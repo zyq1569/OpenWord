@@ -5,80 +5,80 @@
 SDK_INSTALL_PREFIX = D:\KDE\src
 
 F5LIBDIR     = $$SDK_INSTALL_PREFIX/lib
-F5INCLUDEDIR = $$SDK_INSTALL_PREFIX/include
-
+F5INCLUDEDIR = $$SDK_INSTALL_PREFIX
+SDK_INSTALL_PREFIX = D:/CraftRoot/include
 TEMPLATE = lib
-TARGET = komain
-DESTDIR = ../../../calligra/bin/Debug
-QT += core xml network gui widgets printsupport concurrent dbus
-CONFIG += debug
-DEFINES += _WINDOWS WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0600 WINVER=0x0600
-_WIN32_IE=0x0600 _UNICODE _USE_MATH_DEFINES _CRT_SECURE_NO_DEPRECATE
-_CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE _SCL_SECURE_NO_WARNINGS
-QT_DISABLE_DEPRECATED_BEFORE=0 QT_USE_QSTRINGBUILDER QT_STRICT_ITERATORS
-QT_NO_SIGNALS_SLOTS_KEYWORDS QT_NO_URL_CAST_FROM_STRING QT_NO_CAST_TO_ASCII
-NOMINMAX BOOST_ALL_NO_LIB TRANSLATION_DOMAIN=\"calligra\" QT_XML_LIB
-QT_WIDGETS_LIB KCOREADDONS_LIB QT_NETWORK_LIB QT_CONCURRENT_LIB
-QT_DBUS_LIB QT_PRINTSUPPORT_LIB
+TARGET   = komain
+DESTDIR  = ../../bin/Debug
+QT      += core xml network gui widgets printsupport concurrent dbus
+CONFIG  += debug
 
-INCLUDEPATH += ../../../../interfaces \
-    ../../../../calligra \
-    ../../../../winquirks \
-    ../../../version \
-    ../../../text \
-    ../../../text/changetracker \
-    ../../../text/styles \
-    ../../../text/opendocument \
-    ../../../flake \
-    ../../../odf \
-    ../../../store \
-    ../../../odf \
-    ../../../store \
-    ../../../plugin \
-    ../../../pigment \
-    ../../../pigment \
-    ../../../pigment/compositeops \
-    ../../../pigment/resources \
-    ../../../kundo2 \
-    ../../../kundo2 \
-    ../../../widgetutils \
-    ../../../flake/commands \
-    ../../../flake/tools \
-    ../../../flake/svg \
-    ../../../flake \
-    ../../../widgetutils \
-    ../../../widgets \
-    ../../../widgets \
-    ../../../textlayout \
-    ../../../textlayout \
-    ../../../config \
-    ../../../plugin \
-    $$SDK_INSTALL_PREFIX/include/KF5/KIOCore \
-    $$SDK_INSTALL_PREFIX/include/KF5 \
-    $$SDK_INSTALL_PREFIX/include/KF5/KCoreAddons \
-    $$SDK_INSTALL_PREFIX/include/KF5/KService \
-    $$SDK_INSTALL_PREFIX/include/KF5/KConfigCore \
-    $$SDK_INSTALL_PREFIX/include/KF5/KXmlGui \
-    $$SDK_INSTALL_PREFIX/include/KF5/KConfigWidgets \
-    $$SDK_INSTALL_PREFIX/include/KF5/KCodecs \
-    $$SDK_INSTALL_PREFIX/include/KF5/KWidgetsAddons \
-    $$SDK_INSTALL_PREFIX/include/KF5/KConfigGui \
-    $$SDK_INSTALL_PREFIX/include/KF5/KAuth \
-    $$SDK_INSTALL_PREFIX/include/KF5/KTextWidgets \
-    $$SDK_INSTALL_PREFIX/include/KF5/SonnetUi \
-    $$SDK_INSTALL_PREFIX/include/KF5/KIOWidgets \
-    $$SDK_INSTALL_PREFIX/include/KF5/KIOGui \
-    $$SDK_INSTALL_PREFIX/include/KF5/KWindowSystem \
-    $$SDK_INSTALL_PREFIX/include/KF5/KJobWidgets \
-    $$SDK_INSTALL_PREFIX/include/KF5/KCompletion \
-    $$SDK_INSTALL_PREFIX/include/KF5/KNotifications \
-    $$SDK_INSTALL_PREFIX/include/KF5/KItemViews \
-    $$SDK_INSTALL_PREFIX/include/KF5/KIOFileWidgets \
-    $$SDK_INSTALL_PREFIX/include/KF5/KBookmarks \
-    $$SDK_INSTALL_PREFIX/include/KF5/Solid \
-    $$SDK_INSTALL_PREFIX/include/KF5/KIconThemes \
-    $$SDK_INSTALL_PREFIX/include/KF5/KDBusAddons \
-    $$SDK_INSTALL_PREFIX/include/KF5/KActivities
+#DEFINES += _WINDOWS WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0600 WINVER=0x0600
+#_WIN32_IE=0x0600 _UNICODE _USE_MATH_DEFINES _CRT_SECURE_NO_DEPRECATE _SCL_SECURE_NO_WARNINGS
+#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0 QT_USE_QSTRINGBUILDER QT_STRICT_ITERATORS
+#DEFINES += QT_NO_SIGNALS_SLOTS_KEYWORDS QT_NO_URL_CAST_FROM_STRING QT_NO_CAST_TO_ASCII
+#DEFINES += NOMINMAX BOOST_ALL_NO_LIB TRANSLATION_DOMAIN=\"calligra\"
+#DEFINES += QT_XML_LIB QT_WIDGETS_LIB KCOREADDONS_LIB QT_NETWORK_LIB QT_CONCURRENT_LIB
+#DEFINES += QT_DBUS_LIB QT_PRINTSUPPORT_LIB KOMAIN_STATIC_DEFINE
+
+INCLUDEPATH += ../../ \
+    ../../interfaces \
+    ../widgets \
+    ../../winquirks \
+    ../version \
+    ../text \
+    ../text/changetracker \
+    ../text/styles \
+    ../text/opendocument \
+    ../flake \
+    ../odf \
+    ../store \
+    ../plugin \
+    ../pigment/compositeops \
+    ../pigment/resources \
+    ../kundo2 \
+    ../widgetutils \
+    ../flake/commands \
+    ../flake/tools \
+    ../flake/svg \
+    ../flake \
+    ../widgetutils \
+    ../textlayout \
+    config \
+    ../plugin \
+#    $$SDK_INSTALL_PREFIX/kconfig-5.75.0/src/core \
+#    $$SDK_INSTALL_PREFIX/ki18n-5.75.0/src \
+#    $$SDK_INSTALL_PREFIX/kdelibs4support-5.75.0\src\includes \
+#    $$SDK_INSTALL_PREFIX/kxmlgui-5.75.0\src \
+    $$SDK_INSTALL_PREFIX/KF5/KIOCore \
+    $$SDK_INSTALL_PREFIX/KF5 \
+    $$SDK_INSTALL_PREFIX/KF5/kdecore \
+    $$SDK_INSTALL_PREFIX/KF5/ki18n \
+    $$SDK_INSTALL_PREFIX/KF5/KCoreAddons \
+    $$SDK_INSTALL_PREFIX/KF5/KService \
+    $$SDK_INSTALL_PREFIX/KF5/KConfigCore \
+    $$SDK_INSTALL_PREFIX/KF5/KXmlGui \
+    $$SDK_INSTALL_PREFIX/KF5/KConfigWidgets \
+    $$SDK_INSTALL_PREFIX/KF5/KCodecs \
+    $$SDK_INSTALL_PREFIX/KF5/KWidgetsAddons \
+    $$SDK_INSTALL_PREFIX/KF5/KConfigGui \
+    $$SDK_INSTALL_PREFIX/KF5/KAuth \
+    $$SDK_INSTALL_PREFIX/KF5/KTextWidgets \
+    $$SDK_INSTALL_PREFIX/KF5/SonnetUi \
+    $$SDK_INSTALL_PREFIX/KF5/KIOWidgets \
+    $$SDK_INSTALL_PREFIX/KF5/KIOGui \
+    $$SDK_INSTALL_PREFIX/KF5/KWindowSystem \
+    $$SDK_INSTALL_PREFIX/KF5/KJobWidgets \
+    $$SDK_INSTALL_PREFIX/KF5/KCompletion \
+    $$SDK_INSTALL_PREFIX/KF5/KNotifications \
+    $$SDK_INSTALL_PREFIX/KF5/KItemViews \
+    $$SDK_INSTALL_PREFIX/KF5/KIOFileWidgets \
+    $$SDK_INSTALL_PREFIX/KF5/KBookmarks \
+    $$SDK_INSTALL_PREFIX/KF5/Solid \
+    $$SDK_INSTALL_PREFIX/KF5/KIconThemes \
+    $$SDK_INSTALL_PREFIX/KF5/KDBusAddons \
+    $$SDK_INSTALL_PREFIX/KF5/KActivities
+
 #LIBS += -L$${DCMTKLIBDIR} \
 LIBS +=-L$${F5INCLUDEDIR} \
     -lkowidgets \
