@@ -4,51 +4,50 @@
 
 # This is a reminder that you are using a generated .pro file.
 # Remove it when you are finished editing this file.
-message("You are running qmake on a generated .pro file. This may not work!")
+#message("You are running qmake on a generated .pro file. This may not work!")
 
 
-SOURCES += ../../../calligra/libs/pigment/pigmentcms_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/DebugPigment.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoBasicHistogramProducers.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColor.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorDisplayRendererInterface.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorConversionAlphaTransformation.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorConversionCache.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorConversions.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorConversionSystem.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorConversionTransformation.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorConversionTransformationFactory.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorModelStandardIds.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorProfile.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorSpace.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorSpaceEngine.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorSpaceFactory.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorSpaceMaths.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorSpaceRegistry.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorTransformation.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorTransformationFactory.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoColorTransformationFactoryRegistry.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoCompositeColorTransformation.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoCompositeOp.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoCompositeOpRegistry.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoCopyColorConversionTransformation.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoFallBackColorTransformation.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoHistogramProducer.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoMultipleColorConversionTransformation.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/KoUniqueNumberForIdServer.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/colorspaces/KoAlphaColorSpace.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/colorspaces/KoLabColorSpace.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/colorspaces/KoRgbU16ColorSpace.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/colorspaces/KoRgbU8ColorSpace.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/colorspaces/KoSimpleColorSpaceEngine.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/compositeops/KoOptimizedCompositeOpFactory.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/compositeops/KoOptimizedCompositeOpFactoryPerArch_Scalar.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/colorprofiles/KoDummyColorProfile.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/resources/KoAbstractGradient.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/resources/KoColorSet.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/resources/KoPattern.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/resources/KoResource.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/resources/KoMD5Generator.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/resources/KoHashGeneratorProvider.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/resources/KoStopGradient.cpp \
-    ../../../../src/calligra-v3.2.1/libs/pigment/resources/KoSegmentGradient.cpp
+SOURCES +=  DebugPigment.cpp \
+            KoBasicHistogramProducers.cpp \
+            KoColor.cpp \
+            KoColorDisplayRendererInterface.cpp \
+            KoColorConversionAlphaTransformation.cpp \
+            KoColorConversionCache.cpp \
+            KoColorConversions.cpp \
+            KoColorConversionSystem.cpp \
+            KoColorConversionTransformation.cpp \
+            KoColorConversionTransformationFactory.cpp \
+            KoColorModelStandardIds.cpp \
+            KoColorProfile.cpp \
+            KoColorSpace.cpp \
+            KoColorSpaceEngine.cpp \
+            KoColorSpaceFactory.cpp \
+            KoColorSpaceMaths.cpp \
+            KoColorSpaceRegistry.cpp \
+            KoColorTransformation.cpp \
+            KoColorTransformationFactory.cpp \
+            KoColorTransformationFactoryRegistry.cpp \
+            KoCompositeColorTransformation.cpp \
+            KoCompositeOp.cpp \
+            KoCompositeOpRegistry.cpp \
+            KoCopyColorConversionTransformation.cpp \
+            KoFallBackColorTransformation.cpp \
+            KoHistogramProducer.cpp \
+            KoMultipleColorConversionTransformation.cpp \
+            KoUniqueNumberForIdServer.cpp \
+            colorspaces/KoAlphaColorSpace.cpp \
+            colorspaces/KoLabColorSpace.cpp \
+            colorspaces/KoRgbU16ColorSpace.cpp \
+            colorspaces/KoRgbU8ColorSpace.cpp \
+            colorspaces/KoSimpleColorSpaceEngine.cpp \
+            compositeops/KoOptimizedCompositeOpFactory.cpp \
+            compositeops/KoOptimizedCompositeOpFactoryPerArch_Scalar.cpp \
+            colorprofiles/KoDummyColorProfile.cpp \
+            resources/KoAbstractGradient.cpp \
+            resources/KoColorSet.cpp \
+            resources/KoPattern.cpp \
+            resources/KoResource.cpp \
+            resources/KoMD5Generator.cpp \
+            resources/KoHashGeneratorProvider.cpp \
+            resources/KoStopGradient.cpp \
+            resources/KoSegmentGradient.cpp
