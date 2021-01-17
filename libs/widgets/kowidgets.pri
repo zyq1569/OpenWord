@@ -4,99 +4,100 @@
 
 # This is a reminder that you are using a generated .pro file.
 # Remove it when you are finished editing this file.
-message("You are running qmake on a generated .pro file. This may not work!")
+#message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ../../../calligra/libs/widgets/ui_KoConfigAuthorPage.h \
-    ../../../calligra/libs/widgets/ui_KoCsvImportDialog.h \
-    ../../../calligra/libs/widgets/ui_koDocumentInfoAboutWidget.h \
-    ../../../calligra/libs/widgets/ui_koDocumentInfoAuthorWidget.h \
-    ../../../calligra/libs/widgets/ui_KoEditColorSet.h \
-    ../../../calligra/libs/widgets/ui_KoPageLayoutWidget.h \
-    ../../../calligra/libs/widgets/ui_KoShadowConfigWidget.h
-SOURCES += ../../../calligra/libs/widgets/kowidgets_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoFontComboBox.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoGradientEditWidget.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoResourcePaths.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoVBox.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoDialog.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoGlobal.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoZoomWidget.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoTagToolButton.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoTagChooserWidget.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoTagFilterWidget.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoResourceTaggingManager.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoResourceItemChooserContextMenu.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoAspectButton.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoCsvImportDialog.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoPageLayoutDialog.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoPageLayoutWidget.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoPagePreviewWidget.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoPositionSelector.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoSliderCombo.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoColorPopupButton.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoConfigAuthorPage.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoUnitDoubleSpinBox.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoZoomAction.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoZoomController.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoZoomInput.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoZoomHandler.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoZoomMode.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoDpi.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoColorPatch.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoColorPopupAction.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoColorSetWidget.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoColorSlider.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoDualColorButton.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoEditColorSetDialog.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoTriangleColorSelector.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoResourcePopupAction.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoStrokeConfigWidget.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoFillConfigWidget.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoShadowConfigWidget.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoIconToolTip.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoResourceItemChooser.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoResourceItemChooserSync.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoResourceSelector.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoResourceModel.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoResourceItemDelegate.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoResourceItemView.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoResourceTagStore.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoRuler.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoRulerController.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoItemToolTip.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoCheckerBoardPainter.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoResourceServerAdapter.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoResourceServerProvider.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoLineStyleSelector.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoLineStyleItemDelegate.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoLineStyleModel.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoMarkerModel.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoMarkerItemDelegate.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoMarkerSelector.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoDockWidgetTitleBar.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoDockWidgetTitleBarButton.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoViewItemContextBar.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoContextBarButton.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoResourceFiltering.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoResourceModelBase.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoToolBoxButton.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoToolBox.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoToolBoxDocker.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoToolBoxFactory.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoToolBoxLayout_p.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoToolDocker.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoModeBox.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoModeBoxDocker.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoModeBoxFactory.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoDocumentInfoDlg.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoDocumentInfoPropsPage.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoTableView.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgets/WidgetsDebug.cpp
-FORMS += ../../../../src/calligra-v3.2.1/libs/widgets/KoConfigAuthorPage.ui \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoCsvImportDialog.ui \
-    ../../../../src/calligra-v3.2.1/libs/widgets/koDocumentInfoAboutWidget.ui \
-    ../../../../src/calligra-v3.2.1/libs/widgets/koDocumentInfoAuthorWidget.ui \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoEditColorSet.ui \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoPageLayoutWidget.ui \
-    ../../../../src/calligra-v3.2.1/libs/widgets/KoShadowConfigWidget.ui
+#HEADERS += ui_KoConfigAuthorPage.h \
+#ui_KoCsvImportDialog.h \
+#ui_koDocumentInfoAboutWidget.h \
+#ui_koDocumentInfoAuthorWidget.h \
+#ui_KoEditColorSet.h \
+#ui_KoPageLayoutWidget.h \
+#ui_KoShadowConfigWidget.h
+
+
+SOURCES +=  KoFontComboBox.cpp \
+            KoGradientEditWidget.cpp \
+            KoResourcePaths.cpp \
+            KoVBox.cpp \
+            KoDialog.cpp \
+            KoGlobal.cpp \
+            KoZoomWidget.cpp \
+            KoTagToolButton.cpp \
+            KoTagChooserWidget.cpp \
+            KoTagFilterWidget.cpp \
+            KoResourceTaggingManager.cpp \
+            KoResourceItemChooserContextMenu.cpp \
+            KoAspectButton.cpp \
+            KoCsvImportDialog.cpp \
+            KoPageLayoutDialog.cpp \
+            KoPageLayoutWidget.cpp \
+            KoPagePreviewWidget.cpp \
+            KoPositionSelector.cpp \
+            KoSliderCombo.cpp \
+            KoColorPopupButton.cpp \
+            KoConfigAuthorPage.cpp \
+            KoUnitDoubleSpinBox.cpp \
+            KoZoomAction.cpp \
+            KoZoomController.cpp \
+            KoZoomInput.cpp \
+            KoZoomHandler.cpp \
+            KoZoomMode.cpp \
+            KoDpi.cpp \
+            KoColorPatch.cpp \
+            KoColorPopupAction.cpp \
+            KoColorSetWidget.cpp \
+            KoColorSlider.cpp \
+            KoDualColorButton.cpp \
+            KoEditColorSetDialog.cpp \
+            KoTriangleColorSelector.cpp \
+            KoResourcePopupAction.cpp \
+            KoStrokeConfigWidget.cpp \
+            KoFillConfigWidget.cpp \
+            KoShadowConfigWidget.cpp \
+            KoIconToolTip.cpp \
+            KoResourceItemChooser.cpp \
+            KoResourceItemChooserSync.cpp \
+            KoResourceSelector.cpp \
+            KoResourceModel.cpp \
+            KoResourceItemDelegate.cpp \
+            KoResourceItemView.cpp \
+            KoResourceTagStore.cpp \
+            KoRuler.cpp \
+            KoRulerController.cpp \
+            KoItemToolTip.cpp \
+            KoCheckerBoardPainter.cpp \
+            KoResourceServerAdapter.cpp \
+            KoResourceServerProvider.cpp \
+            KoLineStyleSelector.cpp \
+            KoLineStyleItemDelegate.cpp \
+            KoLineStyleModel.cpp \
+            KoMarkerModel.cpp \
+            KoMarkerItemDelegate.cpp \
+            KoMarkerSelector.cpp \
+            KoDockWidgetTitleBar.cpp \
+            KoDockWidgetTitleBarButton.cpp \
+            KoViewItemContextBar.cpp \
+            KoContextBarButton.cpp \
+            KoResourceFiltering.cpp \
+            KoResourceModelBase.cpp \
+            KoToolBoxButton.cpp \
+            KoToolBox.cpp \
+            KoToolBoxDocker.cpp \
+            KoToolBoxFactory.cpp \
+            KoToolBoxLayout_p.cpp \
+            KoToolDocker.cpp \
+            KoModeBox.cpp \
+            KoModeBoxDocker.cpp \
+            KoModeBoxFactory.cpp \
+            KoDocumentInfoDlg.cpp \
+            KoDocumentInfoPropsPage.cpp \
+            KoTableView.cpp \
+            WidgetsDebug.cpp
+FORMS += KoConfigAuthorPage.ui \
+            KoCsvImportDialog.ui \
+            koDocumentInfoAboutWidget.ui \
+            koDocumentInfoAuthorWidget.ui \
+            KoEditColorSet.ui \
+            KoPageLayoutWidget.ui \
+            KoShadowConfigWidget.ui
