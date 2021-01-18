@@ -4,11 +4,15 @@
 
 # This is a reminder that you are using a generated .pro file.
 # Remove it when you are finished editing this file.
-message("You are running qmake on a generated .pro file. This may not work!")
+# #message("You are running qmake on a generated .pro file. This may not work!")
 
+#win32:DEFINES =
 
-HEADERS += ../../../calligra/libs/main/ui_KoOpenPaneBase.h \
-    ../../../calligra/libs/main/ui_KoDetailsPaneBase.h
+DEFINES += KCONFIGWIDGETS_NO_DEPRECATED KXMLGUI_NO_DEPRECATED
+DEFINES += KSERVICE_NO_DEPRECATED KWIDGETSADDONS_NO_DEPRECATED  KIOWIDGETS_NO_DEPRECATED
+DEFINES += komain_EXPORTS
+#HEADERS += ui_KoOpenPaneBase.h \
+#           ui_KoDetailsPaneBase.h
 SOURCES +=  KoAutoSaveRecoveryDialog.cpp \
             KoApplication.cpp \
             KoComponentData.cpp \
