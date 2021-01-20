@@ -4,10 +4,10 @@
 
 TEMPLATE = lib
 TARGET = koodf
-DESTDIR = ../../../calligra/bin/Debug
+DESTDIR = ../../bin/libs/
 QT += core xml network gui widgets printsupport concurrent dbus
-CONFIG += debug
-DEFINES += _WINDOWS WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0600 WINVER=0x0600 _WIN32_IE=0x0600 _UNICODE _USE_MATH_DEFINES _CRT_SECURE_NO_DEPRECATE _CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE _SCL_SECURE_NO_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0 QT_USE_QSTRINGBUILDER QT_STRICT_ITERATORS QT_NO_SIGNALS_SLOTS_KEYWORDS QT_NO_URL_CAST_FROM_STRING QT_NO_CAST_TO_ASCII NOMINMAX BOOST_ALL_NO_LIB TRANSLATION_DOMAIN=\"calligra\" QT_XML_LIB QT_WIDGETS_LIB KCOREADDONS_LIB QT_NETWORK_LIB QT_CONCURRENT_LIB QT_DBUS_LIB QT_PRINTSUPPORT_LIB CMAKE_INTDIR=\"Debug\" koodf_EXPORTS
+
+#DEFINES += _WINDOWS WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0600 WINVER=0x0600 _WIN32_IE=0x0600 _UNICODE _USE_MATH_DEFINES _CRT_SECURE_NO_DEPRECATE _CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE _SCL_SECURE_NO_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0 QT_USE_QSTRINGBUILDER QT_STRICT_ITERATORS QT_NO_SIGNALS_SLOTS_KEYWORDS QT_NO_URL_CAST_FROM_STRING QT_NO_CAST_TO_ASCII NOMINMAX BOOST_ALL_NO_LIB TRANSLATION_DOMAIN=\"calligra\" QT_XML_LIB QT_WIDGETS_LIB KCOREADDONS_LIB QT_NETWORK_LIB QT_CONCURRENT_LIB QT_DBUS_LIB QT_PRINTSUPPORT_LIB CMAKE_INTDIR=\"Debug\" koodf_EXPORTS
 INCLUDEPATH += ../../../../calligra/libs/odf \
     ../../../../../src/calligra-v3.2.1/libs/odf \
     ../../../../calligra/libs/odf/koodf_autogen/include_Debug \
@@ -25,30 +25,16 @@ INCLUDEPATH += ../../../../calligra/libs/odf \
     ../../../../../../include/KF5/KCoreAddons \
     ../../../../../../include/KF5/KService \
     ../../../../../../include/KF5/KConfigCore
-LIBS += -L"." \
-    -l../../lib/Debug/kostore \
-    -l../../lib/Debug/koversion \
-    -lKF5::I18n \
-    -lD://lib/KF5KIOCore \
-    -lD://lib/KF5Service \
-    -lD://lib/KF5Crash \
-    -lD://lib/KF5CoreAddons \
-    -lD://lib/KF5DBusAddons \
-    -lD://lib/KF5ConfigCore \
-    -lkernel32 \
-    -luser32 \
-    -lgdi32 \
-    -lwinspool \
-    -lshell32 \
-    -lole32 \
-    -loleaut32 \
-    -luuid \
-    -lcomdlg32 \
-    -ladvapi32 \
-    -l$(NOINHERIT)
-DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
-OBJECTS_DIR += debug
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
+
+LIBS += -L$${DESTDIR} \
+    -kostore \
+    -koversion
+
+#DEPENDPATH += .
+#MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
+#OBJECTS_DIR += debug
+#UI_DIR += ./GeneratedFiles
+#RCC_DIR += ./GeneratedFiles
+#include(../../calligra.pri)
+include(../../calligra.pri)
 include(koodf.pri)
