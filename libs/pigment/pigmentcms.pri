@@ -6,8 +6,13 @@
 # Remove it when you are finished editing this file.
 #message("You are running qmake on a generated .pro file. This may not work!")
 
+HEADERS +=  \
+            KoColorDisplayRendererInterface.h \
+            KoColorSpaceRegistry.h \
+            resources/KoColorSet.h
 
-SOURCES +=  DebugPigment.cpp \
+SOURCES += \
+            DebugPigment.cpp \
             KoBasicHistogramProducers.cpp \
             KoColor.cpp \
             KoColorDisplayRendererInterface.cpp \
