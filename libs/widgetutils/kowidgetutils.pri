@@ -4,15 +4,16 @@
 
 # This is a reminder that you are using a generated .pro file.
 # Remove it when you are finished editing this file.
-message("You are running qmake on a generated .pro file. This may not work!")
+#message("You are running qmake on a generated .pro file. This may not work!")
+HEADERS +=  \
+           KoProgressUpdater.h
 
-
-SOURCES += ../../../calligra/libs/widgetutils/kowidgetutils_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgetutils/KoGroupButton.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgetutils/KoProgressBar.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgetutils/KoProgressUpdater.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgetutils/KoUpdater.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgetutils/KoUpdaterPrivate_p.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgetutils/KoProperties.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgetutils/KoFileDialog.cpp \
-    ../../../../src/calligra-v3.2.1/libs/widgetutils/KoKineticScroller.cpp
+SOURCES +=  \
+            KoGroupButton.cpp \
+            KoProgressBar.cpp \
+            KoProgressUpdater.cpp \
+            KoUpdater.cpp \
+            KoUpdaterPrivate_p.cpp \
+            KoProperties.cpp \
+            KoFileDialog.cpp \
+            KoKineticScroller.cpp
