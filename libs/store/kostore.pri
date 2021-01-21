@@ -6,18 +6,24 @@
 # Remove it when you are finished editing this file.
 #message("You are running qmake on a generated .pro file. This may not work!")
 
+HEADERS +=  \
+           KoNetAccess.h \
+           KoStoreDevice.h \
+           KoTarStore.h \
+           KoZipStore.h \
+           KoNetAccess.h
 
-SOURCES += ../../../calligra/libs/store/kostore_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/libs/store/KoDirectoryStore.cpp \
-    ../../../../src/calligra-v3.2.1/libs/store/KoEncryptedStore.cpp \
-    ../../../../src/calligra-v3.2.1/libs/store/KoEncryptionChecker.cpp \
-    ../../../../src/calligra-v3.2.1/libs/store/KoLZF.cpp \
-    ../../../../src/calligra-v3.2.1/libs/store/KoStore.cpp \
-    ../../../../src/calligra-v3.2.1/libs/store/KoStoreDevice.cpp \
-    ../../../../src/calligra-v3.2.1/libs/store/KoTarStore.cpp \
-    ../../../../src/calligra-v3.2.1/libs/store/KoXmlNS.cpp \
-    ../../../../src/calligra-v3.2.1/libs/store/KoXmlReader.cpp \
-    ../../../../src/calligra-v3.2.1/libs/store/KoXmlWriter.cpp \
-    ../../../../src/calligra-v3.2.1/libs/store/KoZipStore.cpp \
-    ../../../../src/calligra-v3.2.1/libs/store/StoreDebug.cpp \
-    ../../../../src/calligra-v3.2.1/libs/store/KoNetAccess.cpp
+
+SOURCES += KoDirectoryStore.cpp \
+    KoEncryptedStore.cpp \
+    KoEncryptionChecker.cpp \
+    KoLZF.cpp \
+    KoStore.cpp \
+    KoStoreDevice.cpp \
+    KoTarStore.cpp \
+    KoXmlNS.cpp \
+    KoXmlReader.cpp \
+    KoXmlWriter.cpp \
+    KoZipStore.cpp \
+    StoreDebug.cpp \
+    KoNetAccess.cpp
