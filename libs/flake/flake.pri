@@ -7,10 +7,6 @@
 #message("You are running qmake on a generated .pro file. This may not work!")
 
 
-#HEADERS += ../../../calligra/libs/flake/ui_PathToolOptionWidgetBase.h \
-#    ../../../calligra/libs/flake/ui_KoConnectionShapeConfigWidget.h \
-#    ../../../calligra/libs/flake/ui_SnapGuideConfigWidget.h \
-#    ../../../calligra/libs/flake/ui_KoZoomToolWidget.h
 SOURCES +=  KoGradientHelper.cpp \
             KoFlake.cpp \
             KoCanvasBase.cpp \
@@ -209,7 +205,7 @@ SOURCES +=  KoGradientHelper.cpp \
             svg/SvgShapeFactory.cpp \
             FlakeDebug.cpp
 
-FORMS += tools/PathToolOptionWidgetBase.ui \
-        KoConnectionShapeConfigWidget.ui \
-        SnapGuideConfigWidget.ui \
-        tools/KoZoomToolWidget.ui
+FORMS +=    tools/PathToolOptionWidgetBase.ui \
+            KoConnectionShapeConfigWidget.ui \
+            SnapGuideConfigWidget.ui \
+            tools/KoZoomToolWidget.ui
