@@ -6,34 +6,40 @@
 # Remove it when you are finished editing this file.
 #message("You are running qmake on a generated .pro file. This may not work!")
 
+HEADERS +=  KoStyle.h \
+            KoTblStyle.h \
+            KoRowStyle.h \
+            KoCellStyle.h \
+            chart/KoOdfChartWriter.h
 
-SOURCES += ../../../calligra/filters/libodf2/koodf2_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/Odf2Debug.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoXmlStreamReader.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoXmlUtils.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoTable.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoRow.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoColumn.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoCell.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoCellValue.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoDummyCellValue.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoCellChild.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoRawCellChild.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoStyle.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoTblStyle.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoRowStyle.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoColumnStyle.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoCellStyle.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoOdfStyleBase.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoOdfStyleManager.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoOdfStyle.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoOdfListStyle.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoOdfPageLayout.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoOdfStyleProperties.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoOdfTextProperties.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoOdfParagraphProperties.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoOdfListLevelProperties.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoOdfGraphicProperties.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoOdfPageLayoutProperties.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/KoOdfHeaderFooterProperties.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libodf2/chart/KoOdfChartWriter.cpp
+
+
+SOURCES +=  Odf2Debug.cpp \
+            KoXmlStreamReader.cpp \
+            KoXmlUtils.cpp \
+            KoTable.cpp \
+            KoRow.cpp \
+            KoColumn.cpp \
+            KoCell.cpp \
+            KoCellValue.cpp \
+            KoDummyCellValue.cpp \
+            KoCellChild.cpp \
+            KoRawCellChild.cpp \
+            KoStyle.cpp \
+            KoTblStyle.cpp \
+            KoRowStyle.cpp \
+            KoColumnStyle.cpp \
+            KoCellStyle.cpp \
+            KoOdfStyleBase.cpp \
+            KoOdfStyleManager.cpp \
+            KoOdfStyle.cpp \
+            KoOdfListStyle.cpp \
+            KoOdfPageLayout.cpp \
+            KoOdfStyleProperties.cpp \
+            KoOdfTextProperties.cpp \
+            KoOdfParagraphProperties.cpp \
+            KoOdfListLevelProperties.cpp \
+            KoOdfGraphicProperties.cpp \
+            KoOdfPageLayoutProperties.cpp \
+            KoOdfHeaderFooterProperties.cpp \
+            chart/KoOdfChartWriter.cpp
