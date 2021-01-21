@@ -6,15 +6,26 @@
 # Remove it when you are finished editing this file.
 #message("You are running qmake on a generated .pro file. This may not work!")
 
+HEADERS +=  \
+            generated/simpleParser.h \
+            drawstyle.h \
+            writer.h \
+            ODrawToOdf.h \
+            shapes.h \
+            shapes2.h \
+            pictures.h \
+            pole.h \
+            MsoUtils.h \
+            NumberFormatParser.h
 
-SOURCES += ../../../calligra/filters/libmso/mso_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libmso/generated/simpleParser.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libmso/drawstyle.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libmso/writer.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libmso/ODrawToOdf.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libmso/shapes.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libmso/shapes2.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libmso/pictures.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libmso/pole.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libmso/MsoUtils.cpp \
-    ../../../../src/calligra-v3.2.1/filters/libmso/NumberFormatParser.cpp
+
+SOURCES += generated/simpleParser.cpp \
+            drawstyle.cpp \
+            writer.cpp \
+            ODrawToOdf.cpp \
+            shapes.cpp \
+            shapes2.cpp \
+            pictures.cpp \
+            pole.cpp \
+            MsoUtils.cpp \
+            NumberFormatParser.cpp
