@@ -1,0 +1,42 @@
+
+#ifndef KOWIDGETUTILS_EXPORT_H
+#define KOWIDGETUTILS_EXPORT_H
+
+#ifdef KOWIDGETUTILS_STATIC_DEFINE
+#  define KOWIDGETUTILS_EXPORT
+#  define KOWIDGETUTILS_NO_EXPORT
+#else
+#  ifndef KOWIDGETUTILS_EXPORT
+#    ifdef kowidgetutils_EXPORTS
+        /* We are building this library */
+#      define KOWIDGETUTILS_EXPORT __declspec(dllexport)
+#    else
+        /* We are using this library */
+#      define KOWIDGETUTILS_EXPORT __declspec(dllimport)
+#    endif
+#  endif
+
+#  ifndef KOWIDGETUTILS_NO_EXPORT
+#    define KOWIDGETUTILS_NO_EXPORT 
+#  endif
+#endif
+
+#ifndef KOWIDGETUTILS_DEPRECATED
+#  define KOWIDGETUTILS_DEPRECATED __declspec(deprecated)
+#endif
+
+#ifndef KOWIDGETUTILS_DEPRECATED_EXPORT
+#  define KOWIDGETUTILS_DEPRECATED_EXPORT KOWIDGETUTILS_EXPORT KOWIDGETUTILS_DEPRECATED
+#endif
+
+#ifndef KOWIDGETUTILS_DEPRECATED_NO_EXPORT
+#  define KOWIDGETUTILS_DEPRECATED_NO_EXPORT KOWIDGETUTILS_NO_EXPORT KOWIDGETUTILS_DEPRECATED
+#endif
+
+#if 0 /* DEFINE_NO_DEPRECATED */
+#  ifndef KOWIDGETUTILS_NO_DEPRECATED
+#    define KOWIDGETUTILS_NO_DEPRECATED
+#  endif
+#endif
+
+#endif /* KOWIDGETUTILS_EXPORT_H */

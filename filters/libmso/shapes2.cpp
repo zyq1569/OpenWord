@@ -17,25 +17,20 @@
  */
 #include "ODrawToOdf.h"
 
+#include <KoXmlWriter.h>
 #include "drawstyle.h"
-#include "writeodf/writeodfdraw.h"
 
 using namespace MSO;
-using namespace writeodf;
 
 namespace
 {
 void equation(Writer& out, const char* name, const char* formula)
 {
-    draw_equation eq(&out.xml);
-    eq.set_draw_name(name);
-    eq.set_draw_formula(formula);
-}
-void equation(draw_enhanced_geometry& eg, const char* name, const char* formula)
-{
-    draw_equation eq(eg.add_draw_equation());
-    eq.set_draw_name(name);
-    eq.set_draw_formula(formula);
+    out.xml.startElement("draw:equation");
+    out.xml.addAttribute("draw:name", name);
+    out.xml.addAttribute("draw:formula", formula);
+    out.xml.endElement();
+
 }
 
 }
@@ -56,59 +51,67 @@ void equation(draw_enhanced_geometry& eg, const char* name, const char* formula)
 
 
 void ODrawToOdf::processParallelogram(const MSO::OfficeArtSpContainer& o, Writer& out) {
-    draw_custom_shape shape(&out.xml);
+    out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
-    draw_enhanced_geometry eg(shape.add_draw_enhanced_geometry());
-    eg.set_draw_glue_points("?f6 0 10800 ?f8 ?f11 10800 ?f9 21600 10800 ?f10 ?f5 10800");
+    out.xml.startElement("draw:enhanced-geometry");
+    out.xml.addAttribute("draw:glue-points", "?f6 0 10800 ?f8 ?f11 10800 ?f9 21600 10800 ?f10 ?f5 10800");
     processModifiers(o, out, QList<int>() << 5400);
-    eg.set_svg_viewBox("0 0 21600 21600");
-    eg.set_draw_enhanced_path("M ?f0 0 L 21600 0 ?f1 21600 0 21600 Z N");
-    eg.set_draw_type("parallelogram");
-    eg.set_draw_text_areas("?f3 ?f3 ?f4 ?f4");
+    out.xml.addAttribute("svg:viewBox", "0 0 21600 21600");
+    out.xml.addAttribute("draw:enhanced-path", "M ?f0 0 L 21600 0 ?f1 21600 0 21600 Z N");
+    out.xml.addAttribute("draw:type", "parallelogram");
+    out.xml.addAttribute("draw:text-areas", "?f3 ?f3 ?f4 ?f4");
     setShapeMirroring(o, out);
-    equation(eg,"f0","$0 ");
-    equation(eg,"f1","21600-$0 ");
-    equation(eg,"f2","$0 *10/24");
-    equation(eg,"f3","?f2 +1750");
-    equation(eg,"f4","21600-?f3 ");
-    equation(eg,"f5","?f0 /2");
-    equation(eg,"f6","10800+?f5 ");
-    equation(eg,"f7","?f0 -10800");
-    equation(eg,"f8","if(?f7 ,?f13 ,0)");
-    equation(eg,"f9","10800-?f5 ");
-    equation(eg,"f10","if(?f7 ,?f12 ,21600)");
-    equation(eg,"f11","21600-?f5 ");
-    equation(eg,"f12","21600*10800/?f0 ");
-    equation(eg,"f13","21600-?f12 ");
-    draw_handle handle(eg.add_draw_handle("$0 top"));
-    handle.set_draw_handle_radius_range_maximum("21000");
-    handle.set_draw_handle_radius_range_minimum("0");
+    equation(out,"f0","$0 ");
+    equation(out,"f1","21600-$0 ");
+    equation(out,"f2","$0 *10/24");
+    equation(out,"f3","?f2 +1750");
+    equation(out,"f4","21600-?f3 ");
+    equation(out,"f5","?f0 /2");
+    equation(out,"f6","10800+?f5 ");
+    equation(out,"f7","?f0 -10800");
+    equation(out,"f8","if(?f7 ,?f13 ,0)");
+    equation(out,"f9","10800-?f5 ");
+    equation(out,"f10","if(?f7 ,?f12 ,21600)");
+    equation(out,"f11","21600-?f5 ");
+    equation(out,"f12","21600*10800/?f0 ");
+    equation(out,"f13","21600-?f12 ");
+    out.xml.startElement("draw:handle");
+    out.xml.addAttribute("draw:handle-position", "$0 top");
+    out.xml.addAttribute("draw:handle-range-x-maximum", "21600");
+    out.xml.addAttribute("draw:handle-range-x-minimum", "0");
+    out.xml.endElement(); // draw:handle
+    out.xml.endElement(); // enhanced geometry
+    out.xml.endElement(); // custom shape
 }
 
 
 void ODrawToOdf::processTrapezoid(const MSO::OfficeArtSpContainer& o, Writer& out) {
-    draw_custom_shape shape(&out.xml);
+    out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
-    draw_enhanced_geometry eg(shape.add_draw_enhanced_geometry());
-    eg.set_draw_glue_points("?f6 10800 10800 21600 ?f5 10800 10800 0");
+    out.xml.startElement("draw:enhanced-geometry");
+    out.xml.addAttribute("draw:glue-points", "?f6 10800 10800 21600 ?f5 10800 10800 0");
     processModifiers(o, out, QList<int>() << 5400);
-    eg.set_svg_viewBox("0 0 21600 21600");
-    eg.set_draw_enhanced_path("M 0 0 L 21600 0 ?f0 21600 ?f1 21600 Z N");
-    eg.set_draw_type("trapezoid");
-    eg.set_draw_text_areas("?f3 ?f3 ?f4 ?f4");
+    out.xml.addAttribute("svg:viewBox", "0 0 21600 21600");
+    out.xml.addAttribute("draw:enhanced-path", "M 0 0 L 21600 0 ?f0 21600 ?f1 21600 Z N");
+    out.xml.addAttribute("draw:type", "trapezoid");
+    out.xml.addAttribute("draw:text-areas", "?f3 ?f3 ?f4 ?f4");
     setShapeMirroring(o, out);
-    equation(eg,"f0","21600-$0 ");
-    equation(eg,"f1","$0 ");
-    equation(eg,"f2","$0 *10/18");
-    equation(eg,"f3","?f2 +1750");
-    equation(eg,"f4","21600-?f3 ");
-    equation(eg,"f5","$0 /2");
-    equation(eg,"f6","21600-?f5 ");
-    draw_handle handle(eg.add_draw_handle("$0 bottom"));
-    handle.set_draw_handle_radius_range_maximum("10000");
-    handle.set_draw_handle_radius_range_minimum("0");
+    equation(out,"f0","21600-$0 ");
+    equation(out,"f1","$0 ");
+    equation(out,"f2","$0 *10/18");
+    equation(out,"f3","?f2 +1750");
+    equation(out,"f4","21600-?f3 ");
+    equation(out,"f5","$0 /2");
+    equation(out,"f6","21600-?f5 ");
+    out.xml.startElement("draw:handle");
+    out.xml.addAttribute("draw:handle-position", "$0 bottom");
+    out.xml.addAttribute("draw:handle-range-x-maximum", "10800");
+    out.xml.addAttribute("draw:handle-range-x-minimum", "0");
+    out.xml.endElement(); // draw:handle
+    out.xml.endElement(); // enhanced geometry
+    out.xml.endElement(); // custom shape
 }
 
 

@@ -31,8 +31,9 @@
 #include "ODrawToOdf.h"
 #include "drawstyle.h"
 #include "msodraw.h"
+#include "KoXmlWriter.h"
 #include "generated/leinputstream.h"
-#include "writeodf/writeodfdraw.h"
+//#include "writeodf/writeodfdraw.h"
 
 #include <QDebug>
 #include <QPainterPath>
@@ -44,7 +45,18 @@
 
 
 using namespace MSO;
-using namespace writeodf;
+//using namespace writeodf;
+
+namespace
+{
+void equation(Writer& out, const char* name, const char* formula)
+{
+    out.xml.startElement("draw:equation");
+    out.xml.addAttribute("draw:name", name);
+    out.xml.addAttribute("draw:formula", formula);
+    out.xml.endElement();
+}
+}
 
 qint16
 ODrawToOdf::normalizeRotation(qreal rotation)
@@ -106,7 +118,7 @@ void ODrawToOdf::processRectangle(const OfficeArtSpContainer& o, Writer& out)
 {
     // TODO: Use client->isPlaceholder - might require an update of the
     // placeholderAllowed function in the PPT filter.  Trying to save as many
-    // shapes into draw:text-box at the moment, because vertical alignment in
+    // shapes into draw:text-box at the moment, becasue vertical alignment in
     // draw:custom-shape does not work properly (bug 288047).
     if (o.clientData && client->processRectangleAsTextBox(*o.clientData)) {
         processTextBox(o, out);
@@ -116,6 +128,7 @@ void ODrawToOdf::processRectangle(const OfficeArtSpContainer& o, Writer& out)
             // see bug https://bugs.kde.org/show_bug.cgi?id=285577
             processPictureFrame(o, out);
         } else {
+/*
             draw_custom_shape rect(&out.xml);
             processStyleAndText(o, out);
             draw_enhanced_geometry eg(rect.add_draw_enhanced_geometry());
@@ -123,16 +136,35 @@ void ODrawToOdf::processRectangle(const OfficeArtSpContainer& o, Writer& out)
             eg.set_draw_enhanced_path("M 0 0 L 21600 0 21600 21600 0 21600 0 0 Z N");
             eg.set_draw_type("rectangle");
             setShapeMirroring(o, out);
+*/
+
+            out.xml.startElement("draw:custom-shape");
+            processStyleAndText(o, out);
+            out.xml.startElement("draw:enhanced-geometry");
+            out.xml.addAttribute("svg:viewBox", "0 0 21600 21600");
+            out.xml.addAttribute("draw:enhanced-path", "M 0 0 L 21600 0 21600 21600 0 21600 0 0 Z N");
+            out.xml.addAttribute("draw:type", "rectangle");
+            setShapeMirroring(o, out);
+            out.xml.endElement(); // draw:enhanced-geometry
+            out.xml.endElement(); // draw:custom-shape
         }
     }
 }
 
 void ODrawToOdf::processTextBox(const OfficeArtSpContainer& o, Writer& out)
 {
+/*
     draw_frame frame(&out.xml);
     processStyle(o, out);
     draw_text_box text(frame.add_draw_text_box());
     processText(o, out);
+*/
+    out.xml.startElement("draw:frame");
+    processStyle(o, out);
+    out.xml.startElement("draw:text-box");
+    processText(o, out);
+    out.xml.endElement(); // draw:text-box
+    out.xml.endElement(); // draw:frame
 }
 
 void ODrawToOdf::processLine(const OfficeArtSpContainer& o, Writer& out)
@@ -150,7 +182,7 @@ void ODrawToOdf::processLine(const OfficeArtSpContainer& o, Writer& out)
     if (o.shapeProp.fFlipH) {
         qSwap(x1, x2);
     }
-
+/*
     draw_line line(&out.xml,
                    client->formatPos(out.hOffset(x1)),
                    client->formatPos(out.hOffset(x2)),
@@ -159,6 +191,18 @@ void ODrawToOdf::processLine(const OfficeArtSpContainer& o, Writer& out)
     addGraphicStyleToDrawElement(out, o);
     line.set_draw_layer("layout");
     processText(o, out);
+*/
+
+    out.xml.startElement("draw:line");
+    out.xml.addAttribute("svg:y1", client->formatPos(out.vOffset(y1)));
+    out.xml.addAttribute("svg:y2", client->formatPos(out.vOffset(y2)));
+    out.xml.addAttribute("svg:x1", client->formatPos(out.hOffset(x1)));
+    out.xml.addAttribute("svg:x2", client->formatPos(out.hOffset(x2)));
+    addGraphicStyleToDrawElement(out, o);
+    out.xml.addAttribute("draw:layer", "layout");
+    processText(o, out);
+
+    out.xml.endElement();
 }
 
 void ODrawToOdf::drawStraightConnector1(qreal l, qreal t, qreal r, qreal b, Writer& out, QPainterPath &shapePath) const
@@ -403,7 +447,8 @@ void ODrawToOdf::processPictureFrame(const OfficeArtSpContainer& o, Writer& out)
     // A value of 0x00000000 MUST be ignored.  [MS-ODRAW] — v20101219
     if (!ds.pib()) return;
 
-    draw_frame frame(&out.xml);
+//draw_frame frame(&out.xml);
+    out.xml.startElement("draw:frame");
     processStyle(o, out);
 
     //NOTE: OfficeArtClienData might contain additional information
@@ -415,21 +460,41 @@ void ODrawToOdf::processPictureFrame(const OfficeArtSpContainer& o, Writer& out)
     }
     // if the image cannot be found, just place an empty frame
     if (url.isEmpty()) {
+        out.xml.endElement(); //draw:frame
         return;
     }
+/*
     draw_image image(frame.add_draw_image());
     image.set_xlink_href(QUrl(url));
     image.set_xlink_type("simple");
     image.set_xlink_show("embed");
-    image.set_xlink_actuate("onLoad");
+    image.set_xlink_actuate("onLoad");*/
+
+    out.xml.startElement("draw:image");
+    out.xml.addAttribute("xlink:href", url);
+    out.xml.addAttribute("xlink:type", "simple");
+    out.xml.addAttribute("xlink:show", "embed");
+    out.xml.addAttribute("xlink:actuate", "onLoad");
+    out.xml.endElement(); // image
+    out.xml.endElement(); // frame
 }
 
 void ODrawToOdf::processNotPrimitive(const MSO::OfficeArtSpContainer& o, Writer& out)
 {
+/*
     draw_custom_shape shape(&out.xml);
     processStyleAndText(o, out);
     draw_enhanced_geometry eg(shape.add_draw_enhanced_geometry());
     setEnhancedGeometry(o, out);
+*/
+
+    out.xml.startElement("draw:custom-shape");
+    processStyleAndText(o, out);
+    out.xml.startElement("draw:enhanced-geometry");
+    setEnhancedGeometry(o, out);
+    out.xml.endElement(); //draw:enhanced-geometry
+    out.xml.endElement(); //draw:custom-shape
+
 }
 
 
