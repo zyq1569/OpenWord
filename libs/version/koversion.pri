@@ -7,6 +7,5 @@
 #message("You are running qmake on a generated .pro file. This may not work!")
 
 
-SOURCES += ../../../calligra/libs/version/koversion_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/libs/version/calligraversion.cpp \
-    ../../../../src/calligra-v3.2.1/libs/version/CalligraVersionWrapper.cpp
+SOURCES += calligraversion.cpp \
+           CalligraVersionWrapper.cpp
