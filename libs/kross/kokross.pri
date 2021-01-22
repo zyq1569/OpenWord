@@ -6,12 +6,20 @@
 # Remove it when you are finished editing this file.
 #message("You are running qmake on a generated .pro file. This may not work!")
 
+HEADERS +=  \
+            KoScriptingModule.h \
+            KoScriptingDocker.h \
+            KoScriptManager.h \
+            KoScriptManagerAdd.h \
+            KoScriptingPart.h \
+            KoScriptingOdf.h \
+            KoKrossDebug.h
 
-SOURCES += ../../../calligra/libs/kross/kokross_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/libs/kross/KoScriptingModule.cpp \
-    ../../../../src/calligra-v3.2.1/libs/kross/KoScriptingDocker.cpp \
-    ../../../../src/calligra-v3.2.1/libs/kross/KoScriptManager.cpp \
-    ../../../../src/calligra-v3.2.1/libs/kross/KoScriptManagerAdd.cpp \
-    ../../../../src/calligra-v3.2.1/libs/kross/KoScriptingPart.cpp \
-    ../../../../src/calligra-v3.2.1/libs/kross/KoScriptingOdf.cpp \
-    ../../../../src/calligra-v3.2.1/libs/kross/KoKrossDebug.cpp
+
+SOURCES += KoScriptingModule.cpp \
+            KoScriptingDocker.cpp \
+            KoScriptManager.cpp \
+            KoScriptManagerAdd.cpp \
+            KoScriptingPart.cpp \
+            KoScriptingOdf.cpp \
+            KoKrossDebug.cpp
