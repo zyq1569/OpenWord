@@ -4,41 +4,45 @@
 
 # This is a reminder that you are using a generated .pro file.
 # Remove it when you are finished editing this file.
-#message("You are running qmake on a generated .pro file. This may not work!")
+
+HEADERS +=  \
+            KoDocumentInfo.h \
+            KoOdfNotesConfiguration.h \
+            KoOdfBibliographyConfiguration.h \
+            KoOdfLineNumberingConfiguration.h
 
 
-SOURCES += ../../../calligra/libs/odf/koodf_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoOdf.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoOdfManifestEntry.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoDocumentInfo.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoGenStyle.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoGenStyles.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoFontFace.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoOdfLoadingContext.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoOasisSettings.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoOdfStylesReader.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoOdfNumberStyles.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoOdfPaste.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoOdfReadStore.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoOdfWriteStore.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoStyleStack.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoOdfGraphicStyles.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoGenChange.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoGenChanges.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoDocumentBase.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoEmbeddedDocumentSaver.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoEmbeddedDocumentLoader.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoBorder.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/Ko3dScene.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoShadowStyle.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoPageLayout.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoPageFormat.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoColumns.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoUnit.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoOdfNotesConfiguration.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoOdfBibliographyConfiguration.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoOdfNumberDefinition.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoOdfLineNumberingConfiguration.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/KoElementReference.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/writeodf/helpers.cpp \
-    ../../../../src/calligra-v3.2.1/libs/odf/OdfDebug.cpp
+SOURCES +=  KoOdf.cpp \
+            KoOdfManifestEntry.cpp \
+            KoDocumentInfo.cpp \
+            KoGenStyle.cpp \
+            KoGenStyles.cpp \
+            KoFontFace.cpp \
+            KoOdfLoadingContext.cpp \
+            KoOasisSettings.cpp \
+            KoOdfStylesReader.cpp \
+            KoOdfNumberStyles.cpp \
+            KoOdfPaste.cpp \
+            KoOdfReadStore.cpp \
+            KoOdfWriteStore.cpp \
+            KoStyleStack.cpp \
+            KoOdfGraphicStyles.cpp \
+            KoGenChange.cpp \
+            KoGenChanges.cpp \
+            KoDocumentBase.cpp \
+            KoEmbeddedDocumentSaver.cpp \
+            KoEmbeddedDocumentLoader.cpp \
+            KoBorder.cpp \
+            Ko3dScene.cpp \
+            KoShadowStyle.cpp \
+            KoPageLayout.cpp \
+            KoPageFormat.cpp \
+            KoColumns.cpp \
+            KoUnit.cpp \
+            KoOdfNotesConfiguration.cpp \
+            KoOdfBibliographyConfiguration.cpp \
+            KoOdfNumberDefinition.cpp \
+            KoOdfLineNumberingConfiguration.cpp \
+            KoElementReference.cpp \
+#            writeodf/helpers.cpp \
+            OdfDebug.cpp
