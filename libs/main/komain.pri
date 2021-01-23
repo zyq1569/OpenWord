@@ -8,9 +8,9 @@
 
 #win32:DEFINES =
 
-DEFINES += KCONFIGWIDGETS_NO_DEPRECATED KXMLGUI_NO_DEPRECATED
-DEFINES += KSERVICE_NO_DEPRECATED KWIDGETSADDONS_NO_DEPRECATED  KIOWIDGETS_NO_DEPRECATED
-DEFINES += komain_EXPORTS
+#DEFINES += KCONFIGWIDGETS_NO_DEPRECATED KXMLGUI_NO_DEPRECATED
+#DEFINES += KSERVICE_NO_DEPRECATED KWIDGETSADDONS_NO_DEPRECATED  KIOWIDGETS_NO_DEPRECATED
+#DEFINES += komain_EXPORTS
 #HEADERS += ui_KoOpenPaneBase.h \
 #           ui_KoDetailsPaneBase.h
 SOURCES +=  KoAutoSaveRecoveryDialog.cpp \
@@ -63,5 +63,6 @@ SOURCES +=  KoAutoSaveRecoveryDialog.cpp \
             KoApplicationAdaptor.cpp \
             KoViewAdaptor.cpp \
             KoPartAdaptor.cpp
+
 FORMS +=  KoOpenPaneBase.ui \
           KoDetailsPaneBase.ui
