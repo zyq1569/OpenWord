@@ -6,127 +6,54 @@ SDK_INSTALL_PREFIX = D:/CraftRoot/include
 
 TEMPLATE = lib
 TARGET = kotext
-DESTDIR = ../../../calligra/bin/Debug
+DESTDIR = ../../bin/libs/
 QT += core xml network gui widgets printsupport concurrent dbus
-#CONFIG += debug
-#DEFINES += _WINDOWS WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0600 WINVER=0x0600 _WIN32_IE=0x0600 _UNICODE _USE_MATH_DEFINES _CRT_SECURE_NO_DEPRECATE _CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE _SCL_SECURE_NO_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0 QT_USE_QSTRINGBUILDER QT_STRICT_ITERATORS QT_NO_SIGNALS_SLOTS_KEYWORDS QT_NO_URL_CAST_FROM_STRING QT_NO_CAST_TO_ASCII NOMINMAX BOOST_ALL_NO_LIB TRANSLATION_DOMAIN=\"calligra\" QT_XML_LIB QT_WIDGETS_LIB KCOREADDONS_LIB QT_NETWORK_LIB QT_CONCURRENT_LIB QT_DBUS_LIB QT_PRINTSUPPORT_LIB CMAKE_INTDIR=\"Debug\" kotext_EXPORTS
-DEFINES += KWIDGETSADDONS_DEPRECATED_WARNINGS_SINCE KCOMPLETION_NO_DEPRECATED  KI18N_DEPRECATED KI18N_NO_DEPRECATED
-#DEFINES += KCOMPLETION_EXPORT KXMLGUI_EXPORT KCONFIGWIDGETS_EXPORT KIOCORE_EXPORT
-DEFINES += KIOCORE_NO_DEPRECATED KIOWIDGETS_NO_DEPRECATED KCONFIGCORE_NO_DEPRECATED KCOREADDONS_NO_DEPRECATED
-DEFINES += KCONFIGWIDGETS_ENABLE_DEPRECATED_SINCE KCONFIGWIDGETS_NO_DEPRECATED
-DEFINES += KXMLGUI_NO_DEPRECATED KICONTHEMES_NO_DEPRECATED KCONFIGGUI_NO_DEPRECATED
-DEFINES += kotext_EXPORTS _USE_MATH_DEFINES  TRANSLATION_DOMAIN = "calligra"
-DEFINES += KWINDOWSYSTEM_NO_DEPRECATED KTEXTWIDGETS_NO_DEPRECATED
-DEFINES += KIOWIDGETS_calligra calligra
+##CONFIG += debug
+##DEFINES += _WINDOWS WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0600 WINVER=0x0600 _WIN32_IE=0x0600 _UNICODE _USE_MATH_DEFINES _CRT_SECURE_NO_DEPRECATE _CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE _SCL_SECURE_NO_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0 QT_USE_QSTRINGBUILDER QT_STRICT_ITERATORS QT_NO_SIGNALS_SLOTS_KEYWORDS QT_NO_URL_CAST_FROM_STRING QT_NO_CAST_TO_ASCII NOMINMAX BOOST_ALL_NO_LIB TRANSLATION_DOMAIN=\"calligra\" QT_XML_LIB QT_WIDGETS_LIB KCOREADDONS_LIB QT_NETWORK_LIB QT_CONCURRENT_LIB QT_DBUS_LIB QT_PRINTSUPPORT_LIB CMAKE_INTDIR=\"Debug\" kotext_EXPORTS
+#DEFINES += KWIDGETSADDONS_DEPRECATED_WARNINGS_SINCE KCOMPLETION_NO_DEPRECATED  KI18N_DEPRECATED KI18N_NO_DEPRECATED
+##DEFINES += KCOMPLETION_EXPORT KXMLGUI_EXPORT KCONFIGWIDGETS_EXPORT KIOCORE_EXPORT
+#DEFINES += KIOCORE_NO_DEPRECATED KIOWIDGETS_NO_DEPRECATED KCONFIGCORE_NO_DEPRECATED KCOREADDONS_NO_DEPRECATED
+#DEFINES += KCONFIGWIDGETS_ENABLE_DEPRECATED_SINCE KCONFIGWIDGETS_NO_DEPRECATED
+#DEFINES += KXMLGUI_NO_DEPRECATED KICONTHEMES_NO_DEPRECATED KCONFIGGUI_NO_DEPRECATED
+#DEFINES += kotext_EXPORTS _USE_MATH_DEFINES  TRANSLATION_DOMAIN = "calligra"
+#DEFINES += KWINDOWSYSTEM_NO_DEPRECATED KTEXTWIDGETS_NO_DEPRECATED
+#DEFINES += KIOWIDGETS_calligra calligra
 # libwriteodf  no find  ---> writeodf/writeodftext.h writeodfoffice.h writeodfdc.h
 INCLUDEPATH += ../text \
-    ../../interfaces \
-    ../../ \
-    ../../winquirks \
-    ../../version \
-    ../text/changetracker \
-    ../text/styles \
-    ../text/opendocument \
-    ../flake \
-    ../odf \
-    ../store \
-    ../odf \
-    ../store \
-    ../plugin \
-    ../pigment \
-    ../pigment/compositeops \
-    ../pigment/resources \
-    ../kundo2 \
-    ../widgetutils \
-    ../flake/commands \
-    ../flake/tools \
-    ../flake/svg \
-    ../flake \
-    ../widgetutils \
-    ../plugin \
-#    $(QTDIR)/./mkspecs/win32-msvc \
-#    ../../../../../../include/KF5/KIOCore \
-#    ../../../../../../include/KF5 \
-#    ../../../../../../include/KF5/KCoreAddons \
-#    ../../../../../../include/KF5/KService \
-#    ../../../../../../include/KF5/KConfigCore \
-#    ../../../../../../include/KF5/KXmlGui \
-#    ../../../../../../include/KF5/KConfigWidgets \
-#    ../../../../../../include/KF5/KCodecs \
-#    ../../../../../../include/KF5/KWidgetsAddons \
-#    ../../../../../../include/KF5/KConfigGui \
-#    ../../../../../../include/KF5/KAuth \
-#    ../../../../../../include/KF5/KTextWidgets \
-#    ../../../../../../include/KF5/SonnetUi \
-#    ../../../../../../include/KF5/KWindowSystem
-    $$SDK_INSTALL_PREFIX/KF5/KIOCore \
-    $$SDK_INSTALL_PREFIX/KF5 \
-    $$SDK_INSTALL_PREFIX/KF5/ki18n \
-    $$SDK_INSTALL_PREFIX/KF5/kdecore \
-    $$SDK_INSTALL_PREFIX/KF5/KGuiAddons \
-    $$SDK_INSTALL_PREFIX/KF5/KCoreAddons \
-    $$SDK_INSTALL_PREFIX/KF5/KService \
-    $$SDK_INSTALL_PREFIX/KF5/KConfigCore \
-    $$SDK_INSTALL_PREFIX/KF5/KXmlGui \
-    $$SDK_INSTALL_PREFIX/KF5/KConfigWidgets \
-    $$SDK_INSTALL_PREFIX/KF5/KCodecs \
-    $$SDK_INSTALL_PREFIX/KF5/KWidgetsAddons \
-    $$SDK_INSTALL_PREFIX/KF5/KConfigGui \
-    $$SDK_INSTALL_PREFIX/KF5/KAuth \
-    $$SDK_INSTALL_PREFIX/KF5/KTextWidgets \
-    $$SDK_INSTALL_PREFIX/KF5/SonnetUi \
-    $$SDK_INSTALL_PREFIX/KF5/KIOWidgets \
-    $$SDK_INSTALL_PREFIX/KF5/KIOGui \
-    $$SDK_INSTALL_PREFIX/KF5/KWindowSystem \
-    $$SDK_INSTALL_PREFIX/KF5/KJobWidgets \
-    $$SDK_INSTALL_PREFIX/KF5/KCompletion \
-    $$SDK_INSTALL_PREFIX/KF5/KNotifications \
-    $$SDK_INSTALL_PREFIX/KF5/KItemViews \
-    $$SDK_INSTALL_PREFIX/KF5/KIOFileWidgets \
-    $$SDK_INSTALL_PREFIX/KF5/KBookmarks \
-    $$SDK_INSTALL_PREFIX/KF5/Solid \
-    $$SDK_INSTALL_PREFIX/KF5/KIconThemes \
-    $$SDK_INSTALL_PREFIX/KF5/KDBusAddons \
-    $$SDK_INSTALL_PREFIX/KF5/KActivities
-LIBS += -L"." \
-    -l../../lib/Debug/flake \
-    -lD://lib/KF5TextWidgets \
-    -l../../lib/Debug/pigmentcms \
-    -l../../lib/Debug/koplugin \
-    -l../../lib/Debug/kowidgetutils \
-    -l../../lib/Debug/koodf \
-    -l../../lib/Debug/kostore \
-    -lD://lib/KF5KIOCore \
-    -lD://lib/KF5Service \
-    -lD://lib/KF5Crash \
-    -lD://lib/KF5DBusAddons \
-    -l../../lib/Debug/kundo2 \
-    -lD://lib/KF5XmlGui \
-    -lD://lib/KF5WindowSystem \
-    -lD://lib/KF5SonnetUi \
-    -lKF5::I18n \
-    -lD://lib/KF5ConfigWidgets \
-    -lD://lib/KF5Codecs \
-    -lD://lib/KF5WidgetsAddons \
-    -lD://lib/KF5ConfigGui \
-    -lD://lib/KF5ConfigCore \
-    -lD://lib/KF5Auth \
-    -lD://lib/KF5AuthCore \
-    -lD://lib/KF5CoreAddons \
-    -lkernel32 \
-    -luser32 \
-    -lgdi32 \
-    -lwinspool \
-    -lshell32 \
-    -lole32 \
-    -loleaut32 \
-    -luuid \
-    -lcomdlg32 \
-    -ladvapi32 \
-    -l$(NOINHERIT)
-DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
-OBJECTS_DIR += debug
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
+                ../../interfaces \
+                ../../ \
+                ../../winquirks \
+                ../../version \
+                ../text/changetracker \
+                ../text/styles \
+                ../text/opendocument \
+                ../flake \
+                ../odf \
+                ../store \
+                ../odf \
+                ../store \
+                ../plugin \
+                ../pigment \
+                ../pigment/compositeops \
+                ../pigment/resources \
+                ../kundo2 \
+                ../widgetutils \
+                ../flake/commands \
+                ../flake/tools \
+                ../flake/svg \
+                ../flake \
+                ../widgetutils \
+                ../plugin
+
+
+LIBS += -L$${DESTDIR} \
+            -lflake \
+            -lpigmentcms \
+            -lkoplugin \
+            -lkowidgetutils \
+            -lkoodf \
+            -lkostore \
+            -lkundo2
+
+include(../../calligra.pri)
 include(kotext.pri)
