@@ -87,5 +87,7 @@ LIBS += -L$${SDK_LIB_PREFIX} \
         -lKF5Solid \
         -lKF5AuthCore \
         -lKF5Completion \
-        -lKF5GuiAddons
+        -lKF5GuiAddons \
+        -lKF5TextWidgets \
+        -lKF5WindowSystem
 
