@@ -6,7 +6,15 @@
 # Remove it when you are finished editing this file.
 #message("You are running qmake on a generated .pro file. This may not work!")
 HEADERS +=  \
-           KoProgressUpdater.h
+            KoGroupButton.h \
+            KoProgressBar.h \
+            KoProgressUpdater.h \
+            KoUpdater.h \
+            KoUpdaterPrivate_p.h \
+            KoProperties.h \
+            KoFileDialog.h \
+            KoKineticScroller.h
+
 
 SOURCES +=  \
             KoGroupButton.cpp \
