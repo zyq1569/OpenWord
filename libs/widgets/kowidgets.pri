@@ -61,8 +61,8 @@ HEADERS +=  KoFontComboBox.h \
             KoResourceServerAdapter.h \
             KoResourceServerProvider.h \
             KoLineStyleSelector.h \
-            KoLineStyleItemDelegate.h \
-            KoLineStyleModel.h \
+            KoLineStyleItemDelegate_p.h \
+            KoLineStyleModel_p.h \
             KoMarkerModel.h \
             KoMarkerItemDelegate.h \
             KoMarkerSelector.h \
@@ -72,22 +72,24 @@ HEADERS +=  KoFontComboBox.h \
             KoContextBarButton.h \
             KoResourceFiltering.h \
             KoResourceModelBase.h \
-            KoToolBoxButton.h \
-            KoToolBox.h \
-            KoToolBoxDocker.h \
+            KoToolBoxButton_p.h \
+            KoToolBox_p.h \
+            KoToolBoxDocker_p.h \
             KoToolBoxFactory.h \
             KoToolBoxLayout_p.h \
             KoToolDocker.h \
-            KoModeBox.h \
-            KoModeBoxDocker.h \
+            KoModeBox_p.h \
+            KoModeBoxDocker_p.h \
             KoModeBoxFactory.h \
             KoDocumentInfoDlg.h \
             KoDocumentInfoPropsPage.h \
             KoTableView.h \
-            WidgetsDebug.h
+            WidgetsDebug.h \
+            KoToolBoxScrollArea_p.h
 
 
 SOURCES +=  KoFontComboBox.cpp \
+            KoToolBoxScrollArea.cpp \
             KoGradientEditWidget.cpp \
             KoResourcePaths.cpp \
             KoVBox.cpp \
