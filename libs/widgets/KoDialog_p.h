@@ -25,64 +25,64 @@
 #include <QSize>
 #include <QHash>
 
-class QBoxLayout;
-class QPushButton;
-class KUrlLabel;
-class KSeparator;
-class QDialogButtonBox;
+//class QBoxLayout;
+//class QPushButton;
+//class KUrlLabel;
+//class KSeparator;
+//class QDialogButtonBox;
 
-class KoDialogPrivate
-{
-    Q_DECLARE_PUBLIC(KoDialog)
-protected:
-    KoDialogPrivate()
-        : mDetailsVisible(false), mSettingDetails(false), mDeferredDelete(false),
-          mDetailsWidget(0),
-          mTopLayout(0), mMainWidget(0), mUrlHelp(0), mActionSeparator(0),
-          mButtonOrientation(Qt::Horizontal),
-          mDefaultButton(KoDialog::NoDefault),
-          mButtonBox(0)
-    {
-    }
+//class KoDialogPrivate
+//{
+//    Q_DECLARE_PUBLIC(KoDialog)
+//protected:
+//    KoDialogPrivate()
+//        : mDetailsVisible(false), mSettingDetails(false), mDeferredDelete(false),
+//          mDetailsWidget(0),
+//          mTopLayout(0), mMainWidget(0), mUrlHelp(0), mActionSeparator(0),
+//          mButtonOrientation(Qt::Horizontal),
+//          mDefaultButton(KoDialog::NoDefault),
+//          mButtonBox(0)
+//    {
+//    }
 
-    virtual ~KoDialogPrivate() = default;
+//    virtual ~KoDialogPrivate() = default;
 
-    KoDialog *q_ptr;
+//    KoDialog *q_ptr;
 
-    void setupLayout();
-    void appendButton(KoDialog::ButtonCode code, const KGuiItem &item);
+//    void setupLayout();
+//    void appendButton(KoDialog::ButtonCode code, const KGuiItem &item);
 
-    bool mDetailsVisible;
-    bool mSettingDetails;
-    bool mDeferredDelete;
-    QWidget *mDetailsWidget;
-    QSize mIncSize;
-    QSize mMinSize;
-    QString mDetailsButtonText;
+//    bool mDetailsVisible;
+//    bool mSettingDetails;
+//    bool mDeferredDelete;
+//    QWidget *mDetailsWidget;
+//    QSize mIncSize;
+//    QSize mMinSize;
+//    QString mDetailsButtonText;
 
-    QBoxLayout *mTopLayout;
-    QPointer<QWidget> mMainWidget;
-    KUrlLabel *mUrlHelp;
-    KSeparator *mActionSeparator;
+//    QBoxLayout *mTopLayout;
+//    QPointer<QWidget> mMainWidget;
+//    KUrlLabel *mUrlHelp;
+//    KSeparator *mActionSeparator;
 
-    QString mAnchor;
-    QString mHelpApp;
-    QString mHelpLinkText;
+//    QString mAnchor;
+//    QString mHelpApp;
+//    QString mHelpLinkText;
 
-    Qt::Orientation mButtonOrientation;
-    KoDialog::ButtonCode mDefaultButton;
-    KoDialog::ButtonCode mEscapeButton;
+//    Qt::Orientation mButtonOrientation;
+//    KoDialog::ButtonCode mDefaultButton;
+//    KoDialog::ButtonCode mEscapeButton;
 
-    QDialogButtonBox *mButtonBox;
-    QHash<int, QPushButton *> mButtonList;
+//    QDialogButtonBox *mButtonBox;
+//    QHash<int, QPushButton *> mButtonList;
 
-protected Q_SLOTS:
-    void queuedLayoutUpdate();
-    void helpLinkClicked();
+//protected Q_SLOTS:
+//    void queuedLayoutUpdate();
+//    void helpLinkClicked();
 
-private:
-    void init(KoDialog *);
-    bool dirty: 1;
-};
+//private:
+//    void init(KoDialog *);
+//    bool dirty: 1;
+//};
 
 #endif // KDEUI_KDIALOG_P_H

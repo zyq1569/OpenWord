@@ -33,7 +33,7 @@ class KoDialogPrivate;
 #include <kguiitem.h>
 
 #include <QDialog>
-
+#include <QPointer>
 /**
  * @short A dialog base class with standard buttons and predefined layouts.
  *
@@ -125,6 +125,12 @@ class KoDialogPrivate;
  * @author Olivier Goffart <ogoffart at kde.org>
  * @author Tobias Koenig <tokoe@kde.org>
  */
+
+class QBoxLayout;
+class QPushButton;
+class KUrlLabel;
+class KSeparator;
+class QDialogButtonBox;
 class KOWIDGETS_EXPORT KoDialog : public QDialog //krazy:exclude=qclasses
 {
     Q_OBJECT
@@ -830,7 +836,61 @@ private:
     Q_PRIVATE_SLOT(d_ptr, void helpLinkClicked())
 };
 
+class KoDialogPrivate :public QObject
+{
+    Q_OBJECT
+    Q_DECLARE_PUBLIC(KoDialog)
+protected:
+    KoDialogPrivate()
+        : mDetailsVisible(false), mSettingDetails(false), mDeferredDelete(false),
+          mDetailsWidget(0),
+          mTopLayout(0), mMainWidget(0), mUrlHelp(0), mActionSeparator(0),
+          mButtonOrientation(Qt::Horizontal),
+          mDefaultButton(KoDialog::NoDefault),
+          mButtonBox(0)
+    {
+    }
+
+    virtual ~KoDialogPrivate() = default;
+
+    KoDialog *q_ptr;
+
+    void setupLayout();
+    void appendButton(KoDialog::ButtonCode code, const KGuiItem &item);
+
+    bool mDetailsVisible;
+    bool mSettingDetails;
+    bool mDeferredDelete;
+    QWidget *mDetailsWidget;
+    QSize mIncSize;
+    QSize mMinSize;
+    QString mDetailsButtonText;
+
+    QBoxLayout *mTopLayout;
+    QPointer<QWidget> mMainWidget;
+    KUrlLabel *mUrlHelp;
+    KSeparator *mActionSeparator;
+
+    QString mAnchor;
+    QString mHelpApp;
+    QString mHelpLinkText;
+
+    Qt::Orientation mButtonOrientation;
+    KoDialog::ButtonCode mDefaultButton;
+    KoDialog::ButtonCode mEscapeButton;
+
+    QDialogButtonBox *mButtonBox;
+    QHash<int, QPushButton *> mButtonList;
+
+protected Q_SLOTS:
+    void queuedLayoutUpdate();
+    void helpLinkClicked();
+
+private:
+    void init(KoDialog *);
+    bool dirty: 1;
+};
+
 Q_DECLARE_OPERATORS_FOR_FLAGS(KoDialog::ButtonCodes)
 Q_DECLARE_OPERATORS_FOR_FLAGS(KoDialog::CaptionFlags)
-
 #endif // KODIALOG_H
