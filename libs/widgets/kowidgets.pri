@@ -7,13 +7,84 @@
 #message("You are running qmake on a generated .pro file. This may not work!")
 
 
-#HEADERS += ui_KoConfigAuthorPage.h \
-#ui_KoCsvImportDialog.h \
-#ui_koDocumentInfoAboutWidget.h \
-#ui_koDocumentInfoAuthorWidget.h \
-#ui_KoEditColorSet.h \
-#ui_KoPageLayoutWidget.h \
-#ui_KoShadowConfigWidget.h
+HEADERS +=  KoFontComboBox.h \
+            KoGradientEditWidget.h \
+            KoResourcePaths.h \
+            KoVBox.h \
+            KoDialog.h \
+            KoGlobal.h \
+            KoZoomWidget.h \
+            KoTagToolButton.h \
+            KoTagChooserWidget.h \
+            KoTagFilterWidget.h \
+            KoResourceTaggingManager.h \
+            KoResourceItemChooserContextMenu.h \
+            KoAspectButton.h \
+            KoCsvImportDialog.h \
+            KoPageLayoutDialog.h \
+            KoPageLayoutWidget.h \
+            KoPagePreviewWidget.h \
+            KoPositionSelector.h \
+            KoSliderCombo.h \
+            KoColorPopupButton.h \
+            KoConfigAuthorPage.h \
+            KoUnitDoubleSpinBox.h \
+            KoZoomAction.h \
+            KoZoomController.h \
+            KoZoomInput.h \
+            KoZoomHandler.h \
+            KoZoomMode.h \
+            KoDpi.h \
+            KoColorPatch.h \
+            KoColorPopupAction.h \
+            KoColorSetWidget.h \
+            KoColorSlider.h \
+            KoDualColorButton.h \
+            KoEditColorSetDialog.h \
+            KoTriangleColorSelector.h \
+            KoResourcePopupAction.h \
+            KoStrokeConfigWidget.h \
+            KoFillConfigWidget.h \
+            KoShadowConfigWidget.h \
+            KoIconToolTip.h \
+            KoResourceItemChooser.h \
+            KoResourceItemChooserSync.h \
+            KoResourceSelector.h \
+            KoResourceModel.h \
+            KoResourceItemDelegate.h \
+            KoResourceItemView.h \
+            KoResourceTagStore.h \
+            KoRuler.h \
+            KoRulerController.h \
+            KoItemToolTip.h \
+            KoCheckerBoardPainter.h \
+            KoResourceServerAdapter.h \
+            KoResourceServerProvider.h \
+            KoLineStyleSelector.h \
+            KoLineStyleItemDelegate.h \
+            KoLineStyleModel.h \
+            KoMarkerModel.h \
+            KoMarkerItemDelegate.h \
+            KoMarkerSelector.h \
+            KoDockWidgetTitleBar.h \
+            KoDockWidgetTitleBarButton.h \
+            KoViewItemContextBar.h \
+            KoContextBarButton.h \
+            KoResourceFiltering.h \
+            KoResourceModelBase.h \
+            KoToolBoxButton.h \
+            KoToolBox.h \
+            KoToolBoxDocker.h \
+            KoToolBoxFactory.h \
+            KoToolBoxLayout_p.h \
+            KoToolDocker.h \
+            KoModeBox.h \
+            KoModeBoxDocker.h \
+            KoModeBoxFactory.h \
+            KoDocumentInfoDlg.h \
+            KoDocumentInfoPropsPage.h \
+            KoTableView.h \
+            WidgetsDebug.h
 
 
 SOURCES +=  KoFontComboBox.cpp \
