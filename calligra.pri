@@ -89,5 +89,6 @@ LIBS += -L$${SDK_LIB_PREFIX} \
         -lKF5Completion \
         -lKF5GuiAddons \
         -lKF5TextWidgets \
-        -lKF5WindowSystem
+        -lKF5WindowSystem \
+        -lKF5KIOWidgets
 
