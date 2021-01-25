@@ -80,7 +80,7 @@ INCLUDEPATH += ../../ \
 #    $$SDK_INSTALL_PREFIX/KF5/KActivities
 
 #LIBS += -L$${DCMTKLIBDIR} \
-LIBS +=-L$${F5INCLUDEDIR} \
+LIBS += -L$${DESTDIR} \
         -lkowidgets \
         -lkotextlayout \
         -lkotext \

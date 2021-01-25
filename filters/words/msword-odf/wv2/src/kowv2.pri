@@ -4,7 +4,7 @@
 
 # This is a reminder that you are using a generated .pro file.
 # Remove it when you are finished editing this file.
-message("You are running qmake on a generated .pro file. This may not work!")
+#message("You are running qmake on a generated .pro file. This may not work!")
 
 
 HEADERS += ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/annotations.h \
