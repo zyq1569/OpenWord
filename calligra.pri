@@ -31,10 +31,10 @@ INCLUDEPATH +=  $$SDK_INSTALL_PREFIX \
                 $$SDK_INSTALL_PREFIX/KF5/KGuiAddons \
                 $$SDK_INSTALL_PREFIX/KF5/KService \
                 $$SDK_INSTALL_PREFIX/KF5/KXmlGui \
-                $$SDK_INSTALL_PREFIX/KF5/KConfigCore \
                 $$SDK_INSTALL_PREFIX/KF5/KConfigWidgets \
                 $$SDK_INSTALL_PREFIX/KF5/KCodecs \
                 $$SDK_INSTALL_PREFIX/KF5/KConfigGui \
+                $$SDK_INSTALL_PREFIX/KF5/KConfigCore \
                 $$SDK_INSTALL_PREFIX/KF5/KCoreAddons \
                 $$SDK_INSTALL_PREFIX/KF5/KCompletion \
                 $$SDK_INSTALL_PREFIX/KF5/KTextWidgets \
@@ -71,6 +71,7 @@ LIBS += -L$${SDK_LIB_PREFIX} \
         -lKF5Crash \
         -lKF5DBusAddons \
         -lKF5XmlGui \
+        -lKF5KIOFileWidgets \
         -lKF5IconThemes \
         -lKF5ConfigWidgets \
         -lKF5Codecs \
@@ -78,17 +79,19 @@ LIBS += -L$${SDK_LIB_PREFIX} \
         -lKF5ConfigCore \
         -lKF5Auth \
         -lKF5AuthCore \
-        -lKF5CoreAddons \
+        -lKF5Activities \
         -lKF5Archive \
+        -lKF5AuthCore \
+        -lKF5CoreAddons \
         -lKF5JobWidgets \
         -lKF5Parts \
         -lKF5SonnetUi \
         -lKF5Crash \
         -lKF5Solid \
-        -lKF5AuthCore \
         -lKF5Completion \
         -lKF5GuiAddons \
         -lKF5TextWidgets \
         -lKF5WindowSystem \
-        -lKF5KIOWidgets
-
+        -lKF5ItemViews \
+        -lKF5KIOWidgets \
+        -lKF5Notifications
