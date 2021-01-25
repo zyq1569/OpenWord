@@ -84,7 +84,9 @@ LIBS += -L$${DESTDIR} \
         -lkowidgetutils \
         -lkoodf \
         -lkostore \
-        -lkundo2
+        -lkundo2 \
+        -lkotext
+
 
 #    -lD://lib/KF5KIOWidgets \
 #    -lD://lib/KF5WidgetsAddons \

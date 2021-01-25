@@ -6,5 +6,8 @@
 # Remove it when you are finished editing this file.
 #message("You are running qmake on a generated .pro file. This may not work!")
 
+HEADERS += \
+    KoPluginLoader.h
 
-SOURCES += KoPluginLoader.cpp
+SOURCES += \
+    KoPluginLoader.cpp
