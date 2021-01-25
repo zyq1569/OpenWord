@@ -40,35 +40,35 @@
 #include <QToolButton>
 
 
-class KoColorPopupAction::KoColorPopupActionPrivate
-{
-public:
-    KoColorPopupActionPrivate()
-        : colorSetWidget(0), colorChooser(0), opacitySlider(0), menu(0), checkerPainter(4)
-        , showFilter(true), applyMode(true), firstTime(true)
-    {}
+//class KoColorPopupAction::KoColorPopupActionPrivate
+//{
+//public:
+//    KoColorPopupActionPrivate()
+//        : colorSetWidget(0), colorChooser(0), opacitySlider(0), menu(0), checkerPainter(4)
+//        , showFilter(true), applyMode(true), firstTime(true)
+//    {}
 
-    ~KoColorPopupActionPrivate()
-    {
-        delete colorSetWidget;
-        delete colorChooser;
-        delete opacitySlider;
-        delete menu;
-    }
+//    ~KoColorPopupActionPrivate()
+//    {
+//        delete colorSetWidget;
+//        delete colorChooser;
+//        delete opacitySlider;
+//        delete menu;
+//    }
 
-    KoColor currentColor;
-    KoColor buddyColor;
+//    KoColor currentColor;
+//    KoColor buddyColor;
 
-    KoColorSetWidget *colorSetWidget;
-    KoTriangleColorSelector * colorChooser;
-    KoColorSlider * opacitySlider;
-    QMenu *menu;
-    KoCheckerBoardPainter checkerPainter;
-    bool showFilter;
-    bool applyMode;
+//    KoColorSetWidget *colorSetWidget;
+//    KoTriangleColorSelector * colorChooser;
+//    KoColorSlider * opacitySlider;
+//    QMenu *menu;
+//    KoCheckerBoardPainter checkerPainter;
+//    bool showFilter;
+//    bool applyMode;
 
-    bool firstTime;
-};
+//    bool firstTime;
+//};
 
 KoColorPopupAction::KoColorPopupAction(QObject *parent)
     : QAction(parent),

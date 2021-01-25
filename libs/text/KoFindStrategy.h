@@ -21,7 +21,7 @@
 #define KOFINDSTRATEGY_H
 
 #include "KoFindStrategyBase.h"
-
+#include <kfinddialog.h>
 class QWidget;
 
 /**
@@ -50,4 +50,13 @@ private:
     int m_matches;
 };
 
+class NonClosingFindDialog : public KFindDialog
+{
+Q_OBJECT
+public:
+    NonClosingFindDialog(QWidget *parent)
+            : KFindDialog(parent) {}
+
+    void accept() override {}
+};
 #endif /* KOFINDSTRATEGY_H */

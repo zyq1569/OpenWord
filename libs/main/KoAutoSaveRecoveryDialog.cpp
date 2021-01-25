@@ -176,15 +176,15 @@ public:
 KoAutoSaveRecoveryDialog::KoAutoSaveRecoveryDialog(const QStringList &filenames, QWidget *parent) :
     KoDialog(parent)
 {
-    setCaption(/*i18nc*/("@title:window", "Recover Files"));
+    setCaption(i18nc("@title:window", "Recover Files"));
     setMinimumSize(650, 500);
     QWidget *page = new QWidget(this);
     QVBoxLayout *layout = new QVBoxLayout(page);
     if (filenames.size() == 1) {
-        layout->addWidget(new QLabel(/*i18n*/("The following autosave file can be recovered:")));
+        layout->addWidget(new QLabel(i18n("The following autosave file can be recovered:")));
     }
     else {
-        layout->addWidget(new QLabel(/*i18n*/("The following autosave files can be recovered:")));
+        layout->addWidget(new QLabel(i18n("The following autosave files can be recovered:")));
     }
 
     m_listView = new QListView();

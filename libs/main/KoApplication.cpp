@@ -76,7 +76,7 @@
 #include "MainDebug.h"
 #include <QDesktopWidget>
 
-//KoApplication* KoApplication::KoApp = 0;
+KoApplication* KoApplication::KoApp = 0;
 
 namespace {
 const QTime appStartTime(QTime::currentTime());
@@ -139,13 +139,6 @@ KoApplication::KoApplication(const QByteArray &nativeMimeType,
     : QApplication(argc, argv)
     , d(new KoApplicationPrivate())
 {
-    static bool init = false;
-    if (!init)
-    {
-        init = true;
-        KoApplication::KoApp = 0; //add 2021-0111
-    }
-
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
     QScopedPointer<KAboutData> aboutData(aboutDataGenerator());
@@ -215,17 +208,17 @@ bool KoApplication::start()
     QCommandLineParser parser;
     aboutData.setupCommandLine(&parser);
 
-    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("print"), /*i18n*/("Only print and exit")));
-    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("template"), /*i18n*/("Open a new document based on the given template (desktopfile name)")));
-    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("new"), /*i18n*/("Open a new document based on the given template file")));
-    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("dpi"), /*i18n*/("Override display DPI"), QStringLiteral("dpiX,dpiY")));
-    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("export-pdf"), /*i18n*/("Only export to PDF and exit")));
-    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("export-filename"), /*i18n*/("Filename for export-pdf"), QStringLiteral("filename")));
-    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("benchmark-loading"), /*i18n*/("just load the file and then exit")));
-    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("benchmark-loading-show-window"), /*i18n*/("load the file, show the window and progressbar and then exit")));
-    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("profile-filename"), /*i18n*/("Filename to write profiling information into."), QStringLiteral("filename")));
-    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("roundtrip-filename"), /*i18n*/("Load a file and save it as an ODF file. Meant for debugging."), QStringLiteral("filename")));
-    parser.addPositionalArgument(QStringLiteral("[file(s)]"), /*i18n*/("File(s) or URL(s) to open"));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("print"), i18n("Only print and exit")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("template"), i18n("Open a new document based on the given template (desktopfile name)")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("new"), i18n("Open a new document based on the given template file")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("dpi"), i18n("Override display DPI"), QStringLiteral("dpiX,dpiY")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("export-pdf"), i18n("Only export to PDF and exit")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("export-filename"), i18n("Filename for export-pdf"), QStringLiteral("filename")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("benchmark-loading"), i18n("just load the file and then exit")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("benchmark-loading-show-window"), i18n("load the file, show the window and progressbar and then exit")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("profile-filename"), i18n("Filename to write profiling information into."), QStringLiteral("filename")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("roundtrip-filename"), i18n("Load a file and save it as an ODF file. Meant for debugging."), QStringLiteral("filename")));
+    parser.addPositionalArgument(QStringLiteral("[file(s)]"), i18n("File(s) or URL(s) to open"));
 
     parser.process(*this);
 
@@ -235,7 +228,7 @@ bool KoApplication::start()
 #ifdef ENV32BIT
     if (isWow64()) {
         KMessageBox::information(0,
-                                 /*i18n*/("You are running a 32 bits build on a 64 bits Windows.\n"
+                                 i18n("You are running a 32 bits build on a 64 bits Windows.\n"
                                       "This is not recommended.\n"
                                       "Please download and install the x64 build instead."),
                                  qApp->applicationName(),
@@ -279,7 +272,7 @@ bool KoApplication::start()
     qDeleteAll(pluginLoaders);
 
     if (entry.isEmpty()) {
-        QMessageBox::critical(0, /*i18n*/("%1: Critical Error", applicationName()), /*i18n*/("Essential application components could not be found.\n"
+        QMessageBox::critical(0, i18n("%1: Critical Error", applicationName()), i18n("Essential application components could not be found.\n"
                                                                                     "This might be an installation issue.\n"
                                                                                     "Try restarting or reinstalling."));
         return false;
@@ -528,10 +521,10 @@ bool KoApplication::start()
                             paths = KoResourcePaths::findAllResources("data", templatesResourcePath + desktopName);
                         }
                         if (paths.isEmpty()) {
-                            KMessageBox::error(0, /*i18n*/("No template found for: %1", desktopName));
+                            KMessageBox::error(0, i18n("No template found for: %1", desktopName));
                             delete mainWindow;
                         } else if (paths.count() > 1) {
-                            KMessageBox::error(0, /*i18n*/("Too many templates found for: %1", desktopName));
+                            KMessageBox::error(0, i18n("Too many templates found for: %1", desktopName));
                             delete mainWindow;
                         } else {
                             templatePath = paths.at(0);
@@ -553,7 +546,7 @@ bool KoApplication::start()
                             debugMain << "Template loaded...";
                             numberOfOpenDocuments++;
                         } else {
-                            KMessageBox::error(0, /*i18n*/("Template %1 failed to load.", templateURL.toDisplayString()));
+                            KMessageBox::error(0, i18n("Template %1 failed to load.", templateURL.toDisplayString()));
                             delete mainWindow;
                         }
                     }
@@ -561,7 +554,7 @@ bool KoApplication::start()
                 }
                 else if (doNew) {
                     if (url.isLocalFile() && !QFile::exists(url.toLocalFile())) {
-                        KMessageBox::error(0, /*i18n*/("No template found at: %1", url.toDisplayString()));
+                        KMessageBox::error(0, i18n("No template found at: %1", url.toDisplayString()));
                         delete mainWindow;
                     } else {
                         if (mainWindow->openDocument(part, url)) {
@@ -571,7 +564,7 @@ bool KoApplication::start()
                             debugMain << "Template loaded...";
                             numberOfOpenDocuments++;
                         } else {
-                            KMessageBox::error(0, /*i18n*/("Template %1 failed to load.", url.toDisplayString()));
+                            KMessageBox::error(0, i18n("Template %1 failed to load.", url.toDisplayString()));
                             delete mainWindow;
                         }
                     }

@@ -114,7 +114,7 @@ KoTemplateCreateDia::KoTemplateCreateDia(const QString &templatesResourcePath,
 
     setButtons( KoDialog::Ok|KoDialog::Cancel );
     setDefaultButton( KoDialog::Ok );
-    setCaption( /*i18n*/( "Create Template" ) );
+    setCaption( i18n( "Create Template" ) );
     setModal( true );
     setObjectName( "template create dia" );
 
@@ -123,7 +123,7 @@ KoTemplateCreateDia::KoTemplateCreateDia(const QString &templatesResourcePath,
     QVBoxLayout* leftbox = new QVBoxLayout();
     mbox->addLayout( leftbox );
 
-    QLabel *label=new QLabel(/*i18nc*/("Template name", "Name:"), mainwidget);
+    QLabel *label=new QLabel(i18nc("Template name", "Name:"), mainwidget);
     QHBoxLayout *namefield=new QHBoxLayout();
     leftbox->addLayout( namefield );
     namefield->addWidget(label);
@@ -133,7 +133,7 @@ KoTemplateCreateDia::KoTemplateCreateDia(const QString &templatesResourcePath,
             this, SLOT(slotNameChanged(QString)));
     namefield->addWidget(d->m_name);
 
-    label=new QLabel(/*i18n*/("Group:"), mainwidget);
+    label=new QLabel(i18n("Group:"), mainwidget);
     leftbox->addWidget(label);
     d->m_groups = new QTreeWidget(mainwidget);
     leftbox->addWidget(d->m_groups);
@@ -148,28 +148,28 @@ KoTemplateCreateDia::KoTemplateCreateDia(const QString &templatesResourcePath,
 
     QHBoxLayout *bbox=new QHBoxLayout();
     leftbox->addLayout( bbox );
-    d->m_add=new QPushButton(/*i18n*/("&Add Group..."), mainwidget);
+    d->m_add=new QPushButton(i18n("&Add Group..."), mainwidget);
     connect(d->m_add, SIGNAL(clicked()), this, SLOT(slotAddGroup()));
     bbox->addWidget(d->m_add);
-    d->m_remove=new QPushButton(/*i18n*/("&Remove"), mainwidget);
+    d->m_remove=new QPushButton(i18n("&Remove"), mainwidget);
     connect(d->m_remove, SIGNAL(clicked()), this, SLOT(slotRemove()));
     bbox->addWidget(d->m_remove);
 
     QVBoxLayout *rightbox=new QVBoxLayout();
     mbox->addLayout( rightbox );
-    QGroupBox *pixbox = new QGroupBox(/*i18n*/("Picture"), mainwidget);
+    QGroupBox *pixbox = new QGroupBox(i18n("Picture"), mainwidget);
     rightbox->addWidget(pixbox);
     QVBoxLayout *pixlayout=new QVBoxLayout(pixbox );
-    d->m_default=new QRadioButton(/*i18n*/("&Preview"), pixbox);
+    d->m_default=new QRadioButton(i18n("&Preview"), pixbox);
     d->m_default->setChecked(true);
     connect(d->m_default, SIGNAL(clicked()), this, SLOT(slotDefault()));
     pixlayout->addWidget(d->m_default);
     QHBoxLayout *custombox=new QHBoxLayout();
-    d->m_custom=new QRadioButton(/*i18n*/("Custom:"), pixbox);
+    d->m_custom=new QRadioButton(i18n("Custom:"), pixbox);
     d->m_custom->setChecked(false);
     connect(d->m_custom, SIGNAL(clicked()), this, SLOT(slotCustom()));
     custombox->addWidget(d->m_custom);
-    d->m_select=new QPushButton(/*i18n*/("&Select..."), pixbox);
+    d->m_select=new QPushButton(i18n("&Select..."), pixbox);
     connect(d->m_select, SIGNAL(clicked()), this, SLOT(slotSelect()));
     custombox->addWidget(d->m_select);
     custombox->addStretch(1);
@@ -178,10 +178,10 @@ KoTemplateCreateDia::KoTemplateCreateDia(const QString &templatesResourcePath,
     pixlayout->addWidget(d->m_preview, 0, Qt::AlignCenter);
     pixlayout->addStretch(1);
 
-    d->m_defaultTemplate = new QCheckBox( /*i18n*/("Use the new template as default"), mainwidget );
+    d->m_defaultTemplate = new QCheckBox( i18n("Use the new template as default"), mainwidget );
     d->m_defaultTemplate->setChecked( true );
     // QT5TODO: think about restoring this
-//     d->m_defaultTemplate->setToolTip( /*i18n*/("Use the new template every time %1 starts",componentData.aboutData()->programName() ) );
+//     d->m_defaultTemplate->setToolTip( i18n("Use the new template every time %1 starts",componentData.aboutData()->programName() ) );
     rightbox->addWidget( d->m_defaultTemplate );
 
     enableButtonOk(false);
@@ -318,7 +318,7 @@ void KoTemplateCreateDia::slotOk() {
     if(!group->add(t)) {
         KoTemplate *existingTemplate=group->find(d->m_name->text());
         if(existingTemplate && !existingTemplate->isHidden()) {
-            if(KMessageBox::warningYesNo(this, /*i18n*/("Do you really want to overwrite"
+            if(KMessageBox::warningYesNo(this, i18n("Do you really want to overwrite"
                                                     " the existing '%1' template?",existingTemplate->name()))==KMessageBox::Yes)
                 group->add(t, true);
             else
@@ -431,14 +431,14 @@ void KoTemplateCreateDia::slotNameChanged(const QString &name) {
 
 void KoTemplateCreateDia::slotAddGroup() {
     bool ok=false;
-    const QString name = QInputDialog::getText(this, /*i18n*/("Add Group"), /*i18n*/("Enter group name:"),
+    const QString name = QInputDialog::getText(this, i18n("Add Group"), i18n("Enter group name:"),
                                                QLineEdit::Normal, QString(), &ok);
     if(!ok)
         return;
     KoTemplateGroup *group=d->m_tree->find(name);
     if(group && !group->isHidden())
     {
-        KMessageBox::information( this, /*i18n*/("This name is already used."), /*i18n*/("Add Group") );
+        KMessageBox::information( this, i18n("This name is already used."), i18n("Add Group") );
         return;
     }
     QString dir = KoResourcePaths::saveLocation("data", d->m_tree->templatesResourcePath());
@@ -462,11 +462,11 @@ void KoTemplateCreateDia::slotRemove() {
     QString what;
         QString removed;
         if (item->parent() == nullptr) {
-                what =  /*i18n*/("Do you really want to remove that group?");
-                removed = /*i18n*/("Remove Group");
+                what =  i18n("Do you really want to remove that group?");
+                removed = i18n("Remove Group");
         } else {
-                what =  /*i18n*/("Do you really want to remove that template?");
-        removed = /*i18n*/("Remove Template");
+                what =  i18n("Do you really want to remove that template?");
+        removed = i18n("Remove Template");
         }
 
     if(KMessageBox::warningContinueCancel(this, what,
@@ -517,10 +517,10 @@ void KoTemplateCreateDia::updatePixmap() {
         if(!d->m_customPixmap.isNull())
             d->m_preview->setPixmap(d->m_customPixmap);
         else
-            d->m_preview->setText(/*i18n*/("Could not load picture."));
+            d->m_preview->setText(i18n("Could not load picture."));
     }
     else
-        d->m_preview->setText(/*i18n*/("No picture available."));
+        d->m_preview->setText(i18n("No picture available."));
 }
 
 void KoTemplateCreateDia::fillGroupTree() {

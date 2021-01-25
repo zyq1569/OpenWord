@@ -47,7 +47,7 @@ QTextDocument *KoDocumentSectionToolTip::createDocument(const QModelIndex &index
     QString value;
     for(int i = 0, n = properties.count(); i < n; ++i) {
         if (properties[i].isMutable)
-            value = properties[i].state.toBool() ? /*i18n*/("Yes") : /*i18n*/("No");
+            value = properties[i].state.toBool() ? i18n("Yes") : i18n("No");
         else
             value = properties[i].state.toString();
 

@@ -20,6 +20,7 @@
 
 #include "KoRecentDocumentsPane.h"
 
+#include <kundo2command.h>
 #include <QFile>
 #include <QStandardItemModel>
 #include <QUrl>
@@ -81,8 +82,7 @@ KoRecentDocumentsPane::KoRecentDocumentsPane(QWidget* parent, const QString& hea
         , d(new KoRecentDocumentsPanePrivate)
 {
     setFocusProxy(m_documentList);
-    ///m_openButton->setText(/*i18n*/("Open This Document"));///openword
-    m_openButton->setText("Open This Document");
+    m_openButton->setText(/*kundo2_i18n*/("Open This Document"));
     m_openButton->setIcon(koIcon("document-open"));
 
     m_alwaysUseCheckBox->hide();
@@ -183,16 +183,24 @@ void KoRecentDocumentsPane::selectionChanged(const QModelIndex& index)
 
         if (!fileItem.isNull()) {
             // TODO: think about not displaying Modified/Accessed if not available
+//            QString details = QString("<center>%1<br>").arg(fileItem.url().toDisplayString(QUrl::PreferLocalFile)) +
+//                "<table border=\"0\">" +
+//                kundo2_i18nc("File modification date and time. %1 is date time",
+//                      "<tr><td><b>Modified:</b></td><td>%1</td></tr>",
+//                      QString(fileItem.timeString(KFileItem::ModificationTime))) +
+//                kundo2_i18nc("File access date and time. %1 is date time",
+//                      "<tr><td><b>Accessed:</b></td><td>%1</td></tr>",
+//                      QString(fileItem.timeString(KFileItem::AccessTime))) +
+//                "</table></center>";
             QString details = QString("<center>%1<br>").arg(fileItem.url().toDisplayString(QUrl::PreferLocalFile)) +
                 "<table border=\"0\">" +
-                /*i18nc*/("File modification date and time. %1 is date time",
+                ("File modification date and time. %1 is date time",
                       "<tr><td><b>Modified:</b></td><td>%1</td></tr>",
                       QString(fileItem.timeString(KFileItem::ModificationTime))) +
-                /*i18nc*/("File access date and time. %1 is date time",
+                ("File access date and time. %1 is date time",
                       "<tr><td><b>Accessed:</b></td><td>%1</td></tr>",
                       QString(fileItem.timeString(KFileItem::AccessTime))) +
                 "</table></center>";
-            ///openword
             m_detailsLabel->setHtml(details);
         } else {
             m_detailsLabel->clear();

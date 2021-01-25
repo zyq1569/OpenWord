@@ -133,7 +133,7 @@ KoOpenPane::KoOpenPane(QWidget *parent, const QStringList& mimeFilter, const QSt
     d->setupUi(this);
 
     m_mimeFilter = mimeFilter;
-    d->m_openExistingButton->setText(/*i18n*/("Open Existing Document"));
+    d->m_openExistingButton->setText(i18n("Open Existing Document"));
 
     connect(d->m_openExistingButton, SIGNAL(clicked()),
             this, SLOT(openFileDialog()));
@@ -197,7 +197,7 @@ KoOpenPane::~KoOpenPane()
 void KoOpenPane::openFileDialog()
 {
     KoFileDialog dialog(this, KoFileDialog::OpenFile, "OpenDocument");
-    dialog.setCaption(/*i18n*/("Open Existing Document"));
+    dialog.setCaption(i18n("Open Existing Document"));
     dialog.setDefaultDir(qApp->applicationName().contains("karbon")
                           ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
                           : QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
@@ -209,7 +209,7 @@ void KoOpenPane::openFileDialog()
 
 void KoOpenPane::initRecentDocs()
 {
-    QString header = /*i18n*/("Recent Documents");
+    QString header = i18n("Recent Documents");
     KoRecentDocumentsPane* recentDocPane = new KoRecentDocumentsPane(this, header);
     connect(recentDocPane, SIGNAL(openUrl(QUrl)), this, SIGNAL(openExistingFile(QUrl)));
     QTreeWidgetItem* item = addPane(header, koIconName("document-open"), recentDocPane, 0);
@@ -309,7 +309,7 @@ void KoOpenPane::addCustomDocumentWidget(QWidget *widget, const QString& title, 
     QString realtitle = title;
 
     if (realtitle.isEmpty())
-        realtitle = /*i18n*/("Custom Document");
+        realtitle = i18n("Custom Document");
 
     QTreeWidgetItem* item = addPane(realtitle, icon, widget, d->m_freeCustomWidgetIndex);
     ++d->m_freeCustomWidgetIndex;

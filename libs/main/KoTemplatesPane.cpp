@@ -21,7 +21,8 @@
 
 #include "KoTemplateGroup.h"
 #include "KoTemplate.h"
-
+#include "kundo2magicstring.h"
+#include <kundo2command.h>
 #include <KSharedConfig>
 #include <KConfigGroup>
 
@@ -47,8 +48,7 @@ KoTemplatesPane::KoTemplatesPane(QWidget* parent, const QString& header,
 {
     setFocusProxy(m_documentList);
 
-    ///m_openButton->setText(/*i18n*/("Use This Template"));///openword
-    m_openButton->setText("Use This Template");
+    m_openButton->setText(/*kundo2_i18n*/("Use This Template"));
     KConfigGroup cfgGrp(KSharedConfig::openConfig(), "TemplateChooserDialog");
     QString fullTemplateName = cfgGrp.readPathEntry("FullTemplateName", QString());
     d->m_alwaysUseTemplate = cfgGrp.readPathEntry("AlwaysUseTemplate", QString());

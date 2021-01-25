@@ -42,7 +42,7 @@
 
 class KoSliderComboContainer : public QMenu
 {
-Q_OBJECT
+//Q_OBJECT
 public:
     KoSliderComboContainer(KoSliderCombo *parent) : QMenu(parent ), m_parent(parent) {}
     ~KoSliderComboContainer() override = default;
@@ -52,25 +52,25 @@ private:
     KoSliderCombo *m_parent;
 };
 
-class Q_DECL_HIDDEN KoSliderCombo::KoSliderComboPrivate {
-public:
-    KoSliderCombo *thePublic;
-    QValidator *m_validator;
-    QTimer m_timer;
-    KoSliderComboContainer *container;
-    QSlider *slider;
-    QStyle::StateFlag arrowState;
-    qreal minimum;
-    qreal maximum;
-    int decimals;
-    bool firstShowOfSlider;
+//class Q_DECL_HIDDEN KoSliderCombo::KoSliderComboPrivate {
+//public:
+//    KoSliderCombo *thePublic;
+//    QValidator *m_validator;
+//    QTimer m_timer;
+//    KoSliderComboContainer *container;
+//    QSlider *slider;
+//    QStyle::StateFlag arrowState;
+//    qreal minimum;
+//    qreal maximum;
+//    int decimals;
+//    bool firstShowOfSlider;
 
-    void showPopup();
-    void hidePopup();
+//    void showPopup();
+//    void hidePopup();
 
-    void sliderValueChanged(int value);
-    void sliderReleased();
-    void lineEditFinished();
-};
+//    void sliderValueChanged(int value);
+//    void sliderReleased();
+//    void lineEditFinished();
+//};
 
 #endif

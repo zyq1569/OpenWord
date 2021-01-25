@@ -138,4 +138,27 @@ private:
     KoSliderComboPrivate * const d;
 };
 
+#include <QTimer>
+class KoSliderComboContainer;
+class Q_DECL_HIDDEN KoSliderCombo::KoSliderComboPrivate {
+public:
+    KoSliderCombo *thePublic;
+    QValidator *m_validator;
+    QTimer m_timer;
+    KoSliderComboContainer *container;
+    QSlider *slider;
+    QStyle::StateFlag arrowState;
+    qreal minimum;
+    qreal maximum;
+    int decimals;
+    bool firstShowOfSlider;
+
+    void showPopup();
+    void hidePopup();
+
+    void sliderValueChanged(int value);
+    void sliderReleased();
+    void lineEditFinished();
+};
+
 #endif

@@ -72,4 +72,160 @@ private:
     Private * const d;
 };
 
+#include <KoIcon.h>
+#include <QScrollArea>
+#include <QGridLayout>
+#include <QLabel>
+#include <QToolButton>
+#include <QTabWidget>
+#include <QSet>
+class Q_DECL_HIDDEN KoToolDocker::Private
+{
+public:
+    Private(KoToolDocker *dock)
+        : q(dock)
+        , tabbed(false)
+        , tabIcon(koIcon("tab-new"))
+        , unTabIcon(koIcon("tab-close"))
+    {
+    }
+
+    QList<QPointer<QWidget> > currentWidgetList;
+    QSet<QWidget *> currentAuxWidgets;
+    QScrollArea *scrollArea;
+    QWidget *hiderWidget; // non current widgets are hidden by being children of this
+    QWidget *housekeeperWidget;
+    QGridLayout *housekeeperLayout;
+    KoToolDocker *q;
+    Qt::DockWidgetArea dockingArea;
+    bool tabbed;
+    QIcon tabIcon;
+    QIcon unTabIcon;
+    QToolButton *tabButton;
+
+
+    void resetWidgets()
+    {
+        currentWidgetList.clear();
+        qDeleteAll(currentAuxWidgets);
+        currentAuxWidgets.clear();
+    }
+
+    void recreateLayout(const QList<QPointer<QWidget> > &optionWidgetList)
+    {
+        foreach(QPointer<QWidget> widget, currentWidgetList) {
+            if (!widget.isNull() && widget && hiderWidget) {
+                widget->setParent(hiderWidget);
+            }
+        }
+        qDeleteAll(currentAuxWidgets);
+        currentAuxWidgets.clear();
+
+        currentWidgetList = optionWidgetList;
+
+        // need to unstretch row that have previously been stretched
+        housekeeperLayout->setRowStretch(housekeeperLayout->rowCount()-1, 0);
+
+        if (tabbed && currentWidgetList.size() > 1) {
+            QTabWidget *t;
+            housekeeperLayout->addWidget(t = new QTabWidget(), 0, 0);
+            t->setDocumentMode(true);
+            currentAuxWidgets.insert(t);
+            foreach(QPointer<QWidget> widget, currentWidgetList) {
+                if (widget.isNull() || widget->objectName().isEmpty()) {
+                    Q_ASSERT(!(widget->objectName().isEmpty()));
+                    continue; // skip this docker in release build when assert don't crash
+                }
+                t->addTab(widget, widget->windowTitle());
+            }
+        } else {
+            int cnt = 0;
+            QFrame *s;
+            QLabel *l;
+            switch(dockingArea) {
+            case Qt::TopDockWidgetArea:
+            case Qt::BottomDockWidgetArea:
+                housekeeperLayout->setHorizontalSpacing(2);
+                housekeeperLayout->setVerticalSpacing(0);
+                foreach(QPointer<QWidget> widget, currentWidgetList) {
+                    if (widget.isNull() || widget->objectName().isEmpty()) {
+                        continue; // skip this docker in release build when assert don't crash
+                    }
+                    if (!widget->windowTitle().isEmpty()) {
+                        housekeeperLayout->addWidget(l = new QLabel(widget->windowTitle()), 0, 2*cnt);
+                        currentAuxWidgets.insert(l);
+                    }
+                    housekeeperLayout->addWidget(widget, 1, 2*cnt);
+                    widget->show();
+                    if (widget != currentWidgetList.last()) {
+                        housekeeperLayout->addWidget(s = new QFrame(), 0, 2*cnt+1, 2, 1);
+                        s->setFrameShape(QFrame::VLine);
+                        currentAuxWidgets.insert(s);
+                    }
+                    cnt++;
+                }
+                break;
+            case Qt::LeftDockWidgetArea:
+            case Qt::RightDockWidgetArea: {
+                housekeeperLayout->setHorizontalSpacing(0);
+                housekeeperLayout->setVerticalSpacing(2);
+                int specialCount = 0;
+                foreach(QPointer<QWidget> widget, currentWidgetList) {
+                    if (widget.isNull() || widget->objectName().isEmpty()) {
+                        Q_ASSERT(!(widget->objectName().isEmpty()));
+                        continue; // skip this docker in release build when assert don't crash
+                    }
+                    if (!widget->windowTitle().isEmpty()) {
+                        housekeeperLayout->addWidget(l = new QLabel(widget->windowTitle()), cnt++, 0);
+                        currentAuxWidgets.insert(l);
+                    }
+                    housekeeperLayout->addWidget(widget, cnt++, 0);
+                    QLayout *subLayout = widget->layout();
+                    if (subLayout) {
+                        for (int i = 0; i < subLayout->count(); ++i) {
+                            QWidget *spacerWidget = subLayout->itemAt(i)->widget();
+                            if (spacerWidget && spacerWidget->objectName().contains("SpecialSpacer")) {
+                                specialCount++;
+                            }
+                        }
+                    }
+                    widget->show();
+                    if (widget != currentWidgetList.last()) {
+                        housekeeperLayout->addWidget(s = new QFrame(), cnt++, 0);
+                        s->setFrameShape(QFrame::HLine);
+                        currentAuxWidgets.insert(s);
+                    }
+                }
+                if (specialCount == currentWidgetList.count()) {
+                    housekeeperLayout->setRowStretch(cnt, 10000);
+                }
+                break;
+            }
+            default:
+                break;
+            }
+        }
+        housekeeperLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+        housekeeperLayout->invalidate();
+    }
+
+    void locationChanged(Qt::DockWidgetArea area)
+    {
+        dockingArea = area;
+        recreateLayout(currentWidgetList);
+    }
+
+    void toggleTab()
+    {
+        if (!tabbed) {
+            tabbed = true;
+            tabButton->setIcon(unTabIcon);
+        } else {
+            tabbed = false;
+            tabButton->setIcon(tabIcon);
+        }
+        recreateLayout(currentWidgetList);
+    }
+};
+
 #endif

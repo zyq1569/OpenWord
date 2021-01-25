@@ -38,45 +38,45 @@
 #include <QTextTableCell>
 #include <QTimer>
 
-class KUndo2Command;
+//class KUndo2Command;
 
-class Q_DECL_HIDDEN KoTextEditor::Private
-{
-public:
-    enum State {
-        NoOp,
-        KeyPress,
-        Delete,
-        Format,
-        Custom
-    };
+//class Q_DECL_HIDDEN KoTextEditor::Private
+//{
+//public:
+//    enum State {
+//        NoOp,
+//        KeyPress,
+//        Delete,
+//        Format,
+//        Custom
+//    };
 
-    explicit Private(KoTextEditor *qq, QTextDocument *document);
+//    explicit Private(KoTextEditor *qq, QTextDocument *document);
 
-    ~Private() {}
+//    ~Private() {}
 
-    void documentCommandAdded();
-    void updateState(State newState, const KUndo2MagicString &title = KUndo2MagicString());
+//    void documentCommandAdded();
+//    void updateState(State newState, const KUndo2MagicString &title = KUndo2MagicString());
 
-    void newLine(KUndo2Command *parent);
-    void clearCharFormatProperty(int propertyId);
+//    void newLine(KUndo2Command *parent);
+//    void clearCharFormatProperty(int propertyId);
 
-    void emitTextFormatChanged();
+//    void emitTextFormatChanged();
 
-    KoTextEditor *q;
-    QTextCursor caret;
-    QTextDocument *document;
-    QStack<KUndo2Command*> commandStack;
-    bool addNewCommand;
-    bool dummyMacroAdded;
-    int customCommandCount;
-    KUndo2MagicString commandTitle;
+//    KoTextEditor *q;
+//    QTextCursor caret;
+//    QTextDocument *document;
+//    QStack<KUndo2Command*> commandStack;
+//    bool addNewCommand;
+//    bool dummyMacroAdded;
+//    int customCommandCount;
+//    KUndo2MagicString commandTitle;
 
-    State editorState;
+//    State editorState;
 
-    bool editProtected;
-    bool editProtectionCached;
-};
+//    bool editProtected;
+//    bool editProtectionCached;
+//};
 
 class KoTextVisitor
 {

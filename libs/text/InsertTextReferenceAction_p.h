@@ -29,7 +29,7 @@ class KoInlineTextObjectManager;
  */
 class InsertTextReferenceAction : public InsertInlineObjectActionBase
 {
-Q_OBJECT
+//Q_OBJECT
 public:
     InsertTextReferenceAction(KoCanvasBase *canvas, const KoInlineTextObjectManager *manager);
 

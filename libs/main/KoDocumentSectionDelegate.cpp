@@ -518,7 +518,7 @@ void KoDocumentSectionDelegate::drawProgressBar(QPainter *p, const QStyleOptionV
             opt.progress = value.toInt();
             opt.textVisible = true;
             opt.textAlignment = Qt::AlignHCenter;
-            opt.text = /*i18n*/("%1 %", opt.progress);
+            opt.text = i18n("%1 %", opt.progress);
             opt.rect = r;
             opt.orientation = Qt::Horizontal;
             opt.state = option.state;

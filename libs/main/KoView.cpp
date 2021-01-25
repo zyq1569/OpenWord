@@ -340,7 +340,7 @@ void KoView::setupGlobalActions()
 
     actionCollection()->setDefaultShortcut(undo, QKeySequence::Undo);
     actionCollection()->setDefaultShortcut(redo, QKeySequence::Redo);
-    d->actionAuthor  = new KSelectAction(koIcon("user-identity"), /*i18n*/("Active Author Profile"), this);
+    d->actionAuthor  = new KSelectAction(koIcon("user-identity"), i18n("Active Author Profile"), this);
     connect(d->actionAuthor, SIGNAL(triggered(QString)), this, SLOT(changeAuthorProfile(QString)));
     actionCollection()->addAction("settings_active_author", d->actionAuthor);
 
@@ -352,7 +352,7 @@ void KoView::changeAuthorProfile(const QString &profileName)
     KConfigGroup appAuthorGroup( KSharedConfig::openConfig(), "Author");
     if (profileName.isEmpty()) {
         appAuthorGroup.writeEntry("active-profile", "");
-    } else if (profileName == /*i18nc*/("choice for author profile", "Anonymous")) {
+    } else if (profileName == i18nc("choice for author profile", "Anonymous")) {
         appAuthorGroup.writeEntry("active-profile", "anonymous");
     } else {
         appAuthorGroup.writeEntry("active-profile", profileName);
@@ -405,8 +405,8 @@ void KoView::slotUpdateAuthorProfileActions()
         return;
     }
     d->actionAuthor->clear();
-    d->actionAuthor->addAction(/*i18n*/("Default Author Profile"));
-    d->actionAuthor->addAction(/*i18nc*/("choice for author profile", "Anonymous"));
+    d->actionAuthor->addAction(i18n("Default Author Profile"));
+    d->actionAuthor->addAction(i18nc("choice for author profile", "Anonymous"));
 
     KConfigGroup authorGroup(KoGlobal::calligraConfig(), "Author");
     QStringList profiles = authorGroup.readEntry("profile-names", QStringList());

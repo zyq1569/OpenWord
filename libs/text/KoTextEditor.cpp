@@ -77,7 +77,7 @@
 #include <QTextBlockFormat>
 #include <QTextCharFormat>
 #include <QTextDocument>
-#include <QTextDocumentFragment>
+//#include <QTextDocumentFragment>
 #include <QTextFormat>
 #include <QTextTable>
 #include <QTextTableCell>

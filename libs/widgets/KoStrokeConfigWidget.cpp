@@ -68,7 +68,7 @@
 
 class CapNJoinMenu : public QMenu
 {
-Q_OBJECT
+//Q_OBJECT
 public:
     CapNJoinMenu(QWidget *parent = nullptr);
     QSize sizeHint() const override;

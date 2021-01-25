@@ -21,6 +21,7 @@
 #define KOLIST_H
 
 #include "styles/KoListStyle.h"
+#include "KoTextBlockData.h"
 
 #include <QMetaType>
 #include <QPointer>
@@ -96,4 +97,49 @@ private:
 Q_DECLARE_METATYPE(KoList*)
 Q_DECLARE_METATYPE(QList<KoList*>)
 
+
+class KoListPrivate
+{
+public:
+    KoListPrivate(KoList *q, const QTextDocument *document)
+        : q(q), type(KoList::TextList), style(0), textLists(10), textListIds(10), document(document), listToBeContinuedFrom(0)
+    {
+    }
+
+    ~KoListPrivate()
+    {
+    }
+
+    static void invalidate(const QTextBlock &block)
+    {
+        QTextBlock currentBlock = block;
+        KoTextBlockData data(currentBlock);
+        data.setCounterWidth(-1.0);
+    }
+
+    static void invalidateList(const QTextBlock &block)
+    {
+        for (int i = 0; i < block.textList()->count(); i++) {
+            if (block.textList()->item(i) != block) {
+                invalidate(block.textList()->item(i));
+                break;
+            }
+        }
+    }
+
+    void styleChanged(int level)
+    {
+        Q_UNUSED(level);
+        q->setStyle(style);
+    }
+
+    KoList *q;
+    KoList::Type type;
+    KoListStyle *style;
+    QVector<QPointer<QTextList> > textLists;
+    QVector<KoListStyle::ListIdType> textListIds;
+    const QTextDocument *document;
+    QMap<int, QVariant> properties;
+    KoList *listToBeContinuedFrom;
+};
 #endif // KOLIST_H

@@ -21,13 +21,13 @@
 #define KOFIND_H
 
 #include "kotext_export.h"
-
+#include "KoFind_p.h"
 #include <QObject>
 
 class QTextDocument;
 class KoCanvasResourceManager;
 class KActionCollection;
-class KoFindPrivate;
+//class KoFindPrivate;
 
 /**
  * This controller class allows you to get the relevant find actions

@@ -95,4 +95,34 @@ private:
     KoColorSetWidgetPrivate * const d;
 };
 
+
+#include <QTimer>
+#include <QToolButton>
+#include <QHBoxLayout>
+
+#include <QPointer>
+#include <QScrollArea>
+
+class KoColorPatch;
+class Q_DECL_HIDDEN KoColorSetWidget::KoColorSetWidgetPrivate {
+public:
+    KoColorSetWidget *thePublic;
+    QPointer<KoColorSet> colorSet;
+    QTimer m_timer;
+    QVBoxLayout *mainLayout;
+    bool firstShowOfContainer;
+    QWidget *colorSetContainer;
+    QScrollArea *scrollArea;
+    QGridLayout *colorSetLayout;
+    QHBoxLayout *recentsLayout;
+    KoColorPatch *recentPatches[6];
+    QToolButton *addRemoveButton;
+    int numRecents;
+
+    void colorTriggered(KoColorPatch *patch);
+    void addRecent(const KoColor &);
+    void activateRecent(int i);
+    void fillColors();
+    void addRemoveColors();
+};
 #endif

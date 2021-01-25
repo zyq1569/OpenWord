@@ -319,9 +319,8 @@ public:
         m_job = KIO::file_copy(m_url, destURL, 0600, flags);
 #ifndef QT_NO_DBUS
         KJobWidgets::setWindow(m_job, 0);
-        ///if (m_job->ui()) /// openword
-        if (m_job->doResume())
-        {
+        //if (m_job->ui()) {
+        if (m_job) {
             KJobWidgets::setWindow(m_job, parentPart->currentMainwindow());
         }
 #endif
@@ -549,16 +548,15 @@ bool KoDocument::saveFile()
     if (backupFile()) {
         if (url().isLocalFile())
         {
-           ///KBackup::backupFile(url().toLocalFile(), d->backupPath);openword
-           KBackup::simpleBackupFile(url().toLocalFile(), d->backupPath);
+            //KBackup::backupFile(url().toLocalFile(), d->backupPath); ///openword
+            KBackup::simpleBackupFile(url().toLocalFile(), d->backupPath);
         }
-        else
-        {
+        else {
             KIO::UDSEntry entry;
             if (KIO::NetAccess::stat(url(),
                                      entry,
                                      d->parentPart->currentMainwindow())) {     // this file exists => backup
-                emit statusBarMessage(/*i18n*/("Making backup..."));
+                emit statusBarMessage(i18n("Making backup..."));
                 QUrl backup;
                 if (d->backupPath.isEmpty())
                     backup = url();
@@ -573,7 +571,7 @@ bool KoDocument::saveFile()
         }
     }
 
-    emit statusBarMessage(/*i18n*/("Saving..."));
+    emit statusBarMessage(i18n("Saving..."));
     qApp->processEvents();
     bool ret = false;
     bool suppressErrorDialog = false;
@@ -601,9 +599,9 @@ bool KoDocument::saveFile()
     if (!ret) {
         if (!suppressErrorDialog) {
             if (errorMessage().isEmpty()) {
-                KMessageBox::error(0, /*i18n*/("Could not save\n%1", localFilePath()));
+                KMessageBox::error(0, i18n("Could not save\n%1", localFilePath()));
             } else if (errorMessage() != "USER_CANCELED") {
-                KMessageBox::error(0, /*i18n*/("Could not save %1\nReason: %2", localFilePath(), errorMessage()));
+                KMessageBox::error(0, i18n("Could not save %1\nReason: %2", localFilePath(), errorMessage()));
             }
 
         }
@@ -632,7 +630,7 @@ bool KoDocument::saveFile()
 
     if (ret) {
         KNotification *notify = new KNotification("DocumentSaved");
-        notify->setText(/*i18n*/("Document <i>%1</i> saved", url().url()));
+        notify->setText(i18n("Document <i>%1</i> saved", url().url()));
         notify->addContext("url", url().url());
         QTimer::singleShot(0, notify, SLOT(sendEvent()));
     }
@@ -720,10 +718,10 @@ void KoDocument::slotAutoSave()
         // Give a warning when trying to autosave an encrypted file when no password is known (should not happen)
         if (d->specialOutputFlag == SaveEncrypted && d->password.isNull()) {
             // That advice should also fix this error from occurring again
-            emit statusBarMessage(/*i18n*/("The password of this encrypted document is not known. Autosave aborted! Please save your work manually."));
+            emit statusBarMessage(i18n("The password of this encrypted document is not known. Autosave aborted! Please save your work manually."));
         } else {
             connect(this, SIGNAL(sigProgress(int)), d->parentPart->currentMainwindow(), SLOT(slotProgress(int)));
-            emit statusBarMessage(/*i18n*/("Autosaving..."));
+            emit statusBarMessage(i18n("Autosaving..."));
             d->autosaving = true;
             bool ret = saveNativeFormat(autoSaveFile(localFilePath()));
             setModified(true);
@@ -735,7 +733,7 @@ void KoDocument::slotAutoSave()
             emit clearStatusBarMessage();
             disconnect(this, SIGNAL(sigProgress(int)), d->parentPart->currentMainwindow(), SLOT(slotProgress(int)));
             if (!ret && !d->disregardAutosaveFailure) {
-                emit statusBarMessage(/*i18n*/("Error during autosave! Partition full?"));
+                emit statusBarMessage(i18n("Error during autosave! Partition full?"));
             }
         }
     }
@@ -828,7 +826,7 @@ bool KoDocument::saveNativeFormat(const QString & file)
     if (d->specialOutputFlag == SaveEncrypted && !d->password.isNull())
         store->setPassword(d->password);
     if (store->bad()) {
-        d->lastErrorMessage = /*i18n*/("Could not create the file for saving");   // more details needed?
+        d->lastErrorMessage = i18n("Could not create the file for saving");   // more details needed?
         delete store;
         return false;
     }
@@ -872,14 +870,14 @@ bool KoDocument::saveNativeFormatODF(KoStore *store, const QByteArray &mimeType)
         }
         manifestWriter->addManifestEntry("meta.xml", "text/xml");
     } else {
-        d->lastErrorMessage = /*i18n*/("Not able to write '%1'. Partition full?", QString("meta.xml"));
+        d->lastErrorMessage = i18n("Not able to write '%1'. Partition full?", QString("meta.xml"));
         odfStore.closeManifestWriter(false);
         delete store;
         return false;
     }
 
     if (d->docRdf && !d->docRdf->saveOasis(store, manifestWriter)) {
-        d->lastErrorMessage = /*i18n*/("Not able to write RDF metadata. Partition full?");
+        d->lastErrorMessage = i18n("Not able to write RDF metadata. Partition full?");
         odfStore.closeManifestWriter(false);
         delete store;
         return false;
@@ -887,14 +885,14 @@ bool KoDocument::saveNativeFormatODF(KoStore *store, const QByteArray &mimeType)
 
     if (store->open("Thumbnails/thumbnail.png")) {
         if (!saveOasisPreview(store, manifestWriter) || !store->close()) {
-            d->lastErrorMessage = /*i18n*/("Error while trying to write '%1'. Partition full?", QString("Thumbnails/thumbnail.png"));
+            d->lastErrorMessage = i18n("Error while trying to write '%1'. Partition full?", QString("Thumbnails/thumbnail.png"));
             odfStore.closeManifestWriter(false);
             delete store;
             return false;
         }
         // No manifest entry!
     } else {
-        d->lastErrorMessage = /*i18n*/("Not able to write '%1'. Partition full?", QString("Thumbnails/thumbnail.png"));
+        d->lastErrorMessage = i18n("Not able to write '%1'. Partition full?", QString("Thumbnails/thumbnail.png"));
         odfStore.closeManifestWriter(false);
         delete store;
         return false;
@@ -925,7 +923,7 @@ bool KoDocument::saveNativeFormatODF(KoStore *store, const QByteArray &mimeType)
                 store->addDataToFile(version->data, "Versions/" + version->title);
             }
         } else {
-            d->lastErrorMessage = /*i18n*/("Not able to write '%1'. Partition full?", QString("VersionList.xml"));
+            d->lastErrorMessage = i18n("Not able to write '%1'. Partition full?", QString("VersionList.xml"));
             odfStore.closeManifestWriter(false);
             delete store;
             return false;
@@ -934,7 +932,7 @@ bool KoDocument::saveNativeFormatODF(KoStore *store, const QByteArray &mimeType)
 
     // Write out manifest file
     if (!odfStore.closeManifestWriter()) {
-        d->lastErrorMessage = /*i18n*/("Error while trying to write '%1'. Partition full?", QString("META-INF/manifest.xml"));
+        d->lastErrorMessage = i18n("Error while trying to write '%1'. Partition full?", QString("META-INF/manifest.xml"));
         delete store;
         return false;
     }
@@ -959,7 +957,7 @@ bool KoDocument::saveNativeFormatCalligra(KoStore *store)
             return false;
         }
     } else {
-        d->lastErrorMessage = /*i18n*/("Not able to write '%1'. Partition full?", QString("maindoc.xml"));
+        d->lastErrorMessage = i18n("Not able to write '%1'. Partition full?", QString("maindoc.xml"));
         delete store;
         return false;
     }
@@ -1213,7 +1211,7 @@ bool KoDocument::openUrl(const QUrl &_url)
 
     // Reimplemented, to add a check for autosave files and to improve error reporting
     if (!_url.isValid()) {
-        d->lastErrorMessage = /*i18n*/("Malformed URL\n%1", _url.url());  // ## used anywhere ?
+        d->lastErrorMessage = i18n("Malformed URL\n%1", _url.url());  // ## used anywhere ?
         return false;
     }
 
@@ -1229,7 +1227,7 @@ bool KoDocument::openUrl(const QUrl &_url)
             //debugMain <<"asf=" << asf;
             // ## TODO compare timestamps ?
             int res = KMessageBox::warningYesNoCancel(0,
-                      /*i18n*/("An autosaved file exists for this document.\nDo you want to open it instead?"));
+                      i18n("An autosaved file exists for this document.\nDo you want to open it instead?"));
             switch (res) {
             case KMessageBox::Yes :
                 url.setPath(asf);
@@ -1346,7 +1344,7 @@ bool KoDocument::openFile()
         QApplication::restoreOverrideCursor();
         if (d->autoErrorHandlingEnabled)
             // Maybe offer to create a new document with that name ?
-            KMessageBox::error(0, /*i18n*/("The file %1 does not exist.", localFilePath()));
+            KMessageBox::error(0, i18n("The file %1 does not exist.", localFilePath()));
         d->isLoading = false;
         return false;
     }
@@ -1471,7 +1469,7 @@ bool KoDocument::openFile()
             d->profileStream);
 
     d->progressUpdater->setReferenceTime(d->profileReferenceTime);
-    d->progressUpdater->start(100, /*i18n*/("Opening Document"));
+    d->progressUpdater->start(100, i18n("Opening Document"));
 
     setupOpenFileSubProgress();
 
@@ -1486,67 +1484,67 @@ bool KoDocument::openFile()
             case KoFilter::OK: break;
 
             case KoFilter::FilterCreationError:
-                msg = /*i18n*/("Could not create the filter plugin"); break;
+                msg = i18n("Could not create the filter plugin"); break;
 
             case KoFilter::CreationError:
-                msg = /*i18n*/("Could not create the output document"); break;
+                msg = i18n("Could not create the output document"); break;
 
             case KoFilter::FileNotFound:
-                msg = /*i18n*/("File not found"); break;
+                msg = i18n("File not found"); break;
 
             case KoFilter::StorageCreationError:
-                msg = /*i18n*/("Cannot create storage"); break;
+                msg = i18n("Cannot create storage"); break;
 
             case KoFilter::BadMimeType:
-                msg = /*i18n*/("Bad MIME type"); break;
+                msg = i18n("Bad MIME type"); break;
 
             case KoFilter::EmbeddedDocError:
-                msg = /*i18n*/("Error in embedded document"); break;
+                msg = i18n("Error in embedded document"); break;
 
             case KoFilter::WrongFormat:
-                msg = /*i18n*/("Format not recognized"); break;
+                msg = i18n("Format not recognized"); break;
 
             case KoFilter::NotImplemented:
-                msg = /*i18n*/("Not implemented"); break;
+                msg = i18n("Not implemented"); break;
 
             case KoFilter::ParsingError:
-                msg = /*i18n*/("Parsing error"); break;
+                msg = i18n("Parsing error"); break;
 
             case KoFilter::PasswordProtected:
-                msg = /*i18n*/("Document is password protected"); break;
+                msg = i18n("Document is password protected"); break;
 
             case KoFilter::InvalidFormat:
-                msg = /*i18n*/("Invalid file format"); break;
+                msg = i18n("Invalid file format"); break;
 
             case KoFilter::InternalError:
             case KoFilter::UnexpectedEOF:
             case KoFilter::UnexpectedOpcode:
             case KoFilter::StupidError: // ?? what is this ??
             case KoFilter::UsageError:
-                msg = /*i18n*/("Internal error"); break;
+                msg = i18n("Internal error"); break;
 
             case KoFilter::OutOfMemory:
-                msg = /*i18n*/("Out of memory"); break;
+                msg = i18n("Out of memory"); break;
 
             case KoFilter::FilterEntryNull:
-                msg = /*i18n*/("Empty Filter Plugin"); break;
+                msg = i18n("Empty Filter Plugin"); break;
 
             case KoFilter::NoDocumentCreated:
-                msg = /*i18n*/("Trying to load into the wrong kind of document"); break;
+                msg = i18n("Trying to load into the wrong kind of document"); break;
 
             case KoFilter::DownloadFailed:
-                msg = /*i18n*/("Failed to download remote file"); break;
+                msg = i18n("Failed to download remote file"); break;
 
             case KoFilter::UserCancelled:
             case KoFilter::BadConversionGraph:
                 // intentionally we do not prompt the error message here
                 break;
 
-            default: msg = /*i18n*/("Unknown error"); break;
+            default: msg = i18n("Unknown error"); break;
             }
 
             if (d->autoErrorHandlingEnabled && !msg.isEmpty()) {
-                QString errorMsg(/*i18n*/("Could not open %2.\nReason: %1.\n%3", msg, prettyPathOrUrl(), errorMessage()));
+                QString errorMsg(i18n("Could not open %2.\nReason: %1.\n%3", msg, prettyPathOrUrl(), errorMessage()));
                 KMessageBox::error(0, errorMsg);
             }
 
@@ -1603,7 +1601,7 @@ bool KoDocument::openFile()
         setMimeTypeAfterLoading(typeName);
 
         KNotification *notify = new KNotification("DocumentLoaded");
-        notify->setText(/*i18n*/("Document <i>%1</i> loaded", url().url()));
+        notify->setText(i18n("Document <i>%1</i> loaded", url().url()));
         notify->addContext("url", url().url());
         QTimer::singleShot(0, notify, SLOT(sendEvent()));
         d->parentPart->deleteOpenPane();
@@ -1665,7 +1663,7 @@ bool KoDocument::oldLoadAndParse(KoStore *store, const QString& filename, KoXmlD
 
     if (!store->open(filename)) {
         warnMain << "Entry " << filename << " not found!";
-        d->lastErrorMessage = /*i18n*/("Could not find %1", filename);
+        d->lastErrorMessage = i18n("Could not find %1", filename);
         return false;
     }
     // Error variables for QDomDocument::setContent
@@ -1677,11 +1675,12 @@ bool KoDocument::oldLoadAndParse(KoStore *store, const QString& filename, KoXmlD
         errorMain << "Parsing error in " << filename << "! Aborting!" << endl
         << " In line: " << errorLine << ", column: " << errorColumn << endl
         << " Error message: " << errorMsg << endl;
-//        d->lastErrorMessage = /*i18n*/("Parsing error in %1 at line %2, column %3\nError message: %4"
+//        d->lastErrorMessage = i18n("Parsing error in %1 at line %2, column %3\nError message: %4"
 //                                   , filename  , errorLine, errorColumn ,
 //                                   QCoreApplication::translate("QXml", errorMsg.toUtf8(), 0,
-//                                                               QCoreApplication::UnicodeUTF8)); openword
-        d->lastErrorMessage = /*i18n*/("Parsing error in %1 at line %2, column %3\nError message: %4"
+//                                                               QCoreApplication::UnicodeUTF8));
+        ///openword
+        d->lastErrorMessage = i18n("Parsing error in %1 at line %2, column %3\nError message: %4"
                                    , filename  , errorLine, errorColumn ,
                                    QCoreApplication::translate("QXml", errorMsg.toUtf8(), 0));
         return false;
@@ -1695,14 +1694,14 @@ bool KoDocument::loadNativeFormat(const QString & file_)
     QString file = file_;
     QFileInfo fileInfo(file);
     if (!fileInfo.exists()) { // check duplicated from openUrl, but this is useful for templates
-        d->lastErrorMessage = /*i18n*/("The file %1 does not exist.", file);
+        d->lastErrorMessage = i18n("The file %1 does not exist.", file);
         return false;
     }
     if (!fileInfo.isFile()) {
         file += "/content.xml";
         QFileInfo fileInfo2(file);
         if (!fileInfo2.exists() || !fileInfo2.isFile()) {
-            d->lastErrorMessage = /*i18n*/("%1 is not a file." , file_);
+            d->lastErrorMessage = i18n("%1 is not a file." , file_);
             return false;
         }
     }
@@ -1717,7 +1716,7 @@ bool KoDocument::loadNativeFormat(const QString & file_)
         in.setFileName(file);
         if (!in.open(QIODevice::ReadOnly)) {
             QApplication::restoreOverrideCursor();
-            d->lastErrorMessage = /*i18n*/("Could not open the file for reading (check read permissions).");
+            d->lastErrorMessage = i18n("Could not open the file for reading (check read permissions).");
             return false;
         }
 
@@ -1728,7 +1727,7 @@ bool KoDocument::loadNativeFormat(const QString & file_)
             if (in.read(buf + pos , 1) < 1) {
                 QApplication::restoreOverrideCursor();
                 in.close();
-                d->lastErrorMessage = /*i18n*/("Could not read the beginning of the file.");
+                d->lastErrorMessage = i18n("Could not read the beginning of the file.");
                 return false;
             }
 
@@ -1758,7 +1757,7 @@ bool KoDocument::loadNativeFormat(const QString & file_)
             errorMain << "Parsing Error! Aborting! (in KoDocument::loadNativeFormat (QFile))" << endl
             << "  Line: " << errorLine << " Column: " << errorColumn << endl
             << "  Message: " << errorMsg << endl;
-            d->lastErrorMessage = /*i18n*/("parsing error in the main document at line %1, column %2\nError message: %3", errorLine, errorColumn, /*i18n*/(errorMsg.toUtf8()));
+            d->lastErrorMessage = i18n("parsing error in the main document at line %1, column %2\nError message: %3", errorLine, errorColumn, i18n(errorMsg.toUtf8()));
             res = false;
         }
 
@@ -1779,7 +1778,7 @@ bool KoDocument::loadNativeFormatFromStore(const QString& file)
     KoStore *store = KoStore::createStore(file, KoStore::Read, "", backend);
 
     if (store->bad()) {
-        d->lastErrorMessage = /*i18n*/("Not a valid Calligra file: %1", file);
+        d->lastErrorMessage = i18n("Not a valid Calligra file: %1", file);
         delete store;
         QApplication::restoreOverrideCursor();
         return false;
@@ -1864,7 +1863,7 @@ bool KoDocument::loadNativeFormatFromStoreInternal(KoStore *store)
 
     } else {
         errorMain << "ERROR: No maindoc.xml" << endl;
-        d->lastErrorMessage = /*i18n*/("Invalid document: no file 'maindoc.xml'.");
+        d->lastErrorMessage = i18n("Invalid document: no file 'maindoc.xml'.");
         QApplication::restoreOverrideCursor();
         return false;
     }
@@ -1888,7 +1887,7 @@ bool KoDocument::loadNativeFormatFromStoreInternal(KoStore *store)
 
     if (oasis && store->hasFile("VersionList.xml")) {
         KNotification *notify = new KNotification("DocumentHasVersions");
-        notify->setText(/*i18n*/("Document <i>%1</i> contains several versions. Go to File->Versions to open an old version.", store->urlOfStore().url()));
+        notify->setText(i18n("Document <i>%1</i> contains several versions. Go to File->Versions to open an old version.", store->urlOfStore().url()));
         notify->addContext("url", store->urlOfStore().url());
         QTimer::singleShot(0, notify, SLOT(sendEvent()));
 
@@ -2007,7 +2006,7 @@ bool KoDocument::addVersion(const QString& comment)
 
     // Write out manifest file
     if (!odfStore.closeManifestWriter()) {
-        d->lastErrorMessage = /*i18n*/("Error while trying to write '%1'. Partition full?", QString("META-INF/manifest.xml"));
+        d->lastErrorMessage = i18n("Error while trying to write '%1'. Partition full?", QString("META-INF/manifest.xml"));
         delete store;
         return false;
     }
@@ -2097,10 +2096,10 @@ int KoDocument::queryCloseDia()
         name = url().fileName();
 
     if (name.isEmpty())
-        name = /*i18n*/("Untitled");
+        name = i18n("Untitled");
 
     int res = KMessageBox::warningYesNoCancel(0,
-              /*i18n*/("<p>The document <b>'%1'</b> has been modified.</p><p>Do you want to save it?</p>", name));
+              i18n("<p>The document <b>'%1'</b> has been modified.</p><p>Do you want to save it?</p>", name));
 
     switch (res) {
     case KMessageBox::Yes :
@@ -2183,7 +2182,7 @@ QDomDocument KoDocument::createDomDocument(const QString& appName, const QString
 QDomDocument KoDocument::saveXML()
 {
     errorMain << "not implemented" << endl;
-    d->lastErrorMessage = /*i18n*/("Internal error: saveXML not implemented");
+    d->lastErrorMessage = i18n("Internal error: saveXML not implemented");
     return QDomDocument();
 }
 
@@ -2220,10 +2219,10 @@ QString KoDocument::errorMessage() const
 void KoDocument::showLoadingErrorDialog()
 {
     if (errorMessage().isEmpty()) {
-        KMessageBox::error(0, /*i18n*/("Could not open\n%1", localFilePath()));
+        KMessageBox::error(0, i18n("Could not open\n%1", localFilePath()));
     }
     else if (errorMessage() != "USER_CANCELED") {
-        KMessageBox::error(0, /*i18n*/("Could not open %1\nReason: %2", localFilePath(), errorMessage()));
+        KMessageBox::error(0, i18n("Could not open %1\nReason: %2", localFilePath(), errorMessage()));
     }
 }
 
@@ -2292,7 +2291,7 @@ QString KoDocument::tagNameToDocumentType(const QString& localName)
 {
     for (unsigned int i = 0 ; i < numTN2DT ; ++i)
         if (localName == TN2DTArray[i].localName)
-            return /*i18n*/(TN2DTArray[i].documentType);
+            return i18n(TN2DTArray[i].documentType);
     return localName;
 }
 
@@ -2572,13 +2571,13 @@ bool KoDocument::queryClose()
         return true;
 
     QString docName = url().fileName();
-    if (docName.isEmpty()) docName = /*i18n*/( "Untitled" );
+    if (docName.isEmpty()) docName = i18n( "Untitled" );
 
 
     int res = KMessageBox::warningYesNoCancel( 0,
-                                               /*i18n*/( "The document \"%1\" has been modified.\n"
+                                               i18n( "The document \"%1\" has been modified.\n"
                                                      "Do you want to save your changes or discard them?" ,  docName ),
-                                               /*i18n*/( "Close Document" ), KStandardGuiItem::save(), KStandardGuiItem::discard() );
+                                               i18n( "Close Document" ), KStandardGuiItem::save(), KStandardGuiItem::discard() );
 
     bool abortClose=false;
     bool handled=false;

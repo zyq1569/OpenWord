@@ -22,7 +22,7 @@
 #include <kcolormimedata.h>
 
 #include "dcolorarrow.xbm"
-#include "dcolorreset.xpm"
+//#include "dcolorreset.xpm"
 
 #include <QColorDialog>
 
@@ -33,60 +33,60 @@
 #include <qdrawutil.h>
 #include <QApplication>
 
-class Q_DECL_HIDDEN KoDualColorButton::Private
-{
-  public:
-    Private(const KoColor &fgColor, const KoColor &bgColor,
-            QWidget *_dialogParent,
-            const KoColorDisplayRendererInterface *_displayRenderer)
-        : dialogParent(_dialogParent)
-        , dragFlag( false )
-        , miniCtlFlag( false )
-        , foregroundColor(fgColor)
-        , backgroundColor(bgColor)
+//class Q_DECL_HIDDEN KoDualColorButton::Private
+//{
+//  public:
+//    Private(const KoColor &fgColor, const KoColor &bgColor,
+//            QWidget *_dialogParent,
+//            const KoColorDisplayRendererInterface *_displayRenderer)
+//        : dialogParent(_dialogParent)
+//        , dragFlag( false )
+//        , miniCtlFlag( false )
+//        , foregroundColor(fgColor)
+//        , backgroundColor(bgColor)
 
-        , displayRenderer(_displayRenderer)
-    {
-        updateArrows();
-        resetPixmap = QPixmap( (const char **)dcolorreset_xpm );
+//        , displayRenderer(_displayRenderer)
+//    {
+//        updateArrows();
+//        resetPixmap = QPixmap( (const char **)dcolorreset_xpm );
 
-        popDialog = true;
-    }
+//        popDialog = true;
+//    }
 
-    void updateArrows() {
-        arrowBitmap = QPixmap(12,12);
-        arrowBitmap.fill(Qt::transparent);
+//    void updateArrows() {
+//        arrowBitmap = QPixmap(12,12);
+//        arrowBitmap.fill(Qt::transparent);
 
-        QPainter p(&arrowBitmap);
-        p.setPen(QPen(dialogParent->palette().foreground().color(), 0));
+//        QPainter p(&arrowBitmap);
+//        p.setPen(QPen(dialogParent->palette().foreground().color(), 0));
 
-        // arrow pointing left
-        p.drawLine(0, 3, 7, 3);
-        p.drawLine(1, 2, 1, 4);
-        p.drawLine(2, 1, 2, 5);
-        p.drawLine(3, 0, 3, 6);
+//        // arrow pointing left
+//        p.drawLine(0, 3, 7, 3);
+//        p.drawLine(1, 2, 1, 4);
+//        p.drawLine(2, 1, 2, 5);
+//        p.drawLine(3, 0, 3, 6);
 
-        // arrow pointing down
-        p.drawLine(8, 4, 8, 11);
-        p.drawLine(5, 8, 11, 8);
-        p.drawLine(6, 9, 10, 9);
-        p.drawLine(7, 10, 9, 10);
-    }
+//        // arrow pointing down
+//        p.drawLine(8, 4, 8, 11);
+//        p.drawLine(5, 8, 11, 8);
+//        p.drawLine(6, 9, 10, 9);
+//        p.drawLine(7, 10, 9, 10);
+//    }
 
-    QWidget* dialogParent;
+//    QWidget* dialogParent;
 
-    QPixmap arrowBitmap;
-    QPixmap resetPixmap;
-    bool dragFlag, miniCtlFlag;
-    KoColor foregroundColor;
-    KoColor backgroundColor;
-    QPoint dragPosition;
-    Selection tmpSelection;
-    bool popDialog;
-    const KoColorDisplayRendererInterface *displayRenderer;
+//    QPixmap arrowBitmap;
+//    QPixmap resetPixmap;
+//    bool dragFlag, miniCtlFlag;
+//    KoColor foregroundColor;
+//    KoColor backgroundColor;
+//    QPoint dragPosition;
+//    Selection tmpSelection;
+//    bool popDialog;
+//    const KoColorDisplayRendererInterface *displayRenderer;
 
-    void init(KoDualColorButton *q);
-};
+//    void init(KoDualColorButton *q);
+//};
 
 void KoDualColorButton::Private::init(KoDualColorButton *q)
 {

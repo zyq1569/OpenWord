@@ -56,9 +56,9 @@ KoFindText::KoFindText(QObject* parent)
     d->initializeFormats();
 
     KoFindOptionSet *options = new KoFindOptionSet();
-    options->addOption("caseSensitive", /*i18n*/("Case Sensitive"), /*i18n*/("Match cases when searching"), QVariant::fromValue<bool>(false));
-    options->addOption("wholeWords", /*i18n*/("Whole Words Only"), /*i18n*/("Match only whole words"), QVariant::fromValue<bool>(false));
-    options->addOption("fromCursor", /*i18n*/("Find from Cursor"), /*i18n*/("Start searching from the current cursor"), QVariant::fromValue<bool>(true));
+    options->addOption("caseSensitive", i18n("Case Sensitive"), i18n("Match cases when searching"), QVariant::fromValue<bool>(false));
+    options->addOption("wholeWords", i18n("Whole Words Only"), i18n("Match only whole words"), QVariant::fromValue<bool>(false));
+    options->addOption("fromCursor", i18n("Find from Cursor"), i18n("Start searching from the current cursor"), QVariant::fromValue<bool>(true));
     setOptions(options);
 }
 

@@ -20,7 +20,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "KoImageData_p.h"
+//#include "KoImageData_p.h"
+#include "KoImageData.h"
 #include "KoImageCollection.h"
 
 #include <QApplication>

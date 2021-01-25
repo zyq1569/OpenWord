@@ -76,7 +76,7 @@
 
 class KoPageWidgetItemAdapter : public KPageWidgetItem
 {
-Q_OBJECT
+//Q_OBJECT
 public:
     KoPageWidgetItemAdapter(KoPageWidgetItem *item)
       : KPageWidgetItem(item->widget(), item->name())

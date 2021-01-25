@@ -53,7 +53,7 @@ public:
         KoProgressBar *bar = new KoProgressBar(this);
         d->progress = new KoProgressUpdater(bar);
         grid->addWidget(bar, 1, 0, 1, 2);
-        d->button = new QPushButton(/*i18n*/("Stop"), this);
+        d->button = new QPushButton(i18n("Stop"), this);
         grid->addWidget(d->button, 2, 1);
         grid->setColumnStretch(0, 1);
     }
@@ -142,7 +142,7 @@ void KoPrintingDialog::startPrinting(RemovePolicy removePolicy)
         d->zoomer.setZoom( 1.0 );
         d->zoomer.setDpi( d->printer->resolution(), d->printer->resolution() );
 
-        d->progress->start(100, /*i18n*/("Printing"));
+        d->progress->start(100, i18n("Printing"));
 
         if (d->printer->numCopies() > 1) {
             QList<int> oldPages = d->pages;

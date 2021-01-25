@@ -45,7 +45,7 @@ Boston, MA 02110-1301, USA.
 #include <unistd.h>
 
 // static cache for filter availability
-QMap<QString, bool> KoFilterManager::m_filterAvailable;///openword
+QMap<QString, bool> KoFilterManager::m_filterAvailable;
 
 KoFilterManager::KoFilterManager(KoDocument* document,
                                  KoProgressUpdater* progressUpdater) :
@@ -226,7 +226,7 @@ KoFilter::ConversionStatus KoFilterManager::exportDocument(const QString& url, Q
 
     if (!m_graph.isValid()) {
         errorFilter << "Couldn't create a valid graph for this source mimetype.";
-        if (!d->batch && !userCancelled) KMessageBox::error(0, /*i18n*/("Could not export file."), /*i18n*/("Missing Export Filter"));
+        if (!d->batch && !userCancelled) KMessageBox::error(0, i18n("Could not export file."), i18n("Missing Export Filter"));
         return KoFilter::BadConversionGraph;
     }
 
@@ -235,7 +235,7 @@ KoFilter::ConversionStatus KoFilterManager::exportDocument(const QString& url, Q
 
     if (!chain) {
         errorFilter << "Couldn't create a valid filter chain to " << mimeType << " !" << endl;
-        if (!d->batch) KMessageBox::error(0, /*i18n*/("Could not export file."), /*i18n*/("Missing Export Filter"));
+        if (!d->batch) KMessageBox::error(0, i18n("Could not export file."), i18n("Missing Export Filter"));
         return KoFilter::BadConversionGraph;
     }
 
@@ -537,9 +537,9 @@ bool KoFilterManager::filterAvailable(KoFilterEntry::Ptr entry)
 
 void KoFilterManager::importErrorHelper(const QString& mimeType, const bool suppressDialog)
 {
-    QString tmp = /*i18n*/("Could not import file of type\n%1", mimeType);
+    QString tmp = i18n("Could not import file of type\n%1", mimeType);
     // ###### FIXME: use KLibLoader::lastErrorMessage() here
-    if (!suppressDialog) KMessageBox::error(0, tmp, /*i18n*/("Missing Import Filter"));
+    if (!suppressDialog) KMessageBox::error(0, tmp, i18n("Missing Import Filter"));
 }
 
 void KoFilterManager::setBatchMode(const bool batch)

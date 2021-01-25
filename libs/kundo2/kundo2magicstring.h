@@ -192,7 +192,7 @@ inline KUndo2MagicString kundo2_noi18n(const char *text, const A1 &a1, const A2 
 
 inline KUndo2MagicString kundo2_i18n(const char *text)
 {
-    return KUndo2MagicString(/*i18nc*/("(qtundo-format)", text));
+    return KUndo2MagicString(i18nc("(qtundo-format)", text));
 }
 
 template <typename A1>

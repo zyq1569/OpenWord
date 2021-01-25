@@ -22,8 +22,6 @@ Boston, MA 02110-1301, USA.
 
 #include "KoDocument.h"
 #include "KoFilter.h"
-#include "klibrary.h"
-
 #include <MainDebug.h>
 #include <KoPluginLoader.h>
 #include <KoConfig.h> // CALLIGRA_OLD_PLUGIN_METADATA
@@ -35,7 +33,7 @@ Boston, MA 02110-1301, USA.
 
 
 KoFilterEntry::KoFilterEntry(QPluginLoader *loader)
-        : m_loader(loader)
+    : m_loader(loader)
 {
     QJsonObject metadata = loader->metaData().value("MetaData").toObject();
 #ifdef CALLIGRA_OLD_PLUGIN_METADATA
@@ -84,25 +82,34 @@ QList<KoFilterEntry::Ptr> KoFilterEntry::query()
 
 KoFilter* KoFilterEntry::createFilter(KoFilterChain* chain, QObject* parent)
 {
-//    KLibFactory *factory = qobject_cast<KLibFactory *>(m_loader->instance());
+    //KLibFactory *factory = qobject_cast<KLibFactory *>(m_loader->instance());
 
-//    if (!factory) {
-//        warnMain << m_loader->errorString();
-//        return 0;
-//    }
+    //if (!factory) {
+    //warnMain << m_loader->errorString();
+    //return 0;
+    //}
 
-//    QObject* obj = factory->create<KoFilter>(parent);
-//    if (!obj || !obj->inherits("KoFilter")) {
-//        delete obj;
-//        return 0;
-//    }
+    //QObject* obj = factory->create<KoFilter>(parent);
+    //if (!obj || !obj->inherits("KoFilter")) {
+    //delete obj;
+    //return 0;
+    //}
 
-//    KoFilter* filter = static_cast<KoFilter*>(obj);
-//    filter->m_chain = chain;
-//    return filter;
+    //KoFilter* filter = static_cast<KoFilter*>(obj);
+    //filter->m_chain = chain;
+    //return filter;
 
-    ///openword
-    KoFilter* filter = static_cast<KoFilter*>(parent);
+
+
+    QObject* obj = m_loader->instance();
+    if (!obj || !obj->inherits("KoFilter"))
+    {
+        delete obj;
+        return 0;
+    }
+
+    KoFilter* filter = static_cast<KoFilter*>(obj);
+    filter->m_chain = chain;
     return filter;
 }
 

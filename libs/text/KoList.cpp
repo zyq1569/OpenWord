@@ -19,7 +19,7 @@
  */
 
 #include "KoList.h"
-#include "KoList_p.h"
+//#include "KoList_p.h"
 
 #include "KoTextDocument.h"
 #include "styles/KoListLevelProperties.h"

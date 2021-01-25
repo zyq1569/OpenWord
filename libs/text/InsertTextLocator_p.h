@@ -27,7 +27,7 @@
  */
 class InsertTextLocator : public InsertInlineObjectActionBase
 {
-Q_OBJECT
+//Q_OBJECT
 public:
     explicit InsertTextLocator(KoCanvasBase *canvas);
 

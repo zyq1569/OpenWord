@@ -33,7 +33,8 @@
 #include <QMetaType>
 #include <QTextCursor>
 #include <QTextFrame>
-
+#include <QTextDocumentFragment>
+#include <QTextCursor>
 class KoListLevelProperties;
 class KoCharacterStyle;
 class KoInlineObject;
@@ -56,7 +57,7 @@ class QTextBlock;
 class QTextCharFormat;
 class QTextBlockFormat;
 class QTextDocument;
-class QTextDocumentFragment;
+//class QTextDocumentFragment;
 class QString;
 class QMimeData;
 
@@ -562,4 +563,43 @@ Q_DECLARE_METATYPE(KoTextEditor*)
 Q_DECLARE_METATYPE(bool *)
 Q_DECLARE_OPERATORS_FOR_FLAGS(KoTextEditor::ChangeListFlags)
 
+#include <QStack>
+class KUndo2Command;
+class Q_DECL_HIDDEN KoTextEditor::Private
+{
+public:
+    enum State {
+        NoOp,
+        KeyPress,
+        Delete,
+        Format,
+        Custom
+    };
+
+    explicit Private(KoTextEditor *qq, QTextDocument *document);
+
+    ~Private() {}
+
+    void documentCommandAdded();
+    void updateState(State newState, const KUndo2MagicString &title = KUndo2MagicString());
+
+    void newLine(KUndo2Command *parent);
+    void clearCharFormatProperty(int propertyId);
+
+    void emitTextFormatChanged();
+
+    KoTextEditor *q;
+    QTextCursor caret;
+    QTextDocument *document;
+    QStack<KUndo2Command*> commandStack;
+    bool addNewCommand;
+    bool dummyMacroAdded;
+    int customCommandCount;
+    KUndo2MagicString commandTitle;
+
+    State editorState;
+
+    bool editProtected;
+    bool editProtectionCached;
+};
 #endif // KOTEXTEDITOR_H

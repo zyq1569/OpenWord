@@ -55,7 +55,7 @@ public:
 };
 
 class RadioLayout : public QLayout {
-Q_OBJECT
+//Q_OBJECT
 public:
     RadioLayout(QWidget *parent)
         : QLayout(parent)

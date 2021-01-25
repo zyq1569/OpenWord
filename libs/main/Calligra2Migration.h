@@ -46,7 +46,7 @@ public:
     void setConfigFiles(const QStringList &configFiles);
     void setUiFiles(const QStringList &uiFiles);
     void migrate();
-
+    
 private:
     QString m_newAppName;
     QString m_oldAppName;

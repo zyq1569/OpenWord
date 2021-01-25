@@ -40,7 +40,7 @@
 
 class KoCsvImportWidget : public QWidget, public Ui::KoCsvImportWidget
 {
-Q_OBJECT
+//Q_OBJECT
 public:
     explicit KoCsvImportWidget(QWidget* parent) : QWidget(parent) { setupUi(this); }
 };

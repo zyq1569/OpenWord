@@ -20,21 +20,21 @@
 #include "KoFindStrategy.h"
 
 #include <kfind.h>
-#include <kfinddialog.h>
+//#include <kfinddialog.h>
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
 
 #include "FindDirection_p.h"
 
-class NonClosingFindDialog : public KFindDialog
-{
-Q_OBJECT
-public:
-    NonClosingFindDialog(QWidget *parent)
-            : KFindDialog(parent) {}
+//class NonClosingFindDialog : public KFindDialog
+//{
+////Q_OBJECT
+//public:
+//    NonClosingFindDialog(QWidget *parent)
+//            : KFindDialog(parent) {}
 
-    void accept() override {}
-};
+//    void accept() override {}
+//};
 
 KoFindStrategy::KoFindStrategy(QWidget *parent)
         : m_dialog(new NonClosingFindDialog(parent))

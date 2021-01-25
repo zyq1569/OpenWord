@@ -21,7 +21,7 @@
  */
 
 #include "KoDialog.h"
-#include "KoDialog_p.h"
+//#include "KoDialog_p.h"
 
 #include <QApplication>
 #include <QDesktopWidget>

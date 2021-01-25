@@ -45,7 +45,7 @@
 KoVersionDialog::KoVersionDialog(QWidget* parent, KoDocument *doc)
         : KoDialog(parent)
 {
-    setCaption(/*i18n*/("Version"));
+    setCaption(i18n("Version"));
     setButtons(Close);
     setDefaultButton(Close);
     m_doc = doc;
@@ -59,25 +59,25 @@ KoVersionDialog::KoVersionDialog(QWidget* parent, KoDocument *doc)
     list = new QTreeWidget(page);
     list->setColumnCount(3);
     QStringList h;
-    h.append(/*i18n*/("Date & Time"));
-    h.append(/*i18n*/("Saved By"));
-    h.append(/*i18n*/("Comment"));
+    h.append(i18n("Date & Time"));
+    h.append(i18n("Saved By"));
+    h.append(i18n("Comment"));
     list->setHeaderLabels(h);
 
     updateVersionList();
 
     grid1->addWidget(list, 0, 0, 9, 1);
 
-    m_pAdd = new QPushButton(/*i18n*/("&Add"), page);
+    m_pAdd = new QPushButton(i18n("&Add"), page);
     grid1->addWidget(m_pAdd, 1, 2);
 
-    m_pRemove = new QPushButton(/*i18n*/("&Remove"), page);
+    m_pRemove = new QPushButton(i18n("&Remove"), page);
     grid1->addWidget(m_pRemove, 2, 2);
 
-    m_pModify = new QPushButton(/*i18n*/("&Modify"), page);
+    m_pModify = new QPushButton(i18n("&Modify"), page);
     grid1->addWidget(m_pModify, 3, 2);
 
-    m_pOpen = new QPushButton(/*i18n*/("&Open"), page);
+    m_pOpen = new QPushButton(i18n("&Open"), page);
     grid1->addWidget(m_pOpen, 4, 2);
 
 
@@ -130,7 +130,7 @@ void KoVersionDialog::slotAdd()
     }
 
     if (!m_doc->addVersion(dlg->comment()))
-        KMessageBox::error(this, /*i18n*/("A new version could not be added"));
+        KMessageBox::error(this, i18n("A new version could not be added"));
 
     delete dlg;
 
@@ -225,7 +225,7 @@ void KoVersionDialog::slotOpen()
 KoVersionModifyDialog::KoVersionModifyDialog(QWidget* parent, KoVersionInfo *info)
         : KoDialog(parent)
 {
-    setCaption(/*i18n*/("Comment"));
+    setCaption(i18n("Comment"));
     setButtons(Ok | Cancel);
     setDefaultButton(Ok);
     setModal(true);
@@ -237,9 +237,9 @@ KoVersionModifyDialog::KoVersionModifyDialog(QWidget* parent, KoVersionInfo *inf
 
     QLabel *l = new QLabel(page);
     if (info)
-        l->setText(/*i18n*/("Date: %1", info->date.toString()));
+        l->setText(i18n("Date: %1", info->date.toString()));
     else
-        l->setText(/*i18n*/("Date: %1", QDateTime::currentDateTime().toString(Qt::ISODate)));
+        l->setText(i18n("Date: %1", QDateTime::currentDateTime().toString(Qt::ISODate)));
     grid1->addWidget(l);
 
     m_textEdit = new QTextEdit(page);

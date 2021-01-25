@@ -21,51 +21,51 @@
 #define KoDockWidgetTitleBar_p_h
 
 #include "KoDockWidgetTitleBar.h"
-#include "KoDockWidgetTitleBarButton.h"
+//#include "KoDockWidgetTitleBarButton.h"
 
-#include <KoIcon.h>
+//#include <KoIcon.h>
 
-#include <WidgetsDebug.h>
+//#include <WidgetsDebug.h>
 
-#include <QAbstractButton>
-#include <QAction>
-#include <QLabel>
-#include <QLayout>
-#include <QStyle>
-#include <QStylePainter>
-#include <QStyleOptionFrame>
+//#include <QAbstractButton>
+//#include <QAction>
+//#include <QLabel>
+//#include <QLayout>
+//#include <QStyle>
+//#include <QStylePainter>
+//#include <QStyleOptionFrame>
 
-class Q_DECL_HIDDEN KoDockWidgetTitleBar::Private
-{
-public:
-    Private(KoDockWidgetTitleBar* thePublic)
-        : thePublic(thePublic),
-            collapsable(true),
-            collapsableSet(true),
-            lockable(true),
-            textVisibilityMode(KoDockWidgetTitleBar::FullTextAlwaysVisible),
-            preCollapsedWidth(-1),
-            locked(false)
-    {
-    }
+//class Q_DECL_HIDDEN KoDockWidgetTitleBar::Private
+//{
+//public:
+//    Private(KoDockWidgetTitleBar* thePublic)
+//        : thePublic(thePublic),
+//            collapsable(true),
+//            collapsableSet(true),
+//            lockable(true),
+//            textVisibilityMode(KoDockWidgetTitleBar::FullTextAlwaysVisible),
+//            preCollapsedWidth(-1),
+//            locked(false)
+//    {
+//    }
 
-    KoDockWidgetTitleBar* thePublic;
-    QAbstractButton* closeButton;
-    QAbstractButton* floatButton;
-    QAbstractButton* collapseButton;
-    bool collapsable;
-    bool collapsableSet;
-    QAbstractButton* lockButton;
-    bool lockable;
-    KoDockWidgetTitleBar::TextVisibilityMode textVisibilityMode;
-    int preCollapsedWidth;
-    bool locked;
-    QDockWidget::DockWidgetFeatures features;
+//    KoDockWidgetTitleBar* thePublic;
+//    QAbstractButton* closeButton;
+//    QAbstractButton* floatButton;
+//    QAbstractButton* collapseButton;
+//    bool collapsable;
+//    bool collapsableSet;
+//    QAbstractButton* lockButton;
+//    bool lockable;
+//    KoDockWidgetTitleBar::TextVisibilityMode textVisibilityMode;
+//    int preCollapsedWidth;
+//    bool locked;
+//    QDockWidget::DockWidgetFeatures features;
 
-    void toggleFloating();
-    void toggleCollapsed();
-    void topLevelChanged(bool topLevel);
-    void featuresChanged(QDockWidget::DockWidgetFeatures features);
-    void updateIcons();
-};
+//    void toggleFloating();
+//    void toggleCollapsed();
+//    void topLevelChanged(bool topLevel);
+//    void featuresChanged(QDockWidget::DockWidgetFeatures features);
+//    void updateIcons();
+//};
 #endif

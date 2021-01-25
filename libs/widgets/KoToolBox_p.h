@@ -109,4 +109,27 @@ private:
     Private * const d;
 };
 
+//class KoToolBox::Private
+//{
+//public:
+//    Private()
+//        : layout(0)
+//        , buttonGroup(0)
+//        , floating(false)
+//        , contextSize(0)
+//    {
+//    }
+
+//    void addSection(Section *section, const QString &name);
+
+//    QList<QToolButton*> buttons;
+//    QMap<QString, Section*> sections;
+//    KoToolBoxLayout *layout;
+//    QButtonGroup *buttonGroup;
+//    QHash<QToolButton*, QString> visibilityCodes;
+//    bool floating;
+//    QMap<QAction*,int> contextIconSizes;
+//    QMenu* contextSize;
+//    Qt::Orientation orientation;
+//};
 #endif // _KO_TOOLBOX_H_

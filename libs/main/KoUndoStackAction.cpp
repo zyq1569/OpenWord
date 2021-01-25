@@ -35,7 +35,7 @@ KoUndoStackAction::KoUndoStackAction(KUndo2Stack* stack, Type type)
         connect(stack, SIGNAL(canUndoChanged(bool)), this, SLOT(setEnabled(bool)));
         connect(stack, SIGNAL(undoTextChanged(QString)), this, SLOT(slotUndoTextChanged(QString)));
         setIcon(koIcon("edit-undo"));
-        setText(/*i18n*/("Undo"));
+        setText(i18n("Undo"));
         setShortcuts(KStandardShortcut::undo());
         setEnabled(stack->canUndo());
     } else {
@@ -43,7 +43,7 @@ KoUndoStackAction::KoUndoStackAction(KUndo2Stack* stack, Type type)
         connect(stack, SIGNAL(canRedoChanged(bool)), this, SLOT(setEnabled(bool)));
         connect(stack, SIGNAL(redoTextChanged(QString)), this, SLOT(slotUndoTextChanged(QString)));
         setIcon(koIcon("edit-redo"));
-        setText(/*i18n*/("Redo"));
+        setText(i18n("Redo"));
         setShortcuts(KStandardShortcut::redo());
         setEnabled(stack->canRedo());
     }
@@ -51,6 +51,6 @@ KoUndoStackAction::KoUndoStackAction(KUndo2Stack* stack, Type type)
 
 void KoUndoStackAction::slotUndoTextChanged(const QString& text)
 {
-    QString actionText = (m_type == UNDO) ? /*i18n*/("Undo %1", text) : /*i18n*/("Redo %1", text);
+    QString actionText = (m_type == UNDO) ? i18n("Undo %1", text) : i18n("Redo %1", text);
     setText(actionText);
 }

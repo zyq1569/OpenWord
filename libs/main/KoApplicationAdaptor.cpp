@@ -48,7 +48,7 @@ KoApplicationAdaptor::~KoApplicationAdaptor()
 //{
 //    KoDocumentEntry entry = KoDocumentEntry::queryByMimeType(nativeFormat);
 //    if (entry.isEmpty()) {
-//        KMessageBox::questionYesNo(0, /*i18n*/("Unknown Calligra MimeType %1. Check your installation.", nativeFormat));
+//        KMessageBox::questionYesNo(0, i18n("Unknown Calligra MimeType %1. Check your installation.", nativeFormat));
 //        return QString();
 //    }
 //    KoPart *part = entry.createKoPart(0);

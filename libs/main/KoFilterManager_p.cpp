@@ -40,7 +40,7 @@ KoFilterChooser::KoFilterChooser(QWidget *parent, const QStringList &mimeTypes, 
     setInitialSize(QSize(300, 350));
     setButtons(KoDialog::Ok|KoDialog::Cancel);
     setDefaultButton(KoDialog::Ok);
-    setCaption(/*i18n*/("Choose Filter"));
+    setCaption(i18n("Choose Filter"));
     setModal(true);
 
     QWidget *page = new QWidget(this);
