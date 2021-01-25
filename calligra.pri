@@ -94,4 +94,6 @@ LIBS += -L$${SDK_LIB_PREFIX} \
         -lKF5WindowSystem \
         -lKF5ItemViews \
         -lKF5KIOWidgets \
+        -lKF5KrossCore \
+        -lKF5KrossUi \
         -lKF5Notifications

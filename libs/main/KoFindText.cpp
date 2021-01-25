@@ -20,7 +20,7 @@
  */
 
 #include "KoFindText.h"
-#include "KoFindText_p.h"
+//#include "KoFindText_p.h"
 
 #include <QTextDocument>
 #include <QTextCursor>

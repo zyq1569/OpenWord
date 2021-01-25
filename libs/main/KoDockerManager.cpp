@@ -20,7 +20,7 @@
  */
 
 #include "KoDockerManager.h"
-#include "KoDockerManager_p.h"
+//#include "KoDockerManager_p.h"
 #include "KoDockFactoryBase.h"
 
 #include <klocalizedstring.h>
