@@ -7,5 +7,4 @@
 #message("You are running qmake on a generated .pro file. This may not work!")
 
 
-SOURCES += ../../../calligra/words/app/kdeinit_calligrawords_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/words/app/main.cpp
+SOURCES += main.cpp
