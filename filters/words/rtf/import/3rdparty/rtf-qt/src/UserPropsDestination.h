@@ -26,23 +26,23 @@
 #include "rtfreader_export.h"
 namespace RtfReader
 {
-    class Reader;
+class Reader;
 
-    class RTFREADER_EXPORT UserPropsDestination: public Destination
-    {
-      public:
-	UserPropsDestination( Reader *reader, AbstractRtfOutput *output, const QString &name );
+class RTFREADER_EXPORT UserPropsDestination: public Destination
+{
+public:
+    UserPropsDestination( Reader *reader, AbstractRtfOutput *output, const QString &name );
 
-	~UserPropsDestination() override;
+    ~UserPropsDestination() override;
 
-	void handleControlWord( const QByteArray &controlWord, bool hasValue, const int value ) override;
-	void handlePlainText( const QByteArray &plainText ) override;
+    void handleControlWord( const QByteArray &controlWord, bool hasValue, const int value ) override;
+    void handlePlainText( const QByteArray &plainText ) override;
 
-      private:
-	bool m_nextPlainTextIsPropertyName;
-	QVariant::Type m_propertyType;
-	QString m_propertyName;
-      };
+private:
+    bool m_nextPlainTextIsPropertyName;
+    QVariant::Type m_propertyType;
+    QString m_propertyName;
+};
 }
 
 #endif

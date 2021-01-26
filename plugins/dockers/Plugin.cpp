@@ -23,10 +23,10 @@
 
 #include <KoDockRegistry.h>
 
-#include <kpluginfactory.h>
+//#include <kpluginfactory.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(PluginFactory, "calligra_docker_defaults.json",
-                           registerPlugin<Plugin>();)
+//K_PLUGIN_FACTORY_WITH_JSON(PluginFactory, "calligra_docker_defaults.json",
+//                           registerPlugin<Plugin>();)
 
 Plugin::Plugin(QObject *parent, const QVariantList&)
     : QObject(parent)
@@ -37,5 +37,5 @@ Plugin::Plugin(QObject *parent, const QVariantList&)
     KoDockRegistry::instance()->add(new ShapeCollectionDockerFactory());
 }
 
-#include <Plugin.moc>
+//#include <Plugin.moc>
 

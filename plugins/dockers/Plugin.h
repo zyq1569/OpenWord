@@ -21,9 +21,9 @@
 
 #include <QObject>
 #include <QVariantList>
-
+#include <kpluginfactory.h>
 class Plugin : public QObject {
-    Q_OBJECT
+//    Q_OBJECT
 
 public:
     Plugin(QObject * parent, const QVariantList & );

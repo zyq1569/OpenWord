@@ -58,4 +58,33 @@ private:
     Private * const d;
 };
 
+#include "KoToolDocker.h"
+
+//#include "KoView.h"
+#include "KoMainWindow.h"
+
+class Q_DECL_HIDDEN KoDockerManager::Private
+{
+public:
+    Private(KoMainWindow *mw) :
+        mainWindow(mw)
+        ,ignore(true)
+        ,showOptionsDocker(true)
+    {
+    }
+
+    KoToolDocker *toolOptionsDocker;
+    KoMainWindow *mainWindow;
+    bool ignore;
+    bool showOptionsDocker;
+
+    void restoringDone()
+    {
+        if (ignore) {
+            ignore = false;
+            toolOptionsDocker->setVisible(showOptionsDocker);
+        }
+    }
+};
+
 #endif

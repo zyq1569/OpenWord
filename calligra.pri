@@ -1,3 +1,4 @@
+#HEADERS +=
 
 SDK_INSTALL_PREFIX = D:/CraftRoot/include
 SDK_LIB_PREFIX     = D:/CraftRoot/KDE_libs
@@ -10,7 +11,8 @@ DEFINES += KCONFIGWIDGETS_ENABLE_DEPRECATED_SINCE KCONFIGWIDGETS_NO_DEPRECATED
 DEFINES += KXMLGUI_NO_DEPRECATED KICONTHEMES_NO_DEPRECATED KCONFIGGUI_NO_DEPRECATED
 DEFINES += pigmentcms_EXPORTS koplugin_EXPORTS kowidgetutils_EXPORTS flake_EXPORTS  _USE_MATH_DEFINES
 DEFINES += koodf_EXPORTS koodf2_EXPORTS kostore_EXPORTS  kundo2_EXPORTS kokross_EXPORTS kowidgets_EXPORTS
-DEFINES += kotext_EXPORTS kotextlayout_EXPORTS RtfReader_EXPORTS koodfreader_EXPORTS
+DEFINES += kotext_EXPORTS kotextlayout_EXPORTS RtfReader_EXPORTS koodfreader_EXPORTS basicflakes_EXPORTS
+DEFINES += calligra_docker_defaults_EXPORTS calligra_docker_stencils_EXPORTS
 DEFINES += komain_EXPORTS
 
 #-----selef defined----------

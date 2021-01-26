@@ -21,41 +21,41 @@
 #ifndef KoDockerManager_p_h
 #define KoDockerManager_p_h
 
-#include "KoDockerManager.h"
-#include "KoDockFactoryBase.h"
+//#include "KoDockerManager.h"
+//#include "KoDockFactoryBase.h"
 
-#include <klocalizedstring.h>
-#include <kconfig.h>
-#include <kconfiggroup.h>
-#include <MainDebug.h>
+//#include <klocalizedstring.h>
+//#include <kconfig.h>
+//#include <kconfiggroup.h>
+//#include <MainDebug.h>
 
-#include "KoToolDocker.h"
+//#include "KoToolDocker.h"
 
-#include "KoView.h"
-#include "KoMainWindow.h"
+//#include "KoView.h"
+//#include "KoMainWindow.h"
 
-class Q_DECL_HIDDEN KoDockerManager::Private
-{
-public:
-    Private(KoMainWindow *mw) :
-        mainWindow(mw)
-        ,ignore(true)
-        ,showOptionsDocker(true)
-    {
-    }
+//class Q_DECL_HIDDEN KoDockerManager::Private
+//{
+//public:
+//    Private(KoMainWindow *mw) :
+//        mainWindow(mw)
+//        ,ignore(true)
+//        ,showOptionsDocker(true)
+//    {
+//    }
 
-    KoToolDocker *toolOptionsDocker;
-    KoMainWindow *mainWindow;
-    bool ignore;
-    bool showOptionsDocker;
+//    KoToolDocker *toolOptionsDocker;
+//    KoMainWindow *mainWindow;
+//    bool ignore;
+//    bool showOptionsDocker;
 
-    void restoringDone()
-    {
-        if (ignore) {
-            ignore = false;
-            toolOptionsDocker->setVisible(showOptionsDocker);
-        }
-    }
-};
+//    void restoringDone()
+//    {
+//        if (ignore) {
+//            ignore = false;
+//            toolOptionsDocker->setVisible(showOptionsDocker);
+//        }
+//    }
+//};
 
 #endif

@@ -23,12 +23,11 @@
 #include <QUrl>
 #include <QDebug>
 #include <QMimeDatabase>
-
+#include <KRun>
 #include <KAboutData>
 #include <klocalizedstring.h>
 #include <kmimetypetrader.h>
 #include <KServiceTypeTrader>
-#include <krun.h>
 #include <ktoolinvocation.h>
 #include <kmessagebox.h>
 #include <kguiitem.h>
@@ -164,7 +163,7 @@ static int handleUrls(const QStringList& files)
         //}
     }
     if (!notHandledUrls.isEmpty()) {
-        KRun::displayOpenWithDialog(notHandledUrls, 0);
+        //KRun::displayOpenWithDialog(notHandledUrls, 0); ///openword
         return 0;
     }
     return 0;
