@@ -33,4 +33,4 @@ StencilBoxPlugin::StencilBoxPlugin(QObject *parent, const QVariantList&)
     Q_UNUSED(parent);
     KoDockRegistry::instance()->add(new StencilBoxDockerFactory());
 }
-#include <StencilBoxPlugin.moc>
+//#include <StencilBoxPlugin.moc>
