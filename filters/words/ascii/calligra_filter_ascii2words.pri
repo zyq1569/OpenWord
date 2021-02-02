@@ -1,6 +1,5 @@
 
-HEADERS +=  ui_ImportDialogUI.h \
-            AsciiImportDebug.h \
+HEADERS +=  AsciiImportDebug.h \
             AsciiImport.h
 
 

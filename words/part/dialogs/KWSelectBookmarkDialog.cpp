@@ -78,8 +78,8 @@ void KWSelectBookmark::slotBookmarkRename()
     QString newName = item->text();
     while (true) {
         newName = QInputDialog::getText(parentWidget,
-                                        i18n("Rename Bookmark"),
-                                        i18n("Please provide a new name for the bookmark"),
+                                        /*i18n*/("Rename Bookmark"),
+                                        /*i18n*/("Please provide a new name for the bookmark"),
                                         QLineEdit::Normal,
                                         newName);
         if (curName != newName && ! newName.isNull()) {
@@ -87,7 +87,7 @@ void KWSelectBookmark::slotBookmarkRename()
                 continue;
             QList<QListWidgetItem *> items = widget.bookmarkList->findItems(newName, Qt::MatchExactly);
             if (items.count() > 0) {
-                KMessageBox::error(parentWidget, i18n("A bookmark with the name \"%1\" already exists.", newName));
+                KMessageBox::error(parentWidget, /*i18n*/("A bookmark with the name \"%1\" already exists.", newName));
                 continue;
             }
             item->setText(newName);
@@ -119,7 +119,7 @@ KWSelectBookmarkDialog::KWSelectBookmarkDialog(const QStringList &nameList, QWid
 {
     ui = new KWSelectBookmark(nameList, this);
     setMainWidget(ui);
-    setCaption(i18n("Select Bookmark"));
+    setCaption(/*i18n*/("Select Bookmark"));
     setModal(true);
     setButtons(Ok | Cancel);
     setDefaultButton(Ok);
