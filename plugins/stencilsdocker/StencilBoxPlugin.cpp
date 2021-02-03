@@ -24,8 +24,8 @@
 #include <KoDockRegistry.h>
 #include <kpluginfactory.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(PluginFactory, "calligra_docker_stencils.json",
-                           registerPlugin<StencilBoxPlugin>();)
+//K_PLUGIN_FACTORY_WITH_JSON(PluginFactory, "calligra_docker_stencils.json",  ///openword
+//                           registerPlugin<StencilBoxPlugin>();)
 
 StencilBoxPlugin::StencilBoxPlugin(QObject *parent, const QVariantList&)
     : QObject(parent)

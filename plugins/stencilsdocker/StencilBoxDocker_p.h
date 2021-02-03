@@ -21,25 +21,25 @@
 #include <QMap>
 #include <QString>
 
-class CollectionItemModel;
+//class CollectionItemModel;
 
-class StencilBoxDockerLoader : public QObject
-{
-    Q_OBJECT
-public:
-    StencilBoxDockerLoader(StencilBoxDocker *parent) : q(parent) {}
+//class StencilBoxDockerLoader : public QObject
+//{
+//    Q_OBJECT
+//public:
+//    StencilBoxDockerLoader(StencilBoxDocker *parent) : q(parent) {}
 
-    bool addCollection(const QString& path);
+//    bool addCollection(const QString& path);
 
-    QMap<QString, CollectionItemModel*> m_modelMap;
+//    QMap<QString, CollectionItemModel*> m_modelMap;
 
-public Q_SLOTS:
-    void loadShapeCollections();
+//public Q_SLOTS:
+//    void loadShapeCollections();
 
-Q_SIGNALS:
-    void resultReady();
+//Q_SIGNALS:
+//    void resultReady();
 
-private:
-    StencilBoxDocker *q;
-};
+//private:
+//    StencilBoxDocker *q;
+//};
 

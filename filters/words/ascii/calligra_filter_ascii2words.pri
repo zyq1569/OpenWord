@@ -1,9 +1,12 @@
 
 HEADERS +=  AsciiImportDebug.h \
-            AsciiImport.h
+            AsciiImport.h \
+            ImportDialog.h
+
 
 
 SOURCES += AsciiImportDebug.cpp \
-           AsciiImport.cpp
+           AsciiImport.cpp \
+           ImportDialog.cc
 
 FORMS += ImportDialogUI.ui

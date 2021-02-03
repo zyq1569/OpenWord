@@ -62,8 +62,8 @@
 // is slower then using the Calligra Words API direct.
 //#define OUTPUT_AS_ODT_FILE
 
-K_PLUGIN_FACTORY_WITH_JSON(AsciiImportFactory, "calligra_filter_ascii2words.json",
-                           registerPlugin<AsciiImport>();)
+//K_PLUGIN_FACTORY_WITH_JSON(AsciiImportFactory, "calligra_filter_ascii2words.json", ///openword
+//                           registerPlugin<AsciiImport>();)
 
 bool checkEncoding(QTextCodec *codec, QByteArray &data)
 {
