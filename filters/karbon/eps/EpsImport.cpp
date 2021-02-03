@@ -127,5 +127,4 @@ KoFilter::ConversionStatus EpsImport::convert(const QByteArray& from, const QByt
     return KoFilter::NotImplemented;
 }
 
-#include "EpsImport.moc"
 
