@@ -65,3 +65,4 @@ LIBS += -L$${DESTDIR} \
 #    -lD:/KDE/inst/zlib123dll/static32/zlibstat \
 include(../../../../calligra.pri)
 include(calligra_filter_docx2odt.pri)
+

@@ -1,6 +1,18 @@
-#HEADERS +=
+HEADERS +=  DocxDebug.h \
+            DocxXmlStylesReader.h \
+            DocxXmlFontTableReader.h \
+            DocxXmlCommentsReader.h \
+            DocxXmlDocumentReader.h \
+            DocxXmlHeaderReader.h \
+            DocxXmlFooterReader.h \
+            DocxXmlNumberingReader.h \
+            DocxXmlFootnoteReader.h \
+            DocxXmlEndnoteReader.h \
+            DocxXmlSettingsReader.h \
+            DocxImport.h \
 
-SOURCES += DocxDebug.cpp \
+
+SOURCES +=  DocxDebug.cpp \
             DocxXmlStylesReader.cpp \
             DocxXmlFontTableReader.cpp \
             DocxXmlCommentsReader.cpp \
@@ -12,6 +24,6 @@ SOURCES += DocxDebug.cpp \
             DocxXmlEndnoteReader.cpp \
             DocxXmlSettingsReader.cpp \
             DocxImport.cpp \
-            filters/sheets/xlsxXlsxChartOdfWriter.cpp \
-            filters/sheets/xlsxXlsxXmlChartReader.cpp
+            ../../../sheets/xlsx/XlsxChartOdfWriter.cpp \
+            ../../../sheets/xlsx/XlsxXmlChartReader.cpp
 
