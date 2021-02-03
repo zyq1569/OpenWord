@@ -340,4 +340,3 @@ void DocxImport::writeConfigurationSettings(KoXmlWriter* settings) const
     settings->endElement();
 }
 
-#include "DocxImport.moc"

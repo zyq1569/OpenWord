@@ -403,4 +403,3 @@ readStream(POLE::Storage& storage, const char* streampath, QBuffer& buffer)
     return true;
 }
 
-#include <mswordodfimport.moc>

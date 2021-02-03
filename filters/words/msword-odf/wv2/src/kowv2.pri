@@ -7,64 +7,65 @@
 #message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/annotations.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/olestorage.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/olestream.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/word_helper.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/parser.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/parserfactory.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/ustring.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/textconverter.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/styles.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/sharedptr.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/global.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/handlers.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/fonts.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/lists.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/utilities.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/paragraphproperties.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/functor.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/functordata.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/associatedstrings.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/fields.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/wvlog.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/word95_generated.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/word97_generated.h \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/convert.h
-SOURCES += ../../../../../../calligra/filters/words/msword-odf/wv2/src/kowv2_autogen/mocs_compilation.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/annotations.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/olestorage.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/olestream.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/word97_helper.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/word95_helper.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/word_helper.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/global.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/parser.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/parser9x.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/parser95.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/parser97.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/parserfactory.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/ustring.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/textconverter.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/styles.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/handlers.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/properties97.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/fonts.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/lists.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/paragraphproperties.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/headers.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/headers95.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/headers97.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/footnotes97.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/bookmark.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/functor.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/functordata.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/associatedstrings.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/fields.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/utilities.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/crc32.c \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/graphics.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/wvlog.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/word95_generated.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/word97_generated.cpp \
-    ../../../../../../../src/calligra-v3.2.1/filters/words/msword-odf/wv2/src/convert.cpp
+HEADERS +=
+            annotations.h \
+            olestorage.h \
+            olestream.h \
+            word_helper.h \
+            parser.h \
+            parserfactory.h \
+            ustring.h \
+            textconverter.h \
+            styles.h \
+            sharedptr.h \
+            global.h \
+            handlers.h \
+            fonts.h \
+            lists.h \
+            utilities.h \
+            paragraphproperties.h \
+            functor.h \
+            functordata.h \
+            associatedstrings.h \
+            fields.h \
+            wvlog.h \
+            word95_generated.h \
+            word97_generated.h \
+            convert.h
+
+SOURCES +=  annotations.cpp \
+            olestorage.cpp \
+            olestream.cpp \
+            word97_helper.cpp \
+            word95_helper.cpp \
+            word_helper.cpp \
+            global.cpp \
+            parser.cpp \
+            parser9x.cpp \
+            parser95.cpp \
+            parser97.cpp \
+            parserfactory.cpp \
+            ustring.cpp \
+            textconverter.cpp \
+            styles.cpp \
+            handlers.cpp \
+            properties97.cpp \
+            fonts.cpp \
+            lists.cpp \
+            paragraphproperties.cpp \
+            headers.cpp \
+            headers95.cpp \
+            headers97.cpp \
+            footnotes97.cpp \
+            bookmark.cpp \
+            functor.cpp \
+            functordata.cpp \
+            associatedstrings.cpp \
+            fields.cpp \
+            utilities.cpp \
+            crc32.c \
+            graphics.cpp \
+            wvlog.cpp \
+            word95_generated.cpp \
+            word97_generated.cpp \
+            convert.cpp
