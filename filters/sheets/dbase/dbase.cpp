@@ -73,7 +73,13 @@ bool DBase::load(const QString& filename)
     quint8 y, m, d;
     m_stream >> y >> m >> d;
     // because dBASE saves 102 instead of 2002 (very Y2K-save ;-)
-    m_lastUpdate.setYMD(y + 1900, m, d);
+    //m_lastUpdate.setYMD(y + 1900, m, d); openword
+    if (uint(y) <= 99)
+    {
+        y += 1900;
+    }
+    m_lastUpdate.setDate(y, m, d);
+
 
     // check for valid date
     if (!m_lastUpdate.isValid()) return false;

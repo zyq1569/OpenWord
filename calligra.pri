@@ -13,7 +13,7 @@ DEFINES += pigmentcms_EXPORTS koplugin_EXPORTS kowidgetutils_EXPORTS flake_EXPOR
 DEFINES += koodf_EXPORTS koodf2_EXPORTS kostore_EXPORTS  kundo2_EXPORTS kokross_EXPORTS kowidgets_EXPORTS
 DEFINES += kotext_EXPORTS kotextlayout_EXPORTS RtfReader_EXPORTS koodfreader_EXPORTS basicflakes_EXPORTS
 DEFINES += calligra_docker_defaults_EXPORTS calligra_docker_stencils_EXPORTS calligra_filter_applixword2odt_EXPORTS
-DEFINES += wordsprivate_EXPORTS
+DEFINES += wordsprivate_EXPORTS calligra_filter_dbase2kspread_EXPORTS
 DEFINES += komain_EXPORTS
 
 #-----selef defined----------
