@@ -31,8 +31,8 @@
 #include <kpluginfactory.h>
 #include <kshell.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(EpsImportFactory, "calligra_filter_eps2svgai.json",
-                           registerPlugin<EpsImport>();)
+//K_PLUGIN_FACTORY_WITH_JSON(EpsImportFactory, "calligra_filter_eps2svgai.json", ///openword
+//                           registerPlugin<EpsImport>();)
 
 const QLoggingCategory &EPS_LOG()
 {
