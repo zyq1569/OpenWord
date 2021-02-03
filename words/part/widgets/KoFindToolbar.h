@@ -33,7 +33,7 @@ class KoFindBase;
  * This class implements a search toolbar containing an autocomplete text
  * field, previous/next buttons and an options selector. It uses the methods
  * provided by KoFindBase to find and navigate search matches.
- */
+*/
 class KoFindToolbar : public QWidget
 {
     Q_OBJECT
@@ -74,6 +74,49 @@ private:
     Q_PRIVATE_SLOT(d, void replaceAll())
     Q_PRIVATE_SLOT(d, void inputTimeout())
     Q_PRIVATE_SLOT(d, void returnPressed())
+};
+
+#include <QHBoxLayout>
+#include <QToolButton>
+#include <khistorycombobox.h>
+
+class KSqueezedTextLabel;
+class QLabel;
+
+class Q_DECL_HIDDEN KoFindToolbar::Private
+{
+public:
+    Private(KoFindToolbar *qq) : q(qq) { }
+
+    void matchFound();
+    void noMatchFound();
+    void searchWrapped(bool direction);
+    void addToHistory();
+    void find(const QString &pattern);
+    void optionChanged();
+    void replace();
+    void replaceAll();
+    void inputTimeout();
+    void returnPressed();
+
+    KoFindToolbar *q;
+    KoFindBase *finder;
+
+    QToolButton *closeButton;
+    KHistoryComboBox *searchLine;
+    KHistoryComboBox *replaceLine;
+    QToolButton *previousButton;
+    QToolButton *nextButton;
+    QToolButton *optionsButton;
+    QToolButton *replaceButton;
+    QToolButton *replaceAllButton;
+    QLabel *replaceLabel;
+    KSqueezedTextLabel *information;
+    QLabel *matchCounter;
+    QTimer *textTimeout;
+
+    static QStringList searchCompletionItems;
+    static QStringList replaceCompletionItems;
 };
 
 #endif // KOFINDTOOLBAR_H

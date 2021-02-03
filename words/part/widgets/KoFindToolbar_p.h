@@ -20,61 +20,61 @@
 #ifndef KoFindToolbar_p_h
 #define KoFindToolbar_p_h
 
-#include "KoFindToolbar.h"
+//#include "KoFindToolbar.h"
 
-#include <QHBoxLayout>
-#include <QToolButton>
-#include <QMenu>
-#include <QTimer>
-#include <QApplication>
+//#include <QHBoxLayout>
+//#include <QToolButton>
+//#include <QMenu>
+//#include <QTimer>
+//#include <QApplication>
 
-#include <klocalizedstring.h>
-#include <khistorycombobox.h>
+//#include <klocalizedstring.h>
+//#include <khistorycombobox.h>
 
-#include <KoIcon.h>
+//#include <KoIcon.h>
 
-#include "KoFindBase.h"
-#include "KoFindOptionSet.h"
-#include "KoFindOption.h"
+//#include "KoFindBase.h"
+//#include "KoFindOptionSet.h"
+//#include "KoFindOption.h"
 
-class KSqueezedTextLabel;
-class QLabel;
+//class KSqueezedTextLabel;
+//class QLabel;
 
-class Q_DECL_HIDDEN KoFindToolbar::Private
-{
-public:
-    Private(KoFindToolbar *qq) : q(qq) { }
+//class Q_DECL_HIDDEN KoFindToolbar::Private
+//{
+//public:
+//    Private(KoFindToolbar *qq) : q(qq) { }
 
-    void matchFound();
-    void noMatchFound();
-    void searchWrapped(bool direction);
-    void addToHistory();
-    void find(const QString &pattern);
-    void optionChanged();
-    void replace();
-    void replaceAll();
-    void inputTimeout();
-    void returnPressed();
+//    void matchFound();
+//    void noMatchFound();
+//    void searchWrapped(bool direction);
+//    void addToHistory();
+//    void find(const QString &pattern);
+//    void optionChanged();
+//    void replace();
+//    void replaceAll();
+//    void inputTimeout();
+//    void returnPressed();
 
-    KoFindToolbar *q;
+//    KoFindToolbar *q;
 
-    KoFindBase *finder;
+//    KoFindBase *finder;
 
-    QToolButton *closeButton;
-    KHistoryComboBox *searchLine;
-    KHistoryComboBox *replaceLine;
-    QToolButton *previousButton;
-    QToolButton *nextButton;
-    QToolButton *optionsButton;
-    QToolButton *replaceButton;
-    QToolButton *replaceAllButton;
-    QLabel *replaceLabel;
-    KSqueezedTextLabel *information;
-    QLabel *matchCounter;
-    QTimer *textTimeout;
+//    QToolButton *closeButton;
+//    KHistoryComboBox *searchLine;
+//    KHistoryComboBox *replaceLine;
+//    QToolButton *previousButton;
+//    QToolButton *nextButton;
+//    QToolButton *optionsButton;
+//    QToolButton *replaceButton;
+//    QToolButton *replaceAllButton;
+//    QLabel *replaceLabel;
+//    KSqueezedTextLabel *information;
+//    QLabel *matchCounter;
+//    QTimer *textTimeout;
 
-    static QStringList searchCompletionItems;
-    static QStringList replaceCompletionItems;
-};
+//    static QStringList searchCompletionItems;
+//    static QStringList replaceCompletionItems;
+//};
 
 #endif

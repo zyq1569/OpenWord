@@ -20,6 +20,7 @@
 #include "KoFindToolbar.h"
 #include "KoFindToolbar_p.h"
 
+#include <QApplication>
 #include <QHBoxLayout>
 #include <QToolButton>
 #include <QAction>
