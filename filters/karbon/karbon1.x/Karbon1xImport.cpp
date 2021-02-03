@@ -1285,5 +1285,3 @@ QString KarbonImport::makeUnique(const QString &id)
 
     return m_lastId;
 }
-
-#include "Karbon1xImport.moc"
