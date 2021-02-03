@@ -1,15 +1,64 @@
 
-HEADERS +=  ui_KWFrameConnectSelector.h \
-            ui_KWRunAroundProperties.h \
-            ui_KWAnchoringProperties.h \
-            ui_KWDocumentColumns.h \
-            ui_KWStartupWidget.h \
-            ui_KWCreateBookmark.h \
-            ui_KWSelectBookmark.h \
-            ui_KWInsertImage.h \
-            ui_StatisticsPreferencesPopup.h \
-            ui_SimpleSetupWidget.h \
-            ui_SimpleHeaderFooterWidget.h
+HEADERS +=  KWFactory.h \
+            WordsDebug.h \
+            Words.h \
+            KWApplicationConfig.h \
+            KWCanvasBase.h \
+            KWCanvas.h \
+            KWCanvasItem.h \
+            KWDocument.h \
+            KWGui.h \
+            KWView.h \
+            KWPart.h \
+            KWPage.h \
+            KWPageCacheManager.h \
+            KWPageManager.h \
+            KWPageStyle.h \
+            KWViewMode.h \
+            KWViewModeNormal.h \
+            KWViewModePreview.h \
+            KWStatusBar.h \
+            KWOdfLoader.h \
+            KWOdfWriter.h \
+            KWOdfSharedLoadingData.h \
+            KWRootAreaProviderBase.h \
+            KWRootAreaProviderTextBox.h \
+            KWRootAreaProvider.h \
+            pagetool/KWPageTool.h \
+            pagetool/KWPageToolFactory.h \
+            pagetool/SimpleSetupWidget.h \
+            pagetool/SimpleHeaderFooterWidget.h \
+            frames/KWFrameLayout.h \
+            frames/KWFrame.h \
+            frames/KWFrameSet.h \
+            frames/KWTextFrameSet.h \
+            frames/KWCopyShape.h \
+            widgets/KoFindToolbar.h \
+            dialogs/KWFrameConnectSelector.h \
+            dialogs/KWRunAroundProperties.h \
+            dialogs/KWAnchoringProperties.h \
+            dialogs/KWFrameDialog.h \
+            dialogs/KWShapeConfigFactory.h \
+            dialogs/KWDocumentColumns.h \
+            dialogs/KWStartupWidget.h \
+            dialogs/KWPageSettingsDialog.h \
+            dialogs/KWPrintingDialog.h \
+            dialogs/KWCreateBookmarkDialog.h \
+            dialogs/KWSelectBookmarkDialog.h \
+            dialogs/KWConfigureDialog.h \
+            dockers/KWStatisticsDocker.h \
+            dockers/KWStatisticsWidget.h \
+            dockers/StatisticsPreferencesPopup.h \
+            dockers/KWNavigationDocker.h \
+            dockers/KWNavigationDockerFactory.h \
+            dockers/KWNavigationWidget.h \
+            commands/KWPageStylePropertiesCommand.h \
+            commands/KWNewPageStyleCommand.h \
+            commands/KWChangePageStyleCommand.h \
+            commands/KWShapeCreateCommand.h \
+            dockers/KWDebugDocker.h \
+            dockers/KWDebugDockerFactory.h \
+            dockers/KWDebugWidget.h
 
 SOURCES +=  KWFactory.cpp \
             WordsDebug.cpp \
