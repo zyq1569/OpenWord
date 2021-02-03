@@ -30,7 +30,7 @@ CollectionItemModel::CollectionItemModel(QObject* parent)
     : QAbstractListModel(parent),
       m_viewMode(QListView::IconMode)
 {
-    //setSupportedDragActions(Qt::CopyAction);
+    //setSupportedDragActions(Qt::CopyAction);///openword
     supportedDragActions();
 }
 
@@ -72,7 +72,7 @@ int CollectionItemModel::rowCount(const QModelIndex& parent) const
 void CollectionItemModel::setShapeTemplateList(const QList<KoCollectionItem>& newlist)
 {
     m_shapeTemplateList = newlist;
-    reset();
+//    reset(); openword
 }
 
 QListView::ViewMode CollectionItemModel::viewMode() const
