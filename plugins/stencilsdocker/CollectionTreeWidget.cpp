@@ -127,7 +127,8 @@ QSize SheetDelegate::sizeHint(const QStyleOptionViewItem& opt, const QModelIndex
 CollectionTreeWidget::CollectionTreeWidget(QWidget* parent): QTreeWidget(parent)
 {
     header()->hide();
-    header()->setResizeMode(QHeaderView::Stretch);
+    header()->setSectionResizeMode(QHeaderView::Stretch);
+    //header()->setResizeMode(QHeaderView::Stretch);
     setRootIsDecorated(false);
     setItemsExpandable(true);
     setFocusPolicy(Qt::NoFocus);

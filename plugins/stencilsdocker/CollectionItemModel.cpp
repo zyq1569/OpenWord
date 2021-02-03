@@ -30,7 +30,8 @@ CollectionItemModel::CollectionItemModel(QObject* parent)
     : QAbstractListModel(parent),
       m_viewMode(QListView::IconMode)
 {
-    setSupportedDragActions(Qt::CopyAction);
+    //setSupportedDragActions(Qt::CopyAction);
+    supportedDragActions();
 }
 
 QVariant CollectionItemModel::data(const QModelIndex& index, int role) const
