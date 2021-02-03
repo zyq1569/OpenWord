@@ -1,6 +1,6 @@
 HEADERS +=  EpsImport.h \
-    .       PsCommentLexer.h
+            PsCommentLexer.h
 
 
 SOURCES += EpsImport.cpp \
-    .       PsCommentLexer.cpp
+           PsCommentLexer.cpp
