@@ -52,7 +52,7 @@ struct KOMSOOXML_EXPORT KoOdfWriters {
  */
 class KOMSOOXML_EXPORT KoOdfExporter : public KoFilter
 {
-    Q_OBJECT
+//    Q_OBJECT
 public:
     ~KoOdfExporter() override;
 
