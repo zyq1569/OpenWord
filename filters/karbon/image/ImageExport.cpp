@@ -133,5 +133,4 @@ KoFilter::ConversionStatus ImageExport::convert(const QByteArray& from, const QB
     return KoFilter::OK;
 }
 
-#include "ImageExport.moc"
 

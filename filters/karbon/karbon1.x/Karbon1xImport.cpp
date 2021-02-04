@@ -39,8 +39,9 @@
 
 #include <math.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(KarbonImportFactory, "calligra_filter_karbon1x2karbon.json",
-                           registerPlugin<KarbonImport>();)
+/// openword
+//K_PLUGIN_FACTORY_WITH_JSON(KarbonImportFactory, "calligra_filter_karbon1x2karbon.json",
+//                           registerPlugin<KarbonImport>();)
 
 const QLoggingCategory &KARBON1_LOG()
 {
