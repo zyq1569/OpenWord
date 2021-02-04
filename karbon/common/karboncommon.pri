@@ -1,3 +1,5 @@
+
+
 HEADERS += KarbonGlobal.h \
            KarbonOutlinePaintingStrategy.h \
            KarbonBooleanCommand.h \

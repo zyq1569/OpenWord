@@ -20,7 +20,7 @@
 #include "KarbonBooleanCommand.h"
 #include <KoShapeBasedDocumentBase.h>
 #include <KoPathShape.h>
-#include <KoShapeContainer.h>
+//#include <KoShapeContainer.h>
 #include <KoShapeGroup.h>
 #include <KoShapeGroupCommand.h>
 
@@ -28,30 +28,30 @@
 
 #include <QPainterPath>
 
-class Q_DECL_HIDDEN KarbonBooleanCommand::Private
-{
-public:
-    Private(KoShapeBasedDocumentBase * c)
-            : shapeBasedDocument(c), pathA(0), pathB(0), resultingPath(0)
-            , resultParent(0), resultParentCmd(0)
-            , operation(Intersection), isExecuted(false)
-    {}
+//class Q_DECL_HIDDEN KarbonBooleanCommand::Private
+//{
+//public:
+//    Private(KoShapeBasedDocumentBase * c)
+//            : shapeBasedDocument(c), pathA(0), pathB(0), resultingPath(0)
+//            , resultParent(0), resultParentCmd(0)
+//            , operation(Intersection), isExecuted(false)
+//    {}
 
-    ~Private()
-    {
-        if (! isExecuted)
-            delete resultingPath;
-    }
+//    ~Private()
+//    {
+//        if (! isExecuted)
+//            delete resultingPath;
+//    }
 
-    KoShapeBasedDocumentBase *shapeBasedDocument;
-    KoPathShape * pathA;
-    KoPathShape * pathB;
-    KoPathShape * resultingPath;
-    KoShapeContainer * resultParent;
-    KUndo2Command * resultParentCmd;
-    BooleanOperation operation;
-    bool isExecuted;
-};
+//    KoShapeBasedDocumentBase *shapeBasedDocument;
+//    KoPathShape * pathA;
+//    KoPathShape * pathB;
+//    KoPathShape * resultingPath;
+//    KoShapeContainer * resultParent;
+//    KUndo2Command * resultParentCmd;
+//    BooleanOperation operation;
+//    bool isExecuted;
+//};
 
 KarbonBooleanCommand::KarbonBooleanCommand(
     KoShapeBasedDocumentBase *shapeBasedDocument, KoPathShape* pathA, KoPathShape * pathB,
