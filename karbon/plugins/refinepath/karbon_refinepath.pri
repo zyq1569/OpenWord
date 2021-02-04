@@ -8,5 +8,5 @@
 
 
 SOURCES += ../../../../calligra/karbon/plugins/refinepath/karbon_refinepath_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/karbon/plugins/refinepath/RefinePathPlugin.cpp \
-    ../../../../../src/calligra-v3.2.1/karbon/plugins/refinepath/KarbonPathRefineCommand.cpp
+    ../../../../../karbon/plugins/refinepath/RefinePathPlugin.cpp \
+    ../../../../../karbon/plugins/refinepath/KarbonPathRefineCommand.cpp

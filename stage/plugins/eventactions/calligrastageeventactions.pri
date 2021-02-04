@@ -8,7 +8,7 @@
 
 
 SOURCES += ../../../../calligra/stage/plugins/eventactions/calligrastageeventactions_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/stage/plugins/eventactions/sound/KPrSoundEventAction.cpp \
-    ../../../../../src/calligra-v3.2.1/stage/plugins/eventactions/sound/KPrSoundEventActionFactory.cpp \
-    ../../../../../src/calligra-v3.2.1/stage/plugins/eventactions/sound/KPrSoundEventActionWidget.cpp \
-    ../../../../../src/calligra-v3.2.1/stage/plugins/eventactions/Plugin.cpp
+    ../../../../../stage/plugins/eventactions/sound/KPrSoundEventAction.cpp \
+    ../../../../../stage/plugins/eventactions/sound/KPrSoundEventActionFactory.cpp \
+    ../../../../../stage/plugins/eventactions/sound/KPrSoundEventActionWidget.cpp \
+    ../../../../../stage/plugins/eventactions/Plugin.cpp

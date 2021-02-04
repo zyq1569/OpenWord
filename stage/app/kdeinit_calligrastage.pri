@@ -8,4 +8,4 @@
 
 
 SOURCES += ../../../calligra/stage/app/kdeinit_calligrastage_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/stage/app/main.cpp
+    ../../../../stage/app/main.cpp

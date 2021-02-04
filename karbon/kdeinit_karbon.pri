@@ -8,4 +8,4 @@
 
 
 SOURCES += ../../calligra/karbon/kdeinit_karbon_autogen/mocs_compilation.cpp \
-    ../../../src/calligra-v3.2.1/karbon/main.cpp
+    ../../../karbon/main.cpp

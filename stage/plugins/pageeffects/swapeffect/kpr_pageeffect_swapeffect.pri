@@ -8,6 +8,6 @@
 
 
 SOURCES += ../../../../../calligra/stage/plugins/pageeffects/swapeffect/kpr_pageeffect_swapeffect_autogen/mocs_compilation.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/swapeffect/Plugin.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/swapeffect/KPrSwapEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/swapeffect/KPrSwapEffectHorizontalStrategy.cpp
+    ../../../../../../stage/plugins/pageeffects/swapeffect/Plugin.cpp \
+    ../../../../../../stage/plugins/pageeffects/swapeffect/KPrSwapEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/swapeffect/KPrSwapEffectHorizontalStrategy.cpp

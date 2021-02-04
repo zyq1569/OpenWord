@@ -8,4 +8,4 @@
 
 
 SOURCES += ../../../../calligra/filters/stage/powerpoint/ppttoodp_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/stage/powerpoint/ppttoodpmain.cpp
+    ../../../../../filters/stage/powerpoint/ppttoodpmain.cpp

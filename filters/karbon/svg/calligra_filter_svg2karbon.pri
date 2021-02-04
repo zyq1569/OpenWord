@@ -8,4 +8,4 @@
 
 
 SOURCES += ../../../../calligra/filters/karbon/svg/calligra_filter_svg2karbon_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/karbon/svg/SvgImport.cpp
+    ../../../../../filters/karbon/svg/SvgImport.cpp

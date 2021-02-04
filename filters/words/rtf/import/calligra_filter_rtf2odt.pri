@@ -8,4 +8,4 @@
 
 
 SOURCES += ../../../../../calligra/filters/words/rtf/import/calligra_filter_rtf2odt_autogen/mocs_compilation.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/rtf/import/rtfimport.cpp
+    ../../../../../../filters/words/rtf/import/rtfimport.cpp

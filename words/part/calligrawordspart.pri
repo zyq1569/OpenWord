@@ -8,4 +8,4 @@
 
 
 SOURCES += ../../../calligra/words/part/calligrawordspart_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/words/part/KWFactoryInit.cpp
+    ../../../../words/part/KWFactoryInit.cpp

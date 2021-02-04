@@ -8,11 +8,11 @@
 
 
 SOURCES += ../../../../calligra/filters/words/mobi/calligra_filter_odt2mobi_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/mobi/MobiExportDebug.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/mobi/exportmobi.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/mobi/MobiHeaderGenerator.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/mobi/MobiFile.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/mobi/PalmDocCompression.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/mobi/OdtMobiHtmlConverter.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/epub/FileCollector.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/epub/OdfParser.cpp
+    ../../../../../filters/words/mobi/MobiExportDebug.cpp \
+    ../../../../../filters/words/mobi/exportmobi.cpp \
+    ../../../../../filters/words/mobi/MobiHeaderGenerator.cpp \
+    ../../../../../filters/words/mobi/MobiFile.cpp \
+    ../../../../../filters/words/mobi/PalmDocCompression.cpp \
+    ../../../../../filters/words/mobi/OdtMobiHtmlConverter.cpp \
+    ../../../../../filters/words/epub/FileCollector.cpp \
+    ../../../../../filters/words/epub/OdfParser.cpp

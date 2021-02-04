@@ -9,17 +9,17 @@
 
 HEADERS += ../../../calligra/plugins/videoshape/ui_VideoToolWidget.h
 SOURCES += ../../../calligra/plugins/videoshape/calligra_shape_video_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/videoshape/VideoDebug.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/videoshape/VideoData.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/videoshape/VideoCollection.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/videoshape/VideoShape.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/videoshape/VideoShapeFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/videoshape/VideoEventAction.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/videoshape/Plugin.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/videoshape/VideoShapeConfigWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/videoshape/FullScreenPlayer.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/videoshape/VideoTool.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/videoshape/VideoToolFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/videoshape/ChangeVideoCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/videoshape/SelectVideoWidget.cpp
-FORMS += ../../../../src/calligra-v3.2.1/plugins/videoshape/forms/VideoToolWidget.ui
+    ../../../../plugins/videoshape/VideoDebug.cpp \
+    ../../../../plugins/videoshape/VideoData.cpp \
+    ../../../../plugins/videoshape/VideoCollection.cpp \
+    ../../../../plugins/videoshape/VideoShape.cpp \
+    ../../../../plugins/videoshape/VideoShapeFactory.cpp \
+    ../../../../plugins/videoshape/VideoEventAction.cpp \
+    ../../../../plugins/videoshape/Plugin.cpp \
+    ../../../../plugins/videoshape/VideoShapeConfigWidget.cpp \
+    ../../../../plugins/videoshape/FullScreenPlayer.cpp \
+    ../../../../plugins/videoshape/VideoTool.cpp \
+    ../../../../plugins/videoshape/VideoToolFactory.cpp \
+    ../../../../plugins/videoshape/ChangeVideoCommand.cpp \
+    ../../../../plugins/videoshape/SelectVideoWidget.cpp
+FORMS += ../../../../plugins/videoshape/forms/VideoToolWidget.ui

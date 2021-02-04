@@ -8,4 +8,4 @@
 
 
 SOURCES += ../../../calligra/devtools/rng2cpp/rng2cpp_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/devtools/rng2cpp/rng2cpp.cpp
+    ../../../../devtools/rng2cpp/rng2cpp.cpp

@@ -8,11 +8,11 @@
 
 
 SOURCES += ../../../../calligra/filters/stage/pptx/calligra_filter_pptx2odp_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/stage/pptx/PptxDebug.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/stage/pptx/PptxImport.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/stage/pptx/PptxXmlDocumentReader.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/stage/pptx/PptxXmlSlideReader.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/stage/pptx/PptxXmlCommentsReader.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/stage/pptx/PptxXmlCommentAuthorsReader.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/sheets/xlsx/XlsxChartOdfWriter.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/sheets/xlsx/XlsxXmlChartReader.cpp
+    ../../../../../filters/stage/pptx/PptxDebug.cpp \
+    ../../../../../filters/stage/pptx/PptxImport.cpp \
+    ../../../../../filters/stage/pptx/PptxXmlDocumentReader.cpp \
+    ../../../../../filters/stage/pptx/PptxXmlSlideReader.cpp \
+    ../../../../../filters/stage/pptx/PptxXmlCommentsReader.cpp \
+    ../../../../../filters/stage/pptx/PptxXmlCommentAuthorsReader.cpp \
+    ../../../../../filters/sheets/xlsx/XlsxChartOdfWriter.cpp \
+    ../../../../../filters/sheets/xlsx/XlsxXmlChartReader.cpp

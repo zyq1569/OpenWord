@@ -12,35 +12,35 @@ HEADERS += ../../../calligra/plugins/pathshapes/ui_StarShapeConfigWidget.h \
     ../../../calligra/plugins/pathshapes/ui_EllipseShapeConfigWidget.h \
     ../../../calligra/plugins/pathshapes/ui_SpiralShapeConfigWidget.h
 SOURCES += ../../../calligra/plugins/pathshapes/calligra_shape_paths_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/ellipse/EllipseShape.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/ellipse/EllipseShapeFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/ellipse/EllipseShapeConfigWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/ellipse/EllipseShapeConfigCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/spiral/SpiralShape.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/spiral/SpiralShapeFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/spiral/SpiralShapeConfigWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/spiral/SpiralShapeConfigCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/star/StarShape.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/star/StarShapeFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/star/StarShapeConfigWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/star/StarShapeConfigCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/rectangle/RectangleShape.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/rectangle/RectangleShapeFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/rectangle/RectangleShapeConfigWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/rectangle/RectangleShapeConfigCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/enhancedpath/EnhancedPathShape.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/enhancedpath/EnhancedPathShapeFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/enhancedpath/EnhancedPathCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/enhancedpath/EnhancedPathParameter.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/enhancedpath/EnhancedPathFormula.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/enhancedpath/EnhancedPathHandle.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/enhancedpath/CalloutShape.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/enhancedpath/CalloutShapeFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/enhancedpath/CalloutContainerModel.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/enhancedpath/CalloutToolFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/enhancedpath/CalloutDebug.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/PathShapesPlugin.cpp
-FORMS += ../../../../src/calligra-v3.2.1/plugins/pathshapes/star/StarShapeConfigWidget.ui \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/rectangle/RectangleShapeConfigWidget.ui \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/ellipse/EllipseShapeConfigWidget.ui \
-    ../../../../src/calligra-v3.2.1/plugins/pathshapes/spiral/SpiralShapeConfigWidget.ui
+    ../../../../plugins/pathshapes/ellipse/EllipseShape.cpp \
+    ../../../../plugins/pathshapes/ellipse/EllipseShapeFactory.cpp \
+    ../../../../plugins/pathshapes/ellipse/EllipseShapeConfigWidget.cpp \
+    ../../../../plugins/pathshapes/ellipse/EllipseShapeConfigCommand.cpp \
+    ../../../../plugins/pathshapes/spiral/SpiralShape.cpp \
+    ../../../../plugins/pathshapes/spiral/SpiralShapeFactory.cpp \
+    ../../../../plugins/pathshapes/spiral/SpiralShapeConfigWidget.cpp \
+    ../../../../plugins/pathshapes/spiral/SpiralShapeConfigCommand.cpp \
+    ../../../../plugins/pathshapes/star/StarShape.cpp \
+    ../../../../plugins/pathshapes/star/StarShapeFactory.cpp \
+    ../../../../plugins/pathshapes/star/StarShapeConfigWidget.cpp \
+    ../../../../plugins/pathshapes/star/StarShapeConfigCommand.cpp \
+    ../../../../plugins/pathshapes/rectangle/RectangleShape.cpp \
+    ../../../../plugins/pathshapes/rectangle/RectangleShapeFactory.cpp \
+    ../../../../plugins/pathshapes/rectangle/RectangleShapeConfigWidget.cpp \
+    ../../../../plugins/pathshapes/rectangle/RectangleShapeConfigCommand.cpp \
+    ../../../../plugins/pathshapes/enhancedpath/EnhancedPathShape.cpp \
+    ../../../../plugins/pathshapes/enhancedpath/EnhancedPathShapeFactory.cpp \
+    ../../../../plugins/pathshapes/enhancedpath/EnhancedPathCommand.cpp \
+    ../../../../plugins/pathshapes/enhancedpath/EnhancedPathParameter.cpp \
+    ../../../../plugins/pathshapes/enhancedpath/EnhancedPathFormula.cpp \
+    ../../../../plugins/pathshapes/enhancedpath/EnhancedPathHandle.cpp \
+    ../../../../plugins/pathshapes/enhancedpath/CalloutShape.cpp \
+    ../../../../plugins/pathshapes/enhancedpath/CalloutShapeFactory.cpp \
+    ../../../../plugins/pathshapes/enhancedpath/CalloutContainerModel.cpp \
+    ../../../../plugins/pathshapes/enhancedpath/CalloutToolFactory.cpp \
+    ../../../../plugins/pathshapes/enhancedpath/CalloutDebug.cpp \
+    ../../../../plugins/pathshapes/PathShapesPlugin.cpp
+FORMS += ../../../../plugins/pathshapes/star/StarShapeConfigWidget.ui \
+    ../../../../plugins/pathshapes/rectangle/RectangleShapeConfigWidget.ui \
+    ../../../../plugins/pathshapes/ellipse/EllipseShapeConfigWidget.ui \
+    ../../../../plugins/pathshapes/spiral/SpiralShapeConfigWidget.ui

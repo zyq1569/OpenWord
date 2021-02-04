@@ -8,4 +8,4 @@
 
 
 SOURCES += ../../../calligra/extras/converter/calligraconverter_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/extras/converter/calligraconverter.cpp
+    ../../../../extras/converter/calligraconverter.cpp

@@ -8,6 +8,6 @@
 
 
 SOURCES += ../../../calligra/plugins/pluginshape/calligra_shape_plugin_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pluginshape/PluginShape.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pluginshape/PluginShapeFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pluginshape/Plugin.cpp
+    ../../../../plugins/pluginshape/PluginShape.cpp \
+    ../../../../plugins/pluginshape/PluginShapeFactory.cpp \
+    ../../../../plugins/pluginshape/Plugin.cpp

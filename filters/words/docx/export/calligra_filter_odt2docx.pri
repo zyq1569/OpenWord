@@ -8,16 +8,16 @@
 
 
 SOURCES += ../../../../../calligra/filters/words/docx/export/calligra_filter_odt2docx_autogen/mocs_compilation.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/docx/export/DocxExportDebug.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/docx/export/DocxExport.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/docx/export/DocxStyleWriter.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/docx/export/DocxStyleHelper.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/docx/export/OdfReaderDocxContext.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/docx/export/OdtReaderDocxBackend.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/docx/export/OdfTextReaderDocxBackend.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/docx/export/FileCollector.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/docx/export/DocxFile.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/docx/export/UnitConversions.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/docx/export/OpcContentTypes.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/docx/export/OpcRelSet.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/docx/export/OpcRelSetManager.cpp
+    ../../../../../../filters/words/docx/export/DocxExportDebug.cpp \
+    ../../../../../../filters/words/docx/export/DocxExport.cpp \
+    ../../../../../../filters/words/docx/export/DocxStyleWriter.cpp \
+    ../../../../../../filters/words/docx/export/DocxStyleHelper.cpp \
+    ../../../../../../filters/words/docx/export/OdfReaderDocxContext.cpp \
+    ../../../../../../filters/words/docx/export/OdtReaderDocxBackend.cpp \
+    ../../../../../../filters/words/docx/export/OdfTextReaderDocxBackend.cpp \
+    ../../../../../../filters/words/docx/export/FileCollector.cpp \
+    ../../../../../../filters/words/docx/export/DocxFile.cpp \
+    ../../../../../../filters/words/docx/export/UnitConversions.cpp \
+    ../../../../../../filters/words/docx/export/OpcContentTypes.cpp \
+    ../../../../../../filters/words/docx/export/OpcRelSet.cpp \
+    ../../../../../../filters/words/docx/export/OpcRelSetManager.cpp

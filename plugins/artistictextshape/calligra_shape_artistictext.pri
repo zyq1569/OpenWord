@@ -10,26 +10,26 @@
 HEADERS += ../../../calligra/plugins/artistictextshape/ui_ArtisticTextShapeConfigWidget.h \
     ../../../calligra/plugins/artistictextshape/ui_ArtisticTextShapeOnPathWidget.h
 SOURCES += ../../../calligra/plugins/artistictextshape/calligra_shape_artistictext_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ArtisticTextShapePlugin.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ArtisticTextShape.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ArtisticTextRange.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ArtisticTextShapeFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ArtisticTextTool.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ArtisticTextToolFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ArtisticTextToolSelection.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ArtisticTextShapeConfigWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ArtisticTextShapeOnPathWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ArtisticTextShapeLoadingUpdater.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ArtisticTextLoadingContext.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/AttachTextToPathCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/DetachTextFromPathCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ChangeTextOffsetCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ChangeTextFontCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ChangeTextAnchorCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/AddTextRangeCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/RemoveTextRangeCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/MoveStartOffsetStrategy.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/SelectTextStrategy.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ReplaceTextRangeCommand.cpp
-FORMS += ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ArtisticTextShapeConfigWidget.ui \
-    ../../../../src/calligra-v3.2.1/plugins/artistictextshape/ArtisticTextShapeOnPathWidget.ui
+    ../../../../plugins/artistictextshape/ArtisticTextShapePlugin.cpp \
+    ../../../../plugins/artistictextshape/ArtisticTextShape.cpp \
+    ../../../../plugins/artistictextshape/ArtisticTextRange.cpp \
+    ../../../../plugins/artistictextshape/ArtisticTextShapeFactory.cpp \
+    ../../../../plugins/artistictextshape/ArtisticTextTool.cpp \
+    ../../../../plugins/artistictextshape/ArtisticTextToolFactory.cpp \
+    ../../../../plugins/artistictextshape/ArtisticTextToolSelection.cpp \
+    ../../../../plugins/artistictextshape/ArtisticTextShapeConfigWidget.cpp \
+    ../../../../plugins/artistictextshape/ArtisticTextShapeOnPathWidget.cpp \
+    ../../../../plugins/artistictextshape/ArtisticTextShapeLoadingUpdater.cpp \
+    ../../../../plugins/artistictextshape/ArtisticTextLoadingContext.cpp \
+    ../../../../plugins/artistictextshape/AttachTextToPathCommand.cpp \
+    ../../../../plugins/artistictextshape/DetachTextFromPathCommand.cpp \
+    ../../../../plugins/artistictextshape/ChangeTextOffsetCommand.cpp \
+    ../../../../plugins/artistictextshape/ChangeTextFontCommand.cpp \
+    ../../../../plugins/artistictextshape/ChangeTextAnchorCommand.cpp \
+    ../../../../plugins/artistictextshape/AddTextRangeCommand.cpp \
+    ../../../../plugins/artistictextshape/RemoveTextRangeCommand.cpp \
+    ../../../../plugins/artistictextshape/MoveStartOffsetStrategy.cpp \
+    ../../../../plugins/artistictextshape/SelectTextStrategy.cpp \
+    ../../../../plugins/artistictextshape/ReplaceTextRangeCommand.cpp
+FORMS += ../../../../plugins/artistictextshape/ArtisticTextShapeConfigWidget.ui \
+    ../../../../plugins/artistictextshape/ArtisticTextShapeOnPathWidget.ui

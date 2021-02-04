@@ -8,6 +8,6 @@
 
 
 SOURCES += ../../../../../calligra/libs/pageapp/tools/backgroundTool/kopabackgroundtool_autogen/mocs_compilation.cpp \
-    ../../../../../../src/calligra-v3.2.1/libs/pageapp/tools/backgroundTool/Plugin.cpp \
-    ../../../../../../src/calligra-v3.2.1/libs/pageapp/tools/backgroundTool/KoPABackgroundToolFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/libs/pageapp/tools/backgroundTool/KoPAMasterPageDocker.cpp
+    ../../../../../../libs/pageapp/tools/backgroundTool/Plugin.cpp \
+    ../../../../../../libs/pageapp/tools/backgroundTool/KoPABackgroundToolFactory.cpp \
+    ../../../../../../libs/pageapp/tools/backgroundTool/KoPAMasterPageDocker.cpp

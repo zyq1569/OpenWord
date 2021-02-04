@@ -17,7 +17,7 @@
      *
      * See: http://doc.qt.io/qt-5/qloggingcategory.html
      */
-    QLoggingCategory::setFilterRules("calligra.*.debug=false\n"
+    QLoggingCategory::setFilterRules("calligra.*.debug=true\n"
                                      "calligra.*.warning=true");
 
     KoApplication app(WORDS_MIME_TYPE, QStringLiteral("calligrawords"), newWordsAboutData, argc, argv);

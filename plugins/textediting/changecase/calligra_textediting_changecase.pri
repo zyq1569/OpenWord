@@ -8,7 +8,7 @@
 
 
 SOURCES += ../../../../calligra/plugins/textediting/changecase/calligra_textediting_changecase_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/changecase/ChangecaseDebug.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/changecase/ChangecasePlugin.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/changecase/Changecase.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/changecase/ChangecaseFactory.cpp
+    ../../../../../plugins/textediting/changecase/ChangecaseDebug.cpp \
+    ../../../../../plugins/textediting/changecase/ChangecasePlugin.cpp \
+    ../../../../../plugins/textediting/changecase/Changecase.cpp \
+    ../../../../../plugins/textediting/changecase/ChangecaseFactory.cpp

@@ -14,33 +14,33 @@ HEADERS += ../../../calligra/plugins/defaultTools/ui_DefaultToolWidget.h \
     ../../../calligra/plugins/defaultTools/ui_InsertGuidesToolOptionWidget.h \
     ../../../calligra/plugins/defaultTools/ui_ConnectionPointWidget.h
 SOURCES += ../../../calligra/plugins/defaultTools/calligra_tool_defaults_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/Plugin.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/defaulttool/DefaultTool.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/defaulttool/DefaultToolFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/defaulttool/DefaultToolWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/defaulttool/DefaultToolArrangeWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/defaulttool/DefaultToolTransformWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/defaulttool/ShapeMoveStrategy.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/defaulttool/ShapeResizeStrategy.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/defaulttool/ShapeRotateStrategy.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/defaulttool/ShapeShearStrategy.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/defaulttool/SelectionDecorator.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/defaulttool/SelectionTransformCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/defaulttool/ChartResizeStrategy.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/guidestool/GuidesTool.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/guidestool/GuidesToolFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/guidestool/GuidesToolOptionWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/guidestool/InsertGuidesToolOptionWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/connectionTool/ConnectionTool.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/connectionTool/ConnectionToolFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/connectionTool/AddConnectionPointCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/connectionTool/RemoveConnectionPointCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/connectionTool/ChangeConnectionPointCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/connectionTool/MoveConnectionPointStrategy.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/connectionTool/ConnectionPointWidget.cpp
-FORMS += ../../../../src/calligra-v3.2.1/plugins/defaultTools/defaulttool/DefaultToolWidget.ui \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/defaulttool/DefaultToolArrangeWidget.ui \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/defaulttool/DefaultToolTransformWidget.ui \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/guidestool/GuidesToolOptionWidget.ui \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/guidestool/InsertGuidesToolOptionWidget.ui \
-    ../../../../src/calligra-v3.2.1/plugins/defaultTools/connectionTool/ConnectionPointWidget.ui
+    ../../../../plugins/defaultTools/Plugin.cpp \
+    ../../../../plugins/defaultTools/defaulttool/DefaultTool.cpp \
+    ../../../../plugins/defaultTools/defaulttool/DefaultToolFactory.cpp \
+    ../../../../plugins/defaultTools/defaulttool/DefaultToolWidget.cpp \
+    ../../../../plugins/defaultTools/defaulttool/DefaultToolArrangeWidget.cpp \
+    ../../../../plugins/defaultTools/defaulttool/DefaultToolTransformWidget.cpp \
+    ../../../../plugins/defaultTools/defaulttool/ShapeMoveStrategy.cpp \
+    ../../../../plugins/defaultTools/defaulttool/ShapeResizeStrategy.cpp \
+    ../../../../plugins/defaultTools/defaulttool/ShapeRotateStrategy.cpp \
+    ../../../../plugins/defaultTools/defaulttool/ShapeShearStrategy.cpp \
+    ../../../../plugins/defaultTools/defaulttool/SelectionDecorator.cpp \
+    ../../../../plugins/defaultTools/defaulttool/SelectionTransformCommand.cpp \
+    ../../../../plugins/defaultTools/defaulttool/ChartResizeStrategy.cpp \
+    ../../../../plugins/defaultTools/guidestool/GuidesTool.cpp \
+    ../../../../plugins/defaultTools/guidestool/GuidesToolFactory.cpp \
+    ../../../../plugins/defaultTools/guidestool/GuidesToolOptionWidget.cpp \
+    ../../../../plugins/defaultTools/guidestool/InsertGuidesToolOptionWidget.cpp \
+    ../../../../plugins/defaultTools/connectionTool/ConnectionTool.cpp \
+    ../../../../plugins/defaultTools/connectionTool/ConnectionToolFactory.cpp \
+    ../../../../plugins/defaultTools/connectionTool/AddConnectionPointCommand.cpp \
+    ../../../../plugins/defaultTools/connectionTool/RemoveConnectionPointCommand.cpp \
+    ../../../../plugins/defaultTools/connectionTool/ChangeConnectionPointCommand.cpp \
+    ../../../../plugins/defaultTools/connectionTool/MoveConnectionPointStrategy.cpp \
+    ../../../../plugins/defaultTools/connectionTool/ConnectionPointWidget.cpp
+FORMS += ../../../../plugins/defaultTools/defaulttool/DefaultToolWidget.ui \
+    ../../../../plugins/defaultTools/defaulttool/DefaultToolArrangeWidget.ui \
+    ../../../../plugins/defaultTools/defaulttool/DefaultToolTransformWidget.ui \
+    ../../../../plugins/defaultTools/guidestool/GuidesToolOptionWidget.ui \
+    ../../../../plugins/defaultTools/guidestool/InsertGuidesToolOptionWidget.ui \
+    ../../../../plugins/defaultTools/connectionTool/ConnectionPointWidget.ui

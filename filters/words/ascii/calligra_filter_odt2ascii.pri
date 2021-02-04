@@ -8,7 +8,7 @@
 
 
 SOURCES += ../../../../calligra/filters/words/ascii/calligra_filter_odt2ascii_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/ascii/AsciiExportDebug.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/ascii/AsciiExport.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/ascii/OdtReaderAsciiBackend.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/ascii/OdfReaderAsciiContext.cpp
+    ../../../../../filters/words/ascii/AsciiExportDebug.cpp \
+    ../../../../../filters/words/ascii/AsciiExport.cpp \
+    ../../../../../filters/words/ascii/OdtReaderAsciiBackend.cpp \
+    ../../../../../filters/words/ascii/OdfReaderAsciiContext.cpp

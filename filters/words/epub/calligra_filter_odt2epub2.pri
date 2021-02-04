@@ -8,9 +8,9 @@
 
 
 SOURCES += ../../../../calligra/filters/words/epub/calligra_filter_odt2epub2_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/epub/EpubExportDebug.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/epub/exportepub2.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/epub/OdfParser.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/epub/OdtHtmlConverter.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/epub/EpubFile.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/words/epub/FileCollector.cpp
+    ../../../../../filters/words/epub/EpubExportDebug.cpp \
+    ../../../../../filters/words/epub/exportepub2.cpp \
+    ../../../../../filters/words/epub/OdfParser.cpp \
+    ../../../../../filters/words/epub/OdtHtmlConverter.cpp \
+    ../../../../../filters/words/epub/EpubFile.cpp \
+    ../../../../../filters/words/epub/FileCollector.cpp

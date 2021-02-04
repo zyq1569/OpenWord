@@ -8,4 +8,4 @@
 
 
 SOURCES += ../../../../../calligra/stage/plugins/shapeanimations/example/kpr_shapeanimation_example_autogen/mocs_compilation.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/shapeanimations/example/Plugin.cpp
+    ../../../../../../stage/plugins/shapeanimations/example/Plugin.cpp

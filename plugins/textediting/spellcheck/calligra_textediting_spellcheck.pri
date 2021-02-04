@@ -8,9 +8,9 @@
 
 
 SOURCES += ../../../../calligra/plugins/textediting/spellcheck/calligra_textediting_spellcheck_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/spellcheck/SpellCheckDebug.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/spellcheck/SpellCheckPlugin.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/spellcheck/SpellCheck.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/spellcheck/SpellCheckFactory.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/spellcheck/BgSpellCheck.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/spellcheck/SpellCheckMenu.cpp
+    ../../../../../plugins/textediting/spellcheck/SpellCheckDebug.cpp \
+    ../../../../../plugins/textediting/spellcheck/SpellCheckPlugin.cpp \
+    ../../../../../plugins/textediting/spellcheck/SpellCheck.cpp \
+    ../../../../../plugins/textediting/spellcheck/SpellCheckFactory.cpp \
+    ../../../../../plugins/textediting/spellcheck/BgSpellCheck.cpp \
+    ../../../../../plugins/textediting/spellcheck/SpellCheckMenu.cpp

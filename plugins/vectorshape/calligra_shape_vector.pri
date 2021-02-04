@@ -8,11 +8,11 @@
 
 
 SOURCES += ../../../calligra/plugins/vectorshape/calligra_shape_vector_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/vectorshape/VectorDebug.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/vectorshape/VectorShapePlugin.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/vectorshape/VectorShape.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/vectorshape/VectorShapeConfigWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/vectorshape/VectorShapeFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/vectorshape/VectorTool.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/vectorshape/VectorToolFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/vectorshape/ChangeVectorDataCommand.cpp
+    ../../../../plugins/vectorshape/VectorDebug.cpp \
+    ../../../../plugins/vectorshape/VectorShapePlugin.cpp \
+    ../../../../plugins/vectorshape/VectorShape.cpp \
+    ../../../../plugins/vectorshape/VectorShapeConfigWidget.cpp \
+    ../../../../plugins/vectorshape/VectorShapeFactory.cpp \
+    ../../../../plugins/vectorshape/VectorTool.cpp \
+    ../../../../plugins/vectorshape/VectorToolFactory.cpp \
+    ../../../../plugins/vectorshape/ChangeVectorDataCommand.cpp

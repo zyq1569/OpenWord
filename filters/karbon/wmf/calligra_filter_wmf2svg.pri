@@ -8,6 +8,6 @@
 
 
 SOURCES += ../../../../calligra/filters/karbon/wmf/calligra_filter_wmf2svg_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/karbon/wmf/WmfImportDebug.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/karbon/wmf/WmfImport.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/karbon/wmf/WmfImportParser.cpp
+    ../../../../../filters/karbon/wmf/WmfImportDebug.cpp \
+    ../../../../../filters/karbon/wmf/WmfImport.cpp \
+    ../../../../../filters/karbon/wmf/WmfImportParser.cpp

@@ -8,5 +8,5 @@
 
 
 SOURCES += ../../../../calligra/karbon/plugins/whirlpinch/karbon_whirlpinch_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/karbon/plugins/whirlpinch/WhirlPinchPlugin.cpp \
-    ../../../../../src/calligra-v3.2.1/karbon/plugins/whirlpinch/KarbonWhirlPinchCommand.cpp
+    ../../../../../karbon/plugins/whirlpinch/WhirlPinchPlugin.cpp \
+    ../../../../../karbon/plugins/whirlpinch/KarbonWhirlPinchCommand.cpp

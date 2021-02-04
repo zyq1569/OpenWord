@@ -8,4 +8,4 @@
 
 
 SOURCES += ../../../calligra/extras/properties/calligradocinfopropspage_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/extras/properties/KoDocInfoPropsFactory.cpp
+    ../../../../extras/properties/KoDocInfoPropsFactory.cpp

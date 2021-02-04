@@ -8,9 +8,9 @@
 
 
 SOURCES += ../../../../../calligra/stage/plugins/pageeffects/spacerotation/kpr_pageeffect_spacerotation_autogen/mocs_compilation.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/spacerotation/Plugin.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/spacerotation/KPrSpaceRotationEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/spacerotation/KPrSpaceRotationFromBottomStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/spacerotation/KPrSpaceRotationFromTopStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/spacerotation/KPrSpaceRotationFromRightStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/spacerotation/KPrSpaceRotationFromLeftStrategy.cpp
+    ../../../../../../stage/plugins/pageeffects/spacerotation/Plugin.cpp \
+    ../../../../../../stage/plugins/pageeffects/spacerotation/KPrSpaceRotationEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/spacerotation/KPrSpaceRotationFromBottomStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/spacerotation/KPrSpaceRotationFromTopStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/spacerotation/KPrSpaceRotationFromRightStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/spacerotation/KPrSpaceRotationFromLeftStrategy.cpp

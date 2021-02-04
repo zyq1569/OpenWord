@@ -8,24 +8,24 @@
 
 
 SOURCES += ../../../../../calligra/stage/plugins/pageeffects/edgewipe/kpr_pageeffect_edgewipe_autogen/mocs_compilation.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/Plugin.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/miscdiagonalwipe/MiscDiagonalWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/miscdiagonalwipe/DoubleBarnDoorWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/miscdiagonalwipe/DoubleDiamondWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/fourboxwipe/FourBoxWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/fourboxwipe/CornersInWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/fourboxwipe/CornersOutWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/diagonalwipe/DiagonalWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/diagonalwipe/DiagonalWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/barndoorwipe/BarnDoorWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/barndoorwipe/BarnDoorWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/boxwipe/BoxWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/boxwipe/BoxWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/veewipe/VeeWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/veewipe/VeeWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/barnveewipe/BarnVeeWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/barnveewipe/BarnVeeWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/zigzagwipe/ZigZagWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/zigzagwipe/ZigZagWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/barnzigzagwipe/BarnZigZagWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/edgewipe/barnzigzagwipe/BarnZigZagWipeStrategy.cpp
+    ../../../../../../stage/plugins/pageeffects/edgewipe/Plugin.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/miscdiagonalwipe/MiscDiagonalWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/miscdiagonalwipe/DoubleBarnDoorWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/miscdiagonalwipe/DoubleDiamondWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/fourboxwipe/FourBoxWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/fourboxwipe/CornersInWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/fourboxwipe/CornersOutWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/diagonalwipe/DiagonalWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/diagonalwipe/DiagonalWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/barndoorwipe/BarnDoorWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/barndoorwipe/BarnDoorWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/boxwipe/BoxWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/boxwipe/BoxWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/veewipe/VeeWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/veewipe/VeeWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/barnveewipe/BarnVeeWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/barnveewipe/BarnVeeWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/zigzagwipe/ZigZagWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/zigzagwipe/ZigZagWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/barnzigzagwipe/BarnZigZagWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/edgewipe/barnzigzagwipe/BarnZigZagWipeStrategy.cpp

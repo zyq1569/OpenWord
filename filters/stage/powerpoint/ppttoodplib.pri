@@ -8,8 +8,8 @@
 
 
 SOURCES += ../../../../calligra/filters/stage/powerpoint/ppttoodplib_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/stage/powerpoint/PptDebug.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/stage/powerpoint/PptToOdp.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/stage/powerpoint/ParsedPresentation.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/stage/powerpoint/DateTimeFormat.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/stage/powerpoint/pptstyle.cpp
+    ../../../../../filters/stage/powerpoint/PptDebug.cpp \
+    ../../../../../filters/stage/powerpoint/PptToOdp.cpp \
+    ../../../../../filters/stage/powerpoint/ParsedPresentation.cpp \
+    ../../../../../filters/stage/powerpoint/DateTimeFormat.cpp \
+    ../../../../../filters/stage/powerpoint/pptstyle.cpp

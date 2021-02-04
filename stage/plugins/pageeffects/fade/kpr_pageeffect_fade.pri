@@ -8,7 +8,7 @@
 
 
 SOURCES += ../../../../../calligra/stage/plugins/pageeffects/fade/kpr_pageeffect_fade_autogen/mocs_compilation.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/fade/Plugin.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/fade/KPrFadeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/fade/KPrFadeCrossStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/fade/KPrFadeOverColorStrategy.cpp
+    ../../../../../../stage/plugins/pageeffects/fade/Plugin.cpp \
+    ../../../../../../stage/plugins/pageeffects/fade/KPrFadeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/fade/KPrFadeCrossStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/fade/KPrFadeOverColorStrategy.cpp

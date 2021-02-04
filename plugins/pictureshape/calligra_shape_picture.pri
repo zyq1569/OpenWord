@@ -9,21 +9,21 @@
 
 HEADERS += ../../../calligra/plugins/pictureshape/ui_wdgPictureTool.h
 SOURCES += ../../../calligra/plugins/pictureshape/calligra_shape_picture_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/PictureDebug.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/PictureShape.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/PictureShapeFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/PictureTool.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/PictureToolFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/Plugin.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/PictureShapeConfigWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/ChangeImageCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/ClipCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/CropWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/SelectionRect.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/ClippingRect.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/filters/GreyscaleFilterEffect.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/filters/MonoFilterEffect.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/filters/WatermarkFilterEffect.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/filters/ColoringFilterEffect.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/pictureshape/filters/GammaFilterEffect.cpp
-FORMS += ../../../../src/calligra-v3.2.1/plugins/pictureshape/forms/wdgPictureTool.ui
+    ../../../../plugins/pictureshape/PictureDebug.cpp \
+    ../../../../plugins/pictureshape/PictureShape.cpp \
+    ../../../../plugins/pictureshape/PictureShapeFactory.cpp \
+    ../../../../plugins/pictureshape/PictureTool.cpp \
+    ../../../../plugins/pictureshape/PictureToolFactory.cpp \
+    ../../../../plugins/pictureshape/Plugin.cpp \
+    ../../../../plugins/pictureshape/PictureShapeConfigWidget.cpp \
+    ../../../../plugins/pictureshape/ChangeImageCommand.cpp \
+    ../../../../plugins/pictureshape/ClipCommand.cpp \
+    ../../../../plugins/pictureshape/CropWidget.cpp \
+    ../../../../plugins/pictureshape/SelectionRect.cpp \
+    ../../../../plugins/pictureshape/ClippingRect.cpp \
+    ../../../../plugins/pictureshape/filters/GreyscaleFilterEffect.cpp \
+    ../../../../plugins/pictureshape/filters/MonoFilterEffect.cpp \
+    ../../../../plugins/pictureshape/filters/WatermarkFilterEffect.cpp \
+    ../../../../plugins/pictureshape/filters/ColoringFilterEffect.cpp \
+    ../../../../plugins/pictureshape/filters/GammaFilterEffect.cpp
+FORMS += ../../../../plugins/pictureshape/forms/wdgPictureTool.ui

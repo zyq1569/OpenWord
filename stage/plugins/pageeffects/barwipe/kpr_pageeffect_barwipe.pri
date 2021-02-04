@@ -8,9 +8,9 @@
 
 
 SOURCES += ../../../../../calligra/stage/plugins/pageeffects/barwipe/kpr_pageeffect_barwipe_autogen/mocs_compilation.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/barwipe/Plugin.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/barwipe/KPrBarWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/barwipe/KPrBarWipeFromLeftStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/barwipe/KPrBarWipeFromRightStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/barwipe/KPrBarWipeFromTopStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/barwipe/KPrBarWipeFromBottomStrategy.cpp
+    ../../../../../../stage/plugins/pageeffects/barwipe/Plugin.cpp \
+    ../../../../../../stage/plugins/pageeffects/barwipe/KPrBarWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/barwipe/KPrBarWipeFromLeftStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/barwipe/KPrBarWipeFromRightStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/barwipe/KPrBarWipeFromTopStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/barwipe/KPrBarWipeFromBottomStrategy.cpp

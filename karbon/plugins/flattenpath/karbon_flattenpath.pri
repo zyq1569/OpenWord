@@ -8,5 +8,5 @@
 
 
 SOURCES += ../../../../calligra/karbon/plugins/flattenpath/karbon_flattenpath_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/karbon/plugins/flattenpath/FlattenPathPlugin.cpp \
-    ../../../../../src/calligra-v3.2.1/karbon/plugins/flattenpath/KarbonPathFlattenCommand.cpp
+    ../../../../../karbon/plugins/flattenpath/FlattenPathPlugin.cpp \
+    ../../../../../karbon/plugins/flattenpath/KarbonPathFlattenCommand.cpp

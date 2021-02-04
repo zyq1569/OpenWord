@@ -8,5 +8,5 @@
 
 
 SOURCES += ../../../../calligra/karbon/plugins/roundcorners/karbon_roundcorners_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/karbon/plugins/roundcorners/RoundCornersPlugin.cpp \
-    ../../../../../src/calligra-v3.2.1/karbon/plugins/roundcorners/RoundCornersCommand.cpp
+    ../../../../../karbon/plugins/roundcorners/RoundCornersPlugin.cpp \
+    ../../../../../karbon/plugins/roundcorners/RoundCornersCommand.cpp

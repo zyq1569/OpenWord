@@ -8,21 +8,21 @@
 
 
 SOURCES += ../../../../../calligra/stage/plugins/pageeffects/clockwipe/kpr_pageeffect_clockwipe_autogen/mocs_compilation.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/Plugin.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/KPrClockWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/KPrCenterFanWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/KPrSideFanWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/KPrClockWipeSubpathHelper.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/KPrSweepWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/clockwipe/KPrClockWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/pinwheelwipe/KPrPinWheelWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/singlesweepwipe/KPrSingleSweepWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/singlesweepwipe/KPrSingleSweepWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/fanwipe/KPrFanWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/doublefanwipe/KPrDoubleFanWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/doublesweepwipe/KPrDoubleSweepWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/doublesweepwipe/KPrDoubleSweepWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/saloondoorwipe/KPrSaloonDoorWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/saloondoorwipe/KPrSaloonDoorWipeStrategy.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/windshieldwipe/KPrWindShieldWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/clockwipe/windshieldwipe/KPrWindShieldWipeStrategy.cpp
+    ../../../../../../stage/plugins/pageeffects/clockwipe/Plugin.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/KPrClockWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/KPrCenterFanWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/KPrSideFanWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/KPrClockWipeSubpathHelper.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/KPrSweepWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/clockwipe/KPrClockWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/pinwheelwipe/KPrPinWheelWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/singlesweepwipe/KPrSingleSweepWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/singlesweepwipe/KPrSingleSweepWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/fanwipe/KPrFanWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/doublefanwipe/KPrDoubleFanWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/doublesweepwipe/KPrDoubleSweepWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/doublesweepwipe/KPrDoubleSweepWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/saloondoorwipe/KPrSaloonDoorWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/saloondoorwipe/KPrSaloonDoorWipeStrategy.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/windshieldwipe/KPrWindShieldWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/clockwipe/windshieldwipe/KPrWindShieldWipeStrategy.cpp

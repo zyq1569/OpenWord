@@ -8,8 +8,8 @@
 
 
 SOURCES += ../../../../calligra/filters/karbon/xfig/calligra_filter_xfig2odg_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/karbon/xfig/XFigDocument.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/karbon/xfig/XFigStreamLineReader.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/karbon/xfig/XFigParser.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/karbon/xfig/XFigOdgWriter.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/karbon/xfig/XFigImportFilter.cpp
+    ../../../../../filters/karbon/xfig/XFigDocument.cpp \
+    ../../../../../filters/karbon/xfig/XFigStreamLineReader.cpp \
+    ../../../../../filters/karbon/xfig/XFigParser.cpp \
+    ../../../../../filters/karbon/xfig/XFigOdgWriter.cpp \
+    ../../../../../filters/karbon/xfig/XFigImportFilter.cpp

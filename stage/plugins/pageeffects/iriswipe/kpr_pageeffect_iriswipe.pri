@@ -8,15 +8,15 @@
 
 
 SOURCES += ../../../../../calligra/stage/plugins/pageeffects/iriswipe/kpr_pageeffect_iriswipe_autogen/mocs_compilation.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/iriswipe/Plugin.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/iriswipe/KPrIrisWipeEffectStrategyBase.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/iriswipe/irisWipe/KPrIrisWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/iriswipe/triangleWipe/KPrTriangleWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/iriswipe/arrowHeadWipe/KPrArrowHeadWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/iriswipe/ellipseWipe/KPrEllipseWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/iriswipe/roundRectWipe/KPrRoundRectWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/iriswipe/pentagonWipe/KPrPentagonWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/iriswipe/hexagonWipe/KPrHexagonWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/iriswipe/starWipe/KPrStarWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/iriswipe/eyeWipe/KPrEyeWipeEffectFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/plugins/pageeffects/iriswipe/miscShapeWipe/KPrMiscShapeWipeEffectFactory.cpp
+    ../../../../../../stage/plugins/pageeffects/iriswipe/Plugin.cpp \
+    ../../../../../../stage/plugins/pageeffects/iriswipe/KPrIrisWipeEffectStrategyBase.cpp \
+    ../../../../../../stage/plugins/pageeffects/iriswipe/irisWipe/KPrIrisWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/iriswipe/triangleWipe/KPrTriangleWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/iriswipe/arrowHeadWipe/KPrArrowHeadWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/iriswipe/ellipseWipe/KPrEllipseWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/iriswipe/roundRectWipe/KPrRoundRectWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/iriswipe/pentagonWipe/KPrPentagonWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/iriswipe/hexagonWipe/KPrHexagonWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/iriswipe/starWipe/KPrStarWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/iriswipe/eyeWipe/KPrEyeWipeEffectFactory.cpp \
+    ../../../../../../stage/plugins/pageeffects/iriswipe/miscShapeWipe/KPrMiscShapeWipeEffectFactory.cpp

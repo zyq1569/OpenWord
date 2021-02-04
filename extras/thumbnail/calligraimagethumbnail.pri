@@ -8,4 +8,4 @@
 
 
 SOURCES += ../../../calligra/extras/thumbnail/calligraimagethumbnail_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/extras/thumbnail/calligracreator.cpp
+    ../../../../extras/thumbnail/calligracreator.cpp

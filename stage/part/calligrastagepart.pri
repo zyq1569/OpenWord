@@ -8,4 +8,4 @@
 
 
 SOURCES += ../../../calligra/stage/part/calligrastagepart_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/stage/part/KPrFactoryInit.cpp
+    ../../../../stage/part/KPrFactoryInit.cpp

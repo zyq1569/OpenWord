@@ -9,18 +9,18 @@
 
 HEADERS += ../../../calligra/plugins/variables/ui_FixedDateFormat.h
 SOURCES += ../../../calligra/plugins/variables/calligra_textinlineobject_variables_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/variables/VariablesDebug.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/variables/VariablesPlugin.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/variables/UserVariable.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/variables/UserVariableFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/variables/UserVariableOptionsWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/variables/DateVariable.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/variables/DateVariableFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/variables/FixedDateFormat.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/variables/PageVariable.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/variables/PageVariableFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/variables/InfoVariable.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/variables/InfoVariableFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/variables/ChapterVariable.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/variables/ChapterVariableFactory.cpp
-FORMS += ../../../../src/calligra-v3.2.1/plugins/variables/FixedDateFormat.ui
+    ../../../../plugins/variables/VariablesDebug.cpp \
+    ../../../../plugins/variables/VariablesPlugin.cpp \
+    ../../../../plugins/variables/UserVariable.cpp \
+    ../../../../plugins/variables/UserVariableFactory.cpp \
+    ../../../../plugins/variables/UserVariableOptionsWidget.cpp \
+    ../../../../plugins/variables/DateVariable.cpp \
+    ../../../../plugins/variables/DateVariableFactory.cpp \
+    ../../../../plugins/variables/FixedDateFormat.cpp \
+    ../../../../plugins/variables/PageVariable.cpp \
+    ../../../../plugins/variables/PageVariableFactory.cpp \
+    ../../../../plugins/variables/InfoVariable.cpp \
+    ../../../../plugins/variables/InfoVariableFactory.cpp \
+    ../../../../plugins/variables/ChapterVariable.cpp \
+    ../../../../plugins/variables/ChapterVariableFactory.cpp
+FORMS += ../../../../plugins/variables/FixedDateFormat.ui

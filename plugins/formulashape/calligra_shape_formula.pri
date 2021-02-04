@@ -9,14 +9,14 @@
 
 HEADERS += ../../../calligra/plugins/formulashape/ui_FormulaToolWidget.h
 SOURCES += ../../../calligra/plugins/formulashape/calligra_shape_formula_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/formulashape/KoFormulaShapePlugin.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/formulashape/KoFormulaShape.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/formulashape/FormulaCommandUpdate.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/formulashape/KoFormulaShapeFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/formulashape/KoFormulaTool.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/formulashape/FormulaCommand.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/formulashape/KoFormulaToolFactory.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/formulashape/FormulaToolWidget.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/formulashape/FormulaDocument.cpp \
-    ../../../../src/calligra-v3.2.1/plugins/formulashape/FormulaPart.cpp
-FORMS += ../../../../src/calligra-v3.2.1/plugins/formulashape/FormulaToolWidget.ui
+    ../../../../plugins/formulashape/KoFormulaShapePlugin.cpp \
+    ../../../../plugins/formulashape/KoFormulaShape.cpp \
+    ../../../../plugins/formulashape/FormulaCommandUpdate.cpp \
+    ../../../../plugins/formulashape/KoFormulaShapeFactory.cpp \
+    ../../../../plugins/formulashape/KoFormulaTool.cpp \
+    ../../../../plugins/formulashape/FormulaCommand.cpp \
+    ../../../../plugins/formulashape/KoFormulaToolFactory.cpp \
+    ../../../../plugins/formulashape/FormulaToolWidget.cpp \
+    ../../../../plugins/formulashape/FormulaDocument.cpp \
+    ../../../../plugins/formulashape/FormulaPart.cpp
+FORMS += ../../../../plugins/formulashape/FormulaToolWidget.ui

@@ -8,7 +8,7 @@
 
 
 SOURCES += ../../../../calligra/plugins/textediting/thesaurus/calligra_textediting_thesaurus_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/thesaurus/ThesaurusDebug.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/thesaurus/Thesaurus.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/thesaurus/ThesaurusPlugin.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/thesaurus/ThesaurusFactory.cpp
+    ../../../../../plugins/textediting/thesaurus/ThesaurusDebug.cpp \
+    ../../../../../plugins/textediting/thesaurus/Thesaurus.cpp \
+    ../../../../../plugins/textediting/thesaurus/ThesaurusPlugin.cpp \
+    ../../../../../plugins/textediting/thesaurus/ThesaurusFactory.cpp

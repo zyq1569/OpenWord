@@ -8,7 +8,7 @@
 
 
 SOURCES += ../../../../../calligra/filters/words/wiki/export/calligra_filter_odt2wiki_autogen/mocs_compilation.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/wiki/export/WikiExportDebug.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/wiki/export/WikiExport.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/wiki/export/OdtReaderWikiBackend.cpp \
-    ../../../../../../src/calligra-v3.2.1/filters/words/wiki/export/OdfReaderWikiContext.cpp
+    ../../../../../../filters/words/wiki/export/WikiExportDebug.cpp \
+    ../../../../../../filters/words/wiki/export/WikiExport.cpp \
+    ../../../../../../filters/words/wiki/export/OdtReaderWikiBackend.cpp \
+    ../../../../../../filters/words/wiki/export/OdfReaderWikiContext.cpp

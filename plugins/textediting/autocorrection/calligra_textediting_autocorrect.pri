@@ -9,9 +9,9 @@
 
 HEADERS += ../../../../calligra/plugins/textediting/autocorrection/ui_AutocorrectConfig.h
 SOURCES += ../../../../calligra/plugins/textediting/autocorrection/calligra_textediting_autocorrect_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/autocorrection/AutocorrectDebug.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/autocorrection/AutocorrectPlugin.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/autocorrection/Autocorrect.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/autocorrection/AutocorrectFactory.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/textediting/autocorrection/AutocorrectConfigDialog.cpp
-FORMS += ../../../../../src/calligra-v3.2.1/plugins/textediting/autocorrection/AutocorrectConfig.ui
+    ../../../../../plugins/textediting/autocorrection/AutocorrectDebug.cpp \
+    ../../../../../plugins/textediting/autocorrection/AutocorrectPlugin.cpp \
+    ../../../../../plugins/textediting/autocorrection/Autocorrect.cpp \
+    ../../../../../plugins/textediting/autocorrection/AutocorrectFactory.cpp \
+    ../../../../../plugins/textediting/autocorrection/AutocorrectConfigDialog.cpp
+FORMS += ../../../../../plugins/textediting/autocorrection/AutocorrectConfig.ui

@@ -8,4 +8,4 @@
 
 
 SOURCES += ../../../../calligra/filters/karbon/wmf/calligra_filter_karbon2wmf_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/karbon/wmf/WmfExport.cpp
+    ../../../../../filters/karbon/wmf/WmfExport.cpp

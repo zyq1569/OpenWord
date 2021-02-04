@@ -8,4 +8,4 @@
 
 
 SOURCES += ../../../../calligra/filters/stage/kpr2odf/calligra_filter_kpr2odp_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/filters/stage/kpr2odf/Filterkpr2odf.cpp
+    ../../../../../filters/stage/kpr2odf/Filterkpr2odf.cpp

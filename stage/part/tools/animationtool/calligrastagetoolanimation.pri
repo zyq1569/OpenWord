@@ -8,17 +8,17 @@
 
 
 SOURCES += ../../../../../calligra/stage/part/tools/animationtool/calligrastagetoolanimation_autogen/mocs_compilation.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/part/tools/animationtool/Plugin.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/part/tools/animationtool/KPrAnimationTool.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/part/tools/animationtool/KPrAnimationToolFactory.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/part/tools/animationtool/KPrPageEffectDocker.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/part/tools/animationtool/KPrClickActionDocker.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/part/tools/animationtool/KPrShapeAnimationDocker.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/part/tools/animationtool/KPrEditAnimationsWidget.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/part/tools/animationtool/KPrCollectionItemModel.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/part/tools/animationtool/KPrAnimationGroupProxyModel.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/part/tools/animationtool/KPrAnimationSelectorWidget.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/part/tools/animationtool/KPrPredefinedAnimationsLoader.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/part/tools/animationtool/KPrAnimationsTimeLineView.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/part/tools/animationtool/KPrTimeLineHeader.cpp \
-    ../../../../../../src/calligra-v3.2.1/stage/part/tools/animationtool/KPrTimeLineView.cpp
+    ../../../../../../stage/part/tools/animationtool/Plugin.cpp \
+    ../../../../../../stage/part/tools/animationtool/KPrAnimationTool.cpp \
+    ../../../../../../stage/part/tools/animationtool/KPrAnimationToolFactory.cpp \
+    ../../../../../../stage/part/tools/animationtool/KPrPageEffectDocker.cpp \
+    ../../../../../../stage/part/tools/animationtool/KPrClickActionDocker.cpp \
+    ../../../../../../stage/part/tools/animationtool/KPrShapeAnimationDocker.cpp \
+    ../../../../../../stage/part/tools/animationtool/KPrEditAnimationsWidget.cpp \
+    ../../../../../../stage/part/tools/animationtool/KPrCollectionItemModel.cpp \
+    ../../../../../../stage/part/tools/animationtool/KPrAnimationGroupProxyModel.cpp \
+    ../../../../../../stage/part/tools/animationtool/KPrAnimationSelectorWidget.cpp \
+    ../../../../../../stage/part/tools/animationtool/KPrPredefinedAnimationsLoader.cpp \
+    ../../../../../../stage/part/tools/animationtool/KPrAnimationsTimeLineView.cpp \
+    ../../../../../../stage/part/tools/animationtool/KPrTimeLineHeader.cpp \
+    ../../../../../../stage/part/tools/animationtool/KPrTimeLineView.cpp

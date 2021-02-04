@@ -8,22 +8,22 @@
 
 
 SOURCES += ../../../calligra/libs/vectorimage/kovectorimage_autogen/mocs_compilation.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libemf/EmfRecords.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libemf/EmfObjects.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libemf/EmfHeader.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libemf/BitmapHeader.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libemf/Bitmap.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libemf/EmfParser.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libemf/EmfOutput.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libemf/EmfOutputPainterStrategy.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libsvm/SvmStructs.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libsvm/SvmGraphicsContext.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libsvm/SvmParser.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libsvm/SvmPainterBackend.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libwmf/WmfStack.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libwmf/WmfDeviceContext.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libwmf/WmfParser.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libwmf/WmfAbstractBackend.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libwmf/WmfPainterBackend.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/libwmf/WmfWriter.cpp \
-    ../../../../src/calligra-v3.2.1/libs/vectorimage/VectorImageDebug.cpp
+    ../../../../libs/vectorimage/libemf/EmfRecords.cpp \
+    ../../../../libs/vectorimage/libemf/EmfObjects.cpp \
+    ../../../../libs/vectorimage/libemf/EmfHeader.cpp \
+    ../../../../libs/vectorimage/libemf/BitmapHeader.cpp \
+    ../../../../libs/vectorimage/libemf/Bitmap.cpp \
+    ../../../../libs/vectorimage/libemf/EmfParser.cpp \
+    ../../../../libs/vectorimage/libemf/EmfOutput.cpp \
+    ../../../../libs/vectorimage/libemf/EmfOutputPainterStrategy.cpp \
+    ../../../../libs/vectorimage/libsvm/SvmStructs.cpp \
+    ../../../../libs/vectorimage/libsvm/SvmGraphicsContext.cpp \
+    ../../../../libs/vectorimage/libsvm/SvmParser.cpp \
+    ../../../../libs/vectorimage/libsvm/SvmPainterBackend.cpp \
+    ../../../../libs/vectorimage/libwmf/WmfStack.cpp \
+    ../../../../libs/vectorimage/libwmf/WmfDeviceContext.cpp \
+    ../../../../libs/vectorimage/libwmf/WmfParser.cpp \
+    ../../../../libs/vectorimage/libwmf/WmfAbstractBackend.cpp \
+    ../../../../libs/vectorimage/libwmf/WmfPainterBackend.cpp \
+    ../../../../libs/vectorimage/libwmf/WmfWriter.cpp \
+    ../../../../libs/vectorimage/VectorImageDebug.cpp

@@ -10,33 +10,33 @@
 HEADERS += ../../../../calligra/plugins/karbonplugins/tools/ui_FilterEffectEditWidget.h \
     ../../../../calligra/plugins/karbonplugins/tools/ui_KarbonPatternOptionsWidget.h
 SOURCES += ../../../../calligra/plugins/karbonplugins/tools/karbon_tools_autogen/mocs_compilation.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/KarbonToolsPlugin.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/KarbonCursor.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/CalligraphyTool/KarbonCalligraphyTool.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/CalligraphyTool/KarbonCalligraphyOptionWidget.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/CalligraphyTool/KarbonCalligraphyToolFactory.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/CalligraphyTool/KarbonCalligraphicShape.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/CalligraphyTool/KarbonCalligraphicShapeFactory.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/CalligraphyTool/KarbonSimplifyPath.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/KarbonGradientTool.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/KarbonGradientToolFactory.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/KarbonGradientEditStrategy.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/KarbonPatternTool.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/KarbonPatternToolFactory.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/KarbonPatternEditStrategy.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/filterEffectTool/KarbonFilterEffectsTool.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/filterEffectTool/KarbonFilterEffectsToolFactory.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/filterEffectTool/FilterEffectEditWidget.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/filterEffectTool/FilterEffectScene.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/filterEffectTool/FilterEffectSceneItems.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/filterEffectTool/FilterInputChangeCommand.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/filterEffectTool/FilterAddCommand.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/filterEffectTool/FilterRemoveCommand.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/filterEffectTool/FilterStackSetCommand.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/filterEffectTool/FilterRegionChangeCommand.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/filterEffectTool/FilterEffectResource.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/filterEffectTool/FilterResourceServerProvider.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/filterEffectTool/FilterRegionEditStrategy.cpp \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/KarbonPatternOptionsWidget.cpp
-FORMS += ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/filterEffectTool/FilterEffectEditWidget.ui \
-    ../../../../../src/calligra-v3.2.1/plugins/karbonplugins/tools/KarbonPatternOptionsWidget.ui
+    ../../../../../plugins/karbonplugins/tools/KarbonToolsPlugin.cpp \
+    ../../../../../plugins/karbonplugins/tools/KarbonCursor.cpp \
+    ../../../../../plugins/karbonplugins/tools/CalligraphyTool/KarbonCalligraphyTool.cpp \
+    ../../../../../plugins/karbonplugins/tools/CalligraphyTool/KarbonCalligraphyOptionWidget.cpp \
+    ../../../../../plugins/karbonplugins/tools/CalligraphyTool/KarbonCalligraphyToolFactory.cpp \
+    ../../../../../plugins/karbonplugins/tools/CalligraphyTool/KarbonCalligraphicShape.cpp \
+    ../../../../../plugins/karbonplugins/tools/CalligraphyTool/KarbonCalligraphicShapeFactory.cpp \
+    ../../../../../plugins/karbonplugins/tools/CalligraphyTool/KarbonSimplifyPath.cpp \
+    ../../../../../plugins/karbonplugins/tools/KarbonGradientTool.cpp \
+    ../../../../../plugins/karbonplugins/tools/KarbonGradientToolFactory.cpp \
+    ../../../../../plugins/karbonplugins/tools/KarbonGradientEditStrategy.cpp \
+    ../../../../../plugins/karbonplugins/tools/KarbonPatternTool.cpp \
+    ../../../../../plugins/karbonplugins/tools/KarbonPatternToolFactory.cpp \
+    ../../../../../plugins/karbonplugins/tools/KarbonPatternEditStrategy.cpp \
+    ../../../../../plugins/karbonplugins/tools/filterEffectTool/KarbonFilterEffectsTool.cpp \
+    ../../../../../plugins/karbonplugins/tools/filterEffectTool/KarbonFilterEffectsToolFactory.cpp \
+    ../../../../../plugins/karbonplugins/tools/filterEffectTool/FilterEffectEditWidget.cpp \
+    ../../../../../plugins/karbonplugins/tools/filterEffectTool/FilterEffectScene.cpp \
+    ../../../../../plugins/karbonplugins/tools/filterEffectTool/FilterEffectSceneItems.cpp \
+    ../../../../../plugins/karbonplugins/tools/filterEffectTool/FilterInputChangeCommand.cpp \
+    ../../../../../plugins/karbonplugins/tools/filterEffectTool/FilterAddCommand.cpp \
+    ../../../../../plugins/karbonplugins/tools/filterEffectTool/FilterRemoveCommand.cpp \
+    ../../../../../plugins/karbonplugins/tools/filterEffectTool/FilterStackSetCommand.cpp \
+    ../../../../../plugins/karbonplugins/tools/filterEffectTool/FilterRegionChangeCommand.cpp \
+    ../../../../../plugins/karbonplugins/tools/filterEffectTool/FilterEffectResource.cpp \
+    ../../../../../plugins/karbonplugins/tools/filterEffectTool/FilterResourceServerProvider.cpp \
+    ../../../../../plugins/karbonplugins/tools/filterEffectTool/FilterRegionEditStrategy.cpp \
+    ../../../../../plugins/karbonplugins/tools/KarbonPatternOptionsWidget.cpp
+FORMS += ../../../../../plugins/karbonplugins/tools/filterEffectTool/FilterEffectEditWidget.ui \
+    ../../../../../plugins/karbonplugins/tools/KarbonPatternOptionsWidget.ui
