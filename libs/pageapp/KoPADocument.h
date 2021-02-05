@@ -361,4 +361,20 @@ private:
     Private * const d;
 };
 
+#include "KoPAPageProvider.h"
+class Q_DECL_HIDDEN KoPADocument::Private
+{
+public:
+    QList<KoPAPageBase*> pages;
+    QList<KoPAPageBase*> masterPages;
+    KoInlineTextObjectManager *inlineTextObjectManager;
+    bool rulersVisible;
+    KoPAPageProvider *pageProvider;
+    QPointer<KoUpdater> odfProgressUpdater;
+    QPointer<KoUpdater> odfMasterPageProgressUpdater;
+    QPointer<KoUpdater> odfPageProgressUpdater;
+    QString defaultStylesResourcePath;
+    bool showPageMargins;
+};
+
 #endif /* KOPADOCUMENT_H */

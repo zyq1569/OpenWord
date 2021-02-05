@@ -25,7 +25,7 @@
 #include "KoPAMasterPage.h"
 #include "KoPASavingContext.h"
 #include "KoPALoadingContext.h"
-#include "KoPAPageProvider.h"
+//#include "KoPAPageProvider.h"
 #include "commands/KoPAPageDeleteCommand.h"
 
 #include <KoStore.h>
@@ -59,20 +59,20 @@
 
 #include <QPainter>
 
-class Q_DECL_HIDDEN KoPADocument::Private
-{
-public:
-    QList<KoPAPageBase*> pages;
-    QList<KoPAPageBase*> masterPages;
-    KoInlineTextObjectManager *inlineTextObjectManager;
-    bool rulersVisible;
-    KoPAPageProvider *pageProvider;
-    QPointer<KoUpdater> odfProgressUpdater;
-    QPointer<KoUpdater> odfMasterPageProgressUpdater;
-    QPointer<KoUpdater> odfPageProgressUpdater;
-    QString defaultStylesResourcePath;
-    bool showPageMargins;
-};
+//class Q_DECL_HIDDEN KoPADocument::Private
+//{
+//public:
+//    QList<KoPAPageBase*> pages;
+//    QList<KoPAPageBase*> masterPages;
+//    KoInlineTextObjectManager *inlineTextObjectManager;
+//    bool rulersVisible;
+//    KoPAPageProvider *pageProvider;
+//    QPointer<KoUpdater> odfProgressUpdater;
+//    QPointer<KoUpdater> odfMasterPageProgressUpdater;
+//    QPointer<KoUpdater> odfPageProgressUpdater;
+//    QString defaultStylesResourcePath;
+//    bool showPageMargins;
+//};
 
 KoPADocument::KoPADocument(KoPart *part)
     : KoDocument(part),
