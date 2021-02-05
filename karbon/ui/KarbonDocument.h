@@ -110,5 +110,21 @@ private:
     Private * const d;
 };
 
+
+class Q_DECL_HIDDEN KarbonDocument::Private
+{
+public:
+    Private()
+            : showStatusBar(true),
+              merge(false),
+              maxRecentFiles(10)
+    {}
+
+    // KarbonDocument document;  ///< store non-visual doc info
+
+    bool showStatusBar;       ///< enable/disable status bar in attached view(s)
+    bool merge;
+    uint maxRecentFiles;      ///< max. number of files shown in open recent menu item
+};
 #endif // KARBON_DOCUMENT_H
 

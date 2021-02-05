@@ -92,21 +92,21 @@
 // Make sure an appropriate DTD is available in www/calligra/DTD if changing this value
 // static const char * CURRENT_DTD_VERSION = "1.2";
 
-class Q_DECL_HIDDEN KarbonDocument::Private
-{
-public:
-    Private()
-            : showStatusBar(true),
-              merge(false),
-              maxRecentFiles(10)
-    {}
+//class Q_DECL_HIDDEN KarbonDocument::Private
+//{
+//public:
+//    Private()
+//            : showStatusBar(true),
+//              merge(false),
+//              maxRecentFiles(10)
+//    {}
 
-    // KarbonDocument document;  ///< store non-visual doc info
+//    // KarbonDocument document;  ///< store non-visual doc info
 
-    bool showStatusBar;       ///< enable/disable status bar in attached view(s)
-    bool merge;
-    uint maxRecentFiles;      ///< max. number of files shown in open recent menu item
-};
+//    bool showStatusBar;       ///< enable/disable status bar in attached view(s)
+//    bool merge;
+//    uint maxRecentFiles;      ///< max. number of files shown in open recent menu item
+//};
 
 
 KarbonDocument::KarbonDocument(KarbonPart* part)
