@@ -1,3 +1,4 @@
+#K_PLUGIN_FACTORY_WITH_JSON
 #HEADERS +=
 #DESTDIR = ../../../../bin/libs/
 #DESTDIR = ../../bin/libs/
@@ -16,8 +17,9 @@ DEFINES += kotext_EXPORTS kotextlayout_EXPORTS RtfReader_EXPORTS koodfreader_EXP
 DEFINES += calligra_docker_defaults_EXPORTS calligra_docker_stencils_EXPORTS calligra_filter_applixword2odt_EXPORTS
 DEFINES += wordsprivate_EXPORTS calligra_filter_dbase2kspread_EXPORTS calligra_filter_doc2odt_EXPORTS kowv2_EXPORTS
 DEFINES += calligra_filter_docx2odt_EXPORTS komsooxml_EXPORTS calligra_filter_eps2svgai_EXPORTS
-DEFINES += calligra_filter_karbon1x2karbon_EXPORTS karboncommon_EXPORTS karbonui_EXPORTS 
+DEFINES += calligra_filter_karbon1x2karbon_EXPORTS karboncommon_EXPORTS karbonui_EXPORTS
 DEFINES += kopageapp_EXPORTS calligra_filter_karbon2wmf_EXPORTS kovectorimage_EXPORTS calligra_filter_karbon2svg_EXPORTS
+DEFINES += calligra_filter_kpr2odp_EXPORTS
 DEFINES += komain_EXPORTS
 
 #-----selef defined----------

@@ -1,7 +1,7 @@
 
 
-HEADERS += ImageExport.cpp \
-           ImageExportOptionsWidget.cpp
+HEADERS += ImageExport.h \
+           ImageExportOptionsWidget.h
 
 SOURCES += ImageExport.cpp \
            ImageExportOptionsWidget.cpp

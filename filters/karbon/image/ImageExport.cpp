@@ -46,9 +46,9 @@
 #include <kpluginfactory.h>
 
 #include <QImage>
-
-K_PLUGIN_FACTORY_WITH_JSON(PngExportFactory, "calligra_filter_karbon2image.json",
-                           registerPlugin<ImageExport>();)
+///openword
+//K_PLUGIN_FACTORY_WITH_JSON(PngExportFactory, "calligra_filter_karbon2image.json",
+//                           registerPlugin<ImageExport>();)
 
 
 ImageExport::ImageExport(QObject*parent, const QVariantList&)

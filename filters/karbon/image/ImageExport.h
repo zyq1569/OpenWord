@@ -29,7 +29,7 @@
 
 class ImageExport : public KoFilter
 {
-    Q_OBJECT
+//    Q_OBJECT
 
 public:
     ImageExport(QObject* parent, const QVariantList&);
