@@ -42,7 +42,8 @@
 #ifdef HAVE_IEEEFP_H
 #include <ieeefp.h>
 #endif
-
+#include <string.h>
+#include <math.h>
 namespace wvWare {
 #ifdef WORDS_BIGENDIAN
   const unsigned char NaN_Bytes[] = { 0x7f, 0xf8, 0, 0, 0, 0, 0, 0 };
