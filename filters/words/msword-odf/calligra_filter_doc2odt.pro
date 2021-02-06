@@ -40,8 +40,8 @@ INCLUDEPATH += ../msword-odf \
 
 
 LIBS += -L$${DESTDIR} \
-        -lmso \
         -lkowv2 \
+        -lmso \
         -lkomain \
         -lkowidgets \
         -lkotextlayout \
