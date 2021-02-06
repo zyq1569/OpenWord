@@ -71,12 +71,12 @@ const QLoggingCategory &KPRIMPORT_LOG()
 #define errorKpr qCCritical(KPRIMPORT_LOG)
 
 Filterkpr2odf::Filterkpr2odf(QObject *parent, const QVariantList&)
-        : KoFilter(parent)
-        , m_mainDoc(true)
-        , m_documentInfo(true)
-        , m_currentPage(1)
-        , m_objectIndex(1)
-        , m_sticky(false)
+    : KoFilter(parent)
+    , m_mainDoc(true)
+    , m_documentInfo(true)
+    , m_currentPage(1)
+    , m_objectIndex(1)
+    , m_sticky(false)
 {
 }
 
@@ -97,7 +97,7 @@ KoFilter::ConversionStatus Filterkpr2odf::convert(const QByteArray& from, const 
     //Load the document
     //Load maindoc.xml
     if (!input->open("maindoc.xml")) {
-	delete input;
+        delete input;
         return KoFilter::WrongFormat;
     }
     m_mainDoc.setContent(input->device(), false);
@@ -105,7 +105,7 @@ KoFilter::ConversionStatus Filterkpr2odf::convert(const QByteArray& from, const 
 
     //Load documentinfo.xml
     if (!input->open("documentinfo.xml")) {
-	delete input;
+        delete input;
         return KoFilter::WrongFormat;
     }
 
@@ -115,7 +115,7 @@ KoFilter::ConversionStatus Filterkpr2odf::convert(const QByteArray& from, const 
     //Load the preview picture
     QByteArray* preview = new QByteArray();
     if (!input->extractFile("preview.png", *preview)) {
-	delete input;
+        delete input;
         return KoFilter::WrongFormat;
     }
 
@@ -302,7 +302,7 @@ void Filterkpr2odf::convertContent(KoXmlWriter* content)
     KoXmlNode title = titles.firstChild();
     KoXmlNode note = notes.firstChild();
     for (; !title.isNull() && !note.isNull();
-            title = title.nextSibling(), note = note.nextSibling()) {
+         title = title.nextSibling(), note = note.nextSibling()) {
         //Every page is a draw:page
         content->startElement("draw:page");
         content->addAttribute("draw:name", title.toElement().attribute("title"));
@@ -367,7 +367,7 @@ void Filterkpr2odf::convertContent(KoXmlWriter* content)
     //Now store all the shows
     KoXmlElement customSlideShowConfig = m_mainDoc.namedItem("DOC").namedItem("CUSTOMSLIDESHOWCONFIG").toElement();
     for (KoXmlElement customSlideShow = customSlideShowConfig.firstChild().toElement(); !customSlideShow.isNull();
-            customSlideShow = customSlideShow.nextSibling().toElement()) {
+         customSlideShow = customSlideShow.nextSibling().toElement()) {
         content->startElement("presentation:show");
         content->addAttribute("presentation:name", customSlideShow.attribute("name"));
         content->addAttribute("presentation:pages", customSlideShow.attribute("pages"));
@@ -1119,72 +1119,72 @@ void Filterkpr2odf::appendAutoform(KoXmlWriter* content, const KoXmlElement& obj
 
     if (fileName.endsWith("Connection1.atf")) {
         d += QString("M%1 %2").arg((int)(0)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 100)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100));
+                QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(0)) +
+                QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 100)) +
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100));
     } else if (fileName.endsWith("Connection2.atf")) {
         d += QString("M%1 %2").arg((int)(width * 100)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 100)) +
-             QString("L%1 %2").arg((int)(0)).arg((int)(height * 100));
+                QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(0)) +
+                QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 100)) +
+                QString("L%1 %2").arg((int)(0)).arg((int)(height * 100));
     } else if (fileName.endsWith("Connection3.atf")) {
         d += QString("M%1 %2").arg((int)(0)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(0)).arg((int)(height * 0.50 * 100)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 0.50 * 100)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100));
+                QString("L%1 %2").arg((int)(0)).arg((int)(height * 0.50 * 100)) +
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 0.50 * 100)) +
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100));
     } else if (fileName.endsWith("Connection4.atf")) {
         d += QString("M%1 %2").arg((int)(width * 100)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 0.50 * 100)) +
-             QString("L%1 %2").arg((int)(0)).arg((int)(height * 0.50 * 100)) +
-             QString("L%1 %2").arg((int)(0)).arg((int)(height * 100));
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 0.50 * 100)) +
+                QString("L%1 %2").arg((int)(0)).arg((int)(height * 0.50 * 100)) +
+                QString("L%1 %2").arg((int)(0)).arg((int)(height * 100));
     } else if (fileName.endsWith("Connection5.atf")) {
         d += QString("M%1 %2").arg((int)(0)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(0)).arg((int)(height * 0.50 * 100)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 0.50 * 100)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(0)) +
-             QString("M%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 0.50 * 100)) +
-             QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 100));
+                QString("L%1 %2").arg((int)(0)).arg((int)(height * 0.50 * 100)) +
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 0.50 * 100)) +
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(0)) +
+                QString("M%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 0.50 * 100)) +
+                QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 100));
     } else if (fileName.endsWith("Connection6.atf")) {
-             QString("M%1 %2").arg((int)(0)).arg((int)(height * 100)) +
-             QString("L%1 %2").arg((int)(0)).arg((int)(height * 0.50 * 100)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 0.50 * 100)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100)) +
-             QString("M%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 0.50 * 100)) +
-             QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(0));
+        QString("M%1 %2").arg((int)(0)).arg((int)(height * 100)) +
+                QString("L%1 %2").arg((int)(0)).arg((int)(height * 0.50 * 100)) +
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 0.50 * 100)) +
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100)) +
+                QString("M%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 0.50 * 100)) +
+                QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(0));
     } else if (fileName.endsWith("Connection7.atf")) {
         d += QString("M%1 %2").arg((int)(0)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 100)) +
-             QString("L%1 %2").arg((int)(0)).arg((int)(height * 100)) +
-             QString("M%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 0.50 * 100)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 0.50 * 100));
+                QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(0)) +
+                QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 100)) +
+                QString("L%1 %2").arg((int)(0)).arg((int)(height * 100)) +
+                QString("M%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 0.50 * 100)) +
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 0.50 * 100));
     } else if (fileName.endsWith("Connection8.atf")) {
         d += QString("M%1 %2").arg((int)(width * 100)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 100)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100)) +
-             QString("M%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 0.50 * 100)) +
-             QString("L%1 %2").arg((int)(0)).arg((int)(height * 0.50 * 100));
+                QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(0)) +
+                QString("L%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 100)) +
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100)) +
+                QString("M%1 %2").arg((int)(width * 0.50 * 100)).arg((int)(height * 0.50 * 100)) +
+                QString("L%1 %2").arg((int)(0)).arg((int)(height * 0.50 * 100));
     } else if (fileName.endsWith("Connection9.atf")) {
         d += QString("M%1 %2").arg((int)(0)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(0)).arg((int)(height * 100)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(0));
+                QString("L%1 %2").arg((int)(0)).arg((int)(height * 100)) +
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100)) +
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(0));
     } else if (fileName.endsWith("Connection10.atf")) {
         d += QString("M%1 %2").arg((int)(width * 100)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(0)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(0)).arg((int)(height * 100)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100));
+                QString("L%1 %2").arg((int)(0)).arg((int)(0)) +
+                QString("L%1 %2").arg((int)(0)).arg((int)(height * 100)) +
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100));
     } else if (fileName.endsWith("Connection11.atf")) {
         d += QString("M%1 %2").arg((int)(0)).arg((int)(height * 100)) +
-             QString("L%1 %2").arg((int)(0)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100));
+                QString("L%1 %2").arg((int)(0)).arg((int)(0)) +
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(0)) +
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100));
     } else if (fileName.endsWith("Connection12.atf")) {
         d += QString("M%1 %2").arg((int)(0)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(0)) +
-             QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100)) +
-             QString("L%1 %2").arg((int)(0)).arg((int)(height * 100));
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(0)) +
+                QString("L%1 %2").arg((int)(width * 100)).arg((int)(height * 100)) +
+                QString("L%1 %2").arg((int)(0)).arg((int)(height * 100));
     } else {
         //Not implemented
         return;
@@ -1253,9 +1253,9 @@ void Filterkpr2odf::appendArrow(KoXmlWriter* content, const KoXmlElement& object
     matrix.translate(-0.5 * width, -0.5 * height);
 
     QString matrixString = QString("matrix(%1 %2 %3 %4 %5pt %6pt)")
-                           .arg(matrix.m11()).arg(matrix.m12())
-                           .arg(matrix.m21()).arg(matrix.m22())
-                           .arg(matrix.dx()) .arg(matrix.dy());
+            .arg(matrix.m11()).arg(matrix.m12())
+            .arg(matrix.m21()).arg(matrix.m22())
+            .arg(matrix.dx()) .arg(matrix.dy());
 
     content->addAttribute("draw:transform", matrixString);
 
@@ -1343,7 +1343,7 @@ void Filterkpr2odf::appendBezier(KoXmlWriter* content, const KoXmlElement& objec
         int maxY = 0;
 
         d += QString("M%1 %2").arg((int) point1.attribute("point_x").toDouble() * 10000)
-             .arg((int) point1.attribute("point_y").toDouble() * 10000);
+                .arg((int) point1.attribute("point_y").toDouble() * 10000);
         while (!point3.isNull()) { //if point3 is null then point4 is null too, not need to check it
             int point1X = (int)(point1.attribute("point_x").toDouble() * 10000);
             int point1Y = (int)(point1.attribute("point_y").toDouble() * 10000);
@@ -1355,8 +1355,8 @@ void Filterkpr2odf::appendBezier(KoXmlWriter* content, const KoXmlElement& objec
             int point4Y = (int)(point4.attribute("point_y").toDouble() * 10000);
 
             d += QString("C%1 %2 %3 %4 %5 %6").arg(point3X).arg(point3Y)
-                 .arg(point4X).arg(point4Y)
-                 .arg(point2X).arg(point2Y);
+                    .arg(point4X).arg(point4Y)
+                    .arg(point2X).arg(point2Y);
 
             maxX = qMax(point1X, qMax(point2X, qMax(point3X, qMax(point4X, maxX))));
             maxY = qMax(point1Y, qMax(point2Y, qMax(point3Y, qMax(point4Y, maxY))));
@@ -1386,8 +1386,8 @@ void Filterkpr2odf::appendBezier(KoXmlWriter* content, const KoXmlElement& objec
 const QString Filterkpr2odf::getPictureNameFromKey(const KoXmlElement& key)
 {
     return key.attribute("msec") + key.attribute("second") + key.attribute("minute")
-           + key.attribute("hour") + key.attribute("day") + key.attribute("month")
-           + key.attribute("year") + key.attribute("filename");
+            + key.attribute("hour") + key.attribute("day") + key.attribute("month")
+            + key.attribute("year") + key.attribute("filename");
 }
 
 void Filterkpr2odf::set2DGeometry(KoXmlWriter* content, const KoXmlElement& objectElement)
@@ -1567,7 +1567,7 @@ void Filterkpr2odf::exportAnimation(const KoXmlElement& objectElement, int inden
         int presnumValue = presnum.attribute("value", "0").toInt();
 
         QString animationsContents = QString::fromUtf8(animationsBuffer.buffer(),
-                                     animationsBuffer.buffer().size());
+                                                       animationsBuffer.buffer().size());
 
         QList<QString> effectList = m_pageAnimations.take(presnumValue);  //Qt constructs a default object if Key is not found
         effectList.append(animationsContents);
@@ -1689,7 +1689,7 @@ void Filterkpr2odf::exportAnimation(const KoXmlElement& objectElement, int inden
         int num = disappear.attribute("num", "0").toInt();
 
         QString animationsContents = QString::fromUtf8(animationsBuffer.buffer(),
-                                     animationsBuffer.buffer().size());
+                                                       animationsBuffer.buffer().size());
 
         QList<QString> effectList = m_pageAnimations.take(num);  //Qt constructs a default object if Key is not found
         effectList.append(animationsContents);
@@ -1723,4 +1723,3 @@ void Filterkpr2odf::saveAnimations(KoXmlWriter* content)
 
 #include "StylesFilterkpr2odf.cpp"
 
-#include "Filterkpr2odf.moc"

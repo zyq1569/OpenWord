@@ -7,7 +7,7 @@ TARGET = calligra_filter_kpr2odp
 DESTDIR = ../../bin/libs/
 QT += core xml network gui widgets printsupport concurrent dbus
 
-DEFINES += _WINDOWS WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0600 WINVER=0x0600 _WIN32_IE=0x0600 _UNICODE _USE_MATH_DEFINES _CRT_SECURE_NO_DEPRECATE _CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE _SCL_SECURE_NO_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0 QT_USE_QSTRINGBUILDER QT_STRICT_ITERATORS QT_NO_SIGNALS_SLOTS_KEYWORDS QT_NO_URL_CAST_FROM_STRING QT_NO_CAST_TO_ASCII NOMINMAX BOOST_ALL_NO_LIB TRANSLATION_DOMAIN=\"calligrafilters\" QT_XML_LIB QT_WIDGETS_LIB KCOREADDONS_LIB QT_NETWORK_LIB QT_CONCURRENT_LIB QT_DBUS_LIB QT_PRINTSUPPORT_LIB CMAKE_INTDIR=\"Debug\" calligra_filter_kpr2odp_EXPORTS
+#DEFINES += _WINDOWS WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0600 WINVER=0x0600 _WIN32_IE=0x0600 _UNICODE _USE_MATH_DEFINES _CRT_SECURE_NO_DEPRECATE _CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE _SCL_SECURE_NO_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0 QT_USE_QSTRINGBUILDER QT_STRICT_ITERATORS QT_NO_SIGNALS_SLOTS_KEYWORDS QT_NO_URL_CAST_FROM_STRING QT_NO_CAST_TO_ASCII NOMINMAX BOOST_ALL_NO_LIB TRANSLATION_DOMAIN=\"calligrafilters\" QT_XML_LIB QT_WIDGETS_LIB KCOREADDONS_LIB QT_NETWORK_LIB QT_CONCURRENT_LIB QT_DBUS_LIB QT_PRINTSUPPORT_LIB CMAKE_INTDIR=\"Debug\" calligra_filter_kpr2odp_EXPORTS
 INCLUDEPATH += ../../../../../calligra/filters/stage/kpr2odf \
     ../../../../../../filters/stage/kpr2odf \
     ../../../../../calligra/filters/stage/kpr2odf/calligra_filter_kpr2odp_autogen/include_Debug \
@@ -46,27 +46,10 @@ INCLUDEPATH += ../../../../../calligra/filters/stage/kpr2odf \
     ../../../../../calligra/libs/textlayout \
     ../../../../../../libs/main \
     ../../../../../calligra/libs/main \
-    ../../../../../../libs/main/config \
-    $(QTDIR)/./mkspecs/win32-msvc \
-    ../../../../../../../include/KF5/KIOCore \
-    ../../../../../../../include/KF5 \
-    ../../../../../../../include/KF5/KCoreAddons \
-    ../../../../../../../include/KF5/KService \
-    ../../../../../../../include/KF5/KConfigCore \
-    ../../../../../../../include/KF5/KXmlGui \
-    ../../../../../../../include/KF5/KConfigWidgets \
-    ../../../../../../../include/KF5/KCodecs \
-    ../../../../../../../include/KF5/KWidgetsAddons \
-    ../../../../../../../include/KF5/KConfigGui \
-    ../../../../../../../include/KF5/KAuth \
-    ../../../../../../../include/KF5/KTextWidgets \
-    ../../../../../../../include/KF5/SonnetUi \
-    ../../../../../../../include/KF5/KIOWidgets \
-    ../../../../../../../include/KF5/KIOGui \
-    ../../../../../../../include/KF5/KWindowSystem \
-    ../../../../../../../include/KF5/KJobWidgets \
-    ../../../../../../../include/KF5/KCompletion
-LIBS += -L"." \
+    ../../../../../../libs/main/config
+
+
+LIBS += -L$${DESTDIR} \
     -l../../../lib/Debug/komain \
     -l../../../lib/Debug/kowidgets \
     -lD://lib/KF5KIOWidgets \
@@ -89,31 +72,7 @@ LIBS += -L"." \
     -lKF5::I18n \
     -lD://lib/KF5SonnetUi \
     -lD://lib/KF5WindowSystem \
-    -l../../../lib/Debug/koversion \
-    -lD://lib/KF5IconThemes \
-    -lD://lib/KF5ConfigWidgets \
-    -lD://lib/KF5WidgetsAddons \
-    -lD://lib/KF5ConfigGui \
-    -lD://lib/KF5Codecs \
-    -lD://lib/KF5Auth \
-    -lD://lib/KF5AuthCore \
-    -lD://lib/KF5DBusAddons \
-    -lD://lib/KF5CoreAddons \
-    -lD://lib/KF5ConfigCore \
-    -lkernel32 \
-    -luser32 \
-    -lgdi32 \
-    -lwinspool \
-    -lshell32 \
-    -lole32 \
-    -loleaut32 \
-    -luuid \
-    -lcomdlg32 \
-    -ladvapi32 \
-    -l$(NOINHERIT)
-DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
-OBJECTS_DIR += debug
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
+    -l../../../lib/Debug/koversion
+
+include(../../../calligra.pri)
 include(calligra_filter_kpr2odp.pri)
