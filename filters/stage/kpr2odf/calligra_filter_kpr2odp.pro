@@ -8,71 +8,48 @@ DESTDIR = ../../bin/libs/
 QT += core xml network gui widgets printsupport concurrent dbus
 
 #DEFINES += _WINDOWS WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0600 WINVER=0x0600 _WIN32_IE=0x0600 _UNICODE _USE_MATH_DEFINES _CRT_SECURE_NO_DEPRECATE _CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE _SCL_SECURE_NO_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0 QT_USE_QSTRINGBUILDER QT_STRICT_ITERATORS QT_NO_SIGNALS_SLOTS_KEYWORDS QT_NO_URL_CAST_FROM_STRING QT_NO_CAST_TO_ASCII NOMINMAX BOOST_ALL_NO_LIB TRANSLATION_DOMAIN=\"calligrafilters\" QT_XML_LIB QT_WIDGETS_LIB KCOREADDONS_LIB QT_NETWORK_LIB QT_CONCURRENT_LIB QT_DBUS_LIB QT_PRINTSUPPORT_LIB CMAKE_INTDIR=\"Debug\" calligra_filter_kpr2odp_EXPORTS
-INCLUDEPATH += ../../../../../calligra/filters/stage/kpr2odf \
-    ../../../../../../filters/stage/kpr2odf \
-    ../../../../../calligra/filters/stage/kpr2odf/calligra_filter_kpr2odp_autogen/include_Debug \
-    ../../../../../../interfaces \
-    ../../../../../calligra \
-    ../../../../../../src/calligra-v3.2.1 \
-    ../../../../../../winquirks \
-    ../../../../../../libs/version \
-    ../../../../../calligra/libs/version \
-    ../../../../../../libs/text \
-    ../../../../../calligra/libs/text \
-    ../../../../../../libs/text/changetracker \
-    ../../../../../../libs/text/styles \
-    ../../../../../../libs/text/opendocument \
-    ../../../../../../libs/flake \
-    ../../../../../../libs/odf \
-    ../../../../../../libs/store \
-    ../../../../../calligra/libs/odf \
-    ../../../../../calligra/libs/store \
-    ../../../../../../libs/plugin \
-    ../../../../../../libs/pigment \
-    ../../../../../calligra/libs/pigment \
-    ../../../../../../libs/pigment/compositeops \
-    ../../../../../../libs/pigment/resources \
-    ../../../../../../libs/kundo2 \
-    ../../../../../calligra/libs/kundo2 \
-    ../../../../../../libs/widgetutils \
-    ../../../../../../libs/flake/commands \
-    ../../../../../../libs/flake/tools \
-    ../../../../../../libs/flake/svg \
-    ../../../../../calligra/libs/flake \
-    ../../../../../calligra/libs/widgetutils \
-    ../../../../../../libs/widgets \
-    ../../../../../calligra/libs/widgets \
-    ../../../../../../libs/textlayout \
-    ../../../../../calligra/libs/textlayout \
-    ../../../../../../libs/main \
-    ../../../../../calligra/libs/main \
-    ../../../../../../libs/main/config
+INCLUDEPATH +=  ../../../filters/stage/kpr2odf \
+                ../../../../filters/stage/kpr2odf \
+                ../../../interfaces \
+                ../../../winquirks \
+                ../../../libs/version \
+                ../../../libs/text \
+                ../../../libs/text/changetracker \
+                ../../../libs/text/styles \
+                ../../../libs/text/opendocument \
+                ../../../libs/flake \
+                ../../../libs/odf \
+                ../../../libs/store \
+                ../../../libs/odf \
+                ../../../libs/store \
+                ../../../libs/plugin \
+                ../../../libs/pigment \
+                ../../../libs/pigment/compositeops \
+                ../../../libs/pigment/resources \
+                ../../../libs/kundo2 \
+                ../../../libs/widgetutils \
+                ../../../libs/flake/commands \
+                ../../../libs/flake/tools \
+                ../../../libs/flake/svg \
+                ../../../libs/flake \
+                ../../../libs/widgetutils \
+                ../../../libs/widgets \
+                ../../../libs/textlayout \
+                ../../../libs/main \
+                ../../../libs/main/config
 
 
 LIBS += -L$${DESTDIR} \
-    -l../../../lib/Debug/komain \
-    -l../../../lib/Debug/kowidgets \
-    -lD://lib/KF5KIOWidgets \
-    -lD://lib/KF5KIOGui \
-    -lD://lib/KF5JobWidgets \
-    -lD://lib/KF5Completion \
-    -l../../../lib/Debug/kotextlayout \
-    -l../../../lib/Debug/kotext \
-    -l../../../lib/Debug/flake \
-    -l../../../lib/Debug/pigmentcms \
-    -l../../../lib/Debug/kowidgetutils \
-    -l../../../lib/Debug/koodf \
-    -l../../../lib/Debug/kostore \
-    -lD://lib/KF5KIOCore \
-    -lD://lib/KF5Service \
-    -lD://lib/KF5Crash \
-    -l../../../lib/Debug/kundo2 \
-    -lD://lib/KF5XmlGui \
-    -lD://lib/KF5TextWidgets \
-    -lKF5::I18n \
-    -lD://lib/KF5SonnetUi \
-    -lD://lib/KF5WindowSystem \
-    -l../../../lib/Debug/koversion
-
+        -lkomain \
+        -lkowidgets \
+        -lkotextlayout \
+        -lkotext \
+        -lflake \
+        -lpigmentcms \
+        -lkowidgetutils \
+        -lkoodf \
+        -lkostore \
+        -lkundo2 \
+        -lkoversion
 include(../../../calligra.pri)
 include(calligra_filter_kpr2odp.pri)
