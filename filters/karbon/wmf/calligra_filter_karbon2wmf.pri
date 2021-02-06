@@ -7,5 +7,4 @@
 #message("You are running qmake on a generated .pro file. This may not work!")
 
 
-SOURCES += ../../../../calligra/filters/karbon/wmf/calligra_filter_karbon2wmf_autogen/mocs_compilation.cpp \
-    ../../../../../filters/karbon/wmf/WmfExport.cpp
+SOURCES += WmfExport.cpp
