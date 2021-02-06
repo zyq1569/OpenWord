@@ -192,5 +192,5 @@ int WmfExport::coordY(double top)
     return (int)(top * mScaleY);
 }
 
-#include <WmfExport.moc>
+
 
