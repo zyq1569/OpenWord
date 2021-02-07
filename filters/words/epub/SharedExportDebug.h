@@ -41,6 +41,7 @@
 #define SHAREDEXPORT_LOG MOBIEXPORT_LOG
 #endif
 
+
 #define debugSharedExport qCDebug(SHAREDEXPORT_LOG)
 #define warnSharedExport qCWarning(SHAREDEXPORT_LOG)
 #define errorSharedExport qCCritical(SHAREDEXPORT_LOG)
