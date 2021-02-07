@@ -5,8 +5,8 @@ HEADERS +=  MsDocDebug.h \
             texthandler.h \
             paragraph.h \
             tablehandler.h \
-            graphicshandler.h \
-            drawclient.h
+            graphicshandler.h
+#            drawclient.h
 
 SOURCES +=  MsDocDebug.cpp \
             mswordodfimport.cpp \

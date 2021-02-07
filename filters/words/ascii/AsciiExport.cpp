@@ -43,12 +43,12 @@
 #include "OdfReaderAsciiContext.h"
 #include "AsciiExportDebug.h"
 
-
-K_PLUGIN_FACTORY_WITH_JSON(AsciiExportFactory, "calligra_filter_odt2ascii.json",
-			   registerPlugin<AsciiExport>();)
+///openword
+//K_PLUGIN_FACTORY_WITH_JSON(AsciiExportFactory, "calligra_filter_odt2ascii.json",
+//                 registerPlugin<AsciiExport>();)
 
 // Needed to instantiate the plugin factory.
-#include "AsciiExport.moc"
+//#include "AsciiExport.moc"
 
 
 AsciiExport::AsciiExport(QObject *parent, const QVariantList &)
