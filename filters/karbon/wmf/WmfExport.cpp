@@ -43,14 +43,14 @@
 /*
 TODO: bs.wmf stroke in red with MSword and in brown with Words ??
 */
-
-K_PLUGIN_FACTORY_WITH_JSON(WmfExportFactory, "calligra_filter_karbon2wmf.json",
-			   registerPlugin<WmfExport>();)
+///openword
+//K_PLUGIN_FACTORY_WITH_JSON(WmfExportFactory, "calligra_filter_karbon2wmf.json",
+//                           registerPlugin<WmfExport>();)
 
 
 
 WmfExport::WmfExport(QObject*parent, const QVariantList&) :
-        KoFilter(parent)
+    KoFilter(parent)
 {
 }
 

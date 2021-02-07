@@ -56,8 +56,8 @@ using std::cos;
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
-
-K_PLUGIN_FACTORY_WITH_JSON(Filterkpr2odfFactory, "calligra_filter_kpr2odp.json", registerPlugin<Filterkpr2odf>();)
+///openword
+//K_PLUGIN_FACTORY_WITH_JSON(Filterkpr2odfFactory, "calligra_filter_kpr2odp.json", registerPlugin<Filterkpr2odf>();)
 
 
 const QLoggingCategory &KPRIMPORT_LOG()
