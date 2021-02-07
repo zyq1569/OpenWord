@@ -18,4 +18,6 @@
 */
 
 #include "KWFactoryInit.h"
-#include "moc_KWFactoryInit.cpp"
+
+KWFactoryInit::~KWFactoryInit()  {}
+

@@ -5,8 +5,8 @@
 #include <Calligra2Migration.h>
 
 #include <QLoggingCategory>
-
-/*extern "C" Q_DECL_EXPORT */int main(int argc, char **argv)
+#include <QMessageBox>
+/*extern "C"*/ Q_DECL_EXPORT int main(int argc, char **argv)
 {
     /**
      * Disable debug output by default, only log warnings.
@@ -17,11 +17,11 @@
      *
      * See: http://doc.qt.io/qt-5/qloggingcategory.html
      */
-    QLoggingCategory::setFilterRules("calligra.*.debug=true\n"
+//    QLoggingCategory::setFilterRules("calligra.*.debug=true\n"
+//                                     "calligra.*.warning=true");
+    QLoggingCategory::setFilterRules("calligra.*=true\n"
                                      "calligra.*.warning=true");
-
     KoApplication app(WORDS_MIME_TYPE, QStringLiteral("calligrawords"), newWordsAboutData, argc, argv);
-
     // Migrate data from kde4 to kf5 locations
     Calligra2Migration m("calligrawords", "words");
     QStringList qlist = QStringList() << QStringLiteral("wordsrc");
@@ -30,7 +30,6 @@
     qlist = QStringList() << QStringLiteral("words.rc") << QStringLiteral("words_readonly.rc");
     m.setUiFiles(QStringList() << QStringLiteral("words.rc") << QStringLiteral("words_readonly.rc"));
     m.migrate();
-
     if (!app.start())
     {
         return 1;
