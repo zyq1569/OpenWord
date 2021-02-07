@@ -156,7 +156,7 @@ KoApplication::KoApplication(const QByteArray &nativeMimeType,
     KoGlobal::initialize();
 
 #ifndef QT_NO_DBUS
-    KDBusService service(KDBusService::Multiple);
+//    KDBusService service(KDBusService::Multiple);/// openword
 
     new KoApplicationAdaptor(this);
     QDBusConnection::sessionBus().registerObject("/application", this);

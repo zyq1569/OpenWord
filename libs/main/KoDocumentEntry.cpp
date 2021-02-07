@@ -103,16 +103,20 @@ KoPart *KoDocumentEntry::createKoPart(QString* errorMsg) const
     }
 
     QObject *obj = m_loader->instance();
-    KPluginFactory *factory = qobject_cast<KPluginFactory *>(obj);
-    KoPart *part = factory->create<KoPart>(0, QVariantList());
+    if (obj)
+    {
+        KPluginFactory *factory = qobject_cast<KPluginFactory *>(obj);
+        KoPart *part = factory->create<KoPart>(0, QVariantList());
 
-    if (!part) {
-        if (errorMsg)
-            *errorMsg = m_loader->errorString();
-        return 0;
+        if (!part) {
+            if (errorMsg)
+                *errorMsg = m_loader->errorString();
+            return 0;
+        }
+
+        return part;
     }
-
-    return part;
+    return  0;
 }
 
 KoDocumentEntry KoDocumentEntry::queryByMimeType(const QString & mimetype)
