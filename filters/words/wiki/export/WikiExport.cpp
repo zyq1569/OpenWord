@@ -40,15 +40,15 @@
 #include "OdfReaderWikiContext.h"
 #include "WikiExportDebug.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(WikiExportFactory, "calligra_filter_odt2wiki.json",
-			   registerPlugin<WikiExport>();)
+//K_PLUGIN_FACTORY_WITH_JSON(WikiExportFactory, "calligra_filter_odt2wiki.json",
+//                           registerPlugin<WikiExport>();)
 
 // Needed to instantiate the plugin factory.
-#include "WikiExport.moc"
+//#include "WikiExport.moc"
 
 
 WikiExport::WikiExport(QObject *parent, const QVariantList &)
-: KoFilter(parent)
+    : KoFilter(parent)
 {
 }
 

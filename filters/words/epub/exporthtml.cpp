@@ -49,12 +49,12 @@
 #include "SvmParser.h"
 #include "SvmPainterBackend.h"
 
-
-K_PLUGIN_FACTORY_WITH_JSON(ExportHtmlFactory, "calligra_filter_odt2html.json",
-			   registerPlugin<ExportHtml>();)
+///openword
+//K_PLUGIN_FACTORY_WITH_JSON(ExportHtmlFactory, "calligra_filter_odt2html.json",
+//                           registerPlugin<ExportHtml>();)
 
 // Needed to instantiate the plugin factory.
-#include "exporthtml.moc"
+//#include "exporthtml.moc"
 
 
 ExportHtml::ExportHtml(QObject *parent, const QVariantList&)
@@ -172,62 +172,62 @@ KoFilter::ConversionStatus ExportHtml::extractImages(KoStore *odfStore, HtmlFile
         switch (type) {
 
         case ExportHtml::VectorTypeSvm:
-            {
-                debugHtml << "Svm file";
-                QSize size(qSize.width(), qSize.height());
-                QByteArray output;
-                if (!convertSvm(imgContent, output, size)) {
-                    debugHtml << "Svm Parse error";
-                    return KoFilter::ParsingError;
-                }
-
-                epubFile->addContentFile(("image" + QString::number(imgId)),
-                                         (epubFile->pathPrefix() + imgSrc.section('/', -1)),
-                                         "image/svg+xml", output);
-                break;
+        {
+            debugHtml << "Svm file";
+            QSize size(qSize.width(), qSize.height());
+            QByteArray output;
+            if (!convertSvm(imgContent, output, size)) {
+                debugHtml << "Svm Parse error";
+                return KoFilter::ParsingError;
             }
+
+            epubFile->addContentFile(("image" + QString::number(imgId)),
+                                     (epubFile->pathPrefix() + imgSrc.section('/', -1)),
+                                     "image/svg+xml", output);
+            break;
+        }
         case ExportHtml::VectorTypeEmf:
-            {
-                debugHtml << "EMF file";
-                QSize size(qSize.width(), qSize.height());
-                QByteArray output;
-                if (!convertEmf(imgContent, output, size)) {
-                    debugHtml << "EMF Parse error";
-                    return KoFilter::ParsingError;
-                }
-
-                epubFile->addContentFile(("image" + QString::number(imgId)),
-                                         (epubFile->pathPrefix() + imgSrc.section('/', -1)),
-                                         "image/svg+xml", output);
-                break;
+        {
+            debugHtml << "EMF file";
+            QSize size(qSize.width(), qSize.height());
+            QByteArray output;
+            if (!convertEmf(imgContent, output, size)) {
+                debugHtml << "EMF Parse error";
+                return KoFilter::ParsingError;
             }
+
+            epubFile->addContentFile(("image" + QString::number(imgId)),
+                                     (epubFile->pathPrefix() + imgSrc.section('/', -1)),
+                                     "image/svg+xml", output);
+            break;
+        }
         case ExportHtml::VectorTypeWmf:
-            {
-                debugHtml << "WMF file";
-                 QByteArray output;
-                if (!convertWmf(imgContent, output, qSize)) {
-                    debugHtml << "WMF Parse error";
-                    return KoFilter::ParsingError;
-                }
-
-                epubFile->addContentFile(("image" + QString::number(imgId)),
-                                         (epubFile->pathPrefix() + imgSrc.section('/', -1)),
-                                         "image/svg+xml", output);
-                break;
+        {
+            debugHtml << "WMF file";
+            QByteArray output;
+            if (!convertWmf(imgContent, output, qSize)) {
+                debugHtml << "WMF Parse error";
+                return KoFilter::ParsingError;
             }
+
+            epubFile->addContentFile(("image" + QString::number(imgId)),
+                                     (epubFile->pathPrefix() + imgSrc.section('/', -1)),
+                                     "image/svg+xml", output);
+            break;
+        }
 
             // If it's not one of the types we can convert, let's just
             // assume that the image can be used as it is. The user
             // will find out soon anyway when s/he tries to look at
             // the image.
         case ExportHtml::VectorTypeOther:
-            {
-                debugHtml << "Other file";
-                epubFile->addContentFile(("image" + QString::number(imgId)),
-                                         (epubFile->pathPrefix() + imgSrc.section('/', -1)),
-                                         m_manifest.value(imgSrc).toUtf8(), imgContent);
-                break;
-            }
+        {
+            debugHtml << "Other file";
+            epubFile->addContentFile(("image" + QString::number(imgId)),
+                                     (epubFile->pathPrefix() + imgSrc.section('/', -1)),
+                                     m_manifest.value(imgSrc).toUtf8(), imgContent);
+            break;
+        }
 
         default:
             debugHtml << "";

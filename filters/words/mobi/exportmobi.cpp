@@ -33,12 +33,12 @@
 #include "MobiHeaderGenerator.h"
 
 
-
-K_PLUGIN_FACTORY_WITH_JSON(ExportMobiFactory, "calligra_filter_odt2mobi.json",
-			   registerPlugin<ExportMobi>();)
+///openword
+//K_PLUGIN_FACTORY_WITH_JSON(ExportMobiFactory, "calligra_filter_odt2mobi.json",
+//                           registerPlugin<ExportMobi>();)
 
 // Needed to instantiate the plugin factory.
-#include "exportmobi.moc"
+//#include "exportmobi.moc"
 
 
 ExportMobi::ExportMobi(QObject *parent, const QVariantList &) :
