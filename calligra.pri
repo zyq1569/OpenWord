@@ -19,7 +19,8 @@ DEFINES += wordsprivate_EXPORTS calligra_filter_dbase2kspread_EXPORTS calligra_f
 DEFINES += calligra_filter_docx2odt_EXPORTS komsooxml_EXPORTS calligra_filter_eps2svgai_EXPORTS
 DEFINES += calligra_filter_karbon1x2karbon_EXPORTS karboncommon_EXPORTS karbonui_EXPORTS
 DEFINES += kopageapp_EXPORTS calligra_filter_karbon2wmf_EXPORTS kovectorimage_EXPORTS calligra_filter_karbon2svg_EXPORTS
-DEFINES += calligra_filter_kpr2odp_EXPORTS
+DEFINES += calligra_filter_odt2ascii_EXPORTS calligra_filter_odt2docx_EXPORTS
+DEFINES += calligra_filter_kpr2odp_EXPORTS calligra_filter_odt2epub2_EXPORTS
 DEFINES += komain_EXPORTS
 
 #-----selef defined----------
