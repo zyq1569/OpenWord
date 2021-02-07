@@ -41,7 +41,8 @@ INCLUDEPATH +=  ../../ \
                 ../../libs/flake \
                 ../../libs/widgetutils \
                 ../../libs/widgets \
-                ../../libs/main
+                ../../libs/main \
+                ../../words/part
 
 LIBS += -L$${DESTDIR} \
         -lkomain \
@@ -56,43 +57,5 @@ LIBS += -L$${DESTDIR} \
         -lkundo2 \
         -lkoversion
 
-#    -lD://lib/KF5Service \
-#    -lD://lib/KF5KIOWidgets \
-#    -lD://lib/KF5WidgetsAddons \
-#    -lD://lib/KF5KIOGui \
-#    -lD://lib/KF5JobWidgets \
-#    -lD://lib/KF5Completion \
-#    -lD://lib/KF5KIOCore \
-#    -lD://lib/KF5Crash \
-#    -lD://lib/KF5XmlGui \
-#    -lD://lib/KF5WindowSystem \
-#    -lD://lib/KF5TextWidgets \
-#    -lKF5::I18n \
-#    -lD://lib/KF5SonnetUi \
-#    -lD://lib/KF5DBusAddons \
-#    -lD://lib/KF5IconThemes \
-#    -lD://lib/KF5ConfigWidgets \
-#    -lD://lib/KF5ConfigGui \
-#    -lD://lib/KF5Codecs \
-#    -lD://lib/KF5Auth \
-#    -lD://lib/KF5AuthCore \
-#    -lD://lib/KF5ConfigCore \
-#    -lD://lib/KF5CoreAddons \
 
-#    -lkernel32 \
-#    -luser32 \
-#    -lgdi32 \
-#    -lwinspool \
-#    -lshell32 \
-#    -lole32 \
-#    -loleaut32 \
-#    -luuid \
-#    -lcomdlg32 \
-#    -ladvapi32 \
-#    -l$(NOINHERIT)
-#DEPENDPATH += .
-#MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
-#OBJECTS_DIR += debug
-#UI_DIR += ./GeneratedFiles
-#RCC_DIR += ./GeneratedFiles
 include(calligra.pri)
