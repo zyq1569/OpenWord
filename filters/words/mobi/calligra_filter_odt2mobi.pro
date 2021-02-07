@@ -49,7 +49,8 @@ LIBS += -L$${DESTDIR} \
         -lkoodf \
         -lkostore \
         -lkundo2 \
-        -lkoversion
+        -lkoversion \
+        -lcalligra_filter_odt2epub2
 
 include(../../../calligra.pri)
 include(calligra_filter_odt2mobi.pri)
