@@ -45,12 +45,12 @@
 #include "OdfTextReaderDocxBackend.h"
 #include "DocxExportDebug.h"
 
-
-K_PLUGIN_FACTORY_WITH_JSON(DocxExportFactory, "calligra_filter_odt2docx.json",
-			   registerPlugin<DocxExport>();)
+///openword
+//K_PLUGIN_FACTORY_WITH_JSON(DocxExportFactory, "calligra_filter_odt2docx.json",
+//                           registerPlugin<DocxExport>();)
 
 // Needed to instantiate the plugin factory.
-#include "DocxExport.moc"
+//#include "DocxExport.moc"
 
 
 DocxExport::DocxExport(QObject *parent, const QVariantList &)
@@ -66,7 +66,7 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
 {
     // Check for types
     if (from != "application/vnd.oasis.opendocument.text"
-        || to != "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+            || to != "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
         return KoFilter::NotImplemented;
     }
 
