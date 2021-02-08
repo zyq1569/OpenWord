@@ -55,3 +55,11 @@ LIBS += -L$${DESTDIR} \
 
 include(../../calligra.pri)
 include(calligrawordspart.pri)
+
+HEADERS += \
+    KWFactory.h \
+    words_export.h \
+    words_generated_export.h
+
+SOURCES += \
+    KWFactory.cpp
