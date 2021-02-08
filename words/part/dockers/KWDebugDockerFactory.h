@@ -20,9 +20,11 @@
 #ifndef KWDEBUGDOCKERFACTORY_H
 #define KWDEBUGDOCKERFACTORY_H
 
+#include "words_export.h"
+
 #include <KoDockFactoryBase.h>
 
-class KWDebugDockerFactory : public KoDockFactoryBase
+class WORDS_EXPORT KWDebugDockerFactory : public KoDockFactoryBase
 {
 public:
     KWDebugDockerFactory();

@@ -20,11 +20,11 @@
 
 #ifndef KWPAGETOOLFACTORY_H
 #define KWPAGETOOLFACTORY_H
-
+#include "words_export.h"
 #include <KoToolFactoryBase.h>
 
 /// Factory for the KWPageTool
-class KWPageToolFactory : public KoToolFactoryBase {
+class WORDS_EXPORT KWPageToolFactory : public KoToolFactoryBase {
 public:
     /// constructor
     KWPageToolFactory();

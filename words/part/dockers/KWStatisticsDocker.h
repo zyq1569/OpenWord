@@ -61,7 +61,7 @@ public Q_SLOTS:
     void ondockLocationChanged(Qt::DockWidgetArea newArea);
 };
 
-class KWStatisticsDockerFactory : public KoDockFactoryBase
+class WORDS_EXPORT KWStatisticsDockerFactory : public KoDockFactoryBase
 {
 public:
     KWStatisticsDockerFactory();

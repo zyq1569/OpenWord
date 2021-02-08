@@ -20,9 +20,11 @@
 #ifndef KWNAVIGATIONDOCKERFACTORY_H
 #define KWNAVIGATIONDOCKERFACTORY_H
 
+#include "words_export.h"
+
 #include <KoDockFactoryBase.h>
 
-class KWNavigationDockerFactory : public KoDockFactoryBase
+class WORDS_EXPORT KWNavigationDockerFactory : public KoDockFactoryBase
 {
 public:
     KWNavigationDockerFactory();

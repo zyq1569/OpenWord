@@ -30,7 +30,7 @@ class KWFactoryInit : public KWFactory
 
 public:
     explicit KWFactoryInit() : KWFactory() {}
-    ~KWFactoryInit() override;// {}
+    ~KWFactoryInit() override {}
 
 };
 
