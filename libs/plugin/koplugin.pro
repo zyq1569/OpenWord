@@ -15,10 +15,6 @@ INCLUDEPATH +=  ../../ \
     ../../winquirks \
     ../../libs/version
 
-#LIBS += -L$${SDK_LIB_PREFIX} \
-#    -lKF5ConfigCore \
-#    -lKF5ConfigGui \
-#    -lKF5CoreAddons
 
 
 include(../../calligra.pri)

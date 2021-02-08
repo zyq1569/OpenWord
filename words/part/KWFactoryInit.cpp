@@ -19,4 +19,8 @@
 
 #include "KWFactoryInit.h"
 
+KWFactoryInit::~KWFactoryInit()
+{
+
+}
 
