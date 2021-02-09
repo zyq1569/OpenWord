@@ -36,6 +36,9 @@ Plugin::Plugin(QObject *parent, const QVariantList&)
     KoDockRegistry::instance()->add(new ShapePropertiesDockerFactory());
     KoDockRegistry::instance()->add(new ShapeCollectionDockerFactory());
 }
+Plugin::~Plugin()
+{
 
+}
 //#include <Plugin.moc>
 

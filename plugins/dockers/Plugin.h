@@ -21,13 +21,17 @@
 
 #include <QObject>
 #include <QVariantList>
-#include <kpluginfactory.h>
-class Plugin : public QObject {
-//    Q_OBJECT
 
+#include <kpluginfactory.h>
+
+class Plugin : public QObject {
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_docker_defaults.json")
 public:
     Plugin(QObject * parent, const QVariantList & );
-    ~Plugin() override {}
+    ~Plugin() override ;//{}
 };
+
+//K_PLUGIN_FACTORY_WITH_JSON(PluginFactory, "calligra_docker_defaults.json", registerPlugin<Plugin>();)
 
 #endif

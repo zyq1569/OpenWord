@@ -11,7 +11,7 @@ TEMPLATE = subdirs
 SUBDIRS += filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
     libs/basicflakes/basicflakes.pro \
     extras/calligra/calligra.pro \
-#    plugins/dockers/calligra_docker_defaults.pro \
+    plugins/dockers/calligra_docker_defaults.pro \
     plugins/stencilsdocker/calligra_docker_stencils.pro \
 #    filters/words/applixword/calligra_filter_applixword2odt.pro \
 #    filters/words/ascii/calligra_filter_ascii2words.pro \
