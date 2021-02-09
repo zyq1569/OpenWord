@@ -23,8 +23,7 @@ HEADERS +=  ArtisticTextShapePlugin.h \
             SelectTextStrategy.h \
             ReplaceTextRangeCommand.h
 
-SOURCES += .\
-            ArtisticTextShapePlugin.cpp \
+SOURCES +=  ArtisticTextShapePlugin.cpp \
             ArtisticTextShape.cpp \
             ArtisticTextRange.cpp \
             ArtisticTextShapeFactory.cpp \

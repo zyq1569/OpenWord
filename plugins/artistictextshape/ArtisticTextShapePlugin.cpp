@@ -26,8 +26,8 @@
 
 #include <kpluginfactory.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(ArtisticTextShapePluginFactory, "calligra_shape_artistictext.json",
-                 registerPlugin<ArtisticTextShapePlugin>();)
+//K_PLUGIN_FACTORY_WITH_JSON(ArtisticTextShapePluginFactory, "calligra_shape_artistictext.json",
+//                 registerPlugin<ArtisticTextShapePlugin>();)
 
 ArtisticTextShapePlugin::ArtisticTextShapePlugin( QObject * parent, const QVariantList & )
     : QObject(parent)
