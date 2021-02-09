@@ -4,10 +4,10 @@
 
 TEMPLATE = lib
 TARGET = calligra_shape_vector
-DESTDIR = ../../../calligra/bin/Debug
+DESTDIR =  ../../bin/libs/
 QT += core xml network gui svg widgets printsupport concurrent dbus
 
-DEFINES += _WINDOWS WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0600 WINVER=0x0600 _WIN32_IE=0x0600 _UNICODE _USE_MATH_DEFINES _CRT_SECURE_NO_DEPRECATE _CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE _SCL_SECURE_NO_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0 QT_USE_QSTRINGBUILDER QT_STRICT_ITERATORS QT_NO_SIGNALS_SLOTS_KEYWORDS QT_NO_URL_CAST_FROM_STRING QT_NO_CAST_TO_ASCII NOMINMAX BOOST_ALL_NO_LIB TRANSLATION_DOMAIN=\"calligra_shape_vector\" QT_XML_LIB QT_WIDGETS_LIB KCOREADDONS_LIB QT_NETWORK_LIB QT_CONCURRENT_LIB QT_DBUS_LIB QT_PRINTSUPPORT_LIB QT_SVG_LIB CMAKE_INTDIR=\"Debug\" calligra_shape_vector_EXPORTS
+#DEFINES += _WINDOWS WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0600 WINVER=0x0600 _WIN32_IE=0x0600 _UNICODE _USE_MATH_DEFINES _CRT_SECURE_NO_DEPRECATE _CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE _SCL_SECURE_NO_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0 QT_USE_QSTRINGBUILDER QT_STRICT_ITERATORS QT_NO_SIGNALS_SLOTS_KEYWORDS QT_NO_URL_CAST_FROM_STRING QT_NO_CAST_TO_ASCII NOMINMAX BOOST_ALL_NO_LIB TRANSLATION_DOMAIN=\"calligra_shape_vector\" QT_XML_LIB QT_WIDGETS_LIB KCOREADDONS_LIB QT_NETWORK_LIB QT_CONCURRENT_LIB QT_DBUS_LIB QT_PRINTSUPPORT_LIB QT_SVG_LIB CMAKE_INTDIR=\"Debug\" calligra_shape_vector_EXPORTS
 INCLUDEPATH += ../../../../calligra/plugins/vectorshape \
     ../../../../../plugins/vectorshape \
     ../../../../calligra/plugins/vectorshape/calligra_shape_vector_autogen/include_Debug \
@@ -61,7 +61,9 @@ INCLUDEPATH += ../../../../calligra/plugins/vectorshape \
     ../../../../../../include/KF5/KBookmarks \
     ../../../../../../include/KF5/KItemViews \
     ../../../../../../include/KF5/Solid
-LIBS += -L"." \
+
+
+LIBS += -L$${DESTDIR} \
     -l../../lib/Debug/flake \
     -l../../lib/Debug/kovectorimage \
     -lKF5::I18n \
@@ -105,9 +107,7 @@ LIBS += -L"." \
     -lcomdlg32 \
     -ladvapi32 \
     -l$(NOINHERIT)
-DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
-OBJECTS_DIR += debug
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
+
+
+include(../../calligra.pri)
 include(calligra_shape_vector.pri)

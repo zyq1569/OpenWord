@@ -30,8 +30,8 @@
 
 #include <kpluginfactory.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(PathShapesPluginFactory, "calligra_shape_paths.json",
-                           registerPlugin<PathShapesPlugin>();)
+//K_PLUGIN_FACTORY_WITH_JSON(PathShapesPluginFactory, "calligra_shape_paths.json",
+//                           registerPlugin<PathShapesPlugin>();)
 
 PathShapesPlugin::PathShapesPlugin(QObject *parent, const QVariantList&)
     : QObject(parent)
@@ -44,4 +44,4 @@ PathShapesPlugin::PathShapesPlugin(QObject *parent, const QVariantList&)
     KoShapeRegistry::instance()->add(new CalloutShapeFactory());
 }
 
-#include <PathShapesPlugin.moc>
+//#include <PathShapesPlugin.moc>

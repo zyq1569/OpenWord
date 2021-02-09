@@ -29,8 +29,8 @@
 
 #define CACHE_SIZE 40960 //5 images of 2048x1024 at 32bpp
 
-K_PLUGIN_FACTORY_WITH_JSON(PluginFactory, "calligra_shape_picture.json",
-                           registerPlugin<Plugin>();)
+//K_PLUGIN_FACTORY_WITH_JSON(PluginFactory, "calligra_shape_picture.json",
+//                           registerPlugin<Plugin>();)
 
 Plugin::Plugin(QObject *parent, const QVariantList &)
     : QObject(parent)
@@ -43,5 +43,5 @@ Plugin::Plugin(QObject *parent, const QVariantList &)
     KoToolRegistry::instance()->add( new PictureToolFactory() );
 }
 
-#include <Plugin.moc>
+//#include <Plugin.moc>
 

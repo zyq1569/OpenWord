@@ -34,8 +34,8 @@
 
 #include "MusicShapeFactory.h"
 
-K_PLUGIN_FACTORY_WITH_JSON(MusicShapePluginFactory, "calligra_shape_music.json",
-                           registerPlugin<MusicShapePlugin>();)
+//K_PLUGIN_FACTORY_WITH_JSON(MusicShapePluginFactory, "calligra_shape_music.json",
+//                           registerPlugin<MusicShapePlugin>();)
 
 MusicShapePlugin::MusicShapePlugin( QObject *,  const QVariantList& )
 {
@@ -76,4 +76,4 @@ bool MusicShapeFactory::supports(const KoXmlElement & e, KoShapeLoadingContext &
     return ( e.localName() == "shape" ) && ( e.namespaceURI() == "http://www.calligra.org/music" );
 }
 
-#include "MusicShapeFactory.moc"
+//#include "MusicShapeFactory.moc"

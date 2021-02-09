@@ -20,6 +20,7 @@
 
 #include "../core/KeySignature.h"
 
+#include <klocalizedstring.h>
 using namespace MusicCore;
 
 KeySignatureDialog::KeySignatureDialog(QWidget* parent)
