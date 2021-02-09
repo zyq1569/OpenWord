@@ -46,5 +46,5 @@ SOURCES += .\
             SelectTextStrategy.cpp \
             ReplaceTextRangeCommand.cpp
 
-FORMS += ../../../../plugins/artistictextshape/ArtisticTextShapeConfigWidget.ui \
-    ../../../../plugins/artistictextshape/ArtisticTextShapeOnPathWidget.ui
+FORMS += ArtisticTextShapeConfigWidget.ui \
+         ArtisticTextShapeOnPathWidget.ui
