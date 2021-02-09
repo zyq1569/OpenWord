@@ -58,7 +58,8 @@ LIBS += -L$${DESTDIR} \
         -lkowidgetutils \
         -lkoodf \
         -lkostore \
-        -lkoversion
+        -lkoversion \
+        -lkundo2
 
 include(../../calligra.pri)
 include(calligra_shape_formula.pri)

@@ -43,6 +43,7 @@
 #include "FormulaCommandUpdate.h"
 #include "3rdparty/itexToMML/itex2MML.h"
 
+
 KoM2MMLFormulaTool::KoM2MMLFormulaTool(KoCanvasBase* canvas): KoToolBase(canvas), m_lineEdit(0), m_errorLabel(0), m_formulaShape(0), m_comboBox(0)
 {
 
@@ -171,18 +172,20 @@ void KoM2MMLFormulaTool::textEdited()
         }
     } else {
 #endif
-        std::string source = QStringtoStdString(m_lineEdit->text());
-        source = '$' + source + '$';
-        char * mathml = itex2MML_parse (source.c_str(), source.size());
-        
-        if(mathml)
-        {
-            setMathML(mathml, "LaTeX");
-            itex2MML_free_string(mathml);
-            mathml = 0;
-        } else {
-            m_errorLabel->setText(i18n("Parse error."));
-        }
+        ///openword 2021-01-09
+        //std::string source = QStringtoStdString(m_lineEdit->text());
+        //source = '$' + source + '$';
+        //char * mathml = itex2MML_parse (source.c_str(), source.size());
+
+        //if(mathml)
+        //{
+        //    setMathML(mathml, "LaTeX");
+        //    itex2MML_free_string(mathml);
+        //    mathml = 0;
+        //} else {
+        //    m_errorLabel->setText(i18n("Parse error."));
+        //}
+        m_errorLabel->setText(i18n("Parse error."));
 #ifdef HAVE_M2MML
     }
 #endif
@@ -207,24 +210,25 @@ void KoM2MMLFormulaTool::setMathML(const QString& mathml, const QString& mode)
 }
 
 
-KoM2MMLFormulaToolFactory::KoM2MMLFormulaToolFactory()
-           : KoToolFactoryBase("KoM2MMLFormulaToolFactoryId")
-{
-#ifdef HAVE_M2MML
-    setToolTip( i18n( "Edit formula with LaTeX/Matlab syntax" ) );
-#else
-    setToolTip( i18n( "Edit formula with LaTeX syntax" ) );
-#endif
-    setToolType( dynamicToolType() );
-    setIconName(koIconName("edittext"));
-    setPriority( 1 );
-    setActivationShapeId( KoFormulaShapeId );
-}
+//KoM2MMLFormulaToolFactory::KoM2MMLFormulaToolFactory():KoToolFactoryBase("KoM2MMLFormulaToolFactoryId")
+//{
+//#ifdef HAVE_M2MML
+//    setToolTip( i18n( "Edit formula with LaTeX/Matlab syntax" ) );
+//#else
+//    setToolTip( i18n( "Edit formula with LaTeX syntax" ) );
+//#endif
+//    setToolType( dynamicToolType() );
+//    setIconName(koIconName("edittext"));
+//    setPriority( 1 );
+//    setActivationShapeId( KoFormulaShapeId );
+//}
 
-KoM2MMLFormulaToolFactory::~KoM2MMLFormulaToolFactory()
-{}
+//KoM2MMLFormulaToolFactory::~KoM2MMLFormulaToolFactory()
+//{
 
-KoToolBase* KoM2MMLFormulaToolFactory::createTool( KoCanvasBase* canvas )
-{
-    return new KoM2MMLFormulaTool( canvas );
-}
+//}
+
+//KoToolBase* KoM2MMLFormulaToolFactory::createTool( KoCanvasBase* canvas )
+//{
+//    return new KoM2MMLFormulaTool( canvas );
+//}

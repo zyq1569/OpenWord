@@ -34,7 +34,7 @@
  */
 class KoFormulaShapePlugin : public QObject {
     Q_OBJECT
-
+    //Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_formula.json")
 public:
     KoFormulaShapePlugin( QObject* parent, const QVariantList& );
     ~KoFormulaShapePlugin() override;

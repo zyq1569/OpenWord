@@ -10,7 +10,11 @@ HEADERS +=  KoFormulaShapePlugin.h \
             KoFormulaToolFactory.h \
             FormulaToolWidget.h \
             FormulaDocument.h \
-            FormulaPart.h
+            FormulaPart.h \
+            KoM2MMLFormulaToolFactory.h \
+            KoM2MMLForumulaTool.h
+#            3rdparty/itexToMML/itex2MML.h \\
+#            3rdparty/itexToMML/y.tab.h
 
 SOURCES +=  KoFormulaShapePlugin.cpp \
             KoFormulaShape.cpp \
@@ -21,6 +25,10 @@ SOURCES +=  KoFormulaShapePlugin.cpp \
             KoFormulaToolFactory.cpp \
             FormulaToolWidget.cpp \
             FormulaDocument.cpp \
-            FormulaPart.cpp
+            FormulaPart.cpp \
+            KoM2MMLFormulaToolFactory.cpp \
+            KoM2MMLForumulaTool.cpp
+#            3rdparty/itexToMML/lex.yy.c \ \
+#            3rdparty/itexToMML/y.tab.c
 
 FORMS += FormulaToolWidget.ui

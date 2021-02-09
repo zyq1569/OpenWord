@@ -20,9 +20,9 @@
 #include "FormulaCommand.h"
 #include "FormulaCommandUpdate.h"
 #include "FormulaCursor.h"
-#include <klocalizedstring.h> 
 #include "FormulaData.h"
-
+#include "kundo2command.h"
+#include <klocalizedstring.h>
 
 FormulaCommandUpdate::FormulaCommandUpdate (KoFormulaShape* shape, FormulaCommand* command )
                     : KUndo2Command ()

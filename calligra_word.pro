@@ -65,7 +65,7 @@ SUBDIRS += filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
 #    stage/app/kdeinit_calligrastage.pro \
 #    words/app/kdeinit_calligrawords.pro \
 #    karbon/kdeinit_karbon.pro \
-#    plugins/formulashape/koformula.pro \
+    plugins/formulashape/koformula.pro \
     libs/kross/kokross.pro \
     libs/main/komain.pro \
 #    filters/libmsooxml/komsooxml.pro \

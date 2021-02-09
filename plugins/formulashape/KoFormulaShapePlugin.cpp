@@ -27,10 +27,12 @@
 
 #ifndef _MSC_VER
 #include "KoM2MMLForumulaTool.h"
+#include "KoM2MMLFormulaToolFactory.h"
 #endif
 
-K_PLUGIN_FACTORY_WITH_JSON(KoFormulaShapePluginFactory, "calligra_shape_formula.json",
-                           registerPlugin<KoFormulaShapePlugin>();)
+// openword
+//K_PLUGIN_FACTORY_WITH_JSON(KoFormulaShapePluginFactory, "calligra_shape_formula.json",
+//                           registerPlugin<KoFormulaShapePlugin>();)
 
 KoFormulaShapePlugin::KoFormulaShapePlugin( QObject* parent, const QVariantList& )
                     : QObject( parent )
@@ -45,4 +47,4 @@ KoFormulaShapePlugin::KoFormulaShapePlugin( QObject* parent, const QVariantList&
 KoFormulaShapePlugin::~KoFormulaShapePlugin()
 {}
 
-#include "KoFormulaShapePlugin.moc"
+//#include "KoFormulaShapePlugin.moc"

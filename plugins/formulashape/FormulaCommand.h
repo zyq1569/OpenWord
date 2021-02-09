@@ -23,11 +23,13 @@
 #ifndef FORMULACOMMAND_H
 #define FORMULACOMMAND_H
 
+#include "FormulaCursor.h"
+
 #include <kundo2command.h>
 #include <QList>
 #include <QHash>
 #include <QMetaType>
-#include "FormulaCursor.h"
+
 class BasicElement;
 class TokenElement;
 class FormulaData;

@@ -23,6 +23,7 @@ DEFINES += calligra_filter_odt2ascii_EXPORTS calligra_filter_odt2docx_EXPORTS ca
 DEFINES += calligra_filter_kpr2odp_EXPORTS calligra_filter_odt2epub2_EXPORTS calligra_filter_odt2mobi_EXPORTS
 DEFINES += calligrawordspart_EXPORTS calligra_filter_karbon2svg_EXPORTS
 DEFINES += calligra_shape_artistictext_EXPORTS calligra_shape_formula_EXPORTS
+DEFINES += koformula_EXPORTS calligra_shape_music_EXPORTS calligra_shape_paths_EXPORTS
 DEFINES += komain_EXPORTS
 
 #-----selef defined----------
