@@ -1,0 +1,18 @@
+{
+	"Keys": "calligrawordspart",
+	"KPlugin": {
+				"Type":"Service",
+				"Name":"Calligra Word Processing Component"
+				"Name[uk]":"Компонент текстового редактора Calligra",
+				"Name[x-test]":"xxCalligra Word Processing Componentxx",
+				"Name[zh_CN]":"Calligra 字处理组件",
+				"Name[zh_TW]":"Calligra 文書處理組件",
+				"X-KDE-Library":"wordspart",
+				"X-KDE-NativeMimeType":"application/vnd.oasis.opendocument.text",
+				"X-KDE-NativeOasisMimeType":"application/vnd.oasis.opendocument.text",
+				"X-KDE-ExtraNativeMimeTypes":"application/vnd.oasis.opendocument.text-master,application/vnd.oasis.opendocument.text-template",
+				"MimeType":"application/vnd.oasis.opendocument.text-master;application/vnd.oasis.opendocument.text;application/vnd.oasis.opendocument.text-template;application/msword;application/rtf;application/x-mswrite;application/vnd.openxmlformats-officedocument.wordprocessingml.document;application/vnd.openxmlformats-officedocument.wordprocessingml.template;application/vnd.ms-works;application/vnd.wordperfect;",
+				"X-KDE-ServiceTypes":"Calligra/Part",
+				"Icon":"calligrawords"
+				}
+}

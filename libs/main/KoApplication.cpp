@@ -260,6 +260,7 @@ bool KoApplication::start()
     Q_UNUSED(resetStarting);
 
     // Find the part component file corresponding to the application instance name
+    /// 2021-01-08 plugin error? --->json??
     KoDocumentEntry entry;
     QList<QPluginLoader*> pluginLoaders = KoPluginLoader::pluginLoaders("calligra/parts", d->nativeMimeType);
     Q_FOREACH (QPluginLoader *loader, pluginLoaders) {
