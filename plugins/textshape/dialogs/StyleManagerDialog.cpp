@@ -23,7 +23,7 @@
 #include <KoCharacterStyle.h>
 #include <KoParagraphStyle.h>
 #include <QMessageBox>
-
+#include <klocalizedstring.h>
 StyleManagerDialog::StyleManagerDialog(QWidget *parent)
         : KoDialog(parent)
 {

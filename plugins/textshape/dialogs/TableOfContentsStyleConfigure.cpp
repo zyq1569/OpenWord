@@ -26,7 +26,7 @@
 
 #include <QTableView>
 #include <QHeaderView>
-
+#include <klocalizedstring.h>
 TableOfContentsStyleConfigure::TableOfContentsStyleConfigure(KoStyleManager *manager, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TableOfContentsStyleConfigure),

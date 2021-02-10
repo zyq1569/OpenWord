@@ -1,6 +1,6 @@
 
 
-HEADERS +=     TextShapeDebug.cpp \
+HEADERS +=  TextShapeDebug.h \
             TextPlugin.h \
             TextShape.h \
             TextShapeFactory.h \
@@ -95,7 +95,7 @@ HEADERS +=     TextShapeDebug.cpp \
             TextDocumentInspectionDocker.h \
             TextDocumentInspectionDockerFactory.h
 
-SOURCES += .TextShapeDebug.cpp \
+SOURCES +=  TextShapeDebug.cpp \
             TextPlugin.cpp \
             TextShape.cpp \
             TextShapeFactory.cpp \

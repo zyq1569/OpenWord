@@ -35,10 +35,10 @@
 #include <KConfigGroup>
 #endif
 #include <kpluginfactory.h>
-
-K_PLUGIN_FACTORY_WITH_JSON(TextPluginFactory, "calligra_shape_text.json",
-                 registerPlugin<TextPlugin>();
-)
+///openword
+//K_PLUGIN_FACTORY_WITH_JSON(TextPluginFactory, "calligra_shape_text.json",
+//                 registerPlugin<TextPlugin>();
+//)
 
 TextPlugin::TextPlugin(QObject * parent, const QVariantList &)
         : QObject(parent)
@@ -59,4 +59,4 @@ TextPlugin::TextPlugin(QObject * parent, const QVariantList &)
 #endif
 }
 
-#include <TextPlugin.moc>
+//#include <TextPlugin.moc>

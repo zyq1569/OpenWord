@@ -34,7 +34,7 @@
 
 #include <kcharselect.h>
 #include <KIO/Job>
-
+#include <klocalizedstring.h>
 ParagraphBulletsNumbers::ParagraphBulletsNumbers(QWidget *parent)
         : QWidget(parent),
         m_alignmentMode(false),

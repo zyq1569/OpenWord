@@ -20,7 +20,7 @@
 #include "ChangeConfigureDialog.h"
 #include <QColorDialog>
 #include <QPainter>
-
+#include <klocalizedstring.h>
 ColorDisplayLabel::ColorDisplayLabel(QWidget *parent):QLabel(parent), labelColor(255,255,0)
 {
 }

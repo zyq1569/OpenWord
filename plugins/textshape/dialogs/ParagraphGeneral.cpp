@@ -30,7 +30,7 @@
 #include <KoStyleManager.h>
 #include <KoParagraphStyle.h>
 #include <KoStyleThumbnailer.h>
-
+#include <klocalizedstring.h>
 ParagraphGeneral::ParagraphGeneral(QWidget *parent)
         : CharacterGeneral(parent)
         , m_nameHidden(false)

@@ -2912,7 +2912,8 @@ void TextTool::runUrl(KoPointerEvent *event, QString &url)
         QMimeDatabase db;
         QString type = db.mimeTypeForUrl(_url).name();
 
-        if (KRun::isExecutableFile(_url, type)) {
+        ///openword 2021-01-09 ?????
+        //if (KRun::isExecutableFile(_url, type)) {
             QString question = i18n("This link points to the program or script '%1'.\n"
                                     "Malicious programs can harm your computer. "
                                     "Are you sure that you want to run this program?", url);
@@ -2921,11 +2922,11 @@ void TextTool::runUrl(KoPointerEvent *event, QString &url)
             int choice = KMessageBox::warningYesNo(0, question, i18n("Open Link?"));
             if (choice != KMessageBox::Yes)
                 return;
-        }
+        //}
     }
 
     event->accept();
-    new KRun(_url, 0);
+    //new KRun(_url, 0);
 }
 
 void TextTool::debugTextDocument()

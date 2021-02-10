@@ -35,7 +35,7 @@
 #include <KoCharacterStyle.h>
 
 #include <QDebug>
-
+#include <klocalizedstring.h>
 CharacterGeneral::CharacterGeneral(QWidget *parent)
         : QWidget(parent)
         , m_style(0)

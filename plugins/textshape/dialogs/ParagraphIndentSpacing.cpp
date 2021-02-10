@@ -23,7 +23,7 @@
 
 #include <KoParagraphStyle.h>
 #include <QDebug>
-
+#include <klocalizedstring.h>
 ParagraphIndentSpacing::ParagraphIndentSpacing(QWidget *parent)
         : QWidget(parent),
         m_fontMetricsChecked(false)

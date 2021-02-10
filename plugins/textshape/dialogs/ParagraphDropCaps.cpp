@@ -23,7 +23,7 @@
 
 #include "KoParagraphStyle.h"
 #include <QMessageBox>
-
+#include <klocalizedstring.h>
 ParagraphDropCaps::ParagraphDropCaps(QWidget *parent) :
     QWidget(parent)
 {

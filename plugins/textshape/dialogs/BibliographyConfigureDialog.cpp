@@ -28,7 +28,7 @@
 #include <QComboBox>
 #include <QRadioButton>
 #include <QGroupBox>
-
+#include <klocalizedstring.h>
 BibliographyConfigureDialog::BibliographyConfigureDialog(const QTextDocument *document, QWidget *parent) :
     QDialog(parent),
     m_document(document),

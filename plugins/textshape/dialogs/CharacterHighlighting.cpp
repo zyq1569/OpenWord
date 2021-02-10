@@ -31,7 +31,7 @@
 #include <QVBoxLayout>
 #include <QMessageBox>
 #include <QTextCharFormat>
-
+#include <klocalizedstring.h>
 enum Position {
     Normal,
     Superscript,
