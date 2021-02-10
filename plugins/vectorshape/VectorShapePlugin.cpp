@@ -33,9 +33,9 @@
 #include "VectorToolFactory.h"
 #include "VectorShapeFactory.h"
 
-
-K_PLUGIN_FACTORY_WITH_JSON(VectorShapePluginFactory, "calligra_shape_vector.json",
-                 registerPlugin<VectorShapePlugin>();)
+///openword
+//K_PLUGIN_FACTORY_WITH_JSON(VectorShapePluginFactory, "calligra_shape_vector.json",
+//                 registerPlugin<VectorShapePlugin>();)
 
 VectorShapePlugin::VectorShapePlugin(QObject * parent, const QVariantList &)
     : QObject(parent)
@@ -44,4 +44,4 @@ VectorShapePlugin::VectorShapePlugin(QObject * parent, const QVariantList &)
     KoShapeRegistry::instance()->add(new VectorShapeFactory());
 }
 
-#include <VectorShapePlugin.moc>
+//#include <VectorShapePlugin.moc>

@@ -36,7 +36,7 @@ SUBDIRS += filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
     plugins/pluginshape/calligra_shape_plugin.pro \
     plugins/textshape/calligra_shape_text.pro \
     plugins/vectorshape/calligra_shape_vector.pro \
-    plugins/videoshape/calligra_shape_video.pro \
+#    plugins/videoshape/calligra_shape_video.pro \
 #    plugins/textediting/autocorrection/calligra_textediting_autocorrect.pro \
 #    plugins/textediting/changecase/calligra_textediting_changecase.pro \
 #    plugins/textediting/spellcheck/calligra_textediting_spellcheck.pro \
