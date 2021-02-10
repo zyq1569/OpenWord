@@ -6,6 +6,7 @@
 
 #include <QLoggingCategory>
 #include <QMessageBox>
+///???if (KRun::isExecutableFile(_url, type))
 /*extern "C"*/ Q_DECL_EXPORT int main(int argc, char **argv)
 {
     /**
