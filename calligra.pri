@@ -64,7 +64,8 @@ INCLUDEPATH +=  $$SDK_INSTALL_PREFIX \
                 $$SDK_INSTALL_PREFIX/KF5/KNotifications \
                 $$SDK_INSTALL_PREFIX/KF5/KBookmarks \
                 $$SDK_INSTALL_PREFIX/KF5/SonnetUi \
-                $$SDK_INSTALL_PREFIX/KF5/Solid
+                $$SDK_INSTALL_PREFIX/KF5/Solid \
+                $$SDK_INSTALL_PREFIX/phonon4qt5
 
 LIBS += -L$${SDK_LIB_PREFIX} \
         -lws2_32 \

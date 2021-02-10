@@ -61,17 +61,17 @@ class KUndo2Command;
 // We mean it.
 //
 
-class KUndo2CommandPrivate
-{
-public:
-    KUndo2CommandPrivate() : id(-1) {}
-    QList<KUndo2Command*> child_list;
-    QString actionText;
-    KUndo2MagicString text;
-    int id;
+//class KUndo2CommandPrivate
+//{
+//public:
+//    KUndo2CommandPrivate() : id(-1) {}
+//    QList<KUndo2Command*> child_list;
+//    QString actionText;
+//    KUndo2MagicString text;
+//    int id;
 
-    QScopedPointer<KUndo2CommandExtraData> extraData;
-};
+//    QScopedPointer<KUndo2CommandExtraData> extraData;
+//};
 
 #ifndef QT_NO_UNDOSTACK
 
