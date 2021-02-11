@@ -22,12 +22,15 @@
 #include <QObject>
 #include <QVariantList>
 
+#include <kpluginfactory.h>
+
 class TextPlugin : public QObject
 {
     Q_OBJECT
-
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_text.json")
 public:
+    TextPlugin();
     TextPlugin(QObject * parent, const QVariantList &);
-    ~TextPlugin() override {}
+    ~TextPlugin() override;// {}
 };
 #endif
