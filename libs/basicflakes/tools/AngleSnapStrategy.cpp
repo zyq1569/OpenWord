@@ -1,8 +1,4 @@
-
 #include "AngleSnapStrategy.h"
-
-
-
 
 AngleSnapStrategy::AngleSnapStrategy( qreal angleStep, bool active)
     : KoSnapStrategy(KoSnapGuide::CustomSnapping), m_angleStep(angleStep), m_active(active)
