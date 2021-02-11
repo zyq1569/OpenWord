@@ -22,10 +22,11 @@
 
 #include <QObject>
 #include <QVariantList>
+#include <kpluginfactory.h>
 
 class PathShapesPlugin : public QObject {
     Q_OBJECT
-    //Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_paths.json")
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_paths.json")
 public:
     PathShapesPlugin(QObject *parent, const QVariantList &);
     ~PathShapesPlugin() override {}
