@@ -22,13 +22,22 @@
 
 #include <QObject>
 #include <QVariantList>
+#include <kpluginfactory.h>
 
 class Plugin : public QObject
 {
     Q_OBJECT
-    ///Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_picture.json")
 public:
     Plugin(QObject *parent, const QVariantList&);
 };
 
+class PluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE  "calligra_shape_picture.json")
+public:
+    explicit PluginFactory();
+    ~PluginFactory();
+};
 #endif

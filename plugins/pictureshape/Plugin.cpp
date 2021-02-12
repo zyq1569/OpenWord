@@ -25,12 +25,20 @@
 #include <KoToolRegistry.h>
 #include <KoShapeRegistry.h>
 
-#include <kpluginfactory.h>
 
 #define CACHE_SIZE 40960 //5 images of 2048x1024 at 32bpp
 
 //K_PLUGIN_FACTORY_WITH_JSON(PluginFactory, "calligra_shape_picture.json",
 //                           registerPlugin<Plugin>();)
+
+PluginFactory::PluginFactory()
+{
+    registerPlugin<Plugin>();
+}
+PluginFactory::~PluginFactory()
+{
+
+}
 
 Plugin::Plugin(QObject *parent, const QVariantList &)
     : QObject(parent)
