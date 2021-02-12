@@ -10,7 +10,9 @@
 				"Type":"Service",
 				"X-KDE-Library":"calligra_shape_text",
 				"X-Flake-MinVersion":"28",
-				"X-Flake-PluginVersion":"28"
+				"X-Flake-PluginVersion":"28",
+				"Id":"TextShapeID",
+				"TextShapeID":"666"
 				}],
 	"X-KDE-NativeMimeType":"application/vnd.oasis.opendocument.text",
 	"X-KDE-ExtraNativeMimeTypes":"application/vnd.oasis.opendocument.text-master,application/vnd.oasis.opendocument.text-template"		
