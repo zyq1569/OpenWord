@@ -113,3 +113,22 @@ LIBS += -L$${SDK_LIB_PREFIX} \
         -lKF5KrossCore \
         -lKF5KrossUi \
         -lKF5Notifications
+
+
+#define K_PLUGIN_FACTORY_WITH_JSON(name, jsonFile, pluginRegistrations)
+#class name : public KPluginFactory
+#{
+#    Q_OBJECT
+#    Q_INTERFACES(KPluginFactory)
+#	Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE jsonFile)
+#public:
+#    explicit name();
+#    ~name();
+#};
+
+#name::name()
+#{
+#    pluginRegistrations
+#}
+#name::~name()
+# {}
