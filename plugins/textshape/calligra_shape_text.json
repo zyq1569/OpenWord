@@ -1,6 +1,6 @@
 {
 	"Keys": [ "calligra_shape_text" ],
-	"KPlugin": [{
+	"KPlugin": {
 				"Name":"Text Shape",
 				"Name[en_GB":"Text Shape",
 				"Name[zh_CN":"文本形状",
@@ -13,7 +13,10 @@
 				"X-Flake-PluginVersion":"28",
 				"Id":"TextShapeID",
 				"TextShapeID":"666"
-				}],
+				},
+	"Id":"TextShapeID",
+	"TextShapeID":"666",
+	"X-KDE-PluginInfo-Name":"calligra_shape_text",
 	"X-KDE-NativeMimeType":"application/vnd.oasis.opendocument.text",
 	"X-KDE-ExtraNativeMimeTypes":"application/vnd.oasis.opendocument.text-master,application/vnd.oasis.opendocument.text-template"		
 }
