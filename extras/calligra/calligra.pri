@@ -99,3 +99,10 @@ LIBS += -L$${SDK_LIB_PREFIX} \
         -lKF5Notifications
 
 SOURCES += main.cpp
+
+#<PropertyGroup Label="Globals">
+#<ProjectGuid>{84B9CC03-3DB2-39AB-B225-D018AFE22B7B}</ProjectGuid>
+#<Keyword>Win32Proj</Keyword>
+#<Platform>x64</Platform>
+#<ProjectName>calligrawords</ProjectName>
+#    <Keyword>Qt4VSv1.0</Keyword>
