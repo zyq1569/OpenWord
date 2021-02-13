@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ChartTableEditor</class>
+ <widget class="QDialog" name="ChartTableEditor">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>506</width>
+    <height>272</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Data Editor</string>
+  </property>
+  <layout class="QGridLayout">
+   <item row="0" column="0" colspan="2">
+    <layout class="QVBoxLayout" name="tableViewContainer"/>
+   </item>
+   <item row="1" column="1">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="dataSetsInRows">
+        <property name="text">
+         <string>&amp;Data sets in rows</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="dataSetsInColumns">
+        <property name="text">
+         <string>Data sets in &amp;columns</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QToolButton" name="insertRowBelow">
+        <property name="toolTip">
+         <string>Insert data row below selected row</string>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset theme="edit-table-insert-row-below"/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="insertRowAbove">
+        <property name="toolTip">
+         <string>Insert data row above selected row</string>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset theme="edit-table-insert-row-above"/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="insertColumnLeft">
+        <property name="toolTip">
+         <string>Insert data column before selected column</string>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset theme="edit-table-insert-column-left"/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="insertColumnRight">
+        <property name="toolTip">
+         <string>Insert data column after selected column</string>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset theme="edit-table-insert-column-right"/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="deleteSelection">
+        <property name="toolTip">
+         <string>Delete selection</string>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset theme="edit-delete"/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
