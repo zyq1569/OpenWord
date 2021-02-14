@@ -1,4 +1,4 @@
-
+#https://community.kde.org/Calligra/Libs/KoText/Layout_Overview
 TEMPLATE = subdirs
 SUBDIRS += filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
 #    libs/basicflakes/basicflakes.pro \
