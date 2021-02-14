@@ -59,3 +59,6 @@ LIBS += -L$${DESTDIR} \
 
 
 include(calligra.pri)
+
+
+RC_ICONS = calligrawords.ico
