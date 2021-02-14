@@ -62,3 +62,5 @@ include(calligra.pri)
 
 
 RC_ICONS = calligrawords.ico
+
+#nothing run. for what????
