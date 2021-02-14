@@ -120,7 +120,7 @@ LIBS += -L$${SDK_LIB_PREFIX} \
 #{
 #    Q_OBJECT
 #    Q_INTERFACES(KPluginFactory)
-#	Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE jsonFile)
+#    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE jsonFile)
 #public:
 #    explicit name();
 #    ~name();
@@ -131,4 +131,4 @@ LIBS += -L$${SDK_LIB_PREFIX} \
 #    pluginRegistrations
 #}
 #name::~name()
-# {}
+#{}

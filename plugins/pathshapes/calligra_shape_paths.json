@@ -1,6 +1,6 @@
 {
-	"Keys": [ "calligrawordspart" ],
-	"KPlugin": [{
+	"Keys": [ "calligra_shape_paths" ],
+	"KPlugin": {
 				"Name[en_GB":"Path Shapes",
 				"Name[zh_CN":"路径形状",
 				"Name[zh_TW":"路徑元件",
@@ -10,7 +10,9 @@
 				"X-KDE-Library":"calligra_shape_paths",
 				"X-Flake-MinVersion":"28",
 				"X-Flake-PluginVersion":"28"
-				}],
+				},
+	"Id":"pathshapesID",
+	"pathshapesID":"999",
 	"X-KDE-NativeMimeType":"application/vnd.oasis.opendocument.text",
 	"X-KDE-ExtraNativeMimeTypes":"application/vnd.oasis.opendocument.text-master,application/vnd.oasis.opendocument.text-template"		
 }

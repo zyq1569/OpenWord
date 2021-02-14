@@ -1,7 +1,7 @@
 #https://community.kde.org/Calligra/Libs/KoText/Layout_Overview
 TEMPLATE = subdirs
 SUBDIRS += filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
-#    libs/basicflakes/basicflakes.pro \
+    libs/basicflakes/basicflakes.pro \
     extras/calligra/calligra.pro \
     plugins/dockers/calligra_docker_defaults.pro \
     plugins/stencilsdocker/calligra_docker_stencils.pro \
@@ -31,7 +31,7 @@ SUBDIRS += filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
     plugins/artistictextshape/calligra_shape_artistictext.pro \
     plugins/formulashape/calligra_shape_formula.pro \
     plugins/musicshape/calligra_shape_music.pro \
-#    plugins/pathshapes/calligra_shape_paths.pro \
+    plugins/pathshapes/calligra_shape_paths.pro \
     plugins/pictureshape/calligra_shape_picture.pro \
     plugins/pluginshape/calligra_shape_plugin.pro \
     plugins/textshape/calligra_shape_text.pro \
