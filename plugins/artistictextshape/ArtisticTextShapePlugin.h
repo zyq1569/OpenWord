@@ -20,7 +20,7 @@
 #ifndef ARTISTICTEXTSHAPEPLUGIN_H
 #define ARTISTICTEXTSHAPEPLUGIN_H
 
-//#include <kpluginfactory.h>
+#include <kpluginfactory.h>
 
 #include <QObject>
 #include <QVariantList>
@@ -28,10 +28,18 @@
 class ArtisticTextShapePlugin : public QObject
 {
     Q_OBJECT
-//    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_artistictext.json")
 public:
     ArtisticTextShapePlugin( QObject * parent, const QVariantList & );
     ~ArtisticTextShapePlugin() override;
 };
 
+class ArtisticTextShapePluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_artistictext.json")
+public:
+    explicit ArtisticTextShapePluginFactory();
+    ~ArtisticTextShapePluginFactory();
+};
 #endif // ARTISTICTEXTSHAPEPLUGIN_H

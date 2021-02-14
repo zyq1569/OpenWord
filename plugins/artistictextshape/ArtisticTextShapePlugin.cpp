@@ -29,6 +29,16 @@
 //K_PLUGIN_FACTORY_WITH_JSON(ArtisticTextShapePluginFactory, "calligra_shape_artistictext.json",
 //                 registerPlugin<ArtisticTextShapePlugin>();)
 
+ArtisticTextShapePluginFactory::ArtisticTextShapePluginFactory()
+{
+    registerPlugin<ArtisticTextShapePlugin>();
+}
+
+ArtisticTextShapePluginFactory::~ArtisticTextShapePluginFactory()
+{
+
+}
+
 ArtisticTextShapePlugin::ArtisticTextShapePlugin( QObject * parent, const QVariantList & )
     : QObject(parent)
 {
@@ -38,6 +48,7 @@ ArtisticTextShapePlugin::ArtisticTextShapePlugin( QObject * parent, const QVaria
 
 ArtisticTextShapePlugin::~ArtisticTextShapePlugin()
 {
+
 }
 
 //#include <ArtisticTextShapePlugin.moc>
