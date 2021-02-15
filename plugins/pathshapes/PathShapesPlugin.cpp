@@ -28,10 +28,20 @@
 #include "enhancedpath/EnhancedPathShapeFactory.h"
 #include "enhancedpath/CalloutShapeFactory.h"
 
-#include <kpluginfactory.h>
 
 //K_PLUGIN_FACTORY_WITH_JSON(PathShapesPluginFactory, "calligra_shape_paths.json",
 //                           registerPlugin<PathShapesPlugin>();)
+
+PathShapesPluginFactory::PathShapesPluginFactory()
+{
+    registerPlugin<PathShapesPlugin>();
+}
+
+PathShapesPluginFactory::~PathShapesPluginFactory()
+{
+
+}
+
 
 PathShapesPlugin::PathShapesPlugin(QObject *parent, const QVariantList&)
     : QObject(parent)

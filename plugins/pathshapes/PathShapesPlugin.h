@@ -26,11 +26,23 @@
 
 class PathShapesPlugin : public QObject {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_paths.json")
+    //    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_paths.json")
 public:
     PathShapesPlugin(QObject *parent, const QVariantList &);
     ~PathShapesPlugin() override {}
 
 };
+
+class PathShapesPluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_paths.json")
+public:
+    explicit PathShapesPluginFactory();
+    ~PathShapesPluginFactory();
+};
+
+
 
 #endif
