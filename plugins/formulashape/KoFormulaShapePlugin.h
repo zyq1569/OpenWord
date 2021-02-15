@@ -22,6 +22,7 @@
 
 #include <QObject>
 #include <QVariantList>
+#include <kpluginfactory.h>
 
 /**
  * @short A plugin for the formula shape and tool
@@ -34,11 +35,21 @@
  */
 class KoFormulaShapePlugin : public QObject {
     Q_OBJECT
-    //Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_formula.json")
 public:
     KoFormulaShapePlugin( QObject* parent, const QVariantList& );
     ~KoFormulaShapePlugin() override;
 };
+
+class KoFormulaShapePluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_formula.json")
+public:
+    explicit KoFormulaShapePluginFactory();
+    ~KoFormulaShapePluginFactory();
+};
+
 
 #endif
 

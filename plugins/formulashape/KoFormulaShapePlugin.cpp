@@ -1,5 +1,5 @@
 /* This file is part of the KDE project
- * Copyright (C) 2006 Martin Pfeiffer <hubipete@gmx.net> 
+ * Copyright (C) 2006 Martin Pfeiffer <hubipete@gmx.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,7 +23,7 @@
 #include <KoShapeRegistry.h>
 #include <KoToolRegistry.h>
 
-#include <kpluginfactory.h>
+//#include <kpluginfactory.h>
 
 #ifndef _MSC_VER
 #include "KoM2MMLForumulaTool.h"
@@ -34,8 +34,18 @@
 //K_PLUGIN_FACTORY_WITH_JSON(KoFormulaShapePluginFactory, "calligra_shape_formula.json",
 //                           registerPlugin<KoFormulaShapePlugin>();)
 
+KoFormulaShapePluginFactory::KoFormulaShapePluginFactory()
+{
+    registerPlugin<KoFormulaShapePlugin>();
+}
+KoFormulaShapePluginFactory::~KoFormulaShapePluginFactory()
+{
+
+}
+
+
 KoFormulaShapePlugin::KoFormulaShapePlugin( QObject* parent, const QVariantList& )
-                    : QObject( parent )
+    : QObject( parent )
 {
     KoToolRegistry::instance()->add( new KoFormulaToolFactory() );
 #ifndef _MSC_VER
@@ -45,6 +55,8 @@ KoFormulaShapePlugin::KoFormulaShapePlugin( QObject* parent, const QVariantList&
 }
 
 KoFormulaShapePlugin::~KoFormulaShapePlugin()
-{}
+{
+
+}
 
 //#include "KoFormulaShapePlugin.moc"
