@@ -47,7 +47,7 @@ KoImageData::KoImageData()
 
 KoImageData::KoImageData(const KoImageData &imageData)
     : KoShapeUserData(),
-    d(imageData.d)
+      d(imageData.d)
 {
     if (d)
         d->refCount.ref();
@@ -140,23 +140,32 @@ QSizeF KoImageData::imageSize()
 
 QImage KoImageData::image() const
 {
-    if (d->dataStoreState == KoImageDataPrivate::StateNotLoaded) {
+    if (d->dataStoreState == KoImageDataPrivate::StateNotLoaded)
+    {
         // load image
-        if (d->temporaryFile) {
+        if (d->temporaryFile)
+        {
             bool r = d->temporaryFile->open();
-            if (!r) {
+            if (!r)
+            {
                 d->errorCode = OpenFailed;
             }
-            else if (d->errorCode == Success && !d->image.load(d->temporaryFile->fileName(), d->suffix.toLatin1())) {
+            else if (d->errorCode == Success && !d->image.load(d->temporaryFile->fileName(), d->suffix.toLatin1().data()))
+            {
+                /// openword need :imageformats[ size = 9 : qjpeg.dll qgif.dll qwbmp.dll ....]
                 d->errorCode = OpenFailed;
             }
             d->temporaryFile->close();
-        } else {
-            if (d->errorCode == Success && !d->image.load(d->imageLocation.toLocalFile())) {
+        }
+        else
+        {
+            if (d->errorCode == Success && !d->image.load(d->imageLocation.toLocalFile()))
+            {
                 d->errorCode = OpenFailed;
             }
         }
-        if (d->errorCode == Success) {
+        if (d->errorCode == Success)
+        {
             d->dataStoreState = KoImageDataPrivate::StateImageLoaded;
         }
     }
@@ -170,11 +179,11 @@ bool KoImageData::hasCachedImage() const
 
 void KoImageData::setImage(const QImage &image, KoImageCollection *collection)
 {
-  qint64 oldKey = 0;
-  if (d) {
-    oldKey = d->key;
-  }
-  Q_ASSERT(!image.isNull());
+    qint64 oldKey = 0;
+    if (d) {
+        oldKey = d->key;
+    }
+    Q_ASSERT(!image.isNull());
     if (collection) {
         // let the collection first check if it already has one. If it doesn't it'll call this method
         // again and well go to the other clause
@@ -332,7 +341,7 @@ void KoImageData::setImage(const QByteArray &imageData, KoImageCollection *colle
 bool KoImageData::isValid() const
 {
     return d && d->dataStoreState != KoImageDataPrivate::StateEmpty
-        && d->errorCode == Success;
+            && d->errorCode == Success;
 }
 
 bool KoImageData::operator==(const KoImageData &other) const

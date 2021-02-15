@@ -103,8 +103,26 @@ protected:
 private:
     KoShapeStroke *createStroke();
 
+    ///-------------
     Q_DECLARE_PRIVATE(KoCreatePathTool)
+    //inline KoCreatePathToolPrivate* d_func()
+    //{
+    //Q_CAST_IGNORE_ALIGN(return reinterpret_cast<KoCreatePathToolPrivate *>(qGetPtrHelper(d_ptr));)
+    //}
+    //inline const KoCreatePathToolPrivate* d_func() const
+    //{
+    //Q_CAST_IGNORE_ALIGN(return reinterpret_cast<const KoCreatePathToolPrivate *>(qGetPtrHelper(d_ptr));)
+    //}
+    //friend class KoCreatePathToolPrivate;
+    ///-----------------------------------------------------------
     Q_PRIVATE_SLOT(d_func(), void angleDeltaChanged(int))
     Q_PRIVATE_SLOT(d_func(), void angleSnapChanged(int))
 };
+//#define Q_DECLARE_PRIVATE(Class) \
+//    inline Class##Private* d_func() \
+//    { Q_CAST_IGNORE_ALIGN(return reinterpret_cast<Class##Private *>(qGetPtrHelper(d_ptr));) } \
+//    inline const Class##Private* d_func() const \
+//    { Q_CAST_IGNORE_ALIGN(return reinterpret_cast<const Class##Private *>(qGetPtrHelper(d_ptr));) } \
+//    friend class Class##Private;
+
 #endif
