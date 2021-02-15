@@ -19,7 +19,7 @@
 #include <QStringList>
 #include <QFontDatabase>
 
-#include <kpluginfactory.h>
+//#include <kpluginfactory.h>
 #include <klocalizedstring.h>
 #include "MusicDebug.h"
 #include <KoResourcePaths.h>
@@ -36,6 +36,16 @@
 
 //K_PLUGIN_FACTORY_WITH_JSON(MusicShapePluginFactory, "calligra_shape_music.json",
 //                           registerPlugin<MusicShapePlugin>();)
+MusicShapePluginFactory::MusicShapePluginFactory()
+{
+    registerPlugin<MusicShapePlugin>();
+}
+
+MusicShapePluginFactory::~MusicShapePluginFactory()
+{
+}
+
+
 
 MusicShapePlugin::MusicShapePlugin( QObject *,  const QVariantList& )
 {

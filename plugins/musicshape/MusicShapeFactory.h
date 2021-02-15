@@ -19,6 +19,7 @@
 #ifndef MUSIC_SHAPE_FACTORY
 #define MUSIC_SHAPE_FACTORY
 
+#include <kpluginfactory.h>
 
 #include <KoShapeFactoryBase.h>
 #include <QVariantList>
@@ -46,5 +47,16 @@ public:
     KoShape *createDefaultShape(KoDocumentResourceManager *documentResources = 0) const override;
     bool supports(const KoXmlElement & e, KoShapeLoadingContext &context) const override;
 };
+
+class MusicShapePluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_music.json")
+public:
+    explicit MusicShapePluginFactory();
+    ~MusicShapePluginFactory();
+};
+
 
 #endif
