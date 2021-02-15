@@ -4,15 +4,16 @@
 				"Name[en_GB":"Music Shape",
 				"Name[zh_CN":"音乐形状",
 				"Name[zh_TW":"音樂元件",
+				"X-KDE-PluginInfo-Name":"musicshape",
 				"X-KDE-ServiceTypes":"Calligra/Flake",
 				"Type":"Service",
-				"X-KDE-PluginInfo-Name":"shapemusic",
 				"X-KDE-Library":"calligra_shape_music",
 				"X-Flake-MinVersion":"28",
 				"X-Flake-PluginVersion":"28"
 				},
-	"Id":"shapemusicID",
-	"shapemusicID":"11",
+	"X-KDE-PluginInfo-Name":"musicshape",
+	"Id":"musicshapeID",
+	"musicshapeID":"600",
 	"X-KDE-NativeMimeType":"application/vnd.oasis.opendocument.text",
 	"X-KDE-ExtraNativeMimeTypes":"application/vnd.oasis.opendocument.text-master,application/vnd.oasis.opendocument.text-template"		
 }

@@ -11,6 +11,7 @@
 				"X-Flake-MinVersion":"28",
 				"X-Flake-PluginVersion":"28"
 				},
+	"X-KDE-PluginInfo-Name":"shapeformula",
 	"Id":"shapeformulaID",
 	"shapeformulaID":"111",
 	"X-KDE-NativeMimeType":"application/vnd.oasis.opendocument.text",
