@@ -22,6 +22,7 @@
 #ifndef VECTORSHAPE_PLUGIN_H
 #define VECTORSHAPE_PLUGIN_H
 
+#include <kpluginfactory.h>
 
 // Qt
 #include <QObject>
@@ -34,5 +35,16 @@ public:
     VectorShapePlugin(QObject * parent, const QVariantList &);
     ~VectorShapePlugin() override {}
 };
+
+class VectorShapePluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_vector.json")
+public:
+    explicit VectorShapePluginFactory();
+    ~VectorShapePluginFactory();
+};
+
 
 #endif

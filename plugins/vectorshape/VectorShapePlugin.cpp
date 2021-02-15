@@ -23,7 +23,7 @@
 #include "VectorShapePlugin.h"
 
 // KF5
-#include <kpluginfactory.h>
+//#include <kpluginfactory.h>
 
 // Calligra libs
 #include <KoShapeRegistry.h>
@@ -36,6 +36,18 @@
 ///openword
 //K_PLUGIN_FACTORY_WITH_JSON(VectorShapePluginFactory, "calligra_shape_vector.json",
 //                 registerPlugin<VectorShapePlugin>();)
+
+VectorShapePluginFactory::VectorShapePluginFactory()
+{
+    registerPlugin<VectorShapePlugin>();
+}
+
+
+VectorShapePluginFactory::~VectorShapePluginFactory()
+{
+
+
+}
 
 VectorShapePlugin::VectorShapePlugin(QObject * parent, const QVariantList &)
     : QObject(parent)
