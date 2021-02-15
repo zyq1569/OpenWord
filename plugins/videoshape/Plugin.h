@@ -20,6 +20,8 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
+#include <kpluginfactory.h>
+
 #include <QObject>
 #include <QVariantList>
 
@@ -29,5 +31,21 @@ class Plugin : public QObject
 public:
     Plugin(QObject *parent, const QVariantList&);
 };
+
+
+//define K_PLUGIN_FACTORY_WITH_JSON(name, jsonFile, pluginRegistrations)
+class PluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_video.json")
+
+public:
+    explicit PluginFactory();
+    ~PluginFactory();
+};
+
+
+
 
 #endif
