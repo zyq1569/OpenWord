@@ -22,11 +22,23 @@
 
 #include <KoShapeRegistry.h>
 
-#include <kpluginfactory.h>
+//#include <kpluginfactory.h>
 
 ///openword
 //K_PLUGIN_FACTORY_WITH_JSON(PluginFactory, "calligra_shape_plugin.json",
 //                           registerPlugin<Plugin>();)
+
+PluginFactory::PluginFactory()
+{
+    registerPlugin<Plugin>();
+}
+
+PluginFactory::~PluginFactory()
+{
+
+}
+
+
 
 Plugin::Plugin(QObject *parent, const QVariantList &)
     : QObject(parent)

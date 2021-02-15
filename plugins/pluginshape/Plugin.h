@@ -20,6 +20,7 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
+#include <kpluginfactory.h>
 #include <QObject>
 #include <QVariantList>
 
@@ -30,4 +31,14 @@ public:
     Plugin(QObject *parent, const QVariantList&);
 };
 
+
+class PluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_plugin.json")
+public:
+    explicit PluginFactory();
+    ~PluginFactory();
+};
 #endif
