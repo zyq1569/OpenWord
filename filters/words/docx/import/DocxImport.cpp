@@ -46,7 +46,7 @@
 #include <QRegExp>
 #include <QImage>
 
-#include <kpluginfactory.h>
+//#include <kpluginfactory.h>
 
 #include <KoEmbeddedDocumentSaver.h>
 #include <KoDocumentInfo.h>
@@ -57,6 +57,17 @@
 
 //K_PLUGIN_FACTORY_WITH_JSON(DocxImportFactory, "calligra_filter_docx2odt.json", ///openword
 //                           registerPlugin<DocxImport>();)
+
+DocxImportFactory::DocxImportFactory()
+{
+     registerPlugin<DocxImport>();
+}
+
+DocxImportFactory::~DocxImportFactory()
+{
+
+}
+
 
 enum DocxDocumentType {
     DocxDocument,

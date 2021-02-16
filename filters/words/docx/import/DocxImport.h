@@ -26,6 +26,8 @@
 #ifndef DOCXIMPORT_H
 #define DOCXIMPORT_H
 
+#include <kpluginfactory.h>
+
 #include <MsooXmlImport.h>
 #include <QVariantList>
 
@@ -54,5 +56,18 @@ protected:
     class Private;
     Private * const d;
 };
+
+
+class DocxImportFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE  "calligra_filter_docx2odt.json")
+public:
+    explicit DocxImportFactory();
+    ~DocxImportFactory();
+};
+
+
 
 #endif

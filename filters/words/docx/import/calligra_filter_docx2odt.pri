@@ -9,8 +9,9 @@ HEADERS +=  DocxDebug.h \
             DocxXmlFootnoteReader.h \
             DocxXmlEndnoteReader.h \
             DocxXmlSettingsReader.h \
-            DocxImport.h \
-
+            DocxImport.h  \
+            ../../../sheets/xlsx/XlsxChartOdfWriter.h \
+            ../../../sheets/xlsx/XlsxXmlChartReader.h
 
 SOURCES +=  DocxDebug.cpp \
             DocxXmlStylesReader.cpp \

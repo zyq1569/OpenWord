@@ -8,8 +8,8 @@ SUBDIRS += filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
 #    filters/words/applixword/calligra_filter_applixword2odt.pro \
 #    filters/words/ascii/calligra_filter_ascii2words.pro \
 #    filters/sheets/dbase/calligra_filter_dbase2kspread.pro \
-#    filters/words/msword-odf/calligra_filter_doc2odt.pro \
-#    filters/words/docx/import/calligra_filter_docx2odt.pro \
+    filters/words/msword-odf/calligra_filter_doc2odt.pro \
+    filters/words/docx/import/calligra_filter_docx2odt.pro \
 #    filters/karbon/eps/calligra_filter_eps2svgai.pro \
 #    filters/karbon/karbon1.x/calligra_filter_karbon1x2karbon.pro \
 #    filters/karbon/image/calligra_filter_karbon2image.pro \
@@ -82,7 +82,7 @@ SUBDIRS += filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
     libs/version/koversion.pro \
     libs/widgets/kowidgets.pro \
     libs/widgetutils/kowidgetutils.pro \
-#    filters/words/msword-odf/wv2/src/kowv2.pro \
+    filters/words/msword-odf/wv2/src/kowv2.pro \
 #    stage/plugins/pageeffects/barwipe/kpr_pageeffect_barwipe.pro \
 #    stage/plugins/pageeffects/clockwipe/kpr_pageeffect_clockwipe.pro \
 #    stage/plugins/pageeffects/edgewipe/kpr_pageeffect_edgewipe.pro \
