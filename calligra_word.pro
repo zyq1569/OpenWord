@@ -45,7 +45,7 @@ SUBDIRS += filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
 #    libs/basicflakes/plugin/calligra_tool_basicflakes.pro \
 #    plugins/defaultTools/calligra_tool_defaults.pro \
 #    extras/properties/calligradocinfopropspage.pro \
-#    extras/thumbnail/calligraimagethumbnail.pro \
+    extras/thumbnail/calligraimagethumbnail.pro \
 #    stage/plugins/eventactions/calligrastageeventactions.pro \
 #    stage/part/calligrastagepart.pro \
 #    stage/part/calligrastageprivate.pro \
