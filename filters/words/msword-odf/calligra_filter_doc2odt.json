@@ -1,0 +1,20 @@
+{
+	"Keys": [ "calligra_filter_doc2odt" ],
+	"KPlugin": {
+				"Name":"Words MS Word-ODF Import Filter",
+				"Name[en_GB":"Words MS Word-ODF Import Filter",
+				"Name[zh_CN":"Words MS Word-ODF导入过滤器",
+				"Name[zh_TW":"Words MS Word-ODF匯入過濾程式",
+				"X-KDE-PluginInfo-Name":"Words MS Word-ODF Import Filter",
+				"X-KDE-ServiceTypes":"Calligra/Filter",
+				"Type":"Service",
+				"X-KDE-Library":"calligra_filter_doc2odt",
+				"Id":"doc2odtID",
+				"doc2odtID":"123"
+				},
+	"Id":"doc2odtID",
+	"doc2odtID":"123",
+	"X-KDE-PluginInfo-Name":"calligra_filter_doc2odt",
+	"X-KDE-NativeMimeType":"application/vnd.oasis.opendocument.text",
+	"X-KDE-ExtraNativeMimeTypes":"application/vnd.oasis.opendocument.text-master,application/vnd.oasis.opendocument.text-template"		
+}
