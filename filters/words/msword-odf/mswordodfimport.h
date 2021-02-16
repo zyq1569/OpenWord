@@ -24,7 +24,7 @@
 #define MSWORDODFIMPORT_H
 
 #include <KoFilter.h>
-
+#include <kpluginfactory.h>
 #include <QByteArray>
 #include <QVariantList>
 
@@ -43,7 +43,18 @@ private:
     // checks from FIB if document is encrypted
     bool isEncrypted(const QString &inputfile);
 
-
 };
+
+
+class MSWordOdfImportFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_filter_doc2odt.json")
+public:
+    explicit MSWordOdfImportFactory();
+    ~MSWordOdfImportFactory();
+};
+
 
 #endif // MSWORDODFIMPORT_H

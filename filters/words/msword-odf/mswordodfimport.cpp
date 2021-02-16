@@ -28,7 +28,7 @@
 #include <QBuffer>
 #include <QByteArray>
 
-#include <kpluginfactory.h>
+//#include <kpluginfactory.h>
 
 #include <KoFilterChain.h>
 #include <KoOdfWriteStore.h>
@@ -47,6 +47,18 @@ bool readStream(POLE::Storage& storage, const char* streampath, QBuffer& buffer)
 ///openword
 //K_PLUGIN_FACTORY_WITH_JSON(MSWordOdfImportFactory, "calligra_filter_doc2odt.json",
 //                           registerPlugin<MSWordOdfImport>();)
+
+MSWordOdfImportFactory::MSWordOdfImportFactory()
+{
+    registerPlugin<MSWordOdfImport>();
+}
+
+MSWordOdfImportFactory::~MSWordOdfImportFactory()
+{
+
+}
+
+
 
 
 MSWordOdfImport::MSWordOdfImport(QObject *parent, const QVariantList&)

@@ -4,7 +4,8 @@
 
 TEMPLATE = lib
 TARGET = calligra_filter_doc2odt
-DESTDIR = ../../../bin/libs/
+LIBDIR =  ../../../bin/libs/
+DESTDIR = ../../../bin/libs/calligra/formatfilters
 QT += core xml network gui widgets printsupport concurrent dbus
 
 INCLUDEPATH += ../msword-odf \
@@ -39,7 +40,7 @@ INCLUDEPATH += ../msword-odf \
             ../../../filters/words/msword-odf/wv2/src
 
 
-LIBS += -L$${DESTDIR} \
+LIBS += -L$${LIBDIR} \
         -lkowv2 \
         -lmso \
         -lkomain \
