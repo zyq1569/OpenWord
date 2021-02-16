@@ -1,0 +1,24 @@
+{
+	"Keys": [ "calligra_filter_docx2odt" ],
+	"KPlugin": {
+				"Name":"MS Word 2007 Import Filter for Words",
+				"Name[en_GB":"MS Word 2007 Import Filter for Words",
+				"Name[zh_CN":"Words MS Word 2007 导入过滤器",
+				"Name[zh_TW":"Words 的 Microsoft Word 2007 匯入過濾程式",
+				"X-KDE-PluginInfo-Name":"MS Word 2007 Import Filter for Words",
+				"X-KDE-ServiceTypes":"Calligra/Filter",
+				"Type":"Service",
+				"X-KDE-Library":"calligra_filter_docx2odt",
+				"X-Filter-MinVersion":"28",
+				"X-Filter-PluginVersion":"28",
+				"Id":"docx2odtID",
+				"docx2odtID":"124"
+				},
+	"Id":"docx2odtID",
+	"docx2odtID":"124",
+	"X-KDE-Export":"application/vnd.oasis.opendocument.text",
+	"X-KDE-Import":"application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.wordprocessingml.template,application/vnd.ms-word.document.macroEnabled.12,application/vnd.ms-word.template.macroEnabled.12",
+	"X-KDE-Weight":"1",
+	"X-KDE-Library":"calligra_filter_docx2odt",
+	"X-KDE-ServiceTypes":"Calligra/Filter"		
+}
