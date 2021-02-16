@@ -8,10 +8,12 @@
 				"X-KDE-PluginInfo-Name":"MS Word 2007 Import Filter for Words",
 				"X-KDE-ServiceTypes":"Calligra/Filter",
 				"Type":"Service",
-				"X-KDE-Library":"calligra_filter_docx2odt",
-				"X-Filter-MinVersion":"28",
-				"X-Filter-PluginVersion":"28",
 				"Id":"docx2odtID",
+				"X-KDE-Export":"application/vnd.oasis.opendocument.text",
+				"X-KDE-Import":"application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.wordprocessingml.template,application/vnd.ms-word.document.macroEnabled.12,application/vnd.ms-word.template.macroEnabled.12",
+				"X-KDE-Weight":"1",
+				"X-KDE-Library":"calligra_filter_docx2odt",
+				"X-KDE-PluginInfo-Name":"calligra_filter_docx2odt",
 				"docx2odtID":"124"
 				},
 	"Id":"docx2odtID",
@@ -20,5 +22,8 @@
 	"X-KDE-Import":"application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.wordprocessingml.template,application/vnd.ms-word.document.macroEnabled.12,application/vnd.ms-word.template.macroEnabled.12",
 	"X-KDE-Weight":"1",
 	"X-KDE-Library":"calligra_filter_docx2odt",
-	"X-KDE-ServiceTypes":"Calligra/Filter"		
+	"X-KDE-ServiceTypes":"Calligra/Filter",
+	"X-KDE-PluginInfo-Name":"calligra_filter_docx2odt",
+	"X-KDE-NativeMimeType":"application/vnd.oasis.opendocument.text",
+	"X-KDE-ExtraNativeMimeTypes":"application/vnd.oasis.opendocument.text-master,application/vnd.oasis.opendocument.text-template"		
 }
