@@ -36,10 +36,10 @@ static const int timeoutTime = 5000; // in msec
 
 extern "C"
 {
-    Q_DECL_EXPORT ThumbCreator *new_creator()
-    {
-        return new CalligraCreator;
-    }
+Q_DECL_EXPORT ThumbCreator *new_creator()
+{
+    return new CalligraCreator;
+}
 }
 
 CalligraCreator::CalligraCreator()
@@ -59,18 +59,20 @@ bool CalligraCreator::create(const QString &path, int width, int height, QImage 
     KoStore *store = KoStore::createStore(path, KoStore::Read);
 
     if (store &&
-         // ODF thumbnail?
-        (store->open(QLatin1String("Thumbnails/thumbnail.png")) ||
-         // old KOffice/Calligra thumbnail?
-         store->open(QLatin1String("preview.png")) ||
-         // OOXML?
-         store->open(QLatin1String("docProps/thumbnail.jpeg")))) {
+            // ODF thumbnail?
+            (store->open(QLatin1String("Thumbnails/thumbnail.png")) ||
+             // old KOffice/Calligra thumbnail?
+             store->open(QLatin1String("preview.png")) ||
+             // OOXML?
+             store->open(QLatin1String("docProps/thumbnail.jpeg"))))
+    {
         // Hooray! No long delay for the user...
         const QByteArray thumbnailData = store->read(store->size());
 
         QImage thumbnail;
         if (thumbnail.loadFromData(thumbnailData) &&
-            thumbnail.width() >= width && thumbnail.height() >= height) {
+                thumbnail.width() >= width && thumbnail.height() >= height)
+        {
             // put a white background behind the thumbnail
             // as lots of old(?) OOo files have thumbnails with transparent background
             image = QImage(thumbnail.size(), QImage::Format_RGB32);
@@ -90,7 +92,10 @@ bool CalligraCreator::create(const QString &path, int width, int height, QImage 
     m_part = documentEntry.createKoPart(&error);
 
 
-    if (!m_part) return false;
+    if (!m_part)
+    {
+        return false;
+    }
 
     m_doc = m_part->document();
 
@@ -103,13 +108,15 @@ bool CalligraCreator::create(const QString &path, int width, int height, QImage 
     m_loadingCompleted = false;
 
     const QUrl url = QUrl::fromLocalFile(path);
-    if (!m_doc->openUrl(url)) {
+    if (!m_doc->openUrl(url))
+    {
         delete m_doc;
         m_doc = 0;
         return false;
     }
 
-    if (! m_loadingCompleted) {
+    if (! m_loadingCompleted)
+    {
         // loading is done async, so wait here for a while
         // Using a QEventLoop here seems fine, thumbnailers are only used inside the
         // thumbnail protocol slave, it seems
@@ -117,7 +124,8 @@ bool CalligraCreator::create(const QString &path, int width, int height, QImage 
         m_eventLoop.exec(QEventLoop::ExcludeUserInputEvents);
     }
 
-    if (m_loadingCompleted) {
+    if (m_loadingCompleted)
+    {
         // render the page on a bigger pixmap and use smoothScale,
         // looks better than directly scaling with the QPainter (malte)
         const bool usePassedSize = (width > minThumbnailSize && height > minThumbnailSize);
@@ -143,6 +151,6 @@ ThumbCreator::Flags CalligraCreator::flags() const
 #ifdef NO_ICON_BLENDING
     return DrawFrame;
 #else
-    return (Flags)(DrawFrame | BlendIcon);
+    return (Flags)(/*DrawFrame|*/  BlendIcon);///openword
 #endif
 }
