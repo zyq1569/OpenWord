@@ -1,0 +1,22 @@
+{
+	"Keys": [ "calligra_tool_basicflakes" ],
+	"KPlugin": {
+				"Name":"Basic Flakes",
+				"Name[en_GB":"Basic Flakes",
+				"Name[zh_CN":"Basic Flakes",
+				"Name[zh_TW":"Basic Flakes",
+				"X-KDE-PluginInfo-Name":"basicflakesplugin",
+				"X-KDE-ServiceTypes":"Calligra/Tool",
+				"Type":"Service",
+				"X-KDE-Library":"calligra_tool_basicflakes",
+				"X-Flake-MinVersion":"28",
+				"X-Flake-PluginVersion":"28",
+				"Id":"BasicFlakesID",
+				"BasicFlakesID":"1666"
+				},
+	"Id":"BasicFlakesID",
+	"BasicFlakesID":"1666",
+	"X-KDE-PluginInfo-Name":"calligra_tool_basicflakes",
+	"X-KDE-NativeMimeType":"application/vnd.oasis.opendocument.text",
+	"X-KDE-ExtraNativeMimeTypes":"application/vnd.oasis.opendocument.text-master,application/vnd.oasis.opendocument.text-template"		
+}

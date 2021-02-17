@@ -1,0 +1,34 @@
+{
+	"Keys": [ "calligra_tool_defaults" ],
+	"KPlugin": {
+				"Name":"Default Flake Tools",
+				"Name[en_GB":"Default Flake Tools",
+				"Name[zh_CN":"默认 Flake 工具",
+				"Name[zh_TW":"預設 Flake 工具",
+				"X-KDE-PluginInfo-Name":"defaulttools",
+				"X-KDE-ServiceTypes":"Calligra/Tool",
+				"Type":"Service",
+				"X-KDE-Library":"calligra_tool_defaults",
+				"X-Flake-MinVersion":"28",
+				"X-Flake-PluginVersion":"28",
+				"Id":"defaulttoolsID",
+				"defaulttoolsID":"612"
+				},
+	"Id":"defaulttoolsID",
+	"defaulttoolsID":"621",
+	"X-KDE-PluginInfo-Name":"defaulttools",
+	"X-KDE-NativeMimeType":"application/vnd.oasis.opendocument.text",
+	"X-KDE-ExtraNativeMimeTypes":"application/vnd.oasis.opendocument.text-master,application/vnd.oasis.opendocument.text-template"		
+}
+
+[Desktop Entry]
+Name=Default Flake Tools
+Name[x-test]=xxDefault Flake Toolsxx
+Name[zh_CN]=默认 Flake 工具
+Name[zh_TW]=預設 Flake 工具
+X-KDE-ServiceTypes=Calligra/Tool
+Type=Service
+X-KDE-PluginInfo-Name=defaulttools
+X-KDE-Library=calligra_tool_defaults
+X-Flake-MinVersion=28
+X-Flake-PluginVersion=28
