@@ -18,4 +18,16 @@
  */
 
 #include "KarbonFactoryInit.h"
-#include "moc_KarbonFactoryInit.cpp"
+
+KarbonFactoryInit::KarbonFactoryInit() : KarbonFactory()
+{
+
+}
+
+KarbonFactoryInit::~KarbonFactoryInit()
+{
+
+}
+
+
+//#include "moc_KarbonFactoryInit.cpp"
