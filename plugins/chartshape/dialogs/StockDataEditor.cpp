@@ -20,6 +20,8 @@
 
 #include "StockDataEditor.h"
 
+#include <klocalizedstring.h>
+
 #include <QSortFilterProxyModel>
 #include <QAbstractTableModel>
 #include <QAction>

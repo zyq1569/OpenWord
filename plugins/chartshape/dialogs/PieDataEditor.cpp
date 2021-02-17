@@ -20,6 +20,8 @@
 
 #include "PieDataEditor.h"
 
+#include <klocalizedstring.h>
+
 #include <QSortFilterProxyModel>
 #include <QAbstractItemModel>
 #include <QAction>

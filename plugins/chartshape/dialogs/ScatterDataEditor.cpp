@@ -20,6 +20,7 @@
 
 #include "ScatterDataEditor.h"
 // #include "DataSetTableModel.h"
+#include <klocalizedstring.h>
 
 #include <QSortFilterProxyModel>
 #include <QAbstractTableModel>

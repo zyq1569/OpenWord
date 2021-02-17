@@ -52,8 +52,16 @@
 
 using namespace KoChart;
 
-K_PLUGIN_FACTORY_WITH_JSON(ChartShapePluginFactory, "calligra_shape_chart.json",
-                           registerPlugin<ChartShapePlugin>();)
+//K_PLUGIN_FACTORY_WITH_JSON(ChartShapePluginFactory, "calligra_shape_chart.json",
+//                           registerPlugin<ChartShapePlugin>();)
+
+ChartShapePluginFactory::ChartShapePluginFactory()
+{
+    registerPlugin<ChartShapePlugin>();
+}
+ChartShapePluginFactory::~ChartShapePluginFactory()
+{
+}
 
 ChartShapePlugin::ChartShapePlugin(QObject * parent, const QVariantList&)
     : QObject(parent)
@@ -671,4 +679,4 @@ void ChartShapeFactory::radarData(ChartShape *shape) const
     proxyModel->reset(CellRegion(internalTable, QRect(1, 1, chartData->columnCount(), chartData->rowCount())));
 }
 
-#include "ChartShapeFactory.moc"
+//#include "ChartShapeFactory.moc"

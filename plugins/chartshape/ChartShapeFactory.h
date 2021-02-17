@@ -22,6 +22,7 @@
 #define KCHART_CHART_SHAPE_FACTORY
 
 
+#include <KPluginFactory>
 // Qt
 #include <QStringList>
 
@@ -34,7 +35,7 @@ class KoShape;
 class KoShapeConfigWidgetBase;
 
 namespace KoChart {
-    class ChartShape;
+class ChartShape;
 }
 
 class ChartShapePlugin : public QObject
@@ -79,6 +80,18 @@ private:
     void radarData(KoChart::ChartShape *shape) const;
 
 };
+
+
+class ChartShapePluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_chart.json")
+public:
+    explicit ChartShapePluginFactory();
+    ~ChartShapePluginFactory();
+};
+
 
 
 #endif // KCHART_CHART_SHAPE_FACTORY

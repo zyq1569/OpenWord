@@ -23,6 +23,8 @@
 // Own
 #include "TableEditorDialog.h"
 
+#include <klocalizedstring.h>
+
 // Qt
 #include <QAbstractItemModel>
 #include <QAction>
