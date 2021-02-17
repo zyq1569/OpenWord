@@ -95,9 +95,11 @@ void EffectItemBase::createText(const QString &text)
     QFont font = textItem->font();
     font.setPointSize(FontSize);
     textItem->setFont(font);
-    QRectF textBox = textItem->boundingRect();
-    QPointF offset = rect().center() - textBox.center();
-    textItem->translate(offset.x(), offset.y());
+    ///QRectF textBox = textItem->boundingRect();///openword
+    ///QPointF offset = rect().center() - textBox.center();///openword
+    ///textItem->translate(offset.x(), offset.y());///openword
+    textItem->transform();///openword
+    ///------------
 }
 
 void EffectItemBase::createOutput(const QPointF &position, const QString &name)

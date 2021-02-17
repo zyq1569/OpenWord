@@ -19,7 +19,7 @@
 
 #include "KarbonPatternOptionsWidget.h"
 #include "ui_KarbonPatternOptionsWidget.h"
-
+#include <klocalizedstring.h>
 class Q_DECL_HIDDEN KarbonPatternOptionsWidget::Private
 {
 public:

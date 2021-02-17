@@ -20,6 +20,8 @@
 #ifndef _KARBONTOOLSPLUGIN_H_
 #define _KARBONTOOLSPLUGIN_H_
 
+#include <kpluginfactory.h>
+
 #include <QObject>
 #include <QVariant>
 
@@ -31,6 +33,16 @@ public:
     KarbonToolsPlugin(QObject * parent,  const QVariantList &);
     ~KarbonToolsPlugin() override {}
 
+};
+
+class KarbonToolsPluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "karbon_tools.json")
+public:
+    explicit KarbonToolsPluginFactory();
+    ~KarbonToolsPluginFactory();
 };
 
 #endif // _KARBONTOOLSPLUGIN_H_
