@@ -1,19 +1,22 @@
 {
 	"Keys": [ "calligra_shape_vector" ],
 	"KPlugin": {
+				"Name":"Static Vector Shape",
 				"Name[en_GB":"Static Vector Shape",
-				"Name[zh_CN":"静态矢量形状",
-				"Name[zh_TW":"靜態向量元件",
+				"Name[zh_CN":"文本形状",
+				"Name[zh_TW":"文字元件",
+				"X-KDE-PluginInfo-Name":"StaticVectorshape",
 				"X-KDE-ServiceTypes":"Calligra/Flake",
 				"Type":"Service",
-				"X-KDE-PluginInfo-Name":"vectorshape",
 				"X-KDE-Library":"calligra_shape_vector",
 				"X-Flake-MinVersion":"28",
-				"X-Flake-PluginVersion":"28"
+				"X-Flake-PluginVersion":"28",
+				"Id":"StaticVectorShapeID",
+				"StaticVectorShapeID":"696"
 				},
-	"KDE-PluginInfo-Name":"vectorshape",
-	"Id":"vectorshapeID",
-	"vectorshapeID":"33",
+	"Id":"StaticVectorShapeID",
+	"StaticVectorShapeID":"696",
+	"X-KDE-PluginInfo-Name":"calligra_shape_vector",
 	"X-KDE-NativeMimeType":"application/vnd.oasis.opendocument.text",
 	"X-KDE-ExtraNativeMimeTypes":"application/vnd.oasis.opendocument.text-master,application/vnd.oasis.opendocument.text-template"		
 }
