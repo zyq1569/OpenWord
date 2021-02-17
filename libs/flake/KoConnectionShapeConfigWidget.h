@@ -21,7 +21,6 @@
 #define KOCONNECTIONSHAPECONFIGWIDGET_H
 
 #include "ui_KoConnectionShapeConfigWidget.h"
-
 #include <KoShapeConfigWidgetBase.h>
 
 class KoConnectionShape;
@@ -36,7 +35,8 @@ public:
     /// reimplemented
     void save() override;
     /// reimplemented
-    bool showOnShapeCreate() override {
+    bool showOnShapeCreate() override
+    {
         return false;
     }
     /// reimplemented

@@ -17,6 +17,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
+//#include "ui_KoConnectionShapeConfigWidget.h"
 #include "KoConnectionShapeConfigWidget.h"
 #include "commands/KoConnectionShapeTypeCommand.h"
 #include <KoIcon.h>
@@ -47,7 +48,9 @@ void KoConnectionShapeConfigWidget::open(KoShape *shape)
 {
     m_connection = dynamic_cast<KoConnectionShape*>(shape);
     if (! m_connection)
+    {
         return;
+    }
 
     widget.connectionType->blockSignals(true);
     widget.connectionType->setCurrentIndex(m_connection->type());
@@ -56,7 +59,8 @@ void KoConnectionShapeConfigWidget::open(KoShape *shape)
 
 void KoConnectionShapeConfigWidget::save()
 {
-    if (!m_connection) {
+    if (!m_connection)
+    {
         return;
     }
     m_connection->setType(static_cast<KoConnectionShape::Type>(widget.connectionType->currentIndex()));
@@ -64,9 +68,12 @@ void KoConnectionShapeConfigWidget::save()
 
 KUndo2Command * KoConnectionShapeConfigWidget::createCommand()
 {
-    if (!m_connection) {
+    if (!m_connection)
+    {
         return 0;
-    } else {
+    }
+    else
+    {
         KoConnectionShape::Type type = static_cast<KoConnectionShape::Type>(widget.connectionType->currentIndex());
         return new KoConnectionShapeTypeCommand(m_connection, type);
     }
