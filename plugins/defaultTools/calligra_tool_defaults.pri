@@ -51,7 +51,7 @@ SOURCES +=      Plugin.cpp \
                 connectionTool/MoveConnectionPointStrategy.cpp \
                 connectionTool/ConnectionPointWidget.cpp
 
-FORMS += .      defaulttool/DefaultToolWidget.ui \
+FORMS +=        defaulttool/DefaultToolWidget.ui \
                 defaulttool/DefaultToolArrangeWidget.ui \
                 defaulttool/DefaultToolTransformWidget.ui \
                 guidestool/GuidesToolOptionWidget.ui \

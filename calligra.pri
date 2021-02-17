@@ -1,3 +1,4 @@
+#include <klocalizedstring.h> --->i18n
 #K_PLUGIN_FACTORY_WITH_JSON
 #HEADERS +=
 #DESTDIR = ../../../../bin/libs/
@@ -27,6 +28,7 @@ DEFINES += koformula_EXPORTS calligra_shape_music_EXPORTS calligra_shape_paths_E
 DEFINES += calligra_shape_picture_EXPORTS calligra_shape_plugin_EXPORTS calligra_shape_text_EXPORTS
 DEFINES += calligra_shape_vector_EXPORTS calligra_shape_video_EXPORTS calligraimagethumbnail_EXPORTS
 DEFINES += calligra_tool_basicflakes_EXPORTS calligra_tool_defaults_EXPORTS
+DEFINES += karbon_tools_EXPORTS karbonpart_EXPORTS calligra_shape_chart_EXPORTS
 DEFINES += komain_EXPORTS
 
 #-----selef defined----------
@@ -66,7 +68,8 @@ INCLUDEPATH +=  $$SDK_INSTALL_PREFIX \
                 $$SDK_INSTALL_PREFIX/KF5/KBookmarks \
                 $$SDK_INSTALL_PREFIX/KF5/SonnetUi \
                 $$SDK_INSTALL_PREFIX/KF5/Solid \
-                $$SDK_INSTALL_PREFIX/phonon4qt5
+                $$SDK_INSTALL_PREFIX/phonon4qt5 \
+                $$SDK_INSTALL_PREFIX/KChart
 
 LIBS += -L$${SDK_LIB_PREFIX} \
         -lws2_32 \

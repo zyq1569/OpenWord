@@ -37,6 +37,8 @@ SUBDIRS += filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
     plugins/textshape/calligra_shape_text.pro \
     plugins/vectorshape/calligra_shape_vector.pro \
     plugins/videoshape/calligra_shape_video.pro \
+    plugins/chartshape/calligra_shape_chart.pro \
+    plugins/chartshape/chartshapecore.pro \
 #    plugins/textediting/autocorrection/calligra_textediting_autocorrect.pro \
 #    plugins/textediting/changecase/calligra_textediting_changecase.pro \
 #    plugins/textediting/spellcheck/calligra_textediting_spellcheck.pro \
@@ -57,10 +59,10 @@ SUBDIRS += filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
 #    karbon/plugins/flattenpath/karbon_flattenpath.pro \
 #    karbon/plugins/refinepath/karbon_refinepath.pro \
 #    karbon/plugins/roundcorners/karbon_roundcorners.pro \
-#    plugins/karbonplugins/tools/karbon_tools.pro \
+    plugins/karbonplugins/tools/karbon_tools.pro \
 #    karbon/plugins/whirlpinch/karbon_whirlpinch.pro \
     karbon/common/karboncommon.pro \
-#    karbon/karbonpart.pro \
+    karbon/karbonpart.pro \
     karbon/ui/karbonui.pro \
 #    stage/app/kdeinit_calligrastage.pro \
 #    words/app/kdeinit_calligrawords.pro \
