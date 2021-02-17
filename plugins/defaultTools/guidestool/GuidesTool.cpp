@@ -23,6 +23,8 @@
 #include "GuidesToolOptionWidget.h"
 #include "InsertGuidesToolOptionWidget.h"
 
+#include <klocalizedstring.h>
+
 #include <KoPointerEvent.h>
 #include <KoCanvasBase.h>
 #include <KoCanvasController.h>
@@ -30,7 +32,6 @@
 #include <KoViewConverter.h>
 #include <KoGuidesData.h>
 #include <KoToolManager.h>
-
 #include <QDebug>
 
 #include <QPainter>
