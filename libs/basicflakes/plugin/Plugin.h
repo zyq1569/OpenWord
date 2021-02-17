@@ -19,6 +19,8 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
+#include <kpluginfactory.h>
+
 #include <QObject>
 #include <QVariantList>
 
@@ -29,4 +31,15 @@ public:
     Plugin(QObject * parent, const QVariantList &);
     ~Plugin() override {}
 };
+
+class PluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_tool_basicflakes.json")
+public:
+    explicit PluginFactory();
+    ~PluginFactory();
+};
+
 #endif

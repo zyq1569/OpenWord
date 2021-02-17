@@ -1,6 +1,10 @@
 
 
-SOURCES += ../../../../calligra/libs/basicflakes/plugin/calligra_tool_basicflakes_autogen/mocs_compilation.cpp \
-    ../../../../../libs/basicflakes/plugin/Plugin.cpp \
-    ../../../../../libs/basicflakes/plugin/KoCreatePathToolFactory.cpp \
-    ../../../../../libs/basicflakes/plugin/KoPencilToolFactory.cpp
+
+HEADERS +=  Plugin.h \
+            KoCreatePathToolFactory.h \
+            KoPencilToolFactory.h
+
+SOURCES +=  Plugin.cpp \
+            KoCreatePathToolFactory.cpp \
+            KoPencilToolFactory.cpp

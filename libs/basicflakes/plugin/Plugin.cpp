@@ -25,8 +25,17 @@
 
 #include <kpluginfactory.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(PluginFactory, "calligra_tool_basicflakes.json",
-                           registerPlugin<Plugin>();)
+//K_PLUGIN_FACTORY_WITH_JSON(PluginFactory, "calligra_tool_basicflakes.json",
+//                           registerPlugin<Plugin>();)
+
+PluginFactory::PluginFactory()
+{
+    registerPlugin<Plugin>();
+}
+
+PluginFactory::~PluginFactory()
+{
+}
 
 Plugin::Plugin(QObject * parent, const QVariantList &)
     : QObject(parent)
@@ -35,4 +44,4 @@ Plugin::Plugin(QObject * parent, const QVariantList &)
     KoToolRegistry::instance()->add(new KoPencilToolFactory());
 }
 
-#include <Plugin.moc>
+//#include <Plugin.moc>
