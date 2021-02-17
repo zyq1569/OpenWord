@@ -1,19 +1,22 @@
 {
 	"Keys": [ "calligra_shape_formula" ],
 	"KPlugin": {
+				"Name":"Formula Shape",
 				"Name[en_GB":"Formula Shape",
 				"Name[zh_CN":"公式形状",
 				"Name[zh_TW":"公式元件",
+				"X-KDE-PluginInfo-Name":"formulashape",
 				"X-KDE-ServiceTypes":"Calligra/Flake",
 				"Type":"Service",
-				"X-KDE-PluginInfo-Name":"shapeformula",
 				"X-KDE-Library":"calligra_shape_formula",
 				"X-Flake-MinVersion":"28",
-				"X-Flake-PluginVersion":"28"
+				"X-Flake-PluginVersion":"28",
+				"Id":"FormulaShapeID",
+				"FormulaShapeID":"111"
 				},
-	"X-KDE-PluginInfo-Name":"shapeformula",
-	"Id":"shapeformulaID",
-	"shapeformulaID":"111",
+	"Id":"FormulaShapeID",
+	"FormulaShapeID":"111",
+	"X-KDE-PluginInfo-Name":"calligra_shape_formula",
 	"X-KDE-NativeMimeType":"application/vnd.oasis.opendocument.text",
 	"X-KDE-ExtraNativeMimeTypes":"application/vnd.oasis.opendocument.text-master,application/vnd.oasis.opendocument.text-template"		
 }
