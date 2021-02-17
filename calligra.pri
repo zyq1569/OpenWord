@@ -26,6 +26,7 @@ DEFINES += calligra_shape_artistictext_EXPORTS calligra_shape_formula_EXPORTS
 DEFINES += koformula_EXPORTS calligra_shape_music_EXPORTS calligra_shape_paths_EXPORTS
 DEFINES += calligra_shape_picture_EXPORTS calligra_shape_plugin_EXPORTS calligra_shape_text_EXPORTS
 DEFINES += calligra_shape_vector_EXPORTS calligra_shape_video_EXPORTS calligraimagethumbnail_EXPORTS
+DEFINES += calligra_tool_basicflakes_EXPORTS calligra_tool_defaults_EXPORTS
 DEFINES += komain_EXPORTS
 
 #-----selef defined----------

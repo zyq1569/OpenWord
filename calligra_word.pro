@@ -42,8 +42,8 @@ SUBDIRS += filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
 #    plugins/textediting/spellcheck/calligra_textediting_spellcheck.pro \
 #    plugins/textediting/thesaurus/calligra_textediting_thesaurus.pro \
 #    plugins/variables/calligra_textinlineobject_variables.pro \
-#    libs/basicflakes/plugin/calligra_tool_basicflakes.pro \
-#    plugins/defaultTools/calligra_tool_defaults.pro \
+    libs/basicflakes/plugin/calligra_tool_basicflakes.pro \
+    plugins/defaultTools/calligra_tool_defaults.pro \
 #    extras/properties/calligradocinfopropspage.pro \
     extras/thumbnail/calligraimagethumbnail.pro \
 #    stage/plugins/eventactions/calligrastageeventactions.pro \
