@@ -37,10 +37,10 @@ enum ChartType {
     BarChartType,
     LineChartType,
     AreaChartType,
-    CircleChartType,		// Pie in KChart
+    CircleChartType,        // Pie in KChart
     RingChartType,
     ScatterChartType,
-    RadarChartType,		    // Polar in KChart
+    RadarChartType,	        // Polar in KChart
     FilledRadarChartType,   // Polar in KChart
     StockChartType,
     BubbleChartType,
