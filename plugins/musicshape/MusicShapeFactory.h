@@ -29,8 +29,6 @@ class KoShape;
 class MusicShapePlugin : public QObject
 {
     Q_OBJECT
-    ///openword
-    //Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_shape_music.json")
 public:
 
     MusicShapePlugin( QObject * parent,  const QVariantList& );
