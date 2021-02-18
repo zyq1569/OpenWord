@@ -22,13 +22,23 @@
 
 #include <QObject>
 #include <QVariantList>
-
+#include <kpluginfactory.h>
 class StencilBoxPlugin : public QObject {
     Q_OBJECT
 
 public:
     StencilBoxPlugin(QObject * parent, const QVariantList & );
     ~StencilBoxPlugin() override {}
+};
+
+class PluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_docker_stencils.json")
+public:
+    explicit PluginFactory();
+    ~PluginFactory();
 };
 
 #endif
