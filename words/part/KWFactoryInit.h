@@ -26,7 +26,6 @@ class KWFactoryInit : public KWFactory
     Q_OBJECT
     ///openword
     Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "wordspart.json")
-    //Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "wordspart.desktop")
     Q_INTERFACES(KPluginFactory)
 
 public:
