@@ -1,24 +1,23 @@
 {
-	"Keys": [ "calligra_docker_defaults" ],
+	"Keys": [ "calligra_docker_stencils" ],
 	"KPlugin": {
-				"Name":"Calligra Dockers plugin",				
+				"Name":"=Calligra Stencils Docker plugin",				
 				"Name[x-test]":"xxCalligra Dockers pluginxx",
-				"Name[zh_CN]":"Calligra 停靠插件",
-				"Name[zh_TW]":"Calligra 嵌入外掛程式",
+				"Name[zh_CN]":"Calligra 模板坞插件",
+				"Name[zh_TW]":"Calligra 模板坞插件",
 				"X-KDE-ServiceTypes":"Calligra/Dock",
 				"Type":"Service",
-				"X-KDE-PluginInfo-Name":"calligradockers",
-				"X-KDE-Library":"calligra_docker_defaults",
+				"X-KDE-PluginInfo-Name":"calligra_docker_stencils",
+				"X-KDE-Library":"calligra_docker_stencils",
 				"X-Flake-MinVersion":"28",
 				"X-Flake-PluginVersion":"28",
 				"Id":"calligradockersID",
-	            "calligradockersID":"1666"
+	            "calligradockersID":"1166"
 				},
 	"Id":"calligradockersID",
-	"calligradockersID":"1666",
-	"X-KDE-PluginInfo-Name":"calligradockers",
-	"X-KDE-Library":"calligra_docker_defaults",
+	"calligradockersID":"1166",
+	"X-KDE-PluginInfo-Name":"calligra_docker_stencils",
+	"X-KDE-Library":"calligra_docker_stencils",
 	"X-KDE-NativeMimeType":"application/vnd.oasis.opendocument.text",
 	"X-KDE-ExtraNativeMimeTypes":"application/vnd.oasis.opendocument.text-master,application/vnd.oasis.opendocument.text-template"		
 }
-
