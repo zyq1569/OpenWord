@@ -156,7 +156,14 @@ KoApplication::KoApplication(const QByteArray &nativeMimeType,
     KoGlobal::initialize();
 
 #ifndef QT_NO_DBUS
-//    KDBusService service(KDBusService::Multiple);/// openword
+    if (_WIN32 || _WIN64)
+    {
+        errorFilter << "KDBusService service(KDBusService::Multiple); error! in windowsr!" << endl;
+    }
+    else
+    {
+        KDBusService service(KDBusService::Multiple);/// openword : not start ???? why (in windows)???
+    }
 
     new KoApplicationAdaptor(this);
     QDBusConnection::sessionBus().registerObject("/application", this);
@@ -188,7 +195,7 @@ BOOL isWow64()
     //and GetProcAddress to get a pointer to the function if available.
 
     fnIsWow64Process = (LPFN_ISWOW64PROCESS) GetProcAddress(
-        GetModuleHandle(TEXT("kernel32")),"IsWow64Process");
+                GetModuleHandle(TEXT("kernel32")),"IsWow64Process");
 
     if(0 != fnIsWow64Process)
     {
@@ -274,8 +281,8 @@ bool KoApplication::start()
 
     if (entry.isEmpty()) {
         QMessageBox::critical(0, i18n("%1: Critical Error", applicationName()), i18n("Essential application components could not be found.\n"
-                                                                                    "This might be an installation issue.\n"
-                                                                                    "Try restarting or reinstalling."));
+                                                                                     "This might be an installation issue.\n"
+                                                                                     "Try restarting or reinstalling."));
         return false;
     }
 
@@ -357,16 +364,16 @@ bool KoApplication::start()
 #ifndef QT_NO_DBUS
         // all running instances of our application -- bit hackish, but we cannot get at the dbus name here, for some reason
         ///QDBusReply<QStringList> reply = QDBusConnection::sessionBus().interface()->registeredServiceNames();
-//        foreach (const QString &name, reply.value()) ///openword
-//        {
-//            if (name.contains(part->componentData().componentName())) {
-//                // we got another instance of ourselves running, let's get the pid
-//                QString pid = name.split('-').last();
-//                if (pid != ourPid) {
-//                    pids << pid;
-//                }
-//            }
-//        }
+        //foreach (const QString &name, reply.value()) ///openword
+        //{
+        //    if (name.contains(part->componentData().componentName())) {
+        //        // we got another instance of ourselves running, let's get the pid
+        //        QString pid = name.split('-').last();
+        //        if (pid != ourPid) {
+        //            pids << pid;
+        //        }
+        //    }
+        //}
 #endif
 
         // remove the autosave files that are saved for other, open instances of ourselves
@@ -480,8 +487,8 @@ bool KoApplication::start()
             // convert to an url
             const bool startsWithProtocol = (withProtocolChecker.indexIn(fileUrl) == 0);
             const QUrl url = startsWithProtocol ?
-                QUrl::fromUserInput(fileUrl) :
-                QUrl::fromLocalFile(QDir::current().absoluteFilePath(fileUrl));
+                        QUrl::fromUserInput(fileUrl) :
+                        QUrl::fromLocalFile(QDir::current().absoluteFilePath(fileUrl));
 
             // For now create an empty document
             QString errorMsg;
@@ -573,8 +580,8 @@ bool KoApplication::start()
                 else {
                     if (print) {
                         connect(
-                            mainWindow, SIGNAL(loadCompleted(KoMainWindow *)),
-                            this, SLOT(slotFilePrint(KoMainWindow *)));
+                                    mainWindow, SIGNAL(loadCompleted(KoMainWindow *)),
+                                    this, SLOT(slotFilePrint(KoMainWindow *)));
                     } else if (exportAsPdf) {
                         connect(mainWindow, SIGNAL(loadCompleted(KoMainWindow*)),
                                 this, SLOT(slotExportToPdf(KoMainWindow*)));
@@ -583,8 +590,8 @@ bool KoApplication::start()
                         if (benchmarkLoading) {
                             if (profileoutput.device()) {
                                 profileoutput << "KoApplication::start\t"
-                                            << appStartTime.msecsTo(QTime::currentTime())
-                                            <<"\t100" << endl;
+                                              << appStartTime.msecsTo(QTime::currentTime())
+                                              <<"\t100" << endl;
                             }
                             QTimer::singleShot(0, this, SLOT(benchmarkLoadingFinished()));
                             return true; // only load one document!
