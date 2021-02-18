@@ -16,7 +16,5 @@
 				},
 	"Id":"defaulttoolsID",
 	"defaulttoolsID":"621",
-	"X-KDE-PluginInfo-Name":"defaulttools",
-	"X-KDE-NativeMimeType":"application/vnd.oasis.opendocument.text",
-	"X-KDE-ExtraNativeMimeTypes":"application/vnd.oasis.opendocument.text-master,application/vnd.oasis.opendocument.text-template"		
+	"X-KDE-PluginInfo-Name":"defaulttools"	
 }
