@@ -28,6 +28,16 @@
 //K_PLUGIN_FACTORY_WITH_JSON(PluginFactory, "calligra_docker_defaults.json",
 //                           registerPlugin<Plugin>();)
 
+PluginFactory::PluginFactory()
+{
+    registerPlugin<Plugin>();
+}
+
+PluginFactory::~PluginFactory()
+{
+
+}
+
 Plugin::Plugin(QObject *parent, const QVariantList&)
     : QObject(parent)
 {

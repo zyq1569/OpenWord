@@ -26,12 +26,21 @@
 
 class Plugin : public QObject {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_docker_defaults.json")
 public:
     Plugin(QObject * parent, const QVariantList & );
     ~Plugin() override ;//{}
 };
 
 //K_PLUGIN_FACTORY_WITH_JSON(PluginFactory, "calligra_docker_defaults.json", registerPlugin<Plugin>();)
+class PluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_docker_defaults.json")
+public:
+    explicit PluginFactory();
+    ~PluginFactory();
+};
+
 
 #endif
