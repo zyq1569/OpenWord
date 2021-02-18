@@ -265,8 +265,8 @@ inline KUndo2MagicString kundo2_i18nc(const char *ctxt, const char *text, const 
 template <typename A1>
 inline KUndo2MagicString kundo2_i18np(const char *sing, const char *plur, const A1 &a1)
 {
-    //return KUndo2MagicString(i18ncp("(qtundo-format)", sing, plur, a1));
-    return KUndo2MagicString(("(qtundo-format)", sing, plur)); ///openword
+    return KUndo2MagicString(i18ncp("(qtundo-format)", sing, plur, a1));
+    ///return KUndo2MagicString(("(qtundo-format)", sing, plur)); ///openword
 }
 
 template <typename A1, typename A2>
