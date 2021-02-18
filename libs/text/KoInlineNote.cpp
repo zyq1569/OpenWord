@@ -271,34 +271,34 @@ bool KoInlineNote::loadOdf(const KoXmlElement & element, KoShapeLoadingContext &
 void KoInlineNote::saveOdf(KoShapeSavingContext & context)
 {
     ///openword -2021
-//    KoXmlWriter *writer = &context.xmlWriter();
+    //KoXmlWriter *writer = &context.xmlWriter();
 
-//    if (d->type == Footnote || d->type == Endnote) {
-//        text_note note(writer, (d->type == Footnote) ?"footnote" :"endnote");
-//        text_note_citation cite(note.add_text_note_citation());
-//        if (!autoNumbering()) {
-//            cite.set_text_label(d->label);
-//        }
-//        cite.addTextNode(d->label);
+    //if (d->type == Footnote || d->type == Endnote) {
+    //    text_note note(writer, (d->type == Footnote) ?"footnote" :"endnote");
+    //    text_note_citation cite(note.add_text_note_citation());
+    //    if (!autoNumbering()) {
+    //        cite.set_text_label(d->label);
+    //    }
+    //    cite.addTextNode(d->label);
 
-//        text_note_body body(note.add_text_note_body());
-//        KoTextWriter textWriter(context);
-//        textWriter.write(d->document, d->textFrame->firstPosition(), d->textFrame->lastPosition());
-//    }
-//    else if (d->type == Annotation) {
-//        office_annotation annotation(writer);
-//        if (!d->author.isEmpty()) {
-//            dc_creator creator(annotation.add_dc_creator());
-//            creator.addTextNode(d->author);
-//        }
-//        if (d->date.isValid()) {
-//            dc_date date(annotation.add_dc_date());
-//            date.addTextNode(d->date.toString(Qt::ISODate));
-//        }
+    //    text_note_body body(note.add_text_note_body());
+    //    KoTextWriter textWriter(context);
+    //    textWriter.write(d->document, d->textFrame->firstPosition(), d->textFrame->lastPosition());
+    //}
+    //else if (d->type == Annotation) {
+    //    office_annotation annotation(writer);
+    //    if (!d->author.isEmpty()) {
+    //        dc_creator creator(annotation.add_dc_creator());
+    //        creator.addTextNode(d->author);
+    //    }
+    //    if (d->date.isValid()) {
+    //        dc_date date(annotation.add_dc_date());
+    //        date.addTextNode(d->date.toString(Qt::ISODate));
+    //    }
 
-//        KoTextWriter textWriter(context);
-//        textWriter.write(d->document, d->textFrame->firstPosition(),d->textFrame->lastPosition());
-//    }
+    //    KoTextWriter textWriter(context);
+    //    textWriter.write(d->document, d->textFrame->firstPosition(),d->textFrame->lastPosition());
+    //}
 }
 
 int KoInlineNote::getPosInDocument() const
