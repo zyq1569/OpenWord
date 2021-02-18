@@ -32,9 +32,9 @@
 #include <KoXmlNS.h>
 
 KoPathShapeFactory::KoPathShapeFactory(const QStringList&)
-        : KoShapeFactoryBase(KoPathShapeId, /*i18n*/("Simple path shape"))
+        : KoShapeFactoryBase(KoPathShapeId, i18n("Simple path shape"))
 {
-    setToolTip(/*i18n*/("A simple path shape"));
+    setToolTip(i18n("A simple path shape"));
     setIconName(koIconName("pathshape"));
     QStringList elementNames;
     elementNames << "path" << "line" << "polyline" << "polygon";
