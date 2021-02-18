@@ -172,20 +172,22 @@ void KoM2MMLFormulaTool::textEdited()
         }
     } else {
 #endif
-        ///openword 2021-01-09
-        //std::string source = QStringtoStdString(m_lineEdit->text());
-        //source = '$' + source + '$';
-        //char * mathml = itex2MML_parse (source.c_str(), source.size());
+        ///openword 2021-01-09 to do list ....
+//        std::string source = QStringtoStdString(m_lineEdit->text());
+//        source = '$' + source + '$';
+//        char * mathml = itex2MML_parse (source.c_str(), source.size());
 
-        //if(mathml)
-        //{
-        //    setMathML(mathml, "LaTeX");
-        //    itex2MML_free_string(mathml);
-        //    mathml = 0;
-        //} else {
-        //    m_errorLabel->setText(i18n("Parse error."));
-        //}
-        m_errorLabel->setText(i18n("Parse error."));
+//        if(mathml)
+//        {
+//            setMathML(mathml, "LaTeX");
+//            itex2MML_free_string(mathml);
+//            mathml = 0;
+//        }
+//        else
+//        {
+//            m_errorLabel->setText(i18n("Parse error."));
+//        }
+//        m_errorLabel->setText(i18n("Parse error."));
 #ifdef HAVE_M2MML
     }
 #endif
