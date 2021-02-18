@@ -3,8 +3,8 @@
 #HEADERS +=
 #DESTDIR = ../../../../bin/libs/
 #DESTDIR = ../../bin/libs/
-SDK_INSTALL_PREFIX = D:/CraftRoot/include
-SDK_LIB_PREFIX     = D:/CraftRoot/KDE_libs
+SDK_INSTALL_PREFIX = D:/KDE/calligra_KDE/include
+SDK_LIB_PREFIX     = D:/KDE/calligra_KDE/libs
 
 CONFIG += debug_and_release  c++11
 
