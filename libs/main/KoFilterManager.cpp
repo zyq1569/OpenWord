@@ -49,8 +49,8 @@ QMap<QString, bool> KoFilterManager::m_filterAvailable;
 
 KoFilterManager::KoFilterManager(KoDocument* document,
                                  KoProgressUpdater* progressUpdater) :
-        m_document(document), m_parentChain(0), m_graph(""),
-        d(new Private(progressUpdater))
+    m_document(document), m_parentChain(0), m_graph(""),
+    d(new Private(progressUpdater))
 {
     d->batch = false;
 }
@@ -58,14 +58,14 @@ KoFilterManager::KoFilterManager(KoDocument* document,
 
 KoFilterManager::KoFilterManager(const QString& url, const QByteArray& mimetypeHint,
                                  KoFilterChain* const parentChain) :
-        m_document(0), m_parentChain(parentChain), m_importUrl(url), m_importUrlMimetypeHint(mimetypeHint),
-        m_graph(""), d(new Private)
+    m_document(0), m_parentChain(parentChain), m_importUrl(url), m_importUrlMimetypeHint(mimetypeHint),
+    m_graph(""), d(new Private)
 {
     d->batch = false;
 }
 
 KoFilterManager::KoFilterManager(const QByteArray& mimeType) :
-        m_document(0), m_parentChain(0), m_graph(""), d(new Private)
+    m_document(0), m_parentChain(0), m_graph(""), d(new Private)
 {
     d->batch = false;
     d->importMimeType = mimeType;
@@ -83,20 +83,25 @@ QString KoFilterManager::importDocument(const QString& url,
     // Find the mime type for the file to be imported.
     QString  typeName(documentMimeType);
     QUrl u(url);
-    if (documentMimeType.isEmpty()) {
+    if (documentMimeType.isEmpty())
+    {
         QMimeType t = QMimeDatabase().mimeTypeForUrl(u);
-        if (t.isValid()) {
+        if (t.isValid())
+        {
             typeName = t.name();
         }
     }
     m_graph.setSourceMimeType(typeName.toLatin1()); // .latin1() is okay here (Werner)
 
-    if (!m_graph.isValid()) {
+    if (!m_graph.isValid())
+    {
         bool userCancelled = false;
 
         warnFilter << "Can't open " << typeName << ", trying filter chooser";
-        if (m_document) {
-            if (!m_document->isAutoErrorHandlingEnabled()) {
+        if (m_document)
+        {
+            if (!m_document->isAutoErrorHandlingEnabled())
+            {
                 status = KoFilter::BadConversionGraph;
                 return QString();
             }
@@ -104,25 +109,31 @@ QString KoFilterManager::importDocument(const QString& url,
 
             QApplication::setOverrideCursor(Qt::ArrowCursor);
             KoFilterChooser chooser(0,
-                    KoFilterManager::mimeFilter(nativeFormat, KoFilterManager::Import,
-                    m_document->extraNativeMimeTypes()), nativeFormat, u);
-            if (chooser.exec()) {
+                                    KoFilterManager::mimeFilter(nativeFormat, KoFilterManager::Import,
+                                                                m_document->extraNativeMimeTypes()), nativeFormat, u);
+            if (chooser.exec())
+            {
                 QByteArray f = chooser.filterSelected().toLatin1();
-                if (f == nativeFormat) {
+                if (f == nativeFormat)
+                {
                     status = KoFilter::OK;
                     QApplication::restoreOverrideCursor();
                     return url;
                 }
 
                 m_graph.setSourceMimeType(f);
-            } else
+            }
+            else
+            {
                 userCancelled = true;
+            }
             QApplication::restoreOverrideCursor();
         }
 
-        if (!m_graph.isValid()) {
+        if (!m_graph.isValid())
+        {
             errorFilter << "Couldn't create a valid graph for this source mimetype: "
-                << typeName;
+                        << typeName;
             importErrorHelper(typeName, userCancelled);
             status = KoFilter::BadConversionGraph;
             return QString();
@@ -131,13 +142,15 @@ QString KoFilterManager::importDocument(const QString& url,
 
     KoFilterChain::Ptr chain(0);
     // Are we owned by a KoDocument?
-    if (m_document) {
+    if (m_document)
+    {
         QByteArray mimeType = m_document->nativeFormatMimeType();
         QStringList extraMimes = m_document->extraNativeMimeTypes();
         int i = 0;
         int n = extraMimes.count();
         chain = m_graph.chain(this, mimeType);
-        while (i < n) {
+        while (i < n)
+        {
             QByteArray extraMime = extraMimes[i].toUtf8();
             // TODO check if its the same target mime then continue
             KoFilterChain::Ptr newChain(0);
@@ -146,15 +159,20 @@ QString KoFilterManager::importDocument(const QString& url,
                 chain = newChain;
             ++i;
         }
-    } else if (!d->importMimeType.isEmpty()) {
+    }
+    else if (!d->importMimeType.isEmpty())
+    {
         chain = m_graph.chain(this, d->importMimeType);
-    } else {
+    }
+    else
+    {
         errorFilter << "You aren't supposed to use import() from a filter!" << endl;
         status = KoFilter::UsageError;
         return QString();
     }
 
-    if (!chain) {
+    if (!chain)
+    {
         errorFilter << "Couldn't create a valid filter chain!" << endl;
         importErrorHelper(typeName);
         status = KoFilter::BadConversionGraph;
@@ -185,32 +203,40 @@ KoFilter::ConversionStatus KoFilterManager::exportDocument(const QString& url, Q
     m_exportUrl = url;
 
     KoFilterChain::Ptr chain;
-    if (m_document) {
+    if (m_document)
+    {
         // We have to pick the right native mimetype as source.
         QStringList nativeMimeTypes;
         nativeMimeTypes.append(m_document->nativeFormatMimeType());
         nativeMimeTypes += m_document->extraNativeMimeTypes();
         QStringList::ConstIterator it = nativeMimeTypes.constBegin();
         const QStringList::ConstIterator end = nativeMimeTypes.constEnd();
-        for (; !chain && it != end; ++it) {
+        for (; !chain && it != end; ++it)
+        {
             m_graph.setSourceMimeType((*it).toLatin1());
             if (m_graph.isValid())
                 chain = m_graph.chain(this, mimeType);
         }
-    } else if (!m_importUrlMimetypeHint.isEmpty()) {
+    }
+    else if (!m_importUrlMimetypeHint.isEmpty())
+    {
         debugFilter << "Using the mimetype hint:" << m_importUrlMimetypeHint;
         m_graph.setSourceMimeType(m_importUrlMimetypeHint);
-    } else {
+    }
+    else
+    {
         QUrl u;
         u.setPath(m_importUrl);
         QMimeType t = QMimeDatabase().mimeTypeForUrl(u);
-        if (!t.isValid() || t.isDefault()) {
+        if (!t.isValid() || t.isDefault())
+        {
             errorFilter << "No mimetype found for" << m_importUrl;
             return KoFilter::BadMimeType;
         }
         m_graph.setSourceMimeType(t.name().toLatin1());
 
-        if (!m_graph.isValid()) {
+        if (!m_graph.isValid())
+        {
             warnFilter << "Can't open" << t.name() << ", trying filter chooser";
 
             QApplication::setOverrideCursor(Qt::ArrowCursor);
@@ -224,18 +250,26 @@ KoFilter::ConversionStatus KoFilterManager::exportDocument(const QString& url, Q
         }
     }
 
-    if (!m_graph.isValid()) {
+    if (!m_graph.isValid())
+    {
         errorFilter << "Couldn't create a valid graph for this source mimetype.";
-        if (!d->batch && !userCancelled) KMessageBox::error(0, i18n("Could not export file."), i18n("Missing Export Filter"));
+        if (!d->batch && !userCancelled)
+        {
+            KMessageBox::error(0, i18n("Could not export file."), i18n("Missing Export Filter"));
+        }
         return KoFilter::BadConversionGraph;
     }
 
     if (!chain)   // already set when coming from the m_document case
         chain = m_graph.chain(this, mimeType);
 
-    if (!chain) {
+    if (!chain)
+    {
         errorFilter << "Couldn't create a valid filter chain to " << mimeType << " !" << endl;
-        if (!d->batch) KMessageBox::error(0, i18n("Could not export file."), i18n("Missing Export Filter"));
+        if (!d->batch)
+        {
+            KMessageBox::error(0, i18n("Could not export file."), i18n("Missing Export Filter"));
+        }
         return KoFilter::BadConversionGraph;
     }
 
@@ -251,21 +285,26 @@ public:
     Vertex(const QByteArray& mimeType) : m_color(White), m_mimeType(mimeType) {}
 
     enum Color { White, Gray, Black };
-    Color color() const {
+    Color color() const
+    {
         return m_color;
     }
-    void setColor(Color color) {
+    void setColor(Color color)
+    {
         m_color = color;
     }
 
-    QByteArray mimeType() const {
+    QByteArray mimeType() const
+    {
         return m_mimeType;
     }
 
-    void addEdge(Vertex* vertex) {
+    void addEdge(Vertex* vertex)
+    {
         if (vertex) m_edges.append(vertex);
     }
-    QList<Vertex*> edges() const {
+    QList<Vertex*> edges() const
+    {
         return m_edges;
     }
 
@@ -291,7 +330,8 @@ void buildGraph(QHash<QByteArray, Vertex*>& vertices, KoFilterManager::Direction
     QList<KoDocumentEntry>::ConstIterator partIt(parts.constBegin());
     QList<KoDocumentEntry>::ConstIterator partEnd(parts.constEnd());
 
-    while (partIt != partEnd) {
+    while (partIt != partEnd)
+    {
         QJsonObject metaData = (*partIt).metaData();
 #ifdef CALLIGRA_OLD_PLUGIN_METADATA
         QStringList nativeMimeTypes = metaData.value("X-KDE-ExtraNativeMimeTypes").toString().split(',');
@@ -314,72 +354,95 @@ void buildGraph(QHash<QByteArray, Vertex*>& vertices, KoFilterManager::Direction
     QList<KoFilterEntry::Ptr>::ConstIterator it = filters.constBegin();
     QList<KoFilterEntry::Ptr>::ConstIterator end = filters.constEnd();
     foreach(KoFilterEntry::Ptr filterEntry, filters)
-    for (; it != end; ++it) {
-        QStringList impList; // Import list
-        QStringList expList; // Export list
+        for (; it != end; ++it)
+        {
+            QStringList impList; // Import list
+            QStringList expList; // Export list
 
-        // Now we have to exclude the "stop" mimetypes (in the right direction!)
-        if (direction == KoFilterManager::Import) {
-            // Import: "stop" mime type should not appear in export
-            foreach(const QString & testIt, (*it)->export_) {
-                if (!stopList.contains(testIt))
-                    expList.append(testIt);
-            }
-            impList = (*it)->import;
-        } else {
-            // Export: "stop" mime type should not appear in import
-            foreach(const QString & testIt, (*it)->import) {
-                if (!stopList.contains(testIt))
-                    impList.append(testIt);
-            }
-            expList = (*it)->export_;
-        }
-
-        if (impList.empty() || expList.empty()) {
-            // This filter cannot be used under these conditions
-            debugFilter << "Filter:" << (*it)->fileName() << " ruled out";
-            continue;
-        }
-
-        // First add the "starting points" to the dict
-        QStringList::ConstIterator importIt = impList.constBegin();
-        const QStringList::ConstIterator importEnd = impList.constEnd();
-        for (; importIt != importEnd; ++importIt) {
-            const QByteArray key = (*importIt).toLatin1();    // latin1 is okay here (werner)
-            // already there?
-            if (!vertices[ key ])
-                vertices.insert(key, new Vertex(key));
-        }
-
-        // Are we allowed to use this filter at all?
-        if (KoFilterManager::filterAvailable(*it)) {
-            QStringList::ConstIterator exportIt = expList.constBegin();
-            const QStringList::ConstIterator exportEnd = expList.constEnd();
-            for (; exportIt != exportEnd; ++exportIt) {
-                // First make sure the export vertex is in place
-                const QByteArray key = (*exportIt).toLatin1();    // latin1 is okay here
-                Vertex* exp = vertices[ key ];
-                if (!exp) {
-                    exp = new Vertex(key);
-                    vertices.insert(key, exp);
+            // Now we have to exclude the "stop" mimetypes (in the right direction!)
+            if (direction == KoFilterManager::Import)
+            {
+                // Import: "stop" mime type should not appear in export
+                foreach(const QString & testIt, (*it)->export_)
+                {
+                    if (!stopList.contains(testIt))
+                        expList.append(testIt);
                 }
-                // Then create the appropriate edges depending on the
-                // direction (import/export)
-                // This is the chunk of code which actually differs from the
-                // graph stuff (apart from the different vertex class)
-                importIt = impList.constBegin(); // ### TODO: why only the first one?
-                if (direction == KoFilterManager::Import) {
-                    for (; importIt != importEnd; ++importIt)
-                        exp->addEdge(vertices[(*importIt).toLatin1()]);
-                } else {
-                    for (; importIt != importEnd; ++importIt)
-                        vertices[(*importIt).toLatin1()]->addEdge(exp);
+                impList = (*it)->import;
+            }
+            else
+            {
+                // Export: "stop" mime type should not appear in import
+                foreach(const QString & testIt, (*it)->import)
+                {
+                    if (!stopList.contains(testIt))
+                    {
+                        impList.append(testIt);
+                    }
+                }
+                expList = (*it)->export_;
+            }
+
+            if (impList.empty() || expList.empty())
+            {
+                // This filter cannot be used under these conditions
+                debugFilter << "Filter:" << (*it)->fileName() << " ruled out";
+                continue;
+            }
+
+            // First add the "starting points" to the dict
+            QStringList::ConstIterator importIt = impList.constBegin();
+            const QStringList::ConstIterator importEnd = impList.constEnd();
+            for (; importIt != importEnd; ++importIt)
+            {
+                const QByteArray key = (*importIt).toLatin1();    // latin1 is okay here (werner)
+                // already there?
+                if (!vertices[ key ])
+                {
+                    vertices.insert(key, new Vertex(key));
                 }
             }
-        } else {
-            debugFilter << "Filter:" << (*it)->fileName() << " does not apply.";
+
+            // Are we allowed to use this filter at all?
+            if (KoFilterManager::filterAvailable(*it)) {
+                QStringList::ConstIterator exportIt = expList.constBegin();
+                const QStringList::ConstIterator exportEnd = expList.constEnd();
+                for (; exportIt != exportEnd; ++exportIt)
+                {
+                    // First make sure the export vertex is in place
+                    const QByteArray key = (*exportIt).toLatin1();    // latin1 is okay here
+                    Vertex* exp = vertices[ key ];
+                    if (!exp)
+                    {
+                        exp = new Vertex(key);
+                        vertices.insert(key, exp);
+                    }
+                    // Then create the appropriate edges depending on the
+                    // direction (import/export)
+                    // This is the chunk of code which actually differs from the
+                    // graph stuff (apart from the different vertex class)
+                    importIt = impList.constBegin(); // ### TODO: why only the first one?
+                    if (direction == KoFilterManager::Import)
+                    {
+                        for (; importIt != importEnd; ++importIt)
+                        {
+                            exp->addEdge(vertices[(*importIt).toLatin1()]);
+                        }
+                    }
+                    else
+                    {
+                        for (; importIt != importEnd; ++importIt)
+                        {
+                            vertices[(*importIt).toLatin1()]->addEdge(exp);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                debugFilter << "Filter:" << (*it)->fileName() << " does not apply.";
+            }
         }
-    }
 }
 
 // This method runs a BFS on the graph to determine the connected
@@ -388,22 +451,29 @@ void buildGraph(QHash<QByteArray, Vertex*>& vertices, KoFilterManager::Direction
 QStringList connected(const QHash<QByteArray, Vertex*>& vertices, const QByteArray& mimetype)
 {
     if (mimetype.isEmpty())
+    {
         return QStringList();
+    }
     Vertex *v = vertices[ mimetype ];
     if (!v)
+    {
         return QStringList();
+    }
 
     v->setColor(Vertex::Gray);
     std::queue<Vertex*> queue;
     queue.push(v);
     QStringList connected;
 
-    while (!queue.empty()) {
+    while (!queue.empty())
+    {
         v = queue.front();
         queue.pop();
         QList<Vertex*> edges = v->edges();
-        foreach(Vertex* current, edges) {
-            if (current->color() == Vertex::White) {
+        foreach(Vertex* current, edges)
+        {
+            if (current->color() == Vertex::White)
+            {
                 current->setColor(Vertex::Gray);
                 queue.push(current);
             }
@@ -433,15 +503,20 @@ QStringList KoFilterManager::mimeFilter(const QByteArray &mimetype, Direction di
     QStringList lst = nativeMimeTypes;
 
     // Now look for filters which output each of those natives mimetypes
-    foreach(const QString &natit, nativeMimeTypes) {
+    foreach(const QString &natit, nativeMimeTypes)
+    {
         const QStringList outMimes = connected(vertices, natit.toLatin1());
         //debugFilter <<"output formats connected to mime" << natit <<" :" << outMimes;
-        foreach(const QString &mit, outMimes) {
+        foreach(const QString &mit, outMimes)
+        {
             if (!lst.contains(mit))     // append only if not there already. Qt4: QSet<QString>?
+            {
                 lst.append(mit);
+            }
         }
     }
-    foreach(Vertex* vertex, vertices) {
+    foreach(Vertex* vertex, vertices)
+    {
         delete vertex;
     }
     vertices.clear();
@@ -458,7 +533,9 @@ QStringList KoFilterManager::mimeFilter()
     QList<KoDocumentEntry>::ConstIterator partEnd(parts.constEnd());
 
     if (partIt == partEnd)
+    {
         return QStringList();
+    }
 
     // To find *all* reachable mimetypes, we have to resort to
     // a small hat trick, in order to avoid multiple searches:
@@ -467,7 +544,8 @@ QStringList KoFilterManager::mimeFilter()
     // Now we just need an... ehrm.. unique name for our fake mimetype
     Vertex *v = new Vertex("supercalifragilistic/x-pialadocious");
     vertices.insert("supercalifragilistic/x-pialadocious", v);
-    while (partIt != partEnd) {
+    while (partIt != partEnd)
+    {
         QJsonObject metaData = (*partIt).metaData();
 #ifdef CALLIGRA_OLD_PLUGIN_METADATA
         QStringList nativeMimeTypes = metaData.value("X-KDE-ExtraNativeMimeTypes").toString().split(',');
@@ -478,8 +556,12 @@ QStringList KoFilterManager::mimeFilter()
         QStringList::ConstIterator it = nativeMimeTypes.constBegin();
         const QStringList::ConstIterator end = nativeMimeTypes.constEnd();
         for (; it != end; ++it)
+        {
             if (!(*it).isEmpty())
+            {
                 v->addEdge(vertices[(*it).toLatin1()]);
+            }
+        }
         ++partIt;
     }
     QStringList result = connected(vertices, "supercalifragilistic/x-pialadocious");
@@ -494,13 +576,17 @@ QStringList KoFilterManager::mimeFilter()
 bool KoFilterManager::filterAvailable(KoFilterEntry::Ptr entry)
 {
     if (!entry)
+    {
         return false;
+    }
     if (entry->available != "check")
+    {
         return true;
+    }
 
-// QT5TODO
+    // QT5TODO
 #if 1
-        return true;
+    return true;
 #else
     //kDebug( 30500 ) <<"Checking whether" << entry->service()->name() <<" applies.";
     // generate some "unique" key
@@ -512,7 +598,7 @@ bool KoFilterManager::filterAvailable(KoFilterEntry::Ptr entry)
         KLibrary library(QFile::encodeName(entry->service()->library()));
         if (library.fileName().isEmpty()) {
             warnFilter << "Huh?? Couldn't load the lib: "
-                << entry->service()->library();
+                       << entry->service()->library();
             m_filterAvailable[ key ] = false;
             return false;
         }
@@ -521,9 +607,9 @@ bool KoFilterManager::filterAvailable(KoFilterEntry::Ptr entry)
         QByteArray symname = "check_" + QString(library.objectName()).toLatin1();
         KLibrary::void_function_ptr sym = library.resolveFunction(symname);
         if (!sym) {
-//            warnFilter << "The library " << library.objectName()
-//                << " does not offer a check_" << library.objectName()
-//                << " function." << endl;
+            //            warnFilter << "The library " << library.objectName()
+            //                << " does not offer a check_" << library.objectName()
+            //                << " function." << endl;
             m_filterAvailable[key] = false;
         } else {
             typedef int (*t_func)();
@@ -539,7 +625,10 @@ void KoFilterManager::importErrorHelper(const QString& mimeType, const bool supp
 {
     QString tmp = i18n("Could not import file of type\n%1", mimeType);
     // ###### FIXME: use KLibLoader::lastErrorMessage() here
-    if (!suppressDialog) KMessageBox::error(0, tmp, i18n("Missing Import Filter"));
+    if (!suppressDialog)
+    {
+        KMessageBox::error(0, tmp, i18n("Missing Import Filter"));
+    }
 }
 
 void KoFilterManager::setBatchMode(const bool batch)
@@ -554,7 +643,8 @@ bool KoFilterManager::getBatchMode(void) const
 
 KoProgressUpdater* KoFilterManager::progressUpdater() const
 {
-    if (d->progressUpdater.isNull()) {
+    if (d->progressUpdater.isNull())
+    {
         // somebody, probably its parent, deleted our progress updater for us
         return 0;
     }
