@@ -8,7 +8,12 @@
 				"Type":"Service",
 				"Id":"docx2odtID",
 				"X-KDE-Export":"application/vnd.oasis.opendocument.text",
-				"X-KDE-Import":"application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.wordprocessingml.template,application/vnd.ms-word.document.macroEnabled.12,application/vnd.ms-word.template.macroEnabled.12",
+				"X-KDE-Import":[
+								"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+								"application/vnd.openxmlformats-officedocument.wordprocessingml.template",
+								"application/vnd.ms-word.document.macroEnabled.12",
+								"application/vnd.ms-word.template.macroEnabled.12"
+								],
 				"X-KDE-Weight":"1",
 				"X-KDE-Library":"calligra_filter_docx2odt",
 				"X-KDE-ServiceTypes":"Calligra/Filter",
@@ -20,7 +25,12 @@
 	"Id":"docx2odtID",
 	"docx2odtID":"129",
 	"X-KDE-Export":"application/vnd.oasis.opendocument.text",
-	"X-KDE-Import":"application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.wordprocessingml.template,application/vnd.ms-word.document.macroEnabled.12,application/vnd.ms-word.template.macroEnabled.12",
+	"X-KDE-Import":[
+					"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+					"application/vnd.openxmlformats-officedocument.wordprocessingml.template",
+					"application/vnd.ms-word.document.macroEnabled.12",
+					"application/vnd.ms-word.template.macroEnabled.12"
+				    ],
 	"X-KDE-Weight":"1",
 	"X-KDE-Library":"calligra_filter_docx2odt",
 	"X-KDE-ServiceTypes":"Calligra/Filter",
