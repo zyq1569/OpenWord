@@ -158,7 +158,7 @@ KoApplication::KoApplication(const QByteArray &nativeMimeType,
 #ifndef QT_NO_DBUS
     if (_WIN32 || _WIN64)
     {
-        errorFilter << "KDBusService service(KDBusService::Multiple); error! in windowsr!" << endl;
+        errorMain << "KDBusService service(KDBusService::Multiple); error! in windows!" << endl;
     }
     else
     {
