@@ -972,7 +972,7 @@ bool KoMainWindow::saveDocument(bool saveas, bool silent, int specialOutputFlag)
         KoFileDialog dialog(this, KoFileDialog::SaveFile, "SaveDocument");
         dialog.setCaption(i18n("untitled"));
         dialog.setDefaultDir((isExporting() && !d->lastExportUrl.isEmpty()) ?
-                                d->lastExportUrl.toLocalFile() : suggestedURL.toLocalFile());
+                                 d->lastExportUrl.toLocalFile() : suggestedURL.toLocalFile());
         dialog.setMimeTypeFilters(mimeFilter);
         QUrl newURL = QUrl::fromUserInput(dialog.filename());
 
@@ -1198,7 +1198,7 @@ void KoMainWindow::saveWindowSettings()
 
     }
 
-     KSharedConfig::openConfig()->sync();
+    KSharedConfig::openConfig()->sync();
     resetAutoSaveSettings(); // Don't let KMainWindow override the good stuff we wrote down
 
 }
@@ -1300,8 +1300,8 @@ void KoMainWindow::slotFileOpen()
         KoFileDialog dialog(this, KoFileDialog::OpenFile, "OpenDocument");
         dialog.setCaption(i18n("Open Document"));
         dialog.setDefaultDir(qApp->applicationName().contains("karbon")
-                               ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
-                               : QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+                             ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
+                             : QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
         dialog.setMimeTypeFilters(koApp->mimeFilter(KoFilterManager::Import));
         dialog.setHideNameFilterDetailsOption();
         url = QUrl::fromUserInput(dialog.filename());
@@ -1309,8 +1309,8 @@ void KoMainWindow::slotFileOpen()
         KoFileDialog dialog(this, KoFileDialog::ImportFile, "OpenDocument");
         dialog.setCaption(i18n("Import Document"));
         dialog.setDefaultDir(qApp->applicationName().contains("karbon")
-                                ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
-                                : QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+                             ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
+                             : QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
         dialog.setMimeTypeFilters(koApp->mimeFilter(KoFilterManager::Import));
         dialog.setHideNameFilterDetailsOption();
         url = QUrl::fromUserInput(dialog.filename());
@@ -1634,8 +1634,10 @@ void KoMainWindow::slotProgress(int value)
 {
     QMutexLocker locker(&d->progressMutex);
     debugMain << "KoMainWindow::slotProgress" << value;
-    if (value <= -1 || value >= 100) {
-        if (d->progress) {
+    if (value <= -1 || value >= 100)
+    {
+        if (d->progress)
+        {
             statusBar()->removeWidget(d->progress);
             delete d->progress;
             d->progress = 0;
@@ -1643,16 +1645,19 @@ void KoMainWindow::slotProgress(int value)
         d->firstTime = true;
         return;
     }
-    if (d->firstTime || !d->progress) {
+    if (d->firstTime || !d->progress)
+    {
         // The statusbar might not even be created yet.
         // So check for that first, and create it if necessary
         QStatusBar *bar = findChild<QStatusBar *>();
-        if (!bar) {
+        if (!bar)
+        {
             statusBar()->show();
             QApplication::sendPostedEvents(this, QEvent::ChildAdded);
         }
 
-        if (d->progress) {
+        if (d->progress)
+        {
             statusBar()->removeWidget(d->progress);
             delete d->progress;
             d->progress = 0;
@@ -1665,7 +1670,8 @@ void KoMainWindow::slotProgress(int value)
         d->progress->show();
         d->firstTime = false;
     }
-    if (!d->progress.isNull()) {
+    if (!d->progress.isNull())
+    {
         d->progress->setValue(value);
     }
     locker.unlock();
@@ -1689,7 +1695,8 @@ void KoMainWindow::slotEmailFile()
     QStringList urls;
     QString fileURL;
     if (rootDocument()->url().isEmpty() ||
-            rootDocument()->isModified()) {
+            rootDocument()->isModified())
+    {
         //Save the file as a temporary file
         bool const tmp_modified = rootDocument()->isModified();
         QUrl const tmp_url = rootDocument()->url();
@@ -1717,7 +1724,9 @@ void KoMainWindow::slotEmailFile()
         rootDocument()->setUrl(tmp_url);
         rootDocument()->setModified(tmp_modified);
         rootDocument()->setOutputMimeType(tmp_mimetype);
-    } else {
+    }
+    else
+    {
         fileURL = rootDocument()->url().url();
         theSubject = i18n("Document - %1", rootDocument()->url().fileName());
         urls.append(fileURL);
@@ -1725,7 +1734,8 @@ void KoMainWindow::slotEmailFile()
 
     debugMain << "(" << fileURL << ")";
 
-    if (!fileURL.isEmpty()) {
+    if (!fileURL.isEmpty())
+    {
         KToolInvocation::invokeMailer(QString(), QString(), QString(), theSubject,
                                       QString(), //body
                                       QString(),
@@ -1756,7 +1766,8 @@ void KoMainWindow::slotReloadFile()
         return;
 
     QUrl url = pDoc->url();
-    if (!pDoc->isEmpty()) {
+    if (!pDoc->isEmpty())
+    {
         saveWindowSettings();
         setRootDocument(0);   // don't delete this main window when deleting the document
         if(d->rootDocument)
@@ -1811,7 +1822,8 @@ QDockWidget* KoMainWindow::createDockWidget(KoDockFactoryBase* factory)
 {
     QDockWidget* dockWidget = 0;
 
-    if (!d->dockWidgetsMap.contains(factory->id())) {
+    if (!d->dockWidgetsMap.contains(factory->id()))
+    {
         dockWidget = factory->createDockWidget();
 
         // It is quite possible that a dock factory cannot create the dock; don't
@@ -1821,7 +1833,8 @@ QDockWidget* KoMainWindow::createDockWidget(KoDockFactoryBase* factory)
 
         KoDockWidgetTitleBar *titleBar = 0;
         // Check if the dock widget is supposed to be collapsable
-        if (!dockWidget->titleBarWidget()) {
+        if (!dockWidget->titleBarWidget())
+        {
             titleBar = new KoDockWidgetTitleBar(dockWidget);
             dockWidget->setTitleBarWidget(titleBar);
             titleBar->setCollapsable(factory->isCollapsable());
@@ -1836,7 +1849,8 @@ QDockWidget* KoMainWindow::createDockWidget(KoDockFactoryBase* factory)
         Qt::DockWidgetArea side = Qt::RightDockWidgetArea;
         bool visible = factory->defaultVisible();
 
-        switch (factory->defaultDockPosition()) {
+        switch (factory->defaultDockPosition())
+        {
         case KoDockFactoryBase::DockTornOff:
             dockWidget->setFloating(true); // position nicely?
             break;
@@ -1854,13 +1868,15 @@ QDockWidget* KoMainWindow::createDockWidget(KoDockFactoryBase* factory)
             visible = false;
         }
 
-        if (rootDocument()) {
+        if (rootDocument())
+        {
             KConfigGroup group =  KSharedConfig::openConfig()->group(d->rootPart->componentData().componentName()).group("DockWidget " + factory->id());
             side = static_cast<Qt::DockWidgetArea>(group.readEntry("DockArea", static_cast<int>(side)));
             if (side == Qt::NoDockWidgetArea) side = Qt::RightDockWidgetArea;
         }
         addDockWidget(side, dockWidget);
-        if (dockWidget->features() & QDockWidget::DockWidgetClosable) {
+        if (dockWidget->features() & QDockWidget::DockWidgetClosable)
+        {
             d->dockWidgetMenu->addAction(dockWidget->toggleViewAction());
             if (!visible)
                 dockWidget->hide();
@@ -1868,7 +1884,8 @@ QDockWidget* KoMainWindow::createDockWidget(KoDockFactoryBase* factory)
 
         bool collapsed = factory->defaultCollapsed();
         bool locked = false;
-        if (rootDocument()) {
+        if (rootDocument())
+        {
             KConfigGroup group =  KSharedConfig::openConfig()->group(d->rootPart->componentData().componentName()).group("DockWidget " + factory->id());
             collapsed = group.readEntry("Collapsed", collapsed);
             locked = group.readEntry("Locked", locked);
@@ -1878,13 +1895,16 @@ QDockWidget* KoMainWindow::createDockWidget(KoDockFactoryBase* factory)
         if (titleBar && locked)
             titleBar->setLocked(true);
 
-        if (titleBar) {
+        if (titleBar)
+        {
             KConfigGroup configGroupInterface =  KSharedConfig::openConfig()->group("Interface");
             titleBar->setVisible(configGroupInterface.readEntry("ShowDockerTitleBars", true));
         }
 
         d->dockWidgetsMap.insert(factory->id(), dockWidget);
-    } else {
+    }
+    else
+    {
         dockWidget = d->dockWidgetsMap[ factory->id()];
     }
 
@@ -1901,8 +1921,10 @@ QDockWidget* KoMainWindow::createDockWidget(KoDockFactoryBase* factory)
 void KoMainWindow::forceDockTabFonts()
 {
     QObjectList chis = children();
-    for (int i = 0; i < chis.size(); ++i) {
-        if (chis.at(i)->inherits("QTabBar")) {
+    for (int i = 0; i < chis.size(); ++i)
+    {
+        if (chis.at(i)->inherits("QTabBar"))
+        {
             ((QTabBar *)chis.at(i))->setFont(KoDockRegistry::dockFont());
         }
     }
@@ -1918,9 +1940,11 @@ QList<KoCanvasObserverBase*> KoMainWindow::canvasObservers() const
 
     QList<KoCanvasObserverBase*> observers;
 
-    foreach(QDockWidget *docker, dockWidgets()) {
+    foreach(QDockWidget *docker, dockWidgets())
+    {
         KoCanvasObserverBase *observer = dynamic_cast<KoCanvasObserverBase*>(docker);
-        if (observer) {
+        if (observer)
+        {
             observers << observer;
         }
     }
@@ -1935,19 +1959,24 @@ KoDockerManager * KoMainWindow::dockerManager() const
 
 void KoMainWindow::toggleDockersVisibility(bool visible)
 {
-    if (!visible) {
+    if (!visible)
+    {
         d->m_dockerStateBeforeHiding = saveState();
 
-        foreach(QObject* widget, children()) {
-            if (widget->inherits("QDockWidget")) {
+        foreach(QObject* widget, children())
+        {
+            if (widget->inherits("QDockWidget"))
+            {
                 QDockWidget* dw = static_cast<QDockWidget*>(widget);
-                if (dw->isVisible()) {
+                if (dw->isVisible())
+                {
                     dw->hide();
                 }
             }
         }
     }
-    else {
+    else
+    {
         restoreState(d->m_dockerStateBeforeHiding);
     }
 }
@@ -1960,10 +1989,12 @@ KRecentFilesAction *KoMainWindow::recentAction() const
 KoView* KoMainWindow::currentView() const
 {
     // XXX
-    if (d->activeView) {
+    if (d->activeView)
+    {
         return d->activeView;
     }
-    else if (!d->rootViews.isEmpty()) {
+    else if (!d->rootViews.isEmpty())
+    {
         return d->rootViews.first();
     }
     return 0;
@@ -1980,7 +2011,8 @@ void KoMainWindow::newView()
 
 void KoMainWindow::createMainwindowGUI()
 {
-    if ( isHelpMenuEnabled() && !d->m_helpMenu ) {
+    if ( isHelpMenuEnabled() && !d->m_helpMenu )
+    {
         d->m_helpMenu = new KHelpMenu( this, componentData().aboutData(), true );
 
         KActionCollection *actions = actionCollection();
@@ -1991,22 +2023,28 @@ void KoMainWindow::createMainwindowGUI()
         QAction *aboutAppAction = d->m_helpMenu->action(KHelpMenu::menuAboutApp);
         QAction *aboutKdeAction = d->m_helpMenu->action(KHelpMenu::menuAboutKDE);
 
-        if (helpContentsAction) {
+        if (helpContentsAction)
+        {
             actions->addAction(helpContentsAction->objectName(), helpContentsAction);
         }
-        if (whatsThisAction) {
+        if (whatsThisAction)
+        {
             actions->addAction(whatsThisAction->objectName(), whatsThisAction);
         }
-        if (reportBugAction) {
+        if (reportBugAction)
+        {
             actions->addAction(reportBugAction->objectName(), reportBugAction);
         }
-        if (switchLanguageAction) {
+        if (switchLanguageAction)
+        {
             actions->addAction(switchLanguageAction->objectName(), switchLanguageAction);
         }
-        if (aboutAppAction) {
+        if (aboutAppAction)
+        {
             actions->addAction(aboutAppAction->objectName(), aboutAppAction);
         }
-        if (aboutKdeAction) {
+        if (aboutKdeAction)
+        {
             actions->addAction(aboutKdeAction->objectName(), aboutKdeAction);
         }
     }
@@ -2029,18 +2067,21 @@ void KoMainWindow::createMainwindowGUI()
 
 void KoMainWindow::removePart( KoPart *part )
 {
-    if (d->m_registeredPart.data() != part) {
+    if (d->m_registeredPart.data() != part)
+    {
         return;
     }
     d->m_registeredPart = 0;
-    if ( part == d->m_activePart ) {
+    if ( part == d->m_activePart )
+    {
         setActivePart(0, 0);
     }
 }
 
 void KoMainWindow::setActivePart(KoPart *part, QWidget *widget )
 {
-    if (part && d->m_registeredPart.data() != part) {
+    if (part && d->m_registeredPart.data() != part)
+    {
         warnMain << "trying to activate a non-registered part!" << part->objectName();
         return; // don't allow someone call setActivePart with a part we don't know about
     }
@@ -2056,11 +2097,13 @@ void KoMainWindow::setActivePart(KoPart *part, QWidget *widget )
     d->m_activePart = part;
     d->m_activeWidget = widget;
 
-    if (oldActivePart) {
+    if (oldActivePart)
+    {
         KoPart *savedActivePart = part;
         QWidget *savedActiveWidget = widget;
 
-        if ( oldActiveWidget ) {
+        if ( oldActiveWidget )
+        {
             disconnect( oldActiveWidget, SIGNAL(destroyed()), this, SLOT(slotWidgetDestroyed()) );
         }
 
@@ -2068,23 +2111,26 @@ void KoMainWindow::setActivePart(KoPart *part, QWidget *widget )
         d->m_activeWidget = savedActiveWidget;
     }
 
-    if (d->m_activePart && d->m_activeWidget ) {
+    if (d->m_activePart && d->m_activeWidget )
+    {
         connect( d->m_activeWidget, SIGNAL(destroyed()), this, SLOT(slotWidgetDestroyed()) );
     }
     // Set the new active instance in KGlobal
-//     KGlobal::setActiveComponent(d->m_activePart ? d->m_activePart->componentData() : KGlobal::mainComponent());
+    //     KGlobal::setActiveComponent(d->m_activePart ? d->m_activePart->componentData() : KGlobal::mainComponent());
 
     // old slot called from part manager
     KoPart *newPart = static_cast<KoPart*>(d->m_activePart.data());
 
-    if (d->activePart && d->activePart == newPart) {
+    if (d->activePart && d->activePart == newPart)
+    {
         //debugMain <<"no need to change the GUI";
         return;
     }
 
     KXMLGUIFactory *factory = guiFactory();
 
-    if (d->activeView) {
+    if (d->activeView)
+    {
 
         factory->removeClient(d->activeView);
 
@@ -2093,11 +2139,13 @@ void KoMainWindow::setActivePart(KoPart *part, QWidget *widget )
         d->toolbarList.clear();
     }
 
-    if (!d->mainWindowGuiIsBuilt) {
+    if (!d->mainWindowGuiIsBuilt)
+    {
         createMainwindowGUI();
     }
 
-    if (newPart && d->m_activeWidget && d->m_activeWidget->inherits("KoView")) {
+    if (newPart && d->m_activeWidget && d->m_activeWidget->inherits("KoView"))
+    {
         d->activeView = qobject_cast<KoView *>(d->m_activeWidget);
         d->activeView->actionCollection()->addAction("view_newview", actionCollection()->action("view_newview"));
         d->activePart = newPart;
@@ -2110,9 +2158,12 @@ void KoMainWindow::setActivePart(KoPart *part, QWidget *widget )
 
         KConfigGroup configGroupInterface =  KSharedConfig::openConfig()->group("Interface");
         const bool showDockerTitleBar = configGroupInterface.readEntry("ShowDockerTitleBars", true);
-        foreach (QDockWidget *wdg, d->dockWidgets) {
-            if ((wdg->features() & QDockWidget::DockWidgetClosable) == 0) {
-                if (wdg->titleBarWidget()) {
+        foreach (QDockWidget *wdg, d->dockWidgets)
+        {
+            if ((wdg->features() & QDockWidget::DockWidgetClosable) == 0)
+            {
+                if (wdg->titleBarWidget())
+                {
                     wdg->titleBarWidget()->setVisible(showDockerTitleBar);
                 }
                 wdg->setVisible(true);
@@ -2120,27 +2171,32 @@ void KoMainWindow::setActivePart(KoPart *part, QWidget *widget )
         }
 
         // Create and plug toolbar list for Settings menu
-        foreach(QWidget* it, factory->containers("ToolBar")) {
+        foreach(QWidget* it, factory->containers("ToolBar"))
+        {
             KToolBar * toolBar = ::qobject_cast<KToolBar *>(it);
-            if (toolBar) {
+            if (toolBar)
+            {
                 KToggleAction * act = new KToggleAction(i18n("Show %1 Toolbar", toolBar->windowTitle()), this);
                 actionCollection()->addAction(toolBar->objectName().toUtf8(), act);
                 act->setCheckedState(KGuiItem(i18n("Hide %1 Toolbar", toolBar->windowTitle())));
                 connect(act, SIGNAL(toggled(bool)), this, SLOT(slotToolbarToggled(bool)));
                 act->setChecked(!toolBar->isHidden());
                 d->toolbarList.append(act);
-            } else
-                warnMain << "Toolbar list contains a " << it->metaObject()->className() << " which is not a toolbar!";
+            }
+            else
+            { warnMain << "Toolbar list contains a " << it->metaObject()->className() << " which is not a toolbar!";}
         }
         plugActionList("toolbarlist", d->toolbarList);
 
     }
-    else {
+    else
+    {
         d->activeView = 0;
         d->activePart = 0;
     }
 
-    if (d->activeView) {
+    if (d->activeView)
+    {
         d->activeView->guiActivateEvent(true);
     }
 }
@@ -2163,8 +2219,10 @@ void KoMainWindow::slotDocumentTitleModified(const QString &caption, bool mod)
 
 void KoMainWindow::showDockerTitleBars(bool show)
 {
-    foreach (QDockWidget *dock, dockWidgets()) {
-        if (dock->titleBarWidget()) {
+    foreach (QDockWidget *dock, dockWidgets())
+    {
+        if (dock->titleBarWidget())
+        {
             dock->titleBarWidget()->setVisible(show);
         }
     }
