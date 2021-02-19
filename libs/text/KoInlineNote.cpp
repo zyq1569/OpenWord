@@ -270,6 +270,7 @@ bool KoInlineNote::loadOdf(const KoXmlElement & element, KoShapeLoadingContext &
 
 void KoInlineNote::saveOdf(KoShapeSavingContext & context)
 {
+    qDebug() << "----------void KoInlineNote::saveOdf(KoShapeSavingContext & context)---------";
     ///openword -2021
     //KoXmlWriter *writer = &context.xmlWriter();
 
