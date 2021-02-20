@@ -27,7 +27,7 @@
 #include <QFile>
 
 // KF5
-#include <kpluginfactory.h>
+//#include <kpluginfactory.h>
 
 // Calligra
 #include <KoStore.h>
@@ -52,7 +52,17 @@
 // Needed to instantiate the plugin factory.
 //#include "DocxExport.moc"
 
+DocxExportFactory::DocxExportFactory()
+{
+    registerPlugin<DocxExport>();
+}
 
+DocxExportFactory::~DocxExportFactory()
+{
+}
+
+
+///-------------------------------------------------------------------------------------------------
 DocxExport::DocxExport(QObject *parent, const QVariantList &)
     : KoFilter(parent)
 {

@@ -21,6 +21,8 @@
 #ifndef DOCXEXPORT_H
 #define DOCXEXPORT_H
 
+#include <kpluginfactory.h>
+
 #include <KoFilter.h>
 
 #include <QVariantList>
@@ -38,6 +40,16 @@ public:
     KoFilter::ConversionStatus convert(const QByteArray& from, const QByteArray& to) override;
 
 private:
+};
+
+class DocxExportFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_filter_odt2docx.json")
+public:
+    explicit DocxExportFactory();
+    ~DocxExportFactory();
 };
 
 #endif /* DOCXEXPORT_H */
