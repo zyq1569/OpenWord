@@ -1,0 +1,26 @@
+{
+	"Keys": ["calligra_filter_odt2docx"],
+	"KPlugin": {
+				"Name":"MS Word DOCX Export Filter",
+				"Name[en_GB":"MS Word DOCX Export Filter",
+				"Name[zh_CN":"Microsoft Word DOCX 导出过滤器",
+				"Name[zh_TW":"Microsoft Word DOCX 匯出過濾程式",
+				"Type":"Service",
+				"Id":"docx2odtID",
+				"X-KDE-Export":"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+				"X-KDE-Import":"application/vnd.oasis.opendocument.text",
+				"X-KDE-Weight":"1",
+				"X-KDE-Library":"calligra_filter_odt2docx",
+				"X-KDE-ServiceTypes":"Calligra/Filter",
+				"X-KDE-PluginInfo-Name":"calligra_filter_odt2docx",	
+				"docx2odtID":"129"
+				},
+	"Id":"docx2odtID",
+	"docx2odtID":"129",
+	"X-KDE-Export":"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+	"X-KDE-Import":"application/vnd.oasis.opendocument.text",
+	"X-KDE-Weight":"1",
+	"X-KDE-Library":"calligra_filter_odt2docx",
+	"X-KDE-ServiceTypes":"Calligra/Filter",
+	"X-KDE-PluginInfo-Name":"calligra_filter_odt2docx"		
+}

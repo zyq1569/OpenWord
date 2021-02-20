@@ -17,7 +17,7 @@ SUBDIRS += filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
 #    filters/karbon/wmf/calligra_filter_karbon2wmf.pro \
 #    filters/stage/kpr2odf/calligra_filter_kpr2odp.pro \
 #    filters/words/ascii/calligra_filter_odt2ascii.pro \
-#    filters/words/docx/export/calligra_filter_odt2docx.pro \
+    filters/words/docx/export/calligra_filter_odt2docx.pro \
 #    filters/words/epub/calligra_filter_odt2epub2.pro \
 #    filters/words/epub/calligra_filter_odt2html.pro \
 #    filters/words/mobi/calligra_filter_odt2mobi.pro \
@@ -52,7 +52,7 @@ SUBDIRS += filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
 #    stage/part/calligrastagepart.pro \
 #    stage/part/calligrastageprivate.pro \
 #    stage/part/tools/animationtool/calligrastagetoolanimation.pro \
-#    extras/thumbnail/calligrathumbnail.pro \
+    extras/thumbnail/calligrathumbnail.pro \
     words/app/calligrawords.pro \
     words/part/calligrawordspart.pro \
     libs/flake/flake.pro \

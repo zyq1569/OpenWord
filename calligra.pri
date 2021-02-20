@@ -29,6 +29,7 @@ DEFINES += calligra_shape_picture_EXPORTS calligra_shape_plugin_EXPORTS calligra
 DEFINES += calligra_shape_vector_EXPORTS calligra_shape_video_EXPORTS calligraimagethumbnail_EXPORTS
 DEFINES += calligra_tool_basicflakes_EXPORTS calligra_tool_defaults_EXPORTS
 DEFINES += karbon_tools_EXPORTS karbonpart_EXPORTS calligra_shape_chart_EXPORTS
+DEFINES += calligrathumbnail_EXPORTS
 DEFINES += komain_EXPORTS
 
 #-----selef defined----------
