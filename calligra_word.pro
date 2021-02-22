@@ -70,7 +70,7 @@ SUBDIRS += filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
     plugins/formulashape/koformula.pro \
     libs/kross/kokross.pro \
     libs/main/komain.pro \
-#    filters/libmsooxml/komsooxml.pro \
+    filters/libmsooxml/komsooxml.pro \
     libs/odf/koodf.pro \
     filters/libodf2/koodf2.pro \
     filters/libodfreader/koodfreader.pro \
