@@ -1,6 +1,6 @@
 
 LIB_DIR     = ../../bin/bin/libs
-SDK_INSTALL_PREFIX = D:/CraftRoot/include
+#SDK_INSTALL_PREFIX = D:/CraftRoot/include
 
 TEMPLATE = lib
 TARGET   = flake

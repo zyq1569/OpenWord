@@ -2,7 +2,7 @@
 # 
 # ------------------------------------------------------
 
-SDK_INSTALL_PREFIX = D:/CraftRoot/include
+#SDK_INSTALL_PREFIX = D:/CraftRoot/include
 
 TEMPLATE = lib
 TARGET = kotext
