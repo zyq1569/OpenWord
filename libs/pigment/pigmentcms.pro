@@ -2,7 +2,7 @@
 # 
 # ------------------------------------------------------
 
-LIB_DIR     = D:/OpenWord/bin/bin/libs
+#LIB_DIR     = D:/OpenWord/bin/bin/libs
 
 TEMPLATE = lib
 CONFIG += debug_and_release  c++11
@@ -13,17 +13,17 @@ QT += core xml gui
 
 
 INCLUDEPATH += ../pigment \
-    ../../interfaces \
-    ../../ \
-    ../../winquirks \
-    ../version \
-    ../plugin \
-    ../pigment/compositeops \
-    ../pigment/resources \
-    ../plugin
+                ../../interfaces \
+                ../../ \
+                ../../winquirks \
+                ../version \
+                ../plugin \
+                ../pigment/compositeops \
+                ../pigment/resources \
+                ../plugin
 
 
-LIBS += -L$${LIB_DIR} \
+LIBS += -L$${DESTDIR} \
          -llibkoplugin
 
 include(../../calligra.pri)
