@@ -161,6 +161,7 @@ void Graph::buildGraph()
             {
                 m_vertices.insert(key, new Vertex(key));
             }
+            debugFilter <<"--void Graph::buildGraph()---import:"<<import;
         }
 
         // Are we allowed to use this filter at all?
@@ -176,11 +177,11 @@ void Graph::buildGraph()
                     exp = new Vertex(key);
                     m_vertices.insert(key, exp);
                 }
+                debugFilter << "---void Graph::buildGraph()-----exportIt:" <<exportIt;
                 // Then create the appropriate edges
                 foreach(const QString& import, filter->import)
                 {
                     m_vertices[import.toLatin1()]->addEdge(new Edge(exp, filter));
-                    debugFilter << "---void Graph::buildGraph()-----:" <<import;
                 }
             }
         }

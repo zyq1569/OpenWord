@@ -85,6 +85,7 @@ LIBS += -L$${SDK_LIB_PREFIX} \
         -luuid \
         -lcomdlg32 \
         -ladvapi32 \
+        -llibiconv \
         -lKF5I18n \
         -lKF5WidgetsAddons \
         -lKF5KIOCore \
