@@ -39,11 +39,13 @@ static void listApplicationNames()
     const KService::List services = KServiceTypeTrader::self()->query("Calligra/Application");
     QTextStream out(stdout, QIODevice::WriteOnly);
     QStringList names;
-    foreach (KService::Ptr service, services) {
+    foreach (KService::Ptr service, services)
+    {
         names.append(service->desktopEntryName());
     }
     names.sort();
-    foreach (const QString& name, names) {
+    foreach (const QString& name, names)
+    {
         out << name << '\n';
     }
 }
@@ -59,8 +61,8 @@ static bool startService(KService::Ptr service, const QUrl& url)
     QString serviceName;
     int pid = 0;
     int res = KToolInvocation::startServiceByDesktopPath(
-        service->entryPath(), url.url(), &error, &serviceName, &pid
-    );
+                  service->entryPath(), url.url(), &error, &serviceName, &pid
+              );
     // could not check result - does not work for custom KDEDIRS: ok = res == 0;
     //ok = true;
     qDebug() << "KToolInvocation::startServiceByDesktopPath:" << res << pid << error << serviceName;
@@ -72,24 +74,26 @@ static int handleUrls(const QStringList& files)
     KMimeTypeTrader* mimeTrader = KMimeTypeTrader::self();
     QList<QUrl> notHandledUrls;
     const QRegExp withProtocolChecker( QStringLiteral("^[a-zA-Z]+:") );
-    foreach(const QString& file, files) {
+    foreach(const QString& file, files)
+    {
         // convert to an url
         const bool startsWithProtocol = (withProtocolChecker.indexIn(file) == 0);
         QUrl url = startsWithProtocol ? QUrl::fromUserInput(file) : QUrl::fromLocalFile(file);
         const QMimeType mimetype = QMimeDatabase().mimeTypeForUrl(url);
-        if (mimetype.isDefault()) {
+        if (mimetype.isDefault())
+        {
             KMessageBox::error(0, i18nc("@info", "Mimetype for <filename>%1</filename> not found!",
                                         url.toString()));
             return 1;
         }
         qDebug() << url << mimetype.name();
-        /* 
+        /*
             Find apps marked with Calligra/Applications service type
             and having given mimetype on the X-Calligra-Default-MimeTypes list.
             This is needed because, single mimetype can be supported by more than
             one Calligra application but only one application should be selected
             for opening given document using the calligra command.
-            
+
             Example: application/vnd.oasis.opendocument.graphic, supported
             by Flow and Karbon already; out of these two, Karbon is selected
             for opening the document.
@@ -98,16 +102,19 @@ static int handleUrls(const QStringList& files)
         qDebug() << constraint;
         KService::List services;
         KService::List offers = KServiceTypeTrader::self()->query("Calligra/Application");
-        foreach(KService::Ptr offer, offers) {
+        foreach(KService::Ptr offer, offers)
+        {
             QStringList defaultMimeTypes = offer->property("X-Calligra-DefaultMimeTypes").toStringList();
-            if (defaultMimeTypes.contains(mimetype.name())) {
+            if (defaultMimeTypes.contains(mimetype.name()))
+            {
                 services << offer;
             }
         }
 
         KService::Ptr service;
         //bool ok = false;
-        if (!services.isEmpty()) {
+        if (!services.isEmpty())
+        {
             service = services.first();
             qDebug() << "-" << service->name() << service->property("X-Calligra-DefaultMimeTypes");
 #if 0
@@ -122,47 +129,54 @@ static int handleUrls(const QStringList& files)
         // if above not found or app cannot be executed:
         KService::List mimeServices = mimeTrader->query(mimetype.name(), "Calligra/Application");
         qDebug() << "Found" << mimeServices.count() << "services by MimeType field:";
-        foreach (KService::Ptr service, mimeServices) {
+        foreach (KService::Ptr service, mimeServices)
+        {
             //qDebug() << "-" << service->name() << service->property("X-DBUS-ServiceName", QVariant::String);
             qDebug() << "-" << service->name() << service->hasServiceType("Calligra/Application")
-                << service->hasMimeType(mimetype.name());
+                     << service->hasMimeType(mimetype.name());
             //QVariant isCalligraApp = service->property("X-Calligra-App", QVariant::Bool);
             /*if (isCalligraApp.isValid() && isCalligraApp.toBool()) {
                 qDebug() << "FOUND:" << service->name();
             }*/
         }
-        if (mimeServices.isEmpty()) {
+        if (mimeServices.isEmpty())
+        {
             service = mimeTrader->preferredService(mimetype.name());
             qDebug() << "mimeTrader->preferredService():" << service->name();
-            if (service) {
+            if (service)
+            {
                 KGuiItem openItem(KStandardGuiItem::open());
                 openItem.setText(i18nc("@action:button", "Open with <application>%1</application>",
-                                      service->property("Name").toString()));
+                                       service->property("Name").toString()));
                 if (KMessageBox::Yes != KMessageBox::questionYesNo(
-                    0, 
-                    i18nc("@info",
-                         "Could not find Calligra application suitable for opening <filename>%1</filename>.<nl/>"
-                         "Do you want to open the file using default application <application>%2</application>?",
-                         url.url(), service->property("Name").toString()),
-                    i18nc("@title:window", "Calligra Application Not Found"), openItem, KStandardGuiItem::cancel()))
+                            0,
+                            i18nc("@info",
+                                  "Could not find Calligra application suitable for opening <filename>%1</filename>.<nl/>"
+                                  "Do you want to open the file using default application <application>%2</application>?",
+                                  url.url(), service->property("Name").toString()),
+                            i18nc("@title:window", "Calligra Application Not Found"), openItem, KStandardGuiItem::cancel()))
                 {
                     return 2;
                 }
             }
         }
-        else {
+        else
+        {
             service = mimeServices.first();
         }
-        if (service) {
+        if (service)
+        {
             startService(service, url);
             return 0;
         }
-        else {
+        else
+        {
             notHandledUrls.append(url);
         }
         //}
     }
-    if (!notHandledUrls.isEmpty()) {
+    if (!notHandledUrls.isEmpty())
+    {
         //KRun::displayOpenWithDialog(notHandledUrls, 0); ///openword
         return 0;
     }
@@ -192,16 +206,19 @@ int main( int argc, char **argv )
     parser.process(app);
     aboutData.processCommandLine(&parser);
 
-    if (parser.isSet("apps")) {
+    if (parser.isSet("apps"))
+    {
         listApplicationNames();
         return 0;
     }
     const QStringList files = parser.positionalArguments();
-    if (files.isEmpty()) {
+    if (files.isEmpty())
+    {
         //! @todo show cool Welcome window for app selection
         showWelcomeWindow();
     }
-    else {
+    else
+    {
         return handleUrls(files);
     }
     return 0;
