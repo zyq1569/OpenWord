@@ -100,7 +100,9 @@ LIBS += -L$${SDK_LIB_PREFIX} \
         -lKF5KrossUi \
         -lKF5Notifications
 
-SOURCES += main.cpp
+SOURCES   += main.cpp
+
+RC_FILE   +=  calligra_rc.rc
 
 #<PropertyGroup Label="Globals">
 #<ProjectGuid>{84B9CC03-3DB2-39AB-B225-D018AFE22B7B}</ProjectGuid>
