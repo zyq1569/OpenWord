@@ -3,8 +3,8 @@
 #HEADERS +=
 #DESTDIR = ../../../../bin/libs/
 #DESTDIR = ../../bin/libs/
-SDK_INSTALL_PREFIX = D:/KDE/KDE_SDK/include
-SDK_LIB_PREFIX     = D:/KDE/KDE_SDK/libs
+SDK_INSTALL_PREFIX = D:/Dev/KDE_SDK/include
+SDK_LIB_PREFIX     = D:/Dev/KDE_SDK/libs
 
 CONFIG += debug_and_release  c++11
 
