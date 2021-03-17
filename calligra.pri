@@ -3,8 +3,8 @@
 #HEADERS +=
 #DESTDIR = ../../../../bin/libs/
 #DESTDIR = ../../bin/libs/
-SDK_INSTALL_PREFIX = D:/KDE/calligra_KDE/include
-SDK_LIB_PREFIX     = D:/KDE/calligra_KDE/libs
+SDK_INSTALL_PREFIX = D:/KDE/KDE_SDK/include
+SDK_LIB_PREFIX     = D:/KDE/KDE_SDK/libs
 
 CONFIG += debug_and_release  c++11
 
@@ -72,53 +72,53 @@ INCLUDEPATH +=  $$SDK_INSTALL_PREFIX \
                 $$SDK_INSTALL_PREFIX/phonon4qt5 \
                 $$SDK_INSTALL_PREFIX/KChart
 
-LIBS += -L$${SDK_LIB_PREFIX} \
-        -lws2_32 \
-        -lnetapi32 \
-        -lkernel32 \
-        -luser32 \
-        -lgdi32 \
-        -lwinspool \
-        -lshell32 \
-        -lole32 \
-        -loleaut32 \
-        -luuid \
-        -lcomdlg32 \
-        -ladvapi32 \
-        -llibiconv \
-        -lKF5I18n \
-        -lKF5WidgetsAddons \
-        -lKF5KIOCore \
-        -lKF5Service \
-        -lKF5Crash \
-        -lKF5DBusAddons \
-        -lKF5XmlGui \
-        -lKF5KIOFileWidgets \
-        -lKF5IconThemes \
-        -lKF5ConfigWidgets \
-        -lKF5Codecs \
-        -lKF5ConfigGui \
-        -lKF5ConfigCore \
-        -lKF5Auth \
-        -lKF5AuthCore \
-        -lKF5Activities \
-        -lKF5Archive \
-        -lKF5AuthCore \
-        -lKF5CoreAddons \
-        -lKF5JobWidgets \
-        -lKF5Parts \
-        -lKF5SonnetUi \
-        -lKF5Crash \
-        -lKF5Solid \
-        -lKF5Completion \
-        -lKF5GuiAddons \
-        -lKF5TextWidgets \
-        -lKF5WindowSystem \
-        -lKF5ItemViews \
-        -lKF5KIOWidgets \
-        -lKF5KrossCore \
-        -lKF5KrossUi \
-        -lKF5Notifications
+LIBS       +=   -L$${SDK_LIB_PREFIX} \
+                -lws2_32 \
+                -lnetapi32 \
+                -lkernel32 \
+                -luser32 \
+                -lgdi32 \
+                -lwinspool \
+                -lshell32 \
+                -lole32 \
+                -loleaut32 \
+                -luuid \
+                -lcomdlg32 \
+                -ladvapi32 \
+                -llibiconv \
+                -lKF5I18n \
+                -lKF5WidgetsAddons \
+                -lKF5KIOCore \
+                -lKF5Service \
+                -lKF5Crash \
+                -lKF5DBusAddons \
+                -lKF5XmlGui \
+                -lKF5KIOFileWidgets \
+                -lKF5IconThemes \
+                -lKF5ConfigWidgets \
+                -lKF5Codecs \
+                -lKF5ConfigGui \
+                -lKF5ConfigCore \
+                -lKF5Auth \
+                -lKF5AuthCore \
+                -lKF5Activities \
+                -lKF5Archive \
+                -lKF5AuthCore \
+                -lKF5CoreAddons \
+                -lKF5JobWidgets \
+                -lKF5Parts \
+                -lKF5SonnetUi \
+                -lKF5Crash \
+                -lKF5Solid \
+                -lKF5Completion \
+                -lKF5GuiAddons \
+                -lKF5TextWidgets \
+                -lKF5WindowSystem \
+                -lKF5ItemViews \
+                -lKF5KIOWidgets \
+                -lKF5KrossCore \
+                -lKF5KrossUi \
+                -lKF5Notifications
 
 
 #define K_PLUGIN_FACTORY_WITH_JSON(name, jsonFile, pluginRegistrations)
