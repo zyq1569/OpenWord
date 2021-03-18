@@ -40,7 +40,7 @@ INCLUDEPATH +=  ../ \
 LIBS += -L$${DESTDIR} \
         -lmso \
         -lkoodf \
-        -lkostore \
-        -lzlibstatic
+        -lkostore
+#        -lzlibstatic \
 include(../../../../../calligra.pri)
 include(kowv2.pri)

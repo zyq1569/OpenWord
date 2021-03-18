@@ -31,7 +31,22 @@ INCLUDEPATH += ../ \
                 ../../libs/widgetutils
 
 
-LIBS       +=   -L$${DESTDIR} \
+#LIBS       +=   -L$${DESTDIR} \
+#                -lkowidgets \
+#                -lkotext \
+#                -lflake \
+#                -lpigmentcms \
+#                -lkoodf \
+#                -lkostore \
+#                -lkundo2 \
+#                -lkowidgetutils
+
+
+include(../../calligra.pri)
+include(basicflakes.pri)
+
+
+LIBS         +=  -L$${ALL_LIBS_DIR}\
                 -lkowidgets \
                 -lkotext \
                 -lflake \
@@ -40,11 +55,6 @@ LIBS       +=   -L$${DESTDIR} \
                 -lkostore \
                 -lkundo2 \
                 -lkowidgetutils
-
-
-include(../../calligra.pri)
-include(basicflakes.pri)
-
 #for build error!!
 #add: #include "../../../../libs/basicflakes/tools/KoCreatePathTool_p.h" in " :moc_KoCreatePathTool.cpp "
 

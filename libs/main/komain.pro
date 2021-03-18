@@ -31,18 +31,18 @@ INCLUDEPATH += ../../ \
                 config \
                 ../plugin
 
-LIBS += -L$${DESTDIR} \
-        -lkowidgets \
-        -lkotextlayout \
-        -lkotext \
-        -lflake \
-        -lpigmentcms \
-        -lkoplugin \
-        -lkowidgetutils \
-        -lkoodf \
-        -lkoversion \
-        -lkostore \
-        -lkundo2
+LIBS         += -L$${DESTDIR} \
+                -lkowidgets \
+                -lkotextlayout \
+                -lkotext \
+                -lflake \
+                -lpigmentcms \
+                -lkoplugin \
+                -lkowidgetutils \
+                -lkoodf \
+                -lkoversion \
+                -lkostore \
+                -lkundo2
 
 include(../../calligra.pri)
 include(komain.pri)

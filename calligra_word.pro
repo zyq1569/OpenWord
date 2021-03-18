@@ -1,8 +1,24 @@
 #https://community.kde.org/Calligra/Libs/KoText/Layout_Overview
-TEMPLATE    =  subdirs
+CONFIG     +=   ordered
+TEMPLATE    =   subdirs
 SUBDIRS    +=   filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
+                libs/version/koversion.pro \
+                filters/libmso/mso.pro \
+                libs/store/kostore.pro \
+                libs/odf/koodf.pro \
+                filters/libodf2/koodf2.pro \
+                libs/kundo2/kundo2.pro \
+                libs/plugin/koplugin.pro \
+                libs/pigment/pigmentcms.pro \
+                libs/widgetutils/kowidgetutils.pro \
+                libs/flake/flake.pro \
+                libs/text/kotext.pro \
+                libs/widgets/kowidgets.pro \
                 libs/basicflakes/basicflakes.pro \
+                libs/textlayout/kotextlayout.pro \
                 extras/calligra/calligra.pro \
+                filters/words/msword-odf/wv2/src/kowv2.pro \
+                libs/main/komain.pro \
                 plugins/dockers/calligra_docker_defaults.pro \
                 plugins/stencilsdocker/calligra_docker_stencils.pro \
                 filters/words/msword-odf/calligra_filter_doc2odt.pro \
@@ -25,31 +41,16 @@ SUBDIRS    +=   filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
                 extras/thumbnail/calligrathumbnail.pro \
                 words/app/calligrawords.pro \
                 words/part/calligrawordspart.pro \
-                libs/flake/flake.pro \
                 plugins/karbonplugins/tools/karbon_tools.pro \
                 karbon/common/karboncommon.pro \
                 karbon/karbonpart.pro \
                 karbon/ui/karbonui.pro \
                 plugins/formulashape/koformula.pro \
                 libs/kross/kokross.pro \
-                libs/main/komain.pro \
                 filters/libmsooxml/komsooxml.pro \
-                libs/odf/koodf.pro \
-                filters/libodf2/koodf2.pro \
                 filters/libodfreader/koodfreader.pro \
                 libs/pageapp/kopageapp.pro \
-                libs/plugin/koplugin.pro \
-                libs/store/kostore.pro \
-                libs/text/kotext.pro \
-                libs/textlayout/kotextlayout.pro \
                 libs/vectorimage/kovectorimage.pro \
-                libs/version/koversion.pro \
-                libs/widgets/kowidgets.pro \
-                libs/widgetutils/kowidgetutils.pro \
-                filters/words/msword-odf/wv2/src/kowv2.pro \
-                libs/kundo2/kundo2.pro \
-                filters/libmso/mso.pro \
-                libs/pigment/pigmentcms.pro \
                 #filters/words/applixword/calligra_filter_applixword2odt.pro \
                 #filters/words/ascii/calligra_filter_ascii2words.pro \
                 #filters/sheets/dbase/calligra_filter_dbase2kspread.pro \

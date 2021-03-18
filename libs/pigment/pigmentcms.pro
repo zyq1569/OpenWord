@@ -29,9 +29,9 @@ INCLUDEPATH  +=  ../pigment \
 
 #build_pass:message($$IDE_BUILD_TREE)
 include(../../calligra.pri)
-build_pass:message(------show start: ALL_LIBS_DIR---------)
-build_pass:message($$ALL_LIBS_DIR)
-build_pass:message(------show end: ALL_LIBS_DIR---------)
+#build_pass:message(------show start: ALL_LIBS_DIR---------)
+#build_pass:message($$ALL_LIBS_DIR)
+#build_pass:message(------show end: ALL_LIBS_DIR---------)
 LIBS         +=  -L$${ALL_LIBS_DIR}\
                  -llibkoplugin
 include(pigmentcms.pri)
