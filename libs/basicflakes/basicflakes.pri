@@ -4,6 +4,7 @@ HEADERS +=  tools/KoCreatePathTool.h \
 
 
 SOURCES += tools/KoCreatePathTool.cpp \
+#           tools/KoCreatePathTool_p.cpp \
            tools/KoPencilTool.cpp
 
 #add

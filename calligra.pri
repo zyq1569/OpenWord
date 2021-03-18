@@ -120,8 +120,9 @@ LIBS       +=   -L$${SDK_LIB_PREFIX} \
                 -lKF5KIOWidgets \
                 -lKF5KrossCore \
                 -lKF5KrossUi \
-                -lKF5Notifications
-
+                -lKF5Notifications \
+                -llibzstd \
+                -llibz
 
 #define K_PLUGIN_FACTORY_WITH_JSON(name, jsonFile, pluginRegistrations)
 #class name : public KPluginFactory
