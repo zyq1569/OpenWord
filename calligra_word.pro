@@ -2,6 +2,7 @@
 CONFIG     +=   ordered
 TEMPLATE    =   subdirs
 SUBDIRS    +=   filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
+                libs/plugin/koplugin.pro \
                 plugins/chartshape/chartshapecore.pro \
                 libs/vectorimage/kovectorimage.pro \
                 libs/version/koversion.pro \
@@ -10,7 +11,6 @@ SUBDIRS    +=   filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
                 libs/odf/koodf.pro \
                 filters/libodf2/koodf2.pro \
                 libs/kundo2/kundo2.pro \
-                libs/plugin/koplugin.pro \
                 libs/pigment/pigmentcms.pro \
                 libs/widgetutils/kowidgetutils.pro \
                 filters/libodfreader/koodfreader.pro \
