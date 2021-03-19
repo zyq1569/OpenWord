@@ -125,4 +125,5 @@ private:
 //    { Q_CAST_IGNORE_ALIGN(return reinterpret_cast<const Class##Private *>(qGetPtrHelper(d_ptr));) } \
 //    friend class Class##Private;
 
+
 #endif
