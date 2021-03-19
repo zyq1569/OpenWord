@@ -19,7 +19,6 @@ SUBDIRS    +=   filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
                 libs/widgets/kowidgets.pro \
                 libs/basicflakes/basicflakes.pro \
                 libs/textlayout/kotextlayout.pro \
-#                extras/calligra/calligra.pro \
                 filters/words/msword-odf/wv2/src/kowv2.pro \
                 libs/main/komain.pro \
                 plugins/formulashape/koformula.pro \
@@ -27,6 +26,7 @@ SUBDIRS    +=   filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
                 karbon/common/karboncommon.pro \
                 libs/pageapp/kopageapp.pro \
                 karbon/ui/karbonui.pro \
+                libs/basicflakes/plugin/calligra_tool_basicflakes.pro \
                 words/part/wordsprivate.pro \
                 plugins/dockers/calligra_docker_defaults.pro \
                 plugins/stencilsdocker/calligra_docker_stencils.pro \
@@ -43,7 +43,6 @@ SUBDIRS    +=   filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
                 plugins/vectorshape/calligra_shape_vector.pro \
                 plugins/videoshape/calligra_shape_video.pro \
                 plugins/chartshape/calligra_shape_chart.pro \
-                libs/basicflakes/plugin/calligra_tool_basicflakes.pro \
                 plugins/defaultTools/calligra_tool_defaults.pro \
                 extras/thumbnail/calligraimagethumbnail.pro \
                 extras/thumbnail/calligrathumbnail.pro \
@@ -52,6 +51,7 @@ SUBDIRS    +=   filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
                 karbon/karbonpart.pro \
                 libs/kross/kokross.pro \
                 words/app/calligrawords.pro
+#               extras/calligra/calligra.pro \
                 #filters/words/applixword/calligra_filter_applixword2odt.pro \
                 #filters/words/ascii/calligra_filter_ascii2words.pro \
                 #filters/sheets/dbase/calligra_filter_dbase2kspread.pro \

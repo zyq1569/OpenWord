@@ -45,16 +45,16 @@ INCLUDEPATH +=  ../ \
                 ../../libs/main \
                 ../../libs/main/config
 
-LIBS += -L$${LIBDIR} \
-        -lkomain \
-        -lkowidgets \
-        -lkotextlayout \
-        -lkotext \
-        -lflake \
-        -lpigmentcms \
-        -lkowidgetutils \
-        -lkoodf \
-        -lkostore
+LIBS       +=   -L$${LIBDIR} \
+                -lkomain \
+                -lkowidgets \
+                -lkotextlayout \
+                -lkotext \
+                -lflake \
+                -lpigmentcms \
+                -lkowidgetutils \
+                -lkoodf \
+                -lkostore
 
 include(../../calligra.pri)
 include(calligra_docker_stencils.pri)
