@@ -19,6 +19,7 @@ SUBDIRS    +=   filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
                 extras/calligra/calligra.pro \
                 filters/words/msword-odf/wv2/src/kowv2.pro \
                 libs/main/komain.pro \
+                filters/libmsooxml/komsooxml.pro \
                 plugins/dockers/calligra_docker_defaults.pro \
                 plugins/stencilsdocker/calligra_docker_stencils.pro \
                 filters/words/msword-odf/calligra_filter_doc2odt.pro \
@@ -47,7 +48,6 @@ SUBDIRS    +=   filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
                 karbon/ui/karbonui.pro \
                 plugins/formulashape/koformula.pro \
                 libs/kross/kokross.pro \
-                filters/libmsooxml/komsooxml.pro \
                 filters/libodfreader/koodfreader.pro \
                 libs/pageapp/kopageapp.pro \
                 libs/vectorimage/kovectorimage.pro \

@@ -59,8 +59,7 @@ LIBS += -L$${LIBDIR} \
         -lpigmentcms \
         -lkowidgetutils \
         -lkundo2 \
-        -lkoversion \
-        -lzlibstatic
+        -lkoversion
 
 include(../../../../calligra.pri)
 include(calligra_filter_docx2odt.pri)
