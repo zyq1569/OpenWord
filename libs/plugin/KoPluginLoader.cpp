@@ -61,7 +61,8 @@ Q_GLOBAL_STATIC(KoPluginLoaderImpl, pluginLoaderInstance)
 void KoPluginLoader::load(const QString & directory, const PluginsConfig &config, QObject* owner)
 {
     // Don't load the same plugins again
-    if (pluginLoaderInstance->loadedDirectories.contains(directory)) {
+    if (pluginLoaderInstance->loadedDirectories.contains(directory))
+    {
         return;
     }
     /// openword
@@ -71,7 +72,8 @@ void KoPluginLoader::load(const QString & directory, const PluginsConfig &config
     QList<QPluginLoader *> plugins;
     bool configChanged = false;
     QList<QString> blacklist; // what we will save out afterwards
-    if (config.whiteList && config.blacklist && config.group) {
+    if (config.whiteList && config.blacklist && config.group)
+    {
         debugPlugin << "Loading" << directory << "with checking the config";
         KConfigGroup configGroup(KSharedConfig::openConfig(), config.group);
         QList<QString> whiteList = configGroup.readEntry(config.whiteList, config.defaults);
@@ -80,42 +82,56 @@ void KoPluginLoader::load(const QString & directory, const PluginsConfig &config
         // if there was no list of defaults; all plugins are loaded.
         const bool firstStart = !config.defaults.isEmpty() && !configGroup.hasKey(config.whiteList);
         knownList = configGroup.readEntry(config.blacklist, knownList);
-        if (firstStart) {
+        if (firstStart)
+        {
             configChanged = true;
         }
-        foreach(QPluginLoader *loader, offers) {
+        foreach(QPluginLoader *loader, offers)
+        {
             QJsonObject json = loader->metaData().value("MetaData").toObject();
             json = json.value("KPlugin").toObject();
             const QString pluginName = json.value("Id").toString();
-            if (pluginName.isEmpty()) {
+            if (pluginName.isEmpty())
+            {
                 warnPlugin << "Loading plugin" << loader->fileName() << "failed, has no X-KDE-PluginInfo-Name.";
                 continue;
             }
-            if (whiteList.contains(pluginName)) {
+            if (whiteList.contains(pluginName))
+            {
                 plugins.append(loader);
-            } else if (!firstStart && !knownList.contains(pluginName)) { // also load newly installed plugins.
+            }
+            else if (!firstStart && !knownList.contains(pluginName))     // also load newly installed plugins.
+            {
                 plugins.append(loader);
                 configChanged = true;
-            } else {
+            }
+            else
+            {
                 blacklist << pluginName;
             }
         }
-    } else {
+    }
+    else
+    {
         plugins = offers;
     }
 
     QMap<QString, QPluginLoader *> serviceNames;
-    foreach(QPluginLoader *loader, plugins) {
-        if (serviceNames.contains(loader->fileName())) { // duplicate
+    foreach(QPluginLoader *loader, plugins)
+    {
+        if (serviceNames.contains(loader->fileName()))   // duplicate
+        {
             QJsonObject json2 = loader->metaData().value("MetaData").toObject();
             QVariant pluginVersion2 = json2.value("X-Flake-PluginVersion").toVariant();
-            if (pluginVersion2.isNull()) { // just take the first one found...
+            if (pluginVersion2.isNull())   // just take the first one found...
+            {
                 continue;
             }
             QPluginLoader *currentLoader = serviceNames.value(loader->fileName());
             QJsonObject json = currentLoader->metaData().value("MetaData").toObject();
             QVariant pluginVersion = json.value("X-Flake-PluginVersion").toVariant();
-            if (!(pluginVersion.isNull() || pluginVersion.toInt() < pluginVersion2.toInt())) {
+            if (!(pluginVersion.isNull() || pluginVersion.toInt() < pluginVersion2.toInt()))
+            {
                 continue; // replace the old one with this one, since its newer.
             }
         }
@@ -123,24 +139,30 @@ void KoPluginLoader::load(const QString & directory, const PluginsConfig &config
     }
 
     QList<QString> whiteList;
-    foreach(QPluginLoader *loader, serviceNames) {
+    foreach(QPluginLoader *loader, serviceNames)
+    {
         KPluginFactory *factory = qobject_cast<KPluginFactory *>(loader->instance());
         QObject *plugin = factory->create<QObject>(owner ? owner : pluginLoaderInstance, QVariantList());
-        if (plugin) {
+        if (plugin)
+        {
             QJsonObject json = loader->metaData().value("MetaData").toObject();
             json = json.value("KPlugin").toObject();
             const QString pluginName = json.value("Id").toString();
             whiteList << pluginName;
             debugPlugin << "Loaded plugin" << loader->fileName() << owner;
-            if (!owner) {
+            if (!owner)
+            {
                 delete plugin;
             }
-        } else {
+        }
+        else
+        {
             warnPlugin << "Loading plugin" << loader->fileName() << "failed, " << loader->errorString();
         }
     }
 
-    if (configChanged && config.whiteList && config.blacklist && config.group) {
+    if (configChanged && config.whiteList && config.blacklist && config.group)
+    {
         KConfigGroup configGroup(KSharedConfig::openConfig(), config.group);
         configGroup.writeEntry(config.whiteList, whiteList);
         configGroup.writeEntry(config.blacklist, blacklist);
@@ -155,14 +177,17 @@ QList<KPluginFactory *> KoPluginLoader::instantiatePluginFactories(const QString
 
     const QList<QPluginLoader *> offers = KoPluginLoader::pluginLoaders(directory);
 
-    foreach(QPluginLoader *pluginLoader, offers) {
+    foreach(QPluginLoader *pluginLoader, offers)
+    {
         QObject* pluginInstance = pluginLoader->instance();
-        if (!pluginInstance) {
+        if (!pluginInstance)
+        {
             warnPlugin << "Loading plugin" << pluginLoader->fileName() << "failed, " << pluginLoader->errorString();
             continue;
         }
         KPluginFactory *factory = qobject_cast<KPluginFactory *>(pluginInstance);
-        if (factory == 0) {
+        if (factory == 0)
+        {
             warnPlugin << "Expected a KPluginFactory, got a" << pluginInstance->metaObject()->className();
             delete pluginInstance;
             continue;
@@ -178,17 +203,20 @@ QList<KPluginFactory *> KoPluginLoader::instantiatePluginFactories(const QString
 QList<QPluginLoader *> KoPluginLoader::pluginLoaders(const QString &directory, const QString &mimeType)
 {
     QList<QPluginLoader *>list;
-    KPluginLoader::forEachPlugin(directory, [&](const QString &pluginPath) {
+    KPluginLoader::forEachPlugin(directory, [&](const QString &pluginPath)
+    {
         debugPlugin << "Trying to load" << pluginPath;
         QPluginLoader *loader = new QPluginLoader(pluginPath);
         QJsonObject metaData = loader->metaData().value("MetaData").toObject();
 
-        if (metaData.isEmpty()) {
+        if (metaData.isEmpty())
+        {
             debugPlugin << pluginPath << "has no MetaData!";
             return;
         }
 
-        if (!mimeType.isEmpty()) {
+        if (!mimeType.isEmpty())
+        {
 #ifdef CALLIGRA_OLD_PLUGIN_METADATA
             QStringList mimeTypes = metaData.value("MimeType").toString().split(';');
             mimeTypes += metaData.value("X-KDE-ExtraNativeMimeTypes").toString().split(QLatin1Char(','));
@@ -198,7 +226,8 @@ QList<QPluginLoader *> KoPluginLoader::pluginLoaders(const QString &directory, c
             mimeTypes += metaData.value("X-KDE-ExtraNativeMimeTypes").toVariant().toStringList();
 #endif
             mimeTypes += metaData.value("X-KDE-NativeMimeType").toString();
-            if (! mimeTypes.contains(mimeType)) {
+            if (! mimeTypes.contains(mimeType))
+            {
                 return;
             }
         }

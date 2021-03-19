@@ -19,7 +19,7 @@ SUBDIRS    +=   filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
                 libs/widgets/kowidgets.pro \
                 libs/basicflakes/basicflakes.pro \
                 libs/textlayout/kotextlayout.pro \
-                extras/calligra/calligra.pro \
+#                extras/calligra/calligra.pro \
                 filters/words/msword-odf/wv2/src/kowv2.pro \
                 libs/main/komain.pro \
                 plugins/formulashape/koformula.pro \
