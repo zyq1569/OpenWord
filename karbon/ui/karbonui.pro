@@ -46,21 +46,21 @@ INCLUDEPATH +=  ../../karbon/ui \
                 ../../libs/plugin
 
 
-LIBS += -L$${DESTDIR} \
-        -lkarboncommon \
-        -lkopageapp \
-        -lkomain \
-        -lkowidgets \
-        -lkotextlayout \
-        -lkotext \
-        -lflake \
-        -lkoodf \
-        -lkostore \
-        -lkoversion \
-        -lpigmentcms \
-        -lkowidgetutils \
-        -lkundo2 \
-        -lkoplugin
+LIBS        +=  -L$${DESTDIR} \
+                -lkarboncommon \
+                -lkopageapp \
+                -lkomain \
+                -lkowidgets \
+                -lkotextlayout \
+                -lkotext \
+                -lflake \
+                -lkoodf \
+                -lkostore \
+                -lkoversion \
+                -lpigmentcms \
+                -lkowidgetutils \
+                -lkundo2 \
+                -lkoplugin
 
 
 include(../../calligra.pri)

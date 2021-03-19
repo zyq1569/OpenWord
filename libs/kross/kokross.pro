@@ -32,20 +32,20 @@ INCLUDEPATH += ../ \
                 ../store
 
 
-LIBS += -L$${DESTDIR} \
-        -lkostore \
-        -lkoversion \
-        -lkomain \
-        -lkowidgets \
-        -lkotextlayout \
-        -lkotext \
-        -lflake \
-        -lpigmentcms \
-        -lkowidgetutils \
-        -lkoodf \
-        -lkostore \
-        -lkundo2 \
-        -lkoversion
+LIBS       +=   -L$${DESTDIR} \
+                -lkostore \
+                -lkoversion \
+                -lkomain \
+                -lkowidgets \
+                -lkotextlayout \
+                -lkotext \
+                -lflake \
+                -lpigmentcms \
+                -lkowidgetutils \
+                -lkoodf \
+                -lkostore \
+                -lkundo2 \
+                -lkoversion
 
 
 include(../../calligra.pri)

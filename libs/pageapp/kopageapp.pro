@@ -41,18 +41,18 @@ INCLUDEPATH +=     ../../libs/pageapp \
                 ../../libs/pageapp/commands
 
 
-LIBS += -L$${DESTDIR} \
-        -lkomain \
-        -lkotextlayout \
-        -lkowidgets \
-        -lkotext \
-        -lflake \
-        -lkoodf \
-        -lkostore \
-        -lkundo2 \
-        -lpigmentcms \
-        -lkowidgetutils \
-        -lkoversion
+LIBS        +=  -L$${DESTDIR} \
+                -lkomain \
+                -lkotextlayout \
+                -lkowidgets \
+                -lkotext \
+                -lflake \
+                -lkoodf \
+                -lkostore \
+                -lkundo2 \
+                -lpigmentcms \
+                -lkowidgetutils \
+                -lkoversion
 
 
 include(../../calligra.pri)

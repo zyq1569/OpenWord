@@ -36,20 +36,20 @@ INCLUDEPATH +=   ../../  \
             ../../libs/main/config \
             ../../words/part
 
-LIBS += -L$${DESTDIR} \
-        -lpigmentcms \
-        -lkowidgetutils \
-        -lkoodf \
-        -lkundo2 \
-        -lkoplugin \
-        -lkostore \
-        -lkomain \
-        -lkowidgets \
-        -lkotextlayout \
-        -lkotext \
-        -lflake \
-        -lpigmentcms \
-        -lkoversion
+LIBS    +=  -L$${DESTDIR} \
+            -lpigmentcms \
+            -lkowidgetutils \
+            -lkoodf \
+            -lkundo2 \
+            -lkoplugin \
+            -lkostore \
+            -lkomain \
+            -lkowidgets \
+            -lkotextlayout \
+            -lkotext \
+            -lflake \
+            -lpigmentcms \
+            -lkoversion
 
 include(../../calligra.pri)
 include(calligrawords.pri)

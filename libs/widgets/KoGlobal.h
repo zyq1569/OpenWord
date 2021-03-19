@@ -36,7 +36,8 @@ public:
     KoGlobal();
 
     /// For KoApplication
-    static void initialize()  {
+    static void initialize()
+    {
         (void)self(); // I don't want to make KGlobal instances public, so self() is private
     }
     /**
@@ -45,7 +46,8 @@ public:
      * except that it is guaranteed to have a point size set,
      * never a pixel size (see @ref QFont).
      */
-    static QFont defaultFont()  {
+    static QFont defaultFont()
+    {
         return self()->_defaultFont();
     }
 
@@ -55,18 +57,21 @@ public:
      * so this is the centralization of the KConfig object so that the file is
      * parsed only once
      */
-    static KConfig* calligraConfig() {
+    static KConfig* calligraConfig()
+    {
         return self()->_calligraConfig();
     }
 
     /// Return the list of available languages, in their displayable form
     /// (translated names)
-    static QStringList listOfLanguages() {
+    static QStringList listOfLanguages()
+    {
         return self()->_listOfLanguages();
     }
     /// Return the list of available languages, in their internal form
     /// e.g. "fr" or "en_US", here called "tag"
-    static QStringList listOfLanguageTags() {
+    static QStringList listOfLanguageTags()
+    {
         return self()->_listOfLanguageTags();
     }
     /// For a given language display name, return its tag

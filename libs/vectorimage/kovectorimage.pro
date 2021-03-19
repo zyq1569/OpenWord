@@ -23,17 +23,17 @@ INCLUDEPATH += ../../libs/vectorimage \
 
 
 
-LIBS += -L$${DESTDIR} \
-        -lkernel32 \
-        -luser32 \
-        -lgdi32 \
-        -lwinspool \
-        -lshell32 \
-        -lole32 \
-        -loleaut32 \
-        -luuid \
-        -lcomdlg32 \
-        -ladvapi32
+#LIBS += -L$${DESTDIR} \
+#        -lkernel32 \
+#        -luser32 \
+#        -lgdi32 \
+#        -lwinspool \
+#        -lshell32 \
+#        -lole32 \
+#        -loleaut32 \
+#        -luuid \
+#        -lcomdlg32 \
+#        -ladvapi32
 
 #kovectorimage_EXPORTS
 include(../../calligra.pri)
