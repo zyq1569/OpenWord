@@ -144,8 +144,8 @@ void KoPluginLoader::load(const QString & directory, const PluginsConfig &config
         KPluginFactory *factory = qobject_cast<KPluginFactory *>(loader->instance());
         if (!factory)
         {
-          debugPlugin << "KPluginFactory *factory = qobject_cast<KPluginFactory *>(loader->instance());";
-          break;
+            debugPlugin<< "KPluginFactory *factory = qobject_cast<KPluginFactory *>(loader->instance()); <<loader->fileName()";
+            break;
         }
         QObject *plugin = factory->create<QObject>(owner ? owner : pluginLoaderInstance, QVariantList());
         if (plugin)
