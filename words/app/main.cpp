@@ -1,3 +1,7 @@
+#include "logging.h"
+#include "easylogging++.h"
+INITIALIZE_EASYLOGGINGPP
+
 #include <KWAboutData.h>
 #include <KWDocument.h>
 
@@ -18,8 +22,8 @@
      *
      * See: http://doc.qt.io/qt-5/qloggingcategory.html
      */
-//    QLoggingCategory::setFilterRules("calligra.*.debug=true\n"
-//                                     "calligra.*.warning=true");
+    //    QLoggingCategory::setFilterRules("calligra.*.debug=true\n"
+    //                                     "calligra.*.warning=true");
     QLoggingCategory::setFilterRules("calligra.*=true\n"
                                      "calligra.*.warning=true");
     KoApplication app(WORDS_MIME_TYPE, QStringLiteral("calligrawords"), newWordsAboutData, argc, argv);
@@ -31,6 +35,8 @@
     qlist = QStringList() << QStringLiteral("words.rc") << QStringLiteral("words_readonly.rc");
     m.setUiFiles(QStringList() << QStringLiteral("words.rc") << QStringLiteral("words_readonly.rc"));
     m.migrate();
+    LOG::beginLogging();
+    INFO_LOG("----Word start to run!-----");
     if (!app.start())
     {
         return 1;

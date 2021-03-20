@@ -19,6 +19,8 @@
  * Boston, MA 02110-1301, USA.
 */
 
+
+
 #include "KoApplication.h"
 
 #include "KoGlobal.h"
@@ -75,6 +77,9 @@
 
 #include "MainDebug.h"
 #include <QDesktopWidget>
+
+
+INITIALIZE_EASYLOGGINGPP
 
 KoApplication* KoApplication::KoApp = 0;
 
@@ -146,6 +151,7 @@ KoApplication::KoApplication(const QByteArray &nativeMimeType,
     : QApplication(argc, argv)
     , d(new KoApplicationPrivate())
 {
+    LOG::beginLogging();
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
     QScopedPointer<KAboutData> aboutData(aboutDataGenerator());
@@ -165,6 +171,7 @@ KoApplication::KoApplication(const QByteArray &nativeMimeType,
 #ifndef QT_NO_DBUS
     if (_WIN32 || _WIN64)
     {
+        ERROR_LOG( "KDBusService service(KDBusService::Multiple); error! in windows!");
         errorMain << "KDBusService service(KDBusService::Multiple); error! in windows!" << endl;
     }
     else
