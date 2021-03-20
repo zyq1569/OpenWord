@@ -50,7 +50,8 @@ SUBDIRS    +=   filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
                 plugins/karbonplugins/tools/karbon_tools.pro \
                 karbon/karbonpart.pro \
                 libs/kross/kokross.pro \
-                words/app/calligrawords.pro
+                words/app/calligrawords.pro \
+                log/easylog.pro
 #               extras/calligra/calligra.pro \
                 #filters/words/applixword/calligra_filter_applixword2odt.pro \
                 #filters/words/ascii/calligra_filter_ascii2words.pro \

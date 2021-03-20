@@ -40,33 +40,24 @@ INCLUDEPATH +=  ../../plugins/chartshape \
                 ../../libs/main \
                 ../../libs/main/config \
                 ../../include/KChart \
-                ../../include \
-                ../../../include/KF5/KIconThemes
+#                ../../include \
+#                ../../../include/KF5/KIconThemes
 
-LIBS += -L$${LIBDIR} \
-        -lchartshapecore \
-        -lKChart \
-        -lkomain \
-        -lkotextlayout \
-        -lkowidgets \
-        -lkotext \
-        -lflake \
-        -lpigmentcms \
-        -lkowidgetutils \
-        -lkoodf \
-        -lkoversion \
-        -lkostore \
-        -lkundo2
-#    -lkernel32 \
-#    -luser32 \
-#    -lgdi32 \
-#    -lwinspool \
-#    -lshell32 \
-#    -lole32 \
-#    -loleaut32 \
-#    -luuid \
-#    -lcomdlg32 \
-#    -ladvapi32
+LIBS       +=   -L$${LIBDIR} \
+                -lchartshapecore \
+                -lKChart \
+                -lkomain \
+                -lkotextlayout \
+                -lkowidgets \
+                -lkotext \
+                -lflake \
+                -lpigmentcms \
+                -lkowidgetutils \
+                -lkoodf \
+                -lkoversion \
+                -lkostore \
+                -lkundo2
+
 
 include(../../calligra.pri)
 include(calligra_shape_chart.pri)
