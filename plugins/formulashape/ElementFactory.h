@@ -27,7 +27,8 @@
 
 class BasicElement;
 
-enum ElementType {
+enum ElementType
+{
     Basic,
     Formula,
     Row,
@@ -75,7 +76,8 @@ enum ElementType {
  *
  * @author Martin Pfeiffer
  */
-class KOFORMULA_EXPORT ElementFactory {
+class KOFORMULA_EXPORT ElementFactory
+{
 public:
     /// The default constructor
     ElementFactory();
