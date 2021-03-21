@@ -79,7 +79,7 @@
 #include <QDesktopWidget>
 
 
-INITIALIZE_EASYLOGGINGPP
+//INITIALIZE_EASYLOGGINGPP
 
 KoApplication* KoApplication::KoApp = 0;
 

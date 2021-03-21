@@ -3,6 +3,7 @@
 
 #include <QDir>
 #include <QApplication>
+INITIALIZE_EASYLOGGINGPP
 namespace LOG
 {
 
@@ -49,15 +50,15 @@ void beginLogging(QString appName)
 
 }
 
-void InitLog()
+void static InitLog()
 {
-//    static bool init = false;
-//    if (init)
+//    static int init = 0;
+//    if (init>1)
 //    {
 //        return;
 //    }
 //    beginLogging("");
-//    init = true;
+//    init++;
 }
 
 QString getLogFilePath(QString appName)
