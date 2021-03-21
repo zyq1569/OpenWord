@@ -128,6 +128,10 @@ LIBS       +=   -L$${SDK_LIB_PREFIX} \
                 -llibzstd \
                 -llibz
 
+LIBS      +=    -L$${DESTDIR/bin/bin/libs}  \
+                -leasylog
+
+
 #define K_PLUGIN_FACTORY_WITH_JSON(name, jsonFile, pluginRegistrations)
 #class name : public KPluginFactory
 #{
