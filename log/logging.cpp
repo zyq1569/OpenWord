@@ -3,7 +3,9 @@
 
 #include <QDir>
 #include <QApplication>
+
 INITIALIZE_EASYLOGGINGPP
+
 namespace LOG
 {
 

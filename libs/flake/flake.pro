@@ -37,13 +37,14 @@ INCLUDEPATH +=  ../../ \
                 ../widgetutils \
                 ../plugin
 
-LIBS    +=  -L$${DESTDIR} \
-            -lpigmentcms \
-            -lkowidgetutils \
-            -lkoodf \
-            -lkundo2 \
-            -lkoplugin \
-            -lkostore
+LIBS       +=   -L$${DESTDIR} \
+                -lpigmentcms \
+                -lkowidgetutils \
+                -lkoodf \
+                -lkundo2 \
+                -lkoplugin \
+                -lkostore
+
 
 
 include(../../calligra.pri)
