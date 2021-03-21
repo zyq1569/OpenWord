@@ -22,7 +22,6 @@
 #define KOCREATEPATHTOOL_H
 
 #include "basicflakes_export.h"
-
 #include <KoToolBase.h>
 
 #include <QList>

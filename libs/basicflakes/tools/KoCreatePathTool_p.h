@@ -222,7 +222,9 @@ public:
           angleSnappingDelta(15),
           angleSnapStatus(false),
           strokeWidget(0)
-    {}
+    {
+
+    }
 
     KoPathShape *shape;
     KoPathPoint *activePoint;
@@ -473,6 +475,7 @@ public:
         listeningToModifiers = false;
     }
 
+public slots:
     void angleDeltaChanged(int value)
     {
         angleSnappingDelta = value;
