@@ -44,5 +44,8 @@ LIBS         += -L$${DESTDIR} \
                 -lkostore \
                 -lkundo2
 
+LIBS       +=   -L$${DESTDIR} \
+                -leasylog
+
 include(../../calligra.pri)
 include(komain.pri)

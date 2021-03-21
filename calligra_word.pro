@@ -1,7 +1,8 @@
 #https://community.kde.org/Calligra/Libs/KoText/Layout_Overview
 CONFIG     +=   ordered
 TEMPLATE    =   subdirs
-SUBDIRS    +=   filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
+SUBDIRS    +=   log/easylog.pro \
+                filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
                 libs/plugin/koplugin.pro \
                 plugins/chartshape/chartshapecore.pro \
                 libs/vectorimage/kovectorimage.pro \
@@ -50,8 +51,8 @@ SUBDIRS    +=   filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
                 plugins/karbonplugins/tools/karbon_tools.pro \
                 karbon/karbonpart.pro \
                 libs/kross/kokross.pro \
-                words/app/calligrawords.pro \
-                log/easylog.pro
+                words/app/calligrawords.pro
+
 #               extras/calligra/calligra.pro \
                 #filters/words/applixword/calligra_filter_applixword2odt.pro \
                 #filters/words/ascii/calligra_filter_ascii2words.pro \

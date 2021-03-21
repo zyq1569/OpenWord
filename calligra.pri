@@ -74,6 +74,10 @@ INCLUDEPATH +=  $$SDK_INSTALL_PREFIX \
                 $$SDK_INSTALL_PREFIX/phonon4qt5 \
                 $$SDK_INSTALL_PREFIX/KChart
 
+
+INCLUDEPATH +=  $$PWD/log
+
+
 LIBS       +=   -L$${SDK_LIB_PREFIX} \
                 -lws2_32 \
                 -lnetapi32 \

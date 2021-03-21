@@ -51,13 +51,13 @@ void beginLogging(QString appName)
 
 void InitLog()
 {
-    static bool init = false;
-    if (init)
-    {
-        return;
-    }
-    //    beginLogging("");
-    init = true;
+//    static bool init = false;
+//    if (init)
+//    {
+//        return;
+//    }
+//    beginLogging("");
+//    init = true;
 }
 
 QString getLogFilePath(QString appName)
