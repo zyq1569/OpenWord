@@ -173,6 +173,7 @@ void KoM2MMLFormulaTool::textEdited()
     } else {
 #endif
         ///openword 2021-01-09 to do list ....
+        INFO_LOG("---itex2MML_free_string()---   openword 2021-01-09 to do list .... ");
 //        std::string source = QStringtoStdString(m_lineEdit->text());
 //        source = '$' + source + '$';
 //        char * mathml = itex2MML_parse (source.c_str(), source.size());
