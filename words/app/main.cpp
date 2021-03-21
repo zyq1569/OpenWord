@@ -34,7 +34,7 @@
     qlist = QStringList() << QStringLiteral("words.rc") << QStringLiteral("words_readonly.rc");
     m.setUiFiles(QStringList() << QStringLiteral("words.rc") << QStringLiteral("words_readonly.rc"));
     m.migrate();
-    LOG::beginLogging();
+//    LOG::beginLogging();
     INFO_LOG("----Word start to run!-----");
     if (!app.start())
     {

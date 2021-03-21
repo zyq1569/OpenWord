@@ -50,15 +50,15 @@ void beginLogging(QString appName)
 
 }
 
-void static InitLog()
+void  InitLog()
 {
-//    static int init = 0;
-//    if (init>1)
-//    {
-//        return;
-//    }
-//    beginLogging("");
-//    init++;
+    static int init (0);
+    if ( init > 0 )
+    {
+        return;
+    }
+    init++;
+    beginLogging("");
 }
 
 QString getLogFilePath(QString appName)

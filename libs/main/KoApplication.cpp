@@ -151,7 +151,7 @@ KoApplication::KoApplication(const QByteArray &nativeMimeType,
     : QApplication(argc, argv)
     , d(new KoApplicationPrivate())
 {
-    LOG::beginLogging();
+//    LOG::beginLogging();
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
     QScopedPointer<KAboutData> aboutData(aboutDataGenerator());
