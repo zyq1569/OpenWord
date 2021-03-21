@@ -52,7 +52,7 @@ void beginLogging(QString appName)
 
 void  InitLog()
 {
-    static int init (0);
+    static int init = 0 ;
     if ( init > 0 )
     {
         return;
