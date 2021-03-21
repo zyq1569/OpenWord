@@ -23,6 +23,7 @@
 #ifndef KODOCUMENT_H
 #define KODOCUMENT_H
 
+#include "logging.h"
 #include <QDateTime>
 #include <QList>
 
