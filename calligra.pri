@@ -128,12 +128,14 @@ LIBS       +=   -L$${SDK_LIB_PREFIX} \
                 -llibzstd \
                 -llibz
 
-LIBS      +=    -L$${DESTDIR/bin/bin/libs}  \
+LOGLIB = $$PWD/bin/bin/libs
+
+LIBS      +=    -L$${LOGLIB}  \
                 -leasylog
 
 
 # EasyLogging++ is set to be thread safe, to not have a default log file, and to not handle crashes
-DEFINES         += ELPP_THREAD_SAFE ELPP_NO_DEFAULT_LOG_FILE ELPP_DISABLE_DEFAULT_CRASH_HANDLING
+#DEFINES         += ELPP_THREAD_SAFE ELPP_NO_DEFAULT_LOG_FILE ELPP_DISABLE_DEFAULT_CRASH_HANDLING
 
 #define K_PLUGIN_FACTORY_WITH_JSON(name, jsonFile, pluginRegistrations)
 #class name : public KPluginFactory
