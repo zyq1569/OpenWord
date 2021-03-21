@@ -61,39 +61,40 @@ Document::Document(const std::string& fileName,
                    KoXmlWriter* bodyWriter, KoXmlWriter* metaWriter, KoXmlWriter* manifestWriter,
                    KoStore* store, KoGenStyles* mainStyles,
                    LEInputStream& wordDocument, POLE::Stream& table, LEInputStream *data, LEInputStream *si)
-        : m_textHandler(0)
-        , m_tableHandler(0)
-        , m_replacementHandler(new WordsReplacementHandler)
-        , m_graphicsHandler(0)
-        , m_filter(filter)
+    : m_textHandler(0)
+    , m_tableHandler(0)
+    , m_replacementHandler(new WordsReplacementHandler)
+    , m_graphicsHandler(0)
+    , m_filter(filter)
 //         , m_chain(chain)
-        , m_parser(wvWare::ParserFactory::createParser(fileName))
-        , m_bodyFound(false)
-        , m_footNoteNumber(0)
-        , m_endNoteNumber(0)
-        , m_bodyWriter(0)
-        , m_mainStyles(0)
-        , m_metaWriter(0)
-        , m_headerWriter(0)
-        , m_headerCount(0)
-        , m_writingHeader(false)
-        , m_evenOpen(false)
-        , m_firstOpen(false)
-        , m_buffer(0)
-        , m_bufferEven(0)
-        , m_writeMasterPageName(false)
-        , m_omittMasterPage(false)
-        , m_useLastMasterPage(false)
-        , m_wdstm(wordDocument)
-        , m_tblstm(0)
-        , m_datastm(data)
-        , m_sistm(si)
-        , m_tblstm_pole(table)
+    , m_parser(wvWare::ParserFactory::createParser(fileName))
+    , m_bodyFound(false)
+    , m_footNoteNumber(0)
+    , m_endNoteNumber(0)
+    , m_bodyWriter(0)
+    , m_mainStyles(0)
+    , m_metaWriter(0)
+    , m_headerWriter(0)
+    , m_headerCount(0)
+    , m_writingHeader(false)
+    , m_evenOpen(false)
+    , m_firstOpen(false)
+    , m_buffer(0)
+    , m_bufferEven(0)
+    , m_writeMasterPageName(false)
+    , m_omittMasterPage(false)
+    , m_useLastMasterPage(false)
+    , m_wdstm(wordDocument)
+    , m_tblstm(0)
+    , m_datastm(data)
+    , m_sistm(si)
+    , m_tblstm_pole(table)
 {
     debugMsDoc;
     addBgColor("#ffffff"); //initialize the background-colors stack
 
-    if (m_parser) { // 0 in case of major error (e.g. unsupported format)
+    if (m_parser)   // 0 in case of major error (e.g. unsupported format)
+    {
 
         m_bodyWriter = bodyWriter; //pointer for writing to the body
         m_mainStyles = mainStyles; //KoGenStyles object for collecting styles
@@ -107,7 +108,7 @@ Document::Document(const std::string& fileName,
         m_tableHandler = new WordsTableHandler(bodyWriter, mainStyles);
         m_tableHandler->setDocument(this);
         m_graphicsHandler = new WordsGraphicsHandler(this, bodyWriter, manifestWriter, store, mainStyles,
-                                                     m_parser->getDrawings(), m_parser->fib());
+                m_parser->getDrawings(), m_parser->fib());
 
         connect(m_textHandler, SIGNAL(subDocFound(const wvWare::FunctorBase*, int)),
                 this, SLOT(slotSubDocFound(const wvWare::FunctorBase*, int)));
@@ -167,7 +168,8 @@ void Document::finishDocument()
 
     Q_ASSERT(m_mainStyles);
 
-    if (m_mainStyles) {
+    if (m_mainStyles)
+    {
         QString footnoteConfig("<text:notes-configuration "
                                "text:note-class=\"footnote\" "
                                "text:default-style-name=\"Footnote\" "
@@ -216,13 +218,19 @@ void Document::processAssociatedStrings()
     debugMsDoc ;
 
     MSO::SummaryInformationPropertySetStream *si = 0;
-    if (m_sistm) {
+    if (m_sistm)
+    {
         si = new MSO::SummaryInformationPropertySetStream();
-        try {
+        try
+        {
             parseSummaryInformationPropertySetStream(*m_sistm, *si);
-        } catch (const IOException &e) {
+        }
+        catch (const IOException &e)
+        {
             errorMsDoc << e.msg;
-        } catch (...) {
+        }
+        catch (...)
+        {
             warnMsDoc << "Warning: Caught an unknown exception!";
         }
     }
@@ -238,44 +246,54 @@ void Document::processAssociatedStrings()
     QString comments;
     QString *p_str = 0;
 
-    if (si) {
+    if (si)
+    {
         MSO::PropertySet &ps = si->propertySet.propertySet1;
 
-        for (uint i = 0; i < ps.numProperties; i++) {
-            switch (ps.propertyIdentifierAndOffset.at(i).propertyIdentifier) {
-            case PIDSI_CODEPAGE:
-                if (ps.property.at(i)._has_vt_I2) {
-                    if (ps.property.at(i).vt_I2 == CP_WINUNICODE) {
-                        isUnicode16 = true;
+        for (uint i = 0; i < ps.numProperties; i++)
+        {
+            switch (ps.propertyIdentifierAndOffset.at(i).propertyIdentifier)
+            {
+                case PIDSI_CODEPAGE:
+                    if (ps.property.at(i)._has_vt_I2)
+                    {
+                        if (ps.property.at(i).vt_I2 == CP_WINUNICODE)
+                        {
+                            isUnicode16 = true;
+                        }
                     }
-                }
-                break;
-            case PIDSI_TITLE:
-                p_str = &title;
-                break;
-            case PIDSI_SUBJECT:
-                p_str = &subject;
-                break;
-            case PIDSI_AUTHOR:
-                p_str = &author;
-                break;
-            case PIDSI_KEYWORDS:
-                p_str = &keywords;
-                break;
-            case PIDSI_COMMENTS:
-                p_str = &comments;
-                break;
-            case PIDSI_LASTAUTHOR:
-                p_str = &lastRevBy;
-                break;
-            default:
-                break;
+                    break;
+                case PIDSI_TITLE:
+                    p_str = &title;
+                    break;
+                case PIDSI_SUBJECT:
+                    p_str = &subject;
+                    break;
+                case PIDSI_AUTHOR:
+                    p_str = &author;
+                    break;
+                case PIDSI_KEYWORDS:
+                    p_str = &keywords;
+                    break;
+                case PIDSI_COMMENTS:
+                    p_str = &comments;
+                    break;
+                case PIDSI_LASTAUTHOR:
+                    p_str = &lastRevBy;
+                    break;
+                default:
+                    break;
             }
-            if (p_str) {
-                if (ps.property.at(i).vt_lpstr) {
-                    if (isUnicode16) {
+            if (p_str)
+            {
+                if (ps.property.at(i).vt_lpstr)
+                {
+                    if (isUnicode16)
+                    {
                         *p_str = QString::fromUtf16((ushort*)ps.property.at(i).vt_lpstr->characters.data());
-                    } else {
+                    }
+                    else
+                    {
                         *p_str = QString::fromUtf8(ps.property.at(i).vt_lpstr->characters.data());
                     }
                 }
@@ -285,59 +303,72 @@ void Document::processAssociatedStrings()
     }
 
     wvWare::AssociatedStrings strings(m_parser->associatedStrings());
-    if (title.isEmpty() && !strings.title().isEmpty()) {
+    if (title.isEmpty() && !strings.title().isEmpty())
+    {
         title = Conversion::string(strings.title());
     }
-    if (subject.isEmpty() && !strings.subject().isEmpty()) {
+    if (subject.isEmpty() && !strings.subject().isEmpty())
+    {
         subject = Conversion::string(strings.subject());
     }
-    if (author.isEmpty() && !strings.author().isEmpty()) {
+    if (author.isEmpty() && !strings.author().isEmpty())
+    {
         author = Conversion::string(strings.author() );
     }
-    if (keywords.isEmpty() && !strings.keywords().isEmpty()) {
+    if (keywords.isEmpty() && !strings.keywords().isEmpty())
+    {
         keywords = Conversion::string(strings.keywords());
     }
     //NOTE: According to the Word6/Word8 spec. SttbfAssoc does contain
     //comments.  However it's not reproducible in MSOffice2000.
-    if (comments.isEmpty() && !strings.comments().isEmpty()) {
+    if (comments.isEmpty() && !strings.comments().isEmpty())
+    {
         comments = Conversion::string(strings.comments());
     }
-    if (lastRevBy.isEmpty() && !strings.lastRevBy().isEmpty()) {
+    if (lastRevBy.isEmpty() && !strings.lastRevBy().isEmpty())
+    {
         lastRevBy = Conversion::string(strings.lastRevBy() );
     }
 
-    if (!title.isEmpty()) {
+    if (!title.isEmpty())
+    {
         m_metaWriter->startElement("dc:title");
         m_metaWriter->addTextNode(title);
         m_metaWriter->endElement();
     }
-    if (!subject.isEmpty()) {
+    if (!subject.isEmpty())
+    {
         m_metaWriter->startElement("dc:subject");
         m_metaWriter->addTextNode(subject);
         m_metaWriter->endElement();
     }
-    if (!author.isEmpty()) {
+    if (!author.isEmpty())
+    {
         m_metaWriter->startElement("meta:initial-creator");
         m_metaWriter->addTextNode(author);
         m_metaWriter->endElement();
     }
-    if (!keywords.isEmpty()) {
+    if (!keywords.isEmpty())
+    {
         m_metaWriter->startElement("meta:keyword");
         m_metaWriter->addTextNode(keywords);
         m_metaWriter->endElement();
     }
-    if (!comments.isEmpty()) {
+    if (!comments.isEmpty())
+    {
         m_metaWriter->startElement("dc:description");
         m_metaWriter->addTextNode(comments);
         m_metaWriter->endElement();
     }
-    if (!lastRevBy.isEmpty()) {
+    if (!lastRevBy.isEmpty())
+    {
         m_metaWriter->startElement("dc:creator");
         m_metaWriter->addTextNode(lastRevBy);
         m_metaWriter->endElement();
     }
 
-    if (si) {
+    if (si)
+    {
         delete si;
     }
 }
@@ -351,7 +382,8 @@ void Document::processStyles()
     debugMsDoc << "styles count=" << count;
 
     //loop through each style
-    for (unsigned int i = 0; i < count ; ++i) {
+    for (unsigned int i = 0; i < count ; ++i)
+    {
         //grab style
         const wvWare::Style* style = styles.styleByIndex(i);
         Q_ASSERT(style);
@@ -359,31 +391,36 @@ void Document::processStyles()
         QString name = Conversion::styleName2QString(style->name());
 
         // if the invariant style identifier says it's a style used for line numbers
-        if (style->sti() == 40) {
+        if (style->sti() == 40)
+        {
             m_lineNumbersStyleName = name;  // store the name of that style
         }
 
         // Process paragraph styles.
-        if (style && style->type() == sgcPara) {
+        if (style && style->type() == sgcPara)
+        {
             //create this style & add formatting info to it
             debugMsDoc << "creating ODT paragraphstyle" << name;
             KoGenStyle userStyle(KoGenStyle::ParagraphStyle, "paragraph");
             userStyle.addAttribute("style:display-name", displayName);
 
             const wvWare::Style* followingStyle = styles.styleByIndex(style->followingStyle());
-            if (followingStyle && followingStyle != style) {
+            if (followingStyle && followingStyle != style)
+            {
                 QString followingName = Conversion::styleName2QString(followingStyle->name());
                 userStyle.addAttribute("style:next-style-name", followingName);
             }
 
             const wvWare::Style* parentStyle = styles.styleByIndex(style->m_std->istdBase);
-            if (parentStyle) {
+            if (parentStyle)
+            {
                 userStyle.setParentName(Conversion::styleName2QString(parentStyle->name()));
             }
 
             //set font name in style
             QString fontName = m_textHandler->getFont(style->chp().ftcAscii);
-            if (!fontName.isEmpty()) {
+            if (!fontName.isEmpty())
+            {
                 m_mainStyles->insertFontFace(KoFontFace(fontName));
                 userStyle.addProperty(QString("style:font-name"), fontName, KoGenStyle::TextType);
             }
@@ -398,23 +435,28 @@ void Document::processStyles()
             debugMsDoc << "added style " << actualName;
 
             //save names of TOC related styles
-            if (actualName.contains("TOC")) {
+            if (actualName.contains("TOC"))
+            {
                 m_tocStyleNames.append(actualName);
             }
-        } else if (style && style->type() == sgcChp) {
+        }
+        else if (style && style->type() == sgcChp)
+        {
             //create this style & add formatting info to it
             debugMsDoc << "creating ODT textstyle" << name;
             KoGenStyle userStyle(KoGenStyle::TextStyle, "text");
             userStyle.addAttribute("style:display-name", displayName);
 
             const wvWare::Style* parentStyle = styles.styleByIndex(style->m_std->istdBase);
-            if (parentStyle) {
+            if (parentStyle)
+            {
                 userStyle.setParentName(Conversion::styleName2QString(parentStyle->name()));
             }
 
             //set font name in style
             QString fontName = m_textHandler->getFont(style->chp().ftcAscii);
-            if (!fontName.isEmpty()) {
+            if (!fontName.isEmpty())
+            {
                 m_mainStyles->insertFontFace(KoFontFace(fontName));
                 userStyle.addProperty(QString("style:font-name"), fontName, KoGenStyle::TextType);
             }
@@ -436,13 +478,16 @@ void Document::processStyles()
 
 quint8 Document::parse()
 {
-    if (m_parser) {
-        if (!m_parser->parse()) {
+    if (m_parser)
+    {
+        if (!m_parser->parse())
+        {
             return 1;
         }
     }
     //make sure texthandler is fine after parsing
-    if (!m_textHandler->stateOk()) {
+    if (!m_textHandler->stateOk())
+    {
         errorMsDoc << "TextHandler state after parsing NOT Ok!";
         return 2;
     }
@@ -469,7 +514,8 @@ void Document::bodyStart()
 void Document::bodyEnd()
 {
     //close a list if we need to
-    if (m_textHandler->listIsOpen()) {
+    if (m_textHandler->listIsOpen())
+    {
         debugMsDoc << "closing the final list in the document body";
         m_textHandler->closeList();
     }
@@ -509,33 +555,37 @@ void Document::slotSectionFound(wvWare::SharedPtr<const wvWare::Word97::SEP> sep
     //let's omit the <style:master-page> element only in case of a continuous
     //section break
 
-    if ( !firstPage && !headersChanged() && (m_pageLayoutStyle_last == *pageLayoutStyle) ){
+    if ( !firstPage && !headersChanged() && (m_pageLayoutStyle_last == *pageLayoutStyle) )
+    {
 
 //         if (sep->bkc != 0) {
 //             textHandler()->set_breakBeforePage(true);
 //         }
 
-        switch (sep->bkc) {
-        case bkcContinuous:
-            debugMsDoc << "omitting page-layout & master-page creation";
-            m_omittMasterPage = true;
-            break;
-        case bkcNewPage:
-        case bkcEvenPage:
-        case bkcOddPage:
-            debugMsDoc << "using the last defined master-page";
-            m_useLastMasterPage = true;
-            m_writeMasterPageName = true;
-            break;
-        default:
-            warnMsDoc << "Warning: section break type (" << sep->bkc << ") NOT SUPPORTED!";
-            m_omittMasterPage = true;
-            break;
+        switch (sep->bkc)
+        {
+            case bkcContinuous:
+                debugMsDoc << "omitting page-layout & master-page creation";
+                m_omittMasterPage = true;
+                break;
+            case bkcNewPage:
+            case bkcEvenPage:
+            case bkcOddPage:
+                debugMsDoc << "using the last defined master-page";
+                m_useLastMasterPage = true;
+                m_writeMasterPageName = true;
+                break;
+            default:
+                warnMsDoc << "Warning: section break type (" << sep->bkc << ") NOT SUPPORTED!";
+                m_omittMasterPage = true;
+                break;
         }
 
         //cleaning required!
         delete pageLayoutStyle;
-    } else {
+    }
+    else
+    {
         //save the actual KoGenStyle!
         m_pageLayoutStyle_last = *pageLayoutStyle;
 
@@ -544,20 +594,22 @@ void Document::slotSectionFound(wvWare::SharedPtr<const wvWare::Word97::SEP> sep
     }
 
     //yeah, we can omitt creation of a new master-page
-    if (m_omittMasterPage || m_useLastMasterPage) {
+    if (m_omittMasterPage || m_useLastMasterPage)
+    {
         return;
     }
 
     //check if a first-page specific page-layout has to be created
-    if (firstPage) {
-       pageLayoutStyle = new KoGenStyle(KoGenStyle::PageLayoutStyle);
+    if (firstPage)
+    {
+        pageLayoutStyle = new KoGenStyle(KoGenStyle::PageLayoutStyle);
 
-       //set page-layout attributes for the first page
-       setPageLayoutStyle(pageLayoutStyle, sep, 1);
-       pageLayoutStyle->setAutoStyleInStylesDotXml(true);
+        //set page-layout attributes for the first page
+        setPageLayoutStyle(pageLayoutStyle, sep, 1);
+        pageLayoutStyle->setAutoStyleInStylesDotXml(true);
 
-       //add data into corresponding lists
-       m_pageLayoutStyle_list.prepend(pageLayoutStyle);
+        //add data into corresponding lists
+        m_pageLayoutStyle_list.prepend(pageLayoutStyle);
     }
 
     // *******************************
@@ -569,10 +621,13 @@ void Document::slotSectionFound(wvWare::SharedPtr<const wvWare::Word97::SEP> sep
     //NOTE: The first master-page-name has to be "Standard", words has hard
     //coded that the value of fo:backgroud-color from this style is used for
     //the entire frameset.
-    if (m_textHandler->sectionNumber() > 1) {
+    if (m_textHandler->sectionNumber() > 1)
+    {
         masterStyleName.append("MP");
         masterStyleName.append(QString::number(m_textHandler->sectionNumber()));
-    } else {
+    }
+    else
+    {
         masterStyleName.append("Standard");
     }
     masterStyle->addAttribute("style:display-name", masterStyleName);
@@ -586,12 +641,14 @@ void Document::slotSectionFound(wvWare::SharedPtr<const wvWare::Word97::SEP> sep
     m_hasFooter_list.prepend(false);
 
     //check if a first-page specific master-page has to be created
-    if (firstPage) {
+    if (firstPage)
+    {
         masterStyle = new KoGenStyle(KoGenStyle::MasterPageStyle);
         masterStyleName.clear();
         masterStyleName.append("First_Page");
 
-        if (m_textHandler->sectionNumber() > 1) {
+        if (m_textHandler->sectionNumber() > 1)
+        {
             masterStyleName.append(QString::number(m_textHandler->sectionNumber()));
         }
         masterStyle->addAttribute("style:display-name", masterStyleName);
@@ -610,7 +667,8 @@ void Document::slotSectionFound(wvWare::SharedPtr<const wvWare::Word97::SEP> sep
     //required by this module
     m_lastMasterPageName = m_masterPageName_list.first();
 
-    for (int i = 0; i < m_masterPageName_list.size(); i++) {
+    for (int i = 0; i < m_masterPageName_list.size(); i++)
+    {
         debugMsDoc << "prepared master-page style:" << m_masterPageName_list[i];
     }
 }
@@ -622,7 +680,8 @@ void Document::slotSectionEnd(wvWare::SharedPtr<const wvWare::Word97::SEP> sep)
     KoGenStyle* pageLayoutStyle = 0;
     QString pageLayoutName;
 
-    for (int i = 0; i < m_masterPageName_list.size(); i++) {
+    for (int i = 0; i < m_masterPageName_list.size(); i++)
+    {
 
         pageLayoutStyle = m_pageLayoutStyle_list[i];
         masterPageStyle = m_masterPageStyle_list[i];
@@ -637,58 +696,79 @@ void Document::slotSectionEnd(wvWare::SharedPtr<const wvWare::Word97::SEP> sep)
         pageLayoutStyle->addPropertyPt("fo:margin-right", (double)sep->dxaRight / 20.0);
 
         // the pgbOffsetFrom variable determines how to calculate the margins and paddings.
-        switch (sep->pgbOffsetFrom) {
-        case pgbFromText:
-            pageLayoutStyle->addPropertyPt("fo:margin-left", sep->dxaLeft / 20.0 - sep->brcLeft.dptSpace);
-            pageLayoutStyle->addPropertyPt("fo:margin-right", sep->dxaRight / 20.0 - sep->brcRight.dptSpace);
-            if (m_hasHeader_list[i]) {
-                // If we have the header in the border, then our margin is the header top position
-                if (m_parser->dop().fIncludeHeader)
-                    pageLayoutStyle->addPropertyPt("fo:margin-top", sep->dyaHdrTop / 20.0 - sep->brcTop.dptSpace);
+        switch (sep->pgbOffsetFrom)
+        {
+            case pgbFromText:
+                pageLayoutStyle->addPropertyPt("fo:margin-left", sep->dxaLeft / 20.0 - sep->brcLeft.dptSpace);
+                pageLayoutStyle->addPropertyPt("fo:margin-right", sep->dxaRight / 20.0 - sep->brcRight.dptSpace);
+                if (m_hasHeader_list[i])
+                {
+                    // If we have the header in the border, then our margin is the header top position
+                    if (m_parser->dop().fIncludeHeader)
+                    {
+                        pageLayoutStyle->addPropertyPt("fo:margin-top", sep->dyaHdrTop / 20.0 - sep->brcTop.dptSpace);
+                    }
+                    else
+                    {
+                        pageLayoutStyle->addPropertyPt("fo:margin-top", (sep->dyaHdrTop + sep->dyaTop) / 20.0 - sep->brcTop.dptSpace);
+                    }
+                }
                 else
-                    pageLayoutStyle->addPropertyPt("fo:margin-top", (sep->dyaHdrTop + sep->dyaTop) / 20.0 - sep->brcTop.dptSpace);
-            } else {
-                pageLayoutStyle->addPropertyPt("fo:margin-top", sep->dyaTop / 20.0 - sep->brcTop.dptSpace);
-            }
-            if (m_hasFooter_list[i]) {
-                // If we have the footer in the border, then our margin is the header bottom position
-                if (m_parser->dop().fIncludeFooter)
-                    pageLayoutStyle->addPropertyPt("fo:margin-bottom", sep->dyaHdrBottom / 20.0 - sep->brcBottom.dptSpace);
+                {
+                    pageLayoutStyle->addPropertyPt("fo:margin-top", sep->dyaTop / 20.0 - sep->brcTop.dptSpace);
+                }
+                if (m_hasFooter_list[i])
+                {
+                    // If we have the footer in the border, then our margin is the header bottom position
+                    if (m_parser->dop().fIncludeFooter)
+                    {
+                        pageLayoutStyle->addPropertyPt("fo:margin-bottom", sep->dyaHdrBottom / 20.0 - sep->brcBottom.dptSpace);
+                    }
+                    else
+                    {
+                        pageLayoutStyle->addPropertyPt("fo:margin-bottom", (sep->dyaHdrBottom + sep->dyaBottom) / 20.0 - sep->brcBottom.dptSpace);
+                    }
+                }
                 else
-                    pageLayoutStyle->addPropertyPt("fo:margin-bottom", (sep->dyaHdrBottom + sep->dyaBottom) / 20.0 - sep->brcBottom.dptSpace);
-            } else {
-                // same comment for footer as for header
-                pageLayoutStyle->addPropertyPt("fo:margin-bottom", sep->dyaBottom / 20.0 - sep->brcBottom.dptSpace);
-            }
+                {
+                    // same comment for footer as for header
+                    pageLayoutStyle->addPropertyPt("fo:margin-bottom", sep->dyaBottom / 20.0 - sep->brcBottom.dptSpace);
+                }
 
-            pageLayoutStyle->addPropertyPt("fo:padding-left",   sep->brcLeft.dptSpace);
-            pageLayoutStyle->addPropertyPt("fo:padding-right",  sep->brcRight.dptSpace);
-            pageLayoutStyle->addPropertyPt("fo:padding-top",    sep->brcTop.dptSpace);
-            pageLayoutStyle->addPropertyPt("fo:padding-bottom", sep->brcBottom.dptSpace);
-            break;
+                pageLayoutStyle->addPropertyPt("fo:padding-left",   sep->brcLeft.dptSpace);
+                pageLayoutStyle->addPropertyPt("fo:padding-right",  sep->brcRight.dptSpace);
+                pageLayoutStyle->addPropertyPt("fo:padding-top",    sep->brcTop.dptSpace);
+                pageLayoutStyle->addPropertyPt("fo:padding-bottom", sep->brcBottom.dptSpace);
+                break;
 
-        case pgbFromEdge:
-            pageLayoutStyle->addPropertyPt("fo:margin-left", sep->brcLeft.dptSpace);
-            pageLayoutStyle->addPropertyPt("fo:margin-right", sep->brcRight.dptSpace);
-            pageLayoutStyle->addPropertyPt("fo:margin-top", sep->brcTop.dptSpace);
-            pageLayoutStyle->addPropertyPt("fo:margin-bottom", sep->brcBottom.dptSpace);
+            case pgbFromEdge:
+                pageLayoutStyle->addPropertyPt("fo:margin-left", sep->brcLeft.dptSpace);
+                pageLayoutStyle->addPropertyPt("fo:margin-right", sep->brcRight.dptSpace);
+                pageLayoutStyle->addPropertyPt("fo:margin-top", sep->brcTop.dptSpace);
+                pageLayoutStyle->addPropertyPt("fo:margin-bottom", sep->brcBottom.dptSpace);
 
-            pageLayoutStyle->addPropertyPt("fo:padding-left", sep->dxaLeft / 20.0 - sep->brcLeft.dptSpace);
-            pageLayoutStyle->addPropertyPt("fo:padding-right", sep->dxaRight / 20.0 - sep->brcRight.dptSpace);
-            if (m_hasHeader_list[i]) {
-                // minimum height of headers is not yet calculated but should be smth like:
-                //   sep->dyaTop - sep->dyaHdrTop
-                pageLayoutStyle->addPropertyPt("fo:padding-top", sep->dyaHdrTop / 20.0 - sep->brcTop.dptSpace);
-            } else {
-                pageLayoutStyle->addPropertyPt("fo:padding-top", sep->dyaTop / 20.0 - sep->brcTop.dptSpace);
-            }
-            if (m_hasFooter_list[i]) {
-                // same comment for footer as for header
-                pageLayoutStyle->addPropertyPt("fo:padding-bottom", sep->dyaHdrBottom / 20.0 - sep->brcBottom.dptSpace);
-            } else {
-                pageLayoutStyle->addPropertyPt("fo:padding-bottom", sep->dyaBottom / 20.0 - sep->brcBottom.dptSpace);
-            }
-            break;
+                pageLayoutStyle->addPropertyPt("fo:padding-left", sep->dxaLeft / 20.0 - sep->brcLeft.dptSpace);
+                pageLayoutStyle->addPropertyPt("fo:padding-right", sep->dxaRight / 20.0 - sep->brcRight.dptSpace);
+                if (m_hasHeader_list[i])
+                {
+                    // minimum height of headers is not yet calculated but should be smth like:
+                    //   sep->dyaTop - sep->dyaHdrTop
+                    pageLayoutStyle->addPropertyPt("fo:padding-top", sep->dyaHdrTop / 20.0 - sep->brcTop.dptSpace);
+                }
+                else
+                {
+                    pageLayoutStyle->addPropertyPt("fo:padding-top", sep->dyaTop / 20.0 - sep->brcTop.dptSpace);
+                }
+                if (m_hasFooter_list[i])
+                {
+                    // same comment for footer as for header
+                    pageLayoutStyle->addPropertyPt("fo:padding-bottom", sep->dyaHdrBottom / 20.0 - sep->brcBottom.dptSpace);
+                }
+                else
+                {
+                    pageLayoutStyle->addPropertyPt("fo:padding-bottom", sep->dyaBottom / 20.0 - sep->brcBottom.dptSpace);
+                }
+                break;
         }
 
 
@@ -732,55 +812,56 @@ void Document::headerStart(wvWare::HeaderData::Type type)
     // NOTE: We are assuming in the parser code that odd header/footer is
     // present by default if m_headers is not empty.
 
-    switch (type) {
-    case wvWare::HeaderData::HeaderEven:
-        //write to the buffer for even headers/footers
-        m_bufferEven = new QBuffer();
-        m_bufferEven->open(QIODevice::WriteOnly);
-        m_headerWriter = new KoXmlWriter(m_bufferEven);
-        m_evenOpen = true;
-        m_headerWriter->startElement("style:header-left");
-        break;
-    case wvWare::HeaderData::HeaderOdd:
-        //set up buffer & writer for odd header
-        m_buffer = new QBuffer();
-        m_buffer->open(QIODevice::WriteOnly);
-        m_headerWriter = new KoXmlWriter(m_buffer);
-        m_headerWriter->startElement("style:header");
-        m_hasHeader_list.replace(i, true);
-        break;
-    case wvWare::HeaderData::FooterEven:
-        //write to the buffer for even headers/footers
-        m_bufferEven = new QBuffer();
-        m_bufferEven->open(QIODevice::WriteOnly);
-        m_headerWriter = new KoXmlWriter(m_bufferEven);
-        m_evenOpen = true;
-        m_headerWriter->startElement("style:footer-left");
-        break;
-    case wvWare::HeaderData::FooterOdd:
-        //set up buffer & writer for odd header
-        m_buffer = new QBuffer();
-        m_buffer->open(QIODevice::WriteOnly);
-        m_headerWriter = new KoXmlWriter(m_buffer);
-        m_headerWriter->startElement("style:footer");
-        m_hasFooter_list.replace(i, true);
-        break;
-    case wvWare::HeaderData::HeaderFirst:
-        m_buffer = new QBuffer();
-        m_buffer->open(QIODevice::WriteOnly);
-        m_headerWriter = new KoXmlWriter(m_buffer);
-        m_firstOpen = true;
-        m_headerWriter->startElement("style:header");
-        m_hasHeader_list.replace(0, true);
-        break;
-    case wvWare::HeaderData::FooterFirst:
-        m_buffer = new QBuffer();
-        m_buffer->open(QIODevice::WriteOnly);
-        m_headerWriter = new KoXmlWriter(m_buffer);
-        m_firstOpen = true;
-        m_headerWriter->startElement("style:footer");
-        m_hasFooter_list.replace(0, true);
-        break;
+    switch (type)
+    {
+        case wvWare::HeaderData::HeaderEven:
+            //write to the buffer for even headers/footers
+            m_bufferEven = new QBuffer();
+            m_bufferEven->open(QIODevice::WriteOnly);
+            m_headerWriter = new KoXmlWriter(m_bufferEven);
+            m_evenOpen = true;
+            m_headerWriter->startElement("style:header-left");
+            break;
+        case wvWare::HeaderData::HeaderOdd:
+            //set up buffer & writer for odd header
+            m_buffer = new QBuffer();
+            m_buffer->open(QIODevice::WriteOnly);
+            m_headerWriter = new KoXmlWriter(m_buffer);
+            m_headerWriter->startElement("style:header");
+            m_hasHeader_list.replace(i, true);
+            break;
+        case wvWare::HeaderData::FooterEven:
+            //write to the buffer for even headers/footers
+            m_bufferEven = new QBuffer();
+            m_bufferEven->open(QIODevice::WriteOnly);
+            m_headerWriter = new KoXmlWriter(m_bufferEven);
+            m_evenOpen = true;
+            m_headerWriter->startElement("style:footer-left");
+            break;
+        case wvWare::HeaderData::FooterOdd:
+            //set up buffer & writer for odd header
+            m_buffer = new QBuffer();
+            m_buffer->open(QIODevice::WriteOnly);
+            m_headerWriter = new KoXmlWriter(m_buffer);
+            m_headerWriter->startElement("style:footer");
+            m_hasFooter_list.replace(i, true);
+            break;
+        case wvWare::HeaderData::HeaderFirst:
+            m_buffer = new QBuffer();
+            m_buffer->open(QIODevice::WriteOnly);
+            m_headerWriter = new KoXmlWriter(m_buffer);
+            m_firstOpen = true;
+            m_headerWriter->startElement("style:header");
+            m_hasHeader_list.replace(0, true);
+            break;
+        case wvWare::HeaderData::FooterFirst:
+            m_buffer = new QBuffer();
+            m_buffer->open(QIODevice::WriteOnly);
+            m_headerWriter = new KoXmlWriter(m_buffer);
+            m_firstOpen = true;
+            m_headerWriter->startElement("style:footer");
+            m_hasFooter_list.replace(0, true);
+            break;
     }
     //tell other handlers we're writing a header
     m_writingHeader = true;
@@ -791,7 +872,8 @@ void Document::headerEnd()
 {
     debugMsDoc ;
     //close a list if we need to (you can have a list inside a header)
-    if (m_textHandler->listIsOpen()) {
+    if (m_textHandler->listIsOpen())
+    {
         debugMsDoc << "closing a list in a header/footer";
         m_textHandler->closeList();
     }
@@ -805,27 +887,32 @@ void Document::headerEnd()
     // If it was an even header/footer, we wrote to this writer, but we won't
     // do anything with it.
 
-    if (m_evenOpen) {
+    if (m_evenOpen)
+    {
         m_headerWriter->endElement(); //style:header-left/footer-left
         m_evenOpen = false;
     }
-    else {
+    else
+    {
         KoGenStyle* masterPageStyle = 0;
         QString name = 0;
-        if (m_firstOpen) {
+        if (m_firstOpen)
+        {
             name = m_masterPageName_list.first();
             masterPageStyle = m_masterPageStyle_list.first();
             m_firstOpen = false;
-    }
-    else {
+        }
+        else
+        {
             name = m_masterPageName_list.last();
             masterPageStyle = m_masterPageStyle_list.last();
-    }
+        }
         Q_ASSERT(masterPageStyle);
         m_headerWriter->endElement(); //style:header/footer
 
         //add the even header/footer content here
-        if (m_bufferEven) {
+        if (m_bufferEven)
+        {
             m_headerWriter->addCompleteElement(m_bufferEven);
             delete m_bufferEven;
             m_bufferEven = 0;
@@ -903,7 +990,8 @@ void Document::slotTableFound(Words::Table* table)
 
     m_tableHandler->tableStart(table);
     QList<Words::Row> &rows = table->rows;
-    for (QList<Words::Row>::Iterator it = rows.begin(); it != rows.end(); ++it) {
+    for (QList<Words::Row>::Iterator it = rows.begin(); it != rows.end(); ++it)
+    {
         Words::TableRowFunctorPtr f = (*it).functorPtr;
         Q_ASSERT(f);
         (*f)(); // call it
@@ -950,8 +1038,10 @@ void Document::processSubDocQueue()
     // Table cells can contain footnotes, and footnotes can contain tables [without footnotes though]
     // This is why we need to repeat until there's nothing more do to (#79024)
 
-    while (!m_subdocQueue.empty()) {// || !m_tableQueue.empty()) {
-        while (!m_subdocQueue.empty()) {
+    while (!m_subdocQueue.empty())  // || !m_tableQueue.empty()) {
+    {
+        while (!m_subdocQueue.empty())
+        {
             SubDocument subdoc(m_subdocQueue.front());
             Q_ASSERT(subdoc.functorPtr);
             (*subdoc.functorPtr)(); // call it
@@ -993,61 +1083,65 @@ void Document::setPageLayoutStyle(KoGenStyle* pageLayoutStyle,
     pageLayoutStyle->addProperty("style:num-format", "1");
 
     DrawStyle ds = m_graphicsHandler->getBgDrawStyle();
-    if (ds.fFilled()) {
-        switch (ds.fillType()) {
-        case msofillSolid:
+    if (ds.fFilled())
+    {
+        switch (ds.fillType())
         {
-            // PptToOdp::toQColor helper function can be used instead of this conversion
-            MSO::OfficeArtCOLORREF clr = ds.fillColor();
-            QColor color(clr.red, clr.green, clr.blue);
-            QString tmp = color.name();
-            pageLayoutStyle->addProperty("fo:background-color", tmp);
+            case msofillSolid:
+            {
+                // PptToOdp::toQColor helper function can be used instead of this conversion
+                MSO::OfficeArtCOLORREF clr = ds.fillColor();
+                QColor color(clr.red, clr.green, clr.blue);
+                QString tmp = color.name();
+                pageLayoutStyle->addProperty("fo:background-color", tmp);
 
-            //update the background-color information if required
-            if (tmp != currentBgColor()) {
-                updateBgColor(tmp);
+                //update the background-color information if required
+                if (tmp != currentBgColor())
+                {
+                    updateBgColor(tmp);
+                }
+                break;
             }
-            break;
-        }
-        //TODO:
+            //TODO:
 //         case msofillShade:
 //         case msofillShadeCenter:
 //         case msofillShadeShape:
 //         case msofillShadeScale:
 //         case msofillShadeTitle:
 //
-        //TODO:
+            //TODO:
 //         case msofillPattern:
 //         case msofillTexture:
 //
-        case msofillPicture:
-        {
-            // picture can be stored in OfficeArtBStoreContainer or in
-            // fillBlip_complex if complex = true only picture in
-            // OfficeArtBStoreContainer is handled now
-            QString filePath = m_graphicsHandler->getPicturePath(ds.fillBlip());
+            case msofillPicture:
+            {
+                // picture can be stored in OfficeArtBStoreContainer or in
+                // fillBlip_complex if complex = true only picture in
+                // OfficeArtBStoreContainer is handled now
+                QString filePath = m_graphicsHandler->getPicturePath(ds.fillBlip());
 
-            if (!filePath.isEmpty()) {
-                QBuffer buffer;
-                KoXmlWriter bkgImageWriter(&buffer);
+                if (!filePath.isEmpty())
+                {
+                    QBuffer buffer;
+                    KoXmlWriter bkgImageWriter(&buffer);
 
-                bkgImageWriter.startElement("style:background-image");
-                bkgImageWriter.addAttribute("xlink:href", filePath);
-                bkgImageWriter.addAttribute("xlink:type", "simple");
-                bkgImageWriter.addAttribute("xlink:actuate", "onLoad");
-                bkgImageWriter.endElement(); //style:background-image
+                    bkgImageWriter.startElement("style:background-image");
+                    bkgImageWriter.addAttribute("xlink:href", filePath);
+                    bkgImageWriter.addAttribute("xlink:type", "simple");
+                    bkgImageWriter.addAttribute("xlink:actuate", "onLoad");
+                    bkgImageWriter.endElement(); //style:background-image
 
-                QString contents = QString::fromUtf8(((QBuffer*)bkgImageWriter.device())->buffer(),
-                                         ((QBuffer*)bkgImageWriter.device())->buffer().size());
+                    QString contents = QString::fromUtf8(((QBuffer*)bkgImageWriter.device())->buffer(),
+                                                         ((QBuffer*)bkgImageWriter.device())->buffer().size());
 
-                pageLayoutStyle->addChildElement("0", contents);
+                    pageLayoutStyle->addChildElement("0", contents);
+                }
+                break;
             }
-        break;
-        }
-        //TODO:
+            //TODO:
 //         case msofillBackground:
-        default:
-            break;
+            default:
+                break;
         }
     }
 
@@ -1073,18 +1167,23 @@ void Document::setPageLayoutStyle(KoGenStyle* pageLayoutStyle,
 
     // The spec says the top-margin MUST be grown to avoid overlapping the
     // space that is occupied by headers.  Not ODF compatible.
-    if (sep->dyaTop >= 0) {
+    if (sep->dyaTop >= 0)
+    {
         header.append(" style:dynamic-spacing=\"true\"");
         header.append(" fo:margin-bottom=\"0pt\"");
-    } else {
+    }
+    else
+    {
         //TODO: tests required, I would prefer margin-bottom set to ZERO
         header.append(" style:dynamic-spacing=\"false\"");
         header.append(" fo:margin-bottom=\"");
 #if 0
         qreal headerMarginTop = qAbs(sep->dyaTop) - sep->dyaHdrTop;
-        if (headerMarginTop > 0) {
+        if (headerMarginTop > 0)
+        {
             header.append(QString::number(headerMarginTop / 20.0, 'f'));
-        } else
+        }
+        else
 #endif
             header.append("0");
         header.append("pt\"");
@@ -1098,17 +1197,23 @@ void Document::setPageLayoutStyle(KoGenStyle* pageLayoutStyle,
 
     // The spec says the bottom-margin MUST be grown to avoid overlapping the
     // space that is occupied by footers or footnotes.  Not ODF compatible.
-    if (sep->dyaBottom > 0) {
+    if (sep->dyaBottom > 0)
+    {
         footer.append(" style:dynamic-spacing=\"true\"");
         footer.append(" fo:margin-top=\"0pt\"");
-    } else {
+    }
+    else
+    {
         //TODO: tests required, I would prefer margin-top set to ZERO
         footer.append(" style:dynamic-spacing=\"false\"");
         footer.append(" fo:margin-top=\"");
         qreal headerMarginBottom = qAbs(sep->dyaBottom) - sep->dyaHdrBottom;
-        if (headerMarginBottom >= 400) {
+        if (headerMarginBottom >= 400)
+        {
             footer.append(QString::number(headerMarginBottom / 20.0, 'f'));
-        } else {
+        }
+        else
+        {
             footer.append("14");
         }
         footer.append("pt\"");
@@ -1125,29 +1230,33 @@ void Document::setPageLayoutStyle(KoGenStyle* pageLayoutStyle,
     //NOTE: 3 - whole document, not mentioned in the "Word Binary File Format
     //(.doc) Structure Specification", but mentiond in word97_generated.h
     if ( (sep->pgbApplyTo == 0) ||
-        ((sep->pgbApplyTo == 1) && firstPage) ||
-        ((sep->pgbApplyTo == 2) && !firstPage))
+            ((sep->pgbApplyTo == 1) && firstPage) ||
+            ((sep->pgbApplyTo == 2) && !firstPage))
     {
         // FIXME: check if we can use fo:border instead of fo:border-left, etc.
-        if (sep->brcLeft.brcType != 0) {
+        if (sep->brcLeft.brcType != 0)
+        {
             pageLayoutStyle->addProperty("fo:border-left",
                                          Conversion::setBorderAttributes(sep->brcLeft));
             pageLayoutStyle->addProperty("calligra:specialborder-left",
                                          Conversion::borderCalligraAttributes(sep->brcLeft));
         }
-        if (sep->brcTop.brcType != 0) {
+        if (sep->brcTop.brcType != 0)
+        {
             pageLayoutStyle->addProperty("fo:border-top",
                                          Conversion::setBorderAttributes(sep->brcTop));
             pageLayoutStyle->addProperty("calligra:specialborder-top",
                                          Conversion::borderCalligraAttributes(sep->brcTop));
         }
-        if (sep->brcRight.brcType != 0) {
+        if (sep->brcRight.brcType != 0)
+        {
             pageLayoutStyle->addProperty("fo:border-right",
                                          Conversion::setBorderAttributes(sep->brcRight));
             pageLayoutStyle->addProperty("calligra:specialborder-right",
                                          Conversion::borderCalligraAttributes(sep->brcRight));
         }
-        if (sep->brcBottom.brcType != 0) {
+        if (sep->brcBottom.brcType != 0)
+        {
             pageLayoutStyle->addProperty("fo:border-bottom",
                                          Conversion::setBorderAttributes(sep->brcBottom));
             pageLayoutStyle->addProperty("calligra:specialborder-bottom",
@@ -1162,7 +1271,8 @@ bool Document::headersChanged(void) const
     int n = m_textHandler->sectionNumber() - 1;
     bool ret = false;
 
-    if (n < m_headersMask.size()) {
+    if (n < m_headersMask.size())
+    {
         ret = m_headersMask[n];
     }
     return ret;

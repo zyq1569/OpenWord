@@ -1,5 +1,4 @@
 #include "logging.h"
-#include "easylogging++.h"
 //INITIALIZE_EASYLOGGINGPP
 
 #include <KWAboutData.h>

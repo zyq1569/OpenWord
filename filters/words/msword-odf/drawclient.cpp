@@ -33,14 +33,16 @@ using namespace wvWare;
 //FIXME: duplicity in PptToOdp.cpp and graphicshandler.cpp
 namespace
 {
-QString format(double v) {
+QString format(double v)
+{
     static const QString f("%1");
     static const QString e("");
     static const QRegExp r("\\.?0+$");
     return f.arg(v, 0, 'f').replace(r, e);
 }
 
-QString mm(double v) {
+QString mm(double v)
+{
     static const QString mm("mm");
     return format(v) + mm;
 }
@@ -50,24 +52,30 @@ QRectF
 WordsGraphicsHandler::DrawClient::getRect(const MSO::OfficeArtClientAnchor& ca)
 {
     const DocOfficeArtClientAnchor* a = ca.anon.get<DocOfficeArtClientAnchor>();
-    if (!a || (a->clientAnchor == -1)) {
+    if (!a || (a->clientAnchor == -1))
+    {
         debugMsDoc << "INVALID DocOfficeArtClientAnchor, returning QRect(0, 0, 1, 1)";
         return QRect(0, 0, 1, 1);
     }
     const PLCF<Word97::FSPA>* plcfSpa = 0;
-    if (gh->m_document->writingHeader()) {
+    if (gh->m_document->writingHeader())
+    {
         plcfSpa = gh->m_drawings->getSpaHdr();
-    } else {
+    }
+    else
+    {
         plcfSpa = gh->m_drawings->getSpaMom();
     }
-    if (!plcfSpa) {
+    if (!plcfSpa)
+    {
         debugMsDoc << "MISSING plcfSpa, returning QRectF()";
         return QRectF();
     }
 
     PLCFIterator<Word97::FSPA> it(plcfSpa->at(a->clientAnchor));
     Word97::FSPA* spa = it.current();
-    if (!spa) {
+    if (!spa)
+    {
         return QRectF();
     }
     return QRectF(spa->xaLeft, spa->yaTop, (spa->xaRight - spa->xaLeft), (spa->yaBottom - spa->yaTop));
@@ -80,7 +88,8 @@ WordsGraphicsHandler::DrawClient::getReserveRect(void)
     //CP is provided by the GraphicsHandler.  No test files for inline shapes
     //at the moment.
     Word97::FSPA* spa = gh->m_pSpa;
-    if (!spa) {
+    if (!spa)
+    {
         return QRectF();
     }
     return QRectF(spa->xaLeft, spa->yaTop, (spa->xaRight - spa->xaLeft), (spa->yaBottom - spa->yaTop));
@@ -94,13 +103,14 @@ WordsGraphicsHandler::DrawClient::getPicturePath(const quint32 pib)
 
 void
 WordsGraphicsHandler::DrawClient::processClientTextBox(const MSO::OfficeArtClientTextBox& ct,
-                                                       const MSO::OfficeArtClientData* cd,
-                                                       Writer& out)
+        const MSO::OfficeArtClientData* cd,
+        Writer& out)
 {
     Q_UNUSED(cd);
     Q_UNUSED(out);
     const DocOfficeArtClientTextBox* tb = ct.anon.get<DocOfficeArtClientTextBox>();
-    if (!tb) {
+    if (!tb)
+    {
         debugMsDoc << "DocOfficeArtClientTextBox missing!";
         return;
     }
@@ -115,9 +125,9 @@ WordsGraphicsHandler::DrawClient::processClientTextBox(const MSO::OfficeArtClien
 
 KoGenStyle
 WordsGraphicsHandler::DrawClient::createGraphicStyle(const MSO::OfficeArtClientTextBox* ct,
-                                                     const MSO::OfficeArtClientData* cd,
-                                                     const DrawStyle& ds,
-                                                     Writer& out)
+        const MSO::OfficeArtClientData* cd,
+        const DrawStyle& ds,
+        Writer& out)
 {
     Q_UNUSED(ct);
     Q_UNUSED(cd);
@@ -132,9 +142,9 @@ WordsGraphicsHandler::DrawClient::createGraphicStyle(const MSO::OfficeArtClientT
 
 void
 WordsGraphicsHandler::DrawClient::addTextStyles(const MSO::OfficeArtClientTextBox* clientTextbox,
-                                                const MSO::OfficeArtClientData* clientData,
-                                                KoGenStyle& style,
-                                                Writer& out)
+        const MSO::OfficeArtClientData* clientData,
+        KoGenStyle& style,
+        Writer& out)
 {
     Q_UNUSED(clientTextbox);
     Q_UNUSED(clientData);
@@ -201,8 +211,8 @@ WordsGraphicsHandler::DrawClient::onlyClientData(const MSO::OfficeArtClientData&
 
 void
 WordsGraphicsHandler::DrawClient::processClientData(const MSO::OfficeArtClientTextBox* ct,
-                                                    const MSO::OfficeArtClientData& o,
-                                                    Writer& out)
+        const MSO::OfficeArtClientData& o,
+        Writer& out)
 {
     Q_UNUSED(ct);
     Q_UNUSED(o);

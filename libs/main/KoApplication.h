@@ -21,7 +21,6 @@
 #define __ko_app_h__
 
 #include "logging.h"
-#include "easylogging++.h"
 #include <QApplication>
 
 #include "komain_export.h"
