@@ -63,7 +63,7 @@ bool UnknownElement::acceptCursor( const FormulaCursor& cursor )
 
 ElementType UnknownElement::elementType() const
 {
-    return Unknown;
+    return UnKnown;
 }
 
 bool UnknownElement::readMathMLAttributes( const KoXmlElement& element )

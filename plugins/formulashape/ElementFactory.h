@@ -60,7 +60,7 @@ enum ElementType
     Phantom,
     Action,
     Annotation,
-    Unknown,
+    UnKnown,
     Empty
 };
 

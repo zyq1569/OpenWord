@@ -20,7 +20,7 @@
 #ifndef KOM2MMLFORMULATOOL_H_
 #define KOM2MMLFORMULATOOL_H_
 
-#include "logging.h"
+//#include "logging.h"
 
 #include <KoToolBase.h>
 #include <KoToolFactoryBase.h>

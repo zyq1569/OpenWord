@@ -71,7 +71,8 @@ void BasicElement::layout( const AttributeManager* )
 
 void BasicElement::stretch()
 {
-    foreach( BasicElement* tmpElement, childElements() ) {
+    foreach( BasicElement* tmpElement, childElements() )
+    {
         tmpElement->stretch();
     }
 }
@@ -100,17 +101,17 @@ QLineF BasicElement::cursorLine(int position) const
 
 QPainterPath BasicElement::selectionRegion(const int pos1, const int pos2) const
 {
-	QLineF l1=cursorLine(pos1);
-	QLineF l2=cursorLine(pos2);
-	//TODO: find out why doesn't work
-	//QRectF r1(l1.p1(),l1.p2());
-	//QRectF r2(l2.p1(),l2.p2());
+    QLineF l1=cursorLine(pos1);
+    QLineF l2=cursorLine(pos2);
+    //TODO: find out why doesn't work
+    //QRectF r1(l1.p1(),l1.p2());
+    //QRectF r2(l2.p1(),l2.p2());
 
-	QRectF r1(l1.p1(),l2.p2());
-	QRectF r2(l2.p1(),l1.p2());
-	QPainterPath temp;
-	temp.addRect(r1.united(r2));
-	return temp;
+    QRectF r1(l1.p1(),l2.p2());
+    QRectF r2(l2.p1(),l1.p2());
+    QPainterPath temp;
+    temp.addRect(r1.united(r2));
+    return temp;
 }
 
 
@@ -118,9 +119,10 @@ const QRectF BasicElement::absoluteBoundingRect() const
 {
     QPointF neworigin = origin();
     BasicElement* tmp=parentElement();
-    while (tmp) {
-	neworigin+=tmp->origin();
-	tmp=tmp->parentElement();
+    while (tmp)
+    {
+        neworigin+=tmp->origin();
+        tmp=tmp->parentElement();
     }
     return QRectF(neworigin,QSizeF(width(),height()));
 }
@@ -149,10 +151,14 @@ const QList<BasicElement*> BasicElement::childElements() const
 BasicElement* BasicElement::childElementAt( const QPointF& p )
 {
     if( !m_boundingRect.contains( p ) )
+    {
         return 0;
+    }
 
     if( childElements().isEmpty() )
+    {
         return this;
+    }
 
     BasicElement* ownerElement = 0;
     foreach( BasicElement* tmpElement, childElements() )
@@ -160,7 +166,9 @@ BasicElement* BasicElement::childElementAt( const QPointF& p )
         ownerElement = tmpElement->childElementAt( p );
 
         if( ownerElement )
+        {
             return ownerElement;
+        }
     }
 
     return this;    // if no child contains the point, it's the FormulaElement itsself
@@ -169,19 +177,27 @@ BasicElement* BasicElement::childElementAt( const QPointF& p )
 void BasicElement::setAttribute( const QString& name, const QVariant& value )
 {
     if( name.isEmpty() || !value.canConvert( QVariant::String ) )
+    {
         return;
+    }
 
     if( value.isNull() )
+    {
         m_attributes.remove( name );
+    }
     else
+    {
         m_attributes.insert( name, value.toString() );
+    }
 }
 
 QString BasicElement::attribute( const QString& attribute ) const
 {
     QString tmp = m_attributes.value( attribute );
     if( tmp.isEmpty() )
+    {
         return QString();
+    }
 
     return tmp;
 }
@@ -205,7 +221,8 @@ bool BasicElement::readMathML( const KoXmlElement& element )
 bool BasicElement::readMathMLAttributes( const KoXmlElement& element )
 {
     QStringList attributeList = KoXml::attributeNames( element );
-    foreach( const QString &attributeName, attributeList ) {
+    foreach( const QString &attributeName, attributeList )
+    {
         m_attributes.insert( attributeName.toLower(),
                              element.attribute( attributeName ).toLower() );
     }
@@ -220,21 +237,27 @@ bool BasicElement::readMathMLContent( const KoXmlElement& parent )
 
 void BasicElement::writeMathML( KoXmlWriter* writer, const QString& ns ) const
 {
-    if (elementType() == Basic || elementType() == Unknown) {
+    if (elementType() == Basic || elementType() == UnKnown)
+    {
         return;
     }
 
     // Collapse a an <mrow> with only one child element to the child element itself.
-    if ((elementType() == Row) && (childElements().count()==1)) {
-        foreach( BasicElement* tmp, childElements() ) {
+    if ((elementType() == Row) && (childElements().count()==1))
+    {
+        foreach( BasicElement* tmp, childElements() )
+        {
             tmp->writeMathML( writer, ns );
         }
-    } else {
+    }
+    else
+    {
         const QByteArray name = ns.isEmpty() ? ElementFactory::elementName( elementType() ).toLatin1()
-            : ns.toLatin1() + ':' + ElementFactory::elementName( elementType() ).toLatin1();
+                                : ns.toLatin1() + ':' + ElementFactory::elementName( elementType() ).toLatin1();
         writer->startElement( name );
         writeMathMLAttributes( writer );
-        if ( elementType() == Formula ) {
+        if ( elementType() == Formula )
+        {
             /*
              * This is a hack to make OOo compatible. It's mandatory
              * for OOo requires a semantics element as math element's
@@ -243,7 +266,8 @@ void BasicElement::writeMathML( KoXmlWriter* writer, const QString& ns ) const
             writer->startElement( "math:semantics" );
         }
         writeMathMLContent( writer, ns );
-        if ( elementType() == Formula ) {
+        if ( elementType() == Formula )
+        {
             writer->endElement();
         }
         writer->endElement();
@@ -260,10 +284,13 @@ void BasicElement::writeMathMLAttributes( KoXmlWriter* writer ) const
     sits.reserve(m_attributes.size());
     // insert iterators by bubble-sorting
     ConstAttributeIterator it = m_attributes.constBegin();
-    while (it != m_attributes.constEnd()) {
+    while (it != m_attributes.constEnd())
+    {
         QVector<ConstAttributeIterator>::Iterator sit = sits.begin();
-        while (sit != sits.end()) {
-            if (sit->key() > it.key()) {
+        while (sit != sits.end())
+        {
+            if (sit->key() > it.key())
+            {
                 break;
             }
             ++sit;
@@ -273,7 +300,8 @@ void BasicElement::writeMathMLAttributes( KoXmlWriter* writer ) const
     }
 
     // finally write all attributes, by estimated sorting
-    foreach(ConstAttributeIterator it, sits) {
+    foreach(ConstAttributeIterator it, sits)
+    {
         writer->addAttribute( it.key().toLatin1(), it.value() );
     }
 }
@@ -375,13 +403,15 @@ void BasicElement::setParentElement( BasicElement* parent )
 
 void BasicElement::setScaleLevel( int scaleLevel )
 {
-    if(scaleLevel == m_scaleLevel) {
+    if(scaleLevel == m_scaleLevel)
+    {
         return;
     }
     m_scaleLevel =  qMax(scaleLevel, 0);
     int level = scaleLevel;
     m_scaleFactor = 1.9;
-    while(level-- > 0)  { //raise multiplier to the power of level
+    while(level-- > 0)    //raise multiplier to the power of level
+    {
         m_scaleFactor *= 0.71;
     }
 }
@@ -418,11 +448,14 @@ void BasicElement::setDisplayStyle(bool displayStyle)
 
 bool BasicElement::hasDescendant ( BasicElement* other ) const
 {
-    if (other==this) {
+    if (other==this)
+    {
         return true;
     }
-    foreach (BasicElement* tmp, childElements()) {
-        if (tmp->hasDescendant(other)) {
+    foreach (BasicElement* tmp, childElements())
+    {
+        if (tmp->hasDescendant(other))
+        {
             return true;
         }
     }
@@ -433,11 +466,14 @@ bool BasicElement::hasDescendant ( BasicElement* other ) const
 BasicElement* BasicElement::emptyDescendant()
 {
     BasicElement* tmp;
-    if (isEmpty() && parentElement() && parentElement()->isInferredRow()) {
+    if (isEmpty() && parentElement() && parentElement()->isInferredRow())
+    {
         return this;
     }
-    foreach (BasicElement* child, childElements()) {
-        if ( (tmp=child->emptyDescendant()) ) {
+    foreach (BasicElement* child, childElements())
+    {
+        if ( (tmp=child->emptyDescendant()) )
+        {
             return tmp;
         }
     }
@@ -447,9 +483,12 @@ BasicElement* BasicElement::emptyDescendant()
 //TODO: This should be cached
 BasicElement* BasicElement::formulaElement()
 {
-    if (parentElement()==0) {
+    if (parentElement()==0)
+    {
         return this;
-    } else {
+    }
+    else
+    {
         return parentElement()->formulaElement();
     }
 }
@@ -468,24 +507,30 @@ void BasicElement::setScaleFactor ( qreal scaleFactor )
 void BasicElement::writeElementTree(int indent, bool wrong) const
 {
     QString s;
-    for (int i=0; i<indent; ++i) {
+    for (int i=0; i<indent; ++i)
+    {
         s+="   ";
     }
     s+=ElementFactory::elementName(elementType());
     s+=' ';
     s+=writeElementContent();
-/*    s+="        [scale level ";
-    s+=QString::number(m_scaleFactor)+","+QString::number(m_scaleLevel)+"] ";*/
+    /*    s+="        [scale level ";
+        s+=QString::number(m_scaleFactor)+","+QString::number(m_scaleLevel)+"] ";*/
     s+=QString(" [")+QString::number(baseLine())+" ; " + QString::number(height())+']';
     s+=QString(" [")+ QString::number(origin().y())+']';
-    if (wrong) {
+    if (wrong)
+    {
         s+=" -> wrong parent !!!";
     }
     debugFormula << s;
-    foreach (BasicElement* tmp, childElements()) {
-        if (tmp->parentElement()!=this) {
+    foreach (BasicElement* tmp, childElements())
+    {
+        if (tmp->parentElement()!=this)
+        {
             tmp->writeElementTree(indent+1,true);
-        } else {
+        }
+        else
+        {
             tmp->writeElementTree(indent+1,false);
         }
     }
@@ -505,14 +550,19 @@ bool BasicElement::isInferredRow() const
 
 void BasicElement::cleanElementTree ( BasicElement* element )
 {
-    foreach (BasicElement* tmp,element->childElements()) {
+    foreach (BasicElement* tmp,element->childElements())
+    {
         cleanElementTree(tmp);
     }
-    if (element->elementType()==Row && element->parentElement() && element->parentElement()->isInferredRow()) {
-        if ( element->childElements().count()==1) {
+    if (element->elementType()==Row && element->parentElement() && element->parentElement()->isInferredRow())
+    {
+        if ( element->childElements().count()==1)
+        {
             BasicElement* parent=element->parentElement();
             parent->replaceChild(element,element->childElements()[0]);
-        } else if ( element->isEmpty()) {
+        }
+        else if ( element->isEmpty())
+        {
             RowElement* parent=static_cast<RowElement*>(element->parentElement());
             parent->removeChild(element);
         }
@@ -521,11 +571,16 @@ void BasicElement::cleanElementTree ( BasicElement* element )
 
 TableDataElement* BasicElement::parentTableData()
 {
-    if (elementType()==TableData) {
+    if (elementType()==TableData)
+    {
         return static_cast<TableDataElement*>(this);
-    } else if (parentElement()) {
+    }
+    else if (parentElement())
+    {
         return parentElement()->parentTableData();
-    } else {
+    }
+    else
+    {
         return 0;
     }
 }
