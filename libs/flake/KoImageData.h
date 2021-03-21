@@ -22,7 +22,7 @@
 #define KOIMAGEDATA_H
 
 #include "flake_export.h"
-
+#include "logging.h"
 #include <QSize>
 #include <QMetaType>
 #include <QTimer>

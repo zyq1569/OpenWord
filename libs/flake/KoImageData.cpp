@@ -153,6 +153,7 @@ QImage KoImageData::image() const
             else if (d->errorCode == Success && !d->image.load(d->temporaryFile->fileName(), d->suffix.toLatin1().data()))
             {
                 /// openword need :imageformats[ size = 9 : qjpeg.dll qgif.dll qwbmp.dll ....]
+                FATAL_LOG("need :imageformats[ size = 9 /dll : qjpeg.dll qgif.dll qwbmp.dll ....!");
                 d->errorCode = OpenFailed;
             }
             d->temporaryFile->close();
