@@ -576,6 +576,7 @@ bool KoApplication::start()
                     {
                         templatePath = url.toLocalFile();
                         debugMain << "using full path...";
+                        DEBUG_LOG("using full path...:"+templatePath);
                     }
                     else
                     {
@@ -618,6 +619,7 @@ bool KoApplication::start()
                             doc->setEmpty();
                             doc->setTitleModified();
                             debugMain << "Template loaded...";
+                            DEBUG_LOG("using full path...:" + templateURL.toString());
                             numberOfOpenDocuments++;
                         }
                         else
