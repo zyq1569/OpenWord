@@ -375,6 +375,8 @@ bool KoApplication::start()
         if (!mimeType.isValid())
         {
             qFatal("It seems your installation is broken/incomplete because we failed to load the native mimetype \"%s\".", doc->nativeFormatMimeType().constData());
+            FATAL_LOG(QString("It seems your installation is broken/incomplete because we failed to load the native mimetype \"%s\". ").
+                      arg(doc->nativeFormatMimeType().constData()));
         }
         const QString extension = mimeType.preferredSuffix();
 

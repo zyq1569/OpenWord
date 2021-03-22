@@ -30,15 +30,19 @@ void beginLogging(QString appName)
 {
     if (appName.length() < 1)
     {
-        appName = qApp->applicationFilePath();
-        if (appName.length() > 1)
+        appName = qAppName();
+        if (appName.length() < 1)
         {
-            appName = appName.right(appName.length() - appName.lastIndexOf("/"));
-            appName = appName.left(appName.length() - 4);
+            appName = qApp->applicationFilePath();
+            if (appName.length() > 1)
+            {
+                appName = appName.right(appName.length() - appName.lastIndexOf("/"));
+                appName = appName.left(appName.length() - 4);
+            }
         }
-        else
+        if (appName.length() < 1)
         {
-            appName = "calligra";
+            appName = "Calligra";
         }
     }
     //QDir logDir = udg::UserLogsPath;

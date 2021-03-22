@@ -23,10 +23,11 @@
      */
     //    QLoggingCategory::setFilterRules("calligra.*.debug=true\n"
     //                                     "calligra.*.warning=true");
-    INFO_LOG("----Word start to run!-----");
+
     QLoggingCategory::setFilterRules("calligra.*=true\n"
                                      "calligra.*.warning=true");
     KoApplication app(WORDS_MIME_TYPE, QStringLiteral("calligrawords"), newWordsAboutData, argc, argv);
+    INFO_LOG("----Word start to run!-----");
     // Migrate data from kde4 to kf5 locations
     Calligra2Migration m("calligrawords", "words");
     QStringList qlist = QStringList() << QStringLiteral("wordsrc");
@@ -35,7 +36,6 @@
     qlist = QStringList() << QStringLiteral("words.rc") << QStringLiteral("words_readonly.rc");
     m.setUiFiles(QStringList() << QStringLiteral("words.rc") << QStringLiteral("words_readonly.rc"));
     m.migrate();
-
     if (!app.start())
     {
         return 1;

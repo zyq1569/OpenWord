@@ -103,3 +103,6 @@ SUBDIRS    +=   log/easylog.pro \
                 #stage/plugins/pageeffects/swapeffect/kpr_pageeffect_swapeffect.pro \
                 #stage/plugins/shapeanimations/example/kpr_shapeanimation_example.pro \
                 #filters/stage/powerpoint/ppttoodplib.pro \
+
+
+#ERROR_LOG(QString("Error reading file [ %1]\n Possible cause: %2 ").arg(filename).arg(status.text()))
