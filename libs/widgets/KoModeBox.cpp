@@ -93,25 +93,38 @@ static bool compareToolActions(const KoToolAction *b1, const KoToolAction *b2)
 {
     int b1Level;
     int b2Level;
-    if (b1->section().contains(KoModeBox::applicationName)) {
+    if (b1->section().contains(KoModeBox::applicationName))
+    {
         b1Level = 0;
-    } else if (b1->section().contains("main")) {
+    }
+    else if (b1->section().contains("main"))
+    {
         b1Level = 1;
-    } else {
+    }
+    else
+    {
         b1Level = 2;
     }
 
-    if (b2->section().contains(KoModeBox::applicationName)) {
+    if (b2->section().contains(KoModeBox::applicationName))
+    {
         b2Level = 0;
-    } else if (b2->section().contains("main")) {
+    }
+    else if (b2->section().contains("main"))
+    {
         b2Level = 1;
-    } else {
+    }
+    else
+    {
         b2Level = 2;
     }
 
-    if (b1Level == b2Level) {
+    if (b1Level == b2Level)
+    {
         return b1->priority() < b2->priority();
-    } else {
+    }
+    else
+    {
         return b1Level < b2Level;
     }
 }
@@ -134,9 +147,12 @@ KoModeBox::KoModeBox(KoCanvasControllerWidget *canvas, const QString &appName)
     d->tabBar = new QTabBar();
     setIconSize();
     d->tabBar->setExpanding(d->horizontalMode);
-    if (d->horizontalMode) {
+    if (d->horizontalMode)
+    {
         switchTabsSide(d->verticalTabsSide);
-    } else {
+    }
+    else
+    {
         switchTabsSide(d->horizontalTabsSide);
     }
     d->tabBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -145,7 +161,8 @@ KoModeBox::KoModeBox(KoCanvasControllerWidget *canvas, const QString &appName)
     d->layout->setContentsMargins(0,0,0,0);
     setLayout(d->layout);
 
-    foreach(KoToolAction *toolAction, KoToolManager::instance()->toolActionList()) {
+    foreach(KoToolAction *toolAction, KoToolManager::instance()->toolActionList())
+    {
         addToolAction(toolAction);
     }
 
@@ -168,7 +185,7 @@ KoModeBox::KoModeBox(KoCanvasControllerWidget *canvas, const QString &appName)
             this, SLOT(toolAdded(KoToolAction*,KoCanvasController*)));
 
     connect(canvas, SIGNAL(toolOptionWidgetsChanged(QList<QPointer<QWidget>>)),
-         this, SLOT(setOptionWidgets(QList<QPointer<QWidget>>)));
+            this, SLOT(setOptionWidgets(QList<QPointer<QWidget>>)));
 }
 
 KoModeBox::~KoModeBox()
@@ -184,7 +201,8 @@ void KoModeBox::addToolAction(KoToolAction *toolAction)
 void KoModeBox::locationChanged(Qt::DockWidgetArea area)
 {
     resize(0,0);
-    switch(area) {
+    switch(area)
+    {
         case Qt::TopDockWidgetArea:
         case Qt::BottomDockWidgetArea:
             d->horizontalMode = true;
@@ -209,19 +227,24 @@ void KoModeBox::locationChanged(Qt::DockWidgetArea area)
 
     setIconSize();
     d->tabBar->setExpanding(d->horizontalMode);
-    if (d->horizontalMode) {
+    if (d->horizontalMode)
+    {
         switchTabsSide(d->verticalTabsSide);
-    } else {
+    }
+    else
+    {
         switchTabsSide(d->horizontalTabsSide);
     }
 }
 
 void KoModeBox::setActiveTool(KoCanvasController *canvas, int id)
 {
-    if (canvas->canvas() == d->canvas) {
+    if (canvas->canvas() == d->canvas)
+    {
         // Clear the minimumSize instigated by the previous tool
         // The new minimumSize will be set in updateShownTools()
-        if (d->addedWidgets.contains(d->activeId)) {
+        if (d->addedWidgets.contains(d->activeId))
+        {
             ScrollArea *sa = qobject_cast<ScrollArea *>(d->addedWidgets[d->activeId]->parentWidget()->parentWidget());
             sa->setMinimumWidth(0);
             sa->setMinimumHeight(0);
@@ -230,8 +253,10 @@ void KoModeBox::setActiveTool(KoCanvasController *canvas, int id)
         d->activeId = id;
         d->tabBar->blockSignals(true);
         int i = 0;
-        foreach (KoToolAction *toolAction, d->addedToolActions) {
-            if (toolAction->buttonGroupId() == d->activeId) {
+        foreach (KoToolAction *toolAction, d->addedToolActions)
+        {
+            if (toolAction->buttonGroupId() == d->activeId)
+            {
                 d->tabBar->setCurrentIndex(i);
                 d->stack->setCurrentIndex(i);
                 break;
@@ -256,10 +281,13 @@ QIcon KoModeBox::createTextIcon(KoToolAction *toolAction) const
     QImage pm(iconSize, QImage::Format_ARGB32_Premultiplied);
     pm.fill(Qt::transparent);
     QPainter p(&pm);
-    if (d->horizontalTabsSide == LeftSide ) {
+    if (d->horizontalTabsSide == LeftSide )
+    {
         p.rotate(90);
         p.translate(0,-iconSize.width());
-    } else {
+    }
+    else
+    {
         p.rotate(-90);
         p.translate(-iconSize.height(),0);
     }
@@ -272,10 +300,13 @@ QIcon KoModeBox::createTextIcon(KoToolAction *toolAction) const
     textLayout.setTextOption(option);
     textLayout.beginLayout();
     qreal height = 0;
-    while (1) {
+    while (1)
+    {
         QTextLine line = textLayout.createLine();
         if (!line.isValid())
+        {
             break;
+        }
 
         line.setLineWidth(iconSize.height());
         line.setPosition(QPointF(0, height));
@@ -283,11 +314,14 @@ QIcon KoModeBox::createTextIcon(KoToolAction *toolAction) const
     }
     textLayout.endLayout();
 
-    if (textLayout.lineCount() > 2) {
+    if (textLayout.lineCount() > 2)
+    {
         iconSize.setHeight(iconSize.height() + 8);
         d->tabBar->setIconSize(iconSize);
         d->iconTextFitted = false;
-    } else if (height > iconSize.width() - 22) {
+    }
+    else if (height > iconSize.width() - 22)
+    {
         iconSize.setWidth(22 + height);
         d->tabBar->setIconSize(iconSize);
         d->iconTextFitted = false;
@@ -310,11 +344,15 @@ QIcon KoModeBox::createSimpleIcon(KoToolAction *toolAction) const
     QImage pm(iconSize, QImage::Format_ARGB32_Premultiplied);
     pm.fill(Qt::transparent);
     QPainter p(&pm);
-    if (!d->horizontalMode) {
-        if (d->horizontalTabsSide == LeftSide ) {
+    if (!d->horizontalMode)
+    {
+        if (d->horizontalTabsSide == LeftSide )
+        {
             p.rotate(90);
             p.translate(0,-iconSize.width());
-        } else {
+        }
+        else
+        {
             p.rotate(-90);
             p.translate(-iconSize.height(),0);
         }
@@ -333,9 +371,12 @@ void KoModeBox::addItem(KoToolAction *toolAction)
     // We need to create a new widget in all cases as QToolBox seems to crash if we reuse
     // a widget (even though the item had been removed)
     QLayout *layout;
-    if (!oldwidget) {
+    if (!oldwidget)
+    {
         layout = new QGridLayout();
-    } else {
+    }
+    else
+    {
         layout = oldwidget->layout();
     }
     widget = new QWidget();
@@ -345,22 +386,31 @@ void KoModeBox::addItem(KoToolAction *toolAction)
     d->addedWidgets[toolAction->buttonGroupId()] = widget;
 
     // Create a rotated icon with text
-    if (d->iconMode == IconAndText) {
-        if (d->horizontalMode) {
+    if (d->iconMode == IconAndText)
+    {
+        if (d->horizontalMode)
+        {
             d->tabBar->addTab(QIcon::fromTheme(toolAction->iconName()), toolAction->iconText());
-        } else {
+        }
+        else
+        {
             d->tabBar->addTab(createTextIcon(toolAction), QString());
         }
-    } else {
+    }
+    else
+    {
         int index = d->tabBar->addTab(createSimpleIcon(toolAction), QString());
         d->tabBar->setTabToolTip(index, toolAction->toolTip());
     }
     d->tabBar->blockSignals(false);
     ScrollArea *sa = new ScrollArea();
-    if (d->horizontalMode) {
+    if (d->horizontalMode)
+    {
         sa->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         sa->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    } else {
+    }
+    else
+    {
         sa->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         sa->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     }
@@ -375,14 +425,16 @@ void KoModeBox::addItem(KoToolAction *toolAction)
 
 void KoModeBox::updateShownTools(const QList<QString> &codes)
 {
-    if (d->iconTextFitted) {
+    if (d->iconTextFitted)
+    {
         d->fittingIterations = 0;
     }
     d->iconTextFitted = true;
 
     d->tabBar->blockSignals(true);
 
-    while (d->tabBar->count()) {
+    while (d->tabBar->count())
+    {
         d->tabBar->removeTab(0);
         d->stack->removeWidget(d->stack->widget(0));
     }
@@ -390,45 +442,60 @@ void KoModeBox::updateShownTools(const QList<QString> &codes)
     d->addedToolActions.clear();
 
     int newIndex = -1;
-    foreach (KoToolAction *toolAction, d->toolActions) {
+    foreach (KoToolAction *toolAction, d->toolActions)
+    {
         const QString toolCodes = toolAction->visibilityCode();
-        if (toolAction->buttonGroupId() == d->activeId) {
+        if (toolAction->buttonGroupId() == d->activeId)
+        {
             newIndex = d->addedToolActions.length();
         }
-        if (toolAction->section().contains(applicationName)) {
+        if (toolAction->section().contains(applicationName))
+        {
             addItem(toolAction);
             continue;
-        } else if (!toolAction->section().contains("dynamic")
-            && !toolAction->section().contains("main")) {
+        }
+        else if (!toolAction->section().contains("dynamic")
+                 && !toolAction->section().contains("main"))
+        {
             continue;
         }
-        if (toolCodes.startsWith(QLatin1String("flake/"))) {
+        if (toolCodes.startsWith(QLatin1String("flake/")))
+        {
             addItem(toolAction);
             continue;
         }
 
-        if (toolCodes.endsWith( QLatin1String( "/always"))) {
+        if (toolCodes.endsWith( QLatin1String( "/always")))
+        {
             addItem(toolAction);
             continue;
-        } else if (toolCodes.isEmpty() && codes.count() != 0) {
+        }
+        else if (toolCodes.isEmpty() && codes.count() != 0)
+        {
             addItem(toolAction);
             continue;
-        } else {
-           foreach (const QString &shapeCode, codes) {
-                if (toolCodes.contains(shapeCode)) {
+        }
+        else
+        {
+            foreach (const QString &shapeCode, codes)
+            {
+                if (toolCodes.contains(shapeCode))
+                {
                     addItem(toolAction);
                     break;
                 }
-           }
+            }
         }
     }
-    if (newIndex != -1) {
+    if (newIndex != -1)
+    {
         d->tabBar->setCurrentIndex(newIndex);
         d->stack->setCurrentIndex(newIndex);
     }
     d->tabBar->blockSignals(false);
 
-    if (!d->iconTextFitted &&  d->fittingIterations++ < 8) {
+    if (!d->iconTextFitted &&  d->fittingIterations++ < 8)
+    {
         updateShownTools(codes);
     }
     d->iconTextFitted = true;
@@ -436,7 +503,10 @@ void KoModeBox::updateShownTools(const QList<QString> &codes)
 
 void KoModeBox::setOptionWidgets(const QList<QPointer<QWidget> > &optionWidgetList)
 {
-    if (! d->addedWidgets.contains(d->activeId)) return;
+    if (! d->addedWidgets.contains(d->activeId))
+    {
+        return;
+    }
 
     // For some reason we need to set some attr on our placeholder widget here
     // eventhough these settings should be default
@@ -459,21 +529,25 @@ void KoModeBox::setOptionWidgets(const QList<QPointer<QWidget> > &optionWidgetLi
     layout->setRowStretch(1, 0);
     layout->setRowStretch(2, 0);
 
-    if (d->horizontalMode) {
+    if (d->horizontalMode)
+    {
         layout->setRowStretch(0, 1);
         layout->setRowStretch(1, 2);
         layout->setRowStretch(2, 1);
         layout->setHorizontalSpacing(2);
         layout->setVerticalSpacing(0);
-        foreach(QWidget *widget, optionWidgetList) {
-            if (!widget->windowTitle().isEmpty()) {
+        foreach(QWidget *widget, optionWidgetList)
+        {
+            if (!widget->windowTitle().isEmpty())
+            {
                 QLabel *l;
                 layout->addWidget(l = new QLabel(widget->windowTitle()), 0, cnt, 1, 1, Qt::AlignLeft);
                 d->currentAuxWidgets.insert(l);
             }
             layout->addWidget(widget, 1, cnt++, 2, 1);
             widget->show();
-            if (widget != optionWidgetList.last()) {
+            if (widget != optionWidgetList.last())
+            {
                 QFrame *s;
                 layout->addWidget(s = new QFrame(), 1, cnt, 1, 1, Qt::AlignHCenter);
                 layout->setColumnMinimumWidth(cnt++, 16);
@@ -483,31 +557,39 @@ void KoModeBox::setOptionWidgets(const QList<QPointer<QWidget> > &optionWidgetLi
             }
             layout->setColumnStretch(cnt, 100);
         }
-    } else {
+    }
+    else
+    {
         layout->setColumnStretch(0, 1);
         layout->setColumnStretch(1, 2);
         layout->setColumnStretch(2, 1);
         layout->setHorizontalSpacing(0);
         layout->setVerticalSpacing(2);
         int specialCount = 0;
-        foreach(QWidget *widget, optionWidgetList) {
-            if (!widget->windowTitle().isEmpty()) {
+        foreach(QWidget *widget, optionWidgetList)
+        {
+            if (!widget->windowTitle().isEmpty())
+            {
                 QLabel *l;
                 layout->addWidget(l = new QLabel(widget->windowTitle()), cnt++, 0, 1, 3, Qt::AlignHCenter);
                 d->currentAuxWidgets.insert(l);
             }
             layout->addWidget(widget, cnt++, 0, 1, 3);
             QLayout *subLayout = widget->layout();
-            if (subLayout) {
-                for (int i = 0; i < subLayout->count(); ++i) {
+            if (subLayout)
+            {
+                for (int i = 0; i < subLayout->count(); ++i)
+                {
                     QWidget *spacerWidget = subLayout->itemAt(i)->widget();
-                    if (spacerWidget && spacerWidget->objectName().contains("SpecialSpacer")) {
+                    if (spacerWidget && spacerWidget->objectName().contains("SpecialSpacer"))
+                    {
                         specialCount++;
                     }
                 }
             }
             widget->show();
-            if (widget != optionWidgetList.last()) {
+            if (widget != optionWidgetList.last())
+            {
                 QFrame *s;
                 layout->addWidget(s = new QFrame(), cnt, 1, 1, 1);
                 layout->setRowMinimumHeight(cnt++, 16);
@@ -515,7 +597,8 @@ void KoModeBox::setOptionWidgets(const QList<QPointer<QWidget> > &optionWidgetLi
                 d->currentAuxWidgets.insert(s);
             }
         }
-        if (specialCount == optionWidgetList.count()) {
+        if (specialCount == optionWidgetList.count())
+        {
             layout->setRowStretch(cnt, 100);
         }
     }
@@ -524,9 +607,12 @@ void KoModeBox::setOptionWidgets(const QList<QPointer<QWidget> > &optionWidgetLi
 void ScrollArea::showEvent(QShowEvent *e)
 {
     QScrollArea::showEvent(e);
-    if (horizontalScrollBarPolicy() == Qt::ScrollBarAlwaysOff) {
+    if (horizontalScrollBarPolicy() == Qt::ScrollBarAlwaysOff)
+    {
         setMinimumWidth(widget()->minimumSizeHint().width() + (verticalScrollBar()->isVisible() ? verticalScrollBar()->width() : 0));
-    } else {
+    }
+    else
+    {
         setMinimumHeight(widget()->minimumSizeHint().height() + (horizontalScrollBar()->isVisible() ? horizontalScrollBar()->height() : 0));
     }
 }
@@ -542,10 +628,11 @@ void KoModeBox::setCanvas(KoCanvasBase *canvas)
 {
     KoCanvasControllerWidget *ccwidget;
 
-    if (d->canvas) {
+    if (d->canvas)
+    {
         ccwidget = dynamic_cast<KoCanvasControllerWidget *>(d->canvas->canvasController());
         disconnect(ccwidget, SIGNAL(toolOptionWidgetsChanged(QList<QPointer<QWidget>>)),
-                    this, SLOT(setOptionWidgets(QList<QPointer<QWidget>>)));
+                   this, SLOT(setOptionWidgets(QList<QPointer<QWidget>>)));
     }
 
     d->canvas = canvas;
@@ -553,7 +640,7 @@ void KoModeBox::setCanvas(KoCanvasBase *canvas)
     ccwidget = dynamic_cast<KoCanvasControllerWidget *>(d->canvas->canvasController());
     connect(
         ccwidget, SIGNAL(toolOptionWidgetsChanged(QList<QPointer<QWidget>>)),
-         this, SLOT(setOptionWidgets(QList<QPointer<QWidget>>)));
+        this, SLOT(setOptionWidgets(QList<QPointer<QWidget>>)));
 }
 
 void KoModeBox::unsetCanvas()
@@ -563,7 +650,8 @@ void KoModeBox::unsetCanvas()
 
 void KoModeBox::toolAdded(KoToolAction *toolAction, KoCanvasController *canvas)
 {
-    if (canvas->canvas() == d->canvas) {
+    if (canvas->canvas() == d->canvas)
+    {
         addToolAction(toolAction);
 
         std::stable_sort(d->toolActions.begin(), d->toolActions.end(), compareToolActions);
@@ -574,7 +662,8 @@ void KoModeBox::toolAdded(KoToolAction *toolAction, KoCanvasController *canvas)
 
 void KoModeBox::toolSelected(int index)
 {
-    if (index != -1) {
+    if (index != -1)
+    {
         d->addedToolActions.at(index)->trigger();
     }
 }
@@ -592,11 +681,14 @@ void KoModeBox::slotContextMenuRequested(const QPoint &pos)
     KSelectAction* buttonPositionAction = new KSelectAction(/*i18n*/("Tabs side"), &menu);
     connect(buttonPositionAction, SIGNAL(triggered(int)), SLOT(switchTabsSide(int)));
     menu.addAction(buttonPositionAction);
-    if (d->horizontalMode) {
+    if (d->horizontalMode)
+    {
         buttonPositionAction->addAction(/*i18n*/("Top side"));
         buttonPositionAction->addAction(/*i18n*/("Bottom side"));
         buttonPositionAction->setCurrentItem(d->verticalTabsSide);
-    } else {
+    }
+    else
+    {
         buttonPositionAction->addAction(/*i18n*/("Left side"));
         buttonPositionAction->addAction(/*i18n*/("Right side"));
         buttonPositionAction->setCurrentItem(d->horizontalTabsSide);
@@ -618,13 +710,17 @@ void KoModeBox::switchIconMode(int mode)
 
 void KoModeBox::switchTabsSide(int side)
 {
-    if (d->horizontalMode) {
+    if (d->horizontalMode)
+    {
         d->verticalTabsSide = static_cast<VerticalTabsSide>(side);
-        if (d->verticalTabsSide == TopSide) {
+        if (d->verticalTabsSide == TopSide)
+        {
             d->layout->removeWidget(d->tabBar);
             d->tabBar->setShape(QTabBar::RoundedNorth);
             d->layout->addWidget(d->tabBar, 0, 0);
-        } else {
+        }
+        else
+        {
             d->layout->removeWidget(d->tabBar);
             d->tabBar->setShape(QTabBar::RoundedSouth);
             d->layout->addWidget(d->tabBar, 2, 0);
@@ -632,13 +728,18 @@ void KoModeBox::switchTabsSide(int side)
 
         KConfigGroup cfg =  KSharedConfig::openConfig()->group("calligra");
         cfg.writeEntry("ModeBoxVerticalTabsSide", (int)d->verticalTabsSide);
-    } else {
+    }
+    else
+    {
         d->horizontalTabsSide = static_cast<HorizontalTabsSide>(side);
-        if (d->horizontalTabsSide == LeftSide) {
+        if (d->horizontalTabsSide == LeftSide)
+        {
             d->layout->removeWidget(d->tabBar);
             d->tabBar->setShape(QTabBar::RoundedWest);
             d->layout->addWidget(d->tabBar, 0, 0);
-        } else {
+        }
+        else
+        {
             d->layout->removeWidget(d->tabBar);
             d->tabBar->setShape(QTabBar::RoundedEast);
             d->layout->addWidget(d->tabBar, 0, 2);
@@ -650,10 +751,14 @@ void KoModeBox::switchTabsSide(int side)
     updateShownTools(QList<QString>());
 }
 
-void KoModeBox::setIconSize() const {
-    if (!d->horizontalMode && d->iconMode == IconAndText) {
+void KoModeBox::setIconSize() const
+{
+    if (!d->horizontalMode && d->iconMode == IconAndText)
+    {
         d->tabBar->setIconSize(QSize(32,64));
-    } else {
+    }
+    else
+    {
         d->tabBar->setIconSize(QSize(22,22));
     }
 }
