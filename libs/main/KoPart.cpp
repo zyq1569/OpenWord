@@ -83,8 +83,8 @@ public:
 
 
 KoPart::KoPart(const KoComponentData &componentData, QObject *parent)
-        : QObject(parent)
-        , d(new Private(componentData, this))
+    : QObject(parent)
+    , d(new Private(componentData, this))
 {
 #ifndef QT_NO_DBUS
     new KoPartAdaptor(this);
@@ -96,11 +96,13 @@ KoPart::~KoPart()
 {
     // Tell our views that the document is already destroyed and
     // that they shouldn't try to access it.
-    foreach(KoView *view, views()) {
+    foreach(KoView *view, views())
+    {
         view->setDocumentDeleted();
     }
 
-    while (!d->mainWindows.isEmpty()) {
+    while (!d->mainWindows.isEmpty())
+    {
         delete d->mainWindows.takeFirst();
     }
 
@@ -130,7 +132,8 @@ KoView *KoPart::createView(KoDocument *document, QWidget *parent)
 {
     KoView *view = createViewInstance(document, parent);
     addView(view, document);
-    if (!d->documents.contains(document)) {
+    if (!d->documents.contains(document))
+    {
         d->documents.append(document);
     }
     return view;
@@ -139,20 +142,26 @@ KoView *KoPart::createView(KoDocument *document, QWidget *parent)
 void KoPart::addView(KoView *view, KoDocument *document)
 {
     if (!view)
+    {
         return;
+    }
 
-    if (!d->views.contains(view)) {
+    if (!d->views.contains(view))
+    {
         d->views.append(view);
     }
-    if (!d->documents.contains(document)) {
+    if (!d->documents.contains(document))
+    {
         d->documents.append(document);
     }
 
     view->updateReadWrite(document->isReadWrite());
 
-    if (d->views.size() == 1) {
+    if (d->views.size() == 1)
+    {
         KoApplication *app = qobject_cast<KoApplication*>(qApp);
-        if (0 != app) {
+        if (0 != app)
+        {
             emit app->documentOpened('/'+objectName());
         }
     }
@@ -162,9 +171,11 @@ void KoPart::removeView(KoView *view)
 {
     d->views.removeAll(view);
 
-    if (d->views.isEmpty()) {
+    if (d->views.isEmpty())
+    {
         KoApplication *app = qobject_cast<KoApplication*>(qApp);
-        if (0 != app) {
+        if (0 != app)
+        {
             emit app->documentClosed('/'+objectName());
         }
     }
@@ -182,7 +193,8 @@ int KoPart::viewCount() const
 
 QGraphicsItem *KoPart::canvasItem(KoDocument *document, bool create)
 {
-    if (create && !d->proxyWidget) {
+    if (create && !d->proxyWidget)
+    {
         return createCanvasItem(document);
     }
     return d->proxyWidget;
@@ -199,7 +211,8 @@ QGraphicsItem *KoPart::createCanvasItem(KoDocument *document)
 
 void KoPart::addMainWindow(KoMainWindow *mainWindow)
 {
-    if (d->mainWindows.indexOf(mainWindow) == -1) {
+    if (d->mainWindows.indexOf(mainWindow) == -1)
+    {
         debugMain <<"mainWindow" << (void*)mainWindow <<"added to doc" << this;
         d->mainWindows.append(mainWindow);
     }
@@ -208,7 +221,8 @@ void KoPart::addMainWindow(KoMainWindow *mainWindow)
 void KoPart::removeMainWindow(KoMainWindow *mainWindow)
 {
     debugMain <<"mainWindow" << (void*)mainWindow <<"removed from doc" << this;
-    if (mainWindow) {
+    if (mainWindow)
+    {
         d->mainWindows.removeAll(mainWindow);
     }
 }
@@ -228,12 +242,14 @@ KoMainWindow *KoPart::currentMainwindow() const
 {
     QWidget *widget = qApp->activeWindow();
     KoMainWindow *mainWindow = qobject_cast<KoMainWindow*>(widget);
-    while (!mainWindow && widget) {
+    while (!mainWindow && widget)
+    {
         widget = widget->parentWidget();
         mainWindow = qobject_cast<KoMainWindow*>(widget);
     }
 
-    if (!mainWindow && mainWindows().size() > 0) {
+    if (!mainWindow && mainWindows().size() > 0)
+    {
         mainWindow = mainWindows().first();
     }
     return mainWindow;
@@ -255,7 +271,8 @@ void KoPart::openTemplate(const QUrl &url)
     d->document->setModified(false);
     d->document->undoStack()->clear();
 
-    if (ok) {
+    if (ok)
+    {
         QString mimeType = QMimeDatabase().mimeTypeForUrl(url).name();
         // in case this is a open document template remove the -template from the end
         mimeType.remove( QRegExp( "-template$" ) );
@@ -263,7 +280,9 @@ void KoPart::openTemplate(const QUrl &url)
         deleteOpenPane();
         d->document->resetURL();
         d->document->setEmpty();
-    } else {
+    }
+    else
+    {
         d->document->showLoadingErrorDialog();
         d->document->initEmpty();
     }
@@ -273,7 +292,8 @@ void KoPart::openTemplate(const QUrl &url)
 void KoPart::addRecentURLToAllMainWindows(const QUrl &url)
 {
     // Add to recent actions list in our mainWindows
-    foreach(KoMainWindow *mainWindow, d->mainWindows) {
+    foreach(KoMainWindow *mainWindow, d->mainWindows)
+    {
         mainWindow->addRecentURL(url);
     }
 
@@ -283,29 +303,39 @@ void KoPart::showStartUpWidget(KoMainWindow *mainWindow, bool alwaysShow)
 {
 #ifndef NDEBUG
     if (d->templatesResourcePath.isEmpty())
+    {
         debugMain << "showStartUpWidget called, but setTemplatesResourcePath() never called. This will not show a lot";
+    }
 #endif
-    if (!alwaysShow) {
+    if (!alwaysShow)
+    {
         KConfigGroup cfgGrp(componentData().config(), "TemplateChooserDialog");
         QString fullTemplateName = cfgGrp.readPathEntry("AlwaysUseTemplate", QString());
-        if (!fullTemplateName.isEmpty()) {
+        if (!fullTemplateName.isEmpty())
+        {
             QFileInfo fi(fullTemplateName);
-            if (!fi.exists()) {
+            if (!fi.exists())
+            {
                 const QString templatesResourcePath = this->templatesResourcePath();
                 QString desktopfile = KoResourcePaths::findResource("data", templatesResourcePath + "*/" + fullTemplateName);
-                if (desktopfile.isEmpty()) {
+                if (desktopfile.isEmpty())
+                {
                     desktopfile = KoResourcePaths::findResource("data", templatesResourcePath + fullTemplateName);
                 }
-                if (desktopfile.isEmpty()) {
+                if (desktopfile.isEmpty())
+                {
                     fullTemplateName.clear();
-                } else {
+                }
+                else
+                {
                     QUrl templateURL;
                     KDesktopFile f(desktopfile);
                     templateURL.setPath(QFileInfo(desktopfile).absolutePath() + '/' + f.readUrl());
                     fullTemplateName = templateURL.toLocalFile();
                 }
             }
-            if (!fullTemplateName.isEmpty()) {
+            if (!fullTemplateName.isEmpty())
+            {
                 openTemplate(QUrl::fromUserInput(fullTemplateName));
                 mainWindows().first()->setRootDocument(d->document, this);
                 return;
@@ -315,9 +345,12 @@ void KoPart::showStartUpWidget(KoMainWindow *mainWindow, bool alwaysShow)
 
     mainWindow->factory()->container("mainToolBar", mainWindow)->hide();
 
-    if (d->startUpWidget) {
+    if (d->startUpWidget)
+    {
         d->startUpWidget->show();
-    } else {
+    }
+    else
+    {
         d->startUpWidget = createOpenPane(mainWindow, d->templatesResourcePath);
         mainWindow->setCentralWidget(d->startUpWidget);
     }
@@ -327,14 +360,16 @@ void KoPart::showStartUpWidget(KoMainWindow *mainWindow, bool alwaysShow)
 
 void KoPart::deleteOpenPane(bool closing)
 {
-    if (d->startUpWidget) {
+    if (d->startUpWidget)
+    {
         d->startUpWidget->hide();
         d->startUpWidget->deleteLater();
 
-        if(!closing) {
+        if(!closing)
+        {
             mainWindows().first()->setRootDocument(d->document, this);
             KoPart::mainWindows().first()->factory()->container("mainToolBar",
-                                                                  mainWindows().first())->show();
+                    mainWindows().first())->show();
         }
     }
 }
@@ -369,7 +404,8 @@ KoOpenPane *KoPart::createOpenPane(QWidget *parent, const QString& templatesReso
 
     KoOpenPane *openPane = new KoOpenPane(parent, mimeFilter, templatesResourcePath);
     QList<CustomDocumentWidgetItem> widgetList = createCustomDocumentWidgets(openPane);
-    foreach(const CustomDocumentWidgetItem & item, widgetList) {
+    foreach(const CustomDocumentWidgetItem & item, widgetList)
+    {
         openPane->addCustomDocumentWidget(item.widget, item.title, item.icon);
         connect(item.widget, SIGNAL(documentSelected()), this, SLOT(startCustomDocument()));
     }

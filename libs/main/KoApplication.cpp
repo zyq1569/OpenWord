@@ -162,6 +162,7 @@ KoApplication::KoApplication(const QByteArray &nativeMimeType,
     KoApplication::KoApp = this;
 
     d->nativeMimeType = nativeMimeType;
+    DEBUG_LOG("Tell the iconloader about share/apps/calligra/icons : KIconLoader::global()->addAppDir(\"calligra\")");
     // Tell the iconloader about share/apps/calligra/icons
     KIconLoader::global()->addAppDir("calligra");
 
