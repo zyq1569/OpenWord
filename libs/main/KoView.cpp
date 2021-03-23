@@ -66,7 +66,9 @@
 QString KoView::newObjectName()
 {
     static int s_viewIFNumber = 0;
-    QString name; name.setNum(s_viewIFNumber++); name.prepend("view_");
+    QString name;
+    name.setNum(s_viewIFNumber++);
+    name.prepend("view_");
     return name;
 }
 
@@ -74,12 +76,14 @@ QString KoView::newObjectName()
 class KoViewPrivate
 {
 public:
-    KoViewPrivate() {
+    KoViewPrivate()
+    {
         tempActiveWidget = 0;
         documentDeleted = false;
         actionAuthor = 0;
     }
-    ~KoViewPrivate() {
+    ~KoViewPrivate()
+    {
     }
 
     QPointer<KoDocument> document; // our KoDocument
@@ -107,34 +111,47 @@ public:
               m_connected(false),
               m_hidden(false) {}
 
-        bool operator==(const StatusBarItem& rhs) {
+        bool operator==(const StatusBarItem& rhs)
+        {
             return m_widget == rhs.m_widget;
         }
 
-        bool operator!=(const StatusBarItem& rhs) {
+        bool operator!=(const StatusBarItem& rhs)
+        {
             return m_widget != rhs.m_widget;
         }
 
-        QWidget * widget() const {
+        QWidget * widget() const
+        {
             return m_widget;
         }
 
-        void ensureItemShown(QStatusBar * sb) {
+        void ensureItemShown(QStatusBar * sb)
+        {
             Q_ASSERT(m_widget);
-            if (!m_connected) {
+            if (!m_connected)
+            {
                 if (m_permanent)
+                {
                     sb->addPermanentWidget(m_widget, m_stretch);
+                }
                 else
+                {
                     sb->addWidget(m_widget, m_stretch);
+                }
 
                 if(!m_hidden)
+                {
                     m_widget->show();
+                }
 
                 m_connected = true;
             }
         }
-        void ensureItemHidden(QStatusBar * sb) {
-            if (m_connected) {
+        void ensureItemHidden(QStatusBar * sb)
+        {
+            if (m_connected)
+            {
                 m_hidden = m_widget->isHidden();
                 sb->removeWidget(m_widget);
                 m_widget->hide();
@@ -155,8 +172,8 @@ public:
 };
 
 KoView::KoView(KoPart *part, KoDocument *document, QWidget *parent)
-        : QWidget(parent)
-        , d(new KoViewPrivate)
+    : QWidget(parent)
+    , d(new KoViewPrivate)
 {
     Q_ASSERT(document);
     Q_ASSERT(part);
@@ -176,7 +193,8 @@ KoView::KoView(KoPart *part, KoDocument *document, QWidget *parent)
     setupGlobalActions();
 
     QStatusBar * sb = statusBar();
-    if (sb) { // No statusbar in e.g. konqueror
+    if (sb)   // No statusbar in e.g. konqueror
+    {
         connect(d->document, SIGNAL(statusBarMessage(QString)),
                 this, SLOT(slotActionStatusText(QString)));
         connect(d->document, SIGNAL(clearStatusBarMessage()),
@@ -184,10 +202,13 @@ KoView::KoView(KoPart *part, KoDocument *document, QWidget *parent)
     }
 
     // add all plugins.
-    foreach(const QString & docker, KoDockRegistry::instance()->keys()) {
+    foreach(const QString & docker, KoDockRegistry::instance()->keys())
+    {
         KoDockFactoryBase *factory = KoDockRegistry::instance()->value(docker);
         if (mainWindow())
+        {
             mainWindow()->createDockWidget(factory);
+        }
     }
 
     actionCollection()->addAssociatedWidget(this);
@@ -197,15 +218,18 @@ KoView::KoView(KoPart *part, KoDocument *document, QWidget *parent)
      *          only. All actions added later will have the default
      *          context, which is Qt::WindowShortcut!
      */
-    foreach(QAction* action, actionCollection()->actions()) {
+    foreach(QAction* action, actionCollection()->actions())
+    {
         action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
     }
 }
 
 KoView::~KoView()
 {
-    if (!d->documentDeleted) {
-        if (d->document) {
+    if (!d->documentDeleted)
+    {
+        if (d->document)
+        {
             d->part->removeView(this);
         }
     }
@@ -216,9 +240,12 @@ KoView::~KoView()
 void KoView::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasImage()
-            || event->mimeData()->hasUrls()) {
+            || event->mimeData()->hasUrls())
+    {
         event->accept();
-    } else {
+    }
+    else
+    {
         event->ignore();
     }
 }
@@ -228,39 +255,50 @@ void KoView::dropEvent(QDropEvent *event)
     // we can drop a list of urls from, for instance dolphin
     QVector<QImage> images;
 
-    if (event->mimeData()->hasImage()) {
+    if (event->mimeData()->hasImage())
+    {
         QImage image = event->mimeData()->imageData().value<QImage>();
-        if (!image.isNull()) {
+        if (!image.isNull())
+        {
             // apparently hasImage() && imageData().value<QImage>().isNull()
             // can hold sometimes (Qt bug?).
             images << image;
         }
     }
-    else if (event->mimeData()->hasUrls()) {
+    else if (event->mimeData()->hasUrls())
+    {
         QList<QUrl> urls = event->mimeData()->urls();
-        foreach (const QUrl &url, urls) {
+        foreach (const QUrl &url, urls)
+        {
             QImage image;
             QUrl kurl(url);
             // make sure we download the files before inserting them
-            if (!kurl.isLocalFile()) {
+            if (!kurl.isLocalFile())
+            {
                 QString tmpFile;
-                if( KIO::NetAccess::download(kurl, tmpFile, this)) {
+                if( KIO::NetAccess::download(kurl, tmpFile, this))
+                {
                     image.load(tmpFile);
                     KIO::NetAccess::removeTempFile(tmpFile);
-                } else {
+                }
+                else
+                {
                     KMessageBox::error(this, KIO::NetAccess::lastErrorString());
                 }
             }
-            else {
+            else
+            {
                 image.load(kurl.toLocalFile());
             }
-            if (!image.isNull()) {
+            if (!image.isNull())
+            {
                 images << image;
             }
         }
     }
 
-    if (!images.isEmpty()) {
+    if (!images.isEmpty())
+    {
         addImages(images, event->pos());
     }
 }
@@ -285,7 +323,8 @@ void KoView::addStatusBarItem(QWidget * widget, int stretch, bool permanent)
 {
     KoViewPrivate::StatusBarItem item(widget, stretch, permanent);
     QStatusBar * sb = statusBar();
-    if (sb) {
+    if (sb)
+    {
         item.ensureItemShown(sb);
     }
     d->statusBarItems.append(item);
@@ -296,10 +335,13 @@ void KoView::removeStatusBarItem(QWidget *widget)
     QStatusBar *sb = statusBar();
 
     int itemCount = d->statusBarItems.count();
-    for (int i = itemCount-1; i >= 0; --i) {
+    for (int i = itemCount-1; i >= 0; --i)
+    {
         KoViewPrivate::StatusBarItem &sbItem = d->statusBarItems[i];
-        if (sbItem.widget() == widget) {
-            if (sb) {
+        if (sbItem.widget() == widget)
+        {
+            if (sb)
+            {
                 sbItem.ensureItemHidden(sb);
             }
             d->statusBarItems.removeOne(sbItem);
@@ -350,11 +392,16 @@ void KoView::setupGlobalActions()
 void KoView::changeAuthorProfile(const QString &profileName)
 {
     KConfigGroup appAuthorGroup( KSharedConfig::openConfig(), "Author");
-    if (profileName.isEmpty()) {
+    if (profileName.isEmpty())
+    {
         appAuthorGroup.writeEntry("active-profile", "");
-    } else if (profileName == i18nc("choice for author profile", "Anonymous")) {
+    }
+    else if (profileName == i18nc("choice for author profile", "Anonymous"))
+    {
         appAuthorGroup.writeEntry("active-profile", "anonymous");
-    } else {
+    }
+    else
+    {
         appAuthorGroup.writeEntry("active-profile", profileName);
     }
     appAuthorGroup.sync();
@@ -368,10 +415,12 @@ KoMainWindow * KoView::mainWindow() const
     // in that case.
     KoMainWindow* mw = dynamic_cast<KoMainWindow *>(window());
     QWidget* parent = parentWidget();
-    while (!mw) {
+    while (!mw)
+    {
         mw = dynamic_cast<KoMainWindow*>(parent);
         parent = parent->parentWidget();
-        if (!parent) {
+        if (!parent)
+        {
             break;
         }
     }
@@ -388,20 +437,25 @@ void KoView::slotActionStatusText(const QString &text)
 {
     QStatusBar *sb = statusBar();
     if (sb)
+    {
         sb->showMessage(text);
+    }
 }
 
 void KoView::slotClearStatusText()
 {
     QStatusBar *sb = statusBar();
     if (sb)
+    {
         sb->clearMessage();
+    }
 }
 
 void KoView::slotUpdateAuthorProfileActions()
 {
     Q_ASSERT(d->actionAuthor);
-    if (!d->actionAuthor) {
+    if (!d->actionAuthor)
+    {
         return;
     }
     d->actionAuthor->clear();
@@ -410,17 +464,23 @@ void KoView::slotUpdateAuthorProfileActions()
 
     KConfigGroup authorGroup(KoGlobal::calligraConfig(), "Author");
     QStringList profiles = authorGroup.readEntry("profile-names", QStringList());
-    foreach (const QString &profile , profiles) {
+    foreach (const QString &profile, profiles)
+    {
         d->actionAuthor->addAction(profile);
     }
 
     KConfigGroup appAuthorGroup( KSharedConfig::openConfig(), "Author");
     QString profileName = appAuthorGroup.readEntry("active-profile", "");
-    if (profileName == "anonymous") {
+    if (profileName == "anonymous")
+    {
         d->actionAuthor->setCurrentItem(1);
-    } else if (profiles.contains(profileName)) {
+    }
+    else if (profiles.contains(profileName))
+    {
         d->actionAuthor->setCurrentAction(profileName);
-    } else {
+    }
+    else
+    {
         d->actionAuthor->setCurrentItem(0);
     }
 }

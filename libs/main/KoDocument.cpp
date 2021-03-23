@@ -2565,7 +2565,8 @@ static const struct
 {
     const char *localName;
     const char *documentType;
-} TN2DTArray[] =
+}
+TN2DTArray[] =
 {
     { "text", I18N_NOOP("a word processing") },
     { "spreadsheet", I18N_NOOP("a spreadsheet") },

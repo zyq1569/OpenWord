@@ -618,7 +618,8 @@ void KoMainWindow::updateReloadFileAction(KoDocument *doc)
 void KoMainWindow::updateVersionsFileAction(KoDocument *doc)
 {
     //TODO activate it just when we save it in oasis file format
-    d->showFileVersions->setEnabled(doc && !doc->url().isEmpty() && (doc->outputMimeType() == doc->nativeOasisMimeType() || doc->outputMimeType() == doc->nativeOasisMimeType() + "-template"));
+    d->showFileVersions->setEnabled(doc && !doc->url().isEmpty() && (doc->outputMimeType() == doc->nativeOasisMimeType()
+                                    || doc->outputMimeType() == doc->nativeOasisMimeType() + "-template"));
 }
 
 void KoMainWindow::setReadWrite(bool readwrite)
@@ -1018,9 +1019,11 @@ bool KoMainWindow::saveDocument(bool saveas, bool silent, int specialOutputFlag)
         mimeFilter = mime.globPatterns();
     }
     else
+    {
         mimeFilter = KoFilterManager::mimeFilter(_native_format,
                      KoFilterManager::Export,
                      d->rootDocument->extraNativeMimeTypes());
+    }
 
 
     if (!mimeFilter.contains(oldOutputFormat) && !isExporting())
