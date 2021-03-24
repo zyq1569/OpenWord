@@ -16,7 +16,7 @@
  *   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  *   Boston, MA 02110-1301, USA.
  */
-
+#include "logging.h"
 #include "Calligra2Migration.h"
 
 #include "KoResourcePaths.h"
@@ -57,6 +57,7 @@ void Calligra2Migration::migrate()
     {
         // assume we have migrated
         qCDebug(CALLIGRA2MIGRATION)<<"migration has been done";
+        DEBUG_LOG("Calligra2Migration::migrate() migration has been done");
         return;
     }
 
@@ -74,6 +75,7 @@ void Calligra2Migration::migrate()
     {
         // rename config files to new names
         qCDebug(CALLIGRA2MIGRATION)<<"rename config files to new names"<<m_configFiles;
+        DEBUG_LOG("Calligra2Migration::migrate() rename config files to new names" + m_configFiles);
         for (const QString &oldname : m_configFiles)
         {
             QString newname = oldname;
