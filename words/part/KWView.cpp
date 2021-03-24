@@ -116,13 +116,13 @@
 #include <limits>
 
 KWView::KWView(KoPart *part, KWDocument *document, QWidget *parent)
-        : KoView(part, document, parent)
-        , m_canvas(0)
-        , m_textMinX(1)
-        , m_textMaxX(600)
-        , m_minPageNum(1)
-        , m_maxPageNum(1)
-        , m_isFullscreenMode(false)
+    : KoView(part, document, parent)
+    , m_canvas(0)
+    , m_textMinX(1)
+    , m_textMaxX(600)
+    , m_minPageNum(1)
+    , m_maxPageNum(1)
+    , m_isFullscreenMode(false)
 {
     setAcceptDrops(true);
 
@@ -170,19 +170,24 @@ KWView::KWView(KoPart *part, KWDocument *document, QWidget *parent)
 
     m_zoomController = new KoZoomController(m_gui->canvasController(), &m_zoomHandler, actionCollection(), 0, this);
     if (statusBar())
+    {
         KWStatusBar::addViewControls(statusBar(), this);
+    }
 
     // the zoom controller needs to be initialized after the status bar gets initialized as
     // that resulted in bug 180759
     QSizeF pageSize = m_currentPage.rect().size();
-    if (m_canvas->showAnnotations()) {
+    if (m_canvas->showAnnotations())
+    {
         pageSize += QSize(KWCanvasBase::AnnotationAreaWidth, 0.0);
     }
     m_zoomController->setPageSize(pageSize);
     m_zoomController->setTextMinMax(m_currentPage.contentRect().left(), m_currentPage.contentRect().right());
     KoZoomMode::Modes modes = KoZoomMode::ZOOM_WIDTH | KoZoomMode::ZOOM_TEXT;
     if (m_canvas->viewMode()->hasPages())
+    {
         modes |= KoZoomMode::ZOOM_PAGE;
+    }
     m_zoomController->zoomAction()->setZoomModes(modes);
     connect(m_canvas, SIGNAL(documentSize(QSizeF)), m_zoomController, SLOT(setDocumentSize(QSizeF)));
     m_canvas->updateSize(); // to emit the doc size at least once
@@ -199,7 +204,8 @@ KWView::KWView(KoPart *part, KWDocument *document, QWidget *parent)
     connect(m_dfmExitButton, SIGNAL(clicked()), this, SLOT(exitFullscreenMode()));
 
 #ifdef SHOULD_BUILD_RDF
-    if (KoDocumentRdf *rdf = dynamic_cast<KoDocumentRdf*>(m_document->documentRdf())) {
+    if (KoDocumentRdf *rdf = dynamic_cast<KoDocumentRdf*>(m_document->documentRdf()))
+    {
         connect(rdf, SIGNAL(semanticObjectViewSiteUpdated(hKoRdfBasicSemanticItem,QString)),
                 this, SLOT(semanticObjectViewSiteUpdated(hKoRdfBasicSemanticItem,QString)));
     }
@@ -235,32 +241,69 @@ void KWView::updateReadWrite(bool readWrite)
     m_actionViewFooter->setEnabled(readWrite);
     m_actionViewSnapToGrid->setEnabled(readWrite);
     QAction *action = actionCollection()->action("insert_framebreak");
-    if (action) action->setEnabled(readWrite);
+    if (action)
+    {
+        action->setEnabled(readWrite);
+    }
     action = actionCollection()->action("insert_variable");
-    if (action) action->setEnabled(readWrite);
+    if (action)
+    {
+        action->setEnabled(readWrite);
+    }
     action = actionCollection()->action("format_page");
-    if (action) action->setEnabled(readWrite);
+    if (action)
+    {
+        action->setEnabled(readWrite);
+    }
     action = actionCollection()->action("anchor");
-    if (action) action->setEnabled(readWrite);
+    if (action)
+    {
+        action->setEnabled(readWrite);
+    }
     action = actionCollection()->action("edit_cut");
-    if (action) action->setEnabled(readWrite);
+    if (action)
+    {
+        action->setEnabled(readWrite);
+    }
     action = actionCollection()->action("edit_copy");
-    if (action) action->setEnabled(readWrite);
+    if (action)
+    {
+        action->setEnabled(readWrite);
+    }
     action = actionCollection()->action("edit_paste");
-    if (action) action->setEnabled(readWrite);
+    if (action)
+    {
+        action->setEnabled(readWrite);
+    }
     action = actionCollection()->action("edit_paste_text");
-    if (action) action->setEnabled(readWrite);
+    if (action)
+    {
+        action->setEnabled(readWrite);
+    }
     action = actionCollection()->action("delete_page");
-    if (action) action->setEnabled(readWrite);
+    if (action)
+    {
+        action->setEnabled(readWrite);
+    }
     action = actionCollection()->action("edit_delete");
-    if (action) action->setEnabled(readWrite);
+    if (action)
+    {
+        action->setEnabled(readWrite);
+    }
     action = actionCollection()->action("create_linked_frame");
-    if (action) action->setEnabled(readWrite);
+    if (action)
+    {
+        action->setEnabled(readWrite);
+    }
     action = actionCollection()->action("create_custom_outline");
-    if (action) action->setEnabled(readWrite);
+    if (action)
+    {
+        action->setEnabled(readWrite);
+    }
 }
 
-void KWView::buildAssociatedWidget() {
+void KWView::buildAssociatedWidget()
+{
     wordCount = new KWStatisticsWidget(this,true);
     wordCount->setLayoutDirection(KWStatisticsWidget::LayoutHorizontal);
     wordCount->setCanvas(dynamic_cast<KWCanvas*>(this->canvas()));
@@ -387,12 +430,14 @@ void KWView::setupActions()
     action->setWhatsThis(i18n("Stylesheets are used to format the display of information which is stored in RDF."));
     connect(action, SIGNAL(triggered()), this, SLOT(editSemanticStylesheets()));
 
-    if (KoDocumentRdf* rdf = dynamic_cast<KoDocumentRdf*>(m_document->documentRdf())) {
+    if (KoDocumentRdf* rdf = dynamic_cast<KoDocumentRdf*>(m_document->documentRdf()))
+    {
         QAction* createRef = rdf->createInsertSemanticObjectReferenceAction(canvasBase());
         actionCollection()->addAction("insert_semanticobject_ref", createRef);
         KActionMenu *subMenu = new KActionMenu(i18n("Create"), this);
         actionCollection()->addAction("insert_semanticobject_new", subMenu);
-        foreach(QAction *action, rdf->createInsertSemanticObjectNewActions(canvasBase())) {
+        foreach(QAction *action, rdf->createInsertSemanticObjectNewActions(canvasBase()))
+        {
             subMenu->addAction(action);
         }
     }
@@ -417,13 +462,17 @@ void KWView::setupActions()
     m_actionViewHeader = new QAction(i18n("Create Header"), this);
     actionCollection()->addAction("insert_header", m_actionViewHeader);
     if (m_currentPage.isValid())
+    {
         m_actionViewHeader->setEnabled(m_currentPage.pageStyle().headerPolicy() == Words::HFTypeNone);
+    }
     connect(m_actionViewHeader, SIGNAL(triggered()), this, SLOT(enableHeader()));
 
     m_actionViewFooter = new QAction(i18n("Create Footer"), this);
     actionCollection()->addAction("insert_footer", m_actionViewFooter);
     if (m_currentPage.isValid())
+    {
         m_actionViewFooter->setEnabled(m_currentPage.pageStyle().footerPolicy() == Words::HFTypeNone);
+    }
     connect(m_actionViewFooter, SIGNAL(triggered()), this, SLOT(enableFooter()));
 
     // -------- Show annotations (called Comments in the UI)
@@ -476,9 +525,12 @@ KoShape* KWView::selectedShape() const
 {
     KoSelection *selection = canvasBase()->shapeManager()->selection();
 
-    foreach (KoShape *s, selection->selectedShapes(KoFlake::TopLevelSelection)) {
+    foreach (KoShape *s, selection->selectedShapes(KoFlake::TopLevelSelection))
+    {
         if (s->isGeometryProtected())
+        {
             continue;
+        }
         return s;
     }
 
@@ -491,7 +543,8 @@ void KWView::pasteRequested()
 {
     QImage img = QApplication::clipboard()->image();
 
-    if (!img.isNull()) {
+    if (!img.isNull())
+    {
         QVector<QImage> images;
         images.append(img);
         addImages(images, canvas()->mapFromGlobal(QCursor::pos()));
@@ -523,7 +576,8 @@ void KWView::showWordCountInStatusBar(bool doShow)
 void KWView::editFrameProperties()
 {
     const QList<KoShape *> &shapes = selectedShapes();
-    if (!shapes.isEmpty()) {
+    if (!shapes.isEmpty())
+    {
         QPointer<KWFrameDialog> frameDialog = new KWFrameDialog(shapes, m_document, m_canvas);
         frameDialog->exec();
         delete frameDialog;
@@ -548,7 +602,9 @@ void KWView::createTemplate()
 void KWView::enableHeader()
 {
     if (!m_currentPage.isValid())
+    {
         return;
+    }
     Q_ASSERT(m_currentPage.pageStyle().isValid());
     m_currentPage.pageStyle().setHeaderPolicy(Words::HFTypeUniform);
     m_actionViewHeader->setEnabled(false);
@@ -558,7 +614,9 @@ void KWView::enableHeader()
 void KWView::enableFooter()
 {
     if (!m_currentPage.isValid())
+    {
         return;
+    }
     Q_ASSERT(m_currentPage.pageStyle().isValid());
     m_currentPage.pageStyle().setFooterPolicy(Words::HFTypeUniform);
     m_actionViewFooter->setEnabled(false);
@@ -610,12 +668,17 @@ void KWView::setShowSectionBounds(bool on)
 void KWView::formatPage()
 {
     if (! m_currentPage.isValid())
+    {
         return;
+    }
     KWPageSettingsDialog *dia = new KWPageSettingsDialog(this, m_document, m_currentPage);
-    if (!m_lastPageSettingsTab.isEmpty()) {
+    if (!m_lastPageSettingsTab.isEmpty())
+    {
         KPageWidgetItem *item = dia->pageItem(m_lastPageSettingsTab);
         if (item)
+        {
             dia->setCurrentPage(item);
+        }
     }
     connect(dia, SIGNAL(finished(int)), this, SLOT(pageSettingsDialogFinished()));
     dia->show();
@@ -630,7 +693,8 @@ void KWView::pageSettingsDialogFinished()
 void KWView::editSemanticStylesheets()
 {
 #ifdef SHOULD_BUILD_RDF
-    if (KoDocumentRdf *rdf = dynamic_cast<KoDocumentRdf*>(m_document->documentRdf())) {
+    if (KoDocumentRdf *rdf = dynamic_cast<KoDocumentRdf*>(m_document->documentRdf()))
+    {
         KoSemanticStylesheetsEditor *dia = new KoSemanticStylesheetsEditor(this, rdf);
         dia->show();
         // TODO this leaks memory
@@ -646,7 +710,10 @@ void KWView::showRulers(bool visible)
 
 void KWView::showStatusBar(bool toggled)
 {
-    if (statusBar()) statusBar()->setVisible(toggled);
+    if (statusBar())
+    {
+        statusBar()->setVisible(toggled);
+    }
 }
 
 void KWView::setFullscreenMode(bool status)
@@ -657,27 +724,34 @@ void KWView::setFullscreenMode(bool status)
     mainWindow()->menuBar()->setVisible(!status);
 
     mainWindow()->viewFullscreen(status);
-    foreach(KToolBar* toolbar, mainWindow()->toolBars()) {
-        if (toolbar->isVisible() == status) {
+    foreach(KToolBar* toolbar, mainWindow()->toolBars())
+    {
+        if (toolbar->isVisible() == status)
+        {
             toolbar->setVisible(!status);
         }
     }
 
-    if (status) {
-         QTimer::singleShot(2000, this, SLOT(hideUI()));
-    } else {
-         mainWindow()->statusBar()->setVisible(true);
-         static_cast<KoCanvasControllerWidget*>(m_gui->canvasController())->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-         static_cast<KoCanvasControllerWidget*>(m_gui->canvasController())->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    if (status)
+    {
+        QTimer::singleShot(2000, this, SLOT(hideUI()));
+    }
+    else
+    {
+        mainWindow()->statusBar()->setVisible(true);
+        static_cast<KoCanvasControllerWidget*>(m_gui->canvasController())->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        static_cast<KoCanvasControllerWidget*>(m_gui->canvasController())->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     }
     // Exit Fullscreen mode button.
     m_dfmExitButton->setVisible(status);
 
     //Hide cursor.
-    if (status) {
+    if (status)
+    {
         m_hideCursorTimer->start(4000);
     }
-    else {
+    else
+    {
         // FIXME: Return back cursor to canvas if cursor is blank cursor.
         m_hideCursorTimer->stop();
     }
@@ -690,13 +764,16 @@ void KWView::setFullscreenMode(bool status)
     const QList<KoShape*> selection = m_canvas->shapeManager()->selection()->selectedShapes();
     m_canvas->shapeManager()->selection()->deselectAll();
     if (selection.count() > 0)
+    {
         m_canvas->shapeManager()->selection()->select(selection.at(0));
+    }
     KoToolManager::instance()->switchToolRequested("TextToolFactory_ID");
 }
 
 void KWView::hideUI()
 {
-    if (m_isFullscreenMode) {
+    if (m_isFullscreenMode)
+    {
         mainWindow()->statusBar()->setVisible(false);
         // Hide vertical  and horizontal scroll bar.
         static_cast<KoCanvasControllerWidget*>(m_gui->canvasController())->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -704,14 +781,16 @@ void KWView::hideUI()
     }
 }
 
-void KWView::hideCursor(){
+void KWView::hideCursor()
+{
     m_canvas->setCursor(Qt::BlankCursor);
     m_gui->setCursor(Qt::BlankCursor);
 }
 
 void KWView::exitFullscreenMode()
 {
-    if (m_isFullscreenMode) {
+    if (m_isFullscreenMode)
+    {
         QAction *action = actionCollection()->action("view_fullscreen");
         action->setChecked(false);
         m_gui->setCursor(Qt::ArrowCursor);
@@ -722,27 +801,33 @@ void KWView::exitFullscreenMode()
 void KWView::viewMouseMoveEvent(QMouseEvent *e)
 {
     if (!m_isFullscreenMode)
+    {
         return;
+    }
 
     m_gui->setCursor(Qt::ArrowCursor);
 
     // Handle status bar and horizontal scroll bar.
-    if (e->y() >= (m_gui->size().height() - statusBar()->size().height())) {
+    if (e->y() >= (m_gui->size().height() - statusBar()->size().height()))
+    {
         mainWindow()->statusBar()->setVisible(true);
         static_cast<KoCanvasControllerWidget*>(m_gui->canvasController())->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     }
-    else {
-       mainWindow()->statusBar()->setVisible(false);
-       static_cast<KoCanvasControllerWidget*>(m_gui->canvasController())->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    else
+    {
+        mainWindow()->statusBar()->setVisible(false);
+        static_cast<KoCanvasControllerWidget*>(m_gui->canvasController())->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     }
 
     // Handle vertical scroll bar.
     QScrollBar *vsb = static_cast<KoCanvasControllerWidget*>(m_gui->canvasController())->verticalScrollBar();
-    if (e->x() >= (m_gui->size().width() - vsb->size().width() - 10)) {
-         static_cast<KoCanvasControllerWidget*>(m_gui->canvasController())->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    if (e->x() >= (m_gui->size().width() - vsb->size().width() - 10))
+    {
+        static_cast<KoCanvasControllerWidget*>(m_gui->canvasController())->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     }
-    else {
-         static_cast<KoCanvasControllerWidget*>(m_gui->canvasController())->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    else
+    {
+        static_cast<KoCanvasControllerWidget*>(m_gui->canvasController())->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     }
 }
 
@@ -773,10 +858,14 @@ void KWView::popupContextMenu(const QPoint &globalPosition, const QList<QAction*
     unplugActionList("frameset_type_action");
     plugActionList("frameset_type_action", actions);
     if (factory() == 0) // we are a kpart, the factory is only set on the active component.
+    {
         return;
+    }
     QMenu *menu = dynamic_cast<QMenu*>(factory()->container("frame_popup", this));
     if (menu)
+    {
         menu->exec(globalPosition);
+    }
 }
 
 void KWView::zoomChanged(KoZoomMode::Mode mode, qreal zoom)
@@ -790,7 +879,8 @@ void KWView::selectionChanged()
 {
     KoShape *shape = canvasBase()->shapeManager()->selection()-> firstSelectedShape();
 
-    if (shape) {
+    if (shape)
+    {
         // Disallow shape properties action for auto-generated frames.
         const KWFrame *frame = kwdocument()->frameOfShape(shape);
         const bool enableAction = !frame || !Words::isAutoGenerated(KWFrameSet::from(frame->shape()));
@@ -801,13 +891,16 @@ void KWView::selectionChanged()
     // actions that need at least one shape selected
     QAction *action = actionCollection()->action("anchor");
     if (action)
+    {
         action->setEnabled(shape && kwdocument()->mainFrameSet());
+    }
 }
 
 void KWView::setCurrentPage(const KWPage &currentPage)
 {
     Q_ASSERT(currentPage.isValid());
-    if (currentPage != m_currentPage) {
+    if (currentPage != m_currentPage)
+    {
         m_currentPage = currentPage;
         m_canvas->resourceManager()->setResource(KoCanvasResourceManager::CurrentPage, m_currentPage.pageNumber());
 
@@ -834,16 +927,21 @@ void KWView::goToPreviousPage(Qt::KeyboardModifiers modifiers)
     // Find textshape under that position and from current frameset
     QList<KoShape*> possibleTextShapes = m_canvas->shapeManager()->shapesAt(QRectF(pos.x() - 20, pos.y() -20, 40, 40));
     KoTextShapeData *textShapeData = 0;
-    foreach (KoShape* shape, possibleTextShapes) {
+    foreach (KoShape* shape, possibleTextShapes)
+    {
         KoShapeUserData *userData = shape->userData();
-        if ((textShapeData = dynamic_cast<KoTextShapeData*>(userData))) {
-            foreach (KoShape *s, currentFrameSet->shapes()) {
-                if (s == shape) {
+        if ((textShapeData = dynamic_cast<KoTextShapeData*>(userData)))
+        {
+            foreach (KoShape *s, currentFrameSet->shapes())
+            {
+                if (s == shape)
+                {
                     pos = shape->absoluteTransformation(0).inverted().map(pos);
                     pos += QPointF(0.0, textShapeData->documentOffset());
 
                     KoTextLayoutArea *area = textShapeData->rootArea();
-                    if (area) {
+                    if (area)
+                    {
                         int cursorPos = area->hitTest(pos, Qt::FuzzyHit).position;
                         KoTextDocument(textShapeData->document()).textEditor()->setPosition(cursorPos, (modifiers & Qt::ShiftModifier) ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
                     }
@@ -874,16 +972,21 @@ void KWView::goToNextPage(Qt::KeyboardModifiers modifiers)
     // Find textshape under that position and from current frameset
     QList<KoShape*> possibleTextShapes = m_canvas->shapeManager()->shapesAt(QRectF(pos.x() - 20, pos.y() -20, 40, 40));
     KoTextShapeData *textShapeData = 0;
-    foreach (KoShape* shape, possibleTextShapes) {
+    foreach (KoShape* shape, possibleTextShapes)
+    {
         KoShapeUserData *userData = shape->userData();
-        if ((textShapeData = dynamic_cast<KoTextShapeData*>(userData))) {
-            foreach (KoShape *s, currentFrameSet->shapes()) {
-                if (s == shape) {
+        if ((textShapeData = dynamic_cast<KoTextShapeData*>(userData)))
+        {
+            foreach (KoShape *s, currentFrameSet->shapes())
+            {
+                if (s == shape)
+                {
                     pos = shape->absoluteTransformation(0).inverted().map(pos);
                     pos += QPointF(0.0, textShapeData->documentOffset());
 
                     KoTextLayoutArea *area = textShapeData->rootArea();
-                    if (area) {
+                    if (area)
+                    {
                         int cursorPos = area->hitTest(pos, Qt::FuzzyHit).position;
                         KoTextDocument(textShapeData->document()).textEditor()->setPosition(cursorPos, (modifiers & Qt::ShiftModifier) ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
                     }
@@ -899,7 +1002,7 @@ void KWView::goToPage(const KWPage &page)
     KoCanvasController *controller = m_gui->canvasController();
     QPoint origPos = controller->scrollBarValue();
     QPointF pos = m_canvas->viewMode()->documentToView(QPointF(0,
-                            page.offsetInDocument()), m_canvas->viewConverter());
+                  page.offsetInDocument()), m_canvas->viewConverter());
     origPos.setY((int)pos.y());
     controller->setScrollBarValue(origPos);
 }
@@ -912,10 +1015,13 @@ void KWView::showEvent(QShowEvent *e)
 
 bool KWView::event(QEvent* event)
 {
-    switch(static_cast<int>(event->type())) {
-        case ViewModeSwitchEvent::AboutToSwitchViewModeEvent: {
+    switch(static_cast<int>(event->type()))
+    {
+        case ViewModeSwitchEvent::AboutToSwitchViewModeEvent:
+        {
             ViewModeSynchronisationObject* syncObject = static_cast<ViewModeSwitchEvent*>(event)->synchronisationObject();
-            if (m_canvas) {
+            if (m_canvas)
+            {
                 syncObject->scrollBarValue = m_canvas->canvasController()->scrollBarValue();
                 syncObject->zoomLevel = zoomController()->zoomAction()->effectiveZoom();
                 syncObject->activeToolId = KoToolManager::instance()->activeToolId();
@@ -925,9 +1031,11 @@ bool KWView::event(QEvent* event)
 
             return true;
         }
-        case ViewModeSwitchEvent::SwitchedToDesktopModeEvent: {
+        case ViewModeSwitchEvent::SwitchedToDesktopModeEvent:
+        {
             ViewModeSynchronisationObject* syncObject = static_cast<ViewModeSwitchEvent*>(event)->synchronisationObject();
-            if (m_canvas && syncObject->initialized) {
+            if (m_canvas && syncObject->initialized)
+            {
                 m_canvas->canvasWidget()->setFocus();
                 qApp->processEvents();
 
@@ -939,8 +1047,10 @@ bool KWView::event(QEvent* event)
                 m_canvas->canvasController()->setScrollBarValue(syncObject->scrollBarValue);
 
                 qApp->processEvents();
-                foreach(KoShape *shape, m_canvas->shapeManager()->shapesAt(currentPage().rect())) {
-                    if (qobject_cast<KoTextShapeDataBase*>(shape->userData())) {
+                foreach(KoShape *shape, m_canvas->shapeManager()->shapesAt(currentPage().rect()))
+                {
+                    if (qobject_cast<KoTextShapeDataBase*>(shape->userData()))
+                    {
                         m_canvas->shapeManager()->selection()->select(shape);
                         break;
                     }
@@ -958,37 +1068,39 @@ void KWView::updateStatusBarAction()
 {
     KToggleAction *action = (KToggleAction*) actionCollection()->action("showStatusBar");
     if (action && statusBar())
+    {
         action->setChecked(! statusBar()->isHidden());
+    }
 }
 
 void KWView::offsetInDocumentMoved(int yOffset)
 {
     const qreal offset = -m_zoomHandler.viewToDocumentY(yOffset);
     const qreal height = m_zoomHandler.viewToDocumentY(m_gui->viewportSize().height());
-/*    if (m_currentPage.isValid()) { // most of the time the current will not change.
-        const qreal pageTop = m_currentPage.offsetInDocument();
-        const qreal pageBottom = pageTop + m_currentPage.height();
-        const qreal visibleArea = qMin(offset + height, pageBottom) - qMax(pageTop, offset);
-        if (visibleArea / height >= 0.45) // current page is just fine if > 45% is shown
-            return;
+    /*    if (m_currentPage.isValid()) { // most of the time the current will not change.
+            const qreal pageTop = m_currentPage.offsetInDocument();
+            const qreal pageBottom = pageTop + m_currentPage.height();
+            const qreal visibleArea = qMin(offset + height, pageBottom) - qMax(pageTop, offset);
+            if (visibleArea / height >= 0.45) // current page is just fine if > 45% is shown
+                return;
 
-        // using 'next'/'prev' is much cheaper than using a documentOffset, so try that first.
-        if (pageTop > offset && pageTop < offset + height) { // check if the page above is a candidate.
-            KWPage page = m_currentPage.previous();
-            if (page.isValid() && pageTop - offset > visibleArea) {
-                firstDrawnPage = page;
-                return;
+            // using 'next'/'prev' is much cheaper than using a documentOffset, so try that first.
+            if (pageTop > offset && pageTop < offset + height) { // check if the page above is a candidate.
+                KWPage page = m_currentPage.previous();
+                if (page.isValid() && pageTop - offset > visibleArea) {
+                    firstDrawnPage = page;
+                    return;
+                }
+            }
+            if (pageBottom > offset && pageBottom < offset + height) { // check if the page above is a candidate.
+                KWPage page = m_currentPage.next();
+                if (page.isValid() && m_currentPage.height() - height > visibleArea) {
+                    firstDrawnPage = page;
+                    return;
+                }
             }
         }
-        if (pageBottom > offset && pageBottom < offset + height) { // check if the page above is a candidate.
-            KWPage page = m_currentPage.next();
-            if (page.isValid() && m_currentPage.height() - height > visibleArea) {
-                firstDrawnPage = page;
-                return;
-            }
-        }
-    }
-*/
+    */
     KWPage page = m_document->pageManager()->page(qreal(offset));
     qreal pageTop = page.offsetInDocument();
     QSizeF maxPageSize;
@@ -996,31 +1108,36 @@ void KWView::offsetInDocumentMoved(int yOffset)
     qreal maxTextX = std::numeric_limits<qreal>::min();
     int minPageNum = page.pageNumber();
     int maxPageNum = page.pageNumber();
-    while (page.isValid() && pageTop < qreal(offset + height)) {
+    while (page.isValid() && pageTop < qreal(offset + height))
+    {
         pageTop += page.height();
         QSizeF pageSize = page.rect().size();
         maxPageSize = QSize(qMax(maxPageSize.width(), pageSize.width()),
-                                     qMax(maxPageSize.height(), pageSize.height()));
+                            qMax(maxPageSize.height(), pageSize.height()));
         minTextX = qMin(minTextX, page.contentRect().left());
         maxTextX = qMax(maxTextX, page.contentRect().right());
         maxPageNum = page.pageNumber();
         page = page.next();
     }
 
-    if (maxPageSize != m_pageSize) {
+    if (maxPageSize != m_pageSize)
+    {
         m_pageSize = maxPageSize;
         QSizeF pageSize = m_pageSize;
-        if (m_canvas->showAnnotations()) {
+        if (m_canvas->showAnnotations())
+        {
             pageSize += QSize(KWCanvasBase::AnnotationAreaWidth, 0.0);
         }
         m_zoomController->setPageSize(pageSize);
     }
-    if (minTextX != m_textMinX || maxTextX != m_textMaxX) {
+    if (minTextX != m_textMinX || maxTextX != m_textMaxX)
+    {
         m_textMinX = minTextX;
         m_textMaxX = maxTextX;
         m_zoomController->setTextMinMax(minTextX, maxTextX);
     }
-    if (minPageNum != m_minPageNum || maxPageNum != m_maxPageNum) {
+    if (minPageNum != m_minPageNum || maxPageNum != m_maxPageNum)
+    {
         m_minPageNum = minPageNum;
         m_maxPageNum = maxPageNum;
         emit shownPagesChanged();
@@ -1033,7 +1150,8 @@ void KWView::semanticObjectViewSiteUpdated(hKoRdfBasicSemanticItem basicitem, co
     hKoRdfSemanticItem item(static_cast<KoRdfSemanticItem *>(basicitem.data()));
     kDebug(30015) << "xmlid:" << xmlid << " reflow item:" << item->name();
     KoTextEditor *editor = KoTextEditor::getTextEditorFromCanvas(canvasBase());
-    if (!editor) {
+    if (!editor)
+    {
         kDebug(30015) << "no editor, not reflowing rdf semantic item.";
         return;
     }
@@ -1045,7 +1163,8 @@ void KWView::semanticObjectViewSiteUpdated(hKoRdfBasicSemanticItem basicitem, co
 
 void KWView::findMatchFound(KoFindMatch match)
 {
-    if(!match.isValid() || !match.location().canConvert<QTextCursor>() || !match.container().canConvert<QTextDocument*>()) {
+    if(!match.isValid() || !match.location().canConvert<QTextCursor>() || !match.container().canConvert<QTextDocument*>())
+    {
         return;
     }
 
@@ -1058,10 +1177,12 @@ void KWView::findMatchFound(KoFindMatch match)
 void KWView::refreshFindTexts()
 {
     QList<QTextDocument*> texts;
-    foreach (KWFrameSet *fSet, m_document->frameSets()) {
+    foreach (KWFrameSet *fSet, m_document->frameSets())
+    {
         KWTextFrameSet *tFSet = dynamic_cast<KWTextFrameSet *>(fSet);
-        if (tFSet) {
-           texts.append(tFSet->document());
+        if (tFSet)
+        {
+            texts.append(tFSet->document());
         }
     }
     m_find->setDocuments(texts);
@@ -1069,7 +1190,8 @@ void KWView::refreshFindTexts()
 
 void KWView::addImages(const QVector<QImage> &imageList, const QPoint &insertAt)
 {
-    if (!m_canvas) {
+    if (!m_canvas)
+    {
         // no canvas because we're not on the desktop?
         return;
     }
@@ -1081,12 +1203,14 @@ void KWView::addImages(const QVector<QImage> &imageList, const QPoint &insertAt)
     // create a factory
     KoShapeFactoryBase *factory = KoShapeRegistry::instance()->value("PictureShape");
 
-    if (!factory) {
+    if (!factory)
+    {
         warnWords << "No picture shape found, cannot drop images.";
         return;
     }
 
-    foreach(const QImage &image, imageList) {
+    foreach(const QImage &image, imageList)
+    {
         KoProperties params;
         params.setProperty("qimage", image);
 
@@ -1097,13 +1221,15 @@ void KWView::addImages(const QVector<QImage> &imageList, const QPoint &insertAt)
         qreal pageWidth = currentPage().width();
         qreal pageHeight = currentPage().height();
 
-        if (shape->size().width() > (pageWidth * 0.8) || shape->size().height() > pageHeight) {
+        if (shape->size().width() > (pageWidth * 0.8) || shape->size().height() > pageHeight)
+        {
             QSizeF sz = shape->size();
             sz.scale(QSizeF(pageWidth * 0.6, pageHeight *.6), Qt::KeepAspectRatio);
             shape->setSize(sz);
         }
 
-        if (!shape) {
+        if (!shape)
+        {
             warnWords << "Could not create a shape from the image";
             return;
         }
@@ -1120,7 +1246,7 @@ void KWView::addImages(const QVector<QImage> &imageList, const QPoint &insertAt)
         shape->setPosition(pos);
 
         pos += QPointF(25,25); // increase the position for each shape we insert so the
-                               // user can see them all.
+        // user can see them all.
 
         // create the undo step.
         KWShapeCreateCommand *cmd = new KWShapeCreateCommand(kwdocument(), shape);
