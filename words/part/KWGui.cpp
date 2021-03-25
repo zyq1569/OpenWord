@@ -45,8 +45,8 @@
 #include <KoMainWindow.h>
 
 KWGui::KWGui(const QString &viewMode, KWView *parent)
-        : QWidget(parent),
-        m_view(parent)
+    : QWidget(parent),
+      m_view(parent)
 {
     QGridLayout *gridLayout = new QGridLayout(this);
     gridLayout->setMargin(0);
@@ -68,7 +68,7 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
     // We need to set this as QDeclarativeView sets them a bit different from QAbstractScrollArea
     canvasController->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     canvasController->setFocusPolicy(Qt::NoFocus);
-        //setScene(0);
+    //setScene(0);
 
     canvasController->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     m_canvasController->setMargin(10);
@@ -145,12 +145,16 @@ void KWGui::pageSetupChanged()
     const KWPage lastPage = pm->last();
     int height = 0;
     if (lastPage.isValid())
+    {
         height = lastPage.offsetInDocument() + lastPage.height();
+    }
     m_verticalRuler->setRulerLength(height);
     updateRulers();
     int width = 0;
     if (firstPage.isValid())
+    {
         width = firstPage.width();
+    }
     m_horizontalRuler->setRulerLength(width);
     m_horizontalRuler->setActiveRange(0, width);
     m_verticalRuler->setActiveRange(0, height);

@@ -68,7 +68,8 @@ Q_SIGNALS:
 
 
 private:
-    enum HFLoadType {
+    enum HFLoadType
+    {
         LoadHeader,
         LoadFooter
     };
