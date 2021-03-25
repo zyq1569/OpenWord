@@ -58,7 +58,7 @@ void traceLog(const QString &msg, const QString &file, int line, const QString &
 #ifdef QT_NO_DEBUG
 #define DEBUG_LOG(msg) while (false)
 #else
-#define DEBUG_LOG(msg) udg::debugLog(msg,__FILE__,__LINE__,LOG_FUNC)
+#define DEBUG_LOG(msg) LOG::debugLog(msg,__FILE__,__LINE__,LOG_FUNC)
 #endif
 
 #define INFO_LOG(msg)                 LOG::infoLog(msg,__FILE__,__LINE__,LOG_FUNC)
