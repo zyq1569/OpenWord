@@ -1508,6 +1508,7 @@ void KoMainWindow::slotFileOpen()
         url = QUrl::fromUserInput(dialog.filename());
     }
 
+    DEBUG_LOG("void KoMainWindow::slotFileOpen() :"+url.toString());
     if (url.isEmpty())
     {
         return;

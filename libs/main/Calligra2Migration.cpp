@@ -75,7 +75,7 @@ void Calligra2Migration::migrate()
     {
         // rename config files to new names
         qCDebug(CALLIGRA2MIGRATION)<<"rename config files to new names"<<m_configFiles;
-        DEBUG_LOG("Calligra2Migration::migrate() rename config files to new names" + m_configFiles);
+        DEBUG_LOG("Calligra2Migration::migrate() rename config files to new names : m_configFiles");
         for (const QString &oldname : m_configFiles)
         {
             QString newname = oldname;
