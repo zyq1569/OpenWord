@@ -76,7 +76,8 @@ QObject* KWFactory::create(const char* /*iface*/, QWidget* /*parentWidget*/, QOb
 
 const KoComponentData &KWFactory::componentData()
 {
-    if (!s_componentData) {
+    if (!s_componentData)
+    {
         KAboutData *aboutData = newWordsAboutData();
         s_componentData = new KoComponentData(*aboutData);
         delete aboutData;
