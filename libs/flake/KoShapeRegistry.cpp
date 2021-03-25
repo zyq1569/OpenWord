@@ -62,7 +62,7 @@ public:
 };
 
 KoShapeRegistry::KoShapeRegistry()
-        : d(new Private())
+    : d(new Private())
 {
 }
 
@@ -96,14 +96,16 @@ void KoShapeRegistry::Private::init(KoShapeRegistry *q)
     // loading ODF.
 
     QList<KoShapeFactoryBase*> factories = q->values();
-    for (int i = 0; i < factories.size(); ++i) {
+    for (int i = 0; i < factories.size(); ++i)
+    {
         insertFactory(factories[i]);
     }
 }
 
 KoShapeRegistry* KoShapeRegistry::instance()
 {
-    if (!s_instance.exists()) {
+    if (!s_instance.exists())
+    {
         s_instance->d->init(s_instance);
     }
     return s_instance;
@@ -119,13 +121,17 @@ void KoShapeRegistry::Private::insertFactory(KoShapeFactoryBase *factory)
 {
     const QList<QPair<QString, QStringList> > odfElements(factory->odfElements());
 
-    if (odfElements.isEmpty()) {
+    if (odfElements.isEmpty())
+    {
         debugFlake << "Shape factory" << factory->id() << " does not have OdfNamespace defined, ignoring";
     }
-    else {
+    else
+    {
         int priority = factory->loadingPriority();
-        for (QList<QPair<QString, QStringList> >::const_iterator it(odfElements.begin()); it != odfElements.end(); ++it) {
-            foreach (const QString &elementName, (*it).second) {
+        for (QList<QPair<QString, QStringList> >::const_iterator it(odfElements.begin()); it != odfElements.end(); ++it)
+        {
+            foreach (const QString &elementName, (*it).second)
+            {
                 QPair<QString, QString> p((*it).first, elementName);
 
                 QMultiMap<int, KoShapeFactoryBase*> & priorityMap = factoryMap[p];
@@ -133,9 +139,9 @@ void KoShapeRegistry::Private::insertFactory(KoShapeFactoryBase *factory)
                 priorityMap.insert(priority, factory);
 
                 debugFlake << "Inserting factory" << factory->id() << " for"
-                    << p << " with priority "
-                    << priority << " into factoryMap making "
-                    << priorityMap.size() << " entries. ";
+                           << p << " with priority "
+                           << priority << " into factoryMap making "
+                           << priorityMap.size() << " entries. ";
             }
         }
     }
@@ -148,7 +154,8 @@ KoShape * KoShapeRegistry::createShapeFromOdf(const KoXmlElement & e, KoShapeLoa
     KoShape * shape = 0;
 
     // Handle the case where the element is a draw:frame differently from other cases.
-    if (e.tagName() == "frame" && e.namespaceURI() == KoXmlNS::draw) {
+    if (e.tagName() == "frame" && e.namespaceURI() == KoXmlNS::draw)
+    {
         // If the element is in a frame, the frame is already added by the
         // application and we only want to create a shape from the
         // embedded element. The very first shape we create is accepted.
@@ -164,45 +171,60 @@ KoShape * KoShapeRegistry::createShapeFromOdf(const KoXmlElement & e, KoShapeLoa
         // representation of the data they are supposed to be views of).
         // The reason is that all subsequent children will be fallbacks, in order of preference.
 
-        if (e.hasChildNodes()) {
+        if (e.hasChildNodes())
+        {
             // if we don't ignore white spaces it can be that the first child is not a element so look for the first element
             KoXmlNode node = e.firstChild();
             KoXmlElement element;
-            while (!node.isNull() && element.isNull()) {
+            while (!node.isNull() && element.isNull())
+            {
                 element = node.toElement();
                 node = node.nextSibling();
             }
 
-            if (!element.isNull()) {
+            if (!element.isNull())
+            {
                 // Check for draw:object
-                if (element.tagName() == "object" && element.namespaceURI() == KoXmlNS::draw && element.hasChildNodes()) {
+                if (element.tagName() == "object" && element.namespaceURI() == KoXmlNS::draw && element.hasChildNodes())
+                {
                     // Loop through the elements and find the first one
                     // that is handled by any shape.
                     KoXmlNode n = element.firstChild();
-                    for (; !n.isNull(); n = n.nextSibling()) {
-                        if (n.isElement()) {
+                    for (; !n.isNull(); n = n.nextSibling())
+                    {
+                        if (n.isElement())
+                        {
                             debugFlake << "trying for element " << n.toElement().tagName();
                             shape = d->createShapeInternal(e, context, n.toElement());
                             if (shape)
+                            {
                                 break;
+                            }
                         }
                     }
                     if (shape)
+                    {
                         debugFlake << "Found a shape for draw:object";
+                    }
                     else
+                    {
                         debugFlake << "Found NO shape shape for draw:object";
+                    }
                 }
 
-                if (!shape) {
+                if (!shape)
+                {
                     // If not draw:object, e.g draw:image or draw:plugin
                     shape = d->createShapeInternal(e, context, element);
                 }
             }
 
-            if (shape) {
+            if (shape)
+            {
                 debugFlake << "A shape supporting the requested type was found.";
             }
-            else {
+            else
+            {
                 // If none of the registered shapes could handle the frame
                 // contents, create an UnavailShape.  This should never fail.
                 debugFlake << "No shape found; Creating an unavail shape";
@@ -216,17 +238,20 @@ KoShape * KoShapeRegistry::createShapeFromOdf(const KoXmlElement & e, KoShapeLoa
                 KoXmlElement child;
                 KoShape *childShape = 0;
                 bool first = true;
-                forEachElement(child, e) {
+                forEachElement(child, e)
+                {
                     // no need to try to load the first element again as it was already tried before and we could not load it
-                    if (first) {
+                    if (first)
+                    {
                         first = false;
                         continue;
                     }
                     debugFlake << "--------------------------------------------------------";
                     debugFlake << "Attempting to check if we can fall back ability to the item"
-                                  << child.nodeName();
+                               << child.nodeName();
                     childShape = d->createShapeInternal(e, context, child);
-                    if (childShape) {
+                    if (childShape)
+                    {
                         debugFlake << "Shape was found! Adding as child of unavail shape and stopping search";
                         uShape->addShape(childShape);
                         childShape->setPosition(QPointF(qreal(0.0), qreal(0.0)));
@@ -242,7 +267,7 @@ KoShape * KoShapeRegistry::createShapeFromOdf(const KoXmlElement & e, KoShapeLoa
                 }
                 if (!childShape)
                     debugFlake << "Failed to find fallback for the unavail shape named "
-                                  << e.tagName();
+                               << e.tagName();
                 shape = uShape;
             }
         }
@@ -250,24 +275,30 @@ KoShape * KoShapeRegistry::createShapeFromOdf(const KoXmlElement & e, KoShapeLoa
 
     // Hardwire the group shape into the loading as it should not appear
     // in the shape selector
-    else if (e.localName() == "g" && e.namespaceURI() == KoXmlNS::draw) {
+    else if (e.localName() == "g" && e.namespaceURI() == KoXmlNS::draw)
+    {
         KoShapeGroup * group = new KoShapeGroup();
 
         context.odfLoadingContext().styleStack().save();
         bool loaded = group->loadOdf(e, context);
         context.odfLoadingContext().styleStack().restore();
 
-        if (loaded) {
+        if (loaded)
+        {
             shape = group;
         }
-        else {
+        else
+        {
             delete group;
         }
-    } else {
+    }
+    else
+    {
         shape = d->createShapeInternal(e, context, e);
     }
 
-    if (shape) {
+    if (shape)
+    {
         context.shapeLoaded(shape);
     }
 
@@ -275,15 +306,17 @@ KoShape * KoShapeRegistry::createShapeFromOdf(const KoXmlElement & e, KoShapeLoa
 }
 
 KoShape *KoShapeRegistry::Private::createShapeInternal(const KoXmlElement &fullElement,
-                                                       KoShapeLoadingContext &context,
-                                                       const KoXmlElement &element) const
+        KoShapeLoadingContext &context,
+        const KoXmlElement &element) const
 {
     // Pair of namespace, tagname
     QPair<QString, QString> p = QPair<QString, QString>(element.namespaceURI(), element.tagName());
 
     // Remove duplicate lookup.
     if (!factoryMap.contains(p))
+    {
         return 0;
+    }
 
     QMultiMap<int, KoShapeFactoryBase*> priorityMap = factoryMap.value(p);
     QList<KoShapeFactoryBase*> factories = priorityMap.values();
@@ -291,7 +324,9 @@ KoShape *KoShapeRegistry::Private::createShapeInternal(const KoXmlElement &fullE
 #ifndef NDEBUG
     debugFlake << "Supported factories for=" << p;
     foreach (KoShapeFactoryBase *f, factories)
+    {
         debugFlake << f->id() << f->name();
+    }
 #endif
 
     // Loop through all shape factories. If any of them supports this
@@ -306,25 +341,31 @@ KoShape *KoShapeRegistry::Private::createShapeInternal(const KoXmlElement &fullE
     // try the next.
     //
     // Higher numbers are more specific, map is sorted by keys.
-    for (int i = factories.size() - 1; i >= 0; --i) {
+    for (int i = factories.size() - 1; i >= 0; --i)
+    {
         KoShapeFactoryBase * factory = factories[i];
-        if (factory->supports(element, context)) {
+        if (factory->supports(element, context))
+        {
             KoShape *shape = factory->createShapeFromOdf(fullElement, context);
-            if (shape) {
+            if (shape)
+            {
                 debugFlake << "Shape found for factory " << factory->id() << factory->name();
                 // we return the top-level most shape as thats the one that we'll have to
                 // add to the KoShapeManager for painting later (and also to avoid memory leaks)
                 // but don't go past a KoShapeLayer as KoShape adds those from the context
                 // during loading and those are already added.
                 while (shape->parent() && dynamic_cast<KoShapeLayer*>(shape->parent()) == 0)
+                {
                     shape = shape->parent();
+                }
 
                 return shape;
             }
             // Maybe a shape with a lower priority can load our
             // element, but this attempt has failed.
         }
-        else {
+        else
+        {
             debugFlake << "No support for" << p << "by" << factory->id();
         }
     }
@@ -340,7 +381,8 @@ QList<KoShapeFactoryBase*> KoShapeRegistry::factoriesForElement(const QString &n
     QMultiMap<int, KoShapeFactoryBase*> priorityMap = d->factoryMap.value(p);
     QList<KoShapeFactoryBase*> shapeFactories;
     // sort list by priority
-    foreach(KoShapeFactoryBase *f, priorityMap) {
+    foreach(KoShapeFactoryBase *f, priorityMap)
+    {
         shapeFactories.prepend(f);
     }
 
