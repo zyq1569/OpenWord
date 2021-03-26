@@ -1,0 +1,255 @@
+< Calligra‎ | Words‎ | Tutorials
+Calligra/Words/Tutorials/LoadingOdf
+
+Contents
+1 About this document
+2 KWord codebase
+3 libs/store
+4 libs/odf
+5 libs/main
+6 libs/flake
+7 libs/kotext
+7.1 libs/kotext/opendocument/
+7.2 libs/kotext/styles/
+8 Other libraries
+8.1 libs/pigment
+8.2 libs/koproperty
+8.3 libs/kopageapp
+9 plugins/textshape
+10 kword/part
+11 Summary
+11.1 KoOdfReadStore
+11.2 KWDocument
+11.3 KWOdfLoader
+11.4 TextShape
+11.5 KoTextSharedLoadingData
+11.6 KoTextShapeData
+11.7 KoTextLoader
+11.8 KoParagraphStyle
+About this document
+Getting started with KWord development can be quite a task. You have to have a good knowledge of C++, Qt, the Scribe framework, KDE (kdelibs), OpenDocument and finally kword itself.
+
+This document will help you understand how ODF loading works in kword. Note that this document is meant to read with the code alongside. Therefore, having a checkout of the koffice code is essential to make the most of this document. You also, probably want to read this document atleast twice to make total sense of it :-)
+
+The paths below are relative to the koffice code. It is important to note that when I say 'koffice', I mean the KOffice suite (kword, kexi, kspread).
+
+KWord codebase
+libs/* - libraries used by all of koffice
+plugins/* - koffice plugins
+kword/* - kword code
+kword/part/* - kword kpart. kword is implemented as part making it possible to embed it inside other KDE applications
+libs/store
+An ODF is really a zip archive. The 'store' library implements reading/writing of file stores - it can extract contents of files from tgz, zip, tar stores.
+
+KoStore provides an abstract interface to read/write stores. The actual reading/writing is implemented using various backends - KoZipStore, KoTarStore. KoStore::createStore() is a factory method to which you can pass a filename (store name). It will auto detect (optionally) the appropriate backend. You can then KoStore::open() files inside the store and read contents using KoStore::device(). One overload of KoStore::createStore() takes a widget argument, which is used by KoStore to create dialog that can query password from the user.
+
+KoXmlReader and KoXmlWriter can read and write XML. It is an alternative implementation of the QDom API. It exists because QDom is slow. And the API is an exact replica so as to enable switching to and from QDom with ease.
+
+libs/odf
+This library provides classes to load odf files.
+
+KoXmlNS contains common ODF XML namespaces.
+
+To read ODF, first you create a KoOdfReadStore by passing it a KoStore. Calling loadAndParse() then makes the various standard odf files (contents, style, settings) available as DOM documents. For example, contentsDoc() provides the contents.xml. It is left to the user of this library to interpret the contents of the document. There is another overload of loadAndParse() which can used to just get a KoXmlDocument from a file (this is just a convenience function. setting some flags on the xml reader for white space processing).
+
+KoOdfReadStore::loadAndParse() uses KoOdfStylesReader to read the styles in the odf. KoOdfStylesReader keeps track of the automatic, custom styles in content.xml, styles.xml, the list styles, the font faces and so on. It maintains a QMap<QString, KoXmlElement *> each for lists, paragraphs, character styles and so on. You can use KoOdfStyleReader::findStyle() to query the style's xml. It also provides the default styles for a particular family.
+
+KoUnit helps you to convert from one metric to another (px to pt for instance).
+
+KoStyleStack is a stack onto which you can push styles. If a paragraph has a style S1 and S1 has a parent P1 and P1 has a parent P2, then we have to look into all these styles to query a (paragraph) style property (First S1, if it's missing in S1 then P1, and if it's missing in P1 toothen P2). You can query a property using KoStyleStack::property(). Since a style can have child property elements like paragraph-properties or text-properties, you have to tell property() which child to look inside by using KoStyleStack::setTypeProperties(). Populating the style stack for an element is normally done using KoOdfLoadingContext::fillStyleStack() or KoOdfLoadingContext::addStyles().
+
+KoOdfLoadingContext binds together all the objects that are used during loading of odf. You will find this context object being passed around, so one can access the following at any time:
+
+The KoStore (i.e the odf)
+The KoOdfStylesReader (i.e the styles in the odf)
+The KoStyleStack
+You can call fillStyleStack() and then access the value for a style using styleStack().property(/*"font-weight"*/)
+TODO
+
+KoGenStyle
+KoGenStyles
+KoOdfWriteStore
+libs/main
+This contains the document/view infrastructure that is used in all KOffice applications. KOffice applications subclass the classes here for their needs.
+
+KoDocument is the document. It has a virtual function loadOdf that is expected to be implemented by the appropriate koffice application. When a user clicks File->Open, it will eventually end up in KoDocument::loadOdf().
+
+libs/flake
+The Flake library provides infrastructure for creating and manipulating items on a canvas (similar to GraphicsView but flake predates it). The library consists of 3 important concepts:
+
+Shapes - Example of shapes are text shape, image shape, video shape and so on. A shape maybe non-rectangular. Shapes can be placed along side each other, nested, grouped and layouted at will. Think of images and videos being embedded inside word/text documents.
+Tools - Tools process input (mouse, keyboard, tablet). There is a 'default tool' for each input device. When the user manipulates a shape using an input device, the event is forwarded by the canvas to the current tool.
+Dockers - Dockers provide the UI to manipulate Shapes. For example, the 'bold', 'underline' buttons all form part of the 'textshape docker'.
+Shapes are implemented using a plugin framework (Qt plugins). The Shape, tools, dockers for a flake are packaged as one plugin. When the plugin gets loaded, the plugin registers a factory to create its shapes (KoShapeFactory) and tools (KoToolFactory) with the KoShapeRegistry and KoToolRegistry.
+
+KoShapeFactory has a method called KoShapeFactory::supports(KoXmlElement) which can be used to check if the shape supports loading a particular XML. KoShapeFactory creates concrete KoShapes on demand.
+
+KoShape is an abstract class (its not a a QObject) from which all shapes derive from. Shapes can be transformed, moved, set a size. The parent of a shape may be a KoShapeContainer which can be used to group shapes. KoShape has two important self explanatory methods - saveOdf() and loadOdf(). These functions take KoShapeSavingContext and KoShapeLoadingContext. Custom data can be attached to KoShape by subclassing KoShapeUserData and then using KoShape::setUserData().
+
+Shapes are placed inside the canvas - concrete canvas are derivates of KoCanvasBase. For example, KWord reimplements KoCanvasBase (KWCanvas) to implement a "page based" canvas. The canvas keeps track of all the shapes inside it using KoShapeManager.
+
+KoShapeManager can tell you the shapes at a given point. In addition, it also helps track the current selection as alist of shapes as the current selection (using KoSelection).
+
+KoTool is an abstract class (QObject) from which all tools derive. When the plugin is loaded, the tools are registered with the KoToolRegistry. The canvas forwards all input events to the current tool and you will find all the input event handlers like mousePressEvent, mouseReleaseEvent and so on. Note that a tool does not know maintain a pointer to the shape it can manipulate. It will query the shape to manipulate at run time using KoShapeManager (KoCanvasBase::shapeManager()). This is important since the life of a tool outlives the life of a shape. Also note that since tools know about the canvas, they can set the cursor and scroll/update the canvas.
+
+Dockers are provided by the tools class itself. The docker/option widget is returned with KoTool::createOptionsWidget().
+
+KoShapeLoadingContext provides context when a shape is being loaded. It is contructed using a KoOdfLoadingContext. In addition it maintains a QMap<QString, KoSharedLoadingData *>. Given a "unique id", you can retreive an KoSharedLoadingData.
+
+Recommended reading:
+
+Tutorial on how to write a Flake plugin
+KOffice Overview tutorial
+API docs
+libs/kotext
+This library builds upon the Qt Scribe framework to add ODF specific features to QTextDocument. The responsibility of this library is to appropriately translate ODF into QTextDocument and vice versa. It also performs the rendering and layout of the contents using KoTextDocumentLayout.
+
+KoTextShapeData is a subclass of KoShapeUserData and provides the custom data for the textshape flake. This object contains the QTextDocument for a text shape. It contains a method loadOdf(KoXmlElement, KoShapeLoadingContext) that is the entry point to loading ODF documents into a QTextDocument. It promptly delegates the responsibility of loading ODF to KoTextLoader (see below).
+
+Recommended reading: Qt Scribe
+
+libs/kotext/opendocument/
+KoTextSharedLoadingData loads and maintains the list of styles for the entire document (a document can have multiple flakes). One can query styles by name using characterStyle(QString), paragraphStyle(QString) and so on. You need to provide a KoOdfLoadingContext when creating a KoTextSharedLoadingData. Recall that KoOdfLoadingContext contains the KoOdfStyleReader which maintains a map QMap<QString name_of_style, KoXmlElement xml>. KoOdfLoadingContext takes the QMap in the reader and translates them into C++ structures - KoParagraphStyle and KoCharacterStyle. In addition, it also saves the office:styles in the KoStyleManager. The automatic styles are marked for deletion after the loading phase (in the destructor of KoTextSharedLoadingData, the automatic styles are deleted).
+
+KoTextLoader loads an ODF file and translates it into QTextDocument. When creating a KoTextLoader, you pass it a KoShapeLoadingContext. KoTextLoader somehow needs access to all the styles in the document - so it somehow needs access to a KoTextSharedLoadingData. Recall that the KoShapeLoadingContext has a map of QMap<QString, KoSharedLoadingData *> and the KoOdfLoadingContext. When the document is loaded, KWOdfLoader (see below) conveniently places a copy of the KoShapeLoadingContext in the map using KoShapeLoadingContext::addSharedData(). So, KoTextLoader can now get a KoTextSharedLoadingData from the KoShapeLoadingContext using the KOTEXT_SHARED_LOADING_ID string and uses it to access the styles in the odf.
+
+libs/kotext/styles/
+KoParagraphStyle, KoCharacterStyle can load/save paragraph and text style of ODF. They store the properties as a QMap<int property, QVariant value>. You can use ::applyStyle() to copy over these properties from the map into a QTextBlockFormat or a QTextCharFormat.
+
+KoStyleManager maintains a list of all office:styles as KoParagraphStyle and KoCharacterStyle and provides them with a unique id. It is possible to convert these into QTextBlockFormat and QTextCharFormat respectively (to save them as formats in the QTextDocument). The unique id generated is store as a part of these formats as the KoParagraphStyle::StyleId and KoCharacterStyle::StyleId. In code,
+
+int uniqueId = format.intProperty(KoCharacterStyle::StyleId);
+KoCharacterStyle *style = styleManager->characterStyle(uniqueId);
+You can also query styles by name when it is a user-visible style. A single KoStyleManager exists for each textshape flake in the application. It is created by the textshape flake when the plugin is loaded (see plugins/textshape/TextShapeFactory::populateDataCenterMap).
+
+Other libraries
+libs/pigment
+Krita stuff, so here is a very brief introduction. From what I understood from the wiki.kde.org:
+
+It is a color management library. If you create a QColor(red), it may not end up as red on the screen, thanks to the fact that many CRT monitor don't display colors accurately. So what is required is a just-in-time color modifier based on the monitor :-) You store everything in KoColor instead of QColor. When you want to paint, you can convert KoColor to QColor. The returned QColor will display as 'red' in the monitor.
+
+Long term goal is to use pigment all over office (including kword).
+
+Recommended reading:
+
+API docs
+libs/koproperty
+A generic properties framework. Main classes of this framework are:
+
+Property, representing a single property with its own type and value
+Set, a set of properties
+Editor, a widget for displaying and editing properties provided by a Set object. Every property has its own row displayed using EditorItem object, within Editor widget.
+Widget class provides editing feature for EditorItem objects if a user selects a given item.
+The framework is currently used by Kexi. The property editor widget looks like the one in Qt designer. Read more.
+
+libs/kopageapp
+KoPageApp is the canvas and 'page' implementation build on top of flake for applications that have different pages. KPresenter, Kivio are build on top of it. KWord does not use kopageapp yet, since KWord pagination was written before kopageapp.
+
+plugins/textshape
+The text shape plugin implements a text shape. It provides tools and dockers that can manipulate text.
+
+TextShape uses the libs/kotext library to load/save odf. So, the first thing it does is to create a KoTextShapeData. Recall that libs/kotext does not layout stuff - it only translated ODF to QTextDocument. TextShape extends the features of KoTextDocumentLayout to provide kword specific features using Layout class (Layout.cpp).
+
+kword/part
+This is the "main" kword code. It is also a kpart which enables us to embed it in other KDE applications.
+
+This contains specializations of the classes in libs/main specific to kword.
+
+KWDocument is a subclass of KoDocument and it implements KoDocument::loadOdf() to load text odf documents. It uses KWOdfLoader to help it load odf documents. KWOdfLoader::load() is the start of all action.
+
+Summary
+The following shows the steps taken by KWord to load an odf. Code reads much faster than words, so here is the pseudo code:
+
+KoOdfReadStore
+KoOdfReadStore::KoOdfReadStore(KoStore *store) 
+{
+}
+KoOdfReadStore::loadAndParse() 
+{
+    // The code below caches the styles as 
+    // QHash<QString /*family*/, QMap<QString /*stylename*/, KoXmlElement *> in the KoOdfStyleReader
+    stylesReader->createStylesMap(KoXmlDocument("styles.xml")); // stylesReader is member variable
+    stylesReader->createStylesMap(KoXmlDocument("contents.xml"));
+}
+KWDocument
+KWDocument::KWDocument() 
+{
+    foreach(shapeFactory, registeredShapeFactories) 
+    {
+        shapeFactory->initializeDataCanterMap(m_datacenter); // so now we can use m_datacenter["StyleManager"]
+                                                             // to get KoStyleManager
+    }
+}
+KWDocument::loadOdf(KoOdfReadStore readStore) 
+{
+    KWOdfLoader loader;
+    loader.load(readStore);
+}
+KWOdfLoader
+KWOdfLoader::loadOdf(KoOdfReadStore readStore) 
+{
+    KoOdfLoadingContext odfContext(readStore.styles() /* KoOdfStyleReader */, readStore.store() /* KoStore */);
+    KoShapeLoadingContext shapeContext(odfContext);  
+ 
+    KoTextSharedLoadingData *sharedData = new KoTextSharedLoadingData; // the real code creates KWOdfSharedLoadingData
+                                                                       // (no idea why it exists)
+    sharedData->loadOdfStyles(odfContext, m_datacenter["StyleManager"]); // now we have loaded up all the styles! (see below)
+    shapeContext.addSharedData(KOTEXT_SHARED_LOADING_ID, sharedData); // remember the QMap<QString, KoSharedLoadingData *> ? 
+    // good, now lets create the shape
+    KoShape *textShape = get_the_textshapefactory_and_then_create_an_instance(); // see TextShape below
+    KoTextShapeData *shapeData = textShape->userData();
+    shapeData->loadOdf(readStore.contentDoc().getElement("text"), shapeContext); // load data from the "text" element
+}
+TextShape
+TextShape::TextShape()
+{
+    m_userData = new KoTextShapeUserData
+    setUserData(m_userData);
+    m_userData->document()->setDocumentLayout(new Layout); // Layout derives from KoTextDocumentLayout
+}
+KoTextSharedLoadingData
+KoTextSharedLoadingData::loadOdfStyles(KoOdfSharedLoadingContext context, KoStyleManager *manager) 
+{
+    get_styles_out_of_stylesReader; // context.styles() returns the KoOdfStylesReader
+    parse automatic paragraph, list, character styles in content.xml
+    parse automatic paragraph, list, character styles in styles.xml
+    insert office:styles into the manager
+}
+KoTextShapeData
+KoTextShapeData::KoTextShapeData() 
+{
+     m_document = new QTextDocument();
+}
+KoTextShapeData::loadOdf(KoXmlElement text, KoShapeLoadingContext context) 
+{
+    KoTextLoader loader(context);
+    loader.loadBody(text, m_document);
+}
+KoTextLoader
+KoTextLoader::loadBody(KoXmlElement text, QTextDocument *document) 
+{
+    inspect the text element;
+    if paragraph loadParagraph(), else if list loadList() and so on;
+    uses the QTextCursor API to insert stuff in document;
+}
+KoTextLoader::loadParagraph(KoXmlElement para) 
+{
+    if (para_has_style_attribute) {
+        KoParagraphStyle *style = context.sharedData(KOTEXT_SHARED_LOADING_ID).paragraphStyle(style_attribute_value);
+    }
+    insert_block; // QTextCursor API
+    style->appleStyle(newlyInsertedBlock); // merges properties of block and the style
+}
+KoParagraphStyle
+KoParagraphStyle::applyStyle(KoXmlElement element, KoOdfLoadingContext context) 
+{
+    context.addStyles(element, "paragraph"); // load me and all my parents in the context.styleStack()
+    context.styleStack().setTypeProperities("paragraph"); // Use <style:paragraph-properties>
+                                                          // to return ::property() values (see below)
+    loadOdfProperties(context.styleStack());
+}
+KoParagraphStyle::loadOdfProperties(KoOdfStyleStack stack) 
+{
+    query and save all values we support. for eg. stack.property(KoXmlNS::fo, "background-color");
+}
+-- Girish Ramakrishnan (girish@forwardbias.in)
