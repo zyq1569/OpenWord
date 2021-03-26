@@ -36,10 +36,10 @@ static const int timeoutTime = 5000; // in msec
 
 extern "C"
 {
-Q_DECL_EXPORT ThumbCreator *new_creator()
-{
-    return new CalligraCreator;
-}
+    Q_DECL_EXPORT ThumbCreator *new_creator()
+    {
+        return new CalligraCreator;
+    }
 }
 
 CalligraCreator::CalligraCreator()
