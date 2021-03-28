@@ -26,14 +26,15 @@
 
 class KoShape;
 class KoGridData;
-struct ViewModeSynchronisationObject {
+struct ViewModeSynchronisationObject
+{
     ViewModeSynchronisationObject()
         : initialized(false)
         , currentIndex(-1)
         , scrollBarValue(QPoint())
         , zoomLevel(0)
         , gridData(0)
-        { }
+    { }
 
     bool initialized;
 
@@ -50,28 +51,33 @@ struct ViewModeSynchronisationObject {
 class ViewModeSwitchEvent : public QEvent
 {
 public:
-    enum ViewModeEventType {
+    enum ViewModeEventType
+    {
         AboutToSwitchViewModeEvent = QEvent::User + 1,
         SwitchedToDesktopModeEvent,
         SwitchedToTouchModeEvent,
     };
 
     inline ViewModeSwitchEvent(ViewModeEventType type, QObject* fromView, QObject* toView, ViewModeSynchronisationObject* syncObject)
-            : QEvent(static_cast<QEvent::Type>(type))
-            , m_fromView(fromView)
-            , m_toView(toView)
-            , m_syncObject(syncObject) {
+        : QEvent(static_cast<QEvent::Type>(type))
+        , m_fromView(fromView)
+        , m_toView(toView)
+        , m_syncObject(syncObject)
+    {
 
     }
 
-    inline QObject* fromView() const {
+    inline QObject* fromView() const
+    {
         return m_fromView;
     }
-    inline QObject* toView() const {
+    inline QObject* toView() const
+    {
         return m_toView;
     }
 
-    inline ViewModeSynchronisationObject* synchronisationObject() const {
+    inline ViewModeSynchronisationObject* synchronisationObject() const
+    {
         return m_syncObject;
     }
 
