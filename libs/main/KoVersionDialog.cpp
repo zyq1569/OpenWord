@@ -239,7 +239,7 @@ void KoVersionDialog::slotOpen()
         }
         KoMainWindow *mainWindow = part->createMainWindow();
         mainWindow ->openDocument(QUrl::fromLocalFile(tmp.fileName()));
-        mainWindow->setWindowTitle("Test Openword");
+        ///mainWindow->setWindowTitle("Test Openword");
         mainWindow ->show();
     }
     else

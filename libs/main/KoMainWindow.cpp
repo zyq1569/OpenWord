@@ -865,6 +865,7 @@ void KoMainWindow::slotLoadCompleted()
         // (Note : could create the main window first and the doc next for this
         // particular case, that would give a better user feedback...)
         KoMainWindow *s = newpart->createMainWindow();
+        ///s->setWindowTitle("Test Openword");
         s->show();
         newpart->removeMainWindow(this);
         s->setRootDocument(newdoc, newpart);
@@ -1456,6 +1457,7 @@ void KoMainWindow::chooseNewDocument(InitDocFlags initDocFlags)
     if ((!doc && initDocFlags == InitDocFileNew) || (doc && !doc->isEmpty()))
     {
         KoMainWindow *s = newpart->createMainWindow();
+        ///s->setWindowTitle("Test Openword");
         s->show();
         newpart->addMainWindow(s);
         newpart->showStartUpWidget(s, true /*Always show widget*/);
@@ -2308,6 +2310,7 @@ void KoMainWindow::newView()
 
     KoMainWindow *mainWindow = d->activePart->createMainWindow();
     mainWindow->setRootDocument(d->activeView->koDocument(), d->activePart);
+    ///mainWindow->setWindowTitle("Test Openword");
     mainWindow->show();
 }
 
