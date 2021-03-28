@@ -24,8 +24,7 @@
     //    QLoggingCategory::setFilterRules("calligra.*.debug=true\n"
     //                                     "calligra.*.warning=true");
 
-    QLoggingCategory::setFilterRules("calligra.*=true\n"
-                                     "calligra.*.warning=true");
+    QLoggingCategory::setFilterRules("calligra.*.debug=true\n calligra.*.warning=true");
     KoApplication app(WORDS_MIME_TYPE, QStringLiteral("calligrawords"), newWordsAboutData, argc, argv);
     INFO_LOG("----Word start to run!-----");//must after:KoApplication
     // Migrate data from kde4 to kf5 locations
