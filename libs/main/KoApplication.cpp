@@ -360,7 +360,10 @@ bool KoApplication::start()
         KoDocument *doc = part->document();
 
         KoMainWindow *mainWindow = part->createMainWindow();
+        ///mainWindow->setWindowTitle("Test Openword");
+        ///mainWindow->setCaption("Test Openword",true);
         mainWindow->show();
+        INFO_LOG("WindowTitle:"+mainWindow->windowTitle());
         QObject::connect(doc, SIGNAL(sigProgress(int)), mainWindow, SLOT(slotProgress(int)));
         // for initDoc to fill in the recent docs list
         // and for KoDocument::slotStarted

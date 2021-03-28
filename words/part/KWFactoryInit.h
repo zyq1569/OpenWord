@@ -29,7 +29,9 @@ class KWFactoryInit : public KWFactory
     Q_INTERFACES(KPluginFactory)
 
 public:
-    explicit KWFactoryInit() : KWFactory() {}
+    explicit KWFactoryInit() : KWFactory()
+    {
+    }
     ~KWFactoryInit() override;// {}
 
 };
