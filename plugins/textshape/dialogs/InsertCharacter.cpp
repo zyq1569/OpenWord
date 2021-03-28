@@ -45,10 +45,14 @@ InsertCharacter::InsertCharacter(QWidget *parent)
     setObjectName("insertSpecialCharacter");
     setWidget(specialCharacterWidget);
     while (parent->parentWidget())
+    {
         parent = parent->parentWidget();
+    }
     QMainWindow *mw = dynamic_cast<QMainWindow*>(parent);
     if (mw)
+    {
         mw->addDockWidget(Qt::TopDockWidgetArea, this);
+    }
     setFloating(true);
 
     connect(close, SIGNAL(released()), this, SLOT(hide()));
