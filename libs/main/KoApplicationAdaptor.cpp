@@ -32,8 +32,8 @@
 #include "KoView.h"
 
 KoApplicationAdaptor::KoApplicationAdaptor(KoApplication *parent)
-        : QDBusAbstractAdaptor(parent)
-        , m_application(parent)
+    : QDBusAbstractAdaptor(parent)
+    , m_application(parent)
 {
     // constructor
     setAutoRelaySignals(true);
@@ -47,16 +47,19 @@ KoApplicationAdaptor::~KoApplicationAdaptor()
 //QString KoApplicationAdaptor::createDocument(const QString &nativeFormat)
 //{
 //    KoDocumentEntry entry = KoDocumentEntry::queryByMimeType(nativeFormat);
-//    if (entry.isEmpty()) {
+//    if (entry.isEmpty())
+//    {
 //        KMessageBox::questionYesNo(0, i18n("Unknown Calligra MimeType %1. Check your installation.", nativeFormat));
 //        return QString();
 //    }
 //    KoPart *part = entry.createKoPart(0);
-//    if (part) {
+//    if (part)
+//    {
 //        m_application->addPart(part);
 //        return '/' + part->document()->objectName();
 //    }
-//    else {
+//    else
+//    {
 //        return QString();
 //    }
 //}
@@ -65,7 +68,8 @@ QStringList KoApplicationAdaptor::getDocuments()
 {
     QStringList lst;
     QList<KoPart*> parts = m_application->partList();
-    foreach(KoPart *part, parts) {
+    foreach(KoPart *part, parts)
+    {
         lst.append('/' + part->document()->objectName());
     }
     return lst;
@@ -75,8 +79,10 @@ QStringList KoApplicationAdaptor::getViews()
 {
     QStringList lst;
     QList<KoPart*> parts = m_application->partList();
-    foreach(KoPart *part, parts) {
-        foreach(KoView* view, part->views()) {
+    foreach(KoPart *part, parts)
+    {
+        foreach(KoView* view, part->views())
+        {
             lst.append('/' + view->objectName());
         }
     }
@@ -88,8 +94,10 @@ QStringList KoApplicationAdaptor::getWindows()
 {
     QStringList lst;
     QList<KMainWindow*> mainWindows = KMainWindow::memberList();
-    if (!mainWindows.isEmpty()) {
-        foreach(KMainWindow* mainWindow, mainWindows) {
+    if (!mainWindows.isEmpty())
+    {
+        foreach(KMainWindow* mainWindow, mainWindows)
+        {
             lst.append(static_cast<KoMainWindow*>(mainWindow)->objectName());
         }
     }

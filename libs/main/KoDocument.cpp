@@ -860,7 +860,8 @@ bool KoDocument::saveNativeFormat(const QString & file)
     QByteArray mimeType = d->outputMimeType;
     debugMain << "KoDocument::savingTo mimeType=" << mimeType;
     QByteArray nativeOasisMime = nativeOasisMimeType();
-    bool oasis = !mimeType.isEmpty() && (mimeType == nativeOasisMime || mimeType == nativeOasisMime + "-template" || mimeType.startsWith("application/vnd.oasis.opendocument"));
+    bool oasis = !mimeType.isEmpty() && (mimeType == nativeOasisMime ||
+                                         mimeType == nativeOasisMime + "-template" || mimeType.startsWith("application/vnd.oasis.opendocument"));
 
     // TODO: use std::auto_ptr or create store on stack [needs API fixing],
     // to remove all the 'delete store' in all the branches
@@ -2579,10 +2580,12 @@ static const unsigned int numTN2DT = sizeof(TN2DTArray) / sizeof(*TN2DTArray);
 QString KoDocument::tagNameToDocumentType(const QString& localName)
 {
     for (unsigned int i = 0 ; i < numTN2DT ; ++i)
+    {
         if (localName == TN2DTArray[i].localName)
         {
             return i18n(TN2DTArray[i].documentType);
         }
+    }
     return localName;
 }
 
@@ -2709,7 +2712,10 @@ int KoDocument::pageCount() const
     return 1;
 }
 
-void KoDocument::setupOpenFileSubProgress() {}
+void KoDocument::setupOpenFileSubProgress()
+{
+
+}
 
 KoDocumentInfoDlg *KoDocument::createDocumentInfoDialog(QWidget *parent, KoDocumentInfo *docInfo) const
 {

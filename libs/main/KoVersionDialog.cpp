@@ -43,7 +43,7 @@
 
 
 KoVersionDialog::KoVersionDialog(QWidget* parent, KoDocument *doc)
-        : KoDialog(parent)
+    : KoDialog(parent)
 {
     setCaption(i18n("Version"));
     setButtons(Close);
@@ -102,7 +102,8 @@ void KoVersionDialog::updateVersionList()
     // add all versions to the tree widget
     QList<KoVersionInfo> versions = m_doc->versionList();
     QList<QTreeWidgetItem *> items;
-    for (int i = 0; i < versions.size(); ++i) {
+    for (int i = 0; i < versions.size(); ++i)
+    {
         QStringList l;
         l.append(versions.at(i).date.toString());
         l.append(versions.at(i).saved_by);
@@ -124,13 +125,16 @@ void KoVersionDialog::updateButton()
 void KoVersionDialog::slotAdd()
 {
     KoVersionModifyDialog * dlg = new KoVersionModifyDialog(this, 0);
-    if (!dlg->exec()) {
+    if (!dlg->exec())
+    {
         delete dlg;
         return;
     }
 
     if (!m_doc->addVersion(dlg->comment()))
+    {
         KMessageBox::error(this, i18n("A new version could not be added"));
+    }
 
     delete dlg;
 
@@ -140,10 +144,14 @@ void KoVersionDialog::slotAdd()
 void KoVersionDialog::slotRemove()
 {
     if (!list->currentItem())
+    {
         return;
+    }
 
-    for (int i = 0; i < m_doc->versionList().size(); ++i) {
-        if (m_doc->versionList().at(i).date.toString() == list->currentItem()->text(0)) {
+    for (int i = 0; i < m_doc->versionList().size(); ++i)
+    {
+        if (m_doc->versionList().at(i).date.toString() == list->currentItem()->text(0))
+        {
             m_doc->versionList().takeAt(i);
             delete list->currentItem();
             return;
@@ -154,20 +162,27 @@ void KoVersionDialog::slotRemove()
 void KoVersionDialog::slotModify()
 {
     if (!list->currentItem())
+    {
         return;
+    }
 
     KoVersionInfo *version = 0;
-    for (int i = 0; i < m_doc->versionList().size(); ++i) {
-        if (m_doc->versionList().at(i).date.toString() == list->currentItem()->text(0)) {
+    for (int i = 0; i < m_doc->versionList().size(); ++i)
+    {
+        if (m_doc->versionList().at(i).date.toString() == list->currentItem()->text(0))
+        {
             version = &m_doc->versionList()[i];
             break;
         }
     }
     if (!version)
+    {
         return;
+    }
 
     KoVersionModifyDialog * dlg = new KoVersionModifyDialog(this, version);
-    if (dlg->exec()) {
+    if (dlg->exec())
+    {
         version->comment = dlg->comment();
         list->currentItem()->setText(2, version->comment);
     }
@@ -178,17 +193,23 @@ void KoVersionDialog::slotModify()
 void KoVersionDialog::slotOpen()
 {
     if (!list->currentItem())
+    {
         return;
+    }
 
     KoVersionInfo *version = 0;
-    for (int i = 0; i < m_doc->versionList().size(); ++i) {
-        if (m_doc->versionList().at(i).date.toString() == list->currentItem()->text(0)) {
+    for (int i = 0; i < m_doc->versionList().size(); ++i)
+    {
+        if (m_doc->versionList().at(i).date.toString() == list->currentItem()->text(0))
+        {
             version = &m_doc->versionList()[i];
             break;
         }
     }
     if (!version)
+    {
         return;
+    }
 
     QTemporaryFile tmp;
     tmp.setAutoRemove(false);
@@ -198,23 +219,31 @@ void KoVersionDialog::slotOpen()
     tmp.setPermissions(QFile::ReadUser);
     tmp.flush();
 
-    if (!m_doc->documentPart()->mainWindows().isEmpty()) { //open the version in a new window if possible
+    if (!m_doc->documentPart()->mainWindows().isEmpty())   //open the version in a new window if possible
+    {
         KoDocumentEntry entry = KoDocumentEntry::queryByMimeType(m_doc->nativeOasisMimeType());
-        if (entry.isEmpty()) {
+        if (entry.isEmpty())
+        {
             entry = KoDocumentEntry::queryByMimeType(m_doc->nativeFormatMimeType());
         }
         Q_ASSERT(!entry.isEmpty());
         QString errorMsg;
         KoPart *part= entry.createKoPart(&errorMsg);
-        if (!part) {
+        if (!part)
+        {
             if (!errorMsg.isEmpty())
+            {
                 KMessageBox::error(0, errorMsg);
+            }
             return;
         }
         KoMainWindow *mainWindow = part->createMainWindow();
         mainWindow ->openDocument(QUrl::fromLocalFile(tmp.fileName()));
+        mainWindow->setWindowTitle("Test Openword");
         mainWindow ->show();
-    } else {
+    }
+    else
+    {
         m_doc->openUrl(QUrl::fromUserInput(tmp.fileName()));
     }
 
@@ -223,7 +252,7 @@ void KoVersionDialog::slotOpen()
 }
 
 KoVersionModifyDialog::KoVersionModifyDialog(QWidget* parent, KoVersionInfo *info)
-        : KoDialog(parent)
+    : KoDialog(parent)
 {
     setCaption(i18n("Comment"));
     setButtons(Ok | Cancel);
@@ -237,14 +266,20 @@ KoVersionModifyDialog::KoVersionModifyDialog(QWidget* parent, KoVersionInfo *inf
 
     QLabel *l = new QLabel(page);
     if (info)
+    {
         l->setText(i18n("Date: %1", info->date.toString()));
+    }
     else
+    {
         l->setText(i18n("Date: %1", QDateTime::currentDateTime().toString(Qt::ISODate)));
+    }
     grid1->addWidget(l);
 
     m_textEdit = new QTextEdit(page);
     if (info)
+    {
         m_textEdit->setText(info->comment);
+    }
     grid1->addWidget(m_textEdit);
 
 }
