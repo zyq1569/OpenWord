@@ -221,7 +221,7 @@ KoFillConfigWidget::KoFillConfigWidget(QWidget *parent)
     QPixmap noFillButtonIcon((const char **) buttonnone);
     noFillButtonIcon.setMask(QBitmap(noFillButtonIcon));
     button->setIcon(noFillButtonIcon);
-    button->setToolTip(/*i18nc*/("No stroke or fill", "None"));
+    button->setToolTip(i18nc("No stroke or fill", "None"));
     button->setCheckable(true);
     d->group->addButton(button, None);
     layout->addWidget(button);
@@ -229,7 +229,7 @@ KoFillConfigWidget::KoFillConfigWidget(QWidget *parent)
     // The button for solid fill
     button = new KoGroupButton(KoGroupButton::GroupCenter, this);
     button->setIcon(QPixmap((const char **) buttonsolid));
-    button->setToolTip(/*i18nc*/("Solid color stroke or fill", "Solid"));
+    button->setToolTip(i18nc("Solid color stroke or fill", "Solid"));
     button->setCheckable(true);
     d->group->addButton(button, Solid);
     layout->addWidget(button);
@@ -237,7 +237,7 @@ KoFillConfigWidget::KoFillConfigWidget(QWidget *parent)
     // The button for gradient fill
     button = new KoGroupButton(KoGroupButton::GroupCenter, this);
     button->setIcon(QPixmap((const char **) buttongradient));
-    button->setToolTip(/*i18n*/("Gradient"));
+    button->setToolTip(i18n("Gradient"));
     button->setCheckable(true);
     d->group->addButton(button, Gradient);
     layout->addWidget(button);

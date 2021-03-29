@@ -230,7 +230,7 @@ inline QString prependContext(const char *ctxt)
  */
 inline KUndo2MagicString kundo2_i18nc(const char *ctxt, const char *text)
 {
-    return KUndo2MagicString(/*i18nc*/(prependContext(ctxt).toLatin1().data(), text));
+    return KUndo2MagicString(i18nc(prependContext(ctxt).toLatin1().data(), text));
 }
 
 template <typename A1>
@@ -254,7 +254,7 @@ inline KUndo2MagicString kundo2_i18nc(const char *ctxt, const char *text, const 
 template <typename A1, typename A2, typename A3, typename A4>
 inline KUndo2MagicString kundo2_i18nc(const char *ctxt, const char *text, const A1 &a1, const A2 &a2, const A3 &a3, const A4 &a4)
 {
-    return KUndo2MagicString(/*i18nc*/(prependContext(ctxt).toLatin1().data(), text, a1, a2, a3, a4));
+    return KUndo2MagicString(i18nc(prependContext(ctxt).toLatin1().data(), text, a1, a2, a3, a4));
 }
 
 /**

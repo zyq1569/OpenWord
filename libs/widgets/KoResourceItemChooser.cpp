@@ -155,21 +155,21 @@ KoResourceItemChooser::KoResourceItemChooser(QSharedPointer<KoAbstractResourceSe
 
     QPushButton *button = new QPushButton(this);
     button->setIcon(koIcon("document-open"));
-    button->setToolTip(/*i18nc*/("@info:tooltip", "Import resource"));
+    button->setToolTip(i18nc("@info:tooltip", "Import resource"));
     button->setEnabled(true);
     d->buttonGroup->addButton(button, Button_Import);
     d->buttonLayout->addWidget(button, 0, 0);
 
     button = new QPushButton(this);
     button->setIcon(koIcon("trash-empty"));
-    button->setToolTip(/*i18nc*/("@info:tooltip", "Delete resource"));
+    button->setToolTip(i18nc("@info:tooltip", "Delete resource"));
     button->setEnabled(false);
     d->buttonGroup->addButton(button, Button_Remove);
     d->buttonLayout->addWidget(button, 0, 1);
 
     button = new QPushButton(this);
     button->setIcon(koIcon("download"));
-    button->setToolTip(/*i18nc*/("@info:tooltip", "Download resource"));
+    button->setToolTip(i18nc("@info:tooltip", "Download resource"));
     button->setEnabled(true);
     button->hide();
     d->buttonGroup->addButton(button, Button_GhnsDownload);
@@ -177,7 +177,7 @@ KoResourceItemChooser::KoResourceItemChooser(QSharedPointer<KoAbstractResourceSe
 
     button = new QPushButton(this);
     button->setIcon(koIcon("go-up"));
-    button->setToolTip(/*i18nc*/("@info:tooltip", "Share Resource"));
+    button->setToolTip(i18nc("@info:tooltip", "Share Resource"));
     button->setEnabled(false);
     button->hide();
     d->buttonGroup->addButton(button, Button_GhnsUpload);

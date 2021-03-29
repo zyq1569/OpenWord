@@ -155,33 +155,33 @@ void KoGradientEditWidget::setupUI()
     QGridLayout* editLayout = new QGridLayout(this);
 
     int row = 0;
-    editLayout->addWidget(new QLabel(/*i18n*/("Target:"), this), row, 0);
+    editLayout->addWidget(new QLabel(i18n("Target:"), this), row, 0);
     m_gradientTarget = new QComboBox(this);
-    m_gradientTarget->insertItem(0, /*i18n*/("Line"));
-    m_gradientTarget->insertItem(1, /*i18n*/("Fill"));
+    m_gradientTarget->insertItem(0, i18n("Line"));
+    m_gradientTarget->insertItem(1, i18n("Fill"));
     m_gradientTarget->setCurrentIndex(FillGradient);
     editLayout->addWidget(m_gradientTarget, row, 1, 1, 2);
 
-    editLayout->addWidget(new QLabel(/*i18n*/("Type:"), this), ++row, 0);
+    editLayout->addWidget(new QLabel(i18n("Type:"), this), ++row, 0);
     m_gradientType = new QComboBox(this);
-    m_gradientType->insertItem(0, /*i18nc*/("Linear gradient type", "Linear"));
-    m_gradientType->insertItem(1, /*i18nc*/("Radial gradient type", "Radial"));
-    m_gradientType->insertItem(2, /*i18nc*/("Conical gradient type", "Conical"));
+    m_gradientType->insertItem(0, i18nc("Linear gradient type", "Linear"));
+    m_gradientType->insertItem(1, i18nc("Radial gradient type", "Radial"));
+    m_gradientType->insertItem(2, i18nc("Conical gradient type", "Conical"));
     editLayout->addWidget(m_gradientType, row, 1, 1, 2);
 
-    editLayout->addWidget(new QLabel(/*i18n*/("Repeat:"), this), ++row, 0);
+    editLayout->addWidget(new QLabel(i18n("Repeat:"), this), ++row, 0);
     m_gradientRepeat = new QComboBox(this);
-    m_gradientRepeat->insertItem(0, /*i18nc*/("No gradient spread", "None"));
-    m_gradientRepeat->insertItem(1, /*i18n*/("Reflect"));
-    m_gradientRepeat->insertItem(2, /*i18n*/("Repeat"));
+    m_gradientRepeat->insertItem(0, i18nc("No gradient spread", "None"));
+    m_gradientRepeat->insertItem(1, i18n("Reflect"));
+    m_gradientRepeat->insertItem(2, i18n("Repeat"));
     editLayout->addWidget(m_gradientRepeat, row, 1, 1, 2);
 
-    editLayout->addWidget(new QLabel(/*i18n*/("Overall opacity:"), this), ++row, 0);
+    editLayout->addWidget(new QLabel(i18n("Overall opacity:"), this), ++row, 0);
     m_opacity = new KoSliderCombo(this);
     m_opacity->setDecimals(0);
     editLayout->addWidget(m_opacity, row, 1, 1, 2);
 
-    editLayout->addWidget(new QLabel(/*i18n*/("Color stop:"), this), ++row, 0);
+    editLayout->addWidget(new QLabel(i18n("Color stop:"), this), ++row, 0);
     m_stopColor = new QToolButton(this);
     editLayout->addWidget(m_stopColor, row, 1);
     m_stopPosition = new QDoubleSpinBox(this);
@@ -189,10 +189,10 @@ void KoGradientEditWidget::setupUI()
     m_stopPosition->setSingleStep(0.01);
     editLayout->addWidget(m_stopPosition, row, 2);
     m_actionStopColor = new KoColorPopupAction(this);
-    m_actionStopColor ->setToolTip(/*i18n*/("Stop color."));
+    m_actionStopColor ->setToolTip(i18n("Stop color."));
     m_stopColor->setDefaultAction(m_actionStopColor);
 
-    m_addToPredefs = new QPushButton(/*i18n*/("&Add to Predefined Gradients"), this);
+    m_addToPredefs = new QPushButton(i18n("&Add to Predefined Gradients"), this);
     editLayout->addWidget(m_addToPredefs, ++row, 0, 1, 3);
 
     editLayout->setSpacing(3);

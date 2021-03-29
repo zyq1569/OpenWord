@@ -88,8 +88,8 @@ KoConfigGridPage::KoConfigGridPage(KoDocument* doc, char* name)
     d->spaceVertUSpin->setMinMaxStep(0.0, 1000, 0.1);
     d->spaceVertUSpin->setUnit(unit);
     d->spaceVertUSpin->changeValue(gd.gridY());
-    layoutSpacingGrp->addRow(/*i18nc*/("Horizontal grid spacing", "&Horizontal:"), d->spaceHorizUSpin);
-    layoutSpacingGrp->addRow(/*i18nc*/("Vertical grid spacing", "&Vertical:"), d->spaceVertUSpin);
+    layoutSpacingGrp->addRow(i18nc("Horizontal grid spacing", "&Horizontal:"), d->spaceHorizUSpin);
+    layoutSpacingGrp->addRow(i18nc("Vertical grid spacing", "&Vertical:"), d->spaceVertUSpin);
     hboxLayout->addLayout(layoutSpacingGrp);
     d->bnLinkSpacing = new KoAspectButton(spacingGrp);
     d->bnLinkSpacing->setKeepAspectRatio(gd.gridX() == gd.gridY());

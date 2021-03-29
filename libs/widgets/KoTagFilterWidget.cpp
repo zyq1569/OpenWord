@@ -47,7 +47,7 @@ public:
 KoTagFilterWidget::KoTagFilterWidget(QWidget* parent): QWidget(parent)
 ,d( new Private())
 {
-    d->tagSearchBarTooltip_saving_disabled = /*i18nc*/ (
+    d->tagSearchBarTooltip_saving_disabled = i18nc (
             "@info:tooltip",
             "<qt>Entering search terms here will add to, or remove resources from the current tag view."
             "<para>To filter based on the partial, case insensitive name of a resource:<br>"
@@ -61,7 +61,7 @@ KoTagFilterWidget::KoTagFilterWidget(QWidget* parent): QWidget(parent)
             "Create and/or switch to a different tag if you want to save filtered resources into named sets.</qt>"
             );
 
-    d->tagSearchBarTooltip_saving_enabled = /*i18nc*/ (
+    d->tagSearchBarTooltip_saving_enabled = i18nc (
             "@info:tooltip",
             "<qt>Entering search terms here will add to, or remove resources from the current tag view."
             "<para>To filter based on the partial, case insensitive name of a resource:<br>"

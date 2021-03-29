@@ -301,16 +301,16 @@ void KoToolBox::contextMenuEvent(QContextMenuEvent *event)
 
     if (!d->contextSize) {
 
-        d->contextSize = new QMenu(/*i18n*/("Icon Size"), this);
-        d->contextIconSizes.insert(d->contextSize->addAction(/*i18nc*/("@item:inmenu Icon size", "Default"),
+        d->contextSize = new QMenu(i18n("Icon Size"), this);
+        d->contextIconSizes.insert(d->contextSize->addAction(i18nc("@item:inmenu Icon size", "Default"),
                                                           this, SLOT(slotContextIconSize())),
                                    toolbuttonSize);
 
         QList<int> sizes;
         sizes << 12 << 14 << 16 << 22 << 32 << 48 << 64; //<< 96 << 128 << 192 << 256;
         foreach(int i, sizes) {
-//            d->contextIconSizes.insert(d->contextSize->addAction(/*i18n*/("%1x%2", i, i), this, SLOT(slotContextIconSize())), i);
-            d->contextIconSizes.insert(d->contextSize->addAction(("%1x%2",QString("%1").arg( i), QString("%1").arg(i)), this, SLOT(slotContextIconSize())), i);
+            d->contextIconSizes.insert(d->contextSize->addAction(i18n("%1x%2", i, i), this, SLOT(slotContextIconSize())), i);
+//            d->contextIconSizes.insert(d->contextSize->addAction(("%1x%2",QString("%1").arg( i), QString("%1").arg(i)), this, SLOT(slotContextIconSize())), i);
         }
 
         QActionGroup *sizeGroup = new QActionGroup(d->contextSize);

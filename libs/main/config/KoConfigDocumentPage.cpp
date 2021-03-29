@@ -72,14 +72,14 @@ KoConfigDocumentPage::KoConfigDocumentPage(KoDocument* doc, char* name)
     d->autoSave = new QSpinBox(gbDocumentSettings);
     d->autoSave->setRange(0, 60);
     d->autoSave->setSingleStep(1);
-    d->autoSave->setSpecialValueText(/*i18n*/("No autosave"));
-    d->autoSave->setSuffix(/*i18nc*/("unit symbol for minutes, leading space as separator", " min"));
+    d->autoSave->setSpecialValueText(i18n("No autosave"));
+    d->autoSave->setSuffix(i18nc("unit symbol for minutes, leading space as separator", " min"));
     d->autoSave->setValue(d->oldAutoSave);
-    layout->addRow(/*i18n*/("Autosave interval:"), d->autoSave);
+    layout->addRow(i18n("Autosave interval:"), d->autoSave);
 
     d->createBackupFile = new QCheckBox(gbDocumentSettings);
     d->createBackupFile->setChecked(d->oldBackupFile);
-    layout->addRow(/*i18n*/("Create backup file:"), d->createBackupFile);
+    layout->addRow(i18n("Create backup file:"), d->createBackupFile);
 }
 
 KoConfigDocumentPage::~KoConfigDocumentPage()

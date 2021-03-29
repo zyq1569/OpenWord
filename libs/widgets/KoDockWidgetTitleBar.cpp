@@ -62,14 +62,14 @@ KoDockWidgetTitleBar::KoDockWidgetTitleBar(QDockWidget* dockWidget)
     d->floatButton->setIcon(q->style()->standardIcon(QStyle::SP_TitleBarNormalButton, nullptr, q));
     connect(d->floatButton, SIGNAL(clicked()), SLOT(toggleFloating()));
     d->floatButton->setVisible(true);
-    d->floatButton->setToolTip(/*i18nc*/("@info:tooltip", "Float Docker"));
+    d->floatButton->setToolTip(i18nc("@info:tooltip", "Float Docker"));
     d->floatButton->setStyleSheet("border: 0");
 
     d->closeButton = new KoDockWidgetTitleBarButton(this);
     d->closeButton->setIcon(q->style()->standardIcon(QStyle::SP_TitleBarCloseButton, nullptr, q));
     connect(d->closeButton, SIGNAL(clicked()), q, SLOT(close()));
     d->closeButton->setVisible(true);
-    d->closeButton->setToolTip(/*i18nc*/("@info:tooltip", "Close Docker"));
+    d->closeButton->setToolTip(i18nc("@info:tooltip", "Close Docker"));
     d->closeButton->setStyleSheet("border: 0"); // border makes the header busy looking (appears on some OSs)
 
     d->collapseButton = new KoDockWidgetTitleBarButton(this);
@@ -77,7 +77,7 @@ KoDockWidgetTitleBar::KoDockWidgetTitleBar(QDockWidget* dockWidget)
     connect(d->collapseButton, SIGNAL(clicked()), SLOT(toggleCollapsed()));
     d->collapseButton->setVisible(true);
     d->collapsable = true;
-    d->collapseButton->setToolTip(/*i18nc*/("@info:tooltip", "Collapse Docker"));
+    d->collapseButton->setToolTip(i18nc("@info:tooltip", "Collapse Docker"));
     d->collapseButton->setStyleSheet("border: 0");
 
     d->lockButton = new KoDockWidgetTitleBarButton(this);
@@ -86,7 +86,7 @@ KoDockWidgetTitleBar::KoDockWidgetTitleBar(QDockWidget* dockWidget)
     connect(d->lockButton, SIGNAL(toggled(bool)), SLOT(setLocked(bool)));
     d->lockButton->setVisible(true);
     d->lockable = true;
-    d->lockButton->setToolTip(/*i18nc*/("@info:tooltip", "Lock Docker"));
+    d->lockButton->setToolTip(i18nc("@info:tooltip", "Lock Docker"));
     d->lockButton->setStyleSheet("border: 0");
 
     connect(dockWidget, SIGNAL(featuresChanged(QDockWidget::DockWidgetFeatures)), SLOT(featuresChanged(QDockWidget::DockWidgetFeatures)));

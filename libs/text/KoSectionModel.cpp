@@ -84,7 +84,7 @@ QString KoSectionModel::possibleNewName()
     int i = m_registeredSections.count();
     do {
         i++;
-        newName = /*i18nc*/("new numbered section name", "New section %1", i);
+        newName = i18nc("new numbered section name", "New section %1", i);
     } while (!isValidNewName(newName));
 
     return newName;

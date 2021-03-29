@@ -29,9 +29,9 @@ using namespace KoText;
 QStringList KoText::underlineTypeList()
 {
     QStringList lst;
-    lst << /*i18nc*/("Underline Style", "None");
-    lst << /*i18nc*/("Underline Style", "Single");
-    lst << /*i18nc*/("Underline Style", "Double");
+    lst << i18nc("Underline Style", "None");
+    lst << i18nc("Underline Style", "Single");
+    lst << i18nc("Underline Style", "Double");
     return lst;
 }
 
