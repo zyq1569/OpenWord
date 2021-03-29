@@ -78,9 +78,6 @@
 #include "MainDebug.h"
 #include <QDesktopWidget>
 
-
-//INITIALIZE_EASYLOGGINGPP
-
 KoApplication* KoApplication::KoApp = 0;
 
 namespace
@@ -363,7 +360,6 @@ bool KoApplication::start()
         ///mainWindow->setWindowTitle("Test Openword");
         ///mainWindow->setCaption("Test Openword",true);
         mainWindow->show();
-        INFO_LOG("WindowTitle:"+mainWindow->windowTitle());
         QObject::connect(doc, SIGNAL(sigProgress(int)), mainWindow, SLOT(slotProgress(int)));
         // for initDoc to fill in the recent docs list
         // and for KoDocument::slotStarted

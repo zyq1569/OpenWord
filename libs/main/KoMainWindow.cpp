@@ -476,6 +476,7 @@ KoMainWindow::~KoMainWindow()
     }
 
     delete d;
+    DEBUG_LOG("KoMainWindow::~KoMainWindow()");
 }
 
 void KoMainWindow::setRootDocument(KoDocument *doc, KoPart *part, bool deletePrevious)
@@ -741,6 +742,7 @@ void KoMainWindow::updateCaption()
 void KoMainWindow::updateCaption(const QString & caption, bool mod)
 {
     debugMain << "KoMainWindow::updateCaption(" << caption << "," << mod << ")";
+    INFO_LOG("KoMainWindow::updateCaption :"+caption);
 #ifdef CALLIGRA_ALPHA
     setCaption(QString("ALPHA %1: %2").arg(CALLIGRA_ALPHA).arg(caption), mod);
     return;
@@ -2367,6 +2369,7 @@ void KoMainWindow::createMainwindowGUI()
     }
 
     guiFactory()->addClient( this );
+//INFO_LOG("title:"+windowTitle());
 
 }
 
@@ -2390,6 +2393,7 @@ void KoMainWindow::setActivePart(KoPart *part, QWidget *widget )
     if (part && d->m_registeredPart.data() != part)
     {
         warnMain << "trying to activate a non-registered part!" << part->objectName();
+        INFO_LOG("trying to activate a non-registered part!" + part->objectName());
         return; // don't allow someone call setActivePart with a part we don't know about
     }
 
