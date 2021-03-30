@@ -24,9 +24,6 @@ SUBDIRS    +=   log/easylog.pro \
                 libs/main/komain.pro \
                 plugins/formulashape/koformula.pro \
                 filters/libmsooxml/komsooxml.pro \
-                karbon/common/karboncommon.pro \
-                libs/pageapp/kopageapp.pro \
-                karbon/ui/karbonui.pro \
                 libs/basicflakes/plugin/calligra_tool_basicflakes.pro \
                 words/part/wordsprivate.pro \
                 plugins/dockers/calligra_docker_defaults.pro \
@@ -45,13 +42,18 @@ SUBDIRS    +=   log/easylog.pro \
                 plugins/videoshape/calligra_shape_video.pro \
                 plugins/chartshape/calligra_shape_chart.pro \
                 plugins/defaultTools/calligra_tool_defaults.pro \
-                extras/thumbnail/calligraimagethumbnail.pro \
-                extras/thumbnail/calligrathumbnail.pro \
                 words/part/calligrawordspart.pro \
                 plugins/karbonplugins/tools/karbon_tools.pro \
                 karbon/karbonpart.pro \
                 libs/kross/kokross.pro \
                 words/app/calligrawords.pro
+#-------------------------------------------------
+#                karbon/ui/karbonui.pro \
+#                karbon/common/karboncommon.pro \
+#                libs/pageapp/kopageapp.pro \
+#                extras/thumbnail/calligraimagethumbnail.pro \
+#                extras/thumbnail/calligrathumbnail.pro \
+#-------------------------------------------------
 
 #               extras/calligra/calligra.pro \
                 #filters/words/applixword/calligra_filter_applixword2odt.pro \
