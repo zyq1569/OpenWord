@@ -21,4 +21,4 @@
 
 OKULAR_EXPORT_PLUGIN(OkularOdtGenerator, "libokularGenerator_wpd.json")
 
-#include "OkularWpdGeneratorPlugin.moc"
+//#include "OkularWpdGeneratorPlugin.moc"

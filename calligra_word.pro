@@ -54,7 +54,9 @@ SUBDIRS    +=   log/easylog.pro \
 #                extras/thumbnail/calligraimagethumbnail.pro \
 #                extras/thumbnail/calligrathumbnail.pro \
 #-------------------------------------------------
-
+#wordperfect to odf
+#               filters/words/wordperfect/import/calligra_filter_wpd2odt.pro \
+#----------------------------------------------------
 #               extras/calligra/calligra.pro \
                 #filters/words/applixword/calligra_filter_applixword2odt.pro \
                 #filters/words/ascii/calligra_filter_ascii2words.pro \

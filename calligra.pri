@@ -72,7 +72,9 @@ INCLUDEPATH +=  $$SDK_INSTALL_PREFIX \
                 $$SDK_INSTALL_PREFIX/KF5/SonnetUi \
                 $$SDK_INSTALL_PREFIX/KF5/Solid \
                 $$SDK_INSTALL_PREFIX/phonon4qt5 \
-                $$SDK_INSTALL_PREFIX/KChart
+                $$SDK_INSTALL_PREFIX/KChart \
+                $$SDK_INSTALL_PREFIX/libwpd-0.9 \
+                $$SDK_INSTALL_PREFIX/libwpg-0.2
 
 
 INCLUDEPATH +=  $$PWD/log

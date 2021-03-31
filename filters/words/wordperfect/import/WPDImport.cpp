@@ -14,8 +14,11 @@
  * For further information visit http://libwpd.sourceforge.net
  */
 
+#include "logging.h"
+
 #include "WPDImport.h"
 
+#include <WPXOLEStream.h>
 #include <libwpd/libwpd.h>
 #include <libwpg/libwpg.h>
 #include <libodfgen/libodfgen.hxx>
@@ -27,7 +30,7 @@
 #include <KoFilterChain.h>
 #include <KoOdf.h>
 
-#include <kpluginfactory.h>
+//#include <kpluginfactory.h>
 
 #include <QString>
 #include <QByteArray>
@@ -66,10 +69,12 @@ public:
         }
         try
         {
-            if (WPD_OK != WPDocument::parse(&input, &collector, password))
-            {
-                return false;
-            }
+            WARN_LOG("wordperfect to odt , need to do ....");
+            ///openword 20210331
+//if (WPD_OK != WPDocument::parse(&input, &collector, password))
+//{
+//    return false;
+//}
         }
         catch (...)
         {
@@ -106,32 +111,33 @@ public:
 
     bool isSupportedFormat(librevenge::RVNGInputStream &input, const char *password)
     {
-        try
-        {
-            WPDConfidence confidence = WPDocument::isFileFormatSupported(&input);
-            if (WPD_CONFIDENCE_EXCELLENT != confidence && WPD_CONFIDENCE_SUPPORTED_ENCRYPTION != confidence)
-            {
-                fprintf(stderr, "ERROR: We have no confidence that you are giving us a valid WordPerfect document.\n");
-                return false;
-            }
-            if (WPD_CONFIDENCE_SUPPORTED_ENCRYPTION == confidence && !password)
-            {
-                fprintf(stderr, "ERROR: The WordPerfect document is encrypted and you did not give us a password.\n");
-                return false;
-            }
-            if (confidence == WPD_CONFIDENCE_SUPPORTED_ENCRYPTION && password &&
-                    (WPD_PASSWORD_MATCH_OK != WPDocument::verifyPassword(&input, password)))
-            {
-                fprintf(stderr, "ERROR: The WordPerfect document is encrypted and we either\n");
-                fprintf(stderr, "ERROR: don't know how to decrypt it or the given password is wrong.\n");
-                return false;
-            }
-        }
-        catch (...)
-        {
-            fprintf(stderr, "ERROR: We have no confidence that you are giving us a valid WordPerfect document.\n");
-            return false;
-        }
+        ///openword 20210331
+//try
+//{
+//    WPDConfidence confidence = WPDocument::isFileFormatSupported(&input);
+//    if (WPD_CONFIDENCE_EXCELLENT != confidence && WPD_CONFIDENCE_SUPPORTED_ENCRYPTION != confidence)
+//    {
+//        fprintf(stderr, "ERROR: We have no confidence that you are giving us a valid WordPerfect document.\n");
+//        return false;
+//    }
+//    if (WPD_CONFIDENCE_SUPPORTED_ENCRYPTION == confidence && !password)
+//    {
+//        fprintf(stderr, "ERROR: The WordPerfect document is encrypted and you did not give us a password.\n");
+//        return false;
+//    }
+//    if (confidence == WPD_CONFIDENCE_SUPPORTED_ENCRYPTION && password &&
+//            (WPD_PASSWORD_MATCH_OK != WPDocument::verifyPassword(&input, password)))
+//    {
+//        fprintf(stderr, "ERROR: The WordPerfect document is encrypted and we either\n");
+//        fprintf(stderr, "ERROR: don't know how to decrypt it or the given password is wrong.\n");
+//        return false;
+//    }
+//}
+//catch (...)
+//{
+//    fprintf(stderr, "ERROR: We have no confidence that you are giving us a valid WordPerfect document.\n");
+//    return false;
+//}
 
         return true;
     }
@@ -181,7 +187,26 @@ private:
     }
 };
 
-K_PLUGIN_FACTORY_WITH_JSON(WPDImportFactory, "calligra_filter_wpd2odt.json",registerPlugin<WPDImport>();)
+//K_PLUGIN_FACTORY_WITH_JSON(WPDImportFactory, "calligra_filter_wpd2odt.json",registerPlugin<WPDImport>();)
+//class WPDImportFactory : public KPluginFactory
+//{
+//    Q_OBJECT
+//    Q_INTERFACES(KPluginFactory)
+//    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_filter_wpd2odt.json")
+//public:
+//    explicit WPDImportFactory();
+//    ~WPDImportFactory();
+//};
+
+WPDImportFactory::WPDImportFactory()
+{
+    registerPlugin<WPDImport>();
+}
+
+WPDImportFactory::~WPDImportFactory()
+{
+
+}
 
 WPDImport::WPDImport(QObject* parent, const QVariantList&)
     : KoFilter(parent)

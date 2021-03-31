@@ -20,6 +20,8 @@
 #ifndef WPDIMPORT_H
 #define WPDIMPORT_H
 
+
+#include <kpluginfactory.h>
 #include <KoFilter.h>
 #include <QVariantList>
 
@@ -27,13 +29,23 @@ class WPDImport : public KoFilter
 {
 
     Q_OBJECT
-
 public:
 
     WPDImport(QObject *parent, const QVariantList&);
     ~WPDImport() override;
-
     KoFilter::ConversionStatus convert(const QByteArray& from, const QByteArray& to) override;
 };
+
+
+class WPDImportFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_filter_wpd2odt.json")
+public:
+    explicit WPDImportFactory();
+    ~WPDImportFactory();
+};
+
 
 #endif // WPDIMPORT_H
