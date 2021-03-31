@@ -1,0 +1,112 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- */
+/* libodfgen
+ * Version: MPL 2.0 / LGPLv2.1+
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * Major Contributor(s):
+ * Copyright (C) 2002-2004 William Lachance (wrlach@gmail.com)
+ * Copyright (C) 2004 Fridrich Strba (fridrich.strba@bluewin.ch)
+ *
+ * For minor contributions see the git repository.
+ *
+ * Alternatively, the contents of this file may be used under the terms
+ * of the GNU Lesser General Public License Version 2.1 or later
+ * (LGPLv2.1+), in which case the provisions of the LGPLv2.1+ are
+ * applicable instead of those above.
+ *
+ * For further information visit http://libwpd.sourceforge.net
+ */
+
+#ifndef _GRAPHICSTYLE_HXX_
+#define _GRAPHICSTYLE_HXX_
+
+#include <map>
+#include <vector>
+
+#include <librevenge/librevenge.h>
+
+#include "FilterInternal.hxx"
+
+#include "Style.hxx"
+
+class FillManager;
+class OdfDocumentHandler;
+
+//! graphic style class
+class GraphicStyle : public Style
+{
+public:
+	//! constructor
+	GraphicStyle(const librevenge::RVNGPropertyList &xPropList, const char *psName, Style::Zone zone);
+	//! destructor
+	~GraphicStyle() override;
+	//! write content to the document handler
+	void write(OdfDocumentHandler *pHandler) const override;
+
+private:
+	librevenge::RVNGPropertyList mPropList;
+};
+
+
+class GraphicStyleManager : public StyleManager
+{
+public:
+	explicit GraphicStyleManager(FillManager &fillManager)
+		: mFillManager(fillManager)
+		, mMarkerStyles(), mStrokeDashStyles(), mStyles()
+		, mMarkerNameMap(), mStrokeDashNameMap(), mDisplayStrokeDashNameMap(), mStyleNameMap()
+		, mDisplayNameMap() {}
+	~GraphicStyleManager() override
+	{
+		clean();
+	}
+	void clean() override;
+	//! write all
+	void write(OdfDocumentHandler *pHandler) const override
+	{
+		write(pHandler, Style::Z_Style);
+		write(pHandler, Style::Z_StyleAutomatic);
+		write(pHandler, Style::Z_ContentAutomatic);
+	}
+	// write automatic/name/... style
+	void write(OdfDocumentHandler *pHandler, Style::Zone zone) const;
+
+	/** find a style ( or add it to the stored styles) and returns the style name */
+	librevenge::RVNGString findOrAdd(librevenge::RVNGPropertyList const &propList, Style::Zone zone=Style::Z_Unknown);
+	//! return the file name corresponding to a display name
+	librevenge::RVNGString getFinalDisplayName(const librevenge::RVNGString &displayName);
+
+	/** append the graphic in the element, ie. the stroke, pattern, bitmap, marker properties */
+	void addGraphicProperties(librevenge::RVNGPropertyList const &style, librevenge::RVNGPropertyList &element);
+	/** append the frame, ... properties in the element, ie. all properties excepted the graphic properties */
+	static void addFrameProperties(librevenge::RVNGPropertyList const &propList, librevenge::RVNGPropertyList &element);
+
+protected:
+	FillManager &mFillManager;
+
+	librevenge::RVNGString getStyleNameForMarker(librevenge::RVNGPropertyList const &style, bool startMarker);
+	librevenge::RVNGString getStyleNameForStrokeDash(librevenge::RVNGPropertyList const &style);
+	// graphics styles
+	libodfgen::DocumentElementVector mMarkerStyles;
+	libodfgen::DocumentElementVector mStrokeDashStyles;
+	std::vector<std::shared_ptr<GraphicStyle> > mStyles;
+
+	// marker hash -> style name
+	std::map<librevenge::RVNGString, librevenge::RVNGString> mMarkerNameMap;
+	// stroke dash hash -> style name
+	std::map<librevenge::RVNGString, librevenge::RVNGString> mStrokeDashNameMap;
+	// display style name -> stroke dash style name
+	std::map<librevenge::RVNGString, librevenge::RVNGString> mDisplayStrokeDashNameMap;
+	// style hash -> style name
+	std::map<librevenge::RVNGString, librevenge::RVNGString> mStyleNameMap;
+	// display name -> style name
+	std::map<librevenge::RVNGString, librevenge::RVNGString> mDisplayNameMap;
+};
+
+
+
+#endif
+/* vim:set shiftwidth=4 softtabstop=4 noexpandtab: */
