@@ -90,28 +90,16 @@ QList<KoFilterEntry::Ptr> KoFilterEntry::query()
 
 KoFilter* KoFilterEntry::createFilter(KoFilterChain* chain, QObject* parent)
 {
-    //KLibFactory *factory = qobject_cast<KLibFactory *>(m_loader->instance());
+    KPluginFactory *factory = qobject_cast<KPluginFactory *>(m_loader->instance());
+//    KLibFactory *factory = qobject_cast<KLibFactory *>(m_loader->instance());
 
-    //if (!factory)
-    //{
-    //    warnMain << m_loader->errorString();
-    //    return 0;
-    //}
+    if (!factory)
+    {
+        warnMain << m_loader->errorString();
+        return 0;
+    }
 
-    //QObject* obj = factory->create<KoFilter>(parent);
-    //if (!obj || !obj->inherits("KoFilter"))
-    //{
-    //    delete obj;
-    //    return 0;
-    //}
-
-    //KoFilter* filter = static_cast<KoFilter*>(obj);
-    //filter->m_chain = chain;
-    //return filter;
-
-
-
-    QObject* obj = m_loader->instance();
+    QObject* obj = factory->create<KoFilter>(parent);
     if (!obj || !obj->inherits("KoFilter"))
     {
         delete obj;
@@ -121,5 +109,7 @@ KoFilter* KoFilterEntry::createFilter(KoFilterChain* chain, QObject* parent)
     KoFilter* filter = static_cast<KoFilter*>(obj);
     filter->m_chain = chain;
     return filter;
+
+
 }
 
