@@ -426,8 +426,7 @@ KoFilter::ConversionStatus MSWordOdfImport::convert(const QByteArray &from, cons
     return KoFilter::OK;
 }
 
-void
-MSWordOdfImport::setProgress(const int percent)
+void MSWordOdfImport::setProgress(const int percent)
 {
     emit sigProgress(percent);
 }
@@ -438,8 +437,7 @@ MSWordOdfImport::setProgress(const int percent)
  * @param streampath; stream path into the POLE storage
  * @param buffer; buffer provided by the user
  */
-bool
-readStream(POLE::Storage& storage, const char* streampath, QBuffer& buffer)
+bool readStream(POLE::Storage& storage, const char* streampath, QBuffer& buffer)
 {
     std::string path(streampath);
     POLE::Stream stream(&storage, path);

@@ -22,13 +22,15 @@
 
 namespace KoOdf
 {
-struct DocumentData {
+struct DocumentData
+{
     const char * mimeType;
     const char * templateMimeType;
     const char * bodyContentElement;
 };
 
-const DocumentData s_documentData[] = {
+const DocumentData s_documentData[] =
+{
     { "application/vnd.oasis.opendocument.text", "application/vnd.oasis.opendocument.text-template", "office:text" },
     { "application/vnd.oasis.opendocument.graphics", "application/vnd.oasis.opendocument.graphics-template", "office:drawing" },
     { "application/vnd.oasis.opendocument.presentation", "application/vnd.oasis.opendocument.presentation-template", "office:presentation" },

@@ -24,8 +24,9 @@
 
 #define MusicShapeId "MusicShape"
 
-namespace MusicCore {
-    class Sheet;
+namespace MusicCore
+{
+class Sheet;
 }
 
 class MusicRenderer;
@@ -60,8 +61,14 @@ public:
     MusicStyle* style();
     void engrave(bool engraveBars=true);
 
-    MusicShape* successor() { return m_successor; }
-    MusicShape* predecessor() { return m_predecessor; }
+    MusicShape* successor()
+    {
+        return m_successor;
+    }
+    MusicShape* predecessor()
+    {
+        return m_predecessor;
+    }
 protected:
     // reimplemented
     bool loadOdfFrameElement( const KoXmlElement & element, KoShapeLoadingContext & context ) override;

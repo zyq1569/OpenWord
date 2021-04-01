@@ -52,6 +52,7 @@
 
 #include <QBuffer>
 #include <QColor>
+#include <QTextCodec>
 
 //TODO: provide all streams to the wv2 parser; POLE storage is going to replace
 //OLE storage soon!
@@ -236,7 +237,7 @@ void Document::processAssociatedStrings()
     }
 
     static const quint16 CP_WINUNICODE = 0x04B0;
-    bool isUnicode16 = false;
+    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
 
     QString title;
     QString subject;
@@ -257,9 +258,22 @@ void Document::processAssociatedStrings()
                 case PIDSI_CODEPAGE:
                     if (ps.property.at(i)._has_vt_I2)
                     {
-                        if (ps.property.at(i).vt_I2 == CP_WINUNICODE)
+                        quint16 codepage = ps.property.at(i).vt_I2;
+                        if (codepage == CP_WINUNICODE)
                         {
-                            isUnicode16 = true;
+                            codec = QTextCodec::codecForName("UTF-16");
+                        }
+                        else
+                        {
+                            QTextCodec *newCodec = QTextCodec::codecForName(QString("Windows-%1").arg(codepage).toLatin1());
+                            if (newCodec)
+                            {
+                                codec = newCodec;
+                            }
+                            else
+                            {
+                                warnMsDoc << "Unknown codepage " << codepage;
+                            }
                         }
                     }
                     break;
@@ -288,14 +302,7 @@ void Document::processAssociatedStrings()
             {
                 if (ps.property.at(i).vt_lpstr)
                 {
-                    if (isUnicode16)
-                    {
-                        *p_str = QString::fromUtf16((ushort*)ps.property.at(i).vt_lpstr->characters.data());
-                    }
-                    else
-                    {
-                        *p_str = QString::fromUtf8(ps.property.at(i).vt_lpstr->characters.data());
-                    }
+                    *p_str = codec->toUnicode(ps.property.at(i).vt_lpstr->characters.data());
                 }
                 p_str = 0;
             }

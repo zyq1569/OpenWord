@@ -53,10 +53,13 @@ void KoM2MMLFormulaTool::activate(KoToolBase::ToolActivation toolActivation, con
 {
     Q_UNUSED(toolActivation);
 
-    foreach (KoShape *shape, shapes) {
+    foreach (KoShape *shape, shapes)
+    {
         m_formulaShape = dynamic_cast<KoFormulaShape*>( shape );
         if( m_formulaShape )
+        {
             break;
+        }
     }
 
     if( m_formulaShape == 0 )  // none found
@@ -74,7 +77,7 @@ void KoM2MMLFormulaTool::activate(KoToolBase::ToolActivation toolActivation, con
             m_mode = annot->attribute("mode");
         }
     }
-    
+
     if(m_lineEdit)
     {
         m_lineEdit->setText(m_text);
@@ -106,71 +109,86 @@ QWidget* KoM2MMLFormulaTool::createOptionWidget()
 {
     QWidget* widget = new QWidget;
     QVBoxLayout* layout = new QVBoxLayout;
-    
+
     // Combobox to select between latex or matlab
     QLabel* modeLabel = new QLabel(i18n("Mode: "));
     m_comboBox = new QComboBox;
-    
+
     m_comboBox->addItem(i18n("LaTeX"));
 #ifdef HAVE_M2MML
     m_comboBox->addItem(i18n("Matlab"));
-    
+
     if(m_mode == "Matlab")
     {
         m_comboBox->setCurrentIndex(1);
     }
 #endif
-    
+
     QHBoxLayout* hlayout = new QHBoxLayout();
     hlayout->addWidget(modeLabel);
     hlayout->addWidget(m_comboBox);
     layout->addLayout(hlayout);
-    
+
     // Edit line
     widget->setLayout(layout);
     m_lineEdit = new QLineEdit(widget);
     layout->addWidget(m_lineEdit);
-    
+
     // Error label
     m_errorLabel = new QLabel(widget);
     layout->addWidget(m_errorLabel);
     m_errorLabel->setText("");
-    
+
     layout->addSpacerItem(new QSpacerItem(0,0));
-    
+
     connect(m_lineEdit, SIGNAL(editingFinished()), SLOT(textEdited()));
     connect(m_lineEdit, SIGNAL(returnPressed()), SLOT(textEdited()));
     m_lineEdit->setText(m_text);
-    
+
     return widget;
 }
 
 // Not sure why but the toStdString/fromStdString in QString are not accessible
 inline std::string QStringtoStdString(const QString& str)
-{ const QByteArray latin1 = str.toLatin1(); return std::string(latin1.constData(), latin1.length()); }
+{
+    const QByteArray latin1 = str.toLatin1();
+    return std::string(latin1.constData(), latin1.length());
+}
 
 inline QString QStringfromStdString(const std::string &s)
-{ return QString::fromLatin1(s.data(), int(s.size())); }
+{
+    return QString::fromLatin1(s.data(), int(s.size()));
+}
 
 void KoM2MMLFormulaTool::textEdited()
 {
-    if(!m_formulaShape) return;
-    if(!m_lineEdit) return;
-    
+    if(!m_formulaShape)
+    {
+        return;
+    }
+    if(!m_lineEdit)
+    {
+        return;
+    }
+
 #ifdef HAVE_M2MML
     if(m_comboBox->currentIndex() == 1)
     {
         std::string source = QStringtoStdString(m_lineEdit->text());
         std::string mathml;
         std::string errmsg;
-        
+
         if(m2mml(source, mathml, &errmsg))
         {
             setMathML(QStringfromStdString(mathml), "Matlab");
-        } else {
+        }
+        else
+        {
             m_errorLabel->setText(QStringfromStdString(errmsg));
         }
-    } else {
+    }
+    else
+    {
 #endif
         ///openword 2021-01-09 to do list ....
 //        INFO_LOG("---itex2MML_free_string()---   openword 2021-01-09 to do list .... ");
@@ -205,9 +223,9 @@ void KoM2MMLFormulaTool::setMathML(const QString& mathml, const QString& mode)
     annot->setContent(m_lineEdit->text());
     annot->setAttribute("mode", mode);
     formulaElement->insertChild(0, annot);
-    
+
     debugFormula << mathml;
-    
+
     canvas()->addCommand(new FormulaCommandUpdate(m_formulaShape, new FormulaCommandLoad(m_formulaShape->formulaData(), formulaElement)));
     m_errorLabel->setText("");
 }

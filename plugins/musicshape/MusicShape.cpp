@@ -60,45 +60,47 @@ using namespace MusicCore;
 
 MusicShape::MusicShape()
     : KoFrameShape("http://www.calligra.org/music", "shape"),
-    m_firstSystem(0),
-    m_style(new MusicStyle),
-    m_engraver(new Engraver()),
-    m_renderer(new MusicRenderer(m_style)),
-    m_successor(0),
-    m_predecessor(0)
+      m_firstSystem(0),
+      m_style(new MusicStyle),
+      m_engraver(new Engraver()),
+      m_renderer(new MusicRenderer(m_style)),
+      m_successor(0),
+      m_predecessor(0)
 {
-/*    debugMusic << "firstShape:" << firstShape << "this:" << this;
+    /*    debugMusic << "firstShape:" << firstShape << "this:" << this;
 
-    if (firstShape) {
-        firstShape->m_successor = this;
-        m_predecessor = firstShape;
-        m_sheet = firstShape->m_sheet;
-        m_firstSystem = firstShape->m_lastSystem+1;
-        m_engraver->engraveSheet(m_sheet, m_firstSystem, QSizeF(1e9, 1e9), true, &m_lastSystem);
-        firstShape = this;
-    } else {
-        firstShape = this;*/
-        m_sheet = new Sheet();
-        Bar* bar = m_sheet->addBar();
+        if (firstShape) {
+            firstShape->m_successor = this;
+            m_predecessor = firstShape;
+            m_sheet = firstShape->m_sheet;
+            m_firstSystem = firstShape->m_lastSystem+1;
+            m_engraver->engraveSheet(m_sheet, m_firstSystem, QSizeF(1e9, 1e9), true, &m_lastSystem);
+            firstShape = this;
+        } else {
+            firstShape = this;*/
+    m_sheet = new Sheet();
+    Bar* bar = m_sheet->addBar();
 
-        Part* part = m_sheet->addPart(i18n("Part 1"));
-        Staff* staff = part->addStaff();
-        part->addVoice();
-        bar->addStaffElement(new Clef(staff, 0, Clef::Trebble, 2, 0));
-        bar->addStaffElement(new TimeSignature(staff, 0, 4, 4));
-        // add some more default bars
-        for (int i = 0; i < 9; i++) {
-            m_sheet->addBar();
-        }
+    Part* part = m_sheet->addPart(i18n("Part 1"));
+    Staff* staff = part->addStaff();
+    part->addVoice();
+    bar->addStaffElement(new Clef(staff, 0, Clef::Trebble, 2, 0));
+    bar->addStaffElement(new TimeSignature(staff, 0, 4, 4));
+    // add some more default bars
+    for (int i = 0; i < 9; i++)
+    {
+        m_sheet->addBar();
+    }
 
-        m_engraver->engraveSheet(m_sheet, 0, QSizeF(1e9, 1e9), true, &m_lastSystem);
+    m_engraver->engraveSheet(m_sheet, 0, QSizeF(1e9, 1e9), true, &m_lastSystem);
 //    }
 }
 
 MusicShape::~MusicShape()
 {
     //debugMusic << "destroying" << this;
-    if (!m_predecessor && !m_successor) {
+    if (!m_predecessor && !m_successor)
+    {
         delete m_sheet;
     }
     delete m_style;
@@ -148,7 +150,7 @@ void MusicShape::saveOdf( KoShapeSavingContext & context ) const
     QSizeF imgSize = size(); // in points
     imgSize *= previewZoom;
     KoViewConverter converter;
-    
+
     // Save a preview SVG image.
     // -------------------------
 
@@ -159,7 +161,7 @@ void MusicShape::saveOdf( KoShapeSavingContext & context ) const
     svg.setOutputDevice(&svgBuffer);  // Write to the buffer
     svg.setSize(imgSize.toSize());
     svg.setViewBox(QRect(0, 0, boundingRect().width(), boundingRect().height()));
-        
+
     // 2. Paint the svg preview image.
     //
     // We need to create all text as paths, because otherwise it
@@ -210,7 +212,8 @@ void MusicShape::saveOdf( KoShapeSavingContext & context ) const
     writer.endElement(); // draw:frame
 }
 
-bool MusicShape::loadOdf( const KoXmlElement & element, KoShapeLoadingContext &context ) {
+bool MusicShape::loadOdf( const KoXmlElement & element, KoShapeLoadingContext &context )
+{
     loadOdfAttributes(element, context, OdfAllAttributes);
     return loadOdfFrame(element, context);
 }
@@ -218,13 +221,16 @@ bool MusicShape::loadOdf( const KoXmlElement & element, KoShapeLoadingContext &c
 bool MusicShape::loadOdfFrameElement( const KoXmlElement & element, KoShapeLoadingContext & /*context*/ )
 {
     KoXmlElement score = KoXml::namedItemNS(element, "http://www.calligra.org/music", "score-partwise");
-    if (score.isNull()) {
+    if (score.isNull())
+    {
         warnMusic << "no music:score-partwise element as first child";
         return false;
     }
     Sheet* sheet = MusicXmlReader().loadSheet(score);
-    if (sheet) {
-        if (!m_predecessor && !m_successor) {
+    if (sheet)
+    {
+        if (!m_predecessor && !m_successor)
+        {
             delete m_sheet;
         }
         m_sheet = sheet;
@@ -241,7 +247,8 @@ Sheet* MusicShape::sheet()
 
 void MusicShape::setSheet(Sheet* sheet, int firstSystem)
 {
-    if (!m_predecessor && !m_successor) {
+    if (!m_predecessor && !m_successor)
+    {
         delete m_sheet;
     }
     m_sheet = sheet;
@@ -268,13 +275,14 @@ int MusicShape::lastSystem() const
 
 int MusicShape::firstBar() const
 {
-    return m_sheet->staffSystem(m_firstSystem)->firstBar();    
+    return m_sheet->staffSystem(m_firstSystem)->firstBar();
 }
 
 int MusicShape::lastBar() const
 {
     int lastBar = INT_MAX;
-    if (m_lastSystem < m_sheet->staffSystemCount()-1) {
+    if (m_lastSystem < m_sheet->staffSystemCount()-1)
+    {
         lastBar = m_sheet->staffSystem(m_lastSystem+1)->firstBar()-1;
     }
     return lastBar;
@@ -288,7 +296,8 @@ MusicRenderer* MusicShape::renderer()
 void MusicShape::engrave(bool engraveBars)
 {
     m_engraver->engraveSheet(m_sheet, m_firstSystem, size(), engraveBars, &m_lastSystem);
-    if (m_successor) {
+    if (m_successor)
+    {
         m_successor->setFirstSystem(m_lastSystem+1);
     }
 }
