@@ -17,7 +17,7 @@ along with this library; see the file COPYING.LIB.  If not, write to
 the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 Boston, MA 02110-1301, USA.
 */
-
+#include "logging.h"
 #include "KoFilterEntry.h"
 
 #include "KoDocument.h"
@@ -46,7 +46,14 @@ KoFilterEntry::KoFilterEntry(QPluginLoader *loader)
     int w = metadata.value("X-KDE-Weight").toInt();
 #endif
     weight = w < 0 ? UINT_MAX : static_cast<unsigned int>(w);
+    if (weight >= UINT_MAX)
+    {
+        weight = 1;
+    }
     available = metadata.value("X-KDE-Available").toString();
+    DEBUG_LOG(loader->fileName() + "X-KDE-Import:" + import.join(","));
+    DEBUG_LOG(loader->fileName() + "X-KDE-Export:" + export_.join(","));
+    DEBUG_LOG(loader->fileName() + "X-KDE-Available:" + available);
 }
 
 KoFilterEntry::~KoFilterEntry()
@@ -68,7 +75,8 @@ QList<KoFilterEntry::Ptr> KoFilterEntry::query()
     QList<QPluginLoader *>::ConstIterator it = offers.constBegin();
     unsigned int max = offers.count();
     //debugFilter <<"Query returned" << max <<" offers";
-    for (unsigned int i = 0; i < max; i++) {
+    for (unsigned int i = 0; i < max; i++)
+    {
         //debugFilter <<"   desktopEntryPath=" << (*it)->entryPath()
         //               << "   library=" << (*it)->library() << endl;
         // Append converted offer
