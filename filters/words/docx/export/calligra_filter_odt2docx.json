@@ -9,7 +9,7 @@
 				"Id":"docx2odtID",
 				"X-KDE-Export":"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 				"X-KDE-Import":"application/vnd.oasis.opendocument.text",
-				"X-KDE-Weight":"1",
+				"X-KDE-Weight":1,
 				"X-KDE-Library":"calligra_filter_odt2docx",
 				"X-KDE-ServiceTypes":"Calligra/Filter",
 				"X-KDE-PluginInfo-Name":"calligra_filter_odt2docx",	
@@ -19,7 +19,7 @@
 	"docx2odtID":"129",
 	"X-KDE-Export":"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 	"X-KDE-Import":"application/vnd.oasis.opendocument.text",
-	"X-KDE-Weight":"1",
+	"X-KDE-Weight":1,
 	"X-KDE-Library":"calligra_filter_odt2docx",
 	"X-KDE-ServiceTypes":"Calligra/Filter",
 	"X-KDE-PluginInfo-Name":"calligra_filter_odt2docx"		

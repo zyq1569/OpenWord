@@ -17,7 +17,8 @@
 				"X-KDE-ServiceTypes":"Calligra/Filter",
 				"X-KDE-PluginInfo-Name":"calligra_filter_doc2odt",
 			    "X-KDE-Available":"true",	
-				"doc2odtID":"123"
+				"doc2odtID":"123",
+				"X-KDE-ExtraNativeMimeTypes":["application/vnd.oasis.opendocument.text-master","application/vnd.oasis.opendocument.text-template"]
 				},
 	"Id":"doc2odtID",
 	"doc2odtID":"123",
@@ -29,5 +30,5 @@
 	"X-KDE-PluginInfo-Name":"calligra_filter_doc2odt",
 	"X-KDE-NativeMimeType":"application/vnd.oasis.opendocument.text",
 	"X-KDE-Available":"true",	
-	"X-KDE-ExtraNativeMimeTypes":"application/vnd.oasis.opendocument.text-master,application/vnd.oasis.opendocument.text-template"		
+	"X-KDE-ExtraNativeMimeTypes":["application/vnd.oasis.opendocument.text-master","application/vnd.oasis.opendocument.text-template"]		
 }
