@@ -21,7 +21,8 @@ Boston, MA 02110-1301, USA.
 
 #include "KoFilterChain.h"
 
-namespace CalligraFilter {
+namespace CalligraFilter
+{
 template <typename T> class PriorityQueue;
 /**
  * An internal class representing a mime type (=node, vertex) in the filter graph.
@@ -34,7 +35,8 @@ public:
     explicit Vertex(const QByteArray &mimeType);
     ~Vertex();
 
-    QByteArray mimeType() const {
+    QByteArray mimeType() const
+    {
         return m_mimeType;
     }
 
@@ -43,7 +45,8 @@ public:
     // really has been "relaxed"
     bool setKey(unsigned int key);
 
-    unsigned int key() const {
+    unsigned int key() const
+    {
         return m_weight;
     }
 
@@ -52,21 +55,25 @@ public:
     void reset();
 
     // Position in the heap, needed for a fast keyDecreased operation
-    void setIndex(int index) {
+    void setIndex(int index)
+    {
         m_index = index;
     }
 
-    int index() const {
+    int index() const
+    {
         return m_index;
     }
 
     // predecessor on the way from the source to the destination,
     // needed for the shortest path algorithm
-    void setPredecessor(const Vertex* predecessor) {
+    void setPredecessor(const Vertex* predecessor)
+    {
         m_predecessor = predecessor;
     }
 
-    const Vertex* predecessor() const {
+    const Vertex* predecessor() const
+    {
         return m_predecessor;
     }
 

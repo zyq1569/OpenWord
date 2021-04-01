@@ -20,14 +20,15 @@ Boston, MA 02110-1301, USA.
 #include <limits.h> // UINT_MAX
 #include "KoFilterEdge.h"
 
-namespace CalligraFilter {
+namespace CalligraFilter
+{
 
 Vertex::Vertex(const QByteArray& mimeType)
-        : m_predecessor(0)
-        , m_mimeType(mimeType)
-        , m_weight(UINT_MAX)
-        , m_index(-1)
-        , d(0)
+    : m_predecessor(0)
+    , m_mimeType(mimeType)
+    , m_weight(UINT_MAX)
+    , m_index(-1)
+    , d(0)
 {
 }
 
@@ -38,7 +39,8 @@ Vertex::~Vertex()
 
 bool Vertex::setKey(unsigned int key)
 {
-    if (m_weight > key) {
+    if (m_weight > key)
+    {
         m_weight = key;
         return true;
     }
@@ -54,18 +56,24 @@ void Vertex::reset()
 void Vertex::addEdge(Edge* edge)
 {
     if (!edge || edge->weight() == 0)
+    {
         return;
+    }
     m_edges.append(edge);
 }
 
 const Edge* Vertex::findEdge(const Vertex* vertex) const
 {
     if (!vertex)
+    {
         return 0;
+    }
     const Edge* edge = 0;
-    foreach(Edge* e, m_edges) {
+    foreach(Edge* e, m_edges)
+    {
         if (e->vertex() == vertex &&
-            (!edge || e->weight() < edge->weight())) {
+                (!edge || e->weight() < edge->weight()))
+        {
             edge = e;
         }
     }
@@ -74,7 +82,8 @@ const Edge* Vertex::findEdge(const Vertex* vertex) const
 
 void Vertex::relaxVertices(PriorityQueue<Vertex>& queue)
 {
-    foreach(Edge* e, m_edges) {
+    foreach(Edge* e, m_edges)
+    {
         e->relax(this, queue);
     }
 }
@@ -86,7 +95,8 @@ void Vertex::dump(const QByteArray& indent) const
 #else
     debugFilter << indent << "Vertex:" << m_mimeType << " (" << m_weight << "):";
     const QByteArray i(indent + "   ");
-    foreach(Edge* edge, m_edges) {
+    foreach(Edge* edge, m_edges)
+    {
         edge->dump(i);
     }
 #endif

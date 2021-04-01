@@ -25,7 +25,8 @@ Boston, MA 02110-1301, USA.
 #include <QByteArray>
 #include <QHash>
 
-namespace CalligraFilter {
+namespace CalligraFilter
+{
 
 /**
  * The main worker behind the scenes. Manages the creation of the graph,
@@ -40,11 +41,13 @@ public:
     explicit Graph(const QByteArray& from);
     ~Graph();
 
-    bool isValid() const {
+    bool isValid() const
+    {
         return m_graphValid;
     }
 
-    QByteArray sourceMimeType() const {
+    QByteArray sourceMimeType() const
+    {
         return m_from;
     }
     void setSourceMimeType(const QByteArray& from);

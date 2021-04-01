@@ -71,14 +71,16 @@ public:
     /**
      *  @return TRUE if the filter can import the requested mimetype.
      */
-    bool imports(const QString& _mimetype) const {
+    bool imports(const QString& _mimetype) const
+    {
         return (import.contains(_mimetype));
     }
 
     /**
      *  @return TRUE if the filter can export the requested mimetype.
      */
-    bool exports(const QString& _m) const {
+    bool exports(const QString& _m) const
+    {
         return (export_.contains(_m));
     }
 

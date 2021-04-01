@@ -37,10 +37,10 @@ class KoDocument;
 
 namespace CalligraFilter
 {
-    class Graph;
-    class ChainLink;
-    class Vertex;
-    class Edge;
+class Graph;
+class ChainLink;
+class Vertex;
+class Edge;
 }
 
 /**
@@ -67,7 +67,8 @@ public:
     /**
      * The filter manager returned may be 0!
      */
-    const KoFilterManager* manager() const {
+    const KoFilterManager* manager() const
+    {
         return m_manager;
     }
 

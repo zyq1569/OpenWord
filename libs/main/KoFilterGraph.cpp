@@ -80,7 +80,8 @@ KoFilterChain::Ptr Graph::chain(const KoFilterManager* manager, QByteArray& to) 
     }
 
     if (to.isEmpty())
-    {    // if the destination is empty we search the closest Calligra part
+    {
+        // if the destination is empty we search the closest Calligra part
         to = findCalligraPart();
         if (to.isEmpty())    // still empty? strange stuff...
         {
@@ -89,7 +90,12 @@ KoFilterChain::Ptr Graph::chain(const KoFilterManager* manager, QByteArray& to) 
     }
 
     const Vertex* vertex = m_vertices.value(to);
-    if (!vertex || vertex->key() == UINT_MAX)
+    if (!vertex )
+    {
+        return KoFilterChain::Ptr();
+    }
+
+    if (vertex->key() == UINT_MAX)
     {
         return KoFilterChain::Ptr();
     }
@@ -113,12 +119,15 @@ void Graph::dump() const
 {
 #ifndef NDEBUG
     debugFilter << "+++++++++ Graph::dump +++++++++";
+    DEBUG_LOG( "+++++++++ Graph::dump +++++++++");
     debugFilter << "From:" << m_from;
+    DEBUG_LOG( "From:");
     foreach(Vertex *vertex, m_vertices)
     {
         vertex->dump("   ");
     }
     debugFilter << "+++++++++ Graph::dump (done) +++++++++";
+    DEBUG_LOG( "+++++++++ Graph::dump (done) +++++++++");
 #endif
 }
 
@@ -211,7 +220,6 @@ void Graph::shortestPaths()
 
     // Inititalize start vertex
     from->setKey(0);
-
     // Fill the priority queue with all the vertices
     PriorityQueue<Vertex> queue(m_vertices);
 

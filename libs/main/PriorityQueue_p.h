@@ -64,17 +64,22 @@ public:
     PriorityQueue(const QHash<QByteArray, T*>& items);
     ~PriorityQueue() {}
 
-    PriorityQueue<T> &operator=(const PriorityQueue<T>& rhs) {
-        m_vector = rhs.m_vector; return *this;
+    PriorityQueue<T> &operator=(const PriorityQueue<T>& rhs)
+    {
+        m_vector = rhs.m_vector;
+        return *this;
     }
-    bool operator==(const PriorityQueue<T>& rhs) {
+    bool operator==(const PriorityQueue<T>& rhs)
+    {
         return m_vector == rhs.m_vector;
     }
 
-    unsigned int count() const {
+    unsigned int count() const
+    {
         return m_vector.size();
     }
-    bool isEmpty() const {
+    bool isEmpty() const
+    {
         return m_vector.empty();
     }
 
@@ -96,13 +101,16 @@ public:
 
 private:
     // Note: We have to use a 1-based index here, and we get/return 0-based ones
-    int parent(int i) {
+    int parent(int i)
+    {
         return ((i + 1) >> 1) - 1;
     }
-    int left(int i) {
+    int left(int i)
+    {
         return ((i + 1) << 1) - 1;
     }
-    int right(int i) {
+    int right(int i)
+    {
         return (i + 1) << 1;
     }
 
@@ -121,7 +129,8 @@ PriorityQueue<T>::PriorityQueue(const QHash<QByteArray, T*>& items)
 {
     // First put all items into the vector
     int i = 0;
-    foreach(T* item, items) {
+    foreach(T* item, items)
+    {
         item->setIndex(i);
         m_vector[i] = item;
         ++i;
@@ -134,7 +143,9 @@ template<class T>
 void PriorityQueue<T>::insert(T* item)
 {
     if (!item)
+    {
         return;
+    }
     int i = static_cast<int>(m_vector.size());
     m_vector.push_back(0);   // extend the vector by one item. i == index to the last item
     bubbleUp(item, i);
@@ -144,7 +155,9 @@ template<class T>
 void PriorityQueue<T>::keyDecreased(T* item)
 {
     if (!item)
+    {
         return;
+    }
     bubbleUp(item, item->index());
 }
 
@@ -152,7 +165,9 @@ template<class T>
 T* PriorityQueue<T>::extractMinimum()
 {
     if (m_vector.size() < 1)
+    {
         return 0;
+    }
     T *min = m_vector[ 0 ];
     m_vector[ 0 ] = m_vector[ m_vector.size() - 1 ];
     // update the index
@@ -168,14 +183,17 @@ void PriorityQueue<T>::dump() const
     debugFilter << "++++++++++ PriorityQueue::dump ++++++++++";
     QString out;
     int size = static_cast<int>(m_vector.size());
-    for (int i = 0; i < size; ++i) {
+    for (int i = 0; i < size; ++i)
+    {
         if (m_vector[ i ]->index() != i)
             out += " ERROR: index out of sync. Should be " + QString::number(i) + ", is " +
                    QString::number(m_vector[ i ]->index()) + ". ";
         out += QString::number(m_vector[ i ]->key()) + ", ";
     }
     if (out.isEmpty())
+    {
         out = "(empty)";
+    }
     debugFilter << out;
     debugFilter << "++++++++++ PriorityQueue::dump (done) ++++++++++";
 }
@@ -189,14 +207,21 @@ void PriorityQueue<T>::heapify(int i)
     int smallest;
 
     if (l < size && i < size && m_vector[ l ]->key() < m_vector[ i ]->key())
+    {
         smallest = l;
+    }
     else
+    {
         smallest = i;
+    }
 
     if (r < size && m_vector[ r ]->key() < m_vector[ smallest ]->key())
+    {
         smallest = r;
+    }
 
-    if (smallest != i) {
+    if (smallest != i)
+    {
         T* tmp = m_vector[ i ];
         m_vector[ i ] = m_vector[ smallest ];
         // update indices
@@ -211,7 +236,8 @@ template<class T>
 void PriorityQueue<T>::bubbleUp(T* item, int i)
 {
     int p = parent(i);
-    while (i > 0 && m_vector[ p ]->key() > item->key()) {
+    while (i > 0 && m_vector[ p ]->key() > item->key())
+    {
         // update the index first
         m_vector[ p ]->setIndex(i);
         // then move it there
@@ -228,7 +254,9 @@ void PriorityQueue<T>::buildHeap()
 {
     // from size() / 2 down to 1
     for (int i = (m_vector.size() >> 1) - 1; i >= 0; --i)
+    {
         heapify(i);
+    }
 }
 
 } // namespace Calligra

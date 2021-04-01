@@ -1622,9 +1622,7 @@ bool KoDocument::openFile()
         progressProxy = d->progressProxy;
     }
 
-    d->progressUpdater = new KoProgressUpdater(progressProxy,
-            KoProgressUpdater::Unthreaded,
-            d->profileStream);
+    d->progressUpdater = new KoProgressUpdater(progressProxy,  KoProgressUpdater::Unthreaded,    d->profileStream);
 
     d->progressUpdater->setReferenceTime(d->profileReferenceTime);
     d->progressUpdater->start(100, i18n("Opening Document"));
@@ -1798,8 +1796,7 @@ bool KoDocument::openFile()
 
     if (progressUpdater())
     {
-        QPointer<KoUpdater> updater
-            = progressUpdater()->startSubtask(1, "clear undo stack");
+        QPointer<KoUpdater> updater  = progressUpdater()->startSubtask(1, "clear undo stack");
         updater->setProgress(0);
         undoStack()->clear();
         updater->setProgress(100);

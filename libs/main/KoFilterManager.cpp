@@ -98,6 +98,7 @@ QString KoFilterManager::importDocument(const QString& url,
         bool userCancelled = false;
 
         warnFilter << "Can't open " << typeName << ", trying filter chooser";
+        WARN_LOG( "Can't open " + typeName + ", trying filter chooser /filename:" + url);
         if (m_document)
         {
             if (!m_document->isAutoErrorHandlingEnabled())
@@ -110,7 +111,7 @@ QString KoFilterManager::importDocument(const QString& url,
             QApplication::setOverrideCursor(Qt::ArrowCursor);
             KoFilterChooser chooser(0,
                                     KoFilterManager::mimeFilter(nativeFormat, KoFilterManager::Import,
-                                                                m_document->extraNativeMimeTypes()), nativeFormat, u);
+                                            m_document->extraNativeMimeTypes()), nativeFormat, u);
             if (chooser.exec())
             {
                 QByteArray f = chooser.filterSelected().toLatin1();
@@ -156,7 +157,9 @@ QString KoFilterManager::importDocument(const QString& url,
             KoFilterChain::Ptr newChain(0);
             newChain = m_graph.chain(this, extraMime);
             if (!chain || (newChain && newChain->weight() < chain->weight()))
+            {
                 chain = newChain;
+            }
             ++i;
         }
     }
@@ -174,6 +177,7 @@ QString KoFilterManager::importDocument(const QString& url,
     if (!chain)
     {
         errorFilter << "Couldn't create a valid filter chain!" << endl;
+        ERROR_LOG("Couldn't create a valid filter chain! fail to open:"  + url);
         importErrorHelper(typeName);
         status = KoFilter::BadConversionGraph;
         return QString();
@@ -183,13 +187,40 @@ QString KoFilterManager::importDocument(const QString& url,
     m_direction = Import; // vital information!
     m_importUrl = url;  // We want to load that file
     m_exportUrl.clear();  // This is null for sure, as embedded stuff isn't
+    ///add openword ( KoFilterEntry::Ptr filterEntry, const QByteArray& from, const QByteArray& to)
+//if (chain->weight() < 1)
+//{
+//    QList<KoFilterEntry::Ptr> filters =  KoFilterEntry::query();
+//    foreach(KoFilterEntry::Ptr filterEntry, filters)
+//    {
+//        QStringList::ConstIterator importIt = filterEntry->import.constBegin();
+//        const QStringList::ConstIterator importEnd = filterEntry->import.constEnd();
+//        QByteArray qaim;
+//        for (; importIt != importEnd; ++importIt)
+//        {
+//            qaim += (*importIt).toLatin1();
+//        }
+
+//        QStringList::ConstIterator exportIt = filterEntry->export_.constBegin();
+//        const QStringList::ConstIterator exportEnd = filterEntry->export_.constEnd();
+//        QByteArray qaex;
+//        for (; exportIt != exportEnd; ++exportIt)
+//        {
+//            qaex += (*exportIt).toLatin1();
+//        }
+//        chain->appendChainLink(filterEntry, qaim, qaex);
+//    }
+//}
+    ///----------------------------------------------------------------------------------------------
     // allowed to use that method
     status = chain->invokeChain();
 
     m_importUrl.clear();  // Reset the import URL
 
     if (status == KoFilter::OK)
+    {
         return chain->chainOutput();
+    }
     return QString();
 }
 
@@ -215,7 +246,9 @@ KoFilter::ConversionStatus KoFilterManager::exportDocument(const QString& url, Q
         {
             m_graph.setSourceMimeType((*it).toLatin1());
             if (m_graph.isValid())
+            {
                 chain = m_graph.chain(this, mimeType);
+            }
         }
     }
     else if (!m_importUrlMimetypeHint.isEmpty())
@@ -242,9 +275,13 @@ KoFilter::ConversionStatus KoFilterManager::exportDocument(const QString& url, Q
             QApplication::setOverrideCursor(Qt::ArrowCursor);
             KoFilterChooser chooser(0, KoFilterManager::mimeFilter(), QString(), u);
             if (chooser.exec())
+            {
                 m_graph.setSourceMimeType(chooser.filterSelected().toLatin1());
+            }
             else
+            {
                 userCancelled = true;
+            }
 
             QApplication::restoreOverrideCursor();
         }
@@ -261,7 +298,9 @@ KoFilter::ConversionStatus KoFilterManager::exportDocument(const QString& url, Q
     }
 
     if (!chain)   // already set when coming from the m_document case
+    {
         chain = m_graph.chain(this, mimeType);
+    }
 
     if (!chain)
     {
@@ -301,7 +340,10 @@ public:
 
     void addEdge(Vertex* vertex)
     {
-        if (vertex) m_edges.append(vertex);
+        if (vertex)
+        {
+            m_edges.append(vertex);
+        }
     }
     QList<Vertex*> edges() const
     {
@@ -342,10 +384,13 @@ void buildGraph(QHash<QByteArray, Vertex*>& vertices, KoFilterManager::Direction
         QStringList::ConstIterator it = nativeMimeTypes.constBegin();
         const QStringList::ConstIterator end = nativeMimeTypes.constEnd();
         for (; it != end; ++it)
-            if (!(*it).isEmpty()) {
+            if (!(*it).isEmpty())
+            {
                 const QByteArray key = (*it).toLatin1();
                 if (!vertices.contains(key))
+                {
                     vertices.insert(key, new Vertex(key));
+                }
             }
         ++partIt;
     }
@@ -354,6 +399,7 @@ void buildGraph(QHash<QByteArray, Vertex*>& vertices, KoFilterManager::Direction
     QList<KoFilterEntry::Ptr>::ConstIterator it = filters.constBegin();
     QList<KoFilterEntry::Ptr>::ConstIterator end = filters.constEnd();
     foreach(KoFilterEntry::Ptr filterEntry, filters)
+    {
         for (; it != end; ++it)
         {
             QStringList impList; // Import list
@@ -366,7 +412,9 @@ void buildGraph(QHash<QByteArray, Vertex*>& vertices, KoFilterManager::Direction
                 foreach(const QString & testIt, (*it)->export_)
                 {
                     if (!stopList.contains(testIt))
+                    {
                         expList.append(testIt);
+                    }
                 }
                 impList = (*it)->import;
             }
@@ -404,7 +452,8 @@ void buildGraph(QHash<QByteArray, Vertex*>& vertices, KoFilterManager::Direction
             }
 
             // Are we allowed to use this filter at all?
-            if (KoFilterManager::filterAvailable(*it)) {
+            if (KoFilterManager::filterAvailable(*it))
+            {
                 QStringList::ConstIterator exportIt = expList.constBegin();
                 const QStringList::ConstIterator exportEnd = expList.constEnd();
                 for (; exportIt != exportEnd; ++exportIt)
@@ -443,6 +492,7 @@ void buildGraph(QHash<QByteArray, Vertex*>& vertices, KoFilterManager::Direction
                 debugFilter << "Filter:" << (*it)->fileName() << " does not apply.";
             }
         }
+    }
 }
 
 // This method runs a BFS on the graph to determine the connected
@@ -592,11 +642,13 @@ bool KoFilterManager::filterAvailable(KoFilterEntry::Ptr entry)
     // generate some "unique" key
     QString key = entry->service()->name() + " - " + entry->service()->library();
 
-    if (!m_filterAvailable.contains(key)) {
+    if (!m_filterAvailable.contains(key))
+    {
         //kDebug( 30500 ) <<"Not cached, checking...";
 
         KLibrary library(QFile::encodeName(entry->service()->library()));
-        if (library.fileName().isEmpty()) {
+        if (library.fileName().isEmpty())
+        {
             warnFilter << "Huh?? Couldn't load the lib: "
                        << entry->service()->library();
             m_filterAvailable[ key ] = false;
@@ -606,12 +658,15 @@ bool KoFilterManager::filterAvailable(KoFilterEntry::Ptr entry)
         // This code is "borrowed" from klibloader ;)
         QByteArray symname = "check_" + QString(library.objectName()).toLatin1();
         KLibrary::void_function_ptr sym = library.resolveFunction(symname);
-        if (!sym) {
+        if (!sym)
+        {
             //            warnFilter << "The library " << library.objectName()
             //                << " does not offer a check_" << library.objectName()
             //                << " function." << endl;
             m_filterAvailable[key] = false;
-        } else {
+        }
+        else
+        {
             typedef int (*t_func)();
             t_func check = (t_func)sym;
             m_filterAvailable[ key ] = check() == 1;

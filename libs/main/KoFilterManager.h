@@ -159,23 +159,28 @@ private:
     // just forward calls to the methods here. Should be
     // pretty safe.
     friend QString KoFilterChain::filterManagerImportFile() const;
-    QString importFile() const {
+    QString importFile() const
+    {
         return m_importUrl;
     }
     friend QString KoFilterChain::filterManagerExportFile() const;
-    QString exportFile() const {
+    QString exportFile() const
+    {
         return m_exportUrl;
     }
     friend KoDocument *KoFilterChain::filterManagerKoDocument() const;
-    KoDocument *document() const {
+    KoDocument *document() const
+    {
         return m_document;
     }
     friend int KoFilterChain::filterManagerDirection() const;
-    int direction() const {
+    int direction() const
+    {
         return static_cast<int>(m_direction);
     }
     friend KoFilterChain *KoFilterChain::filterManagerParentChain() const;
-    KoFilterChain *parentChain() const {
+    KoFilterChain *parentChain() const
+    {
         return m_parentChain;
     }
 
