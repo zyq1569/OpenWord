@@ -65,12 +65,14 @@ void OdtReaderDocxBackend::elementOfficeBody(KoXmlStreamReader &reader, OdfReade
 {
     DEBUG_BACKEND();
     OdfReaderDocxContext *docxContext = dynamic_cast<OdfReaderDocxContext*>(context);
-    if (!docxContext) {
+    if (!docxContext)
+    {
         return;
     }
 
     KoXmlWriter  *writer = docxContext->m_documentWriter;
-    if (reader.isStartElement()) {
+    if (reader.isStartElement())
+    {
         writer->startDocument(0);
 
         // Start the document and add all necessary namespaces to it.
@@ -80,7 +82,8 @@ void OdtReaderDocxBackend::elementOfficeBody(KoXmlStreamReader &reader, OdfReade
 
         writer->startElement("w:body");
     }
-    else {
+    else
+    {
         // FIXME: Do we have to add w:sectPr here always or only sometimes?
 
         writer->endElement(); // w:body

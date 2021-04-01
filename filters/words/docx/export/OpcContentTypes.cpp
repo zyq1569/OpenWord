@@ -60,7 +60,8 @@ void OpcContentTypes::addFile(const QString &partName, const QString &contentTyp
 KoFilter::ConversionStatus OpcContentTypes::writeToStore(KoStore *opcStore)
 {
     // We can hardcode this one.
-    if (!opcStore->open("[Content_Types].xml")) {
+    if (!opcStore->open("[Content_Types].xml"))
+    {
         debugDocx << "Can not to open [Content_Types].xml.";
         return KoFilter::CreationError;
     }
@@ -73,7 +74,8 @@ KoFilter::ConversionStatus OpcContentTypes::writeToStore(KoStore *opcStore)
     writer.addAttribute("xmlns", "http://schemas.openxmlformats.org/package/2006/content-types");
 
     // Write defaults
-    foreach (const QString &def, defaults.keys()) {
+    foreach (const QString &def, defaults.keys())
+    {
         writer.startElement("Default");
         writer.addAttribute("Extension", def);
         writer.addAttribute("ContentType", defaults.value(def));
@@ -81,15 +83,19 @@ KoFilter::ConversionStatus OpcContentTypes::writeToStore(KoStore *opcStore)
     }
 
     // Write overrides.  Only write those which don't fit the defaults.
-    foreach (const QString &part, parts.keys()) {
+    foreach (const QString &part, parts.keys())
+    {
         bool found = false;
-        foreach (const QString &extension, defaults.keys()) {
-            if (part.endsWith(extension) && parts.value(part) == defaults.value(extension)) {
+        foreach (const QString &extension, defaults.keys())
+        {
+            if (part.endsWith(extension) && parts.value(part) == defaults.value(extension))
+            {
                 found = true;
                 break;
             }
         }
-        if (found) {
+        if (found)
+        {
             // No need to write this one
             continue;
         }

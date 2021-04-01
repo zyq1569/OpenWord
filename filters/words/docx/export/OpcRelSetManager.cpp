@@ -50,7 +50,7 @@ public:
 
     QHash<QString, OpcRelSet*> relSets;         // path, relations
     OpcRelSet                 *documentRelSet;  // The relations for the whole document
-                                                // Stored in _rels/.rels 
+    // Stored in _rels/.rels
 };
 
 OpcRelSetManager::Private::Private()
@@ -104,7 +104,8 @@ void OpcRelSetManager::clear()
     qDeleteAll(d->relSets);
     d->relSets.clear();
 
-    if (d->documentRelSet) {
+    if (d->documentRelSet)
+    {
         delete d->documentRelSet;
         d->documentRelSet = 0;
     }
@@ -139,7 +140,7 @@ bool OpcRelSetManager::saveRelSets(KoStore *odfStore)
     // FIXME: save the document relset here
 
 //     foreach (const QString &path, d->relSets.keys()) {
-        // FIXME: save the .rels file for the file with path 'path' here.
+    // FIXME: save the .rels file for the file with path 'path' here.
 //     }
 
     // FIXME: Return actual return status.

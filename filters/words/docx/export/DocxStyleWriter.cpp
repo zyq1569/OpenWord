@@ -65,12 +65,15 @@ void DocxStyleWriter::read()
 
     QList<KoOdfStyle*> defaultStyles = manager->defaultStyles();
     m_documentWriter->startElement("w:docDefaults");
-    foreach (KoOdfStyle* style, defaultStyles) {
-        if (!style->isFromStylesXml()) {
+    foreach (KoOdfStyle* style, defaultStyles)
+    {
+        if (!style->isFromStylesXml())
+        {
             continue;
         }
         QString family = style->family();
-        if (family == "paragraph") {
+        if (family == "paragraph")
+        {
             m_documentWriter->startElement("w:pPrDefault");
             m_documentWriter->startElement("w:pPr");
             KoOdfStyleProperties *paragraphProperties = style->properties("style:paragraph-properties");
@@ -82,7 +85,8 @@ void DocxStyleWriter::read()
             m_documentWriter->endElement(); // w:pPr
             m_documentWriter->endElement(); // w:pPrDefault
         }
-        else if (family == "text") {
+        else if (family == "text")
+        {
             m_documentWriter->startElement("w:rPrDefault");
             m_documentWriter->startElement("w:rPr");
             KoOdfStyleProperties *textProperties = style->properties("style:text-properties");
@@ -94,25 +98,30 @@ void DocxStyleWriter::read()
     m_documentWriter->endElement(); // w:docDefaults
 
     QList<KoOdfStyle*> styles = manager->styles();
-    foreach (KoOdfStyle* style, styles) {
-        if (!style->isFromStylesXml()) {
+    foreach (KoOdfStyle* style, styles)
+    {
+        if (!style->isFromStylesXml())
+        {
             continue;
         }
         QString family = style->family();
         QString parent = style->parent();
 
-        if (family == "paragraph") {
+        if (family == "paragraph")
+        {
             m_documentWriter->startElement("w:style");
             m_documentWriter->addAttribute("w:type", "paragraph");
             m_documentWriter->addAttribute("w:styleId", style->name());
             m_documentWriter->startElement("w:name");
             QString displayName = style->displayName();
-            if (displayName.isEmpty()) {
+            if (displayName.isEmpty())
+            {
                 displayName = style->name();
             }
             m_documentWriter->addAttribute("w:val", displayName);
             m_documentWriter->endElement(); // w:name
-            if (!parent.isEmpty()) {
+            if (!parent.isEmpty())
+            {
                 m_documentWriter->startElement("w:basedOn");
                 m_documentWriter->addAttribute("w:val", parent);
                 m_documentWriter->endElement(); // w:basedOn
@@ -124,28 +133,33 @@ void DocxStyleWriter::read()
             KoOdfStyleProperties *textProperties = style->properties("style:text-properties");
             m_documentWriter->startElement("w:rPr");
             KoOdfStyleProperties properties;
-            if (!parent.isEmpty()) {
+            if (!parent.isEmpty())
+            {
                 DocxStyleHelper::inheritTextStyles(&properties, parent, manager);
             }
-            if (textProperties != 0) {
+            if (textProperties != 0)
+            {
                 properties.copyPropertiesFrom(*textProperties);
             }
             DocxStyleHelper::handleTextStyles(&properties, m_documentWriter);
             m_documentWriter->endElement(); // w:rPr
             m_documentWriter->endElement(); // w:style
         }
-        else if (family == "text") {
+        else if (family == "text")
+        {
             m_documentWriter->startElement("w:style");
             m_documentWriter->addAttribute("w:type", "character");
             m_documentWriter->addAttribute("w:styleId", style->name());
             m_documentWriter->startElement("w:name");
             QString displayName = style->displayName();
-            if (displayName.isEmpty()) {
+            if (displayName.isEmpty())
+            {
                 displayName = style->name();
             }
             m_documentWriter->addAttribute("w:val", displayName);
             m_documentWriter->endElement(); // w:name
-            if (!parent.isEmpty()) {
+            if (!parent.isEmpty())
+            {
                 m_documentWriter->startElement("w:basedOn");
                 m_documentWriter->addAttribute("w:val", parent);
                 m_documentWriter->endElement(); // w:basedOn

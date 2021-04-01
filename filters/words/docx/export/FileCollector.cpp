@@ -151,13 +151,16 @@ QList<FileCollector::FileInfo*>  FileCollector::files() const
 KoFilter::ConversionStatus FileCollector::writeFiles(KoStore *store)
 {
     // Write contents of added files.
-    foreach (FileInfo *file, d->m_files) {
+    foreach (FileInfo *file, d->m_files)
+    {
         // Zip contents do not work with absolute value for lo/msoff
         QString fileName = file->fileName;
-        if (fileName.at(0) == '/') {
+        if (fileName.at(0) == '/')
+        {
             fileName.remove(0, 1);
         }
-        if (!store->open(fileName)) {
+        if (!store->open(fileName))
+        {
             debugDocx << "Can not create" << file->fileName;
             return KoFilter::CreationError;
         }
@@ -165,7 +168,8 @@ KoFilter::ConversionStatus FileCollector::writeFiles(KoStore *store)
         // Write contents and check if it went well.
         qint64 writeLen = store->write(file->fileContents);
         store->close();
-        if (writeLen != file->fileContents.size()) {
+        if (writeLen != file->fileContents.size())
+        {
             // FIXME: There isn't a simple KoFilter::WriteError but there should be!
             return KoFilter::EmbeddedDocError;
         }

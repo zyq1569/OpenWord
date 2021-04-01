@@ -76,14 +76,16 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
 {
     // Check for types
     if (from != "application/vnd.oasis.opendocument.text"
-            || to != "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+            || to != "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+    {
         return KoFilter::NotImplemented;
     }
 
     // Open the infile and return an error if it fails.
     KoStore *odfStore = KoStore::createStore(m_chain->inputFile(), KoStore::Read,
-                                             "", KoStore::Auto);
-    if (!odfStore->open("mimetype")) {
+                        "", KoStore::Auto);
+    if (!odfStore->open("mimetype"))
+    {
         errorDocx << "Unable to open input file!" << endl;
         delete odfStore;
         return KoFilter::FileNotFound;
@@ -107,7 +109,8 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
     odfTextReader.setBackend(&docxTextBackend);
     odtReader.setTextReader(&odfTextReader);
 
-    if (!odtReader.analyzeContent(&docxBackendContext)) {
+    if (!odtReader.analyzeContent(&docxBackendContext))
+    {
         return KoFilter::ParsingError;
     }
 
@@ -120,13 +123,15 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
                             styleWriter.documentContent());
 
 
-    if (!odtReader.readContent(&docxBackend, &docxBackendContext)) {
+    if (!odtReader.readContent(&docxBackend, &docxBackendContext))
+    {
         return KoFilter::ParsingError;
     }
 
     bool commentsExist = !docxBackendContext.commentsContent().isEmpty();
 
-    if (commentsExist) {
+    if (commentsExist)
+    {
         // Add comments file
         QByteArray tempArray;
         QBuffer tempBuffer(&tempArray);

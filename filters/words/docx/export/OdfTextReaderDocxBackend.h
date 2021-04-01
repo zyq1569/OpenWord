@@ -34,7 +34,7 @@ class OdfReaderDocxContext;
 
 class OdfTextReaderDocxBackend : public OdfTextReaderBackend
 {
- public:
+public:
     OdfTextReaderDocxBackend();
     ~OdfTextReaderDocxBackend() override;
 
@@ -57,11 +57,11 @@ class OdfTextReaderDocxBackend : public OdfTextReaderBackend
 
     void characterData(KoXmlStreamReader &reader, OdfReaderContext *context) override;
 
- private:
+private:
     void startRun(const KoXmlStreamReader &reader, OdfReaderDocxContext *context);
     void endRun(OdfReaderDocxContext *context);
 
- private:
+private:
     int m_insideSpanLevel;    // Number of nexted <text:span> levels.
     int m_currentOutlineLevel;
     int m_commentIndex;

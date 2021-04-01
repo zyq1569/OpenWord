@@ -32,7 +32,7 @@ class OpcRelSet;
 
 class OpcRelSetManager
 {
- public:
+public:
     OpcRelSetManager();
     ~OpcRelSetManager();
 
@@ -47,7 +47,7 @@ class OpcRelSetManager
     bool loadRelSets(KoStore *odfStore);
     bool saveRelSets(KoStore *odfStore);
 
- private:
+private:
     class Private;
     Private * const d;
 };

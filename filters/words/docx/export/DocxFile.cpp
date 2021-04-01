@@ -52,9 +52,9 @@ DocxFile::~DocxFile()
 
 // todo: commentsexist should be probably replaced with qlist qpair later
 KoFilter::ConversionStatus DocxFile::writeDocx(const QString &fileName,
-                                               const QByteArray &appIdentification,
-                                               const OdfReaderDocxContext &context,
-                                               bool  commentsExist)
+        const QByteArray &appIdentification,
+        const OdfReaderDocxContext &context,
+        bool  commentsExist)
 {
     Q_UNUSED(context);
 
@@ -62,8 +62,9 @@ KoFilter::ConversionStatus DocxFile::writeDocx(const QString &fileName,
     // Create the store and check if everything went well.
     // FIXME: Should docxStore be deleted from a finalizer?
     KoStore *docxStore = KoStore::createStore(fileName, KoStore::Write,
-                                              appIdentification, KoStore::Auto, false);
-    if (!docxStore || docxStore->bad()) {
+                         appIdentification, KoStore::Auto, false);
+    if (!docxStore || docxStore->bad())
+    {
         warnDocx << "Unable to create output file!";
         delete docxStore;
         return KoFilter::FileNotFound;
@@ -72,21 +73,24 @@ KoFilter::ConversionStatus DocxFile::writeDocx(const QString &fileName,
 
     // Write top-level rels
     status = writeTopLevelRels(docxStore);
-    if (status != KoFilter::OK) {
+    if (status != KoFilter::OK)
+    {
         delete docxStore;
         return status;
     }
 
     // Write rels for word/document.xml
     status = writeDocumentRels(docxStore);
-    if (status != KoFilter::OK) {
+    if (status != KoFilter::OK)
+    {
         delete docxStore;
         return status;
     }
 
     // Write contents of added files.
     status = FileCollector::writeFiles(docxStore);
-    if (status != KoFilter::OK) {
+    if (status != KoFilter::OK)
+    {
         delete docxStore;
         return status;
     }
@@ -95,7 +99,8 @@ KoFilter::ConversionStatus DocxFile::writeDocx(const QString &fileName,
     OpcContentTypes  contentTypes;
     contentTypes.addDefault("rels", "application/vnd.openxmlformats-package.relationships+xml");
     contentTypes.addDefault("xml", "application/xml");
-    foreach (const FileInfo *file, files()) {
+    foreach (const FileInfo *file, files())
+    {
         contentTypes.addFile(file->fileName, file->mimetype);
     }
     contentTypes.writeToStore(docxStore);
@@ -114,7 +119,8 @@ KoFilter::ConversionStatus DocxFile::writeDocx(const QString &fileName,
 KoFilter::ConversionStatus DocxFile::writeTopLevelRels(KoStore *docxStore)
 {
     // We can hardcode this one.
-    if (!docxStore->open("_rels/.rels")) {
+    if (!docxStore->open("_rels/.rels"))
+    {
         debugDocx << "Can not to open _rels/.rels.";
         return KoFilter::CreationError;
     }
@@ -157,7 +163,8 @@ KoFilter::ConversionStatus DocxFile::writeTopLevelRels(KoStore *docxStore)
 KoFilter::ConversionStatus DocxFile::writeDocumentRels(KoStore *docxStore)
 {
     // We can hardcode this for now but should not be int he future.
-    if (!docxStore->open("word/_rels/document.xml.rels")) {
+    if (!docxStore->open("word/_rels/document.xml.rels"))
+    {
         debugDocx << "Can not to open word/_rels/document.xml.rels.";
         return KoFilter::CreationError;
     }
@@ -177,7 +184,8 @@ KoFilter::ConversionStatus DocxFile::writeDocumentRels(KoStore *docxStore)
 
     // FIXME: Enable these when we find that we need them
     // or rather go through a list of these and add all from the list
-    if (m_commentsExist) {
+    if (m_commentsExist)
+    {
         writer.startElement("Relationship");
         writer.addAttribute("Id", "rId2");
         writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments");
