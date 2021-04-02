@@ -41,16 +41,19 @@ class ToolDockerFactory : public KoDockFactoryBase
 public:
     ToolDockerFactory() : KoDockFactoryBase() { }
 
-    QString id() const override {
+    QString id() const override
+    {
         return "sharedtooldocker";
     }
 
-    QDockWidget* createDockWidget() override {
+    QDockWidget* createDockWidget() override
+    {
         KoToolDocker * dockWidget = new KoToolDocker();
         return dockWidget;
     }
 
-    DockPosition defaultDockPosition() const override {
+    DockPosition defaultDockPosition() const override
+    {
         return DockRight;
     }
 };
@@ -60,7 +63,7 @@ KoDockerManager::KoDockerManager(KoMainWindow *mainWindow)
 {
     ToolDockerFactory toolDockerFactory;
     d->toolOptionsDocker =
-            qobject_cast<KoToolDocker*>(mainWindow->createDockWidget(&toolDockerFactory));
+        qobject_cast<KoToolDocker*>(mainWindow->createDockWidget(&toolDockerFactory));
     Q_ASSERT(d->toolOptionsDocker);
     d->toolOptionsDocker->setVisible(false);
 
@@ -77,7 +80,8 @@ void KoDockerManager::newOptionWidgets(const QList<QPointer<QWidget> > &optionWi
     d->toolOptionsDocker->setOptionWidgets(optionWidgetList);
     QFont dockWidgetFont = KoDockRegistry::dockFont();
 
-    foreach(QWidget *w, optionWidgetList) {
+    foreach(QWidget *w, optionWidgetList)
+    {
 #ifdef Q_OS_MAC
         w->setAttribute(Qt::WA_MacSmallSize, true);
 #endif

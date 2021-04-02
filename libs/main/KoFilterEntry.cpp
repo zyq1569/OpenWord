@@ -51,9 +51,9 @@ KoFilterEntry::KoFilterEntry(QPluginLoader *loader)
         weight = 1;
     }
     available = metadata.value("X-KDE-Available").toString();
-    DEBUG_LOG(loader->fileName() + "X-KDE-Import:" + import.join(","));
-    DEBUG_LOG(loader->fileName() + "X-KDE-Export:" + export_.join(","));
-    DEBUG_LOG(loader->fileName() + "X-KDE-Available:" + available);
+//    DEBUG_LOG(loader->fileName() + "X-KDE-Import:" + import.join(","));
+//    DEBUG_LOG(loader->fileName() + "X-KDE-Export:" + export_.join(","));
+//    DEBUG_LOG(loader->fileName() + "X-KDE-Available:" + available);
 }
 
 KoFilterEntry::~KoFilterEntry()
