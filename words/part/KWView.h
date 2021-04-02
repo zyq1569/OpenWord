@@ -78,7 +78,8 @@ public:
      * return the KWDocument that owns this view.
      * @see KoView::document()
      */
-    KWDocument *kwdocument() const {
+    KWDocument *kwdocument() const
+    {
         return m_document;
     }
 
@@ -92,7 +93,8 @@ public:
     virtual QWidget *canvas() const;
 
     /// returns true if this view has the snap-to-grid enabled.
-    bool snapToGrid() const {
+    bool snapToGrid() const
+    {
         return m_snapToGrid;
     }
 
@@ -102,7 +104,8 @@ public:
     KoCanvasBase *canvasBase() const;
 
     /// Return the view converter for this view.
-    KoViewConverter *viewConverter() {
+    KoViewConverter *viewConverter()
+    {
         return &m_zoomHandler;
     }
 
@@ -115,10 +118,19 @@ public:
     /// go to page
     void goToPage(const KWPage &page);
 
-    KoZoomController *zoomController() const override { return m_zoomController; }
+    KoZoomController *zoomController() const override
+    {
+        return m_zoomController;
+    }
 
-    int minPageNumber() const { return m_minPageNum; }
-    int maxPageNumber() const { return m_maxPageNum; }
+    int minPageNumber() const
+    {
+        return m_minPageNum;
+    }
+    int maxPageNumber() const
+    {
+        return m_maxPageNum;
+    }
 
     void viewMouseMoveEvent(QMouseEvent *e);
 

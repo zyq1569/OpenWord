@@ -50,7 +50,8 @@ public:
     ~KoPrintJob() override;
 
     /// A policy to allow the printjob to delete itself after its done printing.
-    enum RemovePolicy {
+    enum RemovePolicy
+    {
         DeleteWhenDone, ///< Delete the job when its done with printing.
         DoNotDelete     ///< Keep the job around so it can be started again.
     };
@@ -61,13 +62,16 @@ public:
     /// returns will be shown in the print dialog.
     virtual QList<QWidget*> createOptionWidgets() const = 0;
 
-    virtual int documentFirstPage() const {
+    virtual int documentFirstPage() const
+    {
         return 1;
     }
-    virtual int documentLastPage() const {
+    virtual int documentLastPage() const
+    {
         return 1;
     }
-    virtual int documentCurrentPage() const {
+    virtual int documentCurrentPage() const
+    {
         return 1;
     }
 
