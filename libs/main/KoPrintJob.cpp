@@ -23,7 +23,7 @@
 #include <QPainter>
 
 KoPrintJob::KoPrintJob(QObject *parent)
-        : QObject(parent)
+    : QObject(parent)
 {
 }
 
@@ -34,7 +34,9 @@ KoPrintJob::~KoPrintJob()
 void KoPrintJob::startPrinting(RemovePolicy removePolicy)
 {
     if (removePolicy == DeleteWhenDone)
+    {
         deleteLater();
+    }
 }
 
 QAbstractPrintDialog::PrintDialogOptions KoPrintJob::printDialogOptions() const
@@ -48,12 +50,14 @@ QAbstractPrintDialog::PrintDialogOptions KoPrintJob::printDialogOptions() const
 
 bool KoPrintJob::canPrint()
 {
-    if (! printer().isValid()) {
+    if (! printer().isValid())
+    {
         return false;
     }
 
     QPainter testPainter(&printer());
-    if (testPainter.isActive()) {
+    if (testPainter.isActive())
+    {
         return true;
     }
 

@@ -1107,13 +1107,17 @@ bool KoMainWindow::saveDocument(bool saveas, bool silent, int specialOutputFlag)
 
 
         if (!isExporting())
+        {
             justChangingFilterOptions = (newURL == d->rootDocument->url()) &&
                                         (outputFormat == d->rootDocument->mimeType()) &&
                                         (specialOutputFlag == oldSpecialOutputFlag);
+        }
         else
+        {
             justChangingFilterOptions = (newURL == d->lastExportUrl) &&
                                         (outputFormat == d->lastExportedFormat) &&
                                         (specialOutputFlag == d->lastExportSpecialOutputFlag);
+        }
 
 
         bool bOk = true;

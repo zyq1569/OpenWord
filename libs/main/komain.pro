@@ -1,7 +1,8 @@
 
 TEMPLATE = lib
 TARGET   = komain
-DESTDIR = ../../bin/libs/
+DESTDIR  = ../../bin/libs/
+#DEFINES += CALLIGRA_RC=1
 QT      += core xml network gui widgets printsupport concurrent dbus
 
 
