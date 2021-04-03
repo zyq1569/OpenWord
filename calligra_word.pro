@@ -44,10 +44,10 @@ SUBDIRS    +=   log/easylog.pro \
                 plugins/defaultTools/calligra_tool_defaults.pro \
                 words/part/calligrawordspart.pro \
                 plugins/karbonplugins/tools/karbon_tools.pro \
-                karbon/karbonpart.pro \
                 libs/kross/kokross.pro \
                 words/app/calligrawords.pro
 #-------------------------------------------------
+#                karbon/karbonpart.pro \
 #                karbon/ui/karbonui.pro \
 #                karbon/common/karboncommon.pro \
 #                libs/pageapp/kopageapp.pro \
