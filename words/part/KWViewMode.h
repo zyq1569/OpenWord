@@ -58,7 +58,8 @@ public:
     ~KWViewMode() override {}
 
     /// a two value return type for mapExposedRects()
-    struct ViewMap {
+    struct ViewMap
+    {
         QRect clipRect;   ///< the rectangle in the view coordinates showing (part of) the clip
         QPointF distance; ///< the displacement between the document and the view in view coordinates.
         KWPage page;      ///< The page that this section represents.
@@ -80,7 +81,8 @@ public:
     virtual QSizeF contentsSize() const = 0;
 
     /** Does this viewmode know anything about pages? */
-    virtual bool hasPages() {
+    virtual bool hasPages()
+    {
         return true;
     }
 
@@ -124,7 +126,11 @@ public Q_SLOTS:
      * added or removed or just resized.
      */
     void pageSetupChanged();
-    void setPageManager(KWPageManager *pageManager) { m_pageManager = pageManager; updatePageCache(); }
+    void setPageManager(KWPageManager *pageManager)
+    {
+        m_pageManager = pageManager;
+        updatePageCache();
+    }
 
 protected:
     /**

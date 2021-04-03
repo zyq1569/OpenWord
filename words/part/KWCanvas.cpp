@@ -42,9 +42,9 @@
 #include <QPainterPath>
 
 KWCanvas::KWCanvas(const QString &viewMode, KWDocument *document, KWView *view, KWGui *parent)
-        : QWidget(parent),
-        KWCanvasBase(document, this),
-        m_view(view)
+    : QWidget(parent),
+      KWCanvasBase(document, this),
+      m_view(view)
 {
     setAttribute(Qt::WA_OpaquePaintEvent, true);
     setAttribute(Qt::WA_InputMethodEnabled, true);
@@ -68,7 +68,8 @@ void KWCanvas::updateSize()
 {
     resourceManager()->setResource(Words::CurrentPageCount, m_document->pageCount());
     QSizeF  canvasSize = m_viewMode->contentsSize();
-    if (showAnnotations()) {
+    if (showAnnotations())
+    {
         canvasSize += QSize(AnnotationAreaWidth, 0.0);
     }
     emit documentSize(canvasSize);
@@ -118,7 +119,8 @@ void KWCanvas::mouseDoubleClickEvent(QMouseEvent *e)
 
 bool KWCanvas::event(QEvent *e)
 {
-    if(toolProxy()) {
+    if(toolProxy())
+    {
         toolProxy()->processEvent(e);
     }
     return QWidget::event(e);
@@ -127,29 +129,42 @@ bool KWCanvas::event(QEvent *e)
 void KWCanvas::keyPressEvent(QKeyEvent *e)
 {
     m_toolProxy->keyPressEvent(e);
-    if (! e->isAccepted()) {
+    if (! e->isAccepted())
+    {
         if (e->key() == Qt::Key_Backtab
                 || (e->key() == Qt::Key_Tab && (e->modifiers() & Qt::ShiftModifier)))
+        {
             focusNextPrevChild(false);
+        }
         else if (e->key() == Qt::Key_Tab)
+        {
             focusNextPrevChild(true);
+        }
         else if (e->key() == Qt::Key_PageUp)
+        {
             m_view->goToPreviousPage(e->modifiers());
+        }
         else if (e->key() == Qt::Key_PageDown)
+        {
             m_view->goToNextPage(e->modifiers());
-         }
+        }
+    }
     if(e->key() == Qt::Key_Escape)
+    {
         m_view->exitFullscreenMode();
+    }
 
 }
 
 QVariant KWCanvas::inputMethodQuery(Qt::InputMethodQuery query) const
 {
-    if (query == Qt::ImMicroFocus) {
+    if (query == Qt::ImMicroFocus)
+    {
         QRectF rect = (m_toolProxy->inputMethodQuery(query, *(viewConverter())).toRectF()).toRect();
         rect = m_viewMode->documentToView(viewConverter()->viewToDocument(rect), viewConverter());
         QPointF scroll(canvasController()->scrollBarValue());
-        if (canvasWidget()->layoutDirection() == Qt::RightToLeft) {
+        if (canvasWidget()->layoutDirection() == Qt::RightToLeft)
+        {
             scroll.setX(-scroll.x());
         }
         rect.translate(documentOrigin() - scroll);

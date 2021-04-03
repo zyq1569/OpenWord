@@ -52,15 +52,18 @@ public:
 
     QPointF documentToView(const QPointF &point, KoViewConverter *viewConverter) const override;
     QPointF viewToDocument(const QPointF &point, KoViewConverter *viewConverter) const override;
-    QSizeF contentsSize() const override {
+    QSizeF contentsSize() const override
+    {
         return m_contents;
     }
 
     /// return a string identification of this viewMode
-    static const QString viewMode() {
+    static const QString viewMode()
+    {
         return "ModeNormal";
     }
-    const QString type() const override {
+    const QString type() const override
+    {
         return KWViewModeNormal::viewMode();
     }
     QVector<ViewMap> mapExposedRects(const QRectF &clipRect, KoViewConverter *viewConverter) const override;

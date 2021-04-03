@@ -27,25 +27,25 @@
 #include <KSharedConfig>
 
 KWApplicationConfig::KWApplicationConfig()
-        : m_viewFrameBorders(true),
-        m_viewRulers(false),
-        m_showFormattingChars(false),
-        m_showTableBorders(true),
-        m_showSectionBounds(false),
-        m_createBackupFile(true),
-        m_statusBarShowPage(true),
-        m_statusBarShowPageStyle(true),
-        m_statusBarShowPageSize(false),
-        m_statusBarShowLineNumber(true),
-        m_statusBarShowModified(true),
-        m_statusBarShowMouse(false),
-        m_statusBarShowZoom(true),
-        m_statusBarShowWordCount(false),
-        m_showInlineObjectVisualization(true),
-        m_zoom(100),
-        m_zoomMode(KoZoomMode::ZOOM_WIDTH),
-        m_autoSaveSeconds(KoDocument::defaultAutoSave()),
-        m_defaultColumnSpacing(MM_TO_POINT(6))
+    : m_viewFrameBorders(true),
+      m_viewRulers(false),
+      m_showFormattingChars(false),
+      m_showTableBorders(true),
+      m_showSectionBounds(false),
+      m_createBackupFile(true),
+      m_statusBarShowPage(true),
+      m_statusBarShowPageStyle(true),
+      m_statusBarShowPageSize(false),
+      m_statusBarShowLineNumber(true),
+      m_statusBarShowModified(true),
+      m_statusBarShowMouse(false),
+      m_statusBarShowZoom(true),
+      m_statusBarShowWordCount(false),
+      m_showInlineObjectVisualization(true),
+      m_zoom(100),
+      m_zoomMode(KoZoomMode::ZOOM_WIDTH),
+      m_autoSaveSeconds(KoDocument::defaultAutoSave()),
+      m_defaultColumnSpacing(MM_TO_POINT(6))
 {
 }
 
@@ -100,11 +100,14 @@ void KWApplicationConfig::load(KWDocument *document)
 //    setSnapToGrid(interface.readEntry("SnapToGrid", false));
 
     KConfigGroup misc = config->group("Misc");
-    if (misc.exists()) {
+    if (misc.exists())
+    {
 
         //load default unit setting - this is only used for new files (from templates) or empty files
         if (document && misc.hasKey("Units"))
+        {
             document->setUnit(KoUnit::fromSymbol(misc.readEntry("Units")));
+        }
         m_defaultColumnSpacing = misc.readEntry("ColumnSpacing", m_defaultColumnSpacing);
     }
 
@@ -118,11 +121,14 @@ void KWApplicationConfig::load(KWDocument *document)
 //    m_layoutViewMode = KWViewMode::create(m_viewModeType, this, 0 /*no canvas*/);
 
     KConfigGroup path = config->group("Words Path");
-    if (path.exists()) {
+    if (path.exists())
+    {
 //        if (path.hasKey("expression path"))
 //            m_personalExpressionPath = path.readPathEntry("expression path", QStringList());
         if (document)
+        {
             document->setBackupPath(path.readPathEntry("backup path", QString()));
+        }
     }
 
     // Load personal dict
