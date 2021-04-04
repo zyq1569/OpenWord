@@ -36,8 +36,8 @@
 #include <QTextCursor>
 
 KWOdfSharedLoadingData::KWOdfSharedLoadingData(KWOdfLoader *loader)
-        : KoTextSharedLoadingData()
-        , m_loader(loader)
+    : KoTextSharedLoadingData()
+    , m_loader(loader)
 {
     KoShapeLoadingContext::addAdditionalAttributeData(
         KoShapeLoadingContext::AdditionalAttributeData(
@@ -51,23 +51,28 @@ void KWOdfSharedLoadingData::shapeInserted(KoShape *shape, const KoXmlElement &e
 {
     shape->removeAdditionalAttribute("text:anchor-type");
     const KoXmlElement *style = 0;
-    if (element.hasAttributeNS(KoXmlNS::draw, "style-name")) {
+    if (element.hasAttributeNS(KoXmlNS::draw, "style-name"))
+    {
         style = context.odfLoadingContext().stylesReader().findStyle(
                     element.attributeNS(KoXmlNS::draw, "style-name"), "graphic",
                     context.odfLoadingContext().useStylesAutoStyles());
     }
 
-    if (shape->shapeId() == "TextShape_SHAPEID") {
+    if (shape->shapeId() == "TextShape_SHAPEID")
+    {
         KoXmlElement textBox(KoXml::namedItemNS(element, KoXmlNS::draw, "text-box"));
-        if (!textBox.isNull()) {
+        if (!textBox.isNull())
+        {
             QString nextName = textBox.attributeNS(KoXmlNS::draw, "chain-next-name");
             m_nextShapeNames.insert(shape, nextName);
             m_shapesToProcess.append(shape);
 
-            if (textBox.hasAttributeNS(KoXmlNS::fo, "min-height")) {
+            if (textBox.hasAttributeNS(KoXmlNS::fo, "min-height"))
+            {
                 shape->setMinimumHeight(KoUnit::parseValue(textBox.attributeNS(KoXmlNS::fo, "min-height")));
                 QSizeF newSize = shape->size();
-                if (newSize.height() < shape->minimumHeight()) {
+                if (newSize.height() < shape->minimumHeight())
+                {
                     newSize.setHeight(shape->minimumHeight());
                     shape->setSize(newSize);
                 }
@@ -76,14 +81,20 @@ void KWOdfSharedLoadingData::shapeInserted(KoShape *shape, const KoXmlElement &e
             fs->setName(m_loader->document()->uniqueFrameSetName(shape->name()));
             KWFrame *frame = new KWFrame(shape, fs);
             if (style)
+            {
                 fillFrameProperties(frame, *style);
+            }
         }
-    } else {
+    }
+    else
+    {
         KWFrameSet *fs = new KWFrameSet();
         fs->setName(m_loader->document()->uniqueFrameSetName(shape->name()));
         KWFrame *frame = new KWFrame(shape, fs);
         if (style)
+        {
             fillFrameProperties(frame, *style);
+        }
         m_loader->document()->addFrameSet(fs);
     }
 }
@@ -92,24 +103,30 @@ bool KWOdfSharedLoadingData::fillFrameProperties(KWFrame *frame, const KoXmlElem
 {
     KoXmlElement properties(KoXml::namedItemNS(style, KoXmlNS::style, "graphic-properties"));
     if (properties.isNull())
+    {
         return frame;
+    }
 
     return true;
 }
 
 void KWOdfSharedLoadingData::connectFlowingTextShapes()
 {
-    while (!m_shapesToProcess.isEmpty()) {
+    while (!m_shapesToProcess.isEmpty())
+    {
         KoShape *shape = m_shapesToProcess.takeFirst();
         KWTextFrameSet *fs = dynamic_cast<KWTextFrameSet *>(KWFrameSet::from(shape));
         m_loader->document()->addFrameSet(fs);
 
-        while (shape) {
+        while (shape)
+        {
             QString nextName = m_nextShapeNames[shape];
             shape = 0;
 
-            foreach (KoShape *s, m_shapesToProcess) {
-                if (s->name() == nextName) {
+            foreach (KoShape *s, m_shapesToProcess)
+            {
+                if (s->name() == nextName)
+                {
                     shape = s;
                     m_shapesToProcess.removeAll(shape);
                     new KWFrame(shape, fs);
