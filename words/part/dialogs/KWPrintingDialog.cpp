@@ -44,10 +44,13 @@ KWPrintingDialog::KWPrintingDialog(KWDocument *document, KoShapeManager *shapeMa
 {
     setShapeManager(shapeManager);
 
-    while (! m_document->layoutFinishedAtleastOnce()) {
+    while (! m_document->layoutFinishedAtleastOnce())
+    {
         QCoreApplication::processEvents();
         if (! QCoreApplication::hasPendingEvents())
+        {
             break;
+        }
     }
     printer().setFromTo(documentFirstPage(), documentLastPage());
 }
@@ -61,7 +64,9 @@ QRectF KWPrintingDialog::preparePage(int pageNumber)
     const int resolution = printer().resolution();
     KWPage page = m_document->pageManager()->page(pageNumber);
     if (! page.isValid())
+    {
         return QRectF();
+    }
     printer().setPaperSize(page.rect().size(), QPrinter::Point);
 
     KoInsets bleed = m_document->pageManager()->padding();

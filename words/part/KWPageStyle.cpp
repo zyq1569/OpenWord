@@ -62,7 +62,9 @@ KWPageStyle::KWPageStyle(const QString &name, const QString &displayname)
 {
     d->name = name;
     if (!displayname.isEmpty() && displayname != name)
+    {
         d->displayName = displayname;
+    }
 }
 
 KWPageStyle::KWPageStyle(const KWPageStyle &ps)
@@ -230,7 +232,8 @@ KoGenStyle KWPageStyle::saveOdf() const
     KoGenStyle pageLayout = d->pageLayout.saveOdf();
     pageLayout.setAutoStyleInStylesDotXml(true);
 
-    switch (d->pageUsage) {
+    switch (d->pageUsage)
+    {
         case LeftPages:
             pageLayout.addAttribute("style:page-usage", "left");
             break;
@@ -250,7 +253,9 @@ KoGenStyle KWPageStyle::saveOdf() const
     {
         KoColorBackground *colorBackground = dynamic_cast<KoColorBackground*>(d->fullPageBackground.data());
         if (colorBackground)
+        {
             pageLayout.addProperty("fo:background-color", colorBackground->color().name());
+        }
     }
 
     // save column data
@@ -267,7 +272,8 @@ KoGenStyle KWPageStyle::saveOdf() const
 
 
 
-    if (headerPolicy() != Words::HFTypeNone) {
+    if (headerPolicy() != Words::HFTypeNone)
+    {
         QBuffer buffer;
         buffer.open(QIODevice::WriteOnly);
         KoXmlWriter writer(&buffer);
@@ -285,7 +291,8 @@ KoGenStyle KWPageStyle::saveOdf() const
         // the 1_ 2_ is needed to get the correct order
         pageLayout.addStyleChildElement("1_headerStyle", contentElement);
     }
-    if (footerPolicy() != Words::HFTypeNone) {
+    if (footerPolicy() != Words::HFTypeNone)
+    {
         QBuffer buffer;
         buffer.open(QIODevice::WriteOnly);
         KoXmlWriter writer(&buffer);
@@ -313,27 +320,38 @@ void KWPageStyle::loadOdf(KoOdfLoadingContext &context, const KoXmlElement &mast
     d->pageLayout.loadOdf(style);
     KoXmlElement props = KoXml::namedItemNS(style, KoXmlNS::style, "page-layout-properties");
     if (props.isNull())
+    {
         return;
+    }
     QString direction = props.attributeNS(KoXmlNS::style, "writing-mode", "lr-tb");
     d->direction = KoText::directionFromString(direction);
 
     QString pageUsage = style.attributeNS(KoXmlNS::style, "page-usage", "all");
-    if (pageUsage == "left") {
+    if (pageUsage == "left")
+    {
         d->pageUsage = LeftPages;
-    } else if (pageUsage == "mirrored") {
+    }
+    else if (pageUsage == "mirrored")
+    {
         d->pageUsage = MirroredPages;
-    } else if (pageUsage == "right") {
+    }
+    else if (pageUsage == "right")
+    {
         d->pageUsage = RightPages;
-    } else { // "all"
+    }
+    else     // "all"
+    {
         d->pageUsage = AllPages;
     }
 
     d->columns.loadOdf(props);
 
     KoXmlElement header = KoXml::namedItemNS(style, KoXmlNS::style, "header-style");
-    if (! header.isNull()) {
+    if (! header.isNull())
+    {
         KoXmlElement hfprops = KoXml::namedItemNS(header, KoXmlNS::style, "header-footer-properties");
-        if (! hfprops.isNull()) {
+        if (! hfprops.isNull())
+        {
             d->headerDistance = KoUnit::parseValue(hfprops.attributeNS(KoXmlNS::fo, "margin-bottom"));
             d->headerMinimumHeight = KoUnit::parseValue(hfprops.attributeNS(KoXmlNS::fo, "min-height"));
             const QString dynamicSpacing(hfprops.attributeNS(KoXmlNS::style, "dynamic-spacing"));
@@ -343,9 +361,11 @@ void KWPageStyle::loadOdf(KoOdfLoadingContext &context, const KoXmlElement &mast
     }
 
     KoXmlElement footer = KoXml::namedItemNS(style, KoXmlNS::style, "footer-style");
-    if (! footer.isNull()) {
+    if (! footer.isNull())
+    {
         KoXmlElement hfprops = KoXml::namedItemNS(footer, KoXmlNS::style, "header-footer-properties");
-        if (! hfprops.isNull()) {
+        if (! hfprops.isNull())
+        {
             d->footerDistance = KoUnit::parseValue(hfprops.attributeNS(KoXmlNS::fo, "margin-top"));
             d->footerMinimumHeight = KoUnit::parseValue(hfprops.attributeNS(KoXmlNS::fo, "min-height"));
             const QString dynamicSpacing(hfprops.attributeNS(KoXmlNS::style, "dynamic-spacing"));
@@ -356,14 +376,17 @@ void KWPageStyle::loadOdf(KoOdfLoadingContext &context, const KoXmlElement &mast
 
     // Load background picture
     KoXmlElement propBackgroundImage = KoXml::namedItemNS(props, KoXmlNS::style, "background-image");
-    if (!propBackgroundImage.isNull()) {
+    if (!propBackgroundImage.isNull())
+    {
         const QString href = propBackgroundImage.attributeNS(KoXmlNS::xlink, "href", QString());
-        if (!href.isEmpty()) {
+        if (!href.isEmpty())
+        {
             QSharedPointer<KoPatternBackground> background =  QSharedPointer<KoPatternBackground>(new KoPatternBackground(documentResources->imageCollection()));
             d->fullPageBackground = background;
 
             KoImageCollection *imageCollection = documentResources->imageCollection();
-            if (imageCollection != 0) {
+            if (imageCollection != 0)
+            {
                 KoImageData *imageData = imageCollection->createImageData(href,context.store());
                 background->setPattern(imageData);
             }
@@ -373,12 +396,15 @@ void KWPageStyle::loadOdf(KoOdfLoadingContext &context, const KoXmlElement &mast
 
     // Load background color
     QString backgroundColor = props.attributeNS(KoXmlNS::fo, "background-color", QString());
-    if (!backgroundColor.isNull() && d->fullPageBackground == 0) {
+    if (!backgroundColor.isNull() && d->fullPageBackground == 0)
+    {
 
-        if (backgroundColor == "transparent") {
+        if (backgroundColor == "transparent")
+        {
             d->fullPageBackground.clear();
         }
-        else {
+        else
+        {
             d->fullPageBackground = QSharedPointer<KoShapeBackground>(new KoColorBackground(QColor(backgroundColor)));
         }
     }
