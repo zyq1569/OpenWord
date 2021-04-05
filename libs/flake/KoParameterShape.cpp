@@ -41,7 +41,8 @@ KoParameterShape::~KoParameterShape()
 void KoParameterShape::moveHandle(int handleId, const QPointF & point, Qt::KeyboardModifiers modifiers)
 {
     Q_D(KoParameterShape);
-    if (handleId >= d->handles.size()) {
+    if (handleId >= d->handles.size())
+    {
         warnFlake << "handleId out of bounds";
         return;
     }
@@ -61,8 +62,10 @@ int KoParameterShape::handleIdAt(const QRectF & rect) const
     Q_D(const KoParameterShape);
     int handle = -1;
 
-    for (int i = 0; i < d->handles.size(); ++i) {
-        if (rect.contains(d->handles.at(i))) {
+    for (int i = 0; i < d->handles.size(); ++i)
+    {
+        if (rect.contains(d->handles.at(i)))
+        {
             handle = i;
             break;
         }
@@ -90,7 +93,8 @@ void KoParameterShape::paintHandles(QPainter & painter, const KoViewConverter & 
     poly = matrix.map(poly);
 
     // There exists a problem on msvc with for(each) and QVector<QPointF>
-    for (int i = 0; i < d->handles.count(); ++i) {
+    for (int i = 0; i < d->handles.count(); ++i)
+    {
         const QPointF moveVector = worldMatrix.map(d->handles[i]);
         poly.translate(moveVector.x(), moveVector.y());
         painter.drawPolygon(poly);
@@ -119,7 +123,8 @@ void KoParameterShape::setSize(const QSizeF &newSize)
     Q_D(KoParameterShape);
     QTransform matrix(resizeMatrix(newSize));
 
-    for (int i = 0; i < d->handles.size(); ++i) {
+    for (int i = 0; i < d->handles.size(); ++i)
+    {
         d->handles[i] = matrix.map(d->handles[i]);
     }
 
@@ -133,7 +138,8 @@ QPointF KoParameterShape::normalize()
     QTransform matrix;
     matrix.translate(-offset.x(), -offset.y());
 
-    for (int i = 0; i < d->handles.size(); ++i) {
+    for (int i = 0; i < d->handles.size(); ++i)
+    {
         d->handles[i] = matrix.map(d->handles[i]);
     }
 

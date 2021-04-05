@@ -41,7 +41,8 @@ class Q_DECL_HIDDEN KoShapeShadow::Private
 {
 public:
     Private()
-            : offset(2, 2), color(Qt::black), blur(8), visible(true), refCount(0) {
+        : offset(2, 2), color(Qt::black), blur(8), visible(true), refCount(0)
+    {
     }
     QPointF offset;
     QColor color;
@@ -69,10 +70,13 @@ public:
 void KoShapeShadow::Private::paintGroupShadow(KoShapeGroup *group, QPainter &painter, const KoViewConverter &converter)
 {
     QList<KoShape*> shapes = group->shapes();
-    foreach(KoShape *child, shapes) {
+    foreach(KoShape *child, shapes)
+    {
         // we paint recursively here, so we do not have to check recursively for visibility
         if (!child->isVisible())
+        {
             continue;
+        }
         painter.save();
         //apply group child's transformation
         painter.setTransform(child->absoluteTransformation(&converter), true);
@@ -84,7 +88,8 @@ void KoShapeShadow::Private::paintGroupShadow(KoShapeGroup *group, QPainter &pai
 void KoShapeShadow::Private::paintShadow(KoShape *shape, QPainter &painter, const KoViewConverter &converter)
 {
     QPainterPath path(shape->shadowOutline());
-    if (!path.isEmpty()) {
+    if (!path.isEmpty())
+    {
         painter.save();
         KoShape::applyConversion(painter, converter);
         painter.setBrush(QBrush(color));
@@ -92,13 +97,16 @@ void KoShapeShadow::Private::paintShadow(KoShape *shape, QPainter &painter, cons
         // Make sure the shadow has the same fill rule as the shape.
         KoPathShape * pathShape = dynamic_cast<KoPathShape*>(shape);
         if (pathShape)
+        {
             path.setFillRule(pathShape->fillRule());
+        }
 
         painter.drawPath(path);
         painter.restore();
     }
 
-    if (shape->stroke()) {
+    if (shape->stroke())
+    {
         shape->stroke()->paint(shape, painter, converter);
     }
 }
@@ -116,16 +124,21 @@ void KoShapeShadow::Private::blurShadow(QImage &image, int radius, const QColor&
     // See comments in http://webkit.org/b/40793, it seems sensible
     // to follow Skia's limit of 128 pixels for the blur radius.
     if (radius > 128)
+    {
         radius = 128;
+    }
 
     int channels[4] = { 3, 0, 1, 3 };
     int dmax = radius >> 1;
     int dmin = dmax - 1 + (radius & 1);
     if (dmin < 0)
+    {
         dmin = 0;
+    }
 
     // Two stages: horizontal and vertical
-    for (int k = 0; k < 2; ++k) {
+    for (int k = 0; k < 2; ++k)
+    {
 
         unsigned char* pixels = image.bits();
         int stride = (k == 0) ? 4 : image.bytesPerLine();
@@ -133,7 +146,8 @@ void KoShapeShadow::Private::blurShadow(QImage &image, int radius, const QColor&
         int jfinal = (k == 0) ? image.height() : image.width();
         int dim = (k == 0) ? image.width() : image.height();
 
-        for (int j = 0; j < jfinal; ++j, pixels += delta) {
+        for (int j = 0; j < jfinal; ++j, pixels += delta)
+        {
 
             // For each step, we blur the alpha in a channel and store the result
             // in another channel for the subsequent step.
@@ -141,7 +155,8 @@ void KoShapeShadow::Private::blurShadow(QImage &image, int radius, const QColor&
             // This is much more efficient than computing the sum of each pixels
             // covered by the box kernel size for each x.
 
-            for (int step = 0; step < 3; ++step) {
+            for (int step = 0; step < 3; ++step)
+            {
                 int side1 = (step == 0) ? dmin : dmax;
                 int side2 = (step == 1) ? dmin : dmax;
                 int pixelCount = side1 + 1 + side2;
@@ -157,21 +172,28 @@ void KoShapeShadow::Private::blurShadow(QImage &image, int radius, const QColor&
                 int sum = side1 * alpha1 + alpha1;
                 int limit = (dim < side2 + 1) ? dim : side2 + 1;
                 for (i = 1; i < limit; ++i, prev += stride)
+                {
                     sum += *prev;
+                }
                 if (limit <= side2)
+                {
                     sum += (side2 - limit + 1) * alpha2;
+                }
 
                 limit = (side1 < dim) ? side1 : dim;
-                for (i = 0; i < limit; ptr += stride, next += stride, ++i, ++ofs) {
+                for (i = 0; i < limit; ptr += stride, next += stride, ++i, ++ofs)
+                {
                     *ptr = (sum * invCount) >> BlurSumShift;
                     sum += ((ofs < dim) ? *next : alpha2) - alpha1;
                 }
                 prev = pixels + channels[step];
-                for (; ofs < dim; ptr += stride, prev += stride, next += stride, ++i, ++ofs) {
+                for (; ofs < dim; ptr += stride, prev += stride, next += stride, ++i, ++ofs)
+                {
                     *ptr = (sum * invCount) >> BlurSumShift;
                     sum += (*next) - (*prev);
                 }
-                for (; i < dim; ptr += stride, prev += stride, ++i) {
+                for (; i < dim; ptr += stride, prev += stride, ++i)
+                {
                     *ptr = (sum * invCount) >> BlurSumShift;
                     sum += alpha2 - (*prev);
                 }
@@ -192,7 +214,7 @@ void KoShapeShadow::Private::blurShadow(QImage &image, int radius, const QColor&
 
 
 KoShapeShadow::KoShapeShadow()
-        : d(new Private())
+    : d(new Private())
 {
 }
 
@@ -221,17 +243,23 @@ void KoShapeShadow::fillStyle(KoGenStyle &style, KoShapeSavingContext &context)
     style.addProperty("draw:shadow", d->visible ? "visible" : "hidden", KoGenStyle::GraphicType);
     style.addProperty("draw:shadow-color", d->color.name(), KoGenStyle::GraphicType);
     if (d->color.alphaF() != 1.0)
+    {
         style.addProperty("draw:shadow-opacity", QString("%1%").arg(d->color.alphaF() * 100.0), KoGenStyle::GraphicType);
+    }
     style.addProperty("draw:shadow-offset-x", QString("%1pt").arg(d->offset.x()), KoGenStyle::GraphicType);
     style.addProperty("draw:shadow-offset-y", QString("%1pt").arg(d->offset.y()), KoGenStyle::GraphicType);
     if (d->blur != 0)
+    {
         style.addProperty("calligra:shadow-blur-radius", QString("%1pt").arg(d->blur), KoGenStyle::GraphicType);
+    }
 }
 
 void KoShapeShadow::paint(KoShape *shape, QPainter &painter, const KoViewConverter &converter)
 {
     if (! d->visible)
+    {
         return;
+    }
 
     // So the approach we are taking here is to draw into a buffer image the size of boundingRect
     // We offset by the shadow offset at the time we draw into the buffer
@@ -256,9 +284,12 @@ void KoShapeShadow::paint(KoShape *shape, QPainter &painter, const KoViewConvert
     imagePainter.translate(converter.documentToView(offset()));
 
     KoShapeGroup *group = dynamic_cast<KoShapeGroup*>(shape);
-    if (group) {
+    if (group)
+    {
         d->paintGroupShadow(group, imagePainter, converter);
-    } else {
+    }
+    else
+    {
         //apply shape's transformation
         imagePainter.setTransform(shape->absoluteTransformation(&converter), true);
 
@@ -321,7 +352,8 @@ bool KoShapeShadow::isVisible() const
 
 void KoShapeShadow::insets(KoInsets &insets) const
 {
-    if (!d->visible) {
+    if (!d->visible)
+    {
         insets.top = 0;
         insets.bottom = 0;
         insets.left = 0;

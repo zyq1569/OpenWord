@@ -39,23 +39,32 @@ KoShapePaintingContext::KoShapePaintingContext(KoCanvasBase *canvas, bool forPri
     KoCanvasResourceManager *rm = canvas->resourceManager();
 
     showFormattingCharacters = rm->boolResource(KoCanvasResourceManager::ShowFormattingCharacters);
-    if (forPrint) {
+    if (forPrint)
+    {
         showTextShapeOutlines = false;
         showFormattingCharacters = false;
         showTableBorders = false;
         showSectionBounds = false;
         showInlineObjectVisualization = false;
-    } else {
+    }
+    else
+    {
         showTextShapeOutlines = rm->boolResource(KoCanvasResourceManager::ShowTextShapeOutlines);
         showInlineObjectVisualization = rm->boolResource(KoCanvasResourceManager::ShowInlineObjectVisualization);
-        if (rm->hasResource(KoCanvasResourceManager::ShowTableBorders)) {
+        if (rm->hasResource(KoCanvasResourceManager::ShowTableBorders))
+        {
             showTableBorders = rm->boolResource(KoCanvasResourceManager::ShowTableBorders);
-        } else {
+        }
+        else
+        {
             showTableBorders = true;
         }
-        if (rm->hasResource(KoCanvasResourceManager::ShowSectionBounds)) {
+        if (rm->hasResource(KoCanvasResourceManager::ShowSectionBounds))
+        {
             showSectionBounds = rm->boolResource(KoCanvasResourceManager::ShowSectionBounds);
-        } else {
+        }
+        else
+        {
             showSectionBounds = true;
         }
     }

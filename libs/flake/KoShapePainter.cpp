@@ -51,9 +51,13 @@ public:
     void gridSize(qreal *horizontal, qreal *vertical) const override
     {
         if (horizontal)
+        {
             *horizontal = 0;
+        }
         if (vertical)
+        {
             *vertical = 0;
+        }
     };
 
     bool snapToGrid() const override
@@ -115,14 +119,18 @@ public:
     {
     }
 
-    ~Private() { delete canvas; }
+    ~Private()
+    {
+        delete canvas;
+    }
     SimpleCanvas * canvas;
 };
 
 KoShapePainter::KoShapePainter(KoShapeManagerPaintingStrategy *strategy)
     : d(new Private())
 {
-    if (strategy) {
+    if (strategy)
+    {
         strategy->setShapeManager(d->canvas->shapeManager());
         d->canvas->shapeManager()->setPaintingStrategy(strategy);
     }
@@ -140,7 +148,8 @@ void KoShapePainter::setShapes(const QList<KoShape*> &shapes)
 
 void KoShapePainter::paint(QPainter &painter, KoViewConverter &converter)
 {
-    foreach (KoShape *shape, d->canvas->shapeManager()->shapes()) {
+    foreach (KoShape *shape, d->canvas->shapeManager()->shapes())
+    {
         shape->waitUntilReady(converter, false);
     }
 
@@ -150,7 +159,9 @@ void KoShapePainter::paint(QPainter &painter, KoViewConverter &converter)
 void KoShapePainter::paint(QPainter &painter, const QRect &painterRect, const QRectF &documentRect)
 {
     if (documentRect.width() == 0.0f || documentRect.height() == 0.0f)
+    {
         return;
+    }
 
     KoViewConverter converter;
     // calculate the painter destination rectangle size in document coordinates
@@ -189,7 +200,9 @@ void KoShapePainter::paint(QPainter &painter, const QRect &painterRect, const QR
 void KoShapePainter::paint(QImage &image)
 {
     if (image.isNull())
+    {
         return;
+    }
 
     QPainter painter(&image);
 
@@ -199,18 +212,27 @@ void KoShapePainter::paint(QImage &image)
 QRectF KoShapePainter::contentRect() const
 {
     QRectF bound;
-    foreach (KoShape *shape, d->canvas->shapeManager()->shapes()) {
+    foreach (KoShape *shape, d->canvas->shapeManager()->shapes())
+    {
         if (!shape->isVisible(true))
+        {
             continue;
+        }
         if (dynamic_cast<KoShapeGroup*>(shape))
+        {
             continue;
+        }
 
         QRectF shapeRect = shape->boundingRect();
 
         if (bound.isEmpty())
+        {
             bound = shapeRect;
+        }
         else
+        {
             bound = bound.united(shapeRect);
+        }
     }
     return bound;
 }

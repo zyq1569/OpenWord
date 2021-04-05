@@ -32,7 +32,7 @@
 #include <KoXmlNS.h>
 
 KoPathShapeFactory::KoPathShapeFactory(const QStringList&)
-        : KoShapeFactoryBase(KoPathShapeId, i18n("Simple path shape"))
+    : KoShapeFactoryBase(KoPathShapeId, i18n("Simple path shape"))
 {
     setToolTip(i18n("A simple path shape"));
     setIconName(koIconName("pathshape"));
@@ -56,15 +56,24 @@ KoShape *KoPathShapeFactory::createDefaultShape(KoDocumentResourceManager *) con
 bool KoPathShapeFactory::supports(const KoXmlElement & e, KoShapeLoadingContext &context) const
 {
     Q_UNUSED(context);
-    if (e.namespaceURI() == KoXmlNS::draw) {
+    if (e.namespaceURI() == KoXmlNS::draw)
+    {
         if (e.localName() == "path")
+        {
             return true;
+        }
         if (e.localName() == "line")
+        {
             return true;
+        }
         if (e.localName() == "polyline")
+        {
             return true;
+        }
         if (e.localName() == "polygon")
+        {
             return true;
+        }
     }
 
     return false;
@@ -76,12 +85,14 @@ void KoPathShapeFactory::newDocumentResourceManager(KoDocumentResourceManager *m
     // we want to make sure that there is always an image collection
     // added to the data center map, in case the picture shape plugin
     // is not loaded
-    if (manager->imageCollection() == 0) {
+    if (manager->imageCollection() == 0)
+    {
         KoImageCollection *imgCol = new KoImageCollection(manager);
         manager->setImageCollection(imgCol);
     }
     // we also need a MarkerCollection so add if it is not there yet
-    if (!manager->hasResource(KoDocumentResourceManager::MarkerCollection)) {
+    if (!manager->hasResource(KoDocumentResourceManager::MarkerCollection))
+    {
         KoMarkerCollection *markerCollection = new KoMarkerCollection(manager);
         manager->setResource(KoDocumentResourceManager::MarkerCollection, qVariantFromValue(markerCollection));
     }

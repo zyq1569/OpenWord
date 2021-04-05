@@ -42,16 +42,18 @@ class Q_DECL_HIDDEN KoShapeLoadingContext::Private
 {
 public:
     Private(KoOdfLoadingContext &c, KoDocumentResourceManager *resourceManager)
-            : context(c)
-            , zIndex(0)
-            , documentResources(resourceManager)
-            , documentRdf(0)
-            , sectionModel(0)
+        : context(c)
+        , zIndex(0)
+        , documentResources(resourceManager)
+        , documentRdf(0)
+        , sectionModel(0)
     {
     }
 
-    ~Private() {
-        foreach(KoSharedLoadingData * data, sharedData) {
+    ~Private()
+    {
+        foreach(KoSharedLoadingData * data, sharedData)
+        {
             delete data;
         }
     }
@@ -70,11 +72,13 @@ public:
 };
 
 KoShapeLoadingContext::KoShapeLoadingContext(KoOdfLoadingContext & context, KoDocumentResourceManager *documentResources)
-        : d(new Private(context, documentResources))
+    : d(new Private(context, documentResources))
 {
-    if (d->documentResources) {
+    if (d->documentResources)
+    {
         KoMarkerCollection *markerCollection = d->documentResources->resource(KoDocumentResourceManager::MarkerCollection).value<KoMarkerCollection*>();
-        if (markerCollection) {
+        if (markerCollection)
+        {
             markerCollection->loadOdf(*this);
         }
     }
@@ -109,7 +113,8 @@ void KoShapeLoadingContext::addShapeId(KoShape * shape, const QString & id)
 {
     d->drawIds.insert(id, shape);
     QMap<QString, KoLoadingShapeUpdater*>::iterator it(d->updaterById.find(id));
-    while (it != d->updaterById.end() && it.key() == id) {
+    while (it != d->updaterById.end() && it.key() == id)
+    {
         d->updaterByShape.insertMulti(shape, it.value());
         it = d->updaterById.erase(it);
     }
@@ -140,7 +145,8 @@ void KoShapeLoadingContext::updateShape(const QString & id, KoLoadingShapeUpdate
 void KoShapeLoadingContext::shapeLoaded(KoShape * shape)
 {
     QMap<KoShape*, KoLoadingShapeUpdater*>::iterator it(d->updaterByShape.find(shape));
-    while (it != d->updaterByShape.end() && it.key() == shape) {
+    while (it != d->updaterByShape.end() && it.key() == shape)
+    {
         it.value()->update(shape);
         delete it.value();
         it = d->updaterByShape.erase(it);
@@ -166,9 +172,12 @@ void KoShapeLoadingContext::addSharedData(const QString & id, KoSharedLoadingDat
 {
     QMap<QString, KoSharedLoadingData*>::iterator it(d->sharedData.find(id));
     // data will not be overwritten
-    if (it == d->sharedData.end()) {
+    if (it == d->sharedData.end())
+    {
         d->sharedData.insert(id, data);
-    } else {
+    }
+    else
+    {
         warnFlake << "The id" << id << "is already registered. Data not inserted";
         Q_ASSERT(it == d->sharedData.end());
     }
@@ -178,7 +187,8 @@ KoSharedLoadingData * KoShapeLoadingContext::sharedData(const QString & id) cons
 {
     KoSharedLoadingData * data = 0;
     QMap<QString, KoSharedLoadingData*>::const_iterator it(d->sharedData.find(id));
-    if (it != d->sharedData.constEnd()) {
+    if (it != d->sharedData.constEnd())
+    {
         data = it.value();
     }
     return data;

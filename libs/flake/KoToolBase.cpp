@@ -104,9 +104,11 @@ KoToolBase::~KoToolBase()
 /// Ultimately only called from Calligra Sheets
 void KoToolBase::updateShapeController(KoShapeBasedDocumentBase *shapeController)
 {
-    if (shapeController) {
+    if (shapeController)
+    {
         KoDocumentResourceManager *scrm = shapeController->resourceManager();
-        if (scrm) {
+        if (scrm)
+        {
             connect(scrm, SIGNAL(resourceChanged(int,QVariant)),
                     this, SLOT(documentResourceChanged(int,QVariant)));
         }
@@ -173,21 +175,25 @@ QVariant KoToolBase::inputMethodQuery(Qt::InputMethodQuery query, const KoViewCo
 {
     Q_D(const KoToolBase);
     if (d->canvas->canvasWidget() == 0)
+    {
         return QVariant();
+    }
 
-    switch (query) {
-    case Qt::ImMicroFocus:
-        return QRect(d->canvas->canvasWidget()->width() / 2, 0, 1, d->canvas->canvasWidget()->height());
-    case Qt::ImFont:
-        return d->canvas->canvasWidget()->font();
-    default:
-        return QVariant();
+    switch (query)
+    {
+        case Qt::ImMicroFocus:
+            return QRect(d->canvas->canvasWidget()->width() / 2, 0, 1, d->canvas->canvasWidget()->height());
+        case Qt::ImFont:
+            return d->canvas->canvasWidget()->font();
+        default:
+            return QVariant();
     }
 }
 
 void KoToolBase::inputMethodEvent(QInputMethodEvent * event)
 {
-    if (! event->commitString().isEmpty()) {
+    if (! event->commitString().isEmpty())
+    {
         QKeyEvent ke(QEvent::KeyPress, -1, 0, event->commitString());
         keyPressEvent(&ke);
     }
@@ -224,7 +230,8 @@ void KoToolBase::useCursor(const QCursor &cursor)
 QList<QPointer<QWidget> > KoToolBase::optionWidgets()
 {
     Q_D(KoToolBase);
-    if (d->optionWidgets.empty()) {
+    if (d->optionWidgets.empty())
+    {
         d->optionWidgets = createOptionWidgets();
     }
     return d->optionWidgets;
@@ -233,7 +240,8 @@ QList<QPointer<QWidget> > KoToolBase::optionWidgets()
 void KoToolBase::addAction(const QString &name, QAction *action)
 {
     Q_D(KoToolBase);
-    if (action->objectName().isEmpty()) {
+    if (action->objectName().isEmpty())
+    {
         action->setObjectName(name);
     }
     d->actionCollection.insert(name, action);
@@ -259,8 +267,10 @@ QWidget * KoToolBase::createOptionWidget()
 QList<QPointer<QWidget> >  KoToolBase::createOptionWidgets()
 {
     QList<QPointer<QWidget> > ow;
-    if (QWidget *widget = createOptionWidget()) {
-        if (widget->objectName().isEmpty()) {
+    if (QWidget *widget = createOptionWidget())
+    {
+        if (widget->objectName().isEmpty())
+        {
             widget->setObjectName(toolId());
         }
         ow.append(widget);
@@ -325,7 +335,9 @@ uint KoToolBase::handleRadius() const
     if(d->canvas->shapeController()->resourceManager())
     {
         return d->canvas->shapeController()->resourceManager()->handleRadius();
-    } else {
+    }
+    else
+    {
         return 3;
     }
 }
@@ -336,7 +348,9 @@ uint KoToolBase::grabSensitivity() const
     if(d->canvas->shapeController()->resourceManager())
     {
         return d->canvas->shapeController()->resourceManager()->grabSensitivity();
-    } else {
+    }
+    else
+    {
         return 3;
     }
 }

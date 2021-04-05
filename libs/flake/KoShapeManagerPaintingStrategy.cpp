@@ -28,14 +28,14 @@ class Q_DECL_HIDDEN KoShapeManagerPaintingStrategy::Private
 {
 public:
     Private(KoShapeManager * manager)
-    : shapeManager(manager)
+        : shapeManager(manager)
     {}
 
     KoShapeManager * shapeManager;
 };
 
 KoShapeManagerPaintingStrategy::KoShapeManagerPaintingStrategy(KoShapeManager * shapeManager)
-: d(new KoShapeManagerPaintingStrategy::Private(shapeManager))
+    : d(new KoShapeManagerPaintingStrategy::Private(shapeManager))
 {
 }
 
@@ -46,7 +46,8 @@ KoShapeManagerPaintingStrategy::~KoShapeManagerPaintingStrategy()
 
 void KoShapeManagerPaintingStrategy::paint(KoShape * shape, QPainter &painter, const KoViewConverter &converter, KoShapePaintingContext &paintContext)
 {
-    if (d->shapeManager) {
+    if (d->shapeManager)
+    {
         painter.save();
         painter.setTransform(shape->absoluteTransformation(&converter) * painter.transform());
         d->shapeManager->paintShape(shape, painter, converter, paintContext);

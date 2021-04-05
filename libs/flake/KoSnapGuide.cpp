@@ -37,8 +37,8 @@ class Q_DECL_HIDDEN KoSnapGuide::Private
 public:
     Private(KoCanvasBase *parentCanvas)
         : canvas(parentCanvas), editedShape(0), currentStrategy(0),
-        active(true),
-        snapDistance(10)
+          active(true),
+          snapDistance(10)
     {
     }
 
@@ -101,7 +101,9 @@ KoSnapGuide::Strategies KoSnapGuide::enabledSnapStrategies() const
 bool KoSnapGuide::addCustomSnapStrategy(KoSnapStrategy *customStrategy)
 {
     if (!customStrategy || customStrategy->type() != CustomSnapping)
+    {
         return false;
+    }
 
     d->strategies.append(customStrategy);
     return true;
@@ -132,24 +134,31 @@ QPointF KoSnapGuide::snap(const QPointF &mousePosition, Qt::KeyboardModifiers mo
     d->currentStrategy = 0;
 
     if (! d->active || (modifiers & Qt::ShiftModifier))
+    {
         return mousePosition;
+    }
 
     KoSnapProxy proxy(this);
 
     qreal minDistance = HUGE_VAL;
 
     qreal maxSnapDistance = d->canvas->viewConverter()->viewToDocument(QSizeF(d->snapDistance,
-                d->snapDistance)).width();
+                            d->snapDistance)).width();
 
-    foreach (KoSnapStrategy *strategy, d->strategies) {
+    foreach (KoSnapStrategy *strategy, d->strategies)
+    {
         if (d->usedStrategies & strategy->type()
-                || strategy->type() == GridSnapping || strategy->type() == CustomSnapping) {
+                || strategy->type() == GridSnapping || strategy->type() == CustomSnapping)
+        {
             if (! strategy->snap(mousePosition, &proxy, maxSnapDistance))
+            {
                 continue;
+            }
 
             QPointF snapCandidate = strategy->snappedPosition();
             qreal distance = KoSnapStrategy::squareDistance(snapCandidate, mousePosition);
-            if (distance < minDistance) {
+            if (distance < minDistance)
+            {
                 d->currentStrategy = strategy;
                 minDistance = distance;
             }
@@ -157,7 +166,9 @@ QPointF KoSnapGuide::snap(const QPointF &mousePosition, Qt::KeyboardModifiers mo
     }
 
     if (! d->currentStrategy)
+    {
         return mousePosition;
+    }
 
     return d->currentStrategy->snappedPosition();
 }
@@ -166,10 +177,13 @@ QRectF KoSnapGuide::boundingRect() const
 {
     QRectF rect;
 
-    if (d->currentStrategy) {
+    if (d->currentStrategy)
+    {
         rect = d->currentStrategy->decoration(*d->canvas->viewConverter()).boundingRect();
         return rect.adjusted(-2, -2, 2, 2);
-    } else {
+    }
+    else
+    {
         return rect;
     }
 }
@@ -177,7 +191,9 @@ QRectF KoSnapGuide::boundingRect() const
 void KoSnapGuide::paint(QPainter &painter, const KoViewConverter &converter)
 {
     if (! d->currentStrategy || ! d->active)
+    {
         return;
+    }
 
     QPainterPath decoration = d->currentStrategy->decoration(converter);
 
@@ -227,8 +243,10 @@ void KoSnapGuide::reset()
     d->ignoredShapes.clear();
     // remove all custom strategies
     int strategyCount = d->strategies.count();
-    for (int i = strategyCount-1; i >= 0; --i) {
-        if (d->strategies[i]->type() == CustomSnapping) {
+    for (int i = strategyCount-1; i >= 0; --i)
+    {
+        if (d->strategies[i]->type() == CustomSnapping)
+        {
             delete d->strategies[i];
             d->strategies.removeAt(i);
         }

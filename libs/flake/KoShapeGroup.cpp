@@ -60,19 +60,20 @@ public:
     {
         SimpleShapeContainerModel::childChanged(shape, type);
         //debugFlake << type;
-        switch (type) {
-        case KoShape::PositionChanged:
-        case KoShape::RotationChanged:
-        case KoShape::ScaleChanged:
-        case KoShape::ShearChanged:
-        case KoShape::SizeChanged:
-        case KoShape::GenericMatrixChange:
-        case KoShape::ParameterChanged:
-        case KoShape::ClipPathChanged :
-            m_group->invalidateSizeCache();
-            break;
-        default:
-            break;
+        switch (type)
+        {
+            case KoShape::PositionChanged:
+            case KoShape::RotationChanged:
+            case KoShape::ScaleChanged:
+            case KoShape::ShearChanged:
+            case KoShape::SizeChanged:
+            case KoShape::GenericMatrixChange:
+            case KoShape::ParameterChanged:
+            case KoShape::ClipPathChanged :
+                m_group->invalidateSizeCache();
+                break;
+            default:
+                break;
         }
     }
 
@@ -84,7 +85,7 @@ class KoShapeGroupPrivate : public KoShapeContainerPrivate
 {
 public:
     KoShapeGroupPrivate(KoShapeGroup *q)
-    : KoShapeContainerPrivate(q)
+        : KoShapeContainerPrivate(q)
     {
         model = new ShapeGroupContainerModel(q);
     }
@@ -97,7 +98,7 @@ public:
 };
 
 KoShapeGroup::KoShapeGroup()
-        : KoShapeContainer(*(new KoShapeGroupPrivate(this)))
+    : KoShapeContainer(*(new KoShapeGroupPrivate(this)))
 {
     setSize(QSizeF(0, 0));
 }
@@ -122,13 +123,19 @@ QSizeF KoShapeGroup::size() const
 {
     Q_D(const KoShapeGroup);
     //debugFlake << "size" << d->size;
-    if (!d->sizeCached) {
+    if (!d->sizeCached)
+    {
         QRectF bound;
-        foreach(KoShape *shape, shapes()) {
+        foreach(KoShape *shape, shapes())
+        {
             if (bound.isEmpty())
+            {
                 bound = shape->transformation().mapRect(shape->outlineRect());
+            }
             else
+            {
                 bound |= shape->transformation().mapRect(shape->outlineRect());
+            }
         }
         d->size = bound.size();
         d->sizeCached = true;
@@ -142,16 +149,21 @@ QRectF KoShapeGroup::boundingRect() const
 {
     bool first = true;
     QRectF groupBound;
-    foreach(KoShape* shape, shapes()) {
-        if (first) {
+    foreach(KoShape* shape, shapes())
+    {
+        if (first)
+        {
             groupBound = shape->boundingRect();
             first = false;
-        } else {
+        }
+        else
+        {
             groupBound = groupBound.united(shape->boundingRect());
         }
     }
 
-    if (shadow()) {
+    if (shadow())
+    {
         KoInsets insets;
         shadow()->insets(insets);
         groupBound.adjust(-insets.left, -insets.top, insets.right, insets.bottom);
@@ -168,7 +180,8 @@ void KoShapeGroup::saveOdf(KoShapeSavingContext & context) const
     QList<KoShape*> shapes = this->shapes();
     std::sort(shapes.begin(), shapes.end(), KoShape::compareShapeZIndex);
 
-    foreach(KoShape* shape, shapes) {
+    foreach(KoShape* shape, shapes)
+    {
         shape->saveOdf(context);
     }
 
@@ -183,11 +196,14 @@ bool KoShapeGroup::loadOdf(const KoXmlElement & element, KoShapeLoadingContext &
 
     KoXmlElement child;
     QHash<KoShapeLayer*, int> usedLayers;
-    forEachElement(child, element) {
+    forEachElement(child, element)
+    {
         KoShape * shape = KoShapeRegistry::instance()->createShapeFromOdf(child, context);
-        if (shape) {
+        if (shape)
+        {
             KoShapeLayer *layer = dynamic_cast<KoShapeLayer*>(shape->parent());
-            if (layer) {
+            if (layer)
+            {
                 usedLayers[layer]++;
             }
             addShape(shape);
@@ -196,8 +212,10 @@ bool KoShapeGroup::loadOdf(const KoXmlElement & element, KoShapeLoadingContext &
     KoShapeLayer *parent = 0;
     int maxUseCount = 0;
     // find most used layer and use this as parent for the group
-    for (QHash<KoShapeLayer*, int>::const_iterator it(usedLayers.constBegin()); it != usedLayers.constEnd(); ++it) {
-        if (it.value() > maxUseCount) {
+    for (QHash<KoShapeLayer*, int>::const_iterator it(usedLayers.constBegin()); it != usedLayers.constEnd(); ++it)
+    {
+        if (it.value() > maxUseCount)
+        {
             maxUseCount = it.value();
             parent = it.key();
         }
@@ -206,12 +224,17 @@ bool KoShapeGroup::loadOdf(const KoXmlElement & element, KoShapeLoadingContext &
 
     QRectF bound;
     bool boundInitialized = false;
-    foreach(KoShape * shape, shapes()) {
-        if (! boundInitialized) {
+    foreach(KoShape * shape, shapes())
+    {
+        if (! boundInitialized)
+        {
             bound = shape->boundingRect();
             boundInitialized = true;
-        } else
+        }
+        else
+        {
             bound = bound.united(shape->boundingRect());
+        }
     }
 
     setSize(bound.size());
@@ -219,7 +242,9 @@ bool KoShapeGroup::loadOdf(const KoXmlElement & element, KoShapeLoadingContext &
     setPosition(bound.topLeft());
 
     foreach(KoShape * shape, shapes())
+    {
         shape->setAbsolutePosition(shape->absolutePosition() - bound.topLeft());
+    }
 
     return true;
 }
@@ -228,19 +253,23 @@ void KoShapeGroup::shapeChanged(ChangeType type, KoShape *shape)
 {
     Q_UNUSED(shape);
     KoShapeContainer::shapeChanged(type, shape);
-    switch (type) {
-    case KoShape::StrokeChanged:
+    switch (type)
     {
-        KoShapeStrokeModel *str = stroke();
-        if (str) {
-            if (str->deref())
-                delete str;
-            setStroke(0);
+        case KoShape::StrokeChanged:
+        {
+            KoShapeStrokeModel *str = stroke();
+            if (str)
+            {
+                if (str->deref())
+                {
+                    delete str;
+                }
+                setStroke(0);
+            }
+            break;
         }
-        break;
-    }
-    default:
-        break;
+        default:
+            break;
     }
 }
 

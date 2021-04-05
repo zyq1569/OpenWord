@@ -26,7 +26,7 @@
 #include <QSizeF>
 
 KoTosContainerModel::KoTosContainerModel()
-: m_textShape(0)
+    : m_textShape(0)
 {
 }
 
@@ -39,7 +39,8 @@ void KoTosContainerModel::add(KoShape *shape)
     // make sure shape is a text shape
     KoTextShapeDataBase *shapeData = qobject_cast<KoTextShapeDataBase*>(shape->userData());
     Q_ASSERT(shapeData != 0);
-    if (shapeData) {
+    if (shapeData)
+    {
         m_textShape = shape;
     }
 }
@@ -47,7 +48,8 @@ void KoTosContainerModel::add(KoShape *shape)
 void KoTosContainerModel::remove(KoShape *shape)
 {
     Q_ASSERT(m_textShape == 0 || shape == m_textShape);
-    if (shape == m_textShape) {
+    if (shape == m_textShape)
+    {
         m_textShape = 0;
     }
 }
@@ -92,7 +94,8 @@ int KoTosContainerModel::count() const
 QList<KoShape*> KoTosContainerModel::shapes() const
 {
     QList<KoShape*> shapes;
-    if (m_textShape) {
+    if (m_textShape)
+    {
         shapes << m_textShape;
     }
     return shapes;
@@ -101,15 +104,18 @@ QList<KoShape*> KoTosContainerModel::shapes() const
 void KoTosContainerModel::containerChanged(KoShapeContainer *container, KoShape::ChangeType type)
 {
     debugFlake << "change type:" << type << KoShape::SizeChanged << KoShape::ContentChanged;
-    if (type != KoShape::SizeChanged && type != KoShape::ContentChanged) {
+    if (type != KoShape::SizeChanged && type != KoShape::ContentChanged)
+    {
         return;
     }
     KoTosContainer *tosContainer = dynamic_cast<KoTosContainer*>(container);
     debugFlake << "tosContainer" << tosContainer;
-    if (tosContainer) {
+    if (tosContainer)
+    {
         debugFlake << "behaviour" << tosContainer->resizeBehavior() << KoTosContainer::TextFollowsPreferredTextRect;
     }
-    if ( m_textShape && tosContainer && tosContainer->resizeBehavior() != KoTosContainer::TextFollowsPreferredTextRect ) {
+    if ( m_textShape && tosContainer && tosContainer->resizeBehavior() != KoTosContainer::TextFollowsPreferredTextRect )
+    {
         debugFlake << "change type setSize";
         m_textShape->setSize(tosContainer->size());
     }

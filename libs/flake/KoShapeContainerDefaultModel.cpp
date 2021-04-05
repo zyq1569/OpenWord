@@ -1,23 +1,23 @@
 /* This file is part of the KDE project
- * Copyright (C) 2006-2007, 2010 Thomas Zander <zander@kde.org>
- * Copyright (C) 2007 Jan Hambrecht <jaham@gmx.net>
- * Copyright (C) 2009 Thorsten Zachmann <zachmann@kde.org>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
- *
- * You should have received a copy of the GNU Library General Public License
- * along with this library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
- */
+* Copyright (C) 2006-2007, 2010 Thomas Zander <zander@kde.org>
+* Copyright (C) 2007 Jan Hambrecht <jaham@gmx.net>
+* Copyright (C) 2009 Thorsten Zachmann <zachmann@kde.org>
+*
+* This library is free software; you can redistribute it and/or
+* modify it under the terms of the GNU Library General Public
+* License as published by the Free Software Foundation; either
+* version 2 of the License, or (at your option) any later version.
+*
+* This library is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* Library General Public License for more details.
+*
+* You should have received a copy of the GNU Library General Public License
+* along with this library; see the file COPYING.LIB.  If not, write to
+* the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+* Boston, MA 02110-1301, USA.
+*/
 
 #include "KoShapeContainerDefaultModel.h"
 
@@ -30,9 +30,9 @@ public:
     {
     public:
         explicit Relation(KoShape *child)
-        : inside(false),
-        inheritsTransform(false),
-        m_child(child)
+            : inside(false),
+              inheritsTransform(false),
+              m_child(child)
         {}
 
         KoShape* child()
@@ -54,8 +54,10 @@ public:
 
     Relation* findRelation(const KoShape *child) const
     {
-        foreach (Relation *relation, relations) {
-            if (relation->child() == child) {
+        foreach (Relation *relation, relations)
+        {
+            if (relation->child() == child)
+            {
                 return relation;
             }
         }
@@ -68,7 +70,7 @@ public:
 };
 
 KoShapeContainerDefaultModel::KoShapeContainerDefaultModel()
-: d(new Private())
+    : d(new Private())
 {
 }
 
@@ -87,11 +89,13 @@ void KoShapeContainerDefaultModel::proposeMove(KoShape *shape, QPointF &move)
 {
     KoShapeContainer *parent = shape->parent();
     bool allowedToMove = true;
-    while (allowedToMove && parent) {
+    while (allowedToMove && parent)
+    {
         allowedToMove = parent->isEditable();
         parent = parent->parent();
     }
-    if (! allowedToMove) {
+    if (! allowedToMove)
+    {
         move.setX(0);
         move.setY(0);
     }
@@ -102,9 +106,13 @@ void KoShapeContainerDefaultModel::setClipped(const KoShape *child, bool clippin
 {
     Private::Relation *relation = d->findRelation(child);
     if (relation == 0)
+    {
         return;
+    }
     if (relation->inside == clipping)
+    {
         return;
+    }
     relation->child()->update(); // mark old canvas-location as in need of repaint (aggregated)
     relation->inside = clipping;
     relation->child()->notifyChanged();
@@ -121,7 +129,9 @@ void KoShapeContainerDefaultModel::remove(KoShape *child)
 {
     Private::Relation *relation = d->findRelation(child);
     if (relation == 0)
+    {
         return;
+    }
     d->relations.removeAll(relation);
     delete relation;
 }
@@ -134,7 +144,8 @@ int KoShapeContainerDefaultModel::count() const
 QList<KoShape*> KoShapeContainerDefaultModel::shapes() const
 {
     QList<KoShape*> answer;
-    foreach(Private::Relation *relation, d->relations) {
+    foreach(Private::Relation *relation, d->relations)
+    {
         answer.append(relation->child());
     }
     return answer;
@@ -153,9 +164,13 @@ void KoShapeContainerDefaultModel::setInheritsTransform(const KoShape *shape, bo
 {
     Private::Relation *relation = d->findRelation(shape);
     if (relation == 0)
+    {
         return;
+    }
     if (relation->inheritsTransform == inherit)
+    {
         return;
+    }
     relation->child()->update(); // mark old canvas-location as in need of repaint (aggregated)
     relation->inheritsTransform = inherit;
     relation->child()->notifyChanged();

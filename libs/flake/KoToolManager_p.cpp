@@ -54,7 +54,8 @@ ToolHelper::ToolHelper(KoToolFactoryBase *tool)
 KoToolAction *ToolHelper::toolAction()
 {
     // create lazily
-    if (!m_toolAction) {
+    if (!m_toolAction)
+    {
         m_toolAction = new KoToolAction(this);
     }
     return m_toolAction;
@@ -103,10 +104,12 @@ void ToolHelper::shortcutToolActionUpdated()
     // check if shortcut changed
     const QKeySequence actionShortcut = action->shortcut();
     const QKeySequence currentShortcut = shortcut();
-    if (actionShortcut != currentShortcut) {
+    if (actionShortcut != currentShortcut)
+    {
         m_hasCustomShortcut = true;
         m_customShortcut = actionShortcut;
-        if (m_toolAction) {
+        if (m_toolAction)
+        {
             emit m_toolAction->changed();
         }
         // no need to forward the new shortcut to the other ShortcutToolAction objects,
@@ -119,7 +122,8 @@ void ToolHelper::shortcutToolActionUpdated()
 KoToolBase *ToolHelper::createTool(KoCanvasBase *canvas) const
 {
     KoToolBase *tool = m_toolFactory->createTool(canvas);
-    if (tool) {
+    if (tool)
+    {
         tool->setToolId(id());
     }
     return tool;
@@ -147,7 +151,8 @@ int ToolHelper::priority() const
 
 QKeySequence ToolHelper::shortcut() const
 {
-    if (m_hasCustomShortcut) {
+    if (m_hasCustomShortcut)
+    {
         return m_customShortcut;
     }
 
@@ -156,8 +161,8 @@ QKeySequence ToolHelper::shortcut() const
 
 //   ************ Connector **********
 Connector::Connector(KoShapeManager *parent)
-        : QObject(parent),
-        m_shapeManager(parent)
+    : QObject(parent),
+      m_shapeManager(parent)
 {
     connect(m_shapeManager, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
 }

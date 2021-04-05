@@ -72,12 +72,15 @@ bool KoTosContainer::loadText(const KoXmlElement &element, KoShapeLoadingContext
     Q_D(const KoTosContainer);
 
     KoXmlElement child;
-    forEachElement(child, element) {
+    forEachElement(child, element)
+    {
         // only recreate the text shape if there's something to be loaded
-        if (child.localName() == "p" || child.localName() == "list") {
+        if (child.localName() == "p" || child.localName() == "list")
+        {
 
             KoShape *textShape = createTextShape(context.documentResourceManager());
-            if (!textShape) {
+            if (!textShape)
+            {
                 return false;
             }
             //apply the style properties to the loaded text
@@ -108,23 +111,33 @@ void KoTosContainer::loadStyle(const KoXmlElement &element, KoShapeLoadingContex
 
     QString verticalAlign(styleStack.property(KoXmlNS::draw, "textarea-vertical-align"));
     Qt::Alignment vAlignment(Qt::AlignTop);
-    if (verticalAlign == "bottom") {
+    if (verticalAlign == "bottom")
+    {
         vAlignment = Qt::AlignBottom;
-    } else if (verticalAlign == "justify") {
+    }
+    else if (verticalAlign == "justify")
+    {
         // not yet supported
         vAlignment = Qt::AlignVCenter;
-    } else if (verticalAlign == "middle") {
+    }
+    else if (verticalAlign == "middle")
+    {
         vAlignment = Qt::AlignVCenter;
     }
 
     QString horizontalAlign(styleStack.property(KoXmlNS::draw, "textarea-horizontal-align"));
     Qt::Alignment hAlignment(Qt::AlignLeft);
-    if (horizontalAlign == "center") {
+    if (horizontalAlign == "center")
+    {
         hAlignment = Qt::AlignCenter;
-    } else if (horizontalAlign == "justify") {
+    }
+    else if (horizontalAlign == "justify")
+    {
         // not yet supported
         hAlignment = Qt::AlignCenter;
-    } else if (horizontalAlign == "right") {
+    }
+    else if (horizontalAlign == "right")
+    {
         hAlignment = Qt::AlignRight;
     }
 
@@ -136,9 +149,12 @@ QString KoTosContainer::saveStyle(KoGenStyle &style, KoShapeSavingContext &conte
     Qt::Alignment alignment = textAlignment();
     QString verticalAlignment = "top";
     Qt::Alignment vAlignment(alignment & Qt::AlignVertical_Mask);
-    if (vAlignment == Qt::AlignBottom) {
+    if (vAlignment == Qt::AlignBottom)
+    {
         verticalAlignment = "bottom";
-    } else if (vAlignment == Qt::AlignVCenter || vAlignment == Qt::AlignCenter) {
+    }
+    else if (vAlignment == Qt::AlignVCenter || vAlignment == Qt::AlignCenter)
+    {
         verticalAlignment = "middle";
     }
 
@@ -146,11 +162,16 @@ QString KoTosContainer::saveStyle(KoGenStyle &style, KoShapeSavingContext &conte
 
     QString horizontalAlignment = "left";
     Qt::Alignment hAlignment(alignment & Qt::AlignHorizontal_Mask);
-    if (hAlignment == Qt::AlignCenter || hAlignment == Qt::AlignHCenter) {
+    if (hAlignment == Qt::AlignCenter || hAlignment == Qt::AlignHCenter)
+    {
         horizontalAlignment = "center";
-    } else if (hAlignment == Qt::AlignJustify) {
+    }
+    else if (hAlignment == Qt::AlignJustify)
+    {
         horizontalAlignment = "justify";
-    } else if (hAlignment == Qt::AlignRight) {
+    }
+    else if (hAlignment == Qt::AlignRight)
+    {
         horizontalAlignment = "right";
     }
 
@@ -165,7 +186,8 @@ QString KoTosContainer::saveStyle(KoGenStyle &style, KoShapeSavingContext &conte
 void KoTosContainer::saveText(KoShapeSavingContext &context) const
 {
     KoShape *textShape = this->textShape();
-    if (!textShape) {
+    if (!textShape)
+    {
         return;
     }
     // In the case of text on shape, we cannot ask the text shape to save
@@ -173,7 +195,8 @@ void KoTosContainer::saveText(KoShapeSavingContext &context) const
     // is wrong.
     // Only save the text shape if it has content.
     KoTextShapeDataBase *shapeData = qobject_cast<KoTextShapeDataBase*>(textShape->userData());
-    if (shapeData && !shapeData->document()->isEmpty()) {
+    if (shapeData && !shapeData->document()->isEmpty())
+    {
         shapeData->saveOdf(context);
     }
 }
@@ -181,7 +204,8 @@ void KoTosContainer::saveText(KoShapeSavingContext &context) const
 void KoTosContainer::setPlainText(const QString &text)
 {
     KoShape *textShape = this->textShape();
-    if (textShape == 0) {
+    if (textShape == 0)
+    {
         warnFlake << "No text shape present in KoTosContainer";
         return;
     }
@@ -193,11 +217,13 @@ void KoTosContainer::setPlainText(const QString &text)
 void KoTosContainer::setResizeBehavior(ResizeBehavior resizeBehavior)
 {
     Q_D(KoTosContainer);
-    if (d->resizeBehavior == resizeBehavior) {
+    if (d->resizeBehavior == resizeBehavior)
+    {
         return;
     }
     d->resizeBehavior = resizeBehavior;
-    if (d->model) {
+    if (d->model)
+    {
         d->model->containerChanged(this, KoShape::SizeChanged);
     }
 }
@@ -213,7 +239,8 @@ void KoTosContainer::setTextAlignment(Qt::Alignment alignment)
     Q_D(KoTosContainer);
 
     KoShape *textShape = this->textShape();
-    if (textShape == 0) {
+    if (textShape == 0)
+    {
         warnFlake << "No text shape present in KoTosContainer";
         return;
     }
@@ -237,7 +264,8 @@ void KoTosContainer::setTextAlignment(Qt::Alignment alignment)
 Qt::Alignment KoTosContainer::textAlignment() const
 {
     KoShape *textShape = this->textShape();
-    if (textShape == 0) {
+    if (textShape == 0)
+    {
         warnFlake << "No text shape present in KoTosContainer";
         return Qt::AlignTop;
     }
@@ -261,7 +289,8 @@ void KoTosContainer::setPreferredTextRect(const QRectF &rect)
     d->preferredTextRect = rect;
     KoShape *textShape = this->textShape();
     //debugFlake << rect << textShape << d->resizeBehavior;
-    if (d->resizeBehavior == TextFollowsPreferredTextRect && textShape) {
+    if (d->resizeBehavior == TextFollowsPreferredTextRect && textShape)
+    {
         //debugFlake << rect;
         textShape->setPosition(rect.topLeft());
         textShape->setSize(rect.size());
@@ -276,7 +305,8 @@ QRectF KoTosContainer::preferredTextRect() const
 
 KoShape *KoTosContainer::createTextShape(KoDocumentResourceManager *documentResources)
 {
-    if (!documentResources) {
+    if (!documentResources)
+    {
         warnFlake << "KoDocumentResourceManager not found";
         return 0;
     }
@@ -292,17 +322,24 @@ KoShape *KoTosContainer::createTextShape(KoDocumentResourceManager *documentReso
     delegates << this;
     KoShape *textShape = 0;
     KoShapeFactoryBase *factory = KoShapeRegistry::instance()->get("TextShapeID");
-    if (factory) { // not installed, thats too bad, but allowed
+    if (factory)   // not installed, thats too bad, but allowed
+    {
         textShape = factory->createDefaultShape(documentResources);
         Q_ASSERT(textShape); // would be a bug in the text shape;
-        if (d->resizeBehavior == TextFollowsPreferredTextRect) {
+        if (d->resizeBehavior == TextFollowsPreferredTextRect)
+        {
             textShape->setSize(d->preferredTextRect.size());
-        } else {
+        }
+        else
+        {
             textShape->setSize(size());
         }
-        if (d->resizeBehavior == TextFollowsPreferredTextRect) {
+        if (d->resizeBehavior == TextFollowsPreferredTextRect)
+        {
             textShape->setPosition(d->preferredTextRect.topLeft());
-        } else {
+        }
+        else
+        {
             textShape->setPosition(QPointF(0, 0));
         }
         textShape->setSelectable(false);
@@ -314,7 +351,9 @@ KoShape *KoTosContainer::createTextShape(KoDocumentResourceManager *documentReso
         addShape(textShape);
         // textShape->setZIndex(zIndex() + 1); // not needed as there as the text shape is the only sub shape
         delegates << textShape;
-    } else {
+    }
+    else
+    {
         warnFlake << "Text shape factory not found";
     }
     setToolDelegates(delegates);
@@ -331,17 +370,21 @@ void KoTosContainer::shapeChanged(ChangeType type, KoShape *shape)
 {
     Q_UNUSED(shape);
     Q_D(KoTosContainer);
-    if (d->model == 0) {
+    if (d->model == 0)
+    {
         return;
     }
 
-    if (type == SizeChanged || type == ContentChanged) {
+    if (type == SizeChanged || type == ContentChanged)
+    {
         d->model->containerChanged(this, type);
     }
     // TODO is this needed?
 #if 0
     foreach(KoShape *shape, d->model->shapes())
+    {
         shape->notifyChanged();
+    }
 #endif
 }
 
@@ -349,7 +392,8 @@ void KoTosContainer::setRunThrough(short int runThrough)
 {
     KoShape::setRunThrough(runThrough);
     KoShape *textShape = this->textShape();
-    if (textShape) {
+    if (textShape)
+    {
         textShape->setRunThrough(runThrough);
     }
 }

@@ -50,7 +50,7 @@ public:
 };
 
 KoShapePaste::KoShapePaste(KoCanvasBase *canvas, KoShapeLayer *layer)
-        : d(new Private(canvas, layer))
+    : d(new Private(canvas, layer))
 {
 }
 
@@ -68,9 +68,11 @@ bool KoShapePaste::process(const KoXmlElement & body, KoOdfReadStore & odfStore)
     QList<KoShape*> shapes(d->layer ? d->layer->shapes(): d->canvas->shapeManager()->topLevelShapes());
 
     int zIndex = 0;
-    if (!shapes.isEmpty()) {
+    if (!shapes.isEmpty())
+    {
         zIndex = shapes.first()->zIndex();
-        foreach (KoShape * shape, shapes) {
+        foreach (KoShape * shape, shapes)
+        {
             zIndex = qMax(zIndex, shape->zIndex());
         }
         ++zIndex;
@@ -90,27 +92,37 @@ bool KoShapePaste::process(const KoXmlElement & body, KoOdfReadStore & odfStore)
     // TODO if this is a text create a text shape and load the text inside the new shape.
     // create the shape from the clipboard
     KoXmlElement element;
-    forEachElement(element, body) {
+    forEachElement(element, body)
+    {
         debugFlake << "loading shape" << element.localName();
 
         KoShape * shape = KoShapeRegistry::instance()->createShapeFromOdf(element, context);
-        if (shape) {
+        if (shape)
+        {
             d->pastedShapes << shape;
         }
     }
 
     if (d->pastedShapes.isEmpty())
+    {
         return true;
+    }
 
     // position shapes
-    if (pasteAtCursor) {
+    if (pasteAtCursor)
+    {
         QRectF bbox;
         // determine bounding rect of all pasted shapes
-        foreach (KoShape *shape, d->pastedShapes) {
+        foreach (KoShape *shape, d->pastedShapes)
+        {
             if (bbox.isEmpty())
+            {
                 bbox = shape->boundingRect();
+            }
             else
+            {
                 bbox |= shape->boundingRect();
+            }
         }
         // where is the cursor now?
         QWidget *canvasWidget = d->canvas->canvasWidget();
@@ -126,55 +138,79 @@ bool KoShapePaste::process(const KoXmlElement & body, KoOdfReadStore & odfStore)
         // now we can determine the offset to apply, with the center of the pasted shapes
         // bounding rect at the current mouse position
         QPointF pasteOffset = mouseDocumentPos - bbox.center();
-        foreach (KoShape *shape, d->pastedShapes) {
+        foreach (KoShape *shape, d->pastedShapes)
+        {
             QPointF move(pasteOffset);
             d->canvas->clipToDocument(shape, move);
-            if (move.x() != 0 || move.y() != 0) {
+            if (move.x() != 0 || move.y() != 0)
+            {
                 shape->setPosition(shape->position() + move);
             }
         }
-    } else {
-        foreach (KoShape *shape, d->pastedShapes) {
+    }
+    else
+    {
+        foreach (KoShape *shape, d->pastedShapes)
+        {
             bool done = true;
-            do {
+            do
+            {
                 // find a nice place for our shape.
                 done = true;
-                foreach (const KoShape *s, sm->shapesAt(shape->boundingRect()) + d->pastedShapes) {
+                foreach (const KoShape *s, sm->shapesAt(shape->boundingRect()) + d->pastedShapes)
+                {
                     if (d->layer && s->parent() != d->layer)
+                    {
                         continue;
+                    }
                     if (s->name() != shape->name())
+                    {
                         continue;
+                    }
                     if (qAbs(s->position().x() - shape->position().x()) > 0.001)
+                    {
                         continue;
+                    }
                     if (qAbs(s->position().y() - shape->position().y()) > 0.001)
+                    {
                         continue;
+                    }
                     if (qAbs(s->size().width() - shape->size().width()) > 0.001)
+                    {
                         continue;
+                    }
                     if (qAbs(s->size().height() - shape->size().height()) > 0.001)
+                    {
                         continue;
+                    }
                     // move it and redo our iteration.
                     QPointF move(pasteOffset);
                     d->canvas->clipToDocument(shape, move);
-                    if (move.x() != 0 || move.y() != 0) {
+                    if (move.x() != 0 || move.y() != 0)
+                    {
                         shape->setPosition(shape->position() + move);
                         done = false;
                         break;
                     }
                 }
-            } while (!done);
+            }
+            while (!done);
         }
     }
 
     KUndo2Command *cmd = new KUndo2Command(kundo2_i18n("Paste Shapes"));
-    if (!cmd) {
+    if (!cmd)
+    {
         qDeleteAll(d->pastedShapes);
         d->pastedShapes.clear();
         return false;
     }
 
     // add shapes to the document
-    foreach (KoShape *shape, d->pastedShapes) {
-        if (!shape->parent()) {
+    foreach (KoShape *shape, d->pastedShapes)
+    {
+        if (!shape->parent())
+        {
             shape->setParent(d->layer);
         }
         d->canvas->shapeController()->addShapeDirect(shape, cmd);

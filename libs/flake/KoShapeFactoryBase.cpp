@@ -54,9 +54,12 @@ public:
     {
     }
 
-    ~Private() {
+    ~Private()
+    {
         foreach(const KoShapeTemplate & t, templates)
+        {
             delete t.properties;
+        }
         templates.clear();
     }
 
@@ -198,10 +201,12 @@ QList<KoDocumentResourceManager *> KoShapeFactoryBase::documentResourceManagers(
 
 KoShape *KoShapeFactoryBase::createDefaultShape(KoDocumentResourceManager *documentResources) const
 {
-    if (!d->deferredPluginName.isEmpty()) {
+    if (!d->deferredPluginName.isEmpty())
+    {
         const_cast<KoShapeFactoryBase*>(this)->getDeferredPlugin();
         Q_ASSERT(d->deferredFactory);
-        if (d->deferredFactory) {
+        if (d->deferredFactory)
+        {
             return d->deferredFactory->createDefaultShape(documentResources);
         }
     }
@@ -209,12 +214,14 @@ KoShape *KoShapeFactoryBase::createDefaultShape(KoDocumentResourceManager *docum
 }
 
 KoShape *KoShapeFactoryBase::createShape(const KoProperties* properties,
-                                         KoDocumentResourceManager *documentResources) const
+        KoDocumentResourceManager *documentResources) const
 {
-    if (!d->deferredPluginName.isEmpty()) {
+    if (!d->deferredPluginName.isEmpty())
+    {
         const_cast<KoShapeFactoryBase*>(this)->getDeferredPlugin();
         Q_ASSERT(d->deferredFactory);
-        if (d->deferredFactory) {
+        if (d->deferredFactory)
+        {
             return d->deferredFactory->createShape(properties, documentResources);
         }
     }
@@ -225,16 +232,21 @@ KoShape *KoShapeFactoryBase::createShapeFromOdf(const KoXmlElement &element, KoS
 {
     KoShape *shape = createDefaultShape(context.documentResourceManager());
     if (!shape)
+    {
         return 0;
+    }
 
     if (shape->shapeId().isEmpty())
+    {
         shape->setShapeId(id());
+    }
 
     context.odfLoadingContext().styleStack().save();
     bool loaded = shape->loadOdf(element, context);
     context.odfLoadingContext().styleStack().restore();
 
-    if (!loaded) {
+    if (!loaded)
+    {
         delete shape;
         return 0;
     }
@@ -245,17 +257,24 @@ KoShape *KoShapeFactoryBase::createShapeFromOdf(const KoXmlElement &element, KoS
 void KoShapeFactoryBase::getDeferredPlugin()
 {
     QMutexLocker(&d->pluginLoadingMutex);
-    if (d->deferredFactory) return;
+    if (d->deferredFactory)
+    {
+        return;
+    }
 
     const QList<KPluginFactory *> pluginFactories =
         KoPluginLoader::instantiatePluginFactories(QStringLiteral("calligra/deferred"));
     Q_ASSERT(pluginFactories.size() > 0);
-    foreach (KPluginFactory* factory, pluginFactories) {
+    foreach (KPluginFactory* factory, pluginFactories)
+    {
         KoDeferredShapeFactoryBase *plugin = factory->create<KoDeferredShapeFactoryBase>(this, QVariantList());
 
-        if (plugin && plugin->deferredPluginName() == d->deferredPluginName) {
+        if (plugin && plugin->deferredPluginName() == d->deferredPluginName)
+        {
             d->deferredFactory = plugin;
-        } else {
+        }
+        else
+        {
             // not our/valid plugin, so delete the created object
             plugin->deleteLater();
         }

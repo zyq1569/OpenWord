@@ -29,42 +29,54 @@ KoViewConverter::KoViewConverter()
 QPointF KoViewConverter::documentToView(const QPointF &documentPoint) const
 {
     if (qFuzzyCompare(m_zoomLevel, 1))
+    {
         return documentPoint;
+    }
     return QPointF(documentToViewX(documentPoint.x()), documentToViewY(documentPoint.y()));
 }
 
 QPointF KoViewConverter::viewToDocument(const QPointF &viewPoint) const
 {
     if (qFuzzyCompare(m_zoomLevel, 1))
+    {
         return viewPoint;
+    }
     return QPointF(viewToDocumentX(viewPoint.x()), viewToDocumentY(viewPoint.y()));
 }
 
 QRectF KoViewConverter::documentToView(const QRectF &documentRect) const
 {
     if (qFuzzyCompare(m_zoomLevel, 1))
+    {
         return documentRect;
+    }
     return QRectF(documentToView(documentRect.topLeft()), documentToView(documentRect.size()));
 }
 
 QRectF KoViewConverter::viewToDocument(const QRectF &viewRect) const
 {
     if (qFuzzyCompare(m_zoomLevel, 1))
+    {
         return viewRect;
+    }
     return QRectF(viewToDocument(viewRect.topLeft()), viewToDocument(viewRect.size()));
 }
 
 QSizeF KoViewConverter::documentToView(const QSizeF &documentSize) const
 {
     if (qFuzzyCompare(m_zoomLevel, 1))
+    {
         return documentSize;
+    }
     return QSizeF(documentToViewX(documentSize.width()), documentToViewY(documentSize.height()));
 }
 
 QSizeF KoViewConverter::viewToDocument(const QSizeF &viewSize) const
 {
     if (qFuzzyCompare(m_zoomLevel, 1))
+    {
         return viewSize;
+    }
     return QSizeF(viewToDocumentX(viewSize.width()), viewToDocumentY(viewSize.height()));
 }
 
@@ -96,7 +108,8 @@ qreal KoViewConverter::viewToDocumentY(qreal viewY) const
 
 void KoViewConverter::setZoom(qreal zoom)
 {
-    if (qFuzzyCompare(zoom, qreal(0.0)) || qFuzzyCompare(zoom, qreal(1.0))) {
+    if (qFuzzyCompare(zoom, qreal(0.0)) || qFuzzyCompare(zoom, qreal(1.0)))
+    {
         zoom = 1;
     }
     m_zoomLevel = zoom;

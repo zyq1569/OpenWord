@@ -34,13 +34,15 @@ public:
         : resourceManager(new KoDocumentResourceManager())
     {
         KoShapeRegistry *registry = KoShapeRegistry::instance();
-        foreach (const QString &id, registry->keys()) {
+        foreach (const QString &id, registry->keys())
+        {
             KoShapeFactoryBase *shapeFactory = registry->value(id);
             shapeFactory->newDocumentResourceManager(resourceManager);
         }
         // read persistent application wide resources
         KSharedConfigPtr config =  KSharedConfig::openConfig();
-        if (config->hasGroup("Misc")) {
+        if (config->hasGroup("Misc"))
+        {
             KConfigGroup miscGroup = config->group("Misc");
             const qreal pasteOffset = miscGroup.readEntry("CopyOffset", 10.0);
             resourceManager->setPasteOffset(pasteOffset);

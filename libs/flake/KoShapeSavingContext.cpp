@@ -40,7 +40,8 @@
 #include <QMimeDatabase>
 #include <QMimeType>
 
-class KoShapeSavingContextPrivate {
+class KoShapeSavingContextPrivate
+{
 public:
     KoShapeSavingContextPrivate(KoXmlWriter&, KoGenStyles&, KoEmbeddedDocumentSaver&);
     ~KoShapeSavingContextPrivate();
@@ -70,17 +71,18 @@ public:
 
 KoShapeSavingContextPrivate::KoShapeSavingContextPrivate(KoXmlWriter &w,
         KoGenStyles &s, KoEmbeddedDocumentSaver &e)
-        : xmlWriter(&w),
-        savingOptions(0),
-        imageId(0),
-        mainStyles(s),
-        embeddedSaver(e)
+    : xmlWriter(&w),
+      savingOptions(0),
+      imageId(0),
+      mainStyles(s),
+      embeddedSaver(e)
 {
 }
 
 KoShapeSavingContextPrivate::~KoShapeSavingContextPrivate()
 {
-    foreach(KoSharedSavingData * data, sharedData) {
+    foreach(KoSharedSavingData * data, sharedData)
+    {
         delete data;
     }
 }
@@ -141,37 +143,45 @@ void KoShapeSavingContext::addOption(ShapeSavingOption option)
 void KoShapeSavingContext::removeOption(ShapeSavingOption option)
 {
     if (isSet(option))
-        d->savingOptions = d->savingOptions ^ option; // xor to remove it.
+    {
+        d->savingOptions = d->savingOptions ^ option;    // xor to remove it.
+    }
 }
 
 KoElementReference KoShapeSavingContext::xmlid(const void *referent, const QString& prefix, KoElementReference::GenerationOption counter)
 {
     Q_ASSERT(counter == KoElementReference::UUID || (counter == KoElementReference::Counter && !prefix.isEmpty()));
 
-    if (d->references.contains(referent)) {
+    if (d->references.contains(referent))
+    {
         return d->references[referent];
     }
 
     KoElementReference ref;
 
-    if (counter == KoElementReference::Counter) {
+    if (counter == KoElementReference::Counter)
+    {
         int referenceCounter = d->referenceCounters[prefix];
         referenceCounter++;
         ref = KoElementReference(prefix, referenceCounter);
         d->references.insert(referent, ref);
         d->referenceCounters[prefix] = referenceCounter;
     }
-    else {
-        if (!prefix.isEmpty()) {
+    else
+    {
+        if (!prefix.isEmpty())
+        {
             ref = KoElementReference(prefix);
             d->references.insert(referent, ref);
         }
-        else {
+        else
+        {
             d->references.insert(referent, ref);
         }
     }
 
-    if (!prefix.isNull()) {
+    if (!prefix.isNull())
+    {
         d->prefixedReferences[prefix].append(referent);
     }
     return ref;
@@ -179,10 +189,12 @@ KoElementReference KoShapeSavingContext::xmlid(const void *referent, const QStri
 
 KoElementReference KoShapeSavingContext::existingXmlid(const void *referent)
 {
-    if (d->references.contains(referent)) {
+    if (d->references.contains(referent))
+    {
         return d->references[referent];
     }
-    else {
+    else
+    {
         KoElementReference ref;
         ref.invalidate();
         return ref;
@@ -192,14 +204,17 @@ KoElementReference KoShapeSavingContext::existingXmlid(const void *referent)
 void KoShapeSavingContext::clearXmlIds(const QString &prefix)
 {
 
-    if (d->prefixedReferences.contains(prefix)) {
-        foreach(const void* ptr, d->prefixedReferences[prefix]) {
+    if (d->prefixedReferences.contains(prefix))
+    {
+        foreach(const void* ptr, d->prefixedReferences[prefix])
+        {
             d->references.remove(ptr);
         }
         d->prefixedReferences.remove(prefix);
     }
 
-    if (d->referenceCounters.contains(prefix)) {
+    if (d->referenceCounters.contains(prefix))
+    {
         d->referenceCounters[prefix] = 0;
     }
 }
@@ -207,19 +222,26 @@ void KoShapeSavingContext::clearXmlIds(const QString &prefix)
 void KoShapeSavingContext::addLayerForSaving(const KoShapeLayer *layer)
 {
     if (layer && ! d->layers.contains(layer))
+    {
         d->layers.append(layer);
+    }
 }
 
 void KoShapeSavingContext::saveLayerSet(KoXmlWriter &xmlWriter) const
 {
     xmlWriter.startElement("draw:layer-set");
-    foreach(const KoShapeLayer * layer, d->layers) {
+    foreach(const KoShapeLayer * layer, d->layers)
+    {
         xmlWriter.startElement("draw:layer");
         xmlWriter.addAttribute("draw:name", layer->name());
         if (layer->isGeometryProtected())
+        {
             xmlWriter.addAttribute("draw:protected", "true");
+        }
         if (! layer->isVisible())
+        {
             xmlWriter.addAttribute("draw:display", "none");
+        }
         xmlWriter.endElement();  // draw:layer
     }
     xmlWriter.endElement();  // draw:layer-set
@@ -233,12 +255,15 @@ void KoShapeSavingContext::clearLayers()
 QString KoShapeSavingContext::imageHref(const KoImageData *image)
 {
     QMap<qint64, QString>::iterator it(d->imageNames.find(image->key()));
-    if (it == d->imageNames.end()) {
+    if (it == d->imageNames.end())
+    {
         QString suffix = image->suffix();
-        if (suffix.isEmpty()) {
+        if (suffix.isEmpty())
+        {
             it = d->imageNames.insert(image->key(), QString("Pictures/image%1").arg(++d->imageId));
         }
-        else {
+        else
+        {
             it = d->imageNames.insert(image->key(), QString("Pictures/image%1.%2").arg(++d->imageId).arg(suffix));
         }
     }
@@ -263,7 +288,8 @@ QMap<qint64, QString> KoShapeSavingContext::imagesToSave()
 QString KoShapeSavingContext::markerRef(const KoMarker *marker)
 {
     QMap<const KoMarker *, QString>::iterator it = d->markerRefs.find(marker);
-    if (it == d->markerRefs.end()) {
+    if (it == d->markerRefs.end())
+    {
         it = d->markerRefs.insert(marker, marker->saveOdf(*this));
     }
 
@@ -272,7 +298,8 @@ QString KoShapeSavingContext::markerRef(const KoMarker *marker)
 
 void KoShapeSavingContext::addDataCenter(KoDataCenterBase * dataCenter)
 {
-    if (dataCenter) {
+    if (dataCenter)
+    {
         d->dataCenters.insert(dataCenter);
     }
 }
@@ -280,28 +307,34 @@ void KoShapeSavingContext::addDataCenter(KoDataCenterBase * dataCenter)
 bool KoShapeSavingContext::saveDataCenter(KoStore *store, KoXmlWriter* manifestWriter)
 {
     bool ok = true;
-    foreach(KoDataCenterBase *dataCenter, d->dataCenters) {
+    foreach(KoDataCenterBase *dataCenter, d->dataCenters)
+    {
         ok = ok && dataCenter->completeSaving(store, manifestWriter, this);
         //debugFlake << "ok" << ok;
     }
 
     // Save images
-    for (QMap<QString, QImage>::ConstIterator it(d->images.constBegin()); it != d->images.constEnd(); ++it) {
-        if (store->open(it.key())) {
+    for (QMap<QString, QImage>::ConstIterator it(d->images.constBegin()); it != d->images.constEnd(); ++it)
+    {
+        if (store->open(it.key()))
+        {
             KoStoreDevice device(store);
             ok = ok && it.value().save(&device, "PNG");
             store->close();
             // TODO error handling
-            if (ok) {
+            if (ok)
+            {
                 QMimeDatabase db;
                 const QString mimetype(db.mimeTypeForFile(it.key(), QMimeDatabase::MatchExtension).name());
                 manifestWriter->addManifestEntry(it.key(), mimetype);
             }
-            else {
+            else
+            {
                 warnFlake << "saving image failed";
             }
         }
-        else {
+        else
+        {
             ok = false;
             warnFlake << "saving image failed: open store failed";
         }
@@ -313,9 +346,12 @@ void KoShapeSavingContext::addSharedData(const QString &id, KoSharedSavingData *
 {
     QMap<QString, KoSharedSavingData*>::iterator it(d->sharedData.find(id));
     // data will not be overwritten
-    if (it == d->sharedData.end()) {
+    if (it == d->sharedData.end())
+    {
         d->sharedData.insert(id, data);
-    } else {
+    }
+    else
+    {
         warnFlake << "The id" << id << "is already registered. Data not inserted";
         Q_ASSERT(it == d->sharedData.end());
     }
@@ -325,7 +361,8 @@ KoSharedSavingData * KoShapeSavingContext::sharedData(const QString &id) const
 {
     KoSharedSavingData * data = 0;
     QMap<QString, KoSharedSavingData*>::const_iterator it(d->sharedData.constFind(id));
-    if (it != d->sharedData.constEnd()) {
+    if (it != d->sharedData.constEnd())
+    {
         data = it.value();
     }
     return data;
@@ -353,10 +390,12 @@ void KoShapeSavingContext::setStyleFamily(const QString &name)
 
 QString KoShapeSavingContext::styleFamily() const
 {
-    if (isSet(PresentationShape)) {
+    if (isSet(PresentationShape))
+    {
         return "pr";
     }
-    if (!d->styleFamily.isEmpty()) {
+    if (!d->styleFamily.isEmpty())
+    {
         return d->styleFamily;
     }
     return "gr";

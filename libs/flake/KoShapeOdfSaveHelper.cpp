@@ -30,13 +30,13 @@ class KoShapeOdfSaveHelperPrivate : public KoDragOdfSaveHelperPrivate
 {
 public:
     KoShapeOdfSaveHelperPrivate(const QList<KoShape *> &shapes)
-    : shapes(shapes) {}
+        : shapes(shapes) {}
 
     QList<KoShape *> shapes;
 };
 
 KoShapeOdfSaveHelper::KoShapeOdfSaveHelper(const QList<KoShape *> &shapes)
-        : KoDragOdfSaveHelper(*(new KoShapeOdfSaveHelperPrivate(shapes)))
+    : KoDragOdfSaveHelper(*(new KoShapeOdfSaveHelperPrivate(shapes)))
 {
 }
 
@@ -50,7 +50,8 @@ bool KoShapeOdfSaveHelper::writeBody()
     bodyWriter.startElement(KoOdf::bodyContentElement(KoOdf::Text, true));
 
     std::sort(d->shapes.begin(), d->shapes.end(), KoShape::compareShapeZIndex);
-    foreach (KoShape *shape, d->shapes) {
+    foreach (KoShape *shape, d->shapes)
+    {
         shape->saveOdf(*d->context);
     }
 

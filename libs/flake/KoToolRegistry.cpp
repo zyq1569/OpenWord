@@ -39,7 +39,7 @@
 Q_GLOBAL_STATIC(KoToolRegistry, s_instance)
 
 KoToolRegistry::KoToolRegistry()
-  : d(0)
+    : d(0)
 {
 }
 
@@ -59,7 +59,8 @@ void KoToolRegistry::init()
 
     KConfigGroup cfg =  KSharedConfig::openConfig()->group("calligra");
     QStringList toolsBlacklist = cfg.readEntry("ToolsBlacklist", QStringList());
-    foreach (const QString& toolID, toolsBlacklist) {
+    foreach (const QString& toolID, toolsBlacklist)
+    {
         delete value(toolID);
         remove(toolID);
     }
@@ -73,7 +74,8 @@ KoToolRegistry::~KoToolRegistry()
 
 KoToolRegistry* KoToolRegistry::instance()
 {
-    if (!s_instance.exists()) {
+    if (!s_instance.exists())
+    {
         s_instance->init();
     }
     return s_instance;
