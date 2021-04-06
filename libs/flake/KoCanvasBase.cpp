@@ -40,9 +40,11 @@ public:
     {
     }
 
-    ~Private() {
+    ~Private()
+    {
         delete shapeController;
-        if (!isResourceManagerShared) {
+        if (!isResourceManagerShared)
+        {
             delete resourceManager;
         }
         delete snapGuide;
@@ -55,10 +57,10 @@ public:
 };
 
 KoCanvasBase::KoCanvasBase(KoShapeBasedDocumentBase *shapeBasedDocument, KoCanvasResourceManager *sharedResourceManager)
-        : d(new Private())
+    : d(new Private())
 {
     d->resourceManager = sharedResourceManager ?
-        sharedResourceManager : new KoCanvasResourceManager();
+                         sharedResourceManager : new KoCanvasResourceManager();
     d->isResourceManagerShared = sharedResourceManager;
 
     d->shapeController = new KoShapeController(this, shapeBasedDocument);
@@ -82,10 +84,22 @@ KoShapeController *KoCanvasBase::shapeController() const
 
 void KoCanvasBase::disconnectCanvasObserver(QObject *object)
 {
-    if (shapeManager()) shapeManager()->selection()->disconnect(object);
-    if (resourceManager()) resourceManager()->disconnect(object);
-    if (shapeManager()) shapeManager()->disconnect(object);
-    if (toolProxy()) toolProxy()->disconnect(object);
+    if (shapeManager())
+    {
+        shapeManager()->selection()->disconnect(object);
+    }
+    if (resourceManager())
+    {
+        resourceManager()->disconnect(object);
+    }
+    if (shapeManager())
+    {
+        shapeManager()->disconnect(object);
+    }
+    if (toolProxy())
+    {
+        toolProxy()->disconnect(object);
+    }
 }
 
 
@@ -97,8 +111,10 @@ KoCanvasResourceManager *KoCanvasBase::resourceManager() const
 void KoCanvasBase::ensureVisible(const QRectF &rect)
 {
     if (d->controller && d->controller->canvas())
+    {
         d->controller->ensureVisible(
-                d->controller->canvas()->viewConverter()->documentToView(rect));
+            d->controller->canvas()->viewConverter()->documentToView(rect));
+    }
 }
 
 void KoCanvasBase::setCanvasController(KoCanvasController *controller)

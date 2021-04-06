@@ -115,7 +115,8 @@ class FLAKE_EXPORT KoShape
 {
 public:
     /// Used by shapeChanged() to select which change was made
-    enum ChangeType {
+    enum ChangeType
+    {
         PositionChanged, ///< used after a setPosition()
         RotationChanged, ///< used after a setRotation()
         ScaleChanged,   ///< used after a scale()
@@ -141,7 +142,8 @@ public:
     };
 
     /// The behavior text should do when intersecting this shape.
-    enum TextRunAroundSide {
+    enum TextRunAroundSide
+    {
         BiggestRunAroundSide,   ///< Run other text around the side that has the most space
         LeftRunAroundSide,      ///< Run other text around the left side of the frame
         RightRunAroundSide,     ///< Run other text around the right side of the frame
@@ -152,7 +154,8 @@ public:
     };
 
     /// The behavior text should do when intersecting this shape.
-    enum TextRunAroundContour {
+    enum TextRunAroundContour
+    {
         ContourBox,     /// Run other text around a bounding rect of the outline
         ContourFull,   ///< Run other text around also on the inside
         ContourOutside   ///< Run other text around only on the outside
@@ -161,13 +164,15 @@ public:
     /**
      * TODO
      */
-    enum RunThroughLevel {
+    enum RunThroughLevel
+    {
         Background,
         Foreground
     };
 
     /// Fine grained control of allowed user interactions
-    enum AllowedInteraction {
+    enum AllowedInteraction
+    {
         MoveAllowed = 1,            ///< Moving the shape is allowed
         ResizeAllowed = 2,          ///< Resizing the shape is allowed
         ShearingAllowed = 4,        ///< Sharing the shape is allowed
@@ -209,7 +214,7 @@ public:
 
     /**
      * @brief Paint the shape's border
-     * This is a helper function that could be called from the paint() method of all shapes. 
+     * This is a helper function that could be called from the paint() method of all shapes.
      * @param painter used for painting the shape
      * @param converter to convert between internal and view coordinates.
      * @see applyConversion()
@@ -712,22 +717,23 @@ public:
     virtual void update(const QRectF &rect) const;
 
     /// Used by compareShapeZIndex() to order shapes
-    enum ChildZOrderPolicy {
+    enum ChildZOrderPolicy
+    {
         ChildZDefault,
         ChildZParentChild = ChildZDefault, ///< normal parent/child ordering
         ChildZPassThrough ///< children are considered equal to this shape
     };
 
-   /**
-    * Returns if during compareShapeZIndex() how this shape portrays the values
-    * of its children. The default behaviour is to let this shape's z values take
-    * the place of its children values, so you get a parent/child relationship.
-    * The children are naturally still ordered relatively to their z values
-    *
-    * But for special cases (like Calligra's TextShape) it can be overloaded to return
-    * ChildZPassThrough which means the children keep their own z values
-    * @returns the z order policy of this shape
-    */
+    /**
+     * Returns if during compareShapeZIndex() how this shape portrays the values
+     * of its children. The default behaviour is to let this shape's z values take
+     * the place of its children values, so you get a parent/child relationship.
+     * The children are naturally still ordered relatively to their z values
+     *
+     * But for special cases (like Calligra's TextShape) it can be overloaded to return
+     * ChildZPassThrough which means the children keep their own z values
+     * @returns the z order policy of this shape
+     */
     virtual ChildZOrderPolicy childZOrderPolicy();
 
     /**
@@ -761,7 +767,7 @@ public:
      * Normally this would be the same as outline() if there is a fill (background) set on the
      * shape and empty if not.  However, a shape could reimplement this to return an outline
      * even if no fill is defined. A typical example of this would be the picture shape
-     * which has a picture but almost never a background. 
+     * which has a picture but almost never a background.
      *
      * @returns the outline of the shape in the form of a path.
      */
@@ -1173,7 +1179,8 @@ protected:
 
     /* ** loading saving helper methods */
     /// attributes from ODF 1.1 chapter 9.2.15 Common Drawing Shape Attributes
-    enum OdfAttribute {
+    enum OdfAttribute
+    {
         OdfTransformation = 1,       ///< Store transformation information
         OdfSize = 2,                 ///< Store size information
         OdfPosition = 8,             ///< Store position

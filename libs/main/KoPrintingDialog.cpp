@@ -38,7 +38,8 @@
 #include <QDialog>
 #include <QThread>
 
-class PrintDialog : public QDialog {
+class PrintDialog : public QDialog
+{
 public:
     PrintDialog(KoPrintingDialogPrivate *d, QWidget *parent)
         : QDialog(parent)
@@ -88,12 +89,15 @@ KoShapeManager *KoPrintingDialog::shapeManager() const
 void KoPrintingDialog::setPageRange(const QList<int> &pages)
 {
     if (d->index == 0) // can't change after we started
+    {
         d->pageRange = pages;
+    }
 }
 
 QPainter & KoPrintingDialog::painter() const
 {
-    if (d->painter == 0) {
+    if (d->painter == 0)
+    {
         d->painter = new QPainter(d->printer);
         d->painter->save(); // state before page preparation (3)
     }
@@ -109,33 +113,43 @@ void KoPrintingDialog::startPrinting(RemovePolicy removePolicy)
 {
     d->removePolicy = removePolicy;
     d->pages = d->pageRange;
-    if (d->pages.isEmpty()) { // auto-fill from min/max
-        switch (d->printer->printRange()) {
-        case QPrinter::AllPages:
-            for (int i=documentFirstPage(); i <= documentLastPage(); i++)
-                d->pages.append(i);
-            break;
-        case QPrinter::PageRange:
-            for (int i=d->printer->fromPage(); i <= d->printer->toPage(); i++)
-                d->pages.append(i);
-            break;
-        case QPrinter::CurrentPage:
-            d->pages.append(documentCurrentPage());
-            break;
-        default:
-            return;
+    if (d->pages.isEmpty())   // auto-fill from min/max
+    {
+        switch (d->printer->printRange())
+        {
+            case QPrinter::AllPages:
+                for (int i=documentFirstPage(); i <= documentLastPage(); i++)
+                {
+                    d->pages.append(i);
+                }
+                break;
+            case QPrinter::PageRange:
+                for (int i=d->printer->fromPage(); i <= d->printer->toPage(); i++)
+                {
+                    d->pages.append(i);
+                }
+                break;
+            case QPrinter::CurrentPage:
+                d->pages.append(documentCurrentPage());
+                break;
+            default:
+                return;
         }
     }
-    if (d->pages.isEmpty()) {
+    if (d->pages.isEmpty())
+    {
         qWarning(/*30004*/) << "KoPrintingDialog::startPrinting: No pages to print, did you forget to call setPageRange()?";
         return;
     }
 
     const bool blocking = property("blocking").toBool();
     const bool noprogressdialog = property("noprogressdialog").toBool();
-    if (d->index == 0 && d->pages.count() > 0 && d->printer) {
+    if (d->index == 0 && d->pages.count() > 0 && d->printer)
+    {
         if (!blocking && !noprogressdialog)
+        {
             d->dialog->show();
+        }
         d->stop = false;
         delete d->painter;
         d->painter = 0;
@@ -144,46 +158,62 @@ void KoPrintingDialog::startPrinting(RemovePolicy removePolicy)
 
         d->progress->start(100, i18n("Printing"));
 
-        if (d->printer->numCopies() > 1) {
+        if (d->printer->numCopies() > 1)
+        {
             QList<int> oldPages = d->pages;
-            if (d->printer->collateCopies()) { // means we print whole doc at once
+            if (d->printer->collateCopies())   // means we print whole doc at once
+            {
                 for (int count = 1; count < d->printer->numCopies(); ++count)
+                {
                     d->pages.append(oldPages);
-            } else {
+                }
+            }
+            else
+            {
                 d->pages.clear();
-                foreach (int page, oldPages) {
+                foreach (int page, oldPages)
+                {
                     for (int count = 1; count < d->printer->numCopies(); ++count)
+                    {
                         d->pages.append(page);
+                    }
                 }
             }
         }
-        if (d->printer->pageOrder() == QPrinter::LastPageFirst) {
+        if (d->printer->pageOrder() == QPrinter::LastPageFirst)
+        {
             const QList<int> pages = d->pages;
             d->pages.clear();
             QList<int>::ConstIterator iter = pages.end();
-            do {
+            do
+            {
                 --iter;
                 d->pages << *iter;
-            } while (iter != pages.begin());
+            }
+            while (iter != pages.begin());
         }
 
 
         d->resetValues();
-        foreach (int page, d->pages) {
+        foreach (int page, d->pages)
+        {
             d->index++;
             d->updaters.append(d->progress->startSubtask()); // one per page
             d->preparePage(page);
             d->printPage(page);
-            if (!blocking) {
+            if (!blocking)
+            {
                 qApp->processEvents();
             }
-            
+
         }
         d->painter->end();
-        if (blocking) {
+        if (blocking)
+        {
             printingDone();
         }
-        else {
+        else
+        {
             d->printingDone();
         }
         d->stop = true;
