@@ -45,14 +45,14 @@ SUBDIRS    +=   log/easylog.pro \
                 words/part/calligrawordspart.pro \
                 plugins/karbonplugins/tools/karbon_tools.pro \
                 libs/kross/kokross.pro \
+                extras/thumbnail/calligraimagethumbnail.pro \
+                extras/thumbnail/calligrathumbnail.pro \
                 words/app/calligrawords.pro
 #-------------------------------------------------
 #                karbon/karbonpart.pro \
 #                karbon/ui/karbonui.pro \
 #                karbon/common/karboncommon.pro \
 #                libs/pageapp/kopageapp.pro \
-#                extras/thumbnail/calligraimagethumbnail.pro \
-#                extras/thumbnail/calligrathumbnail.pro \
 #-------------------------------------------------
 #wordperfect to odf
 #               filters/words/wordperfect/import/calligra_filter_wpd2odt.pro \
