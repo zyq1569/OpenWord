@@ -4,11 +4,35 @@
 #DESTDIR = ../../../../bin/libs/
 #DESTDIR = ../../bin/libs/
 
-ALL_LIBS_DIR       = $$PWD/bin/bin/libs
-SDK_INSTALL_PREFIX = D:/Dev/KDE_SDK/include
-SDK_LIB_PREFIX     = D:/Dev/KDE_SDK/libs
 
-CONFIG            += debug_and_release  c++11
+
+win32 {
+msvc: DEFINES += MSVC
+}
+
+contains(DEFINES, MSVC) {
+
+ALL_LIBS_DIR        = $$PWD/bin/bin/libs
+SDK_INSTALL_PREFIX  = D:/Dev/KDE_SDK/MSC/include
+SDK_LIB_PREFIX      = D:/Dev/KDE_SDK/MSC/libs
+
+DESTDIR             = ./bin/libs/
+
+LOGLIB              =  $$PWD/bin/bin/libs
+
+
+}else {
+
+ALL_LIBS_DIR        = $$PWD/bin/bin/libs
+SDK_INSTALL_PREFIX  = D:/Dev/KDE_SDK/include
+SDK_LIB_PREFIX      = D:/Dev/KDE_SDK/libs
+
+DESTDIR             = ./MS_bin/libs/
+
+LOGLIB              =  $$PWD/MS_bin/libs
+
+}
+CONFIG             += debug_and_release  c++11
 
 DEFINES     +=  KWIDGETSADDONS_DEPRECATED_WARNINGS_SINCE KCOMPLETION_NO_DEPRECATED  KI18N_DEPRECATED KI18N_NO_DEPRECATED
 DEFINES     +=  KIOCORE_NO_DEPRECATED KIOWIDGETS_NO_DEPRECATED KCONFIGCORE_NO_DEPRECATED KCOREADDONS_NO_DEPRECATED
@@ -130,7 +154,7 @@ LIBS        +=  -L$${SDK_LIB_PREFIX} \
                 -llibzstd \
                 -llibz
 
-LOGLIB     =    $$PWD/bin/bin/libs
+
 
 LIBS      +=    -L$${LOGLIB}  \
                 -leasylog
