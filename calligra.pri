@@ -7,7 +7,9 @@
 
 
 win32 {
+
 msvc: DEFINES += MSVC
+
 }
 
 contains(DEFINES, MSVC) {
@@ -23,7 +25,7 @@ LOGLIB              =  $$PWD/bin/bin/libs
 
 }else {
 
-ALL_LIBS_DIR        = $$PWD/bin/bin/libs
+ALL_LIBS_DIR        = $$PWD/bin/MS_bin/libs
 SDK_INSTALL_PREFIX  = D:/Dev/KDE_SDK/include
 SDK_LIB_PREFIX      = D:/Dev/KDE_SDK/libs
 
