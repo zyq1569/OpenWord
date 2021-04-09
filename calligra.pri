@@ -6,22 +6,25 @@
 
 
 
+
 win32 {
 
-msvc: DEFINES += MSVC
+msvc: DEFINES      += MSVC
 
 }
 
 contains(DEFINES, MSVC) {
 
 ALL_LIBS_DIR        = $$PWD/bin/bin/libs
-SDK_INSTALL_PREFIX  = D:/Dev/KDE_SDK/MSC/include
-SDK_LIB_PREFIX      = D:/Dev/KDE_SDK/MSC/libs
+SDK_INSTALL_PREFIX  = D:/Dev/CraftRoot/include
+SDK_LIB_PREFIX      = D:/Dev/CraftRoot/lib
 
-DESTDIR             = ./bin/libs/
+DESTDIR             = ./MS_bin/libs/
 
 LOGLIB              =  $$PWD/bin/bin/libs
 
+LIBS               +=  -L$${SDK_LIB_PREFIX} \
+                       -lzlib
 
 }else {
 
@@ -33,7 +36,11 @@ DESTDIR             = ./MS_bin/libs/
 
 LOGLIB              =  $$PWD/MS_bin/libs
 
+LIBS               +=  -L$${SDK_LIB_PREFIX} \
+                       -lz
+
 }
+
 CONFIG             += debug_and_release  c++11
 
 DEFINES            +=  KWIDGETSADDONS_DEPRECATED_WARNINGS_SINCE KCOMPLETION_NO_DEPRECATED  KI18N_DEPRECATED KI18N_NO_DEPRECATED
@@ -119,7 +126,7 @@ LIBS             +=  -L$${SDK_LIB_PREFIX} \
                      -luuid \
                      -lcomdlg32 \
                      -ladvapi32 \
-                     -llibiconv \
+                     -liconv \
                      -lKF5I18n \
                      -lKF5WidgetsAddons \
                      -lKF5KIOCore \
@@ -153,13 +160,11 @@ LIBS             +=  -L$${SDK_LIB_PREFIX} \
                      -lKF5KrossCore \
                      -lKF5KrossUi \
                      -lKF5Notifications \
-                     -llibzstd \
-                     -llibz
+                     -lzstd
 
 
-
-LIBS            +=   -L$${LOGLIB}  \
-                     -leasylog
+LIBS              +=   -L$${LOGLIB}  \
+                       -leasylog
 
 
 # EasyLogging++ is set to be thread safe, to not have a default log file, and to not handle crashes
