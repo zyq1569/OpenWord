@@ -48,7 +48,9 @@ bool KoOdfPaste::paste(KoOdf::DocumentType documentType, const QMimeData *data)
 bool KoOdfPaste::paste(KoOdf::DocumentType documentType, const QByteArray &bytes)
 {
     if (bytes.isEmpty())
+    {
         return false;
+    }
 
     QBuffer buffer;
     buffer.setData(bytes);
@@ -59,7 +61,8 @@ bool KoOdfPaste::paste(KoOdf::DocumentType documentType, const QByteArray &bytes
     KoOdfReadStore odfStore(store); // KoOdfReadStore does not delete the store on destruction
 
     QString errorMessage;
-    if (! odfStore.loadAndParse(errorMessage)) {
+    if (! odfStore.loadAndParse(errorMessage))
+    {
         warnOdf << "loading and parsing failed:" << errorMessage;
         delete store;
         return false;
@@ -68,7 +71,8 @@ bool KoOdfPaste::paste(KoOdf::DocumentType documentType, const QByteArray &bytes
     KoXmlElement content = odfStore.contentDoc().documentElement();
     KoXmlElement realBody(KoXml::namedItemNS(content, KoXmlNS::office, "body"));
 
-    if (realBody.isNull()) {
+    if (realBody.isNull())
+    {
         warnOdf << "No body tag found";
         delete store;
         return false;
@@ -76,7 +80,8 @@ bool KoOdfPaste::paste(KoOdf::DocumentType documentType, const QByteArray &bytes
 
     KoXmlElement body = KoXml::namedItemNS(realBody, KoXmlNS::office, KoOdf::bodyContentElement(documentType, false));
 
-    if (body.isNull()) {
+    if (body.isNull())
+    {
         warnOdf << "No" << KoOdf::bodyContentElement(documentType, true) << "tag found";
         delete store;
         return false;

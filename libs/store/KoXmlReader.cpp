@@ -112,14 +112,16 @@
 // this is used to quickly get namespaced attribute(s)
 typedef QPair<QString, QString> KoXmlStringPair;
 
-class KoQName {
+class KoQName
+{
 public:
     QString nsURI;
     QString name;
 
     explicit KoQName(const QString& nsURI_, const QString& name_)
         : nsURI(nsURI_), name(name_) {}
-    bool operator==(const KoQName& qname) const {
+    bool operator==(const KoQName& qname) const
+    {
         // local name is more likely to differ, so compare that first
         return name == qname.name && nsURI == qname.nsURI;
     }
@@ -171,37 +173,69 @@ static QString fixNamespace(const QString &nsURI)
     static QString pres = QString::fromLatin1("http://openoffice.org/2000/presentation");
     static QString manifest = QString::fromLatin1("http://openoffice.org/2001/manifest");
     if (nsURI == text)
+    {
         return KoXmlNS::text;
+    }
     if (nsURI == style)
+    {
         return KoXmlNS::style;
+    }
     if (nsURI == office)
+    {
         return KoXmlNS::office;
+    }
     if (nsURI == fo)
+    {
         return KoXmlNS::fo;
+    }
     if (nsURI == table)
+    {
         return KoXmlNS::table;
+    }
     if (nsURI == drawing)
+    {
         return KoXmlNS::draw;
+    }
     if (nsURI == datastyle)
+    {
         return KoXmlNS::number;
+    }
     if (nsURI == svg)
+    {
         return KoXmlNS::svg;
+    }
     if (nsURI == chart)
+    {
         return KoXmlNS::chart;
+    }
     if (nsURI == dr3d)
+    {
         return KoXmlNS::dr3d;
+    }
     if (nsURI == form)
+    {
         return KoXmlNS::form;
+    }
     if (nsURI == script)
+    {
         return KoXmlNS::script;
+    }
     if (nsURI == meta)
+    {
         return KoXmlNS::meta;
+    }
     if (nsURI == config)
+    {
         return KoXmlNS::config;
+    }
     if (nsURI == pres)
+    {
         return KoXmlNS::presentation;
+    }
     if (nsURI == manifest)
+    {
         return KoXmlNS::manifest;
+    }
     return nsURI;
 }
 
@@ -215,13 +249,13 @@ static QString fixNamespace(const QString &nsURI)
 class KoXmlPackedItem
 {
 public:
-bool attr: 1;
-KoXmlNode::NodeType type: 3;
+    bool attr: 1;
+    KoXmlNode::NodeType type: 3;
 
 #ifdef KOXML_COMPACT
-quint32 childStart: 28;
+    quint32 childStart: 28;
 #else
-unsigned depth: 28;
+    unsigned depth: 28;
 #endif
 
     unsigned qnameIndex;
@@ -314,12 +348,15 @@ public:
 private:
     QHash<KoQName, unsigned> qnameHash;
 
-    unsigned cacheQName(const QString& name, const QString& nsURI) {
+    unsigned cacheQName(const QString& name, const QString& nsURI)
+    {
         KoQName qname(nsURI, name);
 
         const unsigned ii = qnameHash.value(qname, (unsigned)-1);
         if (ii != (unsigned)-1)
+        {
             return ii;
+        }
 
         // not yet declared, so we add it
         unsigned i = qnameList.count();
@@ -332,13 +369,18 @@ private:
     QHash<QString, unsigned> valueHash;
     QStringList valueList;
 
-    QString cacheValue(const QString& value) {
+    QString cacheValue(const QString& value)
+    {
         if (value.isEmpty())
+        {
             return 0;
+        }
 
         const unsigned& ii = valueHash[value];
         if (ii > 0)
+        {
             return valueList[ii];
+        }
 
         // not yet declared, so we add it
         unsigned i = valueList.count();
@@ -350,12 +392,14 @@ private:
 
 #ifdef KOXML_COMPACT
 public:
-    const KoXmlPackedItem& itemAt(unsigned depth, unsigned index) {
+    const KoXmlPackedItem& itemAt(unsigned depth, unsigned index)
+    {
         const KoXmlPackedGroup& group = groups[depth];
         return group[index];
     }
 
-    unsigned itemCount(unsigned depth) {
+    unsigned itemCount(unsigned depth)
+    {
         const KoXmlPackedGroup& group = groups[depth];
         return group.count();
     }
@@ -373,7 +417,8 @@ public:
 
     unsigned currentDepth;
 
-    KoXmlPackedItem& newItem(unsigned depth) {
+    KoXmlPackedItem& newItem(unsigned depth)
+    {
         KoXmlPackedGroup& group = groups[depth];
 
 #ifdef KOXML_COMPRESS
@@ -381,7 +426,9 @@ public:
 #else
         // reserve up front
         if ((groups.size() % GROUP_GROW_SIZE) == 0)
+        {
             group.reserve(GROUP_GROW_SIZE * (1 + (groups.size() >> GROUP_GROW_SHIFT)));
+        }
         group.resize(group.count() + 1);
 
         KoXmlPackedItem& item = group[group.count()-1];
@@ -398,7 +445,8 @@ public:
         return item;
     }
 
-    void clear() {
+    void clear()
+    {
         currentDepth = 0;
         qnameHash.clear();
         qnameList.clear();
@@ -412,21 +460,24 @@ public:
         rootItem.type = KoXmlNode::DocumentNode;
     }
 
-    void finish() {
+    void finish()
+    {
         // won't be needed anymore
         qnameHash.clear();
         valueHash.clear();
         valueList.clear();
 
         // optimize, see documentation on QVector::squeeze
-        for (int d = 0; d < groups.count(); ++d) {
+        for (int d = 0; d < groups.count(); ++d)
+        {
             KoXmlPackedGroup& group = groups[d];
             group.squeeze();
         }
     }
 
     // in case namespace processing, 'name' contains the prefix already
-    void addElement(const QString& name, const QString& nsURI) {
+    void addElement(const QString& name, const QString& nsURI)
+    {
         KoXmlPackedItem& item = newItem(currentDepth + 1);
         item.type = KoXmlNode::ElementNode;
         item.qnameIndex = cacheQName(name, nsURI);
@@ -434,15 +485,18 @@ public:
         ++currentDepth;
     }
 
-    void closeElement() {
+    void closeElement()
+    {
         --currentDepth;
     }
 
-    void addDTD(const QString& dt) {
+    void addDTD(const QString& dt)
+    {
         docType = dt;
     }
 
-    void addAttribute(const QString& name, const QString& nsURI, const QString& value) {
+    void addAttribute(const QString& name, const QString& nsURI, const QString& value)
+    {
         KoXmlPackedItem& item = newItem(currentDepth + 1);
         item.attr = true;
         item.qnameIndex = cacheQName(name, nsURI);
@@ -450,25 +504,29 @@ public:
         item.value = value;
     }
 
-    void addText(const QString& text) {
+    void addText(const QString& text)
+    {
         KoXmlPackedItem& item = newItem(currentDepth + 1);
         item.type = KoXmlNode::TextNode;
         item.value = text;
     }
 
-    void addCData(const QString& text) {
+    void addCData(const QString& text)
+    {
         KoXmlPackedItem& item = newItem(currentDepth + 1);
         item.type = KoXmlNode::CDATASectionNode;
         item.value = text;
     }
 
-    void addProcessingInstruction() {
+    void addProcessingInstruction()
+    {
         KoXmlPackedItem& item = newItem(currentDepth + 1);
         item.type = KoXmlNode::ProcessingInstructionNode;
     }
 
 public:
-    KoXmlPackedDocument(): processNamespace(false), currentDepth(0) {
+    KoXmlPackedDocument(): processNamespace(false), currentDepth(0)
+    {
         clear();
     }
 
@@ -479,7 +537,8 @@ private:
 
 public:
 
-    KoXmlPackedItem& newItem() {
+    KoXmlPackedItem& newItem()
+    {
         unsigned count = items.count() + 512;
         count = 1024 * (count >> 10);
         items.reserve(count);
@@ -497,7 +556,8 @@ public:
         return item;
     }
 
-    void addElement(const QString& name, const QString& nsURI) {
+    void addElement(const QString& name, const QString& nsURI)
+    {
         // we are going one level deeper
         ++elementDepth;
 
@@ -509,16 +569,19 @@ public:
         item.qnameIndex = cacheQName(name, nsURI);
     }
 
-    void closeElement() {
+    void closeElement()
+    {
         // we are going up one level
         --elementDepth;
     }
 
-    void addDTD(const QString& dt) {
+    void addDTD(const QString& dt)
+    {
         docType = dt;
     }
 
-    void addAttribute(const QString& name, const QString& nsURI, const QString& value) {
+    void addAttribute(const QString& name, const QString& nsURI, const QString& value)
+    {
         KoXmlPackedItem& item = newItem();
 
         item.attr = true;
@@ -529,7 +592,8 @@ public:
         item.value = value;
     }
 
-    void addText(const QString& str) {
+    void addText(const QString& str)
+    {
         KoXmlPackedItem& item = newItem();
 
         item.attr = false;
@@ -539,7 +603,8 @@ public:
         item.value = str;
     }
 
-    void addCData(const QString& str) {
+    void addCData(const QString& str)
+    {
         KoXmlPackedItem& item = newItem();
 
         item.attr = false;
@@ -549,7 +614,8 @@ public:
         item.value = str;
     }
 
-    void addProcessingInstruction() {
+    void addProcessingInstruction()
+    {
         KoXmlPackedItem& item = newItem();
 
         item.attr = false;
@@ -559,7 +625,8 @@ public:
         item.value.clear();
     }
 
-    void clear() {
+    void clear()
+    {
         qnameHash.clear();
         qnameList.clear();
         valueHash.clear();
@@ -574,42 +641,48 @@ public:
         rootItem.qnameIndex = 0;
     }
 
-    void finish() {
+    void finish()
+    {
         qnameHash.clear();
         valueList.clear();
         valueHash.clear();
         items.squeeze();
     }
 
-    KoXmlPackedDocument(): processNamespace(false), elementDepth(0) {
+    KoXmlPackedDocument(): processNamespace(false), elementDepth(0)
+    {
     }
 
 #endif
 
 };
 
-namespace {
+namespace
+{
 
-    class ParseError {
-    public:
-        QString errorMsg;
-        int errorLine;
-        int errorColumn;
-        bool error;
+class ParseError
+{
+public:
+    QString errorMsg;
+    int errorLine;
+    int errorColumn;
+    bool error;
 
-        ParseError() :errorLine(-1), errorColumn(-1), error(false) {}
-    };
+    ParseError() :errorLine(-1), errorColumn(-1), error(false) {}
+};
 
-    void parseElement(QXmlStreamReader &xml, KoXmlPackedDocument &doc, bool stripSpaces = true);
+void parseElement(QXmlStreamReader &xml, KoXmlPackedDocument &doc, bool stripSpaces = true);
 
-    // parse one element as if this were a standalone xml document
-    ParseError parseDocument(QXmlStreamReader &xml, KoXmlPackedDocument &doc, bool stripSpaces = true)
+// parse one element as if this were a standalone xml document
+ParseError parseDocument(QXmlStreamReader &xml, KoXmlPackedDocument &doc, bool stripSpaces = true)
+{
+    doc.clear();
+    ParseError error;
+    xml.readNext();
+    while (!xml.atEnd() && xml.tokenType() != QXmlStreamReader::EndDocument && !xml.hasError())
     {
-        doc.clear();
-        ParseError error;
-        xml.readNext();
-        while (!xml.atEnd() && xml.tokenType() != QXmlStreamReader::EndDocument && !xml.hasError()) {
-            switch (xml.tokenType()) {
+        switch (xml.tokenType())
+        {
             case QXmlStreamReader::StartElement:
                 parseElement(xml, doc, stripSpaces);
                 break;
@@ -617,7 +690,8 @@ namespace {
                 doc.addDTD(xml.dtdName().toString());
                 break;
             case QXmlStreamReader::StartDocument:
-                if (!xml.documentEncoding().isEmpty() || !xml.documentVersion().isEmpty()) {
+                if (!xml.documentEncoding().isEmpty() || !xml.documentVersion().isEmpty())
+                {
                     doc.addProcessingInstruction();
                 }
                 break;
@@ -626,35 +700,42 @@ namespace {
                 break;
             default:
                 break;
-            }
-            xml.readNext();
         }
-        if (xml.hasError()) {
-            error.error = true;
-            error.errorMsg = xml.errorString();
-            error.errorColumn = xml.columnNumber();
-            error.errorLine = xml.lineNumber();
-        } else {
-            doc.finish();
-        }
-        return error;
-    }
-
-    void parseElementContents(QXmlStreamReader &xml, KoXmlPackedDocument &doc)
-    {
         xml.readNext();
-        QString ws;
-        while (!xml.atEnd()) {
-            switch (xml.tokenType()) {
+    }
+    if (xml.hasError())
+    {
+        error.error = true;
+        error.errorMsg = xml.errorString();
+        error.errorColumn = xml.columnNumber();
+        error.errorLine = xml.lineNumber();
+    }
+    else
+    {
+        doc.finish();
+    }
+    return error;
+}
+
+void parseElementContents(QXmlStreamReader &xml, KoXmlPackedDocument &doc)
+{
+    xml.readNext();
+    QString ws;
+    while (!xml.atEnd())
+    {
+        switch (xml.tokenType())
+        {
             case QXmlStreamReader::EndElement:
                 // if an element contains only whitespace, put it in the dom
-                if (!ws.isEmpty()) {
+                if (!ws.isEmpty())
+                {
                     doc.addText(ws);
                 }
                 return;
             case QXmlStreamReader::StartElement:
                 // The whitespaces between > and < are also a text element
-                if (!ws.isEmpty()) {
+                if (!ws.isEmpty())
+                {
                     doc.addText(ws);
                     ws.clear();
                 }
@@ -662,11 +743,16 @@ namespace {
                 parseElement(xml, doc, false);
                 break;
             case QXmlStreamReader::Characters:
-                if (xml.isCDATA()) {
+                if (xml.isCDATA())
+                {
                     doc.addCData(xml.text().toString());
-                } else if (!xml.isWhitespace()) {
+                }
+                else if (!xml.isWhitespace())
+                {
                     doc.addText(xml.text().toString());
-                } else {
+                }
+                else
+                {
                     ws += xml.text();
                 }
                 break;
@@ -675,21 +761,24 @@ namespace {
                 break;
             default:
                 break;
-            }
-            xml.readNext();
         }
-    }
-
-    void parseElementContentsStripSpaces(QXmlStreamReader &xml, KoXmlPackedDocument &doc)
-    {
         xml.readNext();
-        QString ws;
-        bool sawElement = false;
-        while (!xml.atEnd()) {
-            switch (xml.tokenType()) {
+    }
+}
+
+void parseElementContentsStripSpaces(QXmlStreamReader &xml, KoXmlPackedDocument &doc)
+{
+    xml.readNext();
+    QString ws;
+    bool sawElement = false;
+    while (!xml.atEnd())
+    {
+        switch (xml.tokenType())
+        {
             case QXmlStreamReader::EndElement:
                 // if an element contains only whitespace, put it in the dom
-                if (!ws.isEmpty() && !sawElement) {
+                if (!ws.isEmpty() && !sawElement)
+                {
                     doc.addText(ws);
                 }
                 return;
@@ -699,11 +788,16 @@ namespace {
                 parseElement(xml, doc, true);
                 break;
             case QXmlStreamReader::Characters:
-                if (xml.isCDATA()) {
+                if (xml.isCDATA())
+                {
                     doc.addCData(xml.text().toString());
-                } else if (!xml.isWhitespace()) {
+                }
+                else if (!xml.isWhitespace())
+                {
                     doc.addText(xml.text().toString());
-                } else if (!sawElement) {
+                }
+                else if (!sawElement)
+                {
                     ws += xml.text();
                 }
                 break;
@@ -712,30 +806,35 @@ namespace {
                 break;
             default:
                 break;
-            }
-            xml.readNext();
         }
+        xml.readNext();
     }
+}
 
-    void parseElement(QXmlStreamReader &xml, KoXmlPackedDocument &doc, bool stripSpaces)
+void parseElement(QXmlStreamReader &xml, KoXmlPackedDocument &doc, bool stripSpaces)
+{
+    // Unfortunately MSVC fails using QXmlStreamReader::const_iterator
+    // so we apply a for loop instead. https://bugreports.qt.io/browse/QTBUG-45368
+    doc.addElement(xml.qualifiedName().toString(),
+                   fixNamespace(xml.namespaceUri().toString()));
+    QXmlStreamAttributes attr = xml.attributes();
+    for  (int a = 0; a < attr.count(); a++)
     {
-        // Unfortunately MSVC fails using QXmlStreamReader::const_iterator
-        // so we apply a for loop instead. https://bugreports.qt.io/browse/QTBUG-45368
-        doc.addElement(xml.qualifiedName().toString(),
-                       fixNamespace(xml.namespaceUri().toString()));
-        QXmlStreamAttributes attr = xml.attributes();
-        for  (int a = 0; a < attr.count(); a++) {
-            doc.addAttribute(attr[a].qualifiedName().toString(),
-                             attr[a].namespaceUri().toString(),
-                             attr[a].value().toString());
-        }
-        if (stripSpaces)
-          parseElementContentsStripSpaces(xml, doc);
-        else
-          parseElementContents(xml, doc);
-        // reader.tokenType() is now QXmlStreamReader::EndElement
-        doc.closeElement();
+        doc.addAttribute(attr[a].qualifiedName().toString(),
+                         attr[a].namespaceUri().toString(),
+                         attr[a].value().toString());
     }
+    if (stripSpaces)
+    {
+        parseElementContentsStripSpaces(xml, doc);
+    }
+    else
+    {
+        parseElementContents(xml, doc);
+    }
+    // reader.tokenType() is now QXmlStreamReader::EndElement
+    doc.closeElement();
+}
 }
 
 
@@ -765,11 +864,14 @@ public:
     QString prefix;
     QString localName;
 
-    void ref() {
+    void ref()
+    {
         ++refCount;
     }
-    void unref() {
-        if (!--refCount) {
+    void unref()
+    {
+        if (!--refCount)
+        {
             delete this;
         }
     }
@@ -851,7 +953,8 @@ KoXmlNodeData::~KoXmlNodeData()
 void KoXmlNodeData::clear()
 {
     if (first)
-        for (KoXmlNodeData* node = first; node ;) {
+        for (KoXmlNodeData* node = first; node ;)
+        {
             KoXmlNodeData* next = node->next;
             node->unref();
             node = next;
@@ -860,7 +963,9 @@ void KoXmlNodeData::clear()
     // only document can delete these
     // normal nodes don't "own" them
     if (nodeType == KoXmlNode::DocumentNode)
+    {
         delete packedDoc;
+    }
 
     nodeType = KoXmlNode::NullNode;
     tagName.clear();
@@ -886,15 +991,21 @@ QString KoXmlNodeData::text()
     loadChildren();
 
     KoXmlNodeData* node = first;
-    while (node) {
-        switch (node->nodeType) {
-        case KoXmlNode::ElementNode:
-            t += node->text(); break;
-        case KoXmlNode::TextNode:
-            t += node->data(); break;
-        case KoXmlNode::CDATASectionNode:
-            t += node->data(); break;
-        default: break;
+    while (node)
+    {
+        switch (node->nodeType)
+        {
+            case KoXmlNode::ElementNode:
+                t += node->text();
+                break;
+            case KoXmlNode::TextNode:
+                t += node->data();
+                break;
+            case KoXmlNode::CDATASectionNode:
+                t += node->data();
+                break;
+            default:
+                break;
         }
         node = node->next;
     }
@@ -904,21 +1015,31 @@ QString KoXmlNodeData::text()
 
 QString KoXmlNodeData::nodeName() const
 {
-    switch (nodeType) {
-    case KoXmlNode::ElementNode: {
-        QString n(tagName);
-        if (!prefix.isEmpty())
-            n.prepend(':').prepend(prefix);
-        return n;
-    }
-    break;
+    switch (nodeType)
+    {
+        case KoXmlNode::ElementNode:
+        {
+            QString n(tagName);
+            if (!prefix.isEmpty())
+            {
+                n.prepend(':').prepend(prefix);
+            }
+            return n;
+        }
+        break;
 
-    case KoXmlNode::TextNode:         return QLatin1String("#text");
-    case KoXmlNode::CDATASectionNode: return QLatin1String("#cdata-section");
-    case KoXmlNode::DocumentNode:     return QLatin1String("#document");
-    case KoXmlNode::DocumentTypeNode: return tagName;
+        case KoXmlNode::TextNode:
+            return QLatin1String("#text");
+        case KoXmlNode::CDATASectionNode:
+            return QLatin1String("#cdata-section");
+        case KoXmlNode::DocumentNode:
+            return QLatin1String("#document");
+        case KoXmlNode::DocumentTypeNode:
+            return tagName;
 
-    default: return QString(); break;
+        default:
+            return QString();
+            break;
     }
 
     // should not happen
@@ -944,7 +1065,8 @@ void KoXmlNodeData::setAttributeNS(const QString& nsURI,
                                    const QString& name, const QString& value)
 {
     int i = name.indexOf(':');
-    if (i != -1) {
+    if (i != -1)
+    {
         QString localName(name.mid(i + 1));
         KoXmlStringPair key(nsURI, localName);
         attrNS.insert(key, value);
@@ -998,10 +1120,16 @@ QString KoXmlNodeData::data() const
 void KoXmlNodeData::loadChildren(int depth)
 {
     // sanity check
-    if (!packedDoc) return;
+    if (!packedDoc)
+    {
+        return;
+    }
 
     // already loaded ?
-    if (loaded && (depth <= 1)) return;
+    if (loaded && (depth <= 1))
+    {
+        return;
+    }
 
     // in case depth is different
     unloadChildren();
@@ -1011,21 +1139,26 @@ void KoXmlNodeData::loadChildren(int depth)
 
     unsigned childStop = 0;
     if (nodeIndex == packedDoc->itemCount(nodeDepth) - 1)
+    {
         childStop = packedDoc->itemCount(nodeDepth + 1);
-    else {
+    }
+    else
+    {
         const KoXmlPackedItem& next = packedDoc->itemAt(nodeDepth, nodeIndex + 1);
         childStop = next.childStart;
     }
 
     const KoXmlPackedItem& self = packedDoc->itemAt(nodeDepth, nodeIndex);
 
-    for (unsigned i = self.childStart; i < childStop; ++i) {
+    for (unsigned i = self.childStart; i < childStop; ++i)
+    {
         const KoXmlPackedItem& item = packedDoc->itemAt(nodeDepth + 1, i);
         bool textItem = (item.type == KoXmlNode::TextNode);
         textItem |= (item.type == KoXmlNode::CDATASectionNode);
 
         // attribute belongs to this node
-        if (item.attr) {
+        if (item.attr)
+        {
             KoQName qname = packedDoc->qnameList[item.qnameIndex];
             QString value = item.value;
 
@@ -1036,15 +1169,27 @@ void KoXmlNodeData::loadChildren(int depth)
 
             localName = qName = qname.name;
             int i = qName.indexOf(':');
-            if (i != -1) prefix = qName.left(i);
-            if (i != -1) localName = qName.mid(i + 1);
+            if (i != -1)
+            {
+                prefix = qName.left(i);
+            }
+            if (i != -1)
+            {
+                localName = qName.mid(i + 1);
+            }
 
-            if (packedDoc->processNamespace) {
+            if (packedDoc->processNamespace)
+            {
                 setAttributeNS(qname.nsURI, qName, value);
                 setAttribute(localName, value);
-            } else
+            }
+            else
+            {
                 setAttribute(qName, value);
-        } else {
+            }
+        }
+        else
+        {
             KoQName qname = packedDoc->qnameList[item.qnameIndex];
             QString value = item.value;
 
@@ -1052,10 +1197,12 @@ void KoXmlNodeData::loadChildren(int depth)
             QString localName;
             QString prefix;
 
-            if (packedDoc->processNamespace) {
+            if (packedDoc->processNamespace)
+            {
                 localName = qname.name;
                 int di = qname.name.indexOf(':');
-                if (di != -1) {
+                if (di != -1)
+                {
                     localName = qname.name.mid(di + 1);
                     prefix = qname.name.left(di);
                 }
@@ -1084,12 +1231,16 @@ void KoXmlNodeData::loadChildren(int depth)
             first = (first) ? first : dat;
             last = dat;
             if (lastDat)
+            {
                 lastDat->next = dat;
+            }
             lastDat = dat;
 
             // recursive
             if (depth > 1)
+            {
                 dat->loadChildren(depth - 1);
+            }
         }
     }
 
@@ -1101,10 +1252,16 @@ void KoXmlNodeData::loadChildren(int depth)
 void KoXmlNodeData::loadChildren(int depth)
 {
     // sanity check
-    if (!packedDoc) return;
+    if (!packedDoc)
+    {
+        return;
+    }
 
     // already loaded ?
-    if (loaded && (depth <= 1)) return;
+    if (loaded && (depth <= 1))
+    {
+        return;
+    }
 
     // cause we don't know how deep this node's children already loaded are
     unloadChildren();
@@ -1112,7 +1269,8 @@ void KoXmlNodeData::loadChildren(int depth)
     KoXmlNodeData* lastDat = 0;
     int nodeDepth = packedDoc->items[nodeIndex].depth;
 
-    for (int i = nodeIndex + 1; i < packedDoc->items.count(); ++i) {
+    for (int i = nodeIndex + 1; i < packedDoc->items.count(); ++i)
+    {
         KoXmlPackedItem& item = packedDoc->items[i];
         bool textItem = (item.type == KoXmlNode::TextNode);
         textItem |= (item.type == KoXmlNode::CDATASectionNode);
@@ -1120,10 +1278,13 @@ void KoXmlNodeData::loadChildren(int depth)
         // element already outside our depth
         if (!item.attr && (item.type == KoXmlNode::ElementNode))
             if (item.depth <= (unsigned)nodeDepth)
+            {
                 break;
+            }
 
         // attribute belongs to this node
-        if (item.attr && (item.depth == (unsigned)nodeDepth)) {
+        if (item.attr && (item.depth == (unsigned)nodeDepth))
+        {
             KoQName qname = packedDoc->qnameList[item.qnameIndex];
             QString value = item.value;
 
@@ -1134,24 +1295,36 @@ void KoXmlNodeData::loadChildren(int depth)
 
             localName = qName = qname.name;
             int i = qName.indexOf(':');
-            if (i != -1) prefix = qName.left(i);
-            if (i != -1) localName = qName.mid(i + 1);
+            if (i != -1)
+            {
+                prefix = qName.left(i);
+            }
+            if (i != -1)
+            {
+                localName = qName.mid(i + 1);
+            }
 
-            if (packedDoc->processNamespace) {
+            if (packedDoc->processNamespace)
+            {
                 setAttributeNS(qname.nsURI, qName, value);
                 setAttribute(localName, value);
-            } else
+            }
+            else
+            {
                 setAttribute(qname.name, value);
+            }
         }
 
         // the child node
-        if (!item.attr) {
+        if (!item.attr)
+        {
             bool instruction = (item.type == KoXmlNode::ProcessingInstructionNode);
             bool ok = (textItem || instruction)  ? (item.depth == (unsigned)nodeDepth) : (item.depth == (unsigned)nodeDepth + 1);
 
             ok = (item.depth == (unsigned)nodeDepth + 1);
 
-            if (ok) {
+            if (ok)
+            {
                 KoQName qname = packedDoc->qnameList[item.qnameIndex];
                 QString value = item.value;
 
@@ -1159,10 +1332,12 @@ void KoXmlNodeData::loadChildren(int depth)
                 QString localName;
                 QString prefix;
 
-                if (packedDoc->processNamespace) {
+                if (packedDoc->processNamespace)
+                {
                     localName = qname.name;
                     int di = qname.name.indexOf(':');
-                    if (di != -1) {
+                    if (di != -1)
+                    {
                         localName = qname.name.mid(di + 1);
                         prefix = qname.name.left(di);
                     }
@@ -1191,12 +1366,16 @@ void KoXmlNodeData::loadChildren(int depth)
                 first = (first) ? first : dat;
                 last = dat;
                 if (lastDat)
+                {
                     lastDat->next = dat;
+                }
                 lastDat = dat;
 
                 // recursive
                 if (depth > 1)
+                {
                     dat->loadChildren(depth - 1);
+                }
             }
         }
     }
@@ -1208,12 +1387,19 @@ void KoXmlNodeData::loadChildren(int depth)
 void KoXmlNodeData::unloadChildren()
 {
     // sanity check
-    if (!packedDoc) return;
+    if (!packedDoc)
+    {
+        return;
+    }
 
-    if (!loaded) return;
+    if (!loaded)
+    {
+        return;
+    }
 
     if (first)
-        for (KoXmlNodeData* node = first; node ;) {
+        for (KoXmlNodeData* node = first; node ;)
+        {
             KoXmlNodeData* next = node->next;
             node->unloadChildren();
             node->unref();
@@ -1229,51 +1415,68 @@ void KoXmlNodeData::unloadChildren()
 
 
 static void itemAsQDomNode(QDomDocument& ownerDoc, KoXmlPackedDocument* packedDoc,
-                               unsigned nodeDepth, unsigned nodeIndex, QDomNode parentNode = QDomNode())
+                           unsigned nodeDepth, unsigned nodeIndex, QDomNode parentNode = QDomNode())
 {
     // sanity check
     if (!packedDoc)
+    {
         return;
+    }
 
     const KoXmlPackedItem& self = packedDoc->itemAt(nodeDepth, nodeIndex);
 
     unsigned childStop = 0;
     if (nodeIndex == packedDoc->itemCount(nodeDepth) - 1)
+    {
         childStop = packedDoc->itemCount(nodeDepth + 1);
-    else {
+    }
+    else
+    {
         const KoXmlPackedItem& next = packedDoc->itemAt(nodeDepth, nodeIndex + 1);
         childStop = next.childStart;
     }
 
     // nothing to do here
     if (self.type == KoXmlNode::NullNode)
+    {
         return;
+    }
 
     // create the element properly
-    if (self.type == KoXmlNode::ElementNode) {
+    if (self.type == KoXmlNode::ElementNode)
+    {
         QDomElement element;
 
         KoQName qname = packedDoc->qnameList[self.qnameIndex];
         qname.nsURI = fixNamespace(qname.nsURI);
 
         if (packedDoc->processNamespace)
+        {
             element = ownerDoc.createElementNS(qname.nsURI, qname.name);
+        }
         else
+        {
             element = ownerDoc.createElement(qname.name);
+        }
 
-        if ( parentNode.isNull() ) {
+        if ( parentNode.isNull() )
+        {
             ownerDoc.appendChild( element );
-        } else {
+        }
+        else
+        {
             parentNode.appendChild( element );
         }
         // check all subnodes for attributes
-        for (unsigned i = self.childStart; i < childStop; ++i) {
+        for (unsigned i = self.childStart; i < childStop; ++i)
+        {
             const KoXmlPackedItem& item = packedDoc->itemAt(nodeDepth + 1, i);
             bool textItem = (item.type == KoXmlNode::TextNode);
             textItem |= (item.type == KoXmlNode::CDATASectionNode);
 
             // attribute belongs to this node
-            if (item.attr) {
+            if (item.attr)
+            {
                 KoQName qname = packedDoc->qnameList[item.qnameIndex];
                 qname.nsURI = fixNamespace(qname.nsURI );
                 QString value = item.value;
@@ -1285,15 +1488,27 @@ static void itemAsQDomNode(QDomDocument& ownerDoc, KoXmlPackedDocument* packedDo
 
                 localName = qName = qname.name;
                 int i = qName.indexOf(':');
-                if (i != -1) prefix = qName.left(i);
-                if (i != -1) localName = qName.mid(i + 1);
+                if (i != -1)
+                {
+                    prefix = qName.left(i);
+                }
+                if (i != -1)
+                {
+                    localName = qName.mid(i + 1);
+                }
 
-                if (packedDoc->processNamespace) {
+                if (packedDoc->processNamespace)
+                {
                     element.setAttributeNS(qname.nsURI, qName, value);
                     element.setAttribute(localName, value);
-                } else
+                }
+                else
+                {
                     element.setAttribute(qname.name, value);
-            } else {
+                }
+            }
+            else
+            {
                 // add it recursively
                 itemAsQDomNode(ownerDoc, packedDoc, nodeDepth + 1, i, element);
             }
@@ -1302,14 +1517,18 @@ static void itemAsQDomNode(QDomDocument& ownerDoc, KoXmlPackedDocument* packedDo
     }
 
     // create the text node
-    if (self.type == KoXmlNode::TextNode) {
+    if (self.type == KoXmlNode::TextNode)
+    {
         QString text = self.value;
 
         // FIXME: choose CDATA when the value contains special characters
         QDomText textNode = ownerDoc.createTextNode(text);
-        if ( parentNode.isNull() ) {
+        if ( parentNode.isNull() )
+        {
             ownerDoc.appendChild( textNode );
-        } else {
+        }
+        else
+        {
             parentNode.appendChild( textNode );
         }
         return;
@@ -1325,38 +1544,51 @@ void KoXmlNodeData::asQDomNode(QDomDocument& ownerDoc) const
 #else
 
 static void itemAsQDomNode(QDomDocument& ownerDoc, KoXmlPackedDocument* packedDoc,
-                               unsigned nodeIndex, QDomNode parentNode = QDomNode())
+                           unsigned nodeIndex, QDomNode parentNode = QDomNode())
 {
     // sanity check
     if (!packedDoc)
+    {
         return;
+    }
 
     KoXmlPackedItem& item = packedDoc->items[nodeIndex];
 
     // nothing to do here
     if (item.type == KoXmlNode::NullNode)
+    {
         return;
+    }
 
     // create the element properly
-    if (item.type == KoXmlNode::ElementNode) {
+    if (item.type == KoXmlNode::ElementNode)
+    {
         QDomElement element;
 
         KoQName qname = packedDoc->qnameList[item.qnameIndex];
         qname.nsURI = fixNamespace(qname.nsURI);
 
         if (packedDoc->processNamespace)
+        {
             element = ownerDoc.createElementNS(qname.nsURI, qname.name);
+        }
         else
+        {
             element = ownerDoc.createElement(qname.name);
+        }
 
-        if ( parentNode.isNull() ) {
+        if ( parentNode.isNull() )
+        {
             ownerDoc.appendChild( element );
-        } else {
+        }
+        else
+        {
             parentNode.appendChild( element );
         }
         // check all subnodes for attributes
         int nodeDepth = item.depth;
-        for (int i = nodeIndex + 1; i < packedDoc->items.count(); ++i) {
+        for (int i = nodeIndex + 1; i < packedDoc->items.count(); ++i)
+        {
             KoXmlPackedItem& item = packedDoc->items[i];
             bool textItem = (item.type == KoXmlNode::TextNode);
             textItem |= (item.type == KoXmlNode::CDATASectionNode);
@@ -1364,10 +1596,13 @@ static void itemAsQDomNode(QDomDocument& ownerDoc, KoXmlPackedDocument* packedDo
             // element already outside our depth
             if (!item.attr && (item.type == KoXmlNode::ElementNode))
                 if (item.depth <= (unsigned)nodeDepth)
+                {
                     break;
+                }
 
             // attribute belongs to this node
-            if (item.attr && (item.depth == (unsigned)nodeDepth)) {
+            if (item.attr && (item.depth == (unsigned)nodeDepth))
+            {
                 KoQName qname = packedDoc->qnameList[item.qnameIndex];
                 qname.nsURI = fixNamespace(qname.nsURI);
                 QString value = item.value;
@@ -1378,18 +1613,29 @@ static void itemAsQDomNode(QDomDocument& ownerDoc, KoXmlPackedDocument* packedDo
 
                 localName = qName = qname.name;
                 int i = qName.indexOf(':');
-                if (i != -1) prefix = qName.left(i);
-                if (i != -1) localName = qName.mid(i + 1);
+                if (i != -1)
+                {
+                    prefix = qName.left(i);
+                }
+                if (i != -1)
+                {
+                    localName = qName.mid(i + 1);
+                }
 
-                if (packedDoc->processNamespace) {
+                if (packedDoc->processNamespace)
+                {
                     element.setAttributeNS(qname.nsURI, qName, value);
                     element.setAttribute(localName, value);
-                } else
+                }
+                else
+                {
                     element.setAttribute(qname.name, value);
+                }
             }
 
             // direct child of this node
-            if (!item.attr && (item.depth == (unsigned)nodeDepth + 1)) {
+            if (!item.attr && (item.depth == (unsigned)nodeDepth + 1))
+            {
                 // add it recursively
                 itemAsQDomNode(ownerDoc, packedDoc, i, element);
             }
@@ -1398,13 +1644,17 @@ static void itemAsQDomNode(QDomDocument& ownerDoc, KoXmlPackedDocument* packedDo
     }
 
     // create the text node
-    if (item.type == KoXmlNode::TextNode) {
+    if (item.type == KoXmlNode::TextNode)
+    {
         QString text = item.value;
         // FIXME: choose CDATA when the value contains special characters
         QDomText textNode = ownerDoc.createTextNode(text);
-        if ( parentNode.isNull() ) {
+        if ( parentNode.isNull() )
+        {
             ownerDoc.appendChild( textNode );
-        } else {
+        }
+        else
+        {
             parentNode.appendChild( textNode );
         }
         return;
@@ -1442,9 +1692,13 @@ void KoXmlNodeData::dump()
     printf("  refCount: %ld\n", refCount);
 
     if (loaded)
+    {
         printf("  loaded: TRUE\n");
+    }
     else
+    {
         printf("  loaded: FALSE\n");
+    }
 }
 
 
@@ -1488,10 +1742,15 @@ KoXmlDocumentData::~KoXmlDocumentData()
 bool KoXmlDocumentData::setContent(QXmlStreamReader* reader, QString* errorMsg, int* errorLine, int* errorColumn)
 {
     // sanity checks
-    if (!reader) return false;
+    if (!reader)
+    {
+        return false;
+    }
 
     if (nodeType != KoXmlNode::DocumentNode)
+    {
         return false;
+    }
 
     clear();
     nodeType = KoXmlNode::DocumentNode;
@@ -1500,11 +1759,21 @@ bool KoXmlDocumentData::setContent(QXmlStreamReader* reader, QString* errorMsg, 
     packedDoc->processNamespace = reader->namespaceProcessing();
 
     ParseError error = parseDocument(*reader, *packedDoc, stripSpaces);
-    if (error.error) {
+    if (error.error)
+    {
         // parsing error has occurred
-        if (errorMsg) *errorMsg = error.errorMsg;
-        if (errorLine) *errorLine = error.errorLine;
-        if (errorColumn)  *errorColumn = error.errorColumn;
+        if (errorMsg)
+        {
+            *errorMsg = error.errorMsg;
+        }
+        if (errorLine)
+        {
+            *errorLine = error.errorLine;
+        }
+        if (errorColumn)
+        {
+            *errorColumn = error.errorColumn;
+        }
         return false;
     }
 
@@ -1556,7 +1825,8 @@ KoXmlNode::KoXmlNode(KoXmlNodeData* data)
 // Creates a shallow copy of another node
 KoXmlNode& KoXmlNode::operator=(const KoXmlNode & node)
 {
-    if (this != &node) {
+    if (this != &node)
+    {
         d->unref();
         d = node.d;
         d->ref();
@@ -1567,16 +1837,28 @@ KoXmlNode& KoXmlNode::operator=(const KoXmlNode & node)
 // Note: two null nodes are always equal
 bool KoXmlNode::operator==(const KoXmlNode& node) const
 {
-    if (isNull() && node.isNull()) return true;
+    if (isNull() && node.isNull())
+    {
+        return true;
+    }
     return(d == node.d);
 }
 
 // Note: two null nodes are always equal
 bool KoXmlNode::operator!=(const KoXmlNode& node) const
 {
-    if (isNull() && !node.isNull()) return true;
-    if (!isNull() && node.isNull()) return true;
-    if (isNull() && node.isNull()) return false;
+    if (isNull() && !node.isNull())
+    {
+        return true;
+    }
+    if (!isNull() && node.isNull())
+    {
+        return true;
+    }
+    if (isNull() && node.isNull())
+    {
+        return false;
+    }
     return(d != node.d);
 }
 
@@ -1644,9 +1926,13 @@ QString KoXmlNode::localName() const
 KoXmlDocument KoXmlNode::ownerDocument() const
 {
     KoXmlNodeData* node = d;
-    while (node->parent) node = node->parent;
+    while (node->parent)
+    {
+        node = node->parent;
+    }
 
-    if (node->nodeType == DocumentNode) {
+    if (node->nodeType == DocumentNode)
+    {
         return KoXmlDocument(static_cast<KoXmlDocumentData*>(node));
     }
     return KoXmlDocument();
@@ -1660,10 +1946,14 @@ KoXmlNode KoXmlNode::parentNode() const
 bool KoXmlNode::hasChildNodes() const
 {
     if (isText())
+    {
         return false;
+    }
 
     if (!d->loaded)
+    {
         d->loadChildren();
+    }
 
     return d->first != 0 ;
 }
@@ -1671,14 +1961,19 @@ bool KoXmlNode::hasChildNodes() const
 int KoXmlNode::childNodesCount() const
 {
     if (isText())
+    {
         return 0;
+    }
 
     if (!d->loaded)
+    {
         d->loadChildren();
+    }
 
     KoXmlNodeData* node = d->first;
     int count = 0;
-    while (node) {
+    while (node)
+    {
         ++count;
         node = node->next;
     }
@@ -1689,7 +1984,9 @@ int KoXmlNode::childNodesCount() const
 QStringList KoXmlNode::attributeNames() const
 {
     if (!d->loaded)
+    {
         d->loadChildren();
+    }
 
     return d->attributeNames();
 }
@@ -1697,7 +1994,9 @@ QStringList KoXmlNode::attributeNames() const
 QList< QPair<QString, QString> > KoXmlNode::attributeFullNames() const
 {
     if (!d->loaded)
+    {
         d->loadChildren();
+    }
 
     return d->attributeFullNames();
 }
@@ -1705,14 +2004,17 @@ QList< QPair<QString, QString> > KoXmlNode::attributeFullNames() const
 KoXmlNode KoXmlNode::firstChild() const
 {
     if (!d->loaded)
+    {
         d->loadChildren();
+    }
     return d->first ? KoXmlNode(d->first) : KoXmlNode();
 }
 
 KoXmlElement KoXmlNode::firstChildElement() const
 {
     KoXmlElement element;
-    forEachElement (element, (*this)) {
+    forEachElement (element, (*this))
+    {
         return element;
     }
     return KoXmlElement();
@@ -1721,7 +2023,9 @@ KoXmlElement KoXmlNode::firstChildElement() const
 KoXmlNode KoXmlNode::lastChild() const
 {
     if (!d->loaded)
+    {
         d->loadChildren();
+    }
     return d->last ? KoXmlNode(d->last) : KoXmlNode();
 }
 
@@ -1738,11 +2042,16 @@ KoXmlNode KoXmlNode::previousSibling() const
 KoXmlNode KoXmlNode::namedItem(const QString& name) const
 {
     if (!d->loaded)
+    {
         d->loadChildren();
+    }
 
-    for (KoXmlNodeData* node = d->first; node; node = node->next) {
+    for (KoXmlNodeData* node = d->first; node; node = node->next)
+    {
         if (node->nodeName() == name)
+        {
             return KoXmlNode(node);
+        }
     }
 
     // not found
@@ -1752,13 +2061,17 @@ KoXmlNode KoXmlNode::namedItem(const QString& name) const
 KoXmlNode KoXmlNode::namedItemNS(const QString& nsURI, const QString& name) const
 {
     if (!d->loaded)
+    {
         d->loadChildren();
+    }
 
-    for (KoXmlNodeData* node = d->first; node; node = node->next) {
+    for (KoXmlNodeData* node = d->first; node; node = node->next)
+    {
         if (node->nodeType == KoXmlNode::ElementNode
-                 && node->localName == name
-                 && node->namespaceURI == nsURI
-                 ) {
+                && node->localName == name
+                && node->namespaceURI == nsURI
+           )
+        {
             return KoXmlNode(node);
         }
     }
@@ -1770,16 +2083,23 @@ KoXmlNode KoXmlNode::namedItemNS(const QString& nsURI, const QString& name) cons
 KoXmlNode KoXmlNode::namedItemNS(const QString& nsURI, const QString& name, KoXmlNamedItemType type) const
 {
     if (!d->loaded)
+    {
         d->loadChildren();
+    }
 
-    for (KoXmlNodeData* node = d->first; node; node = node->next) {
+    for (KoXmlNodeData* node = d->first; node; node = node->next)
+    {
         if (node->nodeType != KoXmlNode::ElementNode)
+        {
             continue;
-        if (node->localName == name && node->namespaceURI == nsURI) {
+        }
+        if (node->localName == name && node->namespaceURI == nsURI)
+        {
             return KoXmlNode(node);
         }
         bool isPrelude = false;
-        switch (type) {
+        switch (type)
+        {
             case KoXmlTextContentPrelude:
                 isPrelude =
                     (node->localName == "tracked-changes" && node->namespaceURI == KoXmlNS::text) ||
@@ -1793,7 +2113,8 @@ KoXmlNode KoXmlNode::namedItemNS(const QString& nsURI, const QString& name, KoXm
                     (node->localName == "forms" && node->namespaceURI == KoXmlNS::office);
                 break;
         }
-        if (!isPrelude) {
+        if (!isPrelude)
+        {
             return KoXmlNode(); // no TextContentPrelude means it follows TextContentMain, so stop here.
         }
     }
@@ -1819,7 +2140,8 @@ KoXmlCDATASection KoXmlNode::toCDATASection() const
 
 KoXmlDocument KoXmlNode::toDocument() const
 {
-    if (isDocument()) {
+    if (isDocument())
+    {
         return KoXmlDocument(static_cast<KoXmlDocumentData*>(d));
     }
     return KoXmlDocument();
@@ -1874,14 +2196,23 @@ KoXmlElement& KoXmlElement::operator=(const KoXmlElement & element)
 
 bool KoXmlElement::operator== (const KoXmlElement& element) const
 {
-    if (isNull() || element.isNull()) return false;
+    if (isNull() || element.isNull())
+    {
+        return false;
+    }
     return (d == element.d);
 }
 
 bool KoXmlElement::operator!= (const KoXmlElement& element) const
 {
-    if (isNull() && element.isNull()) return false;
-    if (isNull() || element.isNull()) return true;
+    if (isNull() && element.isNull())
+    {
+        return false;
+    }
+    if (isNull() || element.isNull())
+    {
+        return true;
+    }
     return (d != element.d);
 }
 
@@ -1898,10 +2229,14 @@ QString KoXmlElement::text() const
 QString KoXmlElement::attribute(const QString& name) const
 {
     if (!isElement())
+    {
         return QString();
+    }
 
     if (!d->loaded)
+    {
         d->loadChildren();
+    }
 
     return d->attribute(name, QString());
 }
@@ -1910,10 +2245,14 @@ QString KoXmlElement::attribute(const QString& name,
                                 const QString& defaultValue) const
 {
     if (!isElement())
+    {
         return defaultValue;
+    }
 
     if (!d->loaded)
+    {
         d->loadChildren();
+    }
 
     return d->attribute(name, defaultValue);
 }
@@ -1922,10 +2261,14 @@ QString KoXmlElement::attributeNS(const QString& namespaceURI,
                                   const QString& localName, const QString& defaultValue) const
 {
     if (!isElement())
+    {
         return defaultValue;
+    }
 
     if (!d->loaded)
+    {
         d->loadChildren();
+    }
 
     KoXmlStringPair key(namespaceURI, localName);
     return d->attrNS.value(key, defaultValue);
@@ -1936,7 +2279,9 @@ QString KoXmlElement::attributeNS(const QString& namespaceURI,
 bool KoXmlElement::hasAttribute(const QString& name) const
 {
     if (!d->loaded)
+    {
         d->loadChildren();
+    }
 
     return isElement() ? d->hasAttribute(name) : false;
 }
@@ -1945,7 +2290,9 @@ bool KoXmlElement::hasAttributeNS(const QString& namespaceURI,
                                   const QString& localName) const
 {
     if (!d->loaded)
+    {
         d->loadChildren();
+    }
 
     return isElement() ? d->hasAttributeNS(namespaceURI, localName) : false;
 }
@@ -1999,7 +2346,7 @@ KoXmlCDATASection::KoXmlCDATASection(): KoXmlText()
 }
 
 KoXmlCDATASection::KoXmlCDATASection(const KoXmlCDATASection& cdata)
-        : KoXmlText(cdata)
+    : KoXmlText(cdata)
 {
 }
 
@@ -2008,7 +2355,7 @@ KoXmlCDATASection::~KoXmlCDATASection()
 }
 
 KoXmlCDATASection::KoXmlCDATASection(KoXmlNodeData* cdata):
-        KoXmlText(cdata)
+    KoXmlText(cdata)
 {
 }
 
@@ -2038,7 +2385,7 @@ KoXmlDocumentType::~KoXmlDocumentType()
 }
 
 KoXmlDocumentType::KoXmlDocumentType(const KoXmlDocumentType& dt):
-        KoXmlNode(dt.d)
+    KoXmlNode(dt.d)
 {
 }
 
@@ -2105,10 +2452,14 @@ bool KoXmlDocument::operator!=(const KoXmlDocument& doc) const
 KoXmlElement KoXmlDocument::documentElement() const
 {
     if (!d->loaded)
+    {
         d->loadChildren();
+    }
 
-    for (KoXmlNodeData* node = d->first; node; node = node->next) {
-        if (node->nodeType == KoXmlNode::ElementNode) {
+    for (KoXmlNodeData* node = d->first; node; node = node->next)
+    {
+        if (node->nodeType == KoXmlNode::ElementNode)
+        {
             return KoXmlElement(node);
         }
     }
@@ -2134,21 +2485,27 @@ void KoXmlDocument::clear()
     d = dat;
 }
 
-namespace {
-    /* Use an entity resolver that ignores undefined entities and simply
-       returns an empty string for them.
-       */
-    class DumbEntityResolver : public QXmlStreamEntityResolver {
-    public:
-        QString resolveUndeclaredEntity ( const QString &) override { return ""; }
-    };
+namespace
+{
+/* Use an entity resolver that ignores undefined entities and simply
+   returns an empty string for them.
+   */
+class DumbEntityResolver : public QXmlStreamEntityResolver
+{
+public:
+    QString resolveUndeclaredEntity ( const QString &) override
+    {
+        return "";
+    }
+};
 
 }
 
 bool KoXmlDocument::setContent(QXmlStreamReader *reader,
                                QString* errorMsg, int* errorLine, int* errorColumn)
 {
-    if (d->nodeType != KoXmlNode::DocumentNode) {
+    if (d->nodeType != KoXmlNode::DocumentNode)
+    {
         const bool stripSpaces = KOXMLDOCDATA(d)->stripSpaces;
         d->unref();
         KoXmlDocumentData *dat = new KoXmlDocumentData;
@@ -2172,7 +2529,8 @@ bool KoXmlDocument::setContent(QIODevice* device, QString* errorMsg,
 bool KoXmlDocument::setContent(QIODevice* device, bool namespaceProcessing,
                                QString* errorMsg, int* errorLine, int* errorColumn)
 {
-    if (d->nodeType != KoXmlNode::DocumentNode) {
+    if (d->nodeType != KoXmlNode::DocumentNode)
+    {
         const bool stripSpaces = KOXMLDOCDATA(d)->stripSpaces;
         d->unref();
         KoXmlDocumentData *dat = new KoXmlDocumentData;
@@ -2181,7 +2539,10 @@ bool KoXmlDocument::setContent(QIODevice* device, bool namespaceProcessing,
         d = dat;
     }
 
-    if (!device->isOpen()) device->open(QIODevice::ReadOnly);
+    if (!device->isOpen())
+    {
+        device->open(QIODevice::ReadOnly);
+    }
     QXmlStreamReader reader(device);
     reader.setNamespaceProcessing(namespaceProcessing);
     DumbEntityResolver entityResolver;
@@ -2203,7 +2564,8 @@ bool KoXmlDocument::setContent(const QByteArray& text, bool namespaceProcessing,
 bool KoXmlDocument::setContent(const QString& text, bool namespaceProcessing,
                                QString *errorMsg, int *errorLine, int *errorColumn)
 {
-    if (d->nodeType != KoXmlNode::DocumentNode) {
+    if (d->nodeType != KoXmlNode::DocumentNode)
+    {
         const bool stripSpaces = KOXMLDOCDATA(d)->stripSpaces;
         d->unref();
         KoXmlDocumentData *dat = new KoXmlDocumentData;
@@ -2248,10 +2610,13 @@ KoXmlElement KoXml::namedItemNS(const KoXmlNode& node, const QString& nsURI,
 #ifdef KOXML_USE_QDOM
     // David's solution for namedItemNS, only for QDom stuff
     KoXmlNode n = node.firstChild();
-    for (; !n.isNull(); n = n.nextSibling()) {
+    for (; !n.isNull(); n = n.nextSibling())
+    {
         if (n.isElement() && n.localName() == localName &&
                 n.namespaceURI() == nsURI)
+        {
             return n.toElement();
+        }
     }
     return KoXmlElement();
 #else
@@ -2263,7 +2628,7 @@ KoXmlElement KoXml::namedItemNS(const KoXmlNode& node, const QString& nsURI,
                                 const QString& localName, KoXmlNamedItemType type)
 {
 #ifdef KOXML_USE_QDOM
-Q_ASSERT(false);
+    Q_ASSERT(false);
     return namedItemNS(node, nsURI, localName);
 #else
     return node.namedItemNS(nsURI, localName, type).toElement();
@@ -2310,7 +2675,9 @@ QStringList KoXml::attributeNames(const KoXmlNode& node)
 
     QDomNamedNodeMap attrMap = node.attributes();
     for (int i = 0; i < attrMap.count(); ++i)
+    {
         result += attrMap.item(i).toAttr().name();
+    }
 
     return result;
 #else
@@ -2341,8 +2708,10 @@ QDomDocument KoXml::asQDomDocument(const KoXmlDocument& document)
     return document;
 #else
     QDomDocument qdoc( document.nodeName() );
-    if ( document.hasChildNodes() ) {
-        for ( KoXmlNode n = document.firstChild(); ! n.isNull(); n = n.nextSibling() ) {
+    if ( document.hasChildNodes() )
+    {
+        for ( KoXmlNode n = document.firstChild(); ! n.isNull(); n = n.nextSibling() )
+        {
             KoXml::asQDomNode(qdoc, n);
         }
     }
