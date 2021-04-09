@@ -21,7 +21,7 @@ SDK_LIB_PREFIX      = D:/Dev/CraftRoot/lib
 
 DESTDIR             = ./MS_bin/libs/
 
-LOGLIB              =  $$PWD/bin/bin/libs
+LOGLIB              =  $$PWD/ms_bin/bin/libs
 
 LIBS               +=  -L$${SDK_LIB_PREFIX} \
                        -lzlib
@@ -34,7 +34,7 @@ SDK_LIB_PREFIX      = D:/Dev/KDE_SDK/libs
 
 DESTDIR             = ./MS_bin/libs/
 
-LOGLIB              =  $$PWD/MS_bin/libs
+LOGLIB              =  $$PWD/bin/bin/libs
 
 LIBS               +=  -L$${SDK_LIB_PREFIX} \
                        -lz
