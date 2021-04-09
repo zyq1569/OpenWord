@@ -65,24 +65,32 @@ KoOdfChartWriter::~KoOdfChartWriter()
 // Takes a Excel cellrange and translates it into a ODF cellrange
 QString KoOdfChartWriter::normalizeCellRange(QString range)
 {
-    if (range.startsWith('[') && range.endsWith(']')) {
+    if (range.startsWith('[') && range.endsWith(']'))
+    {
         range.remove(0, 1).chop(1);
     }
     range.remove('$');
 
     const bool isPoint = !range.contains( ':' );
     QRegExp regEx(isPoint ? "(|.*\\.|.*\\!)([A-Z0-9]+)"
-		          : "(|.*\\.|.*\\!)([A-Z]+[0-9]+)\\:(|.*\\.|.*\\!)([A-Z0-9]+)");
-    if (regEx.indexIn(range) >= 0) {
+                  : "(|.*\\.|.*\\!)([A-Z]+[0-9]+)\\:(|.*\\.|.*\\!)([A-Z0-9]+)");
+    if (regEx.indexIn(range) >= 0)
+    {
         range.clear();
         QString sheetName = regEx.cap(1);
         if (sheetName.endsWith(QLatin1Char('.')) || sheetName.endsWith(QLatin1Char('!')))
+        {
             sheetName.chop(1);
+        }
         if (!sheetName.isEmpty())
+        {
             range = sheetName + '.';
+        }
         range += regEx.cap(2);
         if (!isPoint)
+        {
             range += ':' + regEx.cap(4);
+        }
     }
 
     return range;
@@ -120,14 +128,14 @@ QColor KoOdfChartWriter::calculateColorFromGradientStop(const KoChart::Gradient:
 }
 
 QString KoOdfChartWriter::generateGradientStyle(KoGenStyles& mainStyles,
-						const KoChart::Gradient* grad)
+        const KoChart::Gradient* grad)
 {
     KoGenStyle gradStyle(KoGenStyle::GradientStyle);
     gradStyle.addAttribute("draw:style", "linear");
 
     QColor startColor = calculateColorFromGradientStop(grad->gradientStops.first());
     QColor endColor = calculateColorFromGradientStop(grad->gradientStops.last());
-    
+
     gradStyle.addAttribute("draw:start-color", startColor.name());
     gradStyle.addAttribute("draw:end-color", endColor.name());
     gradStyle.addAttribute("draw:angle", QString::number(grad->angle));
@@ -141,32 +149,37 @@ QColor KoOdfChartWriter::labelFontColor() const
 }
 
 QString KoOdfChartWriter::genChartAreaStyle(KoGenStyle& style, KoGenStyles& styles,
-					    KoGenStyles& mainStyles)
+        KoGenStyles& mainStyles)
 {
-    if (chart()->m_fillGradient) {
+    if (chart()->m_fillGradient)
+    {
         style.addProperty("draw:fill", "gradient", KoGenStyle::GraphicType);
         style.addProperty("draw:fill-gradient-name",
-			  generateGradientStyle(mainStyles, chart()->m_fillGradient),
-			  KoGenStyle::GraphicType);
-    } else {
-	style.addProperty("draw:fill", "solid", KoGenStyle::GraphicType);
+                          generateGradientStyle(mainStyles, chart()->m_fillGradient),
+                          KoGenStyle::GraphicType);
+    }
+    else
+    {
+        style.addProperty("draw:fill", "solid", KoGenStyle::GraphicType);
 
-	QColor color;
-	if (chart()->m_areaFormat
-	    && chart()->m_areaFormat->m_fill
-	    && chart()->m_areaFormat->m_foreground.isValid())
-	{
-	    color = chart()->m_areaFormat->m_foreground;
-	}
-	else
-	    color = QColor("#FFFFFF");
-	style.addProperty("draw:fill-color", color.name(), KoGenStyle::GraphicType);
+        QColor color;
+        if (chart()->m_areaFormat
+                && chart()->m_areaFormat->m_fill
+                && chart()->m_areaFormat->m_foreground.isValid())
+        {
+            color = chart()->m_areaFormat->m_foreground;
+        }
+        else
+        {
+            color = QColor("#FFFFFF");
+        }
+        style.addProperty("draw:fill-color", color.name(), KoGenStyle::GraphicType);
 
-	if (color.alpha() < 255)
-	    style.addProperty("draw:opacity",
-			      QString("%1%").arg(chart()->m_areaFormat->m_foreground.alphaF()
-						 * 100.0),
-			      KoGenStyle::GraphicType);
+        if (color.alpha() < 255)
+            style.addProperty("draw:opacity",
+                              QString("%1%").arg(chart()->m_areaFormat->m_foreground.alphaF()
+                                                 * 100.0),
+                              KoGenStyle::GraphicType);
     }
 
     return styles.insert(style, "ch");
@@ -182,32 +195,41 @@ QString KoOdfChartWriter::genChartAreaStyle(KoGenStyles& styles, KoGenStyles& ma
 
 
 QString KoOdfChartWriter::genPlotAreaStyle(KoGenStyle& style, KoGenStyles& styles,
-					   KoGenStyles& mainStyles)
+        KoGenStyles& mainStyles)
 {
     KoChart::AreaFormat *areaFormat = ((chart()->m_plotArea
-					&& chart()->m_plotArea->m_areaFormat
-					&& chart()->m_plotArea->m_areaFormat->m_fill)
-				       ? chart()->m_plotArea->m_areaFormat
-				       : chart()->m_areaFormat);
-    if (chart()->m_plotAreaFillGradient) {
+                                        && chart()->m_plotArea->m_areaFormat
+                                        && chart()->m_plotArea->m_areaFormat->m_fill)
+                                       ? chart()->m_plotArea->m_areaFormat
+                                       : chart()->m_areaFormat);
+    if (chart()->m_plotAreaFillGradient)
+    {
         style.addProperty("draw:fill", "gradient", KoGenStyle::GraphicType);
         style.addProperty("draw:fill-gradient-name",
-			  generateGradientStyle(mainStyles, chart()->m_plotAreaFillGradient),
-			  KoGenStyle::GraphicType);
-    } else {
+                          generateGradientStyle(mainStyles, chart()->m_plotAreaFillGradient),
+                          KoGenStyle::GraphicType);
+    }
+    else
+    {
         style.addProperty("draw:fill", "solid", KoGenStyle::GraphicType);
 
-	QColor color;
-	if (areaFormat && areaFormat->m_foreground.isValid())
-	    color = areaFormat->m_foreground;
-	else
-	    color = QColor(paletteIsSet ? "#C0C0C0" : "#FFFFFF");
-	style.addProperty("draw:fill-color", color.name(), KoGenStyle::GraphicType);
+        QColor color;
+        if (areaFormat && areaFormat->m_foreground.isValid())
+        {
+            color = areaFormat->m_foreground;
+        }
+        else
+        {
+            color = QColor(paletteIsSet ? "#C0C0C0" : "#FFFFFF");
+        }
+        style.addProperty("draw:fill-color", color.name(), KoGenStyle::GraphicType);
 
-	if (color.alpha() < 255)
-	    style.addProperty("draw:opacity",
-			      QString("%1%").arg(areaFormat->m_foreground.alphaF() * 100.0),
-			      KoGenStyle::GraphicType);
+        if (color.alpha() < 255)
+        {
+            style.addProperty("draw:opacity",
+                              QString("%1%").arg(areaFormat->m_foreground.alphaF() * 100.0),
+                              KoGenStyle::GraphicType);
+        }
     }
 
     return styles.insert(style, "ch");
@@ -215,53 +237,64 @@ QString KoOdfChartWriter::genPlotAreaStyle(KoGenStyle& style, KoGenStyles& style
 
 
 void KoOdfChartWriter::addShapePropertyStyle(/*const*/ KoChart::Series* series, KoGenStyle& style,
-					     KoGenStyles& /*mainStyles*/)
+        KoGenStyles& /*mainStyles*/)
 {
     Q_ASSERT(series);
     bool marker = false;
     KoChart::ScatterImpl* impl = dynamic_cast< KoChart::ScatterImpl* >(m_chart->m_impl);
 
     if (impl)
-        marker = (impl->style == KoChart::ScatterImpl::Marker 
-		  || impl->style == KoChart::ScatterImpl::LineMarker);
+    {
+        marker = (impl->style == KoChart::ScatterImpl::Marker
+                  || impl->style == KoChart::ScatterImpl::LineMarker);
+    }
 
-    if (series->spPr->lineFill.valid) {
-        if (series->spPr->lineFill.type == KoChart::Fill::Solid) {
+    if (series->spPr->lineFill.valid)
+    {
+        if (series->spPr->lineFill.type == KoChart::Fill::Solid)
+        {
             style.addProperty("draw:stroke", "solid", KoGenStyle::GraphicType);
             style.addProperty("svg:stroke-color", series->spPr->lineFill.solidColor.name(),
-			      KoGenStyle::GraphicType);
+                              KoGenStyle::GraphicType);
         }
-        else if (series->spPr->lineFill.type == KoChart::Fill::None) {
+        else if (series->spPr->lineFill.type == KoChart::Fill::None)
+        {
             style.addProperty("draw:stroke", "none", KoGenStyle::GraphicType);
-	}
+        }
     }
     else if (  (paletteIsSet && m_chart->m_impl->name() != "scatter")
-             || m_chart->m_showLines)
+               || m_chart->m_showLines)
     {
         const int curSerNum = m_chart->m_series.indexOf(series);
         style.addProperty("draw:stroke", "solid", KoGenStyle::GraphicType);
         style.addProperty("svg:stroke-color", m_palette.at(24 + curSerNum).name(),
-			  KoGenStyle::GraphicType);
+                          KoGenStyle::GraphicType);
     }
     else if (paletteIsSet && m_chart->m_impl->name() == "scatter")
+    {
         style.addProperty("draw:stroke", "none", KoGenStyle::GraphicType);
-    if (series->spPr->areaFill.valid) {
-        if (series->spPr->areaFill.type == KoChart::Fill::Solid) {
+    }
+    if (series->spPr->areaFill.valid)
+    {
+        if (series->spPr->areaFill.type == KoChart::Fill::Solid)
+        {
             style.addProperty("draw:fill", "solid", KoGenStyle::GraphicType);
             style.addProperty("draw:fill-color", series->spPr->areaFill.solidColor.name(),
-			      KoGenStyle::GraphicType);
+                              KoGenStyle::GraphicType);
         }
         else if (series->spPr->areaFill.type == KoChart::Fill::None)
+        {
             style.addProperty("draw:fill", "none", KoGenStyle::GraphicType);
+        }
     }
     else if (paletteIsSet
-	     && !(m_chart->m_markerType != KoChart::NoMarker || marker)
-	     && series->m_markerType == KoChart::NoMarker)
+             && !(m_chart->m_markerType != KoChart::NoMarker || marker)
+             && series->m_markerType == KoChart::NoMarker)
     {
         const int curSerNum = m_chart->m_series.indexOf(series) % 8;
         style.addProperty("draw:fill", "solid", KoGenStyle::GraphicType);
         style.addProperty("draw:fill-color", m_palette.at(16 + curSerNum).name(),
-			  KoGenStyle::GraphicType);
+                          KoGenStyle::GraphicType);
     }
 }
 
@@ -272,7 +305,7 @@ QString KoOdfChartWriter::genPlotAreaStyle(KoGenStyles& styles, KoGenStyles& mai
 }
 
 QString KoOdfChartWriter::replaceSheet(const QString &originalString,
-				       const QString &replacementSheet)
+                                       const QString &replacementSheet)
 {
     QStringList split = originalString.split(QLatin1Char('!'));
     split[0] = replacementSheet;
@@ -288,18 +321,27 @@ void KoOdfChartWriter::set2003ColorPalette(QList < QColor > palette)
 QString KoOdfChartWriter::markerType(KoChart::MarkerType type, int currentSeriesNumber)
 {
     QString markerName;
-    switch(type) {
+    switch(type)
+    {
         case NoMarker:
             break;
-        case AutoMarker: { // auto marker type
+        case AutoMarker:   // auto marker type
+        {
             const int resNum = currentSeriesNumber % 3;
             if (resNum == 0)
+            {
                 markerName = "square";
+            }
             else if (resNum == 1)
+            {
                 markerName = "diamond";
+            }
             else if (resNum == 2)
+            {
                 markerName = "circle";
-        } break;
+            }
+        }
+        break;
         case SquareMarker:
             markerName = "square";
             break;
@@ -340,17 +382,21 @@ QString KoOdfChartWriter::markerType(KoChart::MarkerType type, int currentSeries
 bool KoOdfChartWriter::saveIndex(KoXmlWriter* xmlWriter)
 {
     if (!chart() || m_href.isEmpty())
+    {
         return false;
+    }
 
     // This because for presesentations the frame is done in read_graphicFrame
-    if (!m_drawLayer) {
+    if (!m_drawLayer)
+    {
         xmlWriter->startElement("draw:frame");
         // used in opendocumentpresentation for layers
         //if (m_drawLayer)
         //    xmlWriter->addAttribute("draw:layer", "layout");
 
         // used in opendocumentspreadsheet to reference cells
-        if (!m_endCellAddress.isEmpty()) {
+        if (!m_endCellAddress.isEmpty())
+        {
             xmlWriter->addAttribute("table:end-cell-address", m_endCellAddress);
             xmlWriter->addAttributePt("table:end-x", m_end_x);
             xmlWriter->addAttributePt("table:end-y", m_end_y);
@@ -359,15 +405,21 @@ bool KoOdfChartWriter::saveIndex(KoXmlWriter* xmlWriter)
         xmlWriter->addAttributePt("svg:x", m_x);
         xmlWriter->addAttributePt("svg:y", m_y);
         if (m_width > 0)
+        {
             xmlWriter->addAttributePt("svg:width", m_width);
+        }
         if (m_height > 0)
+        {
             xmlWriter->addAttributePt("svg:height", m_height);
+        }
     }
     //xmlWriter->addAttribute("draw:z-index", "0");
     xmlWriter->startElement("draw:object");
     //TODO don't show on e.g. presenter
     if (!m_notifyOnUpdateOfRanges.isEmpty())
+    {
         xmlWriter->addAttribute("draw:notify-on-update-of-ranges", m_notifyOnUpdateOfRanges);
+    }
 
     xmlWriter->addAttribute("xlink:href", "./" + m_href);
     xmlWriter->addAttribute("xlink:type", "simple");
@@ -375,7 +427,8 @@ bool KoOdfChartWriter::saveIndex(KoXmlWriter* xmlWriter)
     xmlWriter->addAttribute("xlink:actuate", "onLoad");
 
     xmlWriter->endElement(); // draw:object
-    if (!m_drawLayer) {
+    if (!m_drawLayer)
+    {
         xmlWriter->endElement(); // draw:frame
     }
     return true;
@@ -384,8 +437,10 @@ bool KoOdfChartWriter::saveIndex(KoXmlWriter* xmlWriter)
 bool KoOdfChartWriter::saveContent(KoStore* store, KoXmlWriter* manifestWriter)
 {
     if (!chart() || !chart()->m_impl || m_href.isEmpty())
+    {
         return false;
-    
+    }
+
     KoGenStyles styles;
     KoGenStyles mainStyles;
 
@@ -405,23 +460,27 @@ bool KoOdfChartWriter::saveContent(KoStore* store, KoXmlWriter* manifestWriter)
     //             chart:style-name="ch1">
     bodyWriter->startElement("chart:chart");
 
-    if (!chart()->m_impl->name().isEmpty()) {
+    if (!chart()->m_impl->name().isEmpty())
+    {
         bodyWriter->addAttribute("chart:class", "chart:" + chart()->m_impl->name());
     }
 
-    if (m_width > 0) {
+    if (m_width > 0)
+    {
         bodyWriter->addAttributePt("svg:width", m_width);
     }
-    if (m_height > 0) {
+    if (m_height > 0)
+    {
         bodyWriter->addAttributePt("svg:height", m_height);
     }
-    
+
     bodyWriter->addAttribute("chart:style-name", genChartAreaStyle(styles, mainStyles));
 
     // <chart:title svg:x="5.618cm" svg:y="0.14cm" chart:style-name="ch2">
     //     <text:p>PIE CHART</text:p>
     // </chart:title>
-    if (!chart()->m_title.isEmpty()) {
+    if (!chart()->m_title.isEmpty())
+    {
         bodyWriter->startElement("chart:title");
 
         /* TODO we can't determine this because by default we need to center the title,
@@ -449,7 +508,8 @@ bool KoOdfChartWriter::saveContent(KoStore* store, KoXmlWriter* manifestWriter)
     }
 
     // Legend
-    if (chart()->m_legend) {
+    if (chart()->m_legend)
+    {
         bodyWriter->startElement("chart:legend");
         bodyWriter->addAttribute("chart:legend-position", "end");
 
@@ -457,7 +517,9 @@ bool KoOdfChartWriter::saveContent(KoStore* store, KoXmlWriter* manifestWriter)
 
         QColor labelColor = labelFontColor();
         if (labelColor.isValid())
+        {
             legendstyle.addProperty("fo:font-color", labelColor.name(), KoGenStyle::TextType);
+        }
 
         bodyWriter->addAttribute("chart:style-name", styles.insert(legendstyle, "lg"));
 
@@ -469,7 +531,8 @@ bool KoOdfChartWriter::saveContent(KoStore* store, KoXmlWriter* manifestWriter)
     //                  svg:x="0.16cm" svg:y="0.14cm">
     bodyWriter->startElement("chart:plot-area");
 
-    if (chart()->m_is3d) {
+    if (chart()->m_is3d)
+    {
         //bodyWriter->addAttribute("dr3d:transform", "matrix (0.893670830886674 0.102940425033731 -0.436755898547686 -0.437131441492021 0.419523087196176 -0.795560483036015 0.101333848646097 0.901888933407692 0.419914042293545 0cm 0cm 0cm)");
         //bodyWriter->addAttribute("dr3d:vrp", "(12684.722548717 7388.35827488833 17691.2795565958)");
         //bodyWriter->addAttribute("dr3d:vpn", "(0.416199821709347 0.173649045905254 0.892537795986984)");
@@ -493,19 +556,23 @@ bool KoOdfChartWriter::saveContent(KoStore* store, KoXmlWriter* manifestWriter)
     //chartstyle.addProperty("chart:series-source", "rows");
     //chartstyle.addProperty("chart:sort-by-x-values", "false");
     //chartstyle.addProperty("chart:right-angled-axes", "true");
-    if (chart()->m_is3d) {
+    if (chart()->m_is3d)
+    {
         chartstyle.addProperty("chart:three-dimensional", "true");
     }
     //chartstyle.addProperty("chart:angle-offset", "90");
     //chartstyle.addProperty("chart:series-source", "rows");
     //chartstyle.addProperty("chart:right-angled-axes", "false");
-    if (chart()->m_transpose) {
+    if (chart()->m_transpose)
+    {
         chartstyle.addProperty("chart:vertical", "true");
     }
-    if (chart()->m_stacked) {
+    if (chart()->m_stacked)
+    {
         chartstyle.addProperty("chart:stacked", "true");
     }
-    if (chart()->m_f100) {
+    if (chart()->m_f100)
+    {
         chartstyle.addProperty("chart:percentage", "true");
     }
     bodyWriter->addAttribute("chart:style-name", genPlotAreaStyle(chartstyle, styles, mainStyles));
@@ -534,43 +601,57 @@ bool KoOdfChartWriter::saveContent(KoStore* store, KoXmlWriter* manifestWriter)
     const bool definesCategories = chart()->m_impl->name() != "scatter"; // scatter charts are using domains
     int countXAxis = 0;
     int countYAxis = 0;
-    foreach (KoChart::Axis* axis, chart()->m_axes) {
+    foreach (KoChart::Axis* axis, chart()->m_axes)
+    {
         //TODO handle series-axis
-        if (axis->m_type == KoChart::Axis::SeriesAxis) continue;
+        if (axis->m_type == KoChart::Axis::SeriesAxis)
+        {
+            continue;
+        }
 
         bodyWriter->startElement("chart:axis");
 
         KoGenStyle axisstyle(KoGenStyle::ChartAutoStyle, "chart");
 
         if (axis->m_reversed)
+        {
             axisstyle.addProperty("chart:reverse-direction", "true", KoGenStyle::ChartType);
+        }
 
         //FIXME this hits an infinite-looping bug in kdchart it seems... maybe fixed with a newer version
 //         if (axis->m_logarithmic)
 //             axisstyle.addProperty("chart:logarithmic", "true", KoGenStyle::ChartType);
 
         if (!axis->m_autoMinimum)
+        {
             axisstyle.addProperty("chart:minimum", QString::number(axis->m_minimum, 'f'),
-				  KoGenStyle::ChartType);
+                                  KoGenStyle::ChartType);
+        }
         if (!axis->m_autoMaximum)
+        {
             axisstyle.addProperty("chart:maximum", QString::number(axis->m_maximum, 'f'),
-				  KoGenStyle::ChartType);
+                                  KoGenStyle::ChartType);
+        }
 
         axisstyle.addProperty("fo:font-size", QString("%0pt").arg(chart()->m_textSize),
-			      KoGenStyle::TextType);
+                              KoGenStyle::TextType);
 
         QColor labelColor = labelFontColor();
         if (labelColor.isValid())
+        {
             axisstyle.addProperty("fo:font-color", labelColor.name(), KoGenStyle::TextType);
+        }
 
-        if (!axis->m_numberFormat.isEmpty()) {
+        if (!axis->m_numberFormat.isEmpty())
+        {
             const KoGenStyle style = NumberFormatParser::parse(axis->m_numberFormat, &styles);
             axisstyle.addAttribute("style:data-style-name", styles.insert(style, "ds"));
         }
 
         bodyWriter->addAttribute("chart:style-name", styles.insert(axisstyle, "ch"));
 
-        switch(axis->m_type) {
+        switch(axis->m_type)
+        {
             case KoChart::Axis::VerticalValueAxis:
                 bodyWriter->addAttribute("chart:dimension", "y");
                 bodyWriter->addAttribute("chart:name", QString("y%1").arg(++countYAxis));
@@ -578,28 +659,34 @@ bool KoOdfChartWriter::saveContent(KoStore* store, KoXmlWriter* manifestWriter)
             case KoChart::Axis::HorizontalValueAxis:
                 bodyWriter->addAttribute("chart:dimension", "x");
                 bodyWriter->addAttribute("chart:name", QString("x%1").arg(++countXAxis));
-                if (countXAxis == 1 && definesCategories && !verticalCellRangeAddress.isEmpty()) {
+                if (countXAxis == 1 && definesCategories && !verticalCellRangeAddress.isEmpty())
+                {
                     bodyWriter->startElement("chart:categories");
                     if (sheetReplacement)
                         verticalCellRangeAddress
-			    = normalizeCellRange(replaceSheet(verticalCellRangeAddress,
-							      QString::fromLatin1("local")));
+                            = normalizeCellRange(replaceSheet(verticalCellRangeAddress,
+                                                              QString::fromLatin1("local")));
                     else
+                    {
                         verticalCellRangeAddress = normalizeCellRange(verticalCellRangeAddress);
+                    }
                     bodyWriter->addAttribute("table:cell-range-address", verticalCellRangeAddress); //"Sheet1.C2:Sheet1.E2");
                     bodyWriter->endElement();
                 }
                 break;
-            default: break;
+            default:
+                break;
         }
 
-        if (axis->m_majorGridlines.m_format.m_style != KoChart::LineFormat::None) {
+        if (axis->m_majorGridlines.m_format.m_style != KoChart::LineFormat::None)
+        {
             bodyWriter->startElement("chart:grid");
             bodyWriter->addAttribute("chart:class", "major");
             bodyWriter->endElement(); // chart:grid
         }
 
-        if (axis->m_minorGridlines.m_format.m_style != KoChart::LineFormat::None) {
+        if (axis->m_minorGridlines.m_format.m_style != KoChart::LineFormat::None)
+        {
             bodyWriter->startElement("chart:grid");
             bodyWriter->addAttribute("chart:class", "minor");
             bodyWriter->endElement(); // chart:grid
@@ -608,19 +695,23 @@ bool KoOdfChartWriter::saveContent(KoStore* store, KoXmlWriter* manifestWriter)
     }
 
     // Add at least one x-axis.
-    if (countXAxis == 0) {
+    if (countXAxis == 0)
+    {
         bodyWriter->startElement("chart:axis");
         bodyWriter->addAttribute("chart:dimension", "x");
         bodyWriter->addAttribute("chart:name", "primary-x");
 
-        if (definesCategories && !verticalCellRangeAddress.isEmpty()) {
+        if (definesCategories && !verticalCellRangeAddress.isEmpty())
+        {
             bodyWriter->startElement("chart:categories");
             if (sheetReplacement)
                 verticalCellRangeAddress
-		    = normalizeCellRange(replaceSheet(verticalCellRangeAddress,
-						      QString::fromLatin1("local")));
+                    = normalizeCellRange(replaceSheet(verticalCellRangeAddress,
+                                                      QString::fromLatin1("local")));
             else
+            {
                 verticalCellRangeAddress = normalizeCellRange(verticalCellRangeAddress);
+            }
 
             bodyWriter->addAttribute("table:cell-range-address", verticalCellRangeAddress);
             bodyWriter->endElement();
@@ -630,7 +721,8 @@ bool KoOdfChartWriter::saveContent(KoStore* store, KoXmlWriter* manifestWriter)
     }
 
     // Add at least one y-axis.
-    if (countYAxis == 0) {
+    if (countYAxis == 0)
+    {
         bodyWriter->startElement("chart:axis");
         bodyWriter->addAttribute("chart:dimension", "y");
         bodyWriter->addAttribute("chart:name", "primary-y");
@@ -645,10 +737,14 @@ bool KoOdfChartWriter::saveContent(KoStore* store, KoXmlWriter* manifestWriter)
     //       all the other factors accordingly.
     // see 2.4.195 PieFormat
     int maxExplode = 100;
-    foreach (KoChart::Series* series, chart()->m_series) {
-        foreach (KoChart::Format* f, series->m_datasetFormat) {
-            if (KoChart::PieFormat* pieformat = dynamic_cast<KoChart::PieFormat*>(f)) {
-                if (pieformat->m_pcExplode > 0) {
+    foreach (KoChart::Series* series, chart()->m_series)
+    {
+        foreach (KoChart::Format* f, series->m_datasetFormat)
+        {
+            if (KoChart::PieFormat* pieformat = dynamic_cast<KoChart::PieFormat*>(f))
+            {
+                if (pieformat->m_pcExplode > 0)
+                {
                     maxExplode = qMax(maxExplode, pieformat->m_pcExplode);
                 }
             }
@@ -658,15 +754,19 @@ bool KoOdfChartWriter::saveContent(KoStore* store, KoXmlWriter* manifestWriter)
     // Area diagrams are special in that Excel displays the areas in another
     // order than OpenOffice.org and Calligra Sheets. To make sure the same areas are
     // visible we do the same as OpenOffice.org does and reverse the order.
-    if (chart()->m_impl->name() == "area") {
-        for (int i = chart()->m_series.count() - 1; i >= 0; --i) {
+    if (chart()->m_impl->name() == "area")
+    {
+        for (int i = chart()->m_series.count() - 1; i >= 0; --i)
+        {
             chart()->m_series.append(chart()->m_series.takeAt(i));
         }
     }
 
     // Save the series.
     if (!saveSeries(styles, mainStyles, bodyWriter, maxExplode))
-	return false;
+    {
+        return false;
+    }
 
     bodyWriter->startElement("chart:wall");
     bodyWriter->endElement(); // chart:wall
@@ -689,7 +789,8 @@ bool KoOdfChartWriter::saveContent(KoStore* store, KoXmlWriter* manifestWriter)
     styles.saveOdfStyles(KoGenStyles::DocumentAutomaticStyles, contentWriter);
     s.closeContentWriter();
 
-    if (store->open("styles.xml")) {
+    if (store->open("styles.xml"))
+    {
         KoStoreDevice dev(store);
         KoXmlWriter* stylesWriter = new KoXmlWriter(&dev);
 
@@ -732,78 +833,92 @@ bool KoOdfChartWriter::saveContent(KoStore* store, KoXmlWriter* manifestWriter)
 // FIXME: We should probably create a KoOdfChartWriterContext out of these
 //        parameters when we add more similar saving functions later.
 bool KoOdfChartWriter::saveSeries(KoGenStyles &styles, KoGenStyles &mainStyles,
-				  KoXmlWriter* bodyWriter, int maxExplode)
+                                  KoXmlWriter* bodyWriter, int maxExplode)
 {
     int curSerNum = 0;
     bool lines = true;
     bool marker = false;
-    Q_FOREACH (KoChart::Series* series, chart()->m_series) {
+    Q_FOREACH (KoChart::Series* series, chart()->m_series)
+    {
         lines = true;
-        if (chart()->m_impl->name() == "scatter" && !paletteIsSet) {
+        if (chart()->m_impl->name() == "scatter" && !paletteIsSet)
+        {
             KoChart::ScatterImpl* impl = static_cast< KoChart::ScatterImpl* >(chart()->m_impl);
             lines = (impl->style == KoChart::ScatterImpl::Line
-		     || impl->style == KoChart::ScatterImpl::LineMarker);
+                     || impl->style == KoChart::ScatterImpl::LineMarker);
             marker = (impl->style == KoChart::ScatterImpl::Marker
-		      || impl->style == KoChart::ScatterImpl::LineMarker);
+                      || impl->style == KoChart::ScatterImpl::LineMarker);
         }
         const bool noLineFill = ((series->spPr != 0)
-				 && series->spPr->lineFill.type == KoChart::Fill::None);
+                                 && series->spPr->lineFill.type == KoChart::Fill::None);
         lines = lines && !noLineFill;
         lines = lines || m_chart->m_showLines;
-        
-	// <chart:series chart:style-name="ch7"
-	//               chart:values-cell-range-address="Sheet1.C2:Sheet1.E2"
-	//               chart:class="chart:circle">
+
+        // <chart:series chart:style-name="ch7"
+        //               chart:values-cell-range-address="Sheet1.C2:Sheet1.E2"
+        //               chart:class="chart:circle">
         bodyWriter->startElement("chart:series");
         KoGenStyle seriesstyle(KoGenStyle::GraphicAutoStyle, "chart");
         if (series->spPr)
+        {
             addShapePropertyStyle(series, seriesstyle, mainStyles);
-        else if (lines && paletteIsSet) {
+        }
+        else if (lines && paletteIsSet)
+        {
             lines = false;
-            seriesstyle.addProperty("draw:stroke", "solid", KoGenStyle::GraphicType);      
+            seriesstyle.addProperty("draw:stroke", "solid", KoGenStyle::GraphicType);
             seriesstyle.addProperty("svg:stroke-color", m_palette.at(24 + curSerNum).name(),
-				    KoGenStyle::GraphicType);
+                                    KoGenStyle::GraphicType);
         }
 
         if (paletteIsSet
-	    && m_chart->m_impl->name() != "ring"
-	    && m_chart->m_impl->name() != "circle")
-	{
+                && m_chart->m_impl->name() != "ring"
+                && m_chart->m_impl->name() != "circle")
+        {
             if (series->m_markerType == KoChart::NoMarker
-		&& m_chart->m_markerType == KoChart::NoMarker
-		&& !marker)
+                    && m_chart->m_markerType == KoChart::NoMarker
+                    && !marker)
             {
-		seriesstyle.addProperty("draw:fill", "solid", KoGenStyle::GraphicType);
-		seriesstyle.addProperty("draw:fill-color", m_palette.at(16 + curSerNum).name(),
-					KoGenStyle::GraphicType);
+                seriesstyle.addProperty("draw:fill", "solid", KoGenStyle::GraphicType);
+                seriesstyle.addProperty("draw:fill-color", m_palette.at(16 + curSerNum).name(),
+                                        KoGenStyle::GraphicType);
             }
         }
 
-        if (series->m_markerType != KoChart::NoMarker) {
+        if (series->m_markerType != KoChart::NoMarker)
+        {
             QString markerName = markerType(series->m_markerType, curSerNum);
-            if (!markerName.isEmpty()) {
+            if (!markerName.isEmpty())
+            {
                 seriesstyle.addProperty("chart:symbol-type", "named-symbol", KoGenStyle::ChartType);
                 seriesstyle.addProperty("chart:symbol-name", markerName, KoGenStyle::ChartType);
             }
         }
-        else if (m_chart->m_markerType != KoChart::NoMarker || marker) {
+        else if (m_chart->m_markerType != KoChart::NoMarker || marker)
+        {
             QString markerName = markerType(m_chart->m_markerType == KoChart::NoMarker
-					    ? KoChart::AutoMarker
-					    : m_chart->m_markerType, curSerNum);
-            if (!markerName.isEmpty()) {
+                                            ? KoChart::AutoMarker
+                                            : m_chart->m_markerType, curSerNum);
+            if (!markerName.isEmpty())
+            {
                 seriesstyle.addProperty("chart:symbol-type", "named-symbol", KoGenStyle::ChartType);
                 seriesstyle.addProperty("chart:symbol-name", markerName, KoGenStyle::ChartType);
             }
         }
 
         if (chart()->m_impl->name() != "circle" && chart()->m_impl->name() != "ring")
+        {
             addDataThemeToStyle(seriesstyle, curSerNum, chart()->m_series.count(), lines);
+        }
         //seriesstyle.addProperty("draw:stroke", "solid");
         //seriesstyle.addProperty("draw:fill-color", "#ff0000");
 
-        foreach (KoChart::Format* f, series->m_datasetFormat) {
-            if (KoChart::PieFormat* pieformat = dynamic_cast<KoChart::PieFormat*>(f)) {
-                if (pieformat->m_pcExplode > 0) {
+        foreach (KoChart::Format* f, series->m_datasetFormat)
+        {
+            if (KoChart::PieFormat* pieformat = dynamic_cast<KoChart::PieFormat*>(f))
+            {
+                if (pieformat->m_pcExplode > 0)
+                {
                     // Note that 100.0/maxExplode will yield 1.0 most of the
                     // time, that's why do that division first
                     const int pcExplode = (int)((float)pieformat->m_pcExplode * (100.0 / (float)maxExplode));
@@ -812,21 +927,28 @@ bool KoOdfChartWriter::saveSeries(KoGenStyles &styles, KoGenStyles &mainStyles,
             }
         }
 
-        if (series->m_showDataLabelValues && series->m_showDataLabelPercent) {
+        if (series->m_showDataLabelValues && series->m_showDataLabelPercent)
+        {
             seriesstyle.addProperty("chart:data-label-number", "value-and-percentage",
-				    KoGenStyle::ChartType);
-        } else if (series->m_showDataLabelValues) {
+                                    KoGenStyle::ChartType);
+        }
+        else if (series->m_showDataLabelValues)
+        {
             seriesstyle.addProperty("chart:data-label-number", "value", KoGenStyle::ChartType);
-        } else if (series->m_showDataLabelPercent) {
+        }
+        else if (series->m_showDataLabelPercent)
+        {
             seriesstyle.addProperty("chart:data-label-number", "percentage", KoGenStyle::ChartType);
         }
 
-        if (series->m_showDataLabelCategory) {
+        if (series->m_showDataLabelCategory)
+        {
             seriesstyle.addProperty("chart:data-label-text", "true", KoGenStyle::ChartType);
         }
         //seriesstyle.addProperty("chart:data-label-symbol", "true", KoGenStyle::ChartType);
 
-        if (!series->m_numberFormat.isEmpty()) {
+        if (!series->m_numberFormat.isEmpty())
+        {
             const KoGenStyle style = NumberFormatParser::parse(series->m_numberFormat, &styles);
             seriesstyle.addAttribute("style:data-style-name", styles.insert(style, "ds"));
         }
@@ -836,42 +958,51 @@ bool KoOdfChartWriter::saveSeries(KoGenStyles &styles, KoGenStyles &mainStyles,
         // ODF does not support custom labels so we depend on the
         // SeriesLegendOrTrendlineName being defined and to point to a valid
         // cell to be able to display custom labels.
-        if (series->m_datasetValue.contains(KoChart::Value::SeriesLegendOrTrendlineName)) {
+        if (series->m_datasetValue.contains(KoChart::Value::SeriesLegendOrTrendlineName))
+        {
             KoChart::Value* v = series->m_datasetValue[KoChart::Value::SeriesLegendOrTrendlineName];
-            if (!v->m_formula.isEmpty()) {
+            if (!v->m_formula.isEmpty())
+            {
                 bodyWriter->addAttribute("chart:label-cell-address",
-					 (v->m_type == KoChart::Value::CellRange
-					  ? normalizeCellRange(v->m_formula)
-					  : v->m_formula));
+                                         (v->m_type == KoChart::Value::CellRange
+                                          ? normalizeCellRange(v->m_formula)
+                                          : v->m_formula));
             }
         }
 
-        if (!series->m_labelCell.isEmpty()) {
+        if (!series->m_labelCell.isEmpty())
+        {
             QString labelAddress = series->m_labelCell;
             if (sheetReplacement)
                 labelAddress = normalizeCellRange(replaceSheet(labelAddress,
-							       QString::fromLatin1("local")));
+                                                  QString::fromLatin1("local")));
             else
+            {
                 labelAddress = normalizeCellRange(labelAddress);
+            }
             bodyWriter->addAttribute("chart:label-cell-address", labelAddress);
         }
 
         QString valuesCellRangeAddress;
         if (sheetReplacement)
             valuesCellRangeAddress
-		= normalizeCellRange(replaceSheet(series->m_valuesCellRangeAddress,
-						  QString::fromLatin1("local")));
+                = normalizeCellRange(replaceSheet(series->m_valuesCellRangeAddress,
+                                                  QString::fromLatin1("local")));
         else
+        {
             valuesCellRangeAddress = normalizeCellRange(series->m_valuesCellRangeAddress);
-        
-        if (!valuesCellRangeAddress.isEmpty()) {
-	    // "Sheet1.C2:Sheet1.E2";
+        }
+
+        if (!valuesCellRangeAddress.isEmpty())
+        {
+            // "Sheet1.C2:Sheet1.E2";
             bodyWriter->addAttribute("chart:values-cell-range-address", valuesCellRangeAddress);
         }
-        else if (!series->m_domainValuesCellRangeAddress.isEmpty()) {
-	    // "Sheet1.C2:Sheet1.E2";
+        else if (!series->m_domainValuesCellRangeAddress.isEmpty())
+        {
+            // "Sheet1.C2:Sheet1.E2";
             bodyWriter->addAttribute("chart:values-cell-range-address",
-				     series->m_domainValuesCellRangeAddress.last());
+                                     series->m_domainValuesCellRangeAddress.last());
         }
 
         bodyWriter->addAttribute("chart:class", "chart:" + chart()->m_impl->name());
@@ -882,17 +1013,24 @@ bool KoOdfChartWriter::saveSeries(KoGenStyles &styles, KoGenStyles &mainStyles,
 //             bodyWriter->endElement();
 //         } else if (chart()->m_impl->name() == "bubble") {
 
-            QString domainRange;
-            Q_FOREACH (const QString& curRange, series->m_domainValuesCellRangeAddress) {
-                bodyWriter->startElement("chart:domain");
-                if (sheetReplacement)
-                    domainRange = normalizeCellRange(replaceSheet(curRange, QString::fromLatin1("local")));
-                else
-                    domainRange = normalizeCellRange(curRange);
-                if (!domainRange.isEmpty())
-                    bodyWriter->addAttribute("table:cell-range-address", domainRange);
-                bodyWriter->endElement();
+        QString domainRange;
+        Q_FOREACH (const QString& curRange, series->m_domainValuesCellRangeAddress)
+        {
+            bodyWriter->startElement("chart:domain");
+            if (sheetReplacement)
+            {
+                domainRange = normalizeCellRange(replaceSheet(curRange, QString::fromLatin1("local")));
             }
+            else
+            {
+                domainRange = normalizeCellRange(curRange);
+            }
+            if (!domainRange.isEmpty())
+            {
+                bodyWriter->addAttribute("table:cell-range-address", domainRange);
+            }
+            bodyWriter->endElement();
+        }
 //             if (series->m_domainValuesCellRangeAddress.count() == 1){
 //                 bodyWriter->startElement("chart:domain");
 //                 bodyWriter->addAttribute("table:cell-range-address", series->m_domainValuesCellRangeAddress.last()); //"Sheet1.C2:Sheet1.E5");
@@ -908,33 +1046,40 @@ bool KoOdfChartWriter::saveSeries(KoGenStyles &styles, KoGenStyles &mainStyles,
 //             }
 //         }
 
-        for (int j = 0; j < series->m_countYValues; ++j) {
+        for (int j = 0; j < series->m_countYValues; ++j)
+        {
             bodyWriter->startElement("chart:data-point");
             KoGenStyle gs(KoGenStyle::GraphicAutoStyle, "chart");
 
-            if (chart()->m_impl->name() == "circle" || chart()->m_impl->name() == "ring") {
+            if (chart()->m_impl->name() == "circle" || chart()->m_impl->name() == "ring")
+            {
                 QColor fillColor;
-                if (j < series->m_dataPoints.count()) {
+                if (j < series->m_dataPoints.count())
+                {
                     KoChart::DataPoint *dataPoint = series->m_dataPoints[j];
-                    if (dataPoint->m_areaFormat) {
+                    if (dataPoint->m_areaFormat)
+                    {
                         fillColor = dataPoint->m_areaFormat->m_foreground;
                     }
                 }
 
-                if (fillColor.isValid()) {
+                if (fillColor.isValid())
+                {
                     gs.addProperty("draw:fill", "solid", KoGenStyle::GraphicType);
                     gs.addProperty("draw:fill-color", fillColor.name(), KoGenStyle::GraphicType);
                 }
                 else if (series->m_markerType == KoChart::NoMarker
-			 && m_chart->m_markerType == KoChart::NoMarker
-			 && !marker)
-		{
-                    if (paletteIsSet) {
+                         && m_chart->m_markerType == KoChart::NoMarker
+                         && !marker)
+                {
+                    if (paletteIsSet)
+                    {
                         gs.addProperty("draw:fill", "solid", KoGenStyle::GraphicType);
                         gs.addProperty("draw:fill-color", m_palette.at(16 + j).name(),
-				       KoGenStyle::GraphicType);
+                                       KoGenStyle::GraphicType);
                     }
-                    else {
+                    else
+                    {
                         addDataThemeToStyle(gs, j, series->m_countYValues, lines);
                     }
                 }
@@ -946,10 +1091,11 @@ bool KoOdfChartWriter::saveSeries(KoGenStyles &styles, KoGenStyles &mainStyles,
 
             //gs.addProperty("chart:solid-type", "cuboid", KoGenStyle::ChartType);
             //gs.addProperty("draw:fill-color",j==0?"#004586":j==1?"#ff420e":"#ffd320",
-	    //               KoGenStyle::GraphicType);
+            //               KoGenStyle::GraphicType);
             bodyWriter->addAttribute("chart:style-name", styles.insert(gs, "ch"));
 
-            Q_FOREACH (KoChart::Text* t, series->m_texts) {
+            Q_FOREACH (KoChart::Text* t, series->m_texts)
+            {
                 bodyWriter->startElement("chart:data-label");
                 bodyWriter->startElement("text:p");
                 bodyWriter->addTextNode(t->m_text);
@@ -959,7 +1105,7 @@ bool KoOdfChartWriter::saveSeries(KoGenStyles &styles, KoGenStyles &mainStyles,
 
             bodyWriter->endElement();
         }
-        
+
         ++curSerNum;
         bodyWriter->endElement(); // chart:series
     }
@@ -991,7 +1137,7 @@ QColor KoOdfChartWriter::shadeColor(const QColor& col, qreal factor)
 }
 
 void KoOdfChartWriter::addDataThemeToStyle(KoGenStyle& style, int dataNumber, int maxNumData,
-					   bool strokes)
+        bool strokes)
 {
     // FIXME: This is only relevant to themes, so remove this function after
     //        we are done with saveContent().
@@ -1005,7 +1151,9 @@ void KoOdfChartWriter::addDataThemeToStyle(KoGenStyle& style, int dataNumber, in
 float KoOdfChartWriter::sprcToPt(int sprc, Orientation orientation )
 {
     if (orientation & vertical)
+    {
         return (float)sprc * ( (float)m_width / 4000.0);
+    }
 
     return (float)sprc * ( (float)m_height / 4000.0);
 }
@@ -1014,54 +1162,68 @@ void KoOdfChartWriter::writeInternalTable(KoXmlWriter* bodyWriter)
 {
     Q_ASSERT( bodyWriter );
     bodyWriter->startElement("table:table");
-        bodyWriter->addAttribute( "table:name", "local" );
+    bodyWriter->addAttribute( "table:name", "local" );
 
-        bodyWriter->startElement( "table:table-header-columns" );
-            bodyWriter->startElement( "table:table-column" );
-            bodyWriter->endElement();
-        bodyWriter->endElement();
+    bodyWriter->startElement( "table:table-header-columns" );
+    bodyWriter->startElement( "table:table-column" );
+    bodyWriter->endElement();
+    bodyWriter->endElement();
 
-        bodyWriter->startElement( "table:table-columns" );
-            bodyWriter->startElement( "table:table-column" );
-            bodyWriter->endElement();
-        bodyWriter->endElement();
+    bodyWriter->startElement( "table:table-columns" );
+    bodyWriter->startElement( "table:table-column" );
+    bodyWriter->endElement();
+    bodyWriter->endElement();
 
-        bodyWriter->startElement( "table:table-rows" );
+    bodyWriter->startElement( "table:table-rows" );
 
-        const int rowCount = chart()->m_internalTable.maxRow();
-        for (int r = 1; r <= rowCount; ++r) {
-            bodyWriter->startElement("table:table-row");
-            const int columnCount = chart()->m_internalTable.maxCellsInRow(r);
-            for (int c = 1; c <= columnCount; ++c) {
-                bodyWriter->startElement("table:table-cell");
-                if (Cell* cell = chart()->m_internalTable.cell(c, r, false)) {
-                    //debugOdf2 << "cell->m_value " << cell->m_value;
-                    if (!cell->m_value.isEmpty()) {
-                        if (!cell->m_valueType.isEmpty()) {
-                            bodyWriter->addAttribute("office:value-type", cell->m_valueType);
-                            if (cell->m_valueType == "string") {
-                                bodyWriter->addAttribute("office:string-value", cell->m_value);
-                            } else if (cell->m_valueType == "boolean") {
-                                bodyWriter->addAttribute("office:boolean-value", cell->m_value);
-                            } else if (cell->m_valueType == "date") {
-                                bodyWriter->addAttribute("office:date-value", cell->m_value);
-                            } else if (cell->m_valueType == "time") {
-                                bodyWriter->addAttribute("office:time-value", cell->m_value);
-                            } else { // float, percentage and currency including fraction and scientific
-                                bodyWriter->addAttribute("office:value", cell->m_value);
-                            }
+    const int rowCount = chart()->m_internalTable.maxRow();
+    for (int r = 1; r <= rowCount; ++r)
+    {
+        bodyWriter->startElement("table:table-row");
+        const int columnCount = chart()->m_internalTable.maxCellsInRow(r);
+        for (int c = 1; c <= columnCount; ++c)
+        {
+            bodyWriter->startElement("table:table-cell");
+            if (Cell* cell = chart()->m_internalTable.cell(c, r, false))
+            {
+                //debugOdf2 << "cell->m_value " << cell->m_value;
+                if (!cell->m_value.isEmpty())
+                {
+                    if (!cell->m_valueType.isEmpty())
+                    {
+                        bodyWriter->addAttribute("office:value-type", cell->m_valueType);
+                        if (cell->m_valueType == "string")
+                        {
+                            bodyWriter->addAttribute("office:string-value", cell->m_value);
                         }
-
-                        bodyWriter->startElement("text:p");
-                        bodyWriter->addTextNode( cell->m_value );
-                        bodyWriter->endElement(); // text:p
+                        else if (cell->m_valueType == "boolean")
+                        {
+                            bodyWriter->addAttribute("office:boolean-value", cell->m_value);
+                        }
+                        else if (cell->m_valueType == "date")
+                        {
+                            bodyWriter->addAttribute("office:date-value", cell->m_value);
+                        }
+                        else if (cell->m_valueType == "time")
+                        {
+                            bodyWriter->addAttribute("office:time-value", cell->m_value);
+                        }
+                        else     // float, percentage and currency including fraction and scientific
+                        {
+                            bodyWriter->addAttribute("office:value", cell->m_value);
+                        }
                     }
+
+                    bodyWriter->startElement("text:p");
+                    bodyWriter->addTextNode( cell->m_value );
+                    bodyWriter->endElement(); // text:p
                 }
-                bodyWriter->endElement(); // table:table-cell
             }
-            bodyWriter->endElement(); // table:table-row
+            bodyWriter->endElement(); // table:table-cell
         }
-        bodyWriter->endElement(); // table:table-rows
+        bodyWriter->endElement(); // table:table-row
+    }
+    bodyWriter->endElement(); // table:table-rows
     bodyWriter->endElement(); // table:table
 }
 
