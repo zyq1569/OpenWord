@@ -6,6 +6,17 @@
 
 #include <QString>
 
+#if defined(_WIN32)
+
+#if defined(_MSC_VER)
+// Windows平台  Visual Statuio 编译器特定代码
+#include "easylog_export.h"
+#endif
+#if defined(__GNUC__)
+// Windows平台 GCC编译器特定的代码
+#endif
+
+#endif
 
 namespace LOG
 {
@@ -67,6 +78,5 @@ void traceLog(const QString &msg, const QString &file, int line, const QString &
 #define FATAL_LOG(msg)                LOG::fatalLog(msg,__FILE__,__LINE__,LOG_FUNC)
 #define VERBOSE_LOG(vLevel, msg)      LOG::verboseLog(vLevel, msg,__FILE__,__LINE__,LOG_FUNC)
 #define TRACE_LOG(msg)                LOG::traceLog(msg,__FILE__,__LINE__,LOG_FUNC)
-
 
 #endif //_LOGGING_
