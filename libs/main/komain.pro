@@ -1,9 +1,9 @@
 
-TEMPLATE = lib
-TARGET   = komain
-DESTDIR  = ../../bin/libs/
-#DEFINES += CALLIGRA_RC=1
-QT      += core xml network gui widgets printsupport concurrent dbus
+TEMPLATE     = lib
+TARGET       = komain
+DESTDIR      = ../../bin/libs/
+#DEFINES     += CALLIGRA_RC=1
+QT          += core xml network gui widgets printsupport concurrent dbus
 
 
 INCLUDEPATH += ../../ \
@@ -45,8 +45,8 @@ LIBS         += -L$${DESTDIR} \
                 -lkostore \
                 -lkundo2
 
-LIBS       +=   -L$${DESTDIR} \
-                -leasylog
+#LIBS         +=   -L$${DESTDIR} \
+#                  -leasylog
 
 include(../../calligra.pri)
 include(komain.pri)

@@ -15,13 +15,19 @@ msvc: DEFINES      += MSVC
 
 contains(DEFINES, MSVC) {
 
+DEFINES            += UNICODE
+
 ALL_LIBS_DIR        = $$PWD/bin/bin/libs
 SDK_INSTALL_PREFIX  = D:/Dev/CraftRoot/include
 SDK_LIB_PREFIX      = D:/Dev/CraftRoot/lib
 
-DESTDIR             = ./MS_bin/libs/
+DESTDIR             = $$PWD/MS_bin/bin
 
-LOGLIB              =  $$PWD/ms_bin/bin/libs
+TARGET_FILE         = $$PWD/MS_bin/temp/TARGET
+TARGET_IMPLIB       = $$PWD/MS_bin/temp/TARGET
+TARGET_PDB          = $$PWD/MS_bin/temp/TARGET
+
+LOGLIB              = $$PWD/ms_bin/bin/libs
 
 LIBS               +=  -L$${SDK_LIB_PREFIX} \
                        -lzlib

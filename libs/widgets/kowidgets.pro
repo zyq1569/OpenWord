@@ -1,8 +1,8 @@
 
-TEMPLATE = lib
-TARGET = kowidgets
-DESTDIR = ../../bin/libs/
-QT += core xml network gui widgets printsupport concurrent dbus
+TEMPLATE     = lib
+TARGET       = kowidgets
+DESTDIR      = ../../bin/libs/
+QT          += core xml network gui widgets printsupport concurrent dbus
 
 INCLUDEPATH +=   ../../ \
                 ../../interfaces \
@@ -34,16 +34,6 @@ INCLUDEPATH +=   ../../ \
                 ../flake/svg \
                 ../flake \
                 ../widgetutils
-
-
-LIBS += -L$${DESTDIR} \
-        -lflake \
-        -lpigmentcms \
-        -lkowidgetutils \
-        -lkoodf \
-        -lkostore \
-        -lkundo2 \
-        -lkotext
 
 
 #    -lD://lib/KF5KIOWidgets \
@@ -87,3 +77,15 @@ LIBS += -L$${DESTDIR} \
 #RCC_DIR += ./tmp/rcc
 include(../../calligra.pri)
 include(kowidgets.pri)
+
+
+
+
+LIBS     +=      -L$${DESTDIR} \
+                 -lflake \
+                 -lpigmentcms \
+                 -lkowidgetutils \
+                 -lkoodf \
+                 -lkostore \
+                 -lkundo2 \
+                 -lkotext

@@ -1,8 +1,8 @@
 
-TEMPLATE = lib
-TARGET = kokross
-DESTDIR = ../../bin/libs/
-QT += core xml network gui script widgets printsupport concurrent dbus
+TEMPLATE     = lib
+TARGET       = kokross
+DESTDIR      = ../../bin/libs/
+QT          += core xml network gui script widgets printsupport concurrent dbus
 
 INCLUDEPATH += ../ \
                 ../kross/core \
@@ -32,6 +32,10 @@ INCLUDEPATH += ../ \
                 ../store
 
 
+include(../../calligra.pri)
+include(kokross.pri)
+
+
 LIBS       +=   -L$${DESTDIR} \
                 -lkostore \
                 -lkoversion \
@@ -46,7 +50,3 @@ LIBS       +=   -L$${DESTDIR} \
                 -lkostore \
                 -lkundo2 \
                 -lkoversion
-
-
-include(../../calligra.pri)
-include(kokross.pri)

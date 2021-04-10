@@ -36,6 +36,11 @@ INCLUDEPATH +=  ../../../plugins/karbonplugins/tools \
                 ../../../libs/widgetutils
 
 
+
+include(../../../calligra.pri)
+include(karbon_tools.pri)
+
+
 LIBS       +=    -L$${LIBDIR} \
                  -lkowidgets \
                  -lkotext \
@@ -45,7 +50,3 @@ LIBS       +=    -L$${LIBDIR} \
                  -lkundo2 \
                  -lpigmentcms \
                  -lkowidgetutils
-
-
-include(../../../calligra.pri)
-include(karbon_tools.pri)

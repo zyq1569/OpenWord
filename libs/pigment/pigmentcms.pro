@@ -33,5 +33,5 @@ include(../../calligra.pri)
 #build_pass:message($$ALL_LIBS_DIR)
 #build_pass:message(------show end: ALL_LIBS_DIR---------)
 LIBS         +=  -L$${ALL_LIBS_DIR}\
-                 -llibkoplugin
+                 -lkoplugin
 include(pigmentcms.pri)

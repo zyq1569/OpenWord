@@ -39,6 +39,14 @@ INCLUDEPATH     +=  ../../  \
                     ../../libs/main/config \
                     ../../words/part
 
+
+#LIBS          +=    -L$${DESTDIR}  \
+#                    -leasylog
+
+include(../../calligra.pri)
+include(calligrawords.pri)
+
+
 LIBS          +=    -L$${DESTDIR} \
                     -lpigmentcms \
                     -lkowidgetutils \
@@ -53,9 +61,3 @@ LIBS          +=    -L$${DESTDIR} \
                     -lflake \
                     -lpigmentcms \
                     -lkoversion
-
-#LIBS          +=    -L$${DESTDIR}  \
-#                    -leasylog
-
-include(../../calligra.pri)
-include(calligrawords.pri)
