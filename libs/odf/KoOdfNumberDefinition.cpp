@@ -307,10 +307,10 @@ static QString intToScript(int n, int offset)
 
 static QString intToScriptList(int n, KoOdfNumberDefinition::FormatSpecification formatSpecification)
 {
-#if defined(_MSC_VER)
-    WARN_LOG("_MSC_VER : to do unicode static QString intToScriptList(int n, KoOdfNumberDefinition::FormatSpecification formatSpecification)");
-    return QString::number(n);
-#else
+//#if defined(_MSC_VER)
+//    WARN_LOG("_MSC_VER : to do unicode static QString intToScriptList(int n, KoOdfNumberDefinition::FormatSpecification formatSpecification)");
+//    return QString::number(n);
+//#else
     // 1 time Sequences
     // note; the leading X is to make these 1 based.
     static const char* const Abjad[]          =   { "أ", "ب", "ج", "د", "ﻫ", "و", "ز", "ح", "ط", "ي", "ك", "ل", "م",
@@ -362,7 +362,7 @@ static QString intToScriptList(int n, KoOdfNumberDefinition::FormatSpecification
         default:
             return QString::number(n);
     }
-#endif
+//#endif
 }
 
 QString KoOdfNumberDefinition::formattedNumber(int number, KoOdfNumberDefinition *defaultDefinition) const

@@ -32,17 +32,19 @@
 
 #include "KoXmlNS.h"
 
-struct Q_DECL_HIDDEN KoOdfWriteStore::Private {
+struct Q_DECL_HIDDEN KoOdfWriteStore::Private
+{
     Private(KoStore * store)
-            : store(store)
-            , storeDevice(0)
-            , contentWriter(0)
-            , bodyWriter(0)
-            , manifestWriter(0)
-            , contentTmpFile(0) {}
+        : store(store)
+        , storeDevice(0)
+        , contentWriter(0)
+        , bodyWriter(0)
+        , manifestWriter(0)
+        , contentTmpFile(0) {}
 
 
-    ~Private() {
+    ~Private()
+    {
         // If all the right close methods were called, nothing should remain,
         // so those deletes are really just in case.
         Q_ASSERT(!contentWriter);
@@ -65,7 +67,7 @@ struct Q_DECL_HIDDEN KoOdfWriteStore::Private {
 };
 
 KoOdfWriteStore::KoOdfWriteStore(KoStore* store)
-        : d(new Private(store))
+    : d(new Private(store))
 {
 }
 
@@ -80,7 +82,8 @@ KoXmlWriter* KoOdfWriteStore::createOasisXmlWriter(QIODevice* dev, const char* r
     writer->startDocument(rootElementName);
     writer->startElement(rootElementName);
 
-    if (qstrcmp(rootElementName, "VL:version-list") == 0) {
+    if (qstrcmp(rootElementName, "VL:version-list") == 0)
+    {
         writer->addAttribute("xmlns:VL", KoXmlNS::VL);
         writer->addAttribute("xmlns:dc", KoXmlNS::dc);
         return writer;
@@ -89,7 +92,8 @@ KoXmlWriter* KoOdfWriteStore::createOasisXmlWriter(QIODevice* dev, const char* r
     writer->addAttribute("xmlns:office", KoXmlNS::office);
     writer->addAttribute("xmlns:meta", KoXmlNS::meta);
 
-    if (qstrcmp(rootElementName, "office:document-meta") != 0) {
+    if (qstrcmp(rootElementName, "office:document-meta") != 0)
+    {
         writer->addAttribute("xmlns:config", KoXmlNS::config);
         writer->addAttribute("xmlns:text", KoXmlNS::text);
         writer->addAttribute("xmlns:table", KoXmlNS::table);
@@ -113,7 +117,8 @@ KoXmlWriter* KoOdfWriteStore::createOasisXmlWriter(QIODevice* dev, const char* r
         writer->addAttribute("xmlns:ac", KoXmlNS::ac);
     }
 
-    if (qstrcmp(rootElementName, "office:document-settings") == 0) {
+    if (qstrcmp(rootElementName, "office:document-settings") == 0)
+    {
         writer->addAttribute("xmlns:ooo", KoXmlNS::ooo);
     }
 
@@ -131,8 +136,10 @@ KoStore* KoOdfWriteStore::store() const
 
 KoXmlWriter* KoOdfWriteStore::contentWriter()
 {
-    if (!d->contentWriter) {
-        if (!d->store->open("content.xml")) {
+    if (!d->contentWriter)
+    {
+        if (!d->store->open("content.xml"))
+        {
             return 0;
         }
         d->storeDevice = new KoStoreDevice(d->store);
@@ -143,10 +150,12 @@ KoXmlWriter* KoOdfWriteStore::contentWriter()
 
 KoXmlWriter* KoOdfWriteStore::bodyWriter()
 {
-    if (!d->bodyWriter) {
+    if (!d->bodyWriter)
+    {
         Q_ASSERT(!d->contentTmpFile);
         d->contentTmpFile = new QTemporaryFile;
-        if (!d->contentTmpFile->open()) {
+        if (!d->contentTmpFile->open())
+        {
             warnOdf << "Failed to open the temporary content file";
             delete d->contentTmpFile;
             d->contentTmpFile = 0;
@@ -162,25 +171,31 @@ bool KoOdfWriteStore::closeContentWriter()
     Q_ASSERT(d->bodyWriter);
     Q_ASSERT(d->contentTmpFile);
 
-    delete d->bodyWriter; d->bodyWriter = 0;
+    delete d->bodyWriter;
+    d->bodyWriter = 0;
 
     // copy over the contents from the tempfile to the real one
     d->contentTmpFile->close(); // does not really close but seeks to the beginning of the file
-    if (d->contentWriter) {
+    if (d->contentWriter)
+    {
         d->contentWriter->addCompleteElement(d->contentTmpFile);
     }
     d->contentTmpFile->close(); // seek again to the beginning
-    delete d->contentTmpFile; d->contentTmpFile = 0; // and finally close and remove the QTemporaryFile
+    delete d->contentTmpFile;
+    d->contentTmpFile = 0; // and finally close and remove the QTemporaryFile
 
-    if (d->contentWriter) {
+    if (d->contentWriter)
+    {
         d->contentWriter->endElement(); // document-content
         d->contentWriter->endDocument();
         delete d->contentWriter;
         d->contentWriter = 0;
     }
 
-    delete d->storeDevice; d->storeDevice = 0;
-    if (!d->store->close()) {   // done with content.xml
+    delete d->storeDevice;
+    d->storeDevice = 0;
+    if (!d->store->close())     // done with content.xml
+    {
         return false;
     }
     return true;
@@ -188,7 +203,8 @@ bool KoOdfWriteStore::closeContentWriter()
 
 KoXmlWriter* KoOdfWriteStore::manifestWriter(const char* mimeType)
 {
-    if (!d->manifestWriter) {
+    if (!d->manifestWriter)
+    {
         // the pointer to the buffer is already stored in the KoXmlWriter, no need to store it here as well
         QBuffer *manifestBuffer = new QBuffer;
         manifestBuffer->open(QIODevice::WriteOnly);
@@ -212,18 +228,23 @@ bool KoOdfWriteStore::closeManifestWriter(bool writeMainfest)
 {
     Q_ASSERT(d->manifestWriter);
     bool ok = true;
-    if (writeMainfest) {
+    if (writeMainfest)
+    {
         d->manifestWriter->endElement();
         d->manifestWriter->endDocument();
         QBuffer* buffer = static_cast<QBuffer *>(d->manifestWriter->device());
-        if (d->store->open("META-INF/manifest.xml")) {
+        if (d->store->open("META-INF/manifest.xml"))
+        {
             qint64 written = d->store->write(buffer->buffer());
             ok = (written == (qint64) buffer->buffer().size() && d->store->close());
-        } else {
+        }
+        else
+        {
             ok = false;
         }
         delete buffer;
     }
-    delete d->manifestWriter; d->manifestWriter = 0;
+    delete d->manifestWriter;
+    d->manifestWriter = 0;
     return ok;
 }

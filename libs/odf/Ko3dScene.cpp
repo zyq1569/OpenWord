@@ -77,10 +77,22 @@ Ko3dScene::Lightsource::~Lightsource()
 
 
 // getters
-QColor Ko3dScene::Lightsource::diffuseColor() const { return m_diffuseColor; }
-QVector3D Ko3dScene::Lightsource::direction() const { return m_direction; }
-bool Ko3dScene::Lightsource::enabled() const { return m_enabled; }
-bool Ko3dScene::Lightsource::specular() const { return m_specular; }
+QColor Ko3dScene::Lightsource::diffuseColor() const
+{
+    return m_diffuseColor;
+}
+QVector3D Ko3dScene::Lightsource::direction() const
+{
+    return m_direction;
+}
+bool Ko3dScene::Lightsource::enabled() const
+{
+    return m_enabled;
+}
+bool Ko3dScene::Lightsource::specular() const
+{
+    return m_specular;
+}
 
 // setters
 void
@@ -151,30 +163,96 @@ Ko3dScene::~Ko3dScene()
 
 
 // getters
-QVector3D Ko3dScene::vrp() const { return d->vrp; }
-QVector3D Ko3dScene::vpn() const { return d->vpn; }
-QVector3D Ko3dScene::vup() const { return d->vup; }
-Ko3dScene::Projection  Ko3dScene::projection() const { return d->projection; }
-QString Ko3dScene::distance() const { return d->distance; }
-QString Ko3dScene::focalLength() const { return d->focalLength; }
-QString Ko3dScene::shadowSlant() const { return d->shadowSlant; }
-Ko3dScene::Shademode   Ko3dScene::shadeMode() const { return d->shadeMode; }
-QColor Ko3dScene::ambientColor() const { return d->ambientColor; }
-bool Ko3dScene::lightingMode() const { return d->lightingMode; }
-QString Ko3dScene::transform() const { return d->transform; }
+QVector3D Ko3dScene::vrp() const
+{
+    return d->vrp;
+}
+QVector3D Ko3dScene::vpn() const
+{
+    return d->vpn;
+}
+QVector3D Ko3dScene::vup() const
+{
+    return d->vup;
+}
+Ko3dScene::Projection  Ko3dScene::projection() const
+{
+    return d->projection;
+}
+QString Ko3dScene::distance() const
+{
+    return d->distance;
+}
+QString Ko3dScene::focalLength() const
+{
+    return d->focalLength;
+}
+QString Ko3dScene::shadowSlant() const
+{
+    return d->shadowSlant;
+}
+Ko3dScene::Shademode   Ko3dScene::shadeMode() const
+{
+    return d->shadeMode;
+}
+QColor Ko3dScene::ambientColor() const
+{
+    return d->ambientColor;
+}
+bool Ko3dScene::lightingMode() const
+{
+    return d->lightingMode;
+}
+QString Ko3dScene::transform() const
+{
+    return d->transform;
+}
 
-    // setters
-void Ko3dScene::setVrp(const QVector3D &vrp) { d->vrp = vrp; }
-void Ko3dScene::setVpn(const QVector3D &vpn) { d->vpn = vpn; }
-void Ko3dScene::setVup(const QVector3D &vup) { d->vup = vup; }
-void Ko3dScene::setProjection(Projection projection) { d->projection = projection; }
-void Ko3dScene::setDistance(const QString &distance) { d->distance = distance; }
-void Ko3dScene::setFocalLength(const QString &focalLength) { d->focalLength = focalLength; }
-void Ko3dScene::setShadowSlant(const QString &shadowSlant) { d->shadowSlant = shadowSlant; }
-void Ko3dScene::setShadeMode(Shademode shadeMode) { d->shadeMode = shadeMode; }
-void Ko3dScene::setAmbientColor(const QColor &ambientColor) { d->ambientColor = ambientColor; }
-void Ko3dScene::setLightingMode(bool lightingMode) { d->lightingMode = lightingMode; }
-void Ko3dScene::setTransform(const QString &transform) { d->transform = transform; }
+// setters
+void Ko3dScene::setVrp(const QVector3D &vrp)
+{
+    d->vrp = vrp;
+}
+void Ko3dScene::setVpn(const QVector3D &vpn)
+{
+    d->vpn = vpn;
+}
+void Ko3dScene::setVup(const QVector3D &vup)
+{
+    d->vup = vup;
+}
+void Ko3dScene::setProjection(Projection projection)
+{
+    d->projection = projection;
+}
+void Ko3dScene::setDistance(const QString &distance)
+{
+    d->distance = distance;
+}
+void Ko3dScene::setFocalLength(const QString &focalLength)
+{
+    d->focalLength = focalLength;
+}
+void Ko3dScene::setShadowSlant(const QString &shadowSlant)
+{
+    d->shadowSlant = shadowSlant;
+}
+void Ko3dScene::setShadeMode(Shademode shadeMode)
+{
+    d->shadeMode = shadeMode;
+}
+void Ko3dScene::setAmbientColor(const QColor &ambientColor)
+{
+    d->ambientColor = ambientColor;
+}
+void Ko3dScene::setLightingMode(bool lightingMode)
+{
+    d->lightingMode = lightingMode;
+}
+void Ko3dScene::setTransform(const QString &transform)
+{
+    d->transform = transform;
+}
 
 
 bool Ko3dScene::loadOdf(const KoXmlElement &sceneElement)
@@ -184,8 +262,8 @@ bool Ko3dScene::loadOdf(const KoXmlElement &sceneElement)
     // Check if there is a 3d scene at all in this element. We
     // approximate that by checking if there are any camera parameters.
     if (!sceneElement.hasAttributeNS(KoXmlNS::dr3d, "vrp")
-        && !sceneElement.hasAttributeNS(KoXmlNS::dr3d, "vpn")
-        && !sceneElement.hasAttributeNS(KoXmlNS::dr3d, "vup"))
+            && !sceneElement.hasAttributeNS(KoXmlNS::dr3d, "vpn")
+            && !sceneElement.hasAttributeNS(KoXmlNS::dr3d, "vup"))
     {
         return false;
     }
@@ -201,10 +279,12 @@ bool Ko3dScene::loadOdf(const KoXmlElement &sceneElement)
     d->vup = odfToVector3D(dummy);
 
     dummy = sceneElement.attributeNS(KoXmlNS::dr3d, "projection", "perspective");
-    if (dummy == "parallel") {
+    if (dummy == "parallel")
+    {
         d->projection = Parallel;
     }
-    else {
+    else
+    {
         d->projection = Perspective;
     }
 
@@ -215,16 +295,20 @@ bool Ko3dScene::loadOdf(const KoXmlElement &sceneElement)
 
     // Rendering attributes
     dummy = sceneElement.attributeNS(KoXmlNS::dr3d, "shade-mode", "gouraud");
-    if (dummy == "flat") {
+    if (dummy == "flat")
+    {
         d->shadeMode = Flat;
     }
-    else if (dummy == "phong") {
+    else if (dummy == "phong")
+    {
         d->shadeMode = Phong;
     }
-    else if (dummy == "draft") {
+    else if (dummy == "draft")
+    {
         d->shadeMode = Draft;
     }
-    else {
+    else
+    {
         d->shadeMode = Gouraud;
     }
 
@@ -235,8 +319,10 @@ bool Ko3dScene::loadOdf(const KoXmlElement &sceneElement)
 
     // From the ODF 1.1 spec section 9.4.1:
     KoXmlElement elem;
-    forEachElement(elem, sceneElement) {
-        if (elem.localName() == "light" && elem.namespaceURI() == KoXmlNS::dr3d) {
+    forEachElement(elem, sceneElement)
+    {
+        if (elem.localName() == "light" && elem.namespaceURI() == KoXmlNS::dr3d)
+        {
             Lightsource  light;
             light.loadOdf(elem);
             d->lights.append(light);
@@ -273,20 +359,21 @@ void Ko3dScene::saveOdfAttributes(KoXmlWriter &writer) const
     writer.addAttribute("dr3d:ambient-color", d->ambientColor.name());
 
     // Rendering attributes
-    switch (d->shadeMode) {
-    case Flat:
-        writer.addAttribute("dr3d:shade-mode", "flat");
-        break;
-    case Phong:
-        writer.addAttribute("dr3d:shade-mode", "phong");
-        break;
-    case Draft:
-        writer.addAttribute("dr3d:shade-mode", "draft");
-        break;
-    case Gouraud:
-    default:
-        writer.addAttribute("dr3d:shade-mode", "gouraud");
-        break;
+    switch (d->shadeMode)
+    {
+        case Flat:
+            writer.addAttribute("dr3d:shade-mode", "flat");
+            break;
+        case Phong:
+            writer.addAttribute("dr3d:shade-mode", "phong");
+            break;
+        case Draft:
+            writer.addAttribute("dr3d:shade-mode", "draft");
+            break;
+        case Gouraud:
+        default:
+            writer.addAttribute("dr3d:shade-mode", "gouraud");
+            break;
     }
 
     writer.addAttribute("dr3d:lighting-mode", d->lightingMode);
@@ -297,7 +384,8 @@ void Ko3dScene::saveOdfAttributes(KoXmlWriter &writer) const
 void Ko3dScene::saveOdfChildren(KoXmlWriter &writer) const
 {
     // Write light sources.
-    foreach (const Lightsource &light, d->lights) {
+    foreach (const Lightsource &light, d->lights)
+    {
         light.saveOdf(writer);
     }
 }
@@ -311,7 +399,8 @@ KOODF_EXPORT Ko3dScene *load3dScene(const KoXmlElement &element)
 {
     Ko3dScene *scene = new Ko3dScene();
 
-    if (scene->loadOdf(element)) {
+    if (scene->loadOdf(element))
+    {
         return scene;
     }
 
@@ -328,10 +417,12 @@ QVector3D odfToVector3D(const QString &string)
 {
     // The string comes into this function in the form "(0 3.5 0.3)".
     QStringList elements = string.mid(1, string.size() - 2).split(' ', QString::SkipEmptyParts);
-    if (elements.size() == 3) {
+    if (elements.size() == 3)
+    {
         return QVector3D(elements[0].toDouble(), elements[1].toDouble(), elements[2].toDouble());
     }
-    else {
+    else
+    {
         return QVector3D(0, 0, 1);
     }
 }
