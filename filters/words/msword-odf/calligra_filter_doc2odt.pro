@@ -57,3 +57,5 @@ LIBS         += -L$${LIBDIR} \
 
 include(../../../calligra.pri)
 include(calligra_filter_doc2odt.pri)
+
+DLLDESTDIR          = $$DLLDESTDIR/calligra/formatfilters
