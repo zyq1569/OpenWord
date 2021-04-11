@@ -18,14 +18,14 @@
 
 #endif
 
-namespace LOG
+namespace  LOG
 {
-void beginLogging(QString appName="");
+void KOSTORE_EXPORT beginLogging(QString appName="");
 /**
  * Returns the path where the log should be outputted to.
  * @return Log file path
  */
-QString getLogFilePath(QString appName);
+QString KOSTORE_EXPORT getLogFilePath(QString appName);
 /**
  * Location of log.conf file.
  *
@@ -34,15 +34,16 @@ QString getLogFilePath(QString appName);
  *
  * @return Path where log.conf is expected to be found
  */
-QString getLogConfFilePath();
+QString KOSTORE_EXPORT getLogConfFilePath();
 
-void debugLog(const QString &msg, const QString &file, int line, const QString &function);
-void infoLog(const QString &msg, const QString &file, int line, const QString &function);
-void warnLog(const QString &msg, const QString &file, int line, const QString &function);
-void errorLog(const QString &msg, const QString &file, int line, const QString &function);
-void fatalLog(const QString &msg, const QString &file, int line, const QString &function);
-void verboseLog(int vLevel, const QString &msg, const QString &file, int line, const QString &function);
-void traceLog(const QString &msg, const QString &file, int line, const QString &function);
+void KOSTORE_EXPORT debugLog(const QString &msg, const QString &file, int line, const QString &function);
+void KOSTORE_EXPORT infoLog(const QString &msg, const QString &file, int line, const QString &function);
+void KOSTORE_EXPORT warnLog(const QString &msg, const QString &file, int line, const QString &function);
+void KOSTORE_EXPORT errorLog(const QString &msg, const QString &file, int line, const QString &function);
+void KOSTORE_EXPORT fatalLog(const QString &msg, const QString &file, int line, const QString &function);
+void KOSTORE_EXPORT verboseLog(int vLevel, const QString &msg, const QString &file, int line, const QString &function);
+void KOSTORE_EXPORT traceLog(const QString &msg, const QString &file, int line, const QString &function);
+
 }
 
 

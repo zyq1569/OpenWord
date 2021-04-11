@@ -1,36 +1,36 @@
 
-TEMPLATE     = lib
-TARGET       = komain
-DESTDIR      = ../../bin/libs/
+TEMPLATE     =  lib
+TARGET       =  komain
+DESTDIR      =  ../../bin/libs/
 #DEFINES     += CALLIGRA_RC=1
-QT          += core xml network gui widgets printsupport concurrent dbus
+QT          +=  core xml network gui widgets printsupport concurrent dbus
 
-
-INCLUDEPATH += ../../ \
-                ../../interfaces \
-                ../widgets \
-                ../../winquirks \
-                ../version \
-                ../text \
-                ../text/changetracker \
-                ../text/styles \
-                ../text/opendocument \
-                ../flake \
-                ../odf \
-                ../store \
-                ../plugin \
-                ../pigment/compositeops \
-                ../pigment/resources \
-                ../kundo2 \
-                ../widgetutils \
-                ../flake/commands \
-                ../flake/tools \
-                ../flake/svg \
-                ../flake \
-                ../widgetutils \
-                ../textlayout \
-                config \
-                ../plugin
+DEFINES     +=  komain_EXPORTS
+INCLUDEPATH +=  ../../ \
+                 ../../interfaces \
+                 ../widgets \
+                 ../../winquirks \
+                 ../version \
+                 ../text \
+                 ../text/changetracker \
+                 ../text/styles \
+                 ../text/opendocument \
+                 ../flake \
+                 ../odf \
+                 ../store \
+                 ../plugin \
+                 ../pigment/compositeops \
+                 ../pigment/resources \
+                 ../kundo2 \
+                 ../widgetutils \
+                 ../flake/commands \
+                 ../flake/tools \
+                 ../flake/svg \
+                 ../flake \
+                 ../widgetutils \
+                 ../textlayout \
+                 config \
+                 ../plugin
 
 LIBS         += -L$${DESTDIR} \
                 -lkowidgets \

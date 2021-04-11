@@ -4,6 +4,8 @@ TARGET       = kowidgets
 DESTDIR      = ../../bin/libs/
 QT          += core xml network gui widgets printsupport concurrent dbus
 
+
+DEFINES     +=  kowidgets_EXPORTS
 INCLUDEPATH +=   ../../ \
                 ../../interfaces \
                 ../../winquirks \

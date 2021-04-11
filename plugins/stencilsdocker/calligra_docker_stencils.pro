@@ -2,11 +2,13 @@
 #
 # ------------------------------------------------------
 
-TEMPLATE = lib
-TARGET = calligra_docker_stencils
-LIBDIR =  ../../bin/libs/
-DESTDIR = ../../bin/libs/calligra/dockers
-QT += core xml network gui widgets printsupport concurrent dbus
+TEMPLATE      = lib
+TARGET        = calligra_docker_stencils
+LIBDIR        =  ../../bin/libs/
+DESTDIR       = ../../bin/libs/calligra/dockers
+QT           += core xml network gui widgets printsupport concurrent dbus
+
+DEFINES      += calligra_docker_stencils_EXPORTS
 
 INCLUDEPATH +=  ../ \
                 ../../plugins/stencilsdocker \
@@ -58,3 +60,6 @@ LIBS       +=   -L$${LIBDIR} \
 
 include(../../calligra.pri)
 include(calligra_docker_stencils.pri)
+
+
+DLLDESTDIR          = $$DLLDESTDIR/calligra/dockers

@@ -18,32 +18,33 @@ QT         += core xml network gui widgets printsupport concurrent dbus
 #DEFINES += kotext_EXPORTS _USE_MATH_DEFINES  TRANSLATION_DOMAIN = "calligra"
 #DEFINES += KWINDOWSYSTEM_NO_DEPRECATED KTEXTWIDGETS_NO_DEPRECATED
 #DEFINES += KIOWIDGETS_calligra calligra
+DEFINES     +=  kotext_EXPORTS
 # libwriteodf  no find  ---> writeodf/writeodftext.h writeodfoffice.h writeodfdc.h
-INCLUDEPATH += ../text \
-                ../../interfaces \
-                ../../ \
-                ../../winquirks \
-                ../../version \
-                ../text/changetracker \
-                ../text/styles \
-                ../text/opendocument \
-                ../flake \
-                ../odf \
-                ../store \
-                ../odf \
-                ../store \
-                ../plugin \
-                ../pigment \
-                ../pigment/compositeops \
-                ../pigment/resources \
-                ../kundo2 \
-                ../widgetutils \
-                ../flake/commands \
-                ../flake/tools \
-                ../flake/svg \
-                ../flake \
-                ../widgetutils \
-                ../plugin
+INCLUDEPATH +=   ../text \
+                 ../../interfaces \
+                 ../../ \
+                 ../../winquirks \
+                 ../../version \
+                 ../text/changetracker \
+                 ../text/styles \
+                 ../text/opendocument \
+                 ../flake \
+                 ../odf \
+                 ../store \
+                 ../odf \
+                 ../store \
+                 ../plugin \
+                 ../pigment \
+                 ../pigment/compositeops \
+                 ../pigment/resources \
+                 ../kundo2 \
+                 ../widgetutils \
+                 ../flake/commands \
+                 ../flake/tools \
+                 ../flake/svg \
+                 ../flake \
+                 ../widgetutils \
+                 ../plugin
 
 
 include(../../calligra.pri)
