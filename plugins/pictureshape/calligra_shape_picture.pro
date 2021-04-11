@@ -36,6 +36,9 @@ include(../../calligra.pri)
 include(calligra_shape_picture.pri)
 
 
+DLLDESTDIR          =  $$DLLDESTDIR/calligra/shapes
+
+
 LIBS += -L$${LIBDIR} \
         -lflake \
         -lpigmentcms \

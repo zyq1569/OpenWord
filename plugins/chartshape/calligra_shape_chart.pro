@@ -48,6 +48,10 @@ INCLUDEPATH +=  ../../plugins/chartshape \
 include(../../calligra.pri)
 include(calligra_shape_chart.pri)
 
+
+DLLDESTDIR          =  $$DLLDESTDIR/calligra/shapes
+
+
 LIBS       +=   -L$${LIBDIR} \
                 -lchartshapecore \
                 -lKChart \

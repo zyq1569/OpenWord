@@ -53,3 +53,6 @@ LIBS        +=  -L$${LIBDIR} \
 
 include(../../calligra.pri)
 include(calligra_shape_text.pri)
+
+
+DLLDESTDIR          =  $$DLLDESTDIR/calligra/shapes

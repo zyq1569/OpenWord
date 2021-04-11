@@ -39,6 +39,8 @@ include(../../calligra.pri)
 include(calligra_shape_paths.pri)
 
 
+DLLDESTDIR          =  $$DLLDESTDIR/calligra/shapes
+
 
 LIBS       +=   -L$${LIBDIR} \
                 -lkoformula \

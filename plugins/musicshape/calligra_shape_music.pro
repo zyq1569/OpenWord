@@ -37,6 +37,10 @@ INCLUDEPATH +=  ../../plugins/musicshape \
 include(../../calligra.pri)
 include(calligra_shape_music.pri)
 
+
+DLLDESTDIR          =  $$DLLDESTDIR/calligra/shapes
+
+
 LIBS      += -L$${LIBDIR} \
              -lkowidgets \
              -lkotext \

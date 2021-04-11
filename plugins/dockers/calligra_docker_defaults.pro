@@ -60,3 +60,6 @@ LIBS            +=  -L$${LIBDIR} \
 
 include(../../calligra.pri)
 include(calligra_docker_defaults.pri)
+
+
+DLLDESTDIR          = $$DLLDESTDIR/calligra/dockers

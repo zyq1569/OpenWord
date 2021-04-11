@@ -48,6 +48,7 @@ include(../../calligra.pri)
 
 include(calligra_shape_artistictext.pri)
 
+DLLDESTDIR          =  $$DLLDESTDIR/calligra/shapes
 
 LIBS        +=   -L$${LIBDIR} \
                  -lkowidgets \
