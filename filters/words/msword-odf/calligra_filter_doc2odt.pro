@@ -1,40 +1,42 @@
 
-TEMPLATE = lib
-TARGET = calligra_filter_doc2odt
-LIBDIR =  ../../../bin/libs/
-DESTDIR = ../../../bin/libs/calligra/formatfilters
-QT += core xml network gui widgets printsupport concurrent dbus
+TEMPLATE     = lib
+TARGET       = calligra_filter_doc2odt
+LIBDIR       =  ../../../bin/libs/
+DESTDIR      = ../../../bin/libs/calligra/formatfilters
+QT          += core xml network gui widgets printsupport concurrent dbus
+
+DEFINES     += calligra_filter_doc2odt_EXPORTS
 
 INCLUDEPATH += ../msword-odf \
-            ../../../interfaces \
-            ../../../ \
-            ../../../winquirks \
-            ../../../libs/version \
-            ../../../libs/text \
-            ../../../libs/text/changetracker \
-            ../../../libs/text/styles \
-            ../../../libs/text/opendocument \
-            ../../../libs/flake \
-            ../../../libs/odf \
-            ../../../libs/store \
-            ../../../libs/odf \
-            ../../../libs/plugin \
-            ../../../libs/pigment \
-            ../../../libs/pigment/compositeops \
-            ../../../libs/pigment/resources \
-            ../../../libs/kundo2 \
-            ../../../libs/widgetutils \
-            ../../../libs/flake/commands \
-            ../../../libs/flake/tools \
-            ../../../libs/flake/svg \
-            ../../../libs/flake \
-            ../../../libs/widgetutils \
-            ../../../libs/widgets \
-            ../../../libs/textlayout \
-            ../../../libs/main \
-            ../../../libs/main/config \
-            ../../../filters/libmso \
-            ../../../filters/words/msword-odf/wv2/src
+               ../../../interfaces \
+               ../../../ \
+               ../../../winquirks \
+               ../../../libs/version \
+               ../../../libs/text \
+               ../../../libs/text/changetracker \
+               ../../../libs/text/styles \
+               ../../../libs/text/opendocument \
+               ../../../libs/flake \
+               ../../../libs/odf \
+               ../../../libs/store \
+               ../../../libs/odf \
+               ../../../libs/plugin \
+               ../../../libs/pigment \
+               ../../../libs/pigment/compositeops \
+               ../../../libs/pigment/resources \
+               ../../../libs/kundo2 \
+               ../../../libs/widgetutils \
+               ../../../libs/flake/commands \
+               ../../../libs/flake/tools \
+               ../../../libs/flake/svg \
+               ../../../libs/flake \
+               ../../../libs/widgetutils \
+               ../../../libs/widgets \
+               ../../../libs/textlayout \
+               ../../../libs/main \
+               ../../../libs/main/config \
+               ../../../filters/libmso \
+               ../../../filters/words/msword-odf/wv2/src
 
 
 LIBS         += -L$${LIBDIR} \
