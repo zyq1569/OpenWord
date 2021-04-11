@@ -62,3 +62,6 @@ LIBS      +=   -L$${LIBDIR} \
 
 include(../../../calligra.pri)
 include(calligra_tool_basicflakes.pri)
+
+
+DLLDESTDIR          =  $$DLLDESTDIR/calligra/tools
