@@ -18,16 +18,23 @@ contains(DEFINES, MSVC) {
 DEFINES            += UNICODE
 
 ALL_LIBS_DIR        = $$PWD/bin/bin/libs
-SDK_INSTALL_PREFIX  = D:/Dev/CraftRoot/include
-SDK_LIB_PREFIX      = D:/Dev/CraftRoot/lib
+SDK_INSTALL_PREFIX  = D:/CraftRoot/include
+SDK_LIB_PREFIX      = D:/CraftRoot/lib
 
-DESTDIR             = $$PWD/MS_bin/bin
+DESTDIR             = $$PWD/MS_bin/bin/libs
+
+DLLDESTDIR          = $$PWD/MS_bin/bin
 
 TARGET_FILE         = $$PWD/MS_bin/temp/TARGET
 TARGET_IMPLIB       = $$PWD/MS_bin/temp/TARGET
 TARGET_PDB          = $$PWD/MS_bin/temp/TARGET
 
 LOGLIB              = $$PWD/ms_bin/bin/libs
+
+DEFINES            +=  WIN32_LEAN_AND_MEAN  _WINSOCKAPI_
+
+QMAKE_CFLAGS      += /utf-8
+QMAKE_CXXFLAGS    += /utf-8
 
 LIBS               +=  -L$${SDK_LIB_PREFIX} \
                        -lzlib
@@ -49,29 +56,35 @@ LIBS               +=  -L$${SDK_LIB_PREFIX} \
 
 CONFIG             += debug_and_release  c++11
 
+#DEFINES            +=  KWIDGETSADDONS_DEPRECATED_WARNINGS_SINCE KCOMPLETION_NO_DEPRECATED  KI18N_DEPRECATED KI18N_NO_DEPRECATED
+#DEFINES            +=  KIOCORE_NO_DEPRECATED KIOWIDGETS_NO_DEPRECATED KCONFIGCORE_NO_DEPRECATED KCOREADDONS_NO_DEPRECATED
+#DEFINES            +=  KCONFIGWIDGETS_ENABLE_DEPRECATED_SINCE KCONFIGWIDGETS_NO_DEPRECATED
+#DEFINES            +=  KXMLGUI_NO_DEPRECATED KICONTHEMES_NO_DEPRECATED KCONFIGGUI_NO_DEPRECATED
+#DEFINES            +=  pigmentcms_EXPORTS koplugin_EXPORTS kowidgetutils_EXPORTS flake_EXPORTS  _USE_MATH_DEFINES
+#DEFINES            +=  koodf_EXPORTS koodf2_EXPORTS   kundo2_EXPORTS kokross_EXPORTS kowidgets_EXPORTS
+#DEFINES            +=  kotext_EXPORTS kotextlayout_EXPORTS RtfReader_EXPORTS koodfreader_EXPORTS basicflakes_EXPORTS
+#DEFINES            +=  calligra_docker_defaults_EXPORTS calligra_docker_stencils_EXPORTS calligra_filter_applixword2odt_EXPORTS
+#DEFINES            +=  wordsprivate_EXPORTS calligra_filter_dbase2kspread_EXPORTS calligra_filter_doc2odt_EXPORTS kowv2_EXPORTS
+#DEFINES            +=  calligra_filter_docx2odt_EXPORTS komsooxml_EXPORTS calligra_filter_eps2svgai_EXPORTS
+#DEFINES            +=  calligra_filter_karbon1x2karbon_EXPORTS karboncommon_EXPORTS karbonui_EXPORTS
+#DEFINES            +=  kopageapp_EXPORTS calligra_filter_karbon2wmf_EXPORTS kovectorimage_EXPORTS
+#DEFINES            +=  calligra_filter_odt2ascii_EXPORTS calligra_filter_odt2docx_EXPORTS calligra_filter_odt2wiki_EXPORTS
+#DEFINES            +=  calligra_filter_kpr2odp_EXPORTS calligra_filter_odt2epub2_EXPORTS calligra_filter_odt2mobi_EXPORTS
+#DEFINES            +=  calligrawordspart_EXPORTS calligra_filter_karbon2svg_EXPORTS
+#DEFINES            +=  calligra_shape_artistictext_EXPORTS calligra_shape_formula_EXPORTS
+#DEFINES            +=  koformula_EXPORTS calligra_shape_music_EXPORTS calligra_shape_paths_EXPORTS
+#DEFINES            +=  calligra_shape_picture_EXPORTS calligra_shape_plugin_EXPORTS calligra_shape_text_EXPORTS
+#DEFINES            +=  calligra_shape_vector_EXPORTS calligra_shape_video_EXPORTS calligraimagethumbnail_EXPORTS
+#DEFINES            +=  calligra_tool_basicflakes_EXPORTS calligra_tool_defaults_EXPORTS
+#DEFINES            +=  karbon_tools_EXPORTS karbonpart_EXPORTS calligra_shape_chart_EXPORTS
+#DEFINES            +=  calligrathumbnail_EXPORTS
+#DEFINES            +=  komain_EXPORTS
+
 DEFINES            +=  KWIDGETSADDONS_DEPRECATED_WARNINGS_SINCE KCOMPLETION_NO_DEPRECATED  KI18N_DEPRECATED KI18N_NO_DEPRECATED
 DEFINES            +=  KIOCORE_NO_DEPRECATED KIOWIDGETS_NO_DEPRECATED KCONFIGCORE_NO_DEPRECATED KCOREADDONS_NO_DEPRECATED
 DEFINES            +=  KCONFIGWIDGETS_ENABLE_DEPRECATED_SINCE KCONFIGWIDGETS_NO_DEPRECATED
 DEFINES            +=  KXMLGUI_NO_DEPRECATED KICONTHEMES_NO_DEPRECATED KCONFIGGUI_NO_DEPRECATED
-DEFINES            +=  pigmentcms_EXPORTS koplugin_EXPORTS kowidgetutils_EXPORTS flake_EXPORTS  _USE_MATH_DEFINES
-DEFINES            +=  koodf_EXPORTS koodf2_EXPORTS kostore_EXPORTS  kundo2_EXPORTS kokross_EXPORTS kowidgets_EXPORTS
-DEFINES            +=  kotext_EXPORTS kotextlayout_EXPORTS RtfReader_EXPORTS koodfreader_EXPORTS basicflakes_EXPORTS
-DEFINES            +=  calligra_docker_defaults_EXPORTS calligra_docker_stencils_EXPORTS calligra_filter_applixword2odt_EXPORTS
-DEFINES            +=  wordsprivate_EXPORTS calligra_filter_dbase2kspread_EXPORTS calligra_filter_doc2odt_EXPORTS kowv2_EXPORTS
-DEFINES            +=  calligra_filter_docx2odt_EXPORTS komsooxml_EXPORTS calligra_filter_eps2svgai_EXPORTS
-DEFINES            +=  calligra_filter_karbon1x2karbon_EXPORTS karboncommon_EXPORTS karbonui_EXPORTS
-DEFINES            +=  kopageapp_EXPORTS calligra_filter_karbon2wmf_EXPORTS kovectorimage_EXPORTS
-DEFINES            +=  calligra_filter_odt2ascii_EXPORTS calligra_filter_odt2docx_EXPORTS calligra_filter_odt2wiki_EXPORTS
-DEFINES            +=  calligra_filter_kpr2odp_EXPORTS calligra_filter_odt2epub2_EXPORTS calligra_filter_odt2mobi_EXPORTS
-DEFINES            +=  calligrawordspart_EXPORTS calligra_filter_karbon2svg_EXPORTS
-DEFINES            +=  calligra_shape_artistictext_EXPORTS calligra_shape_formula_EXPORTS
-DEFINES            +=  koformula_EXPORTS calligra_shape_music_EXPORTS calligra_shape_paths_EXPORTS
-DEFINES            +=  calligra_shape_picture_EXPORTS calligra_shape_plugin_EXPORTS calligra_shape_text_EXPORTS
-DEFINES            +=  calligra_shape_vector_EXPORTS calligra_shape_video_EXPORTS calligraimagethumbnail_EXPORTS
-DEFINES            +=  calligra_tool_basicflakes_EXPORTS calligra_tool_defaults_EXPORTS
-DEFINES            +=  karbon_tools_EXPORTS karbonpart_EXPORTS calligra_shape_chart_EXPORTS
-DEFINES            +=  calligrathumbnail_EXPORTS
-DEFINES            +=  komain_EXPORTS
+DEFINES            +=  _USE_MATH_DEFINES
 
 #-----selef defined----------
 DEFINES            += KIOWIDGETS_calligra calligra_def
