@@ -6,5 +6,5 @@ HEADERS += \
             KWFactoryInit.h
 
 SOURCES += \
-            KWFactory.cpp \
+#            KWFactory.cpp \
             KWFactoryInit.cpp

@@ -61,3 +61,4 @@ include(../../calligra.pri)
 include(calligrawordspart.pri)
 
 
+DLLDESTDIR          = $$DLLDESTDIR/calligra/parts
