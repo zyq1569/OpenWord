@@ -1,7 +1,6 @@
 
 HEADERS +=  KoTextLayoutCellHelper.h \
             KoTextLayoutArea.h \
-            KoTextLayoutArea_paint.h \
             KoTextLayoutEndNotesArea.h \
             KoTextLayoutTableArea.h \
             KoTextLayoutNoteArea.h \
