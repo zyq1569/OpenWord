@@ -11,8 +11,8 @@ HEADERS +=  \
             drawstyle.h \
             writer.h \
             ODrawToOdf.h \
-            shapes.h \
-            shapes2.h \
+#            shapes.h \
+#            shapes2.h \
             pictures.h \
             pole.h \
             MsoUtils.h \

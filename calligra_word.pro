@@ -43,7 +43,7 @@ SUBDIRS    +=   log/easylog.pro \
                 plugins/chartshape/calligra_shape_chart.pro \
                 plugins/defaultTools/calligra_tool_defaults.pro \
                 words/part/calligrawordspart.pro \
-                plugins/karbonplugins/tools/karbon_tools.pro \
+#                plugins/karbonplugins/tools/karbon_tools.pro \
                 libs/kross/kokross.pro \
                 extras/thumbnail/calligraimagethumbnail.pro \
                 extras/thumbnail/calligrathumbnail.pro \
