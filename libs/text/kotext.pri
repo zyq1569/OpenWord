@@ -8,8 +8,6 @@ HEADERS +=  KoDocumentRdfBase.h \
             KoTextPaste.h \
             KoTextDocument.h \
             KoTextEditor.h \
-            KoTextEditor_undo.h \
-            KoTextEditor_format.h \
             KoList.h \
             KoTextEditingRegistry.h \
             KoTextEditingFactory.h \
@@ -19,10 +17,6 @@ HEADERS +=  KoDocumentRdfBase.h \
             KoInlineObjectFactoryBase.h \
             KoInlineObjectRegistry.h \
             InsertInlineObjectActionBase_p.h \
-            InsertVariableAction.h \
-            InsertNamedVariableAction.h \
-            InsertTextReferenceAction.h \
-            InsertTextLocator.h \
             KoInlineObject.h \
             KoTextRange.h \
             KoVariable.h \
@@ -106,7 +100,6 @@ HEADERS +=  KoDocumentRdfBase.h \
             commands/RenameSectionCommand.h \
             commands/NewSectionCommand.h \
             commands/SplitSectionsCommand.h \
-            KoTextDrag.h \
             KoTextCommandBase.h \
             TextDebug.h
 
