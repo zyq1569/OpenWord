@@ -33,8 +33,8 @@ LOGLIB              = $$PWD/ms_bin/bin/libs
 
 DEFINES            +=  WIN32_LEAN_AND_MEAN  _WINSOCKAPI_
 
-QMAKE_CFLAGS      += /utf-8
-QMAKE_CXXFLAGS    += /utf-8
+QMAKE_CFLAGS       += /utf-8
+QMAKE_CXXFLAGS     += /utf-8
 
 LIBS               +=  -L$${SDK_LIB_PREFIX} \
                        -lzlib
