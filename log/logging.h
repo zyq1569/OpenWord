@@ -11,6 +11,8 @@
 #if defined(_MSC_VER)
 // Windows平台  Visual Statuio 编译器特定代码
 #include "easylog_export.h"
+#else
+#define KOSTORE_EXPORT
 #endif
 #if defined(__GNUC__)
 // Windows平台 GCC编译器特定的代码
