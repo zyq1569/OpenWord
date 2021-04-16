@@ -44,14 +44,6 @@ INCLUDEPATH +=  ../../plugins/chartshape \
 #                ../../include \
 #                ../../../include/KF5/KIconThemes
 
-
-include(../../calligra.pri)
-include(calligra_shape_chart.pri)
-
-
-DLLDESTDIR          =  $$DLLDESTDIR/calligra/shapes
-
-
 LIBS       +=   -L$${LIBDIR} \
                 -lchartshapecore \
                 -lKChart \
@@ -66,3 +58,10 @@ LIBS       +=   -L$${LIBDIR} \
                 -lkoversion \
                 -lkostore \
                 -lkundo2
+
+
+include(../../calligra.pri)
+include(calligra_shape_chart.pri)
+
+
+DLLDESTDIR          =  $$DLLDESTDIR/calligra/shapes
