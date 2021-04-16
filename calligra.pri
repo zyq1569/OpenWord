@@ -50,11 +50,11 @@ ALL_LIBS_DIR        = $$PWD/bin/bin/libs
 
 #----------------------------------------------
 #--------calligra----output--libs---dll----path:
-DESTDIR             = $$PWD/bin/bin/libs
+DESTDIR             = $$PWD/bin/bin
 DLLDESTDIR          = $$PWD/bin/bin
 
 #--------loglib-----input----libs---path:
-LOGLIB              = $$PWD/bin/bin/libs
+LOGLIB              = $$PWD/bin/bin
 
 LIBS               += -L$${SDK_LIB_PREFIX} \
                       -lz

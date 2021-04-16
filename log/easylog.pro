@@ -6,7 +6,7 @@ include(../rootdir.pri)
 #build_pass:message(---$$ROOTDIR-----@)
 TEMPLATE                = lib
 TARGET                  = easylog
-DESTDIR                 = $$ROOTDIR/bin/bin/libs/
+DESTDIR                 = $$ROOTDIR/bin/bin/
 DLLDESTDIR              = $$ROOTDIR/bin/bin/
 QT                     += widgets
 
