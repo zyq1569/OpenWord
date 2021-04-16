@@ -15,42 +15,49 @@ msvc: DEFINES      += MSVC
 
 contains(DEFINES, MSVC) {
 
-DEFINES            += UNICODE
+DEFINES             += UNICODE
 
-ALL_LIBS_DIR        = $$PWD/bin/bin/libs
-SDK_INSTALL_PREFIX  = D:/CraftRoot/include
-SDK_LIB_PREFIX      = D:/CraftRoot/lib
+ALL_LIBS_DIR         = $$PWD/bin/bin/libs
+SDK_INSTALL_PREFIX   = D:/CraftRoot/include
+SDK_LIB_PREFIX       = D:/CraftRoot/lib
 
-DESTDIR             = $$PWD/MS_bin/bin/libs
+DESTDIR              = $$PWD/MS_bin/bin/libs
 
-DLLDESTDIR          = $$PWD/MS_bin/bin
+DLLDESTDIR           = $$PWD/MS_bin/bin
 
-TARGET_FILE         = $$PWD/MS_bin/temp/TARGET
-TARGET_IMPLIB       = $$PWD/MS_bin/temp/TARGET
-TARGET_PDB          = $$PWD/MS_bin/temp/TARGET
+TARGET_FILE          = $$PWD/MS_bin/temp/TARGET
+TARGET_IMPLIB        = $$PWD/MS_bin/temp/TARGET
+TARGET_PDB           = $$PWD/MS_bin/temp/TARGET
 
-LOGLIB              = $$PWD/ms_bin/bin/libs
+LOGLIB               = $$PWD/ms_bin/bin/libs
 
-DEFINES            +=  WIN32_LEAN_AND_MEAN  _WINSOCKAPI_
+DEFINES             += WIN32_LEAN_AND_MEAN  _WINSOCKAPI_
 
-QMAKE_CFLAGS       += /utf-8
-QMAKE_CXXFLAGS     += /utf-8
+QMAKE_CFLAGS        += /utf-8
+QMAKE_CXXFLAGS      += /utf-8
 
-LIBS               +=  -L$${SDK_LIB_PREFIX} \
+LIBS                += -L$${SDK_LIB_PREFIX} \
                        -lzlib
 
 }else {
-
-ALL_LIBS_DIR        = $$PWD/bin/MS_bin/libs
+#---windowns-----GW---
+#-------------KDE----input--libs----path:
 SDK_INSTALL_PREFIX  = D:/Dev/KDE_SDK/include
 SDK_LIB_PREFIX      = D:/Dev/KDE_SDK/libs
 
-DESTDIR             = ./MS_bin/libs/
+#--------calligra----input---libs----path:
+ALL_LIBS_DIR        = $$PWD/bin/bin/libs
 
-LOGLIB              =  $$PWD/bin/bin/libs
+#----------------------------------------------
+#--------calligra----output--libs---dll----path:
+DESTDIR             = $$PWD/bin/bin/libs
+DLLDESTDIR          = $$PWD/bin/bin
 
-LIBS               +=  -L$${SDK_LIB_PREFIX} \
-                       -lz
+#--------loglib-----input----libs---path:
+LOGLIB              = $$PWD/bin/bin/libs
+
+LIBS               += -L$${SDK_LIB_PREFIX} \
+                      -lz
 
 }
 
