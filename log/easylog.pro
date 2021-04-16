@@ -1,7 +1,9 @@
+include(../rootdir.pri)
+#build_pass:message($$ROOTDIR/bin/)
 
 TEMPLATE                = lib
 TARGET                  = easylog
-DESTDIR                 = ../bin/libs/
+DESTDIR                 = $$ROOTDIR/bin/
 QT                     +=  widgets
 
 DEFINES                += easylog_EXPORTS
@@ -12,8 +14,8 @@ win32 {
 msvc {
 
 QT                     -= core gui
-DESTDIR                 = ../bin/libs/
-DLLDESTDIR              = ../bin/
+DESTDIR                 = $$ROOTDIR/ms_bin/bin
+DLLDESTDIR              = $$ROOTDIR/ms_bin/bin
 
 #TARGET_FILE            = ../bin/
 #TARGET_IMPLIB          = ../bin/lib/
