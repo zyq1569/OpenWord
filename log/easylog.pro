@@ -1,14 +1,8 @@
 
-include(../rootdir.pri)
-#build_pass:message(@---$$ROOTDIR----)
-#build_pass:message($$ROOTDIR)
-#build_pass:message($$ROOTDIR/bin/libs/)
-#build_pass:message(---$$ROOTDIR-----@)
 TEMPLATE                = lib
 TARGET                  = easylog
-DESTDIR                 = $$ROOTDIR/bin/bin/
-DLLDESTDIR              = $$ROOTDIR/bin/bin/
-QT                     += widgets
+DESTDIR                 = ../bin/libs/
+QT                     +=  widgets
 
 DEFINES                += easylog_EXPORTS
 win32 {

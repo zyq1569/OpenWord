@@ -1,0 +1,8 @@
+<!DOCTYPE gui SYSTEM "kpartgui.dtd">
+<gui name="KPresenter" version="7" translationDomain="calligrastage">
+    <ToolBar name="mainToolBar">
+        <Action name="view_zoom"/>
+        <Action name="view_zoom_out"/>
+        <Action name="view_zoom_in"/>
+    </ToolBar>
+</gui>
