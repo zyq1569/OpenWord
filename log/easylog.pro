@@ -3,7 +3,7 @@ include(../rootdir.pri)
 
 TEMPLATE                = lib
 TARGET                  = easylog
-DESTDIR                 = $$ROOTDIR/bin/
+DESTDIR                 = $$ROOTDIR/bin/bin
 QT                     +=  widgets
 
 DEFINES                += easylog_EXPORTS
