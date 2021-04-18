@@ -25,7 +25,7 @@
 #include <QImage>
 
 GreyscaleFilterEffect::GreyscaleFilterEffect()
-: KoFilterEffect(GreyscaleFilterEffectId, "Grayscale effect")
+    : KoFilterEffect(GreyscaleFilterEffectId, "Grayscale effect")
 {
 }
 
@@ -53,8 +53,10 @@ QImage GreyscaleFilterEffect::processImage(const QImage& image, const KoFilterEf
     const QRgb *src = (const QRgb*)image.constBits();
     QRgb *dst = (QRgb*)result.bits();
 
-    for (int row = context.filterRegion().top(); row < bottom; ++row) {
-        for (int col = left; col < right; ++col) {
+    for (int row = context.filterRegion().top(); row < bottom; ++row)
+    {
+        for (int col = left; col < right; ++col)
+        {
             int index = row * width + col;
             const QRgb &s = src[index];
             const int red = qRed(s);

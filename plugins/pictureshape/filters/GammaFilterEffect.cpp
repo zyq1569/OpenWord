@@ -58,7 +58,9 @@ qreal GammaFilterEffect::gamma() const
 QImage GammaFilterEffect::processImage(const QImage& image, const KoFilterEffectRenderContext& context) const
 {
     if (m_gamma<=0)
+    {
         return image;
+    }
 
     QImage result = image.convertToFormat(QImage::Format_ARGB32);
 
@@ -73,9 +75,11 @@ QImage GammaFilterEffect::processImage(const QImage& image, const KoFilterEffect
     const qreal invMax = 1.0/ max;
     const qreal invGamma = m_gamma > 0 && m_gamma <= 10.0 ? 1 / m_gamma : 1.0;
 
-    for (int row = context.filterRegion().top(); row < bottom; ++row) {
+    for (int row = context.filterRegion().top(); row < bottom; ++row)
+    {
         int index = row * width + left;
-        for (int col = left; col < right; ++col, ++index) {
+        for (int col = left; col < right; ++col, ++index)
+        {
             const QRgb &s = src[index];
             const int red = qPow(invMax * qRed(s), invGamma) * max;
             const int green = qPow(invMax * qGreen(s), invGamma) * max;
