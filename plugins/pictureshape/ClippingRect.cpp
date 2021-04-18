@@ -55,11 +55,13 @@ void ClippingRect::scale(const QSizeF& size, bool isUniform)
 
 void ClippingRect::normalize(const QSizeF& size)
 {
-    if (!uniform) {
+    if (!uniform)
+    {
         scale(QSizeF(1.0/size.width(), 1.0/size.height()), true);
     }
 
-    if(inverted) {
+    if(inverted)
+    {
         right = 1.0 - right;
         bottom = 1.0 - bottom;
         inverted = false;

@@ -78,7 +78,8 @@ ChangeImageCommand::~ChangeImageCommand()
 
 void ChangeImageCommand::redo()
 {
-    if (m_imageChanged) {
+    if (m_imageChanged)
+    {
         // we need new here as setUserData deletes the old data
         m_shape->setUserData(m_newImageData ? new KoImageData(*m_newImageData): 0);
     }
@@ -90,7 +91,8 @@ void ChangeImageCommand::redo()
 
 void ChangeImageCommand::undo()
 {
-    if (m_imageChanged) {
+    if (m_imageChanged)
+    {
         // we need new here as setUserData deletes the old data
         m_shape->setUserData(m_oldImageData ? new KoImageData(*m_oldImageData): 0);
     }

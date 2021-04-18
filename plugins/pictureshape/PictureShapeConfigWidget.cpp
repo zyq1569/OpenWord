@@ -34,11 +34,14 @@
 
 void PictureShapeLoadWaiter::setImageData(KJob *job)
 {
-    if (job->error()) { // e.g. file not found
+    if (job->error())   // e.g. file not found
+    {
         job->uiDelegate()->showErrorMessage();
-        if (m_pictureShape && !m_pictureShape->imageData()) {
+        if (m_pictureShape && !m_pictureShape->imageData())
+        {
             // Don't leave an empty broken shape, the rest of the code isn't ready for null imageData
-            if (m_pictureShape->parent()) {
+            if (m_pictureShape->parent())
+            {
                 m_pictureShape->parent()->removeShape(m_pictureShape);
             }
             delete m_pictureShape;
@@ -50,17 +53,22 @@ void PictureShapeLoadWaiter::setImageData(KJob *job)
     deleteLater();
 
     if (m_pictureShape == 0)
-        return; // ugh, the shape got deleted meanwhile (## err, who would set the pointer to null?)
+    {
+        return;    // ugh, the shape got deleted meanwhile (## err, who would set the pointer to null?)
+    }
 
     KIO::StoredTransferJob *transferJob = qobject_cast<KIO::StoredTransferJob*>(job);
     Q_ASSERT(transferJob);
 
-    if (m_pictureShape->imageCollection()) {
+    if (m_pictureShape->imageCollection())
+    {
         KoImageData *data = m_pictureShape->imageCollection()->createImageData(transferJob->data());
-        if (data) {
+        if (data)
+        {
             m_pictureShape->setUserData(data);
             // check if the shape still size of the default shape and resize in that case
-            if (qFuzzyCompare(m_pictureShape->size().width(), 50.0)) {
+            if (qFuzzyCompare(m_pictureShape->size().width(), 50.0))
+            {
                 m_pictureShape->setSize(data->imageSize());
             }
             // trigger repaint as the userData was changed
@@ -73,7 +81,7 @@ void PictureShapeLoadWaiter::setImageData(KJob *job)
 
 PictureShapeConfigWidget::PictureShapeConfigWidget()
     : m_shape(0),
-    m_fileWidget(0)
+      m_fileWidget(0)
 {
 }
 
@@ -92,7 +100,8 @@ void PictureShapeConfigWidget::open(KoShape *shape)
     m_fileWidget->setMode(KFile::Files | KFile::ExistingOnly);
     m_fileWidget->setOperationMode(KFileWidget::Opening);
     QStringList imageFilters;
-    foreach(const QByteArray &mimeType, QImageReader::supportedMimeTypes()) {
+    foreach(const QByteArray &mimeType, QImageReader::supportedMimeTypes())
+    {
         imageFilters << QLatin1String(mimeType);
     }
     m_fileWidget->setMimeFilter(imageFilters);
@@ -104,10 +113,13 @@ void PictureShapeConfigWidget::open(KoShape *shape)
 void PictureShapeConfigWidget::save()
 {
     if (!m_shape)
+    {
         return;
+    }
     m_fileWidget->accept();
     QUrl url = m_fileWidget->selectedUrl();
-    if (!url.isEmpty()) {
+    if (!url.isEmpty())
+    {
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::NoReload, 0);
         PictureShapeLoadWaiter *waiter = new PictureShapeLoadWaiter(m_shape);
         connect(job, SIGNAL(result(KJob*)), waiter, SLOT(setImageData(KJob*)));

@@ -29,26 +29,33 @@
 qreal calcScale(const QSizeF& imgSize, const QSizeF viewSize, bool fitView)
 {
     if (qFuzzyCompare(imgSize.width(), qreal(0)) || qFuzzyCompare(imgSize.height(), qreal(0)) ||
-        qFuzzyCompare(viewSize.width(), qreal(0)) || qFuzzyCompare(viewSize.height(), qreal(0))) {
+            qFuzzyCompare(viewSize.width(), qreal(0)) || qFuzzyCompare(viewSize.height(), qreal(0)))
+    {
         return 1;
     }
 
     qreal viewAspect = viewSize.width() / viewSize.height();
     qreal imgAspect = imgSize.width() / imgSize.height();
 
-    if (fitView) {
-        if (viewAspect > imgAspect) {
+    if (fitView)
+    {
+        if (viewAspect > imgAspect)
+        {
             return viewSize.height() / imgSize.height();
         }
-        else {
+        else
+        {
             return viewSize.width()  / imgSize.width();
         }
     }
-    else {
-        if (viewAspect > imgAspect) {
+    else
+    {
+        if (viewAspect > imgAspect)
+        {
             return viewSize.width()  / imgSize.width();
         }
-        else {
+        else
+        {
             return viewSize.height() / imgSize.height();
         }
     }
@@ -87,7 +94,9 @@ void CropWidget::paintEvent(QPaintEvent *event)
     Q_UNUSED(event);
 
     if(!m_pictureShape || m_imageRect.isNull())
+    {
         return;
+    }
 
     QPainter painter(this);
     QImage image = m_pictureShape->imageData()->image();
@@ -99,7 +108,7 @@ void CropWidget::paintEvent(QPaintEvent *event)
 
     painter.setBrush(QColor(0, 0, 0, 127));
     painter.setPen(Qt::NoPen);
-    painter.drawPolygon(QPolygonF(QRectF(0, 0, 1 , 1)).subtracted(m_selectionRect.getRect()));
+    painter.drawPolygon(QPolygonF(QRectF(0, 0, 1, 1)).subtracted(m_selectionRect.getRect()));
 
     painter.setBrush(Qt::NoBrush);
     painter.setPen(QPen(this->palette().color(QPalette::Highlight), 0));
@@ -107,10 +116,13 @@ void CropWidget::paintEvent(QPaintEvent *event)
 
     painter.setBrush(QBrush(this->palette().color(QPalette::Highlight).darker()));
     for (int i=0; i<m_selectionRect.getNumHandles(); ++i)
+    {
         painter.drawRect(m_selectionRect.getHandleRect(m_selectionRect.getHandleFlags(i)));
+    }
 
     KoClipPath *clipPath = m_pictureShape->clipPath();
-    if (clipPath) {
+    if (clipPath)
+    {
         painter.scale(0.01, 0.01); // the path is defined in 100x100 equaling shapesize
         painter.setBrush(Qt::NoBrush);
         painter.setPen(QPen(Qt::red, 0));
@@ -132,36 +144,37 @@ void CropWidget::mouseMoveEvent(QMouseEvent *event)
 
     switch (flags)
     {
-    case SelectionRect::TOP_HANDLE:
-    case SelectionRect::BOTTOM_HANDLE:
-        QWidget::setCursor(Qt::SizeVerCursor);
-        break;
+        case SelectionRect::TOP_HANDLE:
+        case SelectionRect::BOTTOM_HANDLE:
+            QWidget::setCursor(Qt::SizeVerCursor);
+            break;
 
-    case SelectionRect::LEFT_HANDLE:
-    case SelectionRect::RIGHT_HANDLE:
-        QWidget::setCursor(Qt::SizeHorCursor);
-        break;
+        case SelectionRect::LEFT_HANDLE:
+        case SelectionRect::RIGHT_HANDLE:
+            QWidget::setCursor(Qt::SizeHorCursor);
+            break;
 
-    case SelectionRect::LEFT_HANDLE|SelectionRect::TOP_HANDLE:
-    case SelectionRect::RIGHT_HANDLE|SelectionRect::BOTTOM_HANDLE:
-        QWidget::setCursor(Qt::SizeFDiagCursor);
-        break;
+        case SelectionRect::LEFT_HANDLE|SelectionRect::TOP_HANDLE:
+        case SelectionRect::RIGHT_HANDLE|SelectionRect::BOTTOM_HANDLE:
+            QWidget::setCursor(Qt::SizeFDiagCursor);
+            break;
 
-    case SelectionRect::LEFT_HANDLE|SelectionRect::BOTTOM_HANDLE:
-    case SelectionRect::RIGHT_HANDLE|SelectionRect::TOP_HANDLE:
-        QWidget::setCursor(Qt::SizeBDiagCursor);
-        break;
+        case SelectionRect::LEFT_HANDLE|SelectionRect::BOTTOM_HANDLE:
+        case SelectionRect::RIGHT_HANDLE|SelectionRect::TOP_HANDLE:
+            QWidget::setCursor(Qt::SizeBDiagCursor);
+            break;
 
-    case SelectionRect::INSIDE_RECT:
-        QWidget::setCursor(Qt::SizeAllCursor);
-        break;
+        case SelectionRect::INSIDE_RECT:
+            QWidget::setCursor(Qt::SizeAllCursor);
+            break;
 
-    default:
-        QWidget::setCursor(Qt::ArrowCursor);
-        break;
+        default:
+            QWidget::setCursor(Qt::ArrowCursor);
+            break;
     }
 
-    if (m_isMousePressed) {
+    if (m_isMousePressed)
+    {
         m_selectionRect.doDragging(pos);
         update();
         emitCropRegionChanged();
@@ -228,7 +241,8 @@ QPointF CropWidget::fromUniformCoord(const QPointF& coord) const
 
 void CropWidget::emitCropRegionChanged()
 {
-    if (!compareRects(m_oldSelectionRect, m_selectionRect.getRect(), 0.01)) {
+    if (!compareRects(m_oldSelectionRect, m_selectionRect.getRect(), 0.01))
+    {
         m_oldSelectionRect = m_selectionRect.getRect();
         emit sigCropRegionChanged(m_selectionRect.getRect(), m_undoLast);
         update();
@@ -239,13 +253,15 @@ void CropWidget::emitCropRegionChanged()
 
 void CropWidget::calcImageRect()
 {
-    if (m_pictureShape) {
+    if (m_pictureShape)
+    {
         QSizeF imageSize = m_pictureShape->imageData()->image().size();
         imageSize = imageSize * calcScale(imageSize, size(), true);
         m_imageRect = centerRectHorizontally (QRect(0, 0, imageSize.width(), imageSize.height()), size());
         m_selectionRect.setAspectRatio(m_imageRect.width() / m_imageRect.height());
     }
-    else {
+    else
+    {
         m_imageRect = QRectF();
     }
 }

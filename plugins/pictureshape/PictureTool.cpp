@@ -79,17 +79,22 @@ void PictureTool::activate(ToolActivation toolActivation, const QSet<KoShape*> &
 {
     Q_UNUSED(toolActivation);
 
-    foreach (KoShape *shape, shapes) {
+    foreach (KoShape *shape, shapes)
+    {
         if ((m_pictureshape = dynamic_cast<PictureShape*>(shape)))
+        {
             break;
+        }
     }
 
-    if (!m_pictureshape) {
+    if (!m_pictureshape)
+    {
         emit done();
         return;
     }
 
-    if (m_pictureToolUI) {
+    if (m_pictureToolUI)
+    {
         m_pictureToolUI->cropWidget->setPictureShape(m_pictureshape);
         updateControlElements();
     }
@@ -105,10 +110,10 @@ void PictureTool::deactivate()
 QWidget *PictureTool::createOptionWidget()
 {
     m_pictureToolUI = new PictureToolUI();
-    m_pictureToolUI->cmbColorMode->addItem(i18n("Standard")  , PictureShape::Standard);
-    m_pictureToolUI->cmbColorMode->addItem(i18n("Greyscale") , PictureShape::Greyscale);
+    m_pictureToolUI->cmbColorMode->addItem(i18n("Standard"), PictureShape::Standard);
+    m_pictureToolUI->cmbColorMode->addItem(i18n("Greyscale"), PictureShape::Greyscale);
     m_pictureToolUI->cmbColorMode->addItem(i18n("Monochrome"), PictureShape::Mono);
-    m_pictureToolUI->cmbColorMode->addItem(i18n("Watermark") , PictureShape::Watermark);
+    m_pictureToolUI->cmbColorMode->addItem(i18n("Watermark"), PictureShape::Watermark);
     m_pictureToolUI->bnImageFile->setIcon(koIcon("document-open"));
 
     updateControlElements();
@@ -129,7 +134,8 @@ QWidget *PictureTool::createOptionWidget()
 
 void PictureTool::updateControlElements()
 {
-    if (m_pictureshape) {
+    if (m_pictureshape)
+    {
         QSizeF imageSize = m_pictureshape->imageData()->imageSize();
         PictureShape::ColorMode mode      = m_pictureshape->colorMode();
         ClippingRect clippingRect(m_pictureshape->cropRect());
@@ -160,11 +166,14 @@ void PictureTool::updateControlElements()
 void PictureTool::changeUrlPressed()
 {
     if (m_pictureshape == 0)
+    {
         return;
+    }
     // TODO: think about using KoFileDialog everywhere, after extending it to support remote urls
     QFileDialog *dialog = new QFileDialog();
     QStringList imageMimeTypes;
-    foreach(const QByteArray &mimeType, QImageReader::supportedMimeTypes()) {
+    foreach(const QByteArray &mimeType, QImageReader::supportedMimeTypes())
+    {
         imageMimeTypes << QLatin1String(mimeType);
     }
     dialog->setMimeTypeFilters(imageMimeTypes);
@@ -173,7 +182,8 @@ void PictureTool::changeUrlPressed()
     dialog->exec();
     QUrl url = dialog->selectedUrls().value(0);
 
-    if (!url.isEmpty()) {
+    if (!url.isEmpty())
+    {
         // TODO move this to an action in the libs, with a nice dialog or something.
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::NoReload, 0);
         connect(job, SIGNAL(result(KJob*)), this, SLOT(setImageData(KJob*)));
@@ -196,7 +206,8 @@ void PictureTool::cropEditFieldsChanged()
 
 void PictureTool::cropRegionChanged(const QRectF& rect, bool undoPrev)
 {
-    if (undoPrev) {
+    if (undoPrev)
+    {
         canvas()->shapeController()->resourceManager()->undoStack()->undo();
     }
 
@@ -235,11 +246,14 @@ void PictureTool::fillButtonPressed()
 void PictureTool::setImageData(KJob *job)
 {
     if (m_pictureshape == 0)
-        return; // ugh, the user deselected the image in between. We should move this code to main anyway redesign it
+    {
+        return;    // ugh, the user deselected the image in between. We should move this code to main anyway redesign it
+    }
 
     KIO::StoredTransferJob *transferJob = qobject_cast<KIO::StoredTransferJob*>(job);
     Q_ASSERT(transferJob);
-    if (m_pictureshape->imageCollection()) {
+    if (m_pictureshape->imageCollection())
+    {
         KoImageData        *data = m_pictureshape->imageCollection()->createImageData(transferJob->data());
         ChangeImageCommand *cmd  = new ChangeImageCommand(m_pictureshape, data);
         // connect before adding the command, so that "updateControlElements()" is executed
@@ -251,14 +265,16 @@ void PictureTool::setImageData(KJob *job)
 
 void PictureTool::mousePressEvent(KoPointerEvent *event)
 {
-    if (event->button() == Qt::RightButton) {
+    if (event->button() == Qt::RightButton)
+    {
         event->ignore();
     }
 }
 
 void PictureTool::mouseDoubleClickEvent(KoPointerEvent *event)
 {
-    if (canvas()->shapeManager()->shapeAt(event->point) != m_pictureshape) {
+    if (canvas()->shapeManager()->shapeAt(event->point) != m_pictureshape)
+    {
         event->ignore(); // allow the event to be used by another
         return;
     }

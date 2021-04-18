@@ -57,7 +57,8 @@ KoShape *PictureShapeFactory::createDefaultShape(KoDocumentResourceManager *docu
 {
     PictureShape * defaultShape = new PictureShape();
     defaultShape->setShapeId(PICTURESHAPEID);
-    if (documentResources) {
+    if (documentResources)
+    {
         defaultShape->setImageCollection(documentResources->imageCollection());
     }
     return defaultShape;
@@ -66,11 +67,13 @@ KoShape *PictureShapeFactory::createDefaultShape(KoDocumentResourceManager *docu
 KoShape *PictureShapeFactory::createShape(const KoProperties *params, KoDocumentResourceManager *documentResources) const
 {
     PictureShape *shape = static_cast<PictureShape*>(createDefaultShape(documentResources));
-    if (params->contains("qimage")) {
+    if (params->contains("qimage"))
+    {
         QImage image = params->property("qimage").value<QImage>();
         Q_ASSERT(!image.isNull());
 
-        if (shape->imageCollection()) {
+        if (shape->imageCollection())
+        {
             KoImageData *data = shape->imageCollection()->createImageData(image);
             shape->setUserData(data);
             shape->setSize(data->imageSize());
@@ -83,18 +86,23 @@ KoShape *PictureShapeFactory::createShape(const KoProperties *params, KoDocument
 
 bool PictureShapeFactory::supports(const KoXmlElement &e, KoShapeLoadingContext &context) const
 {
-    if (e.localName() == "image" && e.namespaceURI() == KoXmlNS::draw) {
+    if (e.localName() == "image" && e.namespaceURI() == KoXmlNS::draw)
+    {
         QString href = e.attribute("href");
-        if (!href.isEmpty()) {
+        if (!href.isEmpty())
+        {
             // check the mimetype
-            if (href.startsWith(QLatin1String("./"))) {
+            if (href.startsWith(QLatin1String("./")))
+            {
                 href.remove(0, 2);
             }
             QString mimetype = context.odfLoadingContext().mimeTypeForPath(href);
-            if (!mimetype.isEmpty()) {
+            if (!mimetype.isEmpty())
+            {
                 return mimetype.startsWith("image");
             }
-            else {
+            else
+            {
                 return ( href.endsWith("bmp") ||
                          href.endsWith("jpg") ||
                          href.endsWith("gif") ||
@@ -104,7 +112,8 @@ bool PictureShapeFactory::supports(const KoXmlElement &e, KoShapeLoadingContext 
                          href.endsWith("tiff"));
             }
         }
-        else {
+        else
+        {
             return !KoXml::namedItemNS(e, KoXmlNS::office, "binary-data").isNull();
         }
     }
@@ -121,5 +130,7 @@ QList<KoShapeConfigWidgetBase*> PictureShapeFactory::createShapeOptionPanels()
 void PictureShapeFactory::newDocumentResourceManager(KoDocumentResourceManager *manager) const
 {
     if (!manager->imageCollection())
+    {
         manager->setImageCollection(new KoImageCollection(manager));
+    }
 }

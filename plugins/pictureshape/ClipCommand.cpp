@@ -27,9 +27,12 @@ ClipCommand::ClipCommand(PictureShape *shape, bool clip)
     , m_pictureShape(shape)
     , m_clip(clip)
 {
-    if (clip) {
+    if (clip)
+    {
         setText(kundo2_i18n("Contour image (by image analysis)"));
-    } else {
+    }
+    else
+    {
         setText(kundo2_i18n("Remove image contour"));
     }
 }
@@ -40,9 +43,12 @@ ClipCommand::~ClipCommand()
 
 void ClipCommand::redo()
 {
-    if (m_clip) {
+    if (m_clip)
+    {
         m_pictureShape->setClipPath(m_pictureShape->generateClipPath());
-    } else {
+    }
+    else
+    {
         m_pictureShape->setClipPath(0);
     }
     m_pictureShape->update();
@@ -50,9 +56,12 @@ void ClipCommand::redo()
 
 void ClipCommand::undo()
 {
-    if (m_clip) {
+    if (m_clip)
+    {
         m_pictureShape->setClipPath(0);
-    } else {
+    }
+    else
+    {
         m_pictureShape->setClipPath(m_pictureShape->generateClipPath());
     }
     m_pictureShape->update();
