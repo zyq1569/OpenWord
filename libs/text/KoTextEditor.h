@@ -70,7 +70,8 @@ class KOTEXT_EXPORT KoTextEditor: public QObject
 {
     Q_OBJECT
 public:
-    enum ChangeListFlag {
+    enum ChangeListFlag
+    {
         NoFlags = 0,
         ModifyExistingList = 1,
         MergeWithAdjacentList = 2,
@@ -424,7 +425,7 @@ public Q_SLOTS:
      * @param data the border data.
      */
     void setTableBorderData(QTextTable *table, int row, int column, KoBorder::BorderSide cellSide,
-                const KoBorder::BorderData &data);
+                            const KoBorder::BorderData &data);
 
     /**
      * Insert a footnote at the current cursor position
@@ -568,7 +569,8 @@ class KUndo2Command;
 class Q_DECL_HIDDEN KoTextEditor::Private
 {
 public:
-    enum State {
+    enum State
+    {
         NoOp,
         KeyPress,
         Delete,

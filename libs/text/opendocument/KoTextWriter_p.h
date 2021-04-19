@@ -50,45 +50,45 @@ class QTextStream;
  */
 class TagInformation
 {
-    public:
-        TagInformation():tagName(0), attributeList()
-        {
-        }
+public:
+    TagInformation():tagName(0), attributeList()
+    {
+    }
 
-        void setTagName(const char *tagName)
-        {
-            this->tagName = tagName;
-        }
+    void setTagName(const char *tagName)
+    {
+        this->tagName = tagName;
+    }
 
-        void addAttribute(const QString& attributeName, const QString& attributeValue)
-        {
-            attributeList.push_back(QPair<QString,QString>(attributeName, attributeValue));
-        }
+    void addAttribute(const QString& attributeName, const QString& attributeValue)
+    {
+        attributeList.push_back(QPair<QString,QString>(attributeName, attributeValue));
+    }
 
-        void addAttribute(const QString& attributeName, int value)
-        {
-            addAttribute(attributeName, QString::number(value));
-        }
+    void addAttribute(const QString& attributeName, int value)
+    {
+        addAttribute(attributeName, QString::number(value));
+    }
 
-        void clear()
-        {
-            tagName = nullptr;
-            attributeList.clear();
-        }
+    void clear()
+    {
+        tagName = nullptr;
+        attributeList.clear();
+    }
 
-        const char *name() const
-        {
-            return tagName;
-        }
+    const char *name() const
+    {
+        return tagName;
+    }
 
-        const QVector<QPair<QString, QString> >& attributes() const
-        {
-            return attributeList;
-        }
+    const QVector<QPair<QString, QString> >& attributes() const
+    {
+        return attributeList;
+    }
 
-    private:
-        const char *tagName;
-        QVector<QPair<QString, QString> > attributeList;
+private:
+    const char *tagName;
+    QVector<QPair<QString, QString> > attributeList;
 };
 
 
@@ -111,7 +111,8 @@ public:
 
 private:
 
-    enum ElementType {
+    enum ElementType
+    {
         Span,
         ParagraphOrHeader,
         ListItem,
