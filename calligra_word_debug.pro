@@ -1,7 +1,8 @@
 #https://community.kde.org/Calligra/Libs/KoText/Layout_Overview
 CONFIG     +=   ordered
 TEMPLATE    =   subdirs
-SUBDIRS    +=   log/easylog.pro \
+SUBDIRS    +=
+#                log/easylog.pro \
 #                filters/words/rtf/import/3rdparty/rtf-qt/src/RtfReader.pro \
 #                libs/plugin/koplugin.pro \
                 plugins/chartshape/chartshapecore.pro \
