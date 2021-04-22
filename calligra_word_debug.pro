@@ -55,7 +55,7 @@ SUBDIRS    +=
 #                karbon/common/karboncommon.pro \
 #                libs/pageapp/kopageapp.pro \
 #-------------------------------------------------
-#wordperfect to odf
+#---------------wordperfect to odf-------------------
 #               filters/words/wordperfect/import/calligra_filter_wpd2odt.pro \
 #----------------------------------------------------
 #               extras/calligra/calligra.pro \
