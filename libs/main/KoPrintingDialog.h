@@ -251,6 +251,7 @@ public:
         }
         else
         {
+            ///open word ---> to find print file problem??? 20210424
             const int progressPart = 45 / shapes.count();
             foreach(KoShape *shape, shapes)
             {
