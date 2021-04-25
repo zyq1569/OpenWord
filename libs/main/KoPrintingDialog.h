@@ -258,7 +258,8 @@ public:
                 debugMain << "Calling waitUntilReady on shape;" << shape;
                 if(! stop)
                 {
-                    shape->waitUntilReady(zoomer);
+                    ///for error! {print or export PDF file: loss image! }
+                    shape->waitUntilReady(zoomer,false);
                 }
                 debugMain << "done";
                 updater->setProgress(updater->progress() + progressPart);
