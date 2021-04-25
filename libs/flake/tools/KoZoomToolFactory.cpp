@@ -27,7 +27,7 @@
 KoZoomToolFactory::KoZoomToolFactory()
         : KoToolFactoryBase("KoZoomToolId")
 {
-    setToolTip(/*i18n*/("Zoom"));
+    setToolTip(i18n("Zoom"));
     setToolType(navigationToolType());
     setPriority(5);
     setIconName(koIconName("zoom-original"));

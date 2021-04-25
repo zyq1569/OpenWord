@@ -53,7 +53,7 @@ void KoReplaceStrategy::reset()
 void KoReplaceStrategy::displayFinalDialog()
 {
     if (m_replaced == 0) {
-        KMessageBox::information(m_dialog->parentWidget(), /*i18n*/("Found no match\n\nNo text was replaced"));
+        KMessageBox::information(m_dialog->parentWidget(), i18n("Found no match\n\nNo text was replaced"));
     } else {
         KMessageBox::information(m_dialog->parentWidget(),
                                  /*i18np*/("1 replacement made",
@@ -69,7 +69,7 @@ bool KoReplaceStrategy::foundMatch(QTextCursor &cursor, FindDirection *findDirec
         findDirection->select(cursor);
         // TODO: not only Yes and No, but Yes, No, All and Cancel
         int value = KMessageBox::questionYesNo(m_dialog->parentWidget(),
-                                               /*i18n*/("Replace %1 with %2?", m_dialog->pattern(), m_dialog->replacement()));
+                                               i18n("Replace %1 with %2?", m_dialog->pattern(), m_dialog->replacement()));
         if (value != KMessageBox::Yes) {
             replace = false;
         }

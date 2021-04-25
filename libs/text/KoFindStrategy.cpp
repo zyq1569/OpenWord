@@ -62,7 +62,7 @@ void KoFindStrategy::reset()
 void KoFindStrategy::displayFinalDialog()
 {
     //KMessageBox::information(m_dialog, m_matches ? i18np("Found 1 match", "Found %1 matches", m_matches) : i18n("Found no match"));
-    KMessageBox::information(m_dialog, m_matches ? /*i18np*/("Found 1 match", "Found %1 matches", QString("%1").arg(m_matches)) : /*i18n*/("Found no match"));
+    KMessageBox::information(m_dialog, m_matches ? /*i18np*/("Found 1 match", "Found %1 matches", QString("%1").arg(m_matches)) : i18n("Found no match"));
     reset();
 }
 

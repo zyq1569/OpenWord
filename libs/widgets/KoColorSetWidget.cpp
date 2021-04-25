@@ -158,7 +158,7 @@ KoColorSetWidget::KoColorSetWidget(QWidget *parent)
     d->recentsLayout = new QHBoxLayout();
     d->mainLayout->addLayout(d->recentsLayout);
     d->recentsLayout->setMargin(0);
-    d->recentsLayout->addWidget(new QLabel(/*i18n*/("Recent:")));
+    d->recentsLayout->addWidget(new QLabel(i18n("Recent:")));
     d->recentsLayout->addStretch(1);
 
     KoColor color(KoColorSpaceRegistry::instance()->rgb8());
@@ -171,7 +171,7 @@ KoColorSetWidget::KoColorSetWidget(QWidget *parent)
     d->fillColors();
 
     d->addRemoveButton = new QToolButton(this);
-    d->addRemoveButton->setText(/*i18n*/("Add / Remove Colors..."));
+    d->addRemoveButton->setText(i18n("Add / Remove Colors..."));
     d->addRemoveButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     connect(d->addRemoveButton, SIGNAL(clicked()), SLOT(addRemoveColors()));
     d->mainLayout->addWidget(d->addRemoveButton);

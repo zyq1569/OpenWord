@@ -39,18 +39,18 @@ qreal KoZoomMode::maximumZoomValue = 5.0;
 
 QString KoZoomMode::toString(Mode mode)
 {
-    return /*i18n*/(modes[mode]);
+    return i18n(modes[mode]);
 }
 
 KoZoomMode::Mode KoZoomMode::toMode(const QString& mode)
 {
-    if(mode == /*i18n*/(modes[ZOOM_WIDTH]))
+    if(mode == i18n(modes[ZOOM_WIDTH]))
         return ZOOM_WIDTH;
-    else if(mode == /*i18n*/(modes[ZOOM_PAGE]))
+    else if(mode == i18n(modes[ZOOM_PAGE]))
         return ZOOM_PAGE;
-    else if(mode == /*i18n*/(modes[ZOOM_PIXELS]))
+    else if(mode == i18n(modes[ZOOM_PIXELS]))
         return ZOOM_PIXELS;
-    else if(mode == /*i18n*/(modes[ZOOM_TEXT]))
+    else if(mode == i18n(modes[ZOOM_TEXT]))
         return ZOOM_TEXT;
     else
        return ZOOM_CONSTANT;

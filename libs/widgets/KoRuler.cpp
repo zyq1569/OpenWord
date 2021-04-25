@@ -1276,9 +1276,9 @@ void KoRuler::mouseMoveEvent ( QMouseEvent* ev )
         KoRulerPrivate::Selection selection = d->selectionAtPosition(pos);
         QString text;
         switch(selection) {
-        case KoRulerPrivate::FirstLineIndent: text = /*i18n*/("First line indent"); break;
-        case KoRulerPrivate::ParagraphIndent: text = /*i18n*/("Left indent"); break;
-        case KoRulerPrivate::EndIndent: text = /*i18n*/("Right indent"); break;
+        case KoRulerPrivate::FirstLineIndent: text = i18n("First line indent"); break;
+        case KoRulerPrivate::ParagraphIndent: text = i18n("Left indent"); break;
+        case KoRulerPrivate::EndIndent: text = i18n("Right indent"); break;
         case KoRulerPrivate::None:
             if (ev->buttons() & Qt::LeftButton) {
                 if (d->orientation == Qt::Horizontal && ev->pos().y() > height() + OutsideRulerThreshold)

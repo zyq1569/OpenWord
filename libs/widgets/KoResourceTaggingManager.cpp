@@ -153,15 +153,15 @@ void KoResourceTaggingManager::undeleteTag(const QString & tagToUndelete)
     if (allTags.contains(tagName)) {
         bool ok;
         tagName = QInputDialog::getText(
-                      d->tagChooser, /*i18n*/("Unable to undelete tag"),
-                      /*i18n*/("<qt>The tag you are trying to undelete already exists in tag list.<br>Please enter a new, unique name for it.</qt>"),
+                      d->tagChooser, i18n("Unable to undelete tag"),
+                      i18n("<qt>The tag you are trying to undelete already exists in tag list.<br>Please enter a new, unique name for it.</qt>"),
                       QLineEdit::Normal,
                       tagName, &ok);
 
         if (!ok || allTags.contains(tagName) || tagName.isEmpty()) {
             QMessageBox msgBox;
             msgBox.setIcon(QMessageBox::Warning);
-            msgBox.setText(/*i18n*/("Tag was not undeleted."));
+            msgBox.setText(i18n("Tag was not undeleted."));
             msgBox.exec();
             return;
         }

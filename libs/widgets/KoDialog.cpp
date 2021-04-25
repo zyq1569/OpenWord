@@ -287,7 +287,7 @@ void KoDialog::setButtons(ButtonCodes buttonMask)
     }
     if (buttonMask & Try)
     {
-        d->appendButton(Try, KGuiItem(/*i18n*/("&Try")));
+        d->appendButton(Try, KGuiItem(i18n("&Try")));
     }
     if (buttonMask & Cancel)
     {
@@ -535,7 +535,7 @@ QString KoDialog::makeStandardCaption(const QString &userCaption,
     // If the document is modified, add '[modified]'.
     if (flags & ModifiedCaption)
     {
-        captionString += QString::fromUtf8(" [") + /*i18n*/("modified") + QString::fromUtf8("]");
+        captionString += QString::fromUtf8(" [") + i18n("modified") + QString::fromUtf8("]");
     }
 
     if (!userCaption.isEmpty())
@@ -995,7 +995,7 @@ void KoDialog::setDetailsWidgetVisible(bool visible)
     Q_D(KoDialog);
     if (d->mDetailsButtonText.isEmpty())
     {
-        d->mDetailsButtonText = /*i18n*/("&Details");
+        d->mDetailsButtonText = i18n("&Details");
     }
 
     d->mSettingDetails = true;
@@ -1171,7 +1171,7 @@ void KoDialog::setHelpLinkText(const QString &text)
 QString KoDialog::helpLinkText() const
 {
     Q_D(const KoDialog);
-    return (d->mHelpLinkText.isEmpty() ? /*i18n*/("Get help...") : d->mHelpLinkText);
+    return (d->mHelpLinkText.isEmpty() ? i18n("Get help...") : d->mHelpLinkText);
 }
 
 void KoDialog::updateGeometry()

@@ -51,7 +51,7 @@ KoTagChooserWidget::KoTagChooserWidget(QWidget* parent): QWidget(parent)
 , d(new Private())
 {
     d->comboBox = new KComboBox(this);
-    d->comboBox->setToolTip(/*i18n*/("Tag"));
+    d->comboBox->setToolTip(i18n("Tag"));
     d->comboBox->setInsertPolicy(KComboBox::InsertAlphabetically);
     d->comboBox->setSizePolicy(QSizePolicy::MinimumExpanding , QSizePolicy::Fixed );
 

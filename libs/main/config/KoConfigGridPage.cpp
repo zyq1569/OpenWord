@@ -65,7 +65,7 @@ KoConfigGridPage::KoConfigGridPage(KoDocument* doc, char* name)
     KoUnit unit = d->doc->unit();
     KoGridData &gd = d->doc->gridData();
 
-    QGroupBox* generalGrp = new QGroupBox(/*i18n*/("Grid"), this);
+    QGroupBox* generalGrp = new QGroupBox(i18n("Grid"), this);
     QFormLayout *layoutGeneral = new QFormLayout(generalGrp);
     d->gridChBox = new QCheckBox(generalGrp);
     d->gridChBox->setChecked(gd.showGrid());
@@ -73,11 +73,11 @@ KoConfigGridPage::KoConfigGridPage(KoDocument* doc, char* name)
     d->snapChBox->setChecked(gd.snapToGrid());
     d->gridColorBtn = new KColorButton(gd.gridColor(), generalGrp);
     d->gridColorBtn->setAlphaChannelEnabled(true);
-    layoutGeneral->addRow(/*i18n*/("Show grid:"), d->gridChBox);
-    layoutGeneral->addRow(/*i18n*/("Snap to grid:"), d->snapChBox);
-    layoutGeneral->addRow(/*i18n*/("Grid color:"), d->gridColorBtn);
+    layoutGeneral->addRow(i18n("Show grid:"), d->gridChBox);
+    layoutGeneral->addRow(i18n("Snap to grid:"), d->snapChBox);
+    layoutGeneral->addRow(i18n("Grid color:"), d->gridColorBtn);
 
-    QGroupBox* spacingGrp = new QGroupBox(/*i18n*/("Spacing"), this);
+    QGroupBox* spacingGrp = new QGroupBox(i18n("Spacing"), this);
     QHBoxLayout *hboxLayout = new QHBoxLayout(spacingGrp);
     QFormLayout *layoutSpacingGrp = new QFormLayout();
     d->spaceHorizUSpin = new KoUnitDoubleSpinBox(spacingGrp);

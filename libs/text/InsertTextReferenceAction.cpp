@@ -32,7 +32,7 @@
 #include <QLabel>
 
 InsertTextReferenceAction::InsertTextReferenceAction(KoCanvasBase *canvas, const KoInlineTextObjectManager *manager)
-        : InsertInlineObjectActionBase(canvas, /*i18n*/("Text Reference")),
+        : InsertInlineObjectActionBase(canvas, i18n("Text Reference")),
         m_manager(manager)
 {
 }
@@ -41,7 +41,7 @@ KoInlineObject *InsertTextReferenceAction::createInlineObject()
 {
     const QList<KoTextLocator*> textLocators = m_manager->textLocators();
     if (textLocators.isEmpty()) {
-        KMessageBox::information(m_canvas->canvasWidget(), /*i18n*/("Please create an index to reference first."));
+        KMessageBox::information(m_canvas->canvasWidget(), i18n("Please create an index to reference first."));
         return 0;
     }
 
@@ -50,7 +50,7 @@ KoInlineObject *InsertTextReferenceAction::createInlineObject()
     widget->setLayout(lay);
     lay->setMargin(0);
 
-    QLabel *label = new QLabel(/*i18n*/("Select the index you want to reference"), widget);
+    QLabel *label = new QLabel(i18n("Select the index you want to reference"), widget);
     lay->addWidget(label);
     QStringList selectionList;
     foreach(KoTextLocator* locator, textLocators)
@@ -60,7 +60,7 @@ KoInlineObject *InsertTextReferenceAction::createInlineObject()
     list->addItems(selectionList);
 
     KPageDialog dialog(m_canvas->canvasWidget());
-    dialog.setWindowTitle(/*i18n*/("%1 Options", /*i18n*/("Text Reference"))); // reuse the text passed in the constructor
+    dialog.setWindowTitle(i18n("%1 Options", i18n("Text Reference"))); // reuse the text passed in the constructor
     dialog.addPage(widget, QString());
 
     KoVariable *variable = 0;

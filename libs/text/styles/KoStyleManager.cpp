@@ -103,12 +103,12 @@ KoStyleManager::KoStyleManager(QObject *parent)
         : QObject(parent), d(new Private())
 {
     d->defaultCharacterStyle = new KoCharacterStyle(this);
-    d->defaultCharacterStyle->setName(/*i18n*/("Default"));
+    d->defaultCharacterStyle->setName(i18n("Default"));
 
     add(d->defaultCharacterStyle);
 
     d->defaultParagraphStyle = new KoParagraphStyle(this);
-    d->defaultParagraphStyle->setName(/*i18n*/("Default"));
+    d->defaultParagraphStyle->setName(i18n("Default"));
 
     add(d->defaultParagraphStyle);
 

@@ -671,26 +671,26 @@ void KoModeBox::toolSelected(int index)
 void KoModeBox::slotContextMenuRequested(const QPoint &pos)
 {
     QMenu menu;
-    KSelectAction* textAction = new KSelectAction(/*i18n*/("Text"), &menu);
+    KSelectAction* textAction = new KSelectAction(i18n("Text"), &menu);
     connect(textAction, SIGNAL(triggered(int)), SLOT(switchIconMode(int)));
     menu.addAction(textAction);
-    textAction->addAction(/*i18n*/("Icon and Text"));
-    textAction->addAction(/*i18n*/("Icon only"));
+    textAction->addAction(i18n("Icon and Text"));
+    textAction->addAction(i18n("Icon only"));
     textAction->setCurrentItem(d->iconMode);
 
-    KSelectAction* buttonPositionAction = new KSelectAction(/*i18n*/("Tabs side"), &menu);
+    KSelectAction* buttonPositionAction = new KSelectAction(i18n("Tabs side"), &menu);
     connect(buttonPositionAction, SIGNAL(triggered(int)), SLOT(switchTabsSide(int)));
     menu.addAction(buttonPositionAction);
     if (d->horizontalMode)
     {
-        buttonPositionAction->addAction(/*i18n*/("Top side"));
-        buttonPositionAction->addAction(/*i18n*/("Bottom side"));
+        buttonPositionAction->addAction(i18n("Top side"));
+        buttonPositionAction->addAction(i18n("Bottom side"));
         buttonPositionAction->setCurrentItem(d->verticalTabsSide);
     }
     else
     {
-        buttonPositionAction->addAction(/*i18n*/("Left side"));
-        buttonPositionAction->addAction(/*i18n*/("Right side"));
+        buttonPositionAction->addAction(i18n("Left side"));
+        buttonPositionAction->addAction(i18n("Right side"));
         buttonPositionAction->setCurrentItem(d->horizontalTabsSide);
     }
 

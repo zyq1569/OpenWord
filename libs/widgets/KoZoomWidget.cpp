@@ -61,7 +61,7 @@ KoZoomWidget::KoZoomWidget(QWidget* parent, KoZoomAction::SpecialButtons special
     layout->addWidget(d->input);
 
     d->slider = new QSlider(Qt::Horizontal);
-    d->slider->setToolTip(/*i18n*/("Zoom"));
+    d->slider->setToolTip(i18n("Zoom"));
     d->slider->setMinimum(0);
     d->slider->setMaximum(maxZoom);
     d->slider->setValue(0);
@@ -78,7 +78,7 @@ KoZoomWidget::KoZoomWidget(QWidget* parent, KoZoomAction::SpecialButtons special
         d->aspectButton->setCheckable(true);
         d->aspectButton->setChecked(true);
         d->aspectButton->setAutoRaise(true);
-        d->aspectButton->setToolTip(/*i18n*/("Use same aspect as pixels"));
+        d->aspectButton->setToolTip(i18n("Use same aspect as pixels"));
         connect(d->aspectButton, SIGNAL(toggled(bool)), this, SIGNAL(aspectModeChanged(bool)));
         layout->addWidget(d->aspectButton);
     }
@@ -87,7 +87,7 @@ KoZoomWidget::KoZoomWidget(QWidget* parent, KoZoomAction::SpecialButtons special
         zoomToSelectionButton->setIcon(koIcon("zoom-select"));
         zoomToSelectionButton->setIconSize(QSize(16,16));
         zoomToSelectionButton->setAutoRaise(true);
-        zoomToSelectionButton->setToolTip(/*i18n*/("Zoom to Selection"));
+        zoomToSelectionButton->setToolTip(i18n("Zoom to Selection"));
         connect(zoomToSelectionButton, SIGNAL(clicked(bool)), this, SIGNAL(zoomedToSelection()));
         layout->addWidget(zoomToSelectionButton);
     }
@@ -96,7 +96,7 @@ KoZoomWidget::KoZoomWidget(QWidget* parent, KoZoomAction::SpecialButtons special
         zoomToAllButton->setIcon(koIcon("zoom-draw"));
         zoomToAllButton->setIconSize(QSize(16,16));
         zoomToAllButton->setAutoRaise(true);
-        zoomToAllButton->setToolTip(/*i18n*/("Zoom to All"));
+        zoomToAllButton->setToolTip(i18n("Zoom to All"));
         connect(zoomToAllButton, SIGNAL(clicked(bool)), this, SIGNAL(zoomedToAll()));
         layout->addWidget(zoomToAllButton);
     }

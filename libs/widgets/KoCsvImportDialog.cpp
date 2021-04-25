@@ -217,15 +217,15 @@ void KoCsvImportDialog::setDataTypes(DataTypes dataTypes)
 {
     d->formatList.clear();
     if (dataTypes & Generic)
-        d->formatList << /*i18n*/("Generic");
+        d->formatList << i18n("Generic");
     if (dataTypes & Text)
-        d->formatList << /*i18n*/("Text");
+        d->formatList << i18n("Text");
     if (dataTypes & Date)
-        d->formatList << /*i18n*/("Date");
+        d->formatList << i18n("Date");
     if (dataTypes & Currency)
-        d->formatList << /*i18n*/("Currency");
+        d->formatList << i18n("Currency");
     if (dataTypes & None)
-        d->formatList << /*i18n*/("None");
+        d->formatList << i18n("None");
     d->dialog->m_formatComboBox->insertItems(0, d->formatList);
 }
 
@@ -556,7 +556,7 @@ void KoCsvImportDialog::Private::fillTable()
     {
         const QTableWidgetItem* headerItem = dialog->m_sheet->horizontalHeaderItem(column);
         if (!headerItem || !formatList.contains(headerItem->text())) {
-            dialog->m_sheet->setHorizontalHeaderItem(column, new QTableWidgetItem(/*i18n*/("Generic")));
+            dialog->m_sheet->setHorizontalHeaderItem(column, new QTableWidgetItem(i18n("Generic")));
         }
     }
 
@@ -579,15 +579,15 @@ KoCsvImportDialog::DataType KoCsvImportDialog::dataType(int col) const
 {
     const QString header = d->dialog->m_sheet->model()->headerData(col, Qt::Horizontal).toString();
 
-    if (header == /*i18n*/("Generic"))
+    if (header == i18n("Generic"))
         return Generic;
-    else if (header == /*i18n*/("Text"))
+    else if (header == i18n("Text"))
         return Text;
-    else if (header == /*i18n*/("Date"))
+    else if (header == i18n("Date"))
         return Date;
-    else if (header == /*i18n*/("Currency"))
+    else if (header == i18n("Currency"))
         return Currency;
-    else if (header == /*i18n*/("None"))
+    else if (header == i18n("None"))
         return None;
     return Generic;
 }
@@ -694,7 +694,7 @@ void KoCsvImportDialog::delimiterClicked(int id)
 
 void KoCsvImportDialog::textquoteSelected(const QString& mark)
 {
-    if (mark == /*i18n*/("None"))
+    if (mark == i18n("None"))
         d->textQuote = 0;
     else
         d->textQuote = mark[0];
@@ -721,7 +721,7 @@ bool KoCsvImportDialog::Private::checkUpdateRange()
     if ((dialog->m_rowStart->value() > dialog->m_rowEnd->value()) ||
         (dialog->m_colStart->value() > dialog->m_colEnd->value()))
     {
-        KMessageBox::error(0, /*i18n*/("Please check the ranges you specified. The start value must be lower than the end value."));
+        KMessageBox::error(0, i18n("Please check the ranges you specified. The start value must be lower than the end value."));
         return false;
     }
     return true;
@@ -767,7 +767,7 @@ QTextCodec* KoCsvImportDialog::Private::updateCodec() const
         // Default: UTF-8
         warnWidgets << "Cannot find encoding:" << strCodec;
         // ### TODO: what parent to use?
-        KMessageBox::error( 0, /*i18n*/("Cannot find encoding: %1", strCodec ) );
+        KMessageBox::error( 0, i18n("Cannot find encoding: %1", strCodec ) );
         return 0;
     }
 

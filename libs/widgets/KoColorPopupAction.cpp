@@ -86,7 +86,7 @@ KoColorPopupAction::KoColorPopupAction(QObject *parent)
     d->opacitySlider->setFixedWidth(25);
     d->opacitySlider->setRange(0, 255);
     d->opacitySlider->setValue(255);
-    d->opacitySlider->setToolTip( /*i18n*/( "Opacity" ) );
+    d->opacitySlider->setToolTip( i18n( "Opacity" ) );
 
     QGridLayout * layout = new QGridLayout( widget );
     layout->addWidget( d->colorSetWidget, 0, 0, 1, -1 );

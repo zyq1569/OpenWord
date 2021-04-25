@@ -30,7 +30,7 @@
 #include <QFrame>
 
 KoToolBoxDocker::KoToolBoxDocker(KoToolBox *toolBox)
-    : QDockWidget(/*i18n*/("Toolbox"))
+    : QDockWidget(i18n("Toolbox"))
     , m_toolBox(toolBox)
     , m_scrollArea(new KoToolBoxScrollArea(toolBox, this))
 {
@@ -40,7 +40,7 @@ KoToolBoxDocker::KoToolBoxDocker(KoToolBox *toolBox)
     // create title bar
     KoDockWidgetTitleBar* titleBar = new KoDockWidgetTitleBar(this);
     titleBar->setTextVisibilityMode(KoDockWidgetTitleBar::TextCanBeInvisible);
-    titleBar->setToolTip(/*i18n*/("Tools"));
+    titleBar->setToolTip(i18n("Tools"));
     setTitleBarWidget(titleBar);
 
     connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),

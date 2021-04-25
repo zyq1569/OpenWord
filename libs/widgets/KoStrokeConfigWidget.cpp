@@ -93,21 +93,21 @@ CapNJoinMenu::CapNJoinMenu(QWidget *parent)
     button = new QToolButton(this);
     button->setIcon(koIcon("stroke-cap-butt"));
     button->setCheckable(true);
-    button->setToolTip(/*i18n*/("Butt cap"));
+    button->setToolTip(i18n("Butt cap"));
     capGroup->addButton(button, Qt::FlatCap);
     mainLayout->addWidget(button, 2, 0);
 
     button = new QToolButton(this);
     button->setIcon(koIcon("stroke-cap-round"));
     button->setCheckable(true);
-    button->setToolTip(/*i18n*/("Round cap"));
+    button->setToolTip(i18n("Round cap"));
     capGroup->addButton(button, Qt::RoundCap);
     mainLayout->addWidget(button, 2, 1);
 
     button = new QToolButton(this);
     button->setIcon(koIcon("stroke-cap-square"));
     button->setCheckable(true);
-    button->setToolTip(/*i18n*/("Square cap"));
+    button->setToolTip(i18n("Square cap"));
     capGroup->addButton(button, Qt::SquareCap);
     mainLayout->addWidget(button, 2, 2, Qt::AlignLeft);
 
@@ -118,21 +118,21 @@ CapNJoinMenu::CapNJoinMenu(QWidget *parent)
     button = new QToolButton(this);
     button->setIcon(koIcon("stroke-join-miter"));
     button->setCheckable(true);
-    button->setToolTip(/*i18n*/("Miter join"));
+    button->setToolTip(i18n("Miter join"));
     joinGroup->addButton(button, Qt::MiterJoin);
     mainLayout->addWidget(button, 3, 0);
 
     button = new QToolButton(this);
     button->setIcon(koIcon("stroke-join-round"));
     button->setCheckable(true);
-    button->setToolTip(/*i18n*/("Round join"));
+    button->setToolTip(i18n("Round join"));
     joinGroup->addButton(button, Qt::RoundJoin);
     mainLayout->addWidget(button, 3, 1);
 
     button = new QToolButton(this);
     button->setIcon(koIcon("stroke-join-bevel"));
     button->setCheckable(true);
-    button->setToolTip(/*i18n*/("Bevel join"));
+    button->setToolTip(i18n("Bevel join"));
     joinGroup->addButton(button, Qt::BevelJoin);
     mainLayout->addWidget(button, 3, 2, Qt::AlignLeft);
 
@@ -142,7 +142,7 @@ CapNJoinMenu::CapNJoinMenu(QWidget *parent)
     miterLimit->setMinMaxStep(0.0, 1000.0, 0.5);
     miterLimit->setDecimals(2);
     miterLimit->setUnit(KoUnit(KoUnit::Point));
-    miterLimit->setToolTip(/*i18n*/("Miter limit"));
+    miterLimit->setToolTip(i18n("Miter limit"));
     mainLayout->addWidget(miterLimit, 4, 0, 1, 3);
 
     mainLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
@@ -213,7 +213,7 @@ KoStrokeConfigWidget::KoStrokeConfigWidget(QWidget * parent)
 
     // Line width
     QLabel *l = new QLabel(this);
-    l->setText(/*i18n*/("Thickness:"));
+    l->setText(i18n("Thickness:"));
     l->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     l->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     secondLineLayout->addWidget(l);
@@ -223,7 +223,7 @@ KoStrokeConfigWidget::KoStrokeConfigWidget(QWidget * parent)
     d->lineWidth->setMinMaxStep(0.0, 1000.0, 0.5);
     d->lineWidth->setDecimals(2);
     d->lineWidth->setUnit(KoUnit(KoUnit::Point));
-    d->lineWidth->setToolTip(/*i18n*/("Set line width of actual selection"));
+    d->lineWidth->setToolTip(i18n("Set line width of actual selection"));
     secondLineLayout->addWidget(d->lineWidth);
 
     QToolButton *capNJoinButton = new QToolButton(this);
@@ -239,7 +239,7 @@ KoStrokeConfigWidget::KoStrokeConfigWidget(QWidget * parent)
     secondLineLayout->addWidget(d->colorButton);
     d->colorAction = new KoColorPopupAction(this);
     d->colorAction->setIcon(koIcon("format-stroke-color"));
-    d->colorAction->setToolTip(/*i18n*/("Change the color of the line/border"));
+    d->colorAction->setToolTip(i18n("Change the color of the line/border"));
     d->colorButton->setDefaultAction(d->colorAction);
 
     mainLayout->addLayout(firstLineLayout);

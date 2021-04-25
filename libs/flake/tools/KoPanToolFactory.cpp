@@ -27,7 +27,7 @@
 KoPanToolFactory::KoPanToolFactory()
         : KoToolFactoryBase(KoPanTool_ID)
 {
-    setToolTip(/*i18n*/("Pan"));
+    setToolTip(i18n("Pan"));
     setToolType(navigationToolType());
     setPriority(5);
     setIconName(koIconName("hand"));

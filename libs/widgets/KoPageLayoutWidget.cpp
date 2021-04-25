@@ -185,12 +185,12 @@ void KoPageLayoutWidget::facingPagesChanged()
     if (! d->allowSignals) return;
     d->allowSignals = false;
     if (d->widget.singleSided->isChecked()) {
-        d->widget.leftLabel->setText(/*i18n*/("Left Edge:"));
-        d->widget.rightLabel->setText(/*i18n*/("Right Edge:"));
+        d->widget.leftLabel->setText(i18n("Left Edge:"));
+        d->widget.rightLabel->setText(i18n("Right Edge:"));
     }
     else {
-        d->widget.leftLabel->setText(/*i18n*/("Binding Edge:"));
-        d->widget.rightLabel->setText(/*i18n*/("Page Edge:"));
+        d->widget.leftLabel->setText(i18n("Binding Edge:"));
+        d->widget.rightLabel->setText(i18n("Page Edge:"));
     }
     d->allowSignals = true;
     marginsChanged();
@@ -286,12 +286,12 @@ void KoPageLayoutWidget::setPageSpread(bool pageSpread)
 void KoPageLayoutWidget::setApplyToDocument(bool apply)
 {
     if (apply) {
-        d->widget.facingPageLabel->setText(/*i18n*/("Facing Pages:"));
-        d->widget.facingPages->setText(/*i18n*/("Facing pages"));
+        d->widget.facingPageLabel->setText(i18n("Facing Pages:"));
+        d->widget.facingPages->setText(i18n("Facing pages"));
     }
     else {
-        d->widget.facingPageLabel->setText(/*i18n*/("Page Layout:"));
-        d->widget.facingPages->setText(/*i18n*/("Page spread"));
+        d->widget.facingPageLabel->setText(i18n("Page Layout:"));
+        d->widget.facingPages->setText(i18n("Page spread"));
     }
 }
 

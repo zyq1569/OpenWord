@@ -156,7 +156,7 @@ void KoEditColorSetWidget::addColor()
     if (color.isValid()) {
         KoColorSetEntry newEntry;
         newEntry.color = KoColor(color, KoColorSpaceRegistry::instance()->rgb8());
-        newEntry.name = QInputDialog::getText(this, /*i18n*/("Add Color To Palette"), /*i18n*/("Color name:"));
+        newEntry.name = QInputDialog::getText(this, i18n("Add Color To Palette"), i18n("Color name:"));
         KoColorPatch *patch = new KoColorPatch(widget.patchesFrame);
         patch->setColor(newEntry.color);
         connect(patch, SIGNAL(triggered(KoColorPatch*)), this, SLOT(setTextLabel(KoColorPatch*)));
@@ -184,7 +184,7 @@ void KoEditColorSetWidget::open()
     Q_ASSERT(m_activeColorSet);
     KoFileDialog dialog(this, KoFileDialog::OpenFile, "OpenColorSet");
     dialog.setDefaultDir(m_activeColorSet->filename());
-    dialog.setNameFilter(/*i18n*/("Gimp Color Palette (*.gpl)"));
+    dialog.setNameFilter(i18n("Gimp Color Palette (*.gpl)"));
     QString fileName = dialog.filename();
     KoColorSet *colorSet = new KoColorSet(fileName);
     colorSet->load();
@@ -197,7 +197,7 @@ void KoEditColorSetWidget::save()
 {
     Q_ASSERT(m_activeColorSet);
     if (!m_activeColorSet->save())
-        KMessageBox::error(nullptr, /*i18n*/("Cannot write to palette file %1. Maybe it is read-only. ", m_activeColorSet->filename()), /*i18n*/("Palette"));
+        KMessageBox::error(nullptr, i18n("Cannot write to palette file %1. Maybe it is read-only. ", m_activeColorSet->filename()), i18n("Palette"));
 }
 
 KoColorSet *KoEditColorSetWidget::activeColorSet()
@@ -211,7 +211,7 @@ KoEditColorSetDialog::KoEditColorSetDialog(const QList<KoColorSet *> &palettes, 
 {
     ui = new KoEditColorSetWidget(palettes, activePalette, this);
     setMainWidget(ui);
-    setCaption(/*i18n*/("Add/Remove Colors"));
+    setCaption(i18n("Add/Remove Colors"));
     enableButton(KoDialog::Ok, ui->isEnabled());
 }
 

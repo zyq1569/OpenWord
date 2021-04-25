@@ -205,7 +205,7 @@ void KoZoomAction::regenerateItems(const qreal zoom, bool asCurrent)
         const qreal valueInPercent = value * 100;
         const int precision = (value > 10.0) ? 0 : 1;
 
-        values << /*i18n*/("%1%", QLocale().toString(valueInPercent, 'f', precision));
+        values << i18n("%1%", QLocale().toString(valueInPercent, 'f', precision));
     }
 
     setItems( values );
@@ -218,7 +218,7 @@ void KoZoomAction::regenerateItems(const qreal zoom, bool asCurrent)
         // TODO: why zoomInPercent and not zoom here? different from above
         const int precision = (zoomInPercent > 10.0) ? 0 : 1;
 
-        const QString valueString = /*i18n*/("%1%", QLocale().toString(zoomInPercent, 'f', precision));
+        const QString valueString = i18n("%1%", QLocale().toString(zoomInPercent, 'f', precision));
 
         setCurrentAction(valueString);
 

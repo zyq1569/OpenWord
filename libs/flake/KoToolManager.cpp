@@ -523,7 +523,7 @@ void KoToolManager::Private::postSwitchTool(bool temporary)
             toolWidget->setLayout(layout);
             canvasData->dummyToolWidget = toolWidget;
         }
-        canvasData->dummyToolLabel->setText(/*i18n*/("Active tool: %1", title));
+        canvasData->dummyToolLabel->setText(i18n("Active tool: %1", title));
         optionWidgetList.append(toolWidget);
     }
 

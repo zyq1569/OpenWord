@@ -43,11 +43,11 @@ KoPageLayoutDialog::KoPageLayoutDialog(QWidget *parent, const KoPageLayout &layo
     : KPageDialog(parent)
     , d(new Private)
 {
-    setWindowTitle(/*i18n*/("Page Layout"));
+    setWindowTitle(i18n("Page Layout"));
     setFaceType(KPageDialog::Tabbed);
 
     QWidget *widget = new QWidget(this);
-    addPage(widget, /*i18n*/("Page"));
+    addPage(widget, i18n("Page"));
 
     QHBoxLayout *lay = new QHBoxLayout(widget);
 
@@ -105,7 +105,7 @@ void KoPageLayoutDialog::showApplyToDocument(bool on)
     if (on && d->documentCheckBox == 0) {
         for (int i = 0; i < children().count(); ++i) {
             if (QDialogButtonBox *buttonBox = qobject_cast<QDialogButtonBox*>(children()[i])) {
-                d->documentCheckBox = new QCheckBox(/*i18n*/("Apply to document"), buttonBox);
+                d->documentCheckBox = new QCheckBox(i18n("Apply to document"), buttonBox);
                 d->documentCheckBox->setChecked(true);
                 buttonBox->addButton(d->documentCheckBox, QDialogButtonBox::ResetRole);
                 break;

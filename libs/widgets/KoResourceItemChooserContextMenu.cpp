@@ -117,7 +117,7 @@ NewTagAction::NewTagAction(KoResource* resource, QMenu* parent)
 {
     m_resource = resource;
     setIcon(koIcon("document-new"));
-    setPlaceholderText(/*i18n*/("New tag"));
+    setPlaceholderText(i18n("New tag"));
     closeParentOnTrigger(true);
 
     connect (this, SIGNAL(triggered(QString)),
@@ -150,7 +150,7 @@ KoResourceItemChooserContextMenu::KoResourceItemChooserContextMenu(KoResource* r
     removables.sort();
     assignables.sort();
 
-    assignableTagsMenu = addMenu(koIcon("list-add"),/*i18n*/("Assign to tag"));
+    assignableTagsMenu = addMenu(koIcon("list-add"),i18n("Assign to tag"));
 
     if (!removables.isEmpty()) {
         addSeparator();
@@ -159,7 +159,7 @@ KoResourceItemChooserContextMenu::KoResourceItemChooserContextMenu(KoResource* r
             assignables.removeAll(currentTag);
             removables.removeAll(currentTag);
             ContextMenuExistingTagAction * removeTagAction = new ContextMenuExistingTagAction(resource, currentTag, this);
-            removeTagAction->setText(/*i18n*/("Remove from this tag"));
+            removeTagAction->setText(i18n("Remove from this tag"));
             removeTagAction->setIcon(koIcon("list-remove"));
 
             connect(removeTagAction, SIGNAL(triggered(KoResource*,QString)),
@@ -167,7 +167,7 @@ KoResourceItemChooserContextMenu::KoResourceItemChooserContextMenu(KoResource* r
             addAction(removeTagAction);
         }
         if (!removables.isEmpty()) {
-            removableTagsMenu = addMenu(koIcon("list-remove"),/*i18n*/("Remove from other tag"));
+            removableTagsMenu = addMenu(koIcon("list-remove"),i18n("Remove from other tag"));
             foreach (const QString &tag, removables) {
                 assignables.removeAll(tag);
                 ContextMenuExistingTagAction * removeTagAction = new ContextMenuExistingTagAction(resource, tag, this);

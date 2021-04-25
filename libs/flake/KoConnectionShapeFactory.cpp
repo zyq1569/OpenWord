@@ -32,9 +32,9 @@
 #include <KoShapeLoadingContext.h>
 
 KoConnectionShapeFactory::KoConnectionShapeFactory()
-        : KoShapeFactoryBase(KOCONNECTIONSHAPEID, /*i18n*/("Tie"))
+        : KoShapeFactoryBase(KOCONNECTIONSHAPEID, i18n("Tie"))
 {
-    setToolTip(/*i18n*/("A connection between two other shapes"));
+    setToolTip(i18n("A connection between two other shapes"));
     setIconName(koIconName("x-shape-connection"));
     setXmlElementNames(KoXmlNS::draw, QStringList("connector"));
     setLoadingPriority(1);

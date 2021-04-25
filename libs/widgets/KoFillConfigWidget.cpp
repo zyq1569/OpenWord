@@ -245,7 +245,7 @@ KoFillConfigWidget::KoFillConfigWidget(QWidget *parent)
     // The button for pattern fill
     button = new KoGroupButton(KoGroupButton::GroupRight, this);
     button->setIcon(QPixmap((const char **) buttonpattern));
-    button->setToolTip(/*i18n*/("Pattern"));
+    button->setToolTip(i18n("Pattern"));
     button->setCheckable(true);
     d->group->addButton(button, Pattern);
     layout->addWidget(button);
@@ -259,7 +259,7 @@ KoFillConfigWidget::KoFillConfigWidget(QWidget *parent)
     d->noFillAction = new QAction(nullptr);
 
     d->colorAction = new KoColorPopupAction(d->colorButton);
-    d->colorAction->setToolTip(/*i18n*/("Change the filling color"));
+    d->colorAction->setToolTip(i18n("Change the filling color"));
     d->colorAction->setCurrentColor(Qt::white);
     d->colorButton->setDefaultAction(d->colorAction);
     d->colorButton->setPopupMode(QToolButton::InstantPopup);
@@ -270,14 +270,14 @@ KoFillConfigWidget::KoFillConfigWidget(QWidget *parent)
     KoResourceServerProvider *serverProvider = KoResourceServerProvider::instance();
     QSharedPointer<KoAbstractResourceServerAdapter> gradientResourceAdapter(new KoResourceServerAdapter<KoAbstractGradient>(serverProvider->gradientServer()));
     d->gradientAction = new KoResourcePopupAction(gradientResourceAdapter, d->colorButton);
-    d->gradientAction->setToolTip(/*i18n*/("Change the filling gradient"));
+    d->gradientAction->setToolTip(i18n("Change the filling gradient"));
     connect(d->gradientAction, SIGNAL(resourceSelected(QSharedPointer<KoShapeBackground>)), this, SLOT(gradientChanged(QSharedPointer<KoShapeBackground>)));
     connect(d->colorButton, SIGNAL(iconSizeChanged()), d->gradientAction, SLOT(updateIcon()));
 
     // Pattern selector
     QSharedPointer<KoAbstractResourceServerAdapter>patternResourceAdapter(new KoResourceServerAdapter<KoPattern>(serverProvider->patternServer()));
     d->patternAction = new KoResourcePopupAction(patternResourceAdapter, d->colorButton);
-    d->patternAction->setToolTip(/*i18n*/("Change the filling pattern"));
+    d->patternAction->setToolTip(i18n("Change the filling pattern"));
     connect(d->patternAction, SIGNAL(resourceSelected(QSharedPointer<KoShapeBackground>)), this, SLOT(patternChanged(QSharedPointer<KoShapeBackground>)));
     connect(d->colorButton, SIGNAL(iconSizeChanged()), d->patternAction, SLOT(updateIcon()));
 

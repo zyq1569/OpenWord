@@ -61,11 +61,11 @@ KoConfigAuthorPage::KoConfigAuthorPage()
     layout->addWidget(d->combo, 0, 0);
     QToolButton *newUser = new QToolButton;
     newUser->setIcon(koIcon("list-add-user"));
-    newUser->setToolTip(/*i18n*/("Add new author profile (starts out as a copy of current)"));
+    newUser->setToolTip(i18n("Add new author profile (starts out as a copy of current)"));
     layout->addWidget(newUser, 0, 1);
     d->deleteUser = new QToolButton;
     d->deleteUser->setIcon(koIcon("list-remove-user"));
-    d->deleteUser->setToolTip(/*i18n*/("Delete the author profile"));
+    d->deleteUser->setToolTip(i18n("Delete the author profile"));
     layout->addWidget(d->deleteUser, 0, 2);
     QFrame *f = new QFrame;
     f->setFrameStyle(QFrame::HLine | QFrame::Sunken);
@@ -79,7 +79,7 @@ KoConfigAuthorPage::KoConfigAuthorPage()
     QWidget *w = new QWidget;
     w->setEnabled(false);
     aUi->setupUi(w);
-    d->combo->addItem(/*i18n*/("Default Author Profile"));
+    d->combo->addItem(i18n("Default Author Profile"));
     d->stack->addWidget(w);
     KUser user(KUser::UseRealUserID);
     aUi->leFullName->setText(user.property(KUser::FullName).toString());
@@ -139,7 +139,7 @@ void KoConfigAuthorPage::profileChanged(int i)
 void KoConfigAuthorPage::addUser()
 {
     bool ok;
-    QString profileName = QInputDialog::getText(this, /*i18n*/("Name of Profile"), /*i18n*/("Name (not duplicate or blank name):"),QLineEdit::Normal, "", &ok);
+    QString profileName = QInputDialog::getText(this, i18n("Name of Profile"), i18n("Name (not duplicate or blank name):"),QLineEdit::Normal, "", &ok);
 
     if (!ok) {
         return;

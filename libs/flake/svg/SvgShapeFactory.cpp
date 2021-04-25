@@ -33,7 +33,7 @@
 #define SVGSHAPEFACTORYID "SvgShapeFactory"
 
 SvgShapeFactory::SvgShapeFactory()
-    : KoShapeFactoryBase(SVGSHAPEFACTORYID, /*i18n*/("Embedded svg shape"))
+    : KoShapeFactoryBase(SVGSHAPEFACTORYID, i18n("Embedded svg shape"))
 {
     setLoadingPriority(4);
     setXmlElementNames(QString(KoXmlNS::draw), QStringList("image"));

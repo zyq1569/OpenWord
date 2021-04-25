@@ -107,67 +107,67 @@ KoPathTool::KoPathTool(KoCanvasBase *canvas)
 {
     QActionGroup *points = new QActionGroup(this);
     // m_pointTypeGroup->setExclusive(true);
-    m_actionPathPointCorner = new QAction(koIcon("node-type-cusp"), /*i18n*/("Corner point"), this);
+    m_actionPathPointCorner = new QAction(koIcon("node-type-cusp"), i18n("Corner point"), this);
     addAction("pathpoint-corner", m_actionPathPointCorner);
     m_actionPathPointCorner->setData(KoPathPointTypeCommand::Corner);
     points->addAction(m_actionPathPointCorner);
 
-    m_actionPathPointSmooth = new QAction(koIcon("node-type-smooth"), /*i18n*/("Smooth point"), this);
+    m_actionPathPointSmooth = new QAction(koIcon("node-type-smooth"), i18n("Smooth point"), this);
     addAction("pathpoint-smooth", m_actionPathPointSmooth);
     m_actionPathPointSmooth->setData(KoPathPointTypeCommand::Smooth);
     points->addAction(m_actionPathPointSmooth);
 
-    m_actionPathPointSymmetric = new QAction(koIcon("node-type-symmetric"), /*i18n*/("Symmetric Point"), this);
+    m_actionPathPointSymmetric = new QAction(koIcon("node-type-symmetric"), i18n("Symmetric Point"), this);
     addAction("pathpoint-symmetric", m_actionPathPointSymmetric);
     m_actionPathPointSymmetric->setData(KoPathPointTypeCommand::Symmetric);
     points->addAction(m_actionPathPointSymmetric);
 
-    m_actionCurvePoint = new QAction(koIcon("format-node-curve"), /*i18n*/("Make curve point"), this);
+    m_actionCurvePoint = new QAction(koIcon("format-node-curve"), i18n("Make curve point"), this);
     addAction("pathpoint-curve", m_actionCurvePoint);
     connect(m_actionCurvePoint, SIGNAL(triggered()), this, SLOT(pointToCurve()));
 
-    m_actionLinePoint = new QAction(koIcon("format-node-line"), /*i18n*/("Make line point"), this);
+    m_actionLinePoint = new QAction(koIcon("format-node-line"), i18n("Make line point"), this);
     addAction("pathpoint-line", m_actionLinePoint);
     connect(m_actionLinePoint, SIGNAL(triggered()), this, SLOT(pointToLine()));
 
-    m_actionLineSegment = new QAction(koIcon("format-segment-line"), /*i18n*/("Segment to Line"), this);
+    m_actionLineSegment = new QAction(koIcon("format-segment-line"), i18n("Segment to Line"), this);
     m_actionLineSegment->setShortcut(Qt::Key_F);
     addAction("pathsegment-line", m_actionLineSegment);
     connect(m_actionLineSegment, SIGNAL(triggered()), this, SLOT(segmentToLine()));
 
-    m_actionCurveSegment = new QAction(koIcon("format-segment-curve"), /*i18n*/("Segment to Curve"), this);
+    m_actionCurveSegment = new QAction(koIcon("format-segment-curve"), i18n("Segment to Curve"), this);
     m_actionCurveSegment->setShortcut(Qt::Key_C);
     addAction("pathsegment-curve", m_actionCurveSegment);
     connect(m_actionCurveSegment, SIGNAL(triggered()), this, SLOT(segmentToCurve()));
 
-    m_actionAddPoint = new QAction(koIcon("format-insert-node"), /*i18n*/("Insert point"), this);
+    m_actionAddPoint = new QAction(koIcon("format-insert-node"), i18n("Insert point"), this);
     addAction("pathpoint-insert", m_actionAddPoint);
     m_actionAddPoint->setShortcut(Qt::Key_Insert);
     connect(m_actionAddPoint, SIGNAL(triggered()), this, SLOT(insertPoints()));
 
-    m_actionRemovePoint = new QAction(koIcon("format-remove-node"), /*i18n*/("Remove point"), this);
+    m_actionRemovePoint = new QAction(koIcon("format-remove-node"), i18n("Remove point"), this);
     m_actionRemovePoint->setShortcut(Qt::Key_Backspace);
     addAction("pathpoint-remove", m_actionRemovePoint);
     connect(m_actionRemovePoint, SIGNAL(triggered()), this, SLOT(removePoints()));
 
-    m_actionBreakPoint = new QAction(koIcon("format-break-node"), /*i18n*/("Break at point"), this);
+    m_actionBreakPoint = new QAction(koIcon("format-break-node"), i18n("Break at point"), this);
     addAction("path-break-point", m_actionBreakPoint);
     connect(m_actionBreakPoint, SIGNAL(triggered()), this, SLOT(breakAtPoint()));
 
-    m_actionBreakSegment = new QAction(koIcon("format-disconnect-node"), /*i18n*/("Break at segment"), this);
+    m_actionBreakSegment = new QAction(koIcon("format-disconnect-node"), i18n("Break at segment"), this);
     addAction("path-break-segment", m_actionBreakSegment);
     connect(m_actionBreakSegment, SIGNAL(triggered()), this, SLOT(breakAtSegment()));
 
-    m_actionJoinSegment = new QAction(koIcon("format-connect-node"), /*i18n*/("Join with segment"), this);
+    m_actionJoinSegment = new QAction(koIcon("format-connect-node"), i18n("Join with segment"), this);
     m_actionJoinSegment->setShortcut(Qt::Key_J);
     addAction("pathpoint-join", m_actionJoinSegment);
     connect(m_actionJoinSegment, SIGNAL(triggered()), this, SLOT(joinPoints()));
 
-    m_actionMergePoints = new QAction(koIcon("format-join-node"), /*i18n*/("Merge points"), this);
+    m_actionMergePoints = new QAction(koIcon("format-join-node"), i18n("Merge points"), this);
     addAction("pathpoint-merge", m_actionMergePoints);
     connect(m_actionMergePoints, SIGNAL(triggered()), this, SLOT(mergePoints()));
 
-    m_actionConvertToPath = new QAction(koIcon("format-convert-to-path"), /*i18n*/("To Path"), this);
+    m_actionConvertToPath = new QAction(koIcon("format-convert-to-path"), i18n("To Path"), this);
     m_actionConvertToPath->setShortcut(Qt::Key_P);
     addAction("convert-to-path", m_actionConvertToPath);
     connect(m_actionConvertToPath, SIGNAL(triggered()), this, SLOT(convertToPath()));
@@ -200,7 +200,7 @@ QList<QPointer<QWidget> >  KoPathTool::createOptionWidgets()
     PathToolOptionWidget * toolOptions = new PathToolOptionWidget(this);
     connect(this, SIGNAL(typeChanged(int)), toolOptions, SLOT(setSelectionType(int)));
     updateOptionsWidget();
-    toolOptions->setWindowTitle(/*i18n*/("Line/Curve"));
+    toolOptions->setWindowTitle(i18n("Line/Curve"));
     list.append(toolOptions);
 
     return list;
@@ -538,7 +538,7 @@ void KoPathTool::mouseMoveEvent(KoPointerEvent *event)
             int handleId = parameterShape->handleIdAt(roi);
             if (handleId != -1) {
                 useCursor(m_moveCursor);
-                emit statusTextChanged(/*i18n*/("Drag to move handle."));
+                emit statusTextChanged(i18n("Drag to move handle."));
                 if (m_activeHandle)
                     m_activeHandle->repaint();
                 delete m_activeHandle;
@@ -602,9 +602,9 @@ void KoPathTool::mouseMoveEvent(KoPointerEvent *event)
 
                 useCursor(m_moveCursor);
                 if (bestPointType == KoPathPoint::Node)
-                    emit statusTextChanged(/*i18n*/("Drag to move point. Shift click to change point type."));
+                    emit statusTextChanged(i18n("Drag to move point. Shift click to change point type."));
                 else
-                    emit statusTextChanged(/*i18n*/("Drag to move control point."));
+                    emit statusTextChanged(i18n("Drag to move control point."));
 
                 PointHandle *prev = dynamic_cast<PointHandle*>(m_activeHandle);
                 if (prev && prev->activePoint() == bestPoint && prev->activePointType() == bestPointType)
@@ -629,16 +629,16 @@ void KoPathTool::mouseMoveEvent(KoPointerEvent *event)
     PathSegment *hoveredSegment = segmentAtPoint(event->point);
     if(hoveredSegment) {
         useCursor(Qt::PointingHandCursor);
-        emit statusTextChanged(/*i18n*/("Drag to change curve directly. Double click to insert new path point."));
+        emit statusTextChanged(i18n("Drag to change curve directly. Double click to insert new path point."));
         m_activeSegment = hoveredSegment;
     } else {
         uint selectedPointCount = m_pointSelection.size();
         if (selectedPointCount == 0)
             emit statusTextChanged("");
         else if (selectedPointCount == 1)
-            emit statusTextChanged(/*i18n*/("Press B to break path at selected point."));
+            emit statusTextChanged(i18n("Press B to break path at selected point."));
         else
-            emit statusTextChanged(/*i18n*/("Press B to break path at selected segments."));
+            emit statusTextChanged(i18n("Press B to break path at selected segments."));
     }
 }
 

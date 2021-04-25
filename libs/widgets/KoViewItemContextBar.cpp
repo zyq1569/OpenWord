@@ -193,7 +193,7 @@ void KoViewItemContextBar::updateToggleSelectionButton()
     const char *const iconName = (isHoveredIndexSelected ? koIconNameCStr("list-remove") : koIconNameCStr("list-add"));
 
     m_ToggleSelectionButton->setIcon(QIcon::fromTheme(QLatin1String(iconName)));
-    m_ToggleSelectionButton->setToolTip(isHoveredIndexSelected ? /*i18n*/("deselect item") : /*i18n*/("select item"));
+    m_ToggleSelectionButton->setToolTip(isHoveredIndexSelected ? i18n("deselect item") : i18n("select item"));
 }
 
 void KoViewItemContextBar::update()

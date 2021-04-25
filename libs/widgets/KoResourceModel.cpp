@@ -83,11 +83,11 @@ QVariant KoResourceModel::data( const QModelIndex &index, int role ) const
             KoResource * resource = static_cast<KoResource*>(index.internalPointer());
             if( ! resource )
                 return QVariant();
-            QString resName = /*i18n*/( resource->name().toUtf8().data());
+            QString resName = i18n( resource->name().toUtf8().data());
 
             if (m_resourceAdapter->assignedTagsList(resource).count()) {
                 QString taglist = m_resourceAdapter->assignedTagsList(resource).join("] , [");
-                QString tagListToolTip = QString(" - %1: [%2]").arg(/*i18n*/("Tags"), taglist);
+                QString tagListToolTip = QString(" - %1: [%2]").arg(i18n("Tags"), taglist);
                 return QVariant( resName + tagListToolTip );
             }
             return QVariant( resName );

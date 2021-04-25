@@ -56,7 +56,7 @@ KoConfigDocumentPage::KoConfigDocumentPage(KoDocument* doc, char* name)
 
     d->config = d->doc->documentPart()->componentData().config();
 
-    QGroupBox* gbDocumentSettings = new QGroupBox(/*i18n*/("Document Settings"), this);
+    QGroupBox* gbDocumentSettings = new QGroupBox(i18n("Document Settings"), this);
     QFormLayout *layout = new QFormLayout(gbDocumentSettings);
 
     d->oldAutoSave = doc->defaultAutoSave() / 60;

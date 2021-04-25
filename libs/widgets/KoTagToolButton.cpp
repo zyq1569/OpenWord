@@ -61,7 +61,7 @@ KoTagToolButton::KoTagToolButton(QWidget* parent)
     QMenu* popup = new QMenu(this);
 
     KoLineEditAction*  addTagAction = new KoLineEditAction(popup);
-    addTagAction->setPlaceholderText(/*i18n*/("New tag"));
+    addTagAction->setPlaceholderText(i18n("New tag"));
     addTagAction->setIcon(koIcon("document-new"));
     addTagAction->closeParentOnTrigger(true);
     popup->addAction(addTagAction);
@@ -70,7 +70,7 @@ KoTagToolButton::KoTagToolButton(QWidget* parent)
             this, SIGNAL(newTagRequested(QString)));
 
     d->action_renameTag = new KoLineEditAction(popup);
-    d->action_renameTag->setPlaceholderText(/*i18n*/("Rename tag"));
+    d->action_renameTag->setPlaceholderText(i18n("Rename tag"));
     d->action_renameTag->setIcon(koIcon("edit-rename"));
     d->action_renameTag->closeParentOnTrigger(true);
     popup->addAction(d->action_renameTag);
@@ -81,7 +81,7 @@ KoTagToolButton::KoTagToolButton(QWidget* parent)
     popup->addSeparator();
 
     d->action_deleteTag = new QAction(popup);
-    d->action_deleteTag->setText(/*i18n*/("Delete this tag"));
+    d->action_deleteTag->setText(i18n("Delete this tag"));
     d->action_deleteTag->setIcon(koIcon("edit-delete"));
     popup->addAction(d->action_deleteTag);
 
@@ -99,7 +99,7 @@ KoTagToolButton::KoTagToolButton(QWidget* parent)
             this, SLOT(onTagUndeleteClicked()));
 
     d->action_purgeTagUndeleteList = new QAction(popup);
-    d->action_purgeTagUndeleteList->setText(/*i18n*/("Clear undelete list"));
+    d->action_purgeTagUndeleteList->setText(i18n("Clear undelete list"));
     d->action_purgeTagUndeleteList->setIcon(koIcon("edit-clear"));
     d->action_purgeTagUndeleteList->setVisible(false);
     popup->addAction(d->action_purgeTagUndeleteList);
@@ -130,7 +130,7 @@ void KoTagToolButton::setUndeletionCandidate(const QString& deletedTagName)
 {
     QString text = "Undelete ";
     d->undeleteCandidate = deletedTagName;
-    //d->action_undeleteTag->setText(/*i18n*/("Undelete") +" "+ deletedTagName);
+    //d->action_undeleteTag->setText(i18n("Undelete") +" "+ deletedTagName);
     d->action_undeleteTag->setText(text + deletedTagName);
     d->action_undeleteTag->setVisible(!deletedTagName.isEmpty());
     d->action_purgeTagUndeleteList->setVisible(!deletedTagName.isEmpty());

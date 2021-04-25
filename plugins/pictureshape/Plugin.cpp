@@ -43,7 +43,8 @@ PluginFactory::~PluginFactory()
 Plugin::Plugin(QObject *parent, const QVariantList &)
     : QObject(parent)
 {
-    if(QPixmapCache::cacheLimit() < CACHE_SIZE) {
+    if(QPixmapCache::cacheLimit() < CACHE_SIZE)
+    {
         QPixmapCache::setCacheLimit(CACHE_SIZE);
     }
 
