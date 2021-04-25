@@ -196,3 +196,17 @@ LIBS              +=   -L$${LOGLIB}  \
 #build_pass:message($$_PRO_FILE_) # 包含当前pri的pro所在路径
 #build_pass:message($$_PRO_FILE_PWD_) # 包含当前pri的pro所在目录
 #https://www.cnblogs.com/codeForFamily/p/qt-creator-ide-source-learn-3-2.html#replace-functions
+
+
+#OFString HashValue(int F, int S, OFString str)
+#{
+#    int len = str.length();
+#    int value = 0;
+#    for (unsigned int i = 0; i < len; i++)
+#    {
+#        value = value * F + str[i] + i;
+#    }
+#    value %= S;
+
+#    return longToString(value);
+#}
