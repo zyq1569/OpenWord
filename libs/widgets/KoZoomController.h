@@ -23,6 +23,7 @@
 
 #include "KoZoomAction.h"
 #include "kowidgets_export.h"
+#include <KLocalizedString>
 #include <KoZoomMode.h>
 #include <KoZoomHandler.h>
 #include <QObject>
@@ -58,8 +59,9 @@ class QSize;
  * except emit the aspectModeChanged signal.
  *
  */
-class KOWIDGETS_EXPORT KoZoomController : public QObject {
-Q_OBJECT
+class KOWIDGETS_EXPORT KoZoomController : public QObject
+{
+    Q_OBJECT
 public:
     /**
     * Constructor. Create one per canvasController.  The zoomAction is created in the constructor and will
@@ -148,9 +150,9 @@ public:
     void setZoom(KoZoomMode::Mode mode, qreal zoom);
 
 
-  /**
-   * Set Aspect Mode button status and begin a chain of signals
-   */
+    /**
+     * Set Aspect Mode button status and begin a chain of signals
+     */
     void setAspectMode(bool status);
 
 public Q_SLOTS:
@@ -244,11 +246,17 @@ public:
     void setAvailableSize()
     {
         if(zoomHandler->zoomMode() == KoZoomMode::ZOOM_WIDTH)
+        {
             setZoom(KoZoomMode::ZOOM_WIDTH, -1);
+        }
         if(zoomHandler->zoomMode() == KoZoomMode::ZOOM_PAGE)
+        {
             setZoom(KoZoomMode::ZOOM_PAGE, -1);
+        }
         if(zoomHandler->zoomMode() == KoZoomMode::ZOOM_TEXT)
+        {
             setZoom(KoZoomMode::ZOOM_TEXT, -1);
+        }
     }
 
     /// when the canvas controller wants us to change zoom

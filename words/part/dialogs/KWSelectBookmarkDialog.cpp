@@ -18,7 +18,7 @@
  */
 
 #include "KWSelectBookmarkDialog.h"
-
+#include <klocalizedstring.h>
 #include <kmessagebox.h>
 
 #include <QInputDialog>
@@ -26,20 +26,24 @@
 static QString lastBookMarkItem;
 
 KWSelectBookmark::KWSelectBookmark(const QStringList &nameList, QWidget *parent)
-        : QWidget(parent),
-        parentWidget(parent)
+    : QWidget(parent),
+      parentWidget(parent)
 {
     widget.setupUi(this);
     widget.bookmarkList->addItems(nameList);
     widget.bookmarkList->setFocus(Qt::ActiveWindowFocusReason);
 
     const int count = widget.bookmarkList->count();
-    if (count > 0) {
+    if (count > 0)
+    {
         int row = 0;
-        if (! lastBookMarkItem.isNull()) {
+        if (! lastBookMarkItem.isNull())
+        {
             QList<QListWidgetItem *> items = widget.bookmarkList->findItems(lastBookMarkItem, Qt::MatchExactly);
             if (items.count() > 0)
+            {
                 row = widget.bookmarkList->row(items[0]);
+            }
         }
         widget.bookmarkList->setCurrentRow(row);
     }
@@ -76,17 +80,22 @@ void KWSelectBookmark::slotBookmarkRename()
     Q_ASSERT(item);
     QString curName = item->text();
     QString newName = item->text();
-    while (true) {
+    while (true)
+    {
         newName = QInputDialog::getText(parentWidget,
                                         i18n("Rename Bookmark"),
                                         i18n("Please provide a new name for the bookmark"),
                                         QLineEdit::Normal,
                                         newName);
-        if (curName != newName && ! newName.isNull()) {
+        if (curName != newName && ! newName.isNull())
+        {
             if (newName.isEmpty())
+            {
                 continue;
+            }
             QList<QListWidgetItem *> items = widget.bookmarkList->findItems(newName, Qt::MatchExactly);
-            if (items.count() > 0) {
+            if (items.count() > 0)
+            {
                 KMessageBox::error(parentWidget, i18n("A bookmark with the name \"%1\" already exists.", newName));
                 continue;
             }
@@ -115,7 +124,7 @@ void KWSelectBookmark::slotBookmarkItemActivated(QListWidgetItem *item)
 }
 
 KWSelectBookmarkDialog::KWSelectBookmarkDialog(const QStringList &nameList, QWidget *parent)
-        : KoDialog(parent)
+    : KoDialog(parent)
 {
     ui = new KWSelectBookmark(nameList, this);
     setMainWidget(ui);

@@ -421,11 +421,23 @@ void PictureShape::waitUntilReady(const KoViewConverter &converter, bool asynchr
     {
         QSize pixmapSize = calcOptimalPixmapSize(converter.documentToView(QRectF(QPointF(0,0), size())).size(), imageData->image().size());
         QString key(generate_key(imageData->key(), pixmapSize));
+
+#if QT_DEPRECATED_SINCE(5, 13)
+        QPixmap pm;
+        if (!QPixmapCache::find(key, &pm))
+        {
+            pm.load(key);
+            QPixmapCache::insert(key, pm);
+        }
+#else
         if (QPixmapCache::find(key) == 0)
         {
             QPixmap pixmap = imageData->pixmap(pixmapSize);
             QPixmapCache::insert(key, pixmap);
         }
+#endif
+
+
     }
 }
 
