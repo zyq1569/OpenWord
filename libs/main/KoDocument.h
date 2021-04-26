@@ -57,9 +57,9 @@ class QDomDocument;
 //     Also when building calligra_shape_formular.dll - FormulaDocument
 //     referenced the same two pagelayout functions incorrectly.
 #if defined(_WIN32) || defined(_WIN64)
-    #include <KoPageLayout.h>
+#include <KoPageLayout.h>
 #else
-    struct KoPageLayout;
+struct KoPageLayout;
 #endif
 
 class KoVersionInfo
@@ -832,9 +832,11 @@ Q_DECLARE_METATYPE(KoDocument*)
 #include <KJobWidgets>
 #include <QDBusConnection>
 #endif
-namespace {
+namespace
+{
 
-class DocumentProgressProxy : public KoProgressProxy {
+class DocumentProgressProxy : public KoProgressProxy
+{
 public:
     KoMainWindow *m_mainWindow;
     DocumentProgressProxy(KoMainWindow *mainWindow)
@@ -842,26 +844,32 @@ public:
     {
     }
 
-    ~DocumentProgressProxy() override {
+    ~DocumentProgressProxy() override
+    {
         // signal that the job is done
         setValue(-1);
     }
 
-    int maximum() const override {
+    int maximum() const override
+    {
         return 100;
     }
 
-    void setValue(int value) override {
-        if (m_mainWindow) {
+    void setValue(int value) override
+    {
+        if (m_mainWindow)
+        {
             m_mainWindow->slotProgress(value);
         }
     }
 
-    void setRange(int /*minimum*/, int /*maximum*/) override {
+    void setRange(int /*minimum*/, int /*maximum*/) override
+    {
 
     }
 
-    void setFormat(const QString &/*format*/) override {
+    void setFormat(const QString &/*format*/) override
+    {
 
     }
 };
@@ -909,9 +917,12 @@ public:
 
         confirmNonNativeSave[0] = true;
         confirmNonNativeSave[1] = true;
-        if (QLocale().measurementSystem() == QLocale::ImperialSystem) {
+        if (QLocale().measurementSystem() == QLocale::ImperialSystem)
+        {
             unit = KoUnit::Inch;
-        } else {
+        }
+        else
+        {
             unit = KoUnit::Centimeter;
         }
     }
@@ -986,9 +997,11 @@ public:
     bool openFile()
     {
         DocumentProgressProxy *progressProxy = 0;
-        if (!document->progressProxy()) {
+        if (!document->progressProxy())
+        {
             KoMainWindow *mainWindow = 0;
-            if (parentPart->mainWindows().count() > 0) {
+            if (parentPart->mainWindows().count() > 0)
+            {
                 mainWindow = parentPart->mainWindows()[0];
             }
             progressProxy = new DocumentProgressProxy(mainWindow);
@@ -998,7 +1011,8 @@ public:
 
         bool ok = document->openFile();
 
-        if (progressProxy) {
+        if (progressProxy)
+        {
             document->setProgressProxy(0);
             delete progressProxy;
         }
@@ -1009,19 +1023,24 @@ public:
     {
         m_bTemp = false;
         // set the mimetype only if it was not already set (for example, by the host application)
-        if (mimeType.isEmpty()) {
+        if (mimeType.isEmpty())
+        {
             // get the mimetype of the file
             // using findByUrl() to avoid another string -> url conversion
             QMimeType mime = QMimeDatabase().mimeTypeForUrl(m_url);
-            if (mime.isValid()) {
+            if (mime.isValid())
+            {
                 mimeType = mime.name().toLatin1();
                 m_bAutoDetectedMime = true;
             }
         }
         const bool ret = openFile();
-        if (ret) {
+        if (ret)
+        {
             emit document->completed();
-        } else {
+        }
+        else
+        {
             emit document->canceled(QString());
         }
         return ret;
@@ -1036,7 +1055,9 @@ public:
         QString ext = fileInfo.completeSuffix();
         QString extension;
         if (!ext.isEmpty() && m_url.query().isNull()) // not if the URL has a query, e.g. cgi.pl?something
-            extension = '.'+ext; // keep the '.'
+        {
+            extension = '.'+ext;    // keep the '.'
+        }
         QTemporaryFile tempFile(QDir::tempPath() + "/" + qAppName() + QLatin1String("_XXXXXX") + extension);
         tempFile.setAutoRemove(false);
         tempFile.open();
@@ -1049,7 +1070,8 @@ public:
 #ifndef QT_NO_DBUS
         KJobWidgets::setWindow(m_job, 0);
         //if (m_job->ui()) {
-        if (m_job) {
+        if (m_job)
+        {
             KJobWidgets::setWindow(m_job, parentPart->currentMainwindow());
         }
 #endif
@@ -1064,14 +1086,16 @@ public:
         if ( m_url.isLocalFile() )
         {
             if ( m_bTemp ) // get rid of a possible temp file first
-            {              // (happens if previous url was remote)
+            {
+                // (happens if previous url was remote)
                 QFile::remove( m_file );
                 m_bTemp = false;
             }
             m_file = m_url.toLocalFile();
         }
         else
-        { // Remote file
+        {
+            // Remote file
             // We haven't saved yet, or we did but locally - provide a temp file
             if ( m_file.isEmpty() || !m_bTemp )
             {
@@ -1091,12 +1115,17 @@ public:
         Q_ASSERT( job == m_job );
         m_job = 0;
         if (job->error())
+        {
             emit document->canceled( job->errorString() );
-        else {
-            if ( openFile() ) {
+        }
+        else
+        {
+            if ( openFile() )
+            {
                 emit document->completed();
             }
-            else {
+            else
+            {
                 emit document->canceled(QString());
             }
         }
@@ -1109,9 +1138,11 @@ public:
 
         // this could maybe confuse some apps? So for now we'll just fallback to KIO::get
         // and error again. Well, maybe this even helps with wrong stat results.
-        if (!job->error()) {
+        if (!job->error())
+        {
             const QUrl localUrl = static_cast<KIO::StatJob*>(job)->mostLocalUrl();
-            if (localUrl.isLocalFile()) {
+            if (localUrl.isLocalFile())
+            {
                 m_file = localUrl.toLocalFile();
                 openLocalFile();
                 return;
@@ -1124,9 +1155,11 @@ public:
     void _k_slotGotMimeType(KIO::Job *job, const QString &mime)
     {
 //         kDebug(1000) << mime;
-        Q_ASSERT(job == m_job); Q_UNUSED(job);
+        Q_ASSERT(job == m_job);
+        Q_UNUSED(job);
         // set the mimetype only if it was not already set (for example, by the host application)
-        if (mimeType.isEmpty()) {
+        if (mimeType.isEmpty())
+        {
             mimeType = mime.toLatin1();
             m_bAutoDetectedMime = true;
         }
@@ -1138,7 +1171,8 @@ public:
         {
             QFile::remove(m_uploadJob->srcUrl().toLocalFile());
             m_uploadJob = 0;
-            if (m_duringSaveAs) {
+            if (m_duringSaveAs)
+            {
                 document->setUrl(m_originalURL);
                 m_file = m_originalFilePath;
             }
@@ -1155,7 +1189,8 @@ public:
         m_duringSaveAs = false;
         m_originalURL = QUrl();
         m_originalFilePath.clear();
-        if (m_waitForSave) {
+        if (m_waitForSave)
+        {
             m_eventLoop.quit();
         }
     }

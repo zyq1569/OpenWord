@@ -174,11 +174,12 @@ KoApplication::KoApplication(const QByteArray &nativeMimeType,
     }
     else
     {
-        KDBusService service(KDBusService::Multiple);/// openword : not start ???? why (in windows)???
+        ///----- openword : not start ???? why (in windows)???
+        KDBusService service(KDBusService::Multiple);
+        new KoApplicationAdaptor(this);
+        QDBusConnection::sessionBus().registerObject("/application", this);
     }
 
-    new KoApplicationAdaptor(this);
-    QDBusConnection::sessionBus().registerObject("/application", this);
 #endif
 
 #ifdef Q_OS_MACX
