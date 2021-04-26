@@ -426,8 +426,10 @@ void PictureShape::waitUntilReady(const KoViewConverter &converter, bool asynchr
         QPixmap pm;
         if (!QPixmapCache::find(key, &pm))
         {
-            pm.load(key);
-            QPixmapCache::insert(key, pm);
+//pm.load(key);
+//QPixmapCache::insert(key, pm);
+            QPixmap pixmap = imageData->pixmap(pixmapSize);
+            QPixmapCache::insert(key, pixmap);
         }
 #else
         if (QPixmapCache::find(key) == 0)
