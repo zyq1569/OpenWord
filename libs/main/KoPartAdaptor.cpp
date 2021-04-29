@@ -30,7 +30,7 @@
 
 
 KoPartAdaptor::KoPartAdaptor(KoPart *doc)
-        : QDBusAbstractAdaptor(doc)
+    : QDBusAbstractAdaptor(doc)
 {
     setAutoRelaySignals(true);
     m_pDoc = doc;
@@ -70,7 +70,9 @@ QString KoPartAdaptor::view(int idx)
     QList<KoView*> views = m_pDoc->views();
     KoView *v = views.at(idx);
     if (!v)
+    {
         return QString();
+    }
 
     return v->objectName();
 }

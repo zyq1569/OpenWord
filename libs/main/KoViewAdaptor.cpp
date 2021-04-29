@@ -29,7 +29,7 @@
 #include <QList>
 
 KoViewAdaptor::KoViewAdaptor(KoView *view)
-        : QDBusAbstractAdaptor(view)
+    : QDBusAbstractAdaptor(view)
 {
     setAutoRelaySignals(true);
     m_pView = view;
@@ -44,9 +44,12 @@ QStringList KoViewAdaptor::actions()
 {
     QStringList tmp_actions;
     QList<QAction*> lst = m_pView->actionCollection()->actions();
-    foreach(QAction* it, lst) {
+    foreach(QAction* it, lst)
+    {
         if (it->isEnabled())
+        {
             tmp_actions.append(it->objectName());
+        }
     }
     return tmp_actions;
 }
