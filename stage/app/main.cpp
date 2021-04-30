@@ -47,7 +47,8 @@ extern "C" Q_DECL_EXPORT int kdemain( int argc, char **argv )
     m.setUiFiles(QStringList() << QStringLiteral("stage.rc") << QStringLiteral("stage_readonly.rc"));
     m.migrate();
 
-    if (!app.start()) {
+    if (!app.start())
+    {
         return 1;
     }
 

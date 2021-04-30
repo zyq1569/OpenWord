@@ -27,7 +27,7 @@
 
 AutocorrectConfig::AutocorrectConfig(Autocorrect *autocorrect, QWidget *parent)
     : QWidget(parent),
-    m_autocorrect(autocorrect)
+      m_autocorrect(autocorrect)
 {
     widget.setupUi(this);
     widget.upperCase->setCheckState(m_autocorrect->getUppercaseFirstCharOfSentence() ? Qt::Checked : Qt::Unchecked);
@@ -69,7 +69,8 @@ AutocorrectConfig::AutocorrectConfig(Autocorrect *autocorrect, QWidget *parent)
     widget.tableWidget->verticalHeader()->hide();
     QHash<QString, QString>::const_iterator i = m_autocorrectEntries.constBegin();
     int j = 0;
-    while (i != m_autocorrectEntries.constEnd()) {
+    while (i != m_autocorrectEntries.constEnd())
+    {
         widget.tableWidget->setItem(j, 0, new QTableWidgetItem(i.key()));
         widget.tableWidget->setItem(j++, 1, new QTableWidgetItem(i.value()));
         ++i;
@@ -152,7 +153,8 @@ void AutocorrectConfig::selectSingleQuoteCharOpen()
 {
     CharSelectDialog *dlg = new CharSelectDialog(this);
     dlg->setCurrentChar(m_singleQuotes.begin);
-    if (dlg->exec()) {
+    if (dlg->exec())
+    {
         m_singleQuotes.begin = dlg->currentChar();
         widget.singleQuote1->setText(m_singleQuotes.begin);
     }
@@ -163,7 +165,8 @@ void AutocorrectConfig::selectSingleQuoteCharClose()
 {
     CharSelectDialog *dlg = new CharSelectDialog(this);
     dlg->setCurrentChar(m_singleQuotes.end);
-    if (dlg->exec()) {
+    if (dlg->exec())
+    {
         m_singleQuotes.end = dlg->currentChar();
         widget.singleQuote2->setText(m_singleQuotes.end);
     }
@@ -181,7 +184,8 @@ void AutocorrectConfig::selectDoubleQuoteCharOpen()
 {
     CharSelectDialog *dlg = new CharSelectDialog(this);
     dlg->setCurrentChar(m_doubleQuotes.begin);
-    if (dlg->exec()) {
+    if (dlg->exec())
+    {
         m_doubleQuotes.begin = dlg->currentChar();
         widget.doubleQuote1->setText(m_doubleQuotes.begin);
     }
@@ -192,7 +196,8 @@ void AutocorrectConfig::selectDoubleQuoteCharClose()
 {
     CharSelectDialog *dlg = new CharSelectDialog(this);
     dlg->setCurrentChar(m_doubleQuotes.end);
-    if (dlg->exec()) {
+    if (dlg->exec())
+    {
         m_doubleQuotes.end = dlg->currentChar();
         widget.doubleQuote2->setText(m_doubleQuotes.end);
     }
@@ -219,7 +224,10 @@ void AutocorrectConfig::enableAdvAutocorrection(int state)
     widget.addButton->setEnabled(enable);
     widget.removeButton->setEnabled(enable);
     widget.tableWidget->setEnabled(enable);
-    if (!enable) enableAutocorrectFormat(Qt::Unchecked);
+    if (!enable)
+    {
+        enableAutocorrectFormat(Qt::Unchecked);
+    }
 }
 
 void AutocorrectConfig::enableAutocorrectFormat(int state)
@@ -237,7 +245,8 @@ void AutocorrectConfig::addAutocorrectEntry()
     bool modify = false;
 
     // Modify actually, not add, so we want to remove item from hash
-    if (currentRow != -1 && find == widget.tableWidget->item(currentRow, 0)->text()) {
+    if (currentRow != -1 && find == widget.tableWidget->item(currentRow, 0)->text())
+    {
         m_autocorrectEntries.remove(find);
         modify = true;
     }
@@ -246,12 +255,15 @@ void AutocorrectConfig::addAutocorrectEntry()
     widget.tableWidget->setSortingEnabled(false);
     int size = widget.tableWidget->rowCount();
 
-    if (modify) {
+    if (modify)
+    {
         widget.tableWidget->removeRow(currentRow);
         size--;
     }
     else
+    {
         widget.tableWidget->setRowCount(++size);
+    }
 
     QTableWidgetItem *item = new QTableWidgetItem(find);
     widget.tableWidget->setItem(size - 1, 0, item);
@@ -274,31 +286,43 @@ void AutocorrectConfig::enableAddRemoveButton()
     QString find = widget.find->text();
     QString replace = widget.replace->text();
     int currentRow = -1;
-    if (m_autocorrectEntries.contains(find)) {
+    if (m_autocorrectEntries.contains(find))
+    {
         currentRow = widget.tableWidget->findItems(find, Qt::MatchCaseSensitive).first()->row();
         widget.tableWidget->setCurrentCell(currentRow, 0);
     }
     else
+    {
         currentRow = widget.tableWidget->currentRow();
+    }
 
     bool enable = false;
     if (currentRow == -1 || find.isEmpty() || replace.isEmpty()) // disable if no text in find/replace
+    {
         enable = !(find.isEmpty() || replace.isEmpty());
-    else if (find == widget.tableWidget->item(currentRow, 0)->text()) {
+    }
+    else if (find == widget.tableWidget->item(currentRow, 0)->text())
+    {
         // We disable add / remove button if no text for the replacement
         enable = !widget.tableWidget->item(currentRow, 1)->text().isEmpty();
         widget.addButton->setText(i18n("&Modify"));
     }
-    else if (!widget.tableWidget->item(currentRow, 1)->text().isEmpty()) {
+    else if (!widget.tableWidget->item(currentRow, 1)->text().isEmpty())
+    {
         enable = true;
         widget.addButton->setText(i18n("&Add"));
     }
 
-    if (currentRow != -1) {
-    if (replace == widget.tableWidget->item(currentRow, 1)->text())
-        widget.addButton->setEnabled(false);
-    else
-        widget.addButton->setEnabled(enable);
+    if (currentRow != -1)
+    {
+        if (replace == widget.tableWidget->item(currentRow, 1)->text())
+        {
+            widget.addButton->setEnabled(false);
+        }
+        else
+        {
+            widget.addButton->setEnabled(enable);
+        }
     }
     widget.removeButton->setEnabled(enable);
 }
@@ -331,7 +355,8 @@ void AutocorrectConfig::twoUpperLetterChanged(const QString &text)
 void AutocorrectConfig::addAbbreviationEntry()
 {
     QString text = widget.abbreviation->text();
-    if (!m_upperCaseExceptions.contains(text)) {
+    if (!m_upperCaseExceptions.contains(text))
+    {
         m_upperCaseExceptions.insert(text);
         widget.abbreviationList->addItem(text);
     }
@@ -343,7 +368,9 @@ void AutocorrectConfig::removeAbbreviationEntry()
     int currentRow = widget.abbreviationList->currentRow();
     QListWidgetItem *item = widget.abbreviationList->takeItem(currentRow);
     if(!item)
+    {
         return;
+    }
     m_upperCaseExceptions.remove(item->text());
     delete item;
 }
@@ -351,7 +378,8 @@ void AutocorrectConfig::removeAbbreviationEntry()
 void AutocorrectConfig::addTwoUpperLetterEntry()
 {
     QString text = widget.twoUpperLetter->text();
-    if (!m_twoUpperLetterExceptions.contains(text)) {
+    if (!m_twoUpperLetterExceptions.contains(text))
+    {
         m_twoUpperLetterExceptions.insert(text);
         widget.twoUpperLetterList->addItem(text);
     }
@@ -363,7 +391,9 @@ void AutocorrectConfig::removeTwoUpperLetterEntry()
     int currentRow = widget.twoUpperLetterList->currentRow();
     QListWidgetItem *item = widget.twoUpperLetterList->takeItem(currentRow);
     if(!item)
+    {
         return;
+    }
     m_twoUpperLetterExceptions.remove(item->text());
     delete item;
 }
@@ -386,7 +416,7 @@ CharSelectDialog::CharSelectDialog(QWidget *parent)
     : KoDialog(parent)
 {
     m_charSelect = new KCharSelect(this, 0,
-            KCharSelect::FontCombo | KCharSelect::BlockCombos | KCharSelect::CharacterTable);
+                                   KCharSelect::FontCombo | KCharSelect::BlockCombos | KCharSelect::CharacterTable);
     setMainWidget(m_charSelect);
     setCaption(i18n("Select Character"));
 }
