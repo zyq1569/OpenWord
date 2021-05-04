@@ -1525,6 +1525,21 @@ void KoMainWindow::slotFileOpen()
     (void) openDocument(url);
 }
 
+
+void KoMainWindow::HealthFileOpen(QString FileName)
+{
+    QUrl url(FileName);
+    DEBUG_LOG("void KoMainWindow::HealthFileOpen() :" + url.toString());
+
+    if (url.isEmpty())
+    {
+        return;
+    }
+
+    (void) openDocument(url);
+
+}
+
 void KoMainWindow::slotFileOpenRecent(const QUrl & url)
 {
     // Create a copy, because the original QUrl in the map of recent files in

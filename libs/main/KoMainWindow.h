@@ -225,6 +225,14 @@ public Q_SLOTS:
     void slotFileOpen();
 
     /**
+     *  Slot for opening a saved file.
+     *
+     *
+     *
+     */
+    void HealthFileOpen(QString FileName);
+
+    /**
      *  Slot for opening a file among the recently opened files.
      *
      *  If the current document is empty, the opened document replaces it.

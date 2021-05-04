@@ -661,9 +661,8 @@ bool KoApplication::start()
                 {
                     if (print)
                     {
-                        connect(
-                            mainWindow, SIGNAL(loadCompleted(KoMainWindow *)),
-                            this, SLOT(slotFilePrint(KoMainWindow *)));
+                        connect( mainWindow, SIGNAL(loadCompleted(KoMainWindow *)),
+                                 this, SLOT(slotFilePrint(KoMainWindow *)));
                     }
                     else if (exportAsPdf)
                     {
@@ -767,9 +766,13 @@ QStringList KoApplication::mimeFilter(KoFilterManager::Direction direction) cons
     KoDocumentEntry entry = KoDocumentEntry::queryByMimeType(d->nativeMimeType);
     QJsonObject json = entry.metaData();
 #ifdef CALLIGRA_OLD_PLUGIN_METADATA
+
     QStringList mimeTypes = json.value("X-KDE-ExtraNativeMimeTypes").toString().split(',');
+
 #else
+
     QStringList mimeTypes = json.value("X-KDE-ExtraNativeMimeTypes").toVariant().toStringList();
+
 #endif
 
     return KoFilterManager::mimeFilter(d->nativeMimeType, direction, mimeTypes);
