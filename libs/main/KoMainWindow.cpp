@@ -467,9 +467,11 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
 
     QBuffer buffer;
     QDataStream in(&buffer);
-    m_sharedHealthApp.lock();
 
-    filename = (char*)m_sharedHealthApp.constData();
+    m_sharedHealthApp.lock();
+    buffer.setData((char*)m_sharedHealthApp.constData(), m_sharedHealthApp.size());
+    buffer.open(QBuffer::ReadOnly);
+    in >> filename;
 
     m_sharedHealthApp.unlock();
     m_sharedHealthApp.detach();
