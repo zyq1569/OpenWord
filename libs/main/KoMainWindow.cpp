@@ -91,6 +91,9 @@
 
 #include "MainDebug.h"
 
+
+#define SHAREDHEALTH "SharedHealth"
+
 class KoMainWindowPrivate
 {
 public:
@@ -256,8 +259,7 @@ public:
 };
 
 KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentData &componentData)
-    : KXmlGuiWindow()
-    , d(new KoMainWindowPrivate(nativeMimeType, componentData, this))
+    :KXmlGuiWindow(), d(new KoMainWindowPrivate(nativeMimeType, componentData, this)), m_sharedHealthApp(SHAREDHEALTH)
 {
     setStandardToolBarMenuEnabled(true);
 
@@ -421,6 +423,59 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
     restoreState(QByteArray::fromBase64(cfg.readEntry("ko_windowstate", QByteArray())));
 
     d->dockerManager = new KoDockerManager(this);
+
+
+    ///
+    ///
+    m_timerID = startTimer(500);//ms
+    ///
+    ///
+
+
+
+}
+
+void KoMainWindow::timerEvent(QTimerEvent *event)
+{
+    Q_UNUSED(event);
+    //switch (event->timerId()-1)
+    //{
+    //        //    case timer1 :
+    //        //      qDebug() << "timer1" << endl;
+    //        //      break;
+    //        //    case timer2 :
+    //        //      qDebug() << "timer2" << endl;
+    //        //      break;
+    //        //    case timer3 :
+    //        //      qDebug() << "timer3" << endl;
+    //        break;
+    //    default:
+    //        qDebug() << "no  !!"<<endl;
+    //        break;
+    //}
+    //    int timerID = 0;
+    //    killTimer(timerID);
+
+
+    ///---------------check memory open---------------------
+    QString filename;
+    if (!m_sharedHealthApp.attach())
+    {
+        DEBUG_LOG(tr("Unable to attach to shared memory segment.\n"));
+        return;
+    }
+
+    QBuffer buffer;
+    QDataStream in(&buffer);
+    m_sharedHealthApp.lock();
+    buffer.setData((char*)m_sharedHealthApp.constData(), m_sharedHealthApp.size());
+    buffer.open(QBuffer::ReadOnly);
+    m_sharedHealthApp.unlock();
+
+    m_sharedHealthApp.detach();
+    ///
+
+
 }
 
 void KoMainWindow::setNoCleanup(bool noCleanup)

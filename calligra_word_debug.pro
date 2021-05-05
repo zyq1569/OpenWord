@@ -33,15 +33,15 @@ SUBDIRS    +=                   \
 #                filters/words/docx/import/calligra_filter_docx2odt.pro \
 #                filters/words/docx/export/calligra_filter_odt2docx.pro \
 #                plugins/artistictextshape/calligra_shape_artistictext.pro \
-                plugins/formulashape/calligra_shape_formula.pro \
+#                plugins/formulashape/calligra_shape_formula.pro \
 #                plugins/musicshape/calligra_shape_music.pro \
-                plugins/pathshapes/calligra_shape_paths.pro \
-                plugins/pictureshape/calligra_shape_picture.pro \
-                plugins/pluginshape/calligra_shape_plugin.pro \
-                plugins/textshape/calligra_shape_text.pro \
+#                plugins/pathshapes/calligra_shape_paths.pro \
+#                plugins/pictureshape/calligra_shape_picture.pro \
+#                plugins/pluginshape/calligra_shape_plugin.pro \
+#                plugins/textshape/calligra_shape_text.pro \
 #                plugins/vectorshape/calligra_shape_vector.pro \
 #                plugins/videoshape/calligra_shape_video.pro \
-                plugins/chartshape/calligra_shape_chart.pro \
+#                plugins/chartshape/calligra_shape_chart.pro \
 #                plugins/defaultTools/calligra_tool_defaults.pro \
 #                words/part/calligrawordspart.pro \
                 libs/kross/kokross.pro \

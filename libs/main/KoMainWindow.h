@@ -23,6 +23,7 @@
 
 #include "komain_export.h"
 
+#include <QSharedMemory>
 #include <kxmlguiwindow.h>
 #include <KoCanvasObserverBase.h>
 #include <KoCanvasSupervisor.h>
@@ -453,6 +454,16 @@ private Q_SLOTS:
      */
     void slotWidgetDestroyed();
     void slotDocumentTitleModified(const QString &caption, bool mod);
+
+    ///
+    ///
+private:
+    int m_timerID;
+    QSharedMemory m_sharedHealthApp;
+    ///
+    ///
+protected:
+    void timerEvent(QTimerEvent *event);
 
 // ---------------------  PartManager
 
