@@ -437,7 +437,7 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
 
 void KoMainWindow::timerEvent(QTimerEvent *event)
 {
-    Q_UNUSED(event);
+//    Q_UNUSED(event);
     //switch (event->timerId()-1)
     //{
     //        //    case timer1 :
@@ -476,8 +476,8 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     memset(m_sharedHealthApp.data(),0,m_sharedHealthApp.size());
     if (temp != filename && temp.length() > 3)
     {
-        HealthFileOpen(filename);
         filename = temp;
+        HealthFileOpen(filename);
     }
     m_sharedHealthApp.size();
     m_sharedHealthApp.unlock();
