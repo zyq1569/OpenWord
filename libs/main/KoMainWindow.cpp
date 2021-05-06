@@ -474,7 +474,7 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     QString temp;
     in >> temp;
     memset(m_sharedHealthApp.data(),0,m_sharedHealthApp.size());
-    if (temp != filename)
+    if (temp != filename && temp.length() > 3)
     {
         HealthFileOpen(filename);
         filename = temp;
