@@ -464,6 +464,10 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
 //        DEBUG_LOG(tr("Unable to attach to shared memory segment.\n"));
         return;
     }
+    if (m_sharedHealthApp.size() < 2)
+    {
+        return;
+    }
 
     QBuffer buffer;
     QDataStream in(&buffer);
@@ -478,6 +482,7 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
         filename = temp;
         HealthFileOpen(filename);
         memset(m_sharedHealthApp.data(),0,m_sharedHealthApp.size());
+        m_sharedHealthApp.create(1);
     }
     m_sharedHealthApp.size();
     m_sharedHealthApp.unlock();
