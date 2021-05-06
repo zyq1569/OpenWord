@@ -473,11 +473,11 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     buffer.open(QBuffer::ReadOnly);
     QString temp;
     in >> temp;
-    memset(m_sharedHealthApp.data(),0,m_sharedHealthApp.size());
     if (temp != filename && temp.length() > 3)
     {
         filename = temp;
         HealthFileOpen(filename);
+        memset(m_sharedHealthApp.data(),0,m_sharedHealthApp.size());
     }
     m_sharedHealthApp.size();
     m_sharedHealthApp.unlock();
