@@ -466,6 +466,7 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     }
     if (m_sharedHealthApp.size() < 2)
     {
+        m_sharedHealthApp.detach();
         return;
     }
 
