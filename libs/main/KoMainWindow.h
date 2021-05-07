@@ -226,14 +226,6 @@ public Q_SLOTS:
     void slotFileOpen();
 
     /**
-     *  Slot for opening a saved file.
-     *
-     *
-     *
-     */
-    void HealthFileOpen(QString FileName);
-
-    /**
      *  Slot for opening a file among the recently opened files.
      *
      *  If the current document is empty, the opened document replaces it.
@@ -455,15 +447,26 @@ private Q_SLOTS:
     void slotWidgetDestroyed();
     void slotDocumentTitleModified(const QString &caption, bool mod);
 
+    ///----------------------------------------------------------------------
     ///
     ///
+public Q_SLOTS:
+    /**
+     *  Slot for opening a saved file.
+     *
+     *
+     *
+     */
+    void HealthFileOpen(QString FileName);
 private:
     int m_timerID;
     QSharedMemory m_sharedHealthApp;
     ///
     ///
 protected:
-    void timerEvent(QTimerEvent *event);
+    void timerEvent(QTimerEvent *event) override;
+
+    ///-----------------------------------------------------------------------
 
 // ---------------------  PartManager
 

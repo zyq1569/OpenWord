@@ -437,7 +437,7 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
 
 void KoMainWindow::timerEvent(QTimerEvent *event)
 {
-//    Q_UNUSED(event);
+    Q_UNUSED(event);
     //switch (event->timerId()-1)
     //{
     //        //    case timer1 :
@@ -2484,7 +2484,8 @@ void KoMainWindow::setActivePart(KoPart *part, QWidget *widget )
     {
         warnMain << "trying to activate a non-registered part!" << part->objectName();
         INFO_LOG("trying to activate a non-registered part!" + part->objectName());
-        return; // don't allow someone call setActivePart with a part we don't know about
+        // don't allow someone call setActivePart with a part we don't know about
+        return;
     }
 
     // don't activate twice
@@ -2611,9 +2612,10 @@ void KoMainWindow::slotWidgetDestroyed()
     debugMain;
     if ( static_cast<const QWidget *>( sender() ) == d->m_activeWidget )
     {
-        setActivePart(0, 0);    //do not remove the part because if the part's widget dies, then the
+        //do not remove the part because if the part's widget dies, then the
+        //part will delete itself anyway, invoking removePart() in its destructor
+        setActivePart(0, 0);
     }
-    //part will delete itself anyway, invoking removePart() in its destructor
 }
 
 void KoMainWindow::slotDocumentTitleModified(const QString &caption, bool mod)
