@@ -481,6 +481,7 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     if (temp != filename && temp.length() > 3)
     {
         filename = temp;
+        slotFileClose();
         HealthFileOpen(filename);
         memset(m_sharedHealthApp.data(),0,m_sharedHealthApp.size());
         m_sharedHealthApp.create(1);
