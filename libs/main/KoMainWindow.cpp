@@ -425,11 +425,11 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
     d->dockerManager = new KoDockerManager(this);
 
 
-    ///
+    ///------------------------
     ///
     m_timerID = startTimer(500);//ms
     ///
-    ///
+    ///-------------------------
 
 
 
@@ -440,12 +440,12 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     Q_UNUSED(event);
     //switch (event->timerId()-1)
     //{
-    //        //    case timer1 :
-    //        //      qDebug() << "timer1" << endl;
-    //        //      break;
-    //        //    case timer2 :
-    //        //      qDebug() << "timer2" << endl;
-    //        //      break;
+    //    case timer1 :
+    //      qDebug() << "timer1" << endl;
+    //      break;
+    //    case timer2 :
+    //      qDebug() << "timer2" << endl;
+    //      break;
     //        break;
     //    default:
     //        qDebug() << "no  !!"<<endl;
