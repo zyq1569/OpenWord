@@ -479,7 +479,7 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     {
         filename = temp;
         slotFileClose();
-        HealthFileOpen(filename);
+        HealthFileOpen( "file:///" + filename);
         memset(m_sharedHealthApp.data(),0,m_sharedHealthApp.size());
         m_sharedHealthApp.create(1);
     }
