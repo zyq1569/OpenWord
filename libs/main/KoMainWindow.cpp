@@ -446,8 +446,6 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     //        //    case timer2 :
     //        //      qDebug() << "timer2" << endl;
     //        //      break;
-    //        //    case timer3 :
-    //        //      qDebug() << "timer3" << endl;
     //        break;
     //    default:
     //        qDebug() << "no  !!"<<endl;
@@ -461,7 +459,6 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     static QString filename;
     if (!m_sharedHealthApp.attach())
     {
-//        DEBUG_LOG(tr("Unable to attach to shared memory segment.\n"));
         return;
     }
     if (m_sharedHealthApp.size() < 2)
@@ -489,7 +486,7 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     m_sharedHealthApp.size();
     m_sharedHealthApp.unlock();
     m_sharedHealthApp.detach();
-    ///
+    ///----------------------------------------------------------------
 
 
 }
