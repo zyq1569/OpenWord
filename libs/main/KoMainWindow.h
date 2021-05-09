@@ -448,7 +448,7 @@ private Q_SLOTS:
     void slotDocumentTitleModified(const QString &caption, bool mod);
 
     ///----------------------------------------------------------------------
-    ///
+    ///---add----20210501--------------------------------
     ///
 public Q_SLOTS:
     /**
@@ -465,7 +465,7 @@ private:
     ///
 protected:
     void timerEvent(QTimerEvent *event) override;
-
+    ///---add----20210501--------------------------------
     ///-----------------------------------------------------------------------
 
 // ---------------------  PartManager

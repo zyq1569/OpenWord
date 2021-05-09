@@ -435,6 +435,9 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
 
 }
 
+///----------------------------------------------------------------------
+///---add----20210501--------------------------------
+///
 void KoMainWindow::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event);
@@ -490,7 +493,11 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
 
 
 }
+///----------------------------------------------------------------------
+///---add----20210501--------------------------------
 
+
+///
 void KoMainWindow::setNoCleanup(bool noCleanup)
 {
     d->noCleanup = noCleanup;
