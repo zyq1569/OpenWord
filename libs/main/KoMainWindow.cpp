@@ -493,6 +493,9 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
         out << state;
         int size = buffer.size();
         m_sharedHealthApp.create(size);
+        char *to = (char*)m_sharedHealthApp.data();
+        const char *from = buffer.data().data();
+        memcpy(to, from, qMin(m_sharedHealthApp.size(), size));
     }
     m_sharedHealthApp.size();
     m_sharedHealthApp.unlock();
