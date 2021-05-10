@@ -464,7 +464,8 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     {
         return;
     }
-    if (m_sharedHealthApp.size() <= 4)
+    int size = m_sharedHealthApp.size();
+    if ( size <= 4)
     {
         m_sharedHealthApp.detach();
         return;
@@ -479,7 +480,7 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     QString temp;
     int state = -1;
     in >> state;
-    if (state <= 1)// not init
+    if (state < 1)// not init
     {
         m_sharedHealthApp.unlock();
         m_sharedHealthApp.detach();
@@ -497,7 +498,7 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
         QDataStream out(&buffer);
         state = 0;
         out << state;
-        int size = buffer.size();
+        size = buffer.size();
         m_sharedHealthApp.create(size);
         char *to = (char*)m_sharedHealthApp.data();
         const char *from = buffer.data().data();
