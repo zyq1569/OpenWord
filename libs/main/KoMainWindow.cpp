@@ -479,6 +479,12 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     QString temp;
     int state = -1;
     in >> state;
+    if (state <= 1)// not init
+    {
+        m_sharedHealthApp.unlock();
+        m_sharedHealthApp.detach();
+        return;
+    }
     in >> temp;
     if (temp.length() > 3 && temp != filename && temp.length() > 3)
     {
@@ -487,6 +493,7 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
         HealthFileOpen( "file:///" + filename);
         memset(m_sharedHealthApp.data(),0,m_sharedHealthApp.size());
         QBuffer buffer;
+        buffer.open(QBuffer::ReadWrite);
         QDataStream out(&buffer);
         state = 0;
         out << state;
@@ -496,7 +503,6 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
         const char *from = buffer.data().data();
         memcpy(to, from, qMin(m_sharedHealthApp.size(), size));
     }
-    m_sharedHealthApp.size();
     m_sharedHealthApp.unlock();
     m_sharedHealthApp.detach();
     ///----------------------------------------------------------------
