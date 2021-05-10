@@ -480,7 +480,7 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     int state = -1;
     in >> state;
     in >> temp;
-    if (temp != filename && temp.length() > 3)
+    if (temp.length() > 3 && temp != filename && temp.length() > 3)
     {
         filename = temp;
         slotFileClose();
@@ -488,7 +488,6 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
         memset(m_sharedHealthApp.data(),0,m_sharedHealthApp.size());
         QBuffer buffer;
         QDataStream out(&buffer);
-        int i = buffer.size();
         state = 0;
         out << state;
         int size = buffer.size();
