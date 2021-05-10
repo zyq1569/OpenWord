@@ -464,7 +464,7 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     {
         return;
     }
-    if (m_sharedHealthApp.size() < 2)
+    if (m_sharedHealthApp.size() <= 4)
     {
         m_sharedHealthApp.detach();
         return;
@@ -477,6 +477,8 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
     buffer.setData((char*)m_sharedHealthApp.constData(), m_sharedHealthApp.size());
     buffer.open(QBuffer::ReadOnly);
     QString temp;
+    int state = -1;
+    in >> state;
     in >> temp;
     if (temp != filename && temp.length() > 3)
     {
@@ -484,7 +486,13 @@ void KoMainWindow::timerEvent(QTimerEvent *event)
         slotFileClose();
         HealthFileOpen( "file:///" + filename);
         memset(m_sharedHealthApp.data(),0,m_sharedHealthApp.size());
-        m_sharedHealthApp.create(1);
+        QBuffer buffer;
+        QDataStream out(&buffer);
+        int i = buffer.size();
+        state = 0;
+        out << state;
+        int size = buffer.size();
+        m_sharedHealthApp.create(size);
     }
     m_sharedHealthApp.size();
     m_sharedHealthApp.unlock();
