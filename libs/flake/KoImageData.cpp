@@ -405,8 +405,7 @@ void KoImageData::setImage(const QByteArray &imageData, KoImageCollection *colle
 
 bool KoImageData::isValid() const
 {
-    return d && d->dataStoreState != KoImageDataPrivate::StateEmpty
-           && d->errorCode == Success;
+    return d && d->dataStoreState != KoImageDataPrivate::StateEmpty  && d->errorCode == Success;
 }
 
 bool KoImageData::operator==(const KoImageData &other) const
