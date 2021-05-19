@@ -427,7 +427,7 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
 
     ///------------------------
     ///
-    m_timerID = startTimer(500);//ms
+    ///m_timerID = startTimer(500);//ms
     ///
     ///-------------------------
 
