@@ -66,7 +66,8 @@ class FLAKE_EXPORT KoToolBase : public QObject
     Q_OBJECT
 public:
     /// Option for activate()
-    enum ToolActivation {
+    enum ToolActivation
+    {
         TemporaryActivation, ///< The tool is activated temporarily and works 'in-place' of another one.
         DefaultActivation   ///< The tool is activated normally and emitting 'done' goes to the defaultTool
     };
