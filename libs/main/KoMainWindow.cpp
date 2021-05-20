@@ -668,10 +668,24 @@ void KoMainWindow::setRootDocument(KoDocument *doc, KoPart *part, bool deletePre
     setActivePart(d->rootPart, doc ? d->rootViews.first() : 0);
     emit restoringDone();
 
-    while(!oldRootViews.isEmpty())
+    ///---------------------------
+//    while(!oldRootViews.isEmpty()) ///openword --- 20210519 error!!!!
+//    {
+//        delete oldRootViews.takeFirst();
+//    }
+    for (int size = oldRootViews.size(),i=0; i<size; i++)
     {
-        delete oldRootViews.takeFirst();
+        KoView *v = oldRootViews.takeAt(i);
+        if (v->hasFocus())
+        {
+            oldRootViews.removeAt(i);
+            delete  v;
+            break;
+        }
     }
+    ///-----
+
+
     if (oldRootPart && oldRootPart->viewCount() == 0)
     {
         //debugMain <<"No more views, deleting old doc" << oldRootDoc;
@@ -681,7 +695,7 @@ void KoMainWindow::setRootDocument(KoDocument *doc, KoPart *part, bool deletePre
             delete oldRootDoc;
         }
     }
-
+    ///-----------------------------------
     if (doc && !d->dockWidgetVisibilityMap.isEmpty())
     {
         foreach(QDockWidget* dockWidget, d->dockWidgetsMap)
