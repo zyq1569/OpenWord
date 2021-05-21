@@ -636,7 +636,9 @@ void KoMainWindow::setRootDocument(KoDocument *doc, KoPart *part, bool deletePre
 
         KoView *view = d->rootPart->createView(doc, this);
         setCentralWidget(view);
+//        int size = d->rootViews.size();
         d->rootViews.append(view);
+//        size = d->rootViews.size();
 
         view->show();
         view->setFocus();
@@ -669,20 +671,21 @@ void KoMainWindow::setRootDocument(KoDocument *doc, KoPart *part, bool deletePre
     emit restoringDone();
 
     ///---------------------------
-//    while(!oldRootViews.isEmpty()) ///openword --- 20210519 error!!!!
-//    {
-//        delete oldRootViews.takeFirst();
-//    }
-    for (int size = oldRootViews.size(),i=0; i<size; i++)
+    while(!oldRootViews.isEmpty()) ///openword --- 20210519 error!!!!
     {
-        KoView *v = oldRootViews.takeAt(i);
-        if (v->hasFocus())
-        {
-            oldRootViews.removeAt(i);
-            delete  v;
-            break;
-        }
+        delete oldRootViews.takeFirst();
     }
+//    for (int size = oldRootViews.size(),i=0; i<size; i++)
+//    {
+//        KoView *v = oldRootViews.takeAt(i);
+//        if (v->hasFocus())
+//        {
+
+//            oldRootViews.removeAt(i);
+//            delete  v;
+//            break;
+//        }
+//    }
     ///-----
 
 
