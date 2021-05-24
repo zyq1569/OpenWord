@@ -21,7 +21,7 @@ ALL_LIBS_DIR        = $$PWD/bin/bin/libs
 SDK_INSTALL_PREFIX  = D:/Dev/CraftRoot-D/include
 SDK_LIB_PREFIX      = D:/Dev/CraftRoot-D/lib
 
-DESTDIR             = $$PWD/MS_bin/bin/libs
+DESTDIR             = $$PWD/MS_bin/bin
 
 DLLDESTDIR          = $$PWD/MS_bin/bin
 
