@@ -18,8 +18,8 @@ contains(DEFINES, MSVC) {
 DEFINES            += UNICODE
 
 ALL_LIBS_DIR        = $$PWD/bin/bin/libs
-SDK_INSTALL_PREFIX  = D:/CraftRoot/include
-SDK_LIB_PREFIX      = D:/CraftRoot/lib
+SDK_INSTALL_PREFIX  = D:/Dev/CraftRoot-D/include
+SDK_LIB_PREFIX      = D:/Dev/CraftRoot-D/lib
 
 DESTDIR             = $$PWD/MS_bin/bin/libs
 
@@ -29,12 +29,12 @@ TARGET_FILE         = $$PWD/MS_bin/temp/TARGET
 TARGET_IMPLIB       = $$PWD/MS_bin/temp/TARGET
 TARGET_PDB          = $$PWD/MS_bin/temp/TARGET
 
-LOGLIB              = $$PWD/ms_bin/bin/libs
+LOGLIB              = $$PWD/ms_bin/bin
 
 DEFINES            +=  WIN32_LEAN_AND_MEAN  _WINSOCKAPI_
 
-QMAKE_CFLAGS      += /utf-8
-QMAKE_CXXFLAGS    += /utf-8
+QMAKE_CFLAGS       += /utf-8
+QMAKE_CXXFLAGS     += /utf-8
 
 LIBS               +=  -L$${SDK_LIB_PREFIX} \
                        -lzlib
@@ -50,8 +50,8 @@ DLLDESTDIR          = $$PWD/bin/bin
 
 LOGLIB              =  $$PWD/bin/bin
 
-LIBS               +=  -L$${SDK_LIB_PREFIX} \
-                       -lz
+LIBS                +=  -L$${SDK_LIB_PREFIX} \
+                        -lz
 
 }
 

@@ -463,8 +463,8 @@ private:
     QSharedMemory m_sharedHealthApp;
     ///
     ///
-protected:
-    void timerEvent(QTimerEvent *event) override;
+//public:
+//    void timerEvent(QTimerEvent *event) override;
     ///---add----20210501--------------------------------
     ///-----------------------------------------------------------------------
 

@@ -438,78 +438,78 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
 ///----------------------------------------------------------------------
 ///---add----20210501--------------------------------
 ///
-void KoMainWindow::timerEvent(QTimerEvent *event)
-{
-    Q_UNUSED(event);
-    //switch (event->timerId()-1)
-    //{
-    //    case timer1 :
-    //      qDebug() << "timer1" << endl;
-    //      break;
-    //    case timer2 :
-    //      qDebug() << "timer2" << endl;
-    //      break;
-    //        break;
-    //    default:
-    //        qDebug() << "no  !!"<<endl;
-    //        break;
-    //}
-    //    int timerID = 0;
-    //    killTimer(timerID);
+//void KoMainWindow::timerEvent(QTimerEvent *event)
+//{
+//    Q_UNUSED(event);
+//    //switch (event->timerId()-1)
+//    //{
+//    //    case timer1 :
+//    //      qDebug() << "timer1" << endl;
+//    //      break;
+//    //    case timer2 :
+//    //      qDebug() << "timer2" << endl;
+//    //      break;
+//    //        break;
+//    //    default:
+//    //        qDebug() << "no  !!"<<endl;
+//    //        break;
+//    //}
+//    //    int timerID = 0;
+//    //    killTimer(timerID);
 
 
-    ///---------------check memory open test---------------------
-    static QString filename;
-    if (!m_sharedHealthApp.attach())
-    {
-        return;
-    }
-    int size = m_sharedHealthApp.size();
-    if ( size <= 4)
-    {
-        m_sharedHealthApp.detach();
-        return;
-    }
+//    ///---------------check memory open test---------------------
+//    static QString filename;
+//    if (!m_sharedHealthApp.attach())
+//    {
+//        return;
+//    }
+//    int size = m_sharedHealthApp.size();
+//    if ( size <= 4)
+//    {
+//        m_sharedHealthApp.detach();
+//        return;
+//    }
 
-    QBuffer buffer;
-    QDataStream in(&buffer);
+//    QBuffer buffer;
+//    QDataStream in(&buffer);
 
-    m_sharedHealthApp.lock();
-    buffer.setData((char*)m_sharedHealthApp.constData(), m_sharedHealthApp.size());
-    buffer.open(QBuffer::ReadOnly);
-    QString temp;
-    int state = -1;
-    in >> state;
-    if (state < 1)// not init
-    {
-        m_sharedHealthApp.unlock();
-        m_sharedHealthApp.detach();
-        return;
-    }
-    in >> temp;
-    if (temp.length() > 3 && temp != filename && temp.length() > 3)
-    {
-        filename = temp;
-        slotFileClose();
-        HealthFileOpen( "file:///" + filename);
-        memset(m_sharedHealthApp.data(),0,m_sharedHealthApp.size());
-        QBuffer buffer;
-        buffer.open(QBuffer::ReadWrite);
-        QDataStream out(&buffer);
-        state = 0;
-        out << state;
-        size = buffer.size();
-        m_sharedHealthApp.create(size);
-        char *to = (char*)m_sharedHealthApp.data();
-        const char *from = buffer.data().data();
-        memcpy(to, from, qMin(m_sharedHealthApp.size(), size));
-    }
-    m_sharedHealthApp.unlock();
-    m_sharedHealthApp.detach();
-    ///----------------------------------------------------------------
+//    m_sharedHealthApp.lock();
+//    buffer.setData((char*)m_sharedHealthApp.constData(), m_sharedHealthApp.size());
+//    buffer.open(QBuffer::ReadOnly);
+//    QString temp;
+//    int state = -1;
+//    in >> state;
+//    if (state < 1)// not init
+//    {
+//        m_sharedHealthApp.unlock();
+//        m_sharedHealthApp.detach();
+//        return;
+//    }
+//    in >> temp;
+//    if (temp.length() > 3 && temp != filename && temp.length() > 3)
+//    {
+//        filename = temp;
+//        slotFileClose();
+//        HealthFileOpen( "file:///" + filename);
+//        memset(m_sharedHealthApp.data(),0,m_sharedHealthApp.size());
+//        QBuffer buffer;
+//        buffer.open(QBuffer::ReadWrite);
+//        QDataStream out(&buffer);
+//        state = 0;
+//        out << state;
+//        size = buffer.size();
+//        m_sharedHealthApp.create(size);
+//        char *to = (char*)m_sharedHealthApp.data();
+//        const char *from = buffer.data().data();
+//        memcpy(to, from, qMin(m_sharedHealthApp.size(), size));
+//    }
+//    m_sharedHealthApp.unlock();
+//    m_sharedHealthApp.detach();
+//    ///----------------------------------------------------------------
 
 
-}
+//}
 ///----------------------------------------------------------------------
 ///---add----20210501--------------------------------
 
