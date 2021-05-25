@@ -41,15 +41,15 @@ INCLUDEPATH +=  ../../plugins/defaultTools \
 
 
 
-LIBS += -L$${LIBDIR} \
-        -lkowidgets \
-        -lkotext \
-        -lflake \
-        -lpigmentcms \
-        -lkowidgetutils \
-        -lkoodf \
-        -lkostore \
-        -lkundo2
+LIBS        +=    -L$${LIBDIR} \
+                  -lkowidgets \
+                  -lkotext \
+                  -lflake \
+                  -lpigmentcms \
+                  -lkowidgetutils \
+                  -lkoodf \
+                  -lkostore \
+                  -lkundo2
 
 include(../../calligra.pri)
 include(calligra_tool_defaults.pri)
