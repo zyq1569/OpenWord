@@ -670,7 +670,7 @@ void KoMainWindow::setRootDocument(KoDocument *doc, KoPart *part, bool deletePre
     setActivePart(d->rootPart, doc ? d->rootViews.first() : 0);
     emit restoringDone();
 
-    ///---------------------------
+    ///---------------------------oldRootViews: now view ??? oldRootViews.size() === 1????
     while(!oldRootViews.isEmpty()) ///openword --- 20210519 error!!!!
     {
         delete oldRootViews.takeFirst();
