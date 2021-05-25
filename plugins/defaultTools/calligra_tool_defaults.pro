@@ -2,7 +2,7 @@
 
 TEMPLATE     = lib
 TARGET       = calligra_tool_defaults
-LIBDIR       =  ../../bin/libs/
+LIBDIR       =  ../../bin/
 DESTDIR      = ../../bin/libs/calligra/tools
 QT          += core xml network gui widgets printsupport concurrent dbus
 
@@ -55,4 +55,4 @@ include(../../calligra.pri)
 include(calligra_tool_defaults.pri)
 
 
-DLLDESTDIR          = $$DLLDESTDIR/calligra/tools
+DLLDESTDIR          = $$DLLDESTDIR/calligra/tools/
