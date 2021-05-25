@@ -70,9 +70,10 @@
 //    bool firstTime;
 //};
 
+
 KoColorPopupAction::KoColorPopupAction(QObject *parent)
     : QAction(parent),
-    d(new KoColorPopupActionPrivate())
+      d(new KoColorPopupActionPrivate())
 {
     d->menu = new QMenu();
     QWidget *widget = new QWidget(d->menu);
@@ -137,7 +138,8 @@ void KoColorPopupAction::setCurrentColor( const KoColor &color )
 void KoColorPopupAction::setCurrentColor( const QColor &_color )
 {
 #ifndef NDEBUG
-    if (!_color.isValid()) {
+    if (!_color.isValid())
+    {
         warnWidgets << "Invalid color given, defaulting to black";
     }
 #endif
@@ -159,9 +161,12 @@ void KoColorPopupAction::updateIcon()
 {
     QSize iconSize;
     QToolButton *toolButton = dynamic_cast<QToolButton*>(parentWidget());
-    if (toolButton) {
+    if (toolButton)
+    {
         iconSize = QSize(toolButton->iconSize());
-    } else {
+    }
+    else
+    {
         iconSize = QSize(16, 16);
     }
 
@@ -169,20 +174,25 @@ void KoColorPopupAction::updateIcon()
     // UI thread will cause sporadic crashes.
     QImage pm;
 
-    if (icon().isNull()) {
+    if (icon().isNull())
+    {
         d->applyMode = false;
     }
 
-    if(d->applyMode) {
+    if(d->applyMode)
+    {
         pm = icon().pixmap(iconSize).toImage();
-        if (pm.isNull()) {
+        if (pm.isNull())
+        {
             pm = QImage(iconSize, QImage::Format_ARGB32_Premultiplied);
             pm.fill(Qt::transparent);
         }
         QPainter p(&pm);
         p.fillRect(0, iconSize.height() - 4, iconSize.width(), 4, d->currentColor.toQColor());
         p.end();
-    } else {
+    }
+    else
+    {
         pm = QImage(iconSize, QImage::Format_ARGB32_Premultiplied);
         pm.fill(Qt::transparent);
         QPainter p(&pm);
@@ -201,7 +211,8 @@ void KoColorPopupAction::emitColorChanged()
 void KoColorPopupAction::colorWasSelected(const KoColor &color, bool final)
 {
     d->currentColor = color;
-    if (final) {
+    if (final)
+    {
         menu()->hide();
         emitColorChanged();
     }
@@ -235,10 +246,12 @@ void KoColorPopupAction::opacityWasChanged( int opacity )
 
 void KoColorPopupAction::slotTriggered(bool)
 {
-    if (d->firstTime) {
+    if (d->firstTime)
+    {
         KoResourceServer<KoColorSet>* srv = KoResourceServerProvider::instance()->paletteServer(false);
         QList<KoColorSet*> palettes = srv->resources();
-        if (!palettes.empty()) {
+        if (!palettes.empty())
+        {
             d->colorSetWidget->setColorSet(palettes.first());
         }
         d->firstTime = false;

@@ -85,6 +85,7 @@ private:
     KoColorPopupActionPrivate * const d;
 };
 
+
 #include <KoColor.h>
 #include "KoColorSetWidget.h"
 #include "KoTriangleColorSelector.h"
@@ -94,6 +95,7 @@ private:
 //#include "KoResourceServerProvider.h"
 #include <KoColorSpaceRegistry.h>
 #include <KoColor.h>
+#include <QMenu>
 class KoColorPopupAction::KoColorPopupActionPrivate
 {
 public:
@@ -123,5 +125,6 @@ public:
 
     bool firstTime;
 };
+
 #endif
 
