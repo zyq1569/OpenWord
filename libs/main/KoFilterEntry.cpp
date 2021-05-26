@@ -88,6 +88,7 @@ QList<KoFilterEntry::Ptr> KoFilterEntry::query()
     return lst;
 }
 
+/// openword doc  docx  to  odt ??????
 KoFilter* KoFilterEntry::createFilter(KoFilterChain* chain, QObject* parent)
 {
     KPluginFactory *factory = qobject_cast<KPluginFactory *>(m_loader->instance());
