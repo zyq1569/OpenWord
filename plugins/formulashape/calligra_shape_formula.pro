@@ -2,7 +2,7 @@
 
 TEMPLATE       =   lib
 TARGET         =   calligra_shape_formula
-LIBDIR         =    ../../bin/libs/
+LIBDIR         =    ../../bin/
 DESTDIR        =   ../../bin/libs/calligra/shapes
 QT            +=   core xml network gui widgets printsupport concurrent dbus
 

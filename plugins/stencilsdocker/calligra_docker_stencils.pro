@@ -10,7 +10,7 @@ QT           += core xml network gui widgets printsupport concurrent dbus
 
 DEFINES      += calligra_docker_stencils_EXPORTS
 
-INCLUDEPATH +=  ../ \
+INCLUDEPATH  += ../ \
                 ../../plugins/stencilsdocker \
                 ../../interfaces \
                 ../../ \
