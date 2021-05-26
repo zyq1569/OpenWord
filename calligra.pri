@@ -15,6 +15,9 @@ msvc: DEFINES      += MSVC
 
 contains(DEFINES, MSVC) {
 
+# Use Precompiled headers (PCH)
+CONFIG             += precompile_header
+
 DEFINES            += UNICODE
 
 ALL_LIBS_DIR        = $$PWD/bin/bin/libs
@@ -50,7 +53,7 @@ DLLDESTDIR          = $$PWD/bin/bin
 
 LOGLIB              =  $$PWD/bin/bin
 
-LIBS                +=  -L$${SDK_LIB_PREFIX} \
+LIBS               +=  -L$${SDK_LIB_PREFIX} \
                         -lz
 
 }
