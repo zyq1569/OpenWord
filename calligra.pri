@@ -24,6 +24,16 @@ ALL_LIBS_DIR        = $$PWD/bin/bin/libs
 SDK_INSTALL_PREFIX  = D:/Dev/CraftRoot-D/include
 SDK_LIB_PREFIX      = D:/Dev/CraftRoot-D/lib
 
+SDK_INSTALL_PREFIX  = D:/CraftRoot/include
+SDK_LIB_PREFIX      = D:/CraftRoot/lib
+
+SDK_INSTALL_PREFIX  = E:/KDE/DEBUG/include
+SDK_LIB_PREFIX      = E:/KDE/DEBUG/lib
+
+SDK_INSTALL_PREFIX  = E:/KDE/RelWithDebInfo/include
+SDK_LIB_PREFIX      = E:/KDE/RelWithDebInfo/lib
+
+
 DESTDIR             = $$PWD/MS_bin/bin
 
 DLLDESTDIR          = $$PWD/MS_bin/bin
