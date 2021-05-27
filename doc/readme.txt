@@ -1,6 +1,37 @@
 
+界面说明：
 
 KoOpenPane是 Open Existing Document 界面
 KoDetailsPane是显示最近打开文件+打开这个文档 ：的界面
 class KoRecentDocumentsPane : public KoDetailsPane 是KoDetailsPane 具体的动作实现类
 KoRecentDocumentsPane.h {static const int MAX_RECENTFILES_ENTRIES = 20;//recent files }
+
+
+对象创建过程：
+
+创建 KoPart过程
+bool KoApplication::start()
+---> KoPart *part = entry.createKoPart(&errorMsg);
+---> KoPart *KoDocumentEntry::createKoPart(QString* errorMsg) const
+---> QObject* KWFactory::create( 中创建 KoPart
+
+
+
+KoOpenPane KoRecentDocumentsPane 创建过程 【KoPart 中】
+创建过程 ：KoPart::showStartUpWidget--》创建  KoOpenPane ，在KoOpenPane::initRecentDocs()中 创建KoRecentDocumentsPane
+{
+在 void KoPart::showStartUpWidget(KoMainWindow *mainWindow, bool alwaysShow) 中
+创建 d->startUpWidget = createOpenPane(mainWindow, d->templatesResourcePath);
+在
+KoOpenPane *KoPart::createOpenPane(QWidget *parent, const QString& templatesResourcePath) 中
+创建KoOpenPane  KoOpenPane *openPane = new KoOpenPane(parent, mimeFilter, templatesResourcePath);
+
+
+void KoOpenPane::initRecentDocs()
+{
+ KoRecentDocumentsPane* recentDocPane = new KoRecentDocumentsPane(this, header);
+}
+
+}
+
+

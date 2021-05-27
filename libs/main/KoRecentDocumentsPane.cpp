@@ -88,7 +88,7 @@ KoRecentDocumentsPane::KoRecentDocumentsPane(QWidget* parent, const QString& hea
     , d(new KoRecentDocumentsPanePrivate)
 {
     setFocusProxy(m_documentList);
-    m_openButton->setText(/*kundo2_i18n*/("Open This Document"));
+    m_openButton->setText(i18n("Open This Document"));
     m_openButton->setIcon(koIcon("document-open"));
 
     m_alwaysUseCheckBox->hide();
