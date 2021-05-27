@@ -29,10 +29,12 @@
 class KoDetailsPanePrivate
 {
 public:
-    KoDetailsPanePrivate() {
+    KoDetailsPanePrivate()
+    {
         m_model = new QStandardItemModel;
     }
-    ~KoDetailsPanePrivate() {
+    ~KoDetailsPanePrivate()
+    {
         delete m_model;
     }
 
@@ -40,9 +42,9 @@ public:
 };
 
 KoDetailsPane::KoDetailsPane(QWidget* parent, const QString& header)
-        : QWidget(parent),
-        Ui_KoDetailsPaneBase(),
-        d(new KoDetailsPanePrivate)
+    : QWidget(parent),
+      Ui_KoDetailsPaneBase(),
+      d(new KoDetailsPanePrivate)
 {
     d->m_model->setHorizontalHeaderItem(0, new QStandardItem(header));
 
@@ -70,21 +72,27 @@ KoDetailsPane::~KoDetailsPane()
 
 bool KoDetailsPane::eventFilter(QObject* watched, QEvent* e)
 {
-    if (watched == m_previewLabel) {
-        if (e->type() == QEvent::MouseButtonDblClick) {
+    if (watched == m_previewLabel)
+    {
+        if (e->type() == QEvent::MouseButtonDblClick)
+        {
             openFile();
         }
     }
 
-    if (watched == m_documentList) {
-        if ((e->type() == QEvent::Resize) && isVisible()) {
+    if (watched == m_documentList)
+    {
+        if ((e->type() == QEvent::Resize) && isVisible())
+        {
             emit splitterResized(this, m_splitter->sizes());
         }
 
-        if ((e->type() == QEvent::KeyPress)) {
+        if ((e->type() == QEvent::KeyPress))
+        {
             QKeyEvent* keyEvent = static_cast<QKeyEvent*>(e);
 
-            if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) {
+            if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
+            {
                 openFile();
             }
         }
@@ -96,7 +104,9 @@ bool KoDetailsPane::eventFilter(QObject* watched, QEvent* e)
 void KoDetailsPane::resizeSplitter(KoDetailsPane* sender, const QList<int>& sizes)
 {
     if (sender == this)
+    {
         return;
+    }
 
     m_splitter->setSizes(sizes);
 }
