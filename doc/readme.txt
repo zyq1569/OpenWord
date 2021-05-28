@@ -1,3 +1,4 @@
+shellpower : chcp 65001  --> utf8
 
 界面说明：
 
