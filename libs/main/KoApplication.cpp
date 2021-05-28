@@ -265,11 +265,15 @@ bool KoApplication::start()
     {
         qputenv("XDG_DATA_DIRS", QFile::encodeName(appdir.absolutePath() + "/share"));
     }
-    qputenv("PATH", QFile::encodeName(appdir.absolutePath() + "/bin" + ";"
-                                      + appdir.absolutePath() + "/lib" + ";"
-                                      + appdir.absolutePath() + "/lib/kde4" + ";"
-                                      + appdir.absolutePath() + "/Frameworks" + ";"
-                                      + appdir.absolutePath()));
+    QString absolutePath = appdir.absolutePath();
+    QString nameTmp = absolutePath + "/bin" + ";" + absolutePath + "/lib" + ";" + absolutePath + "/lib/kde4" + ";"
+                      + absolutePath + "/Frameworks" + ";" + absolutePath;
+//    qputenv("PATH", QFile::encodeName(appdir.absolutePath() + "/bin" + ";"
+//                                      + appdir.absolutePath() + "/lib" + ";"
+//                                      + appdir.absolutePath() + "/lib/kde4" + ";"
+//                                      + appdir.absolutePath() + "/Frameworks" + ";"
+//                                      + appdir.absolutePath()));
+    qputenv("PATH", QFile::encodeName(nameTmp));
 #endif
 
     if (d->splashScreen)

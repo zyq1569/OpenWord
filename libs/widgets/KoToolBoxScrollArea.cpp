@@ -24,7 +24,8 @@ KoToolBoxScrollArea::KoToolBoxScrollArea(KoToolBox *toolBox, QWidget *parent)
     connect(m_scrollNext, &QToolButton::clicked, this, &KoToolBoxScrollArea::doScrollNext);
 
     QScroller *scroller = KoKineticScroller::createPreconfiguredScroller(this);
-    if (!scroller) {
+    if (!scroller)
+    {
         QScroller::grabGesture(viewport(), QScroller::MiddleMouseButtonGesture);
         QScroller *scroller = QScroller::scroller(viewport());
         QScrollerProperties sp = scroller->scrollerProperties();
@@ -42,7 +43,8 @@ KoToolBoxScrollArea::KoToolBoxScrollArea(KoToolBox *toolBox, QWidget *parent)
 
 void KoToolBoxScrollArea::setOrientation(Qt::Orientation orientation)
 {
-    if (orientation == m_orientation) {
+    if (orientation == m_orientation)
+    {
         return;
     }
     m_orientation = orientation;
@@ -74,7 +76,8 @@ void KoToolBoxScrollArea::slotScrollerStateChange(QScroller::State state)
 
 bool KoToolBoxScrollArea::event(QEvent *event)
 {
-    if (event->type() == QEvent::LayoutRequest) {
+    if (event->type() == QEvent::LayoutRequest)
+    {
         // LayoutRequest can be triggered by icon changes, so resize the toolbox
         layoutItems();
         // The toolbox might have changed the sizeHint and minimumSizeHint
@@ -92,9 +95,12 @@ void KoToolBoxScrollArea::resizeEvent(QResizeEvent *event)
 
 void KoToolBoxScrollArea::wheelEvent(QWheelEvent *event)
 {
-    if (m_orientation == Qt::Vertical) {
+    if (m_orientation == Qt::Vertical)
+    {
         QApplication::sendEvent(verticalScrollBar(), event);
-    } else {
+    }
+    else
+    {
         QApplication::sendEvent(horizontalScrollBar(), event);
     }
 }
@@ -107,18 +113,24 @@ void KoToolBoxScrollArea::scrollContentsBy(int dx, int dy)
 
 void KoToolBoxScrollArea::doScrollPrev()
 {
-    if (m_orientation == Qt::Vertical) {
+    if (m_orientation == Qt::Vertical)
+    {
         verticalScrollBar()->triggerAction(QAbstractSlider::SliderSingleStepSub);
-    } else {
+    }
+    else
+    {
         horizontalScrollBar()->triggerAction(QAbstractSlider::SliderSingleStepSub);
     }
 }
 
 void KoToolBoxScrollArea::doScrollNext()
 {
-    if (m_orientation == Qt::Vertical) {
+    if (m_orientation == Qt::Vertical)
+    {
         verticalScrollBar()->triggerAction(QAbstractSlider::SliderSingleStepAdd);
-    } else {
+    }
+    else
+    {
         horizontalScrollBar()->triggerAction(QAbstractSlider::SliderSingleStepAdd);
     }
 }
@@ -135,9 +147,12 @@ void KoToolBoxScrollArea::layoutItems()
 {
     const KoToolBoxLayout *l = m_toolBox->toolBoxLayout();
     QSize newSize = viewport()->size();
-    if (m_orientation == Qt::Vertical) {
+    if (m_orientation == Qt::Vertical)
+    {
         newSize.setHeight(l->heightForWidth(newSize.width()));
-    } else {
+    }
+    else
+    {
         newSize.setWidth(l->widthForHeight(newSize.height()));
     }
     m_toolBox->resize(newSize);
@@ -154,34 +169,49 @@ void KoToolBoxScrollArea::KoToolBoxScrollArea::updateScrollButtons()
     // moving the viewport widget, but the viewport position is reset during
     // a relayout.)
     const int scrollButtonWidth = this->scrollButtonWidth();
-    if (m_orientation == Qt::Vertical) {
+    if (m_orientation == Qt::Vertical)
+    {
         m_scrollPrev->setArrowType(Qt::UpArrow);
         m_scrollPrev->setEnabled(verticalScrollBar()->value() != verticalScrollBar()->minimum());
-        if (m_scrollPrev->isEnabled()) {
+        if (m_scrollPrev->isEnabled())
+        {
             m_scrollPrev->setGeometry(0, 0, width(), scrollButtonWidth);
-        } else {
+        }
+        else
+        {
             m_scrollPrev->setGeometry(-width(), 0, width(), scrollButtonWidth);
         }
         m_scrollNext->setArrowType(Qt::DownArrow);
         m_scrollNext->setEnabled(verticalScrollBar()->value() != verticalScrollBar()->maximum());
-        if (m_scrollNext->isEnabled()) {
+        if (m_scrollNext->isEnabled())
+        {
             m_scrollNext->setGeometry(0, height() - scrollButtonWidth, width(), scrollButtonWidth);
-        } else {
+        }
+        else
+        {
             m_scrollNext->setGeometry(-width(), height() - scrollButtonWidth, width(), scrollButtonWidth);
         }
-    } else {
+    }
+    else
+    {
         m_scrollPrev->setArrowType(Qt::LeftArrow);
         m_scrollPrev->setEnabled(horizontalScrollBar()->value() != horizontalScrollBar()->minimum());
-        if (m_scrollPrev->isEnabled()) {
+        if (m_scrollPrev->isEnabled())
+        {
             m_scrollPrev->setGeometry(0, 0, scrollButtonWidth, height());
-        } else {
+        }
+        else
+        {
             m_scrollPrev->setGeometry(0, -height(), scrollButtonWidth, height());
         }
         m_scrollNext->setArrowType(Qt::RightArrow);
         m_scrollNext->setEnabled(horizontalScrollBar()->value() != horizontalScrollBar()->maximum());
-        if (m_scrollNext->isEnabled()) {
+        if (m_scrollNext->isEnabled())
+        {
             m_scrollNext->setGeometry(width() - scrollButtonWidth, 0, scrollButtonWidth, height());
-        } else {
+        }
+        else
+        {
             m_scrollNext->setGeometry(width() - scrollButtonWidth, -height(), scrollButtonWidth, height());
         }
     }

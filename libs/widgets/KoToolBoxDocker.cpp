@@ -61,10 +61,14 @@ void KoToolBoxDocker::unsetCanvas()
 void KoToolBoxDocker::resizeEvent(QResizeEvent *event)
 {
     QDockWidget::resizeEvent(event);
-    if (isFloating()) {
-        if (m_scrollArea->width() > m_scrollArea->height()) {
+    if (isFloating())
+    {
+        if (m_scrollArea->width() > m_scrollArea->height())
+        {
             m_scrollArea->setOrientation(Qt::Horizontal);
-        } else {
+        }
+        else
+        {
             m_scrollArea->setOrientation(Qt::Vertical);
         }
     }
@@ -72,9 +76,12 @@ void KoToolBoxDocker::resizeEvent(QResizeEvent *event)
 
 void KoToolBoxDocker::updateToolBoxOrientation(Qt::DockWidgetArea area)
 {
-    if (area == Qt::TopDockWidgetArea || area == Qt::BottomDockWidgetArea) {
+    if (area == Qt::TopDockWidgetArea || area == Qt::BottomDockWidgetArea)
+    {
         m_scrollArea->setOrientation(Qt::Horizontal);
-    } else {
+    }
+    else
+    {
         m_scrollArea->setOrientation(Qt::Vertical);
     }
 }
