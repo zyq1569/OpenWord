@@ -43,7 +43,10 @@ public:
     QString id() const override;
     KoDockFactoryBase::DockPosition defaultDockPosition() const override;
     QDockWidget* createDockWidget() override;
-    bool isCollapsable() const override { return false; }
+    bool isCollapsable() const override
+    {
+        return false;
+    }
 
 private:
     class Private;

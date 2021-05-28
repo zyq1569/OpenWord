@@ -55,7 +55,8 @@ protected:
  *
  * @see KoToolManager
  */
-class KoModeBox : public QWidget {
+class KoModeBox : public QWidget
+{
     Q_OBJECT
 public:
     /// constructor
@@ -125,17 +126,20 @@ public:
     static QString applicationName;
 
 private:
-    enum IconMode {
+    enum IconMode
+    {
         IconAndText,
         IconOnly
     };
 
-    enum VerticalTabsSide {
+    enum VerticalTabsSide
+    {
         TopSide,
         BottomSide
     };
 
-    enum HorizontalTabsSide {
+    enum HorizontalTabsSide
+    {
         LeftSide,
         RightSide
     };

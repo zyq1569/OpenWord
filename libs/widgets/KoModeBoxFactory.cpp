@@ -38,7 +38,8 @@ KoModeBoxFactory::KoModeBoxFactory(KoCanvasControllerWidget *canvasController, c
     d->applicationName = applicationName;
 }
 
-KoModeBoxFactory::~KoModeBoxFactory() {
+KoModeBoxFactory::~KoModeBoxFactory()
+{
     delete d;
 }
 
