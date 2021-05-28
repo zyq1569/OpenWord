@@ -30,7 +30,8 @@ KoModeBoxDocker::KoModeBoxDocker(KoModeBox *modeBox)
     : m_modeBox(modeBox)
 {
     setWidget(modeBox);
-    setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
+//    setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
+    setFeatures(AllDockWidgetFeatures);
     setWindowTitle("");
     setObjectName("ModeBox");
 
