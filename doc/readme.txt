@@ -41,3 +41,4 @@ void KoOpenPane::initRecentDocs()
 能够显示或者隐藏，有一个竖形线显示（参考libreoffice）
 
 目前 判断 整个面板容器是KoModeBoxDocker，需求对这个容器进行显示或者隐藏
+通过KoModeBox嵌入 容器KoModeBoxDocker 中
