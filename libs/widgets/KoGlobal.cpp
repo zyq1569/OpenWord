@@ -49,7 +49,7 @@ KoGlobal::KoGlobal()
     // Fixes a bug where values from some config files are not picked up
     // due to  KSharedConfig::openConfig() being initialized before paths have been set up above.
     // NOTE: Values set without a sync() call before KoGlobal has been initialized will not stick
-     KSharedConfig::openConfig()->reparseConfiguration();
+    KSharedConfig::openConfig()->reparseConfiguration();
 }
 
 KoGlobal::~KoGlobal()
@@ -61,10 +61,13 @@ QFont KoGlobal::_defaultFont()
 {
     QFont font = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
     // we have to use QFontInfo, in case the font was specified with a pixel size
-    if (font.pointSize() == -1) {
+    if (font.pointSize() == -1)
+    {
         // cache size into m_pointSize, since QFontInfo loads the font -> slow
         if (m_pointSize == -1)
+        {
             m_pointSize = QFontInfo(font).pointSize();
+        }
         Q_ASSERT(m_pointSize != -1);
         font.setPointSize(m_pointSize);
     }
@@ -76,14 +79,18 @@ QFont KoGlobal::_defaultFont()
 QStringList KoGlobal::_listOfLanguageTags()
 {
     if (m_langMap.isEmpty())
+    {
         createListOfLanguages();
+    }
     return m_langMap.values();
 }
 
 QStringList KoGlobal::_listOfLanguages()
 {
     if (m_langMap.empty())
+    {
         createListOfLanguages();
+    }
     return m_langMap.keys();
 }
 
@@ -95,7 +102,8 @@ void KoGlobal::createListOfLanguages()
     QMap<QString, bool> seenLanguages;
     const QStringList langlist = config.groupList();
     for (QStringList::ConstIterator itall = langlist.begin();
-            itall != langlist.end(); ++itall) {
+            itall != langlist.end(); ++itall)
+    {
         const QString tag = *itall;
         const QString name = config.group(tag).readEntry("Name", tag);
         // e.g. name is "French" and tag is "fr"
@@ -114,7 +122,8 @@ void KoGlobal::createListOfLanguages()
     const QStringList translationList = KoResourcePaths::findAllResources("locale",
                                         QString::fromLatin1("*/kf5_entry.desktop"));
     for (QStringList::ConstIterator it = translationList.begin();
-            it != translationList.end(); ++it) {
+            it != translationList.end(); ++it)
+    {
         // Extract the language tag from the directory name
         QString tag = *it;
         int index = tag.lastIndexOf('/');
@@ -122,7 +131,8 @@ void KoGlobal::createListOfLanguages()
         index = tag.lastIndexOf('/');
         tag = tag.mid(index + 1);
 
-        if (seenLanguages.find(tag) == seenLanguages.end()) {
+        if (seenLanguages.find(tag) == seenLanguages.end())
+        {
             KConfig entry(*it, KConfig::SimpleConfig);
 
             const QString name = entry.group("KCM Locale").readEntry("Name", tag);
@@ -145,7 +155,9 @@ QString KoGlobal::tagOfLanguage(const QString & _lang)
     const LanguageMap& map = self()->m_langMap;
     QMap<QString, QString>::ConstIterator it = map.find(_lang);
     if (it != map.end())
+    {
         return *it;
+    }
     return QString();
 }
 
@@ -156,7 +168,9 @@ QString KoGlobal::languageFromTag(const QString &langTag)
     const QMap<QString, QString>::ConstIterator end = map.end();
     for (; it != end; ++it)
         if (it.value() == langTag)
+        {
             return it.key();
+        }
 
     // Language code not found. Better return the code (tag) than nothing.
     return langTag;
@@ -164,7 +178,8 @@ QString KoGlobal::languageFromTag(const QString &langTag)
 
 KConfig* KoGlobal::_calligraConfig()
 {
-    if (!m_calligraConfig) {
+    if (!m_calligraConfig)
+    {
         m_calligraConfig = new KConfig("calligrarc");
     }
     return m_calligraConfig;
