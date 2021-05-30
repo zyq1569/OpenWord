@@ -15,7 +15,7 @@ bool KoApplication::start()
 ---> KoPart *part = entry.createKoPart(&errorMsg);
 ---> KoPart *KoDocumentEntry::createKoPart(QString* errorMsg) const
 ---> QObject* KWFactory::create( 中创建 KoPart
-
+同时释放采用延后释放： 在 void KoPart::deleteOpenPane(bool closing)---> ：d->startUpWidget->hide();     d->startUpWidget->deleteLater();
 
 
 KoOpenPane KoRecentDocumentsPane 创建过程 【KoPart 中】
