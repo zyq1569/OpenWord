@@ -42,3 +42,7 @@ void KoOpenPane::initRecentDocs()
 
 目前 判断 整个面板容器是KoModeBoxDocker，需求对这个容器进行显示或者隐藏
 通过KoModeBox嵌入 容器KoModeBoxDocker 中
+
+
+QDockWidget* KoModeBoxFactory::createDockWidget() 中 【 dockWidget = factory->createDockWidget();】创建 KoModeBoxDocker容器 然后把创建的KoModeBox嵌入容器KoModeBoxDocker
+
