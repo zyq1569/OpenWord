@@ -46,3 +46,7 @@ void KoOpenPane::initRecentDocs()
 
 QDockWidget* KoModeBoxFactory::createDockWidget() 中 【 dockWidget = factory->createDockWidget();】创建 KoModeBoxDocker容器 然后把创建的KoModeBox嵌入容器KoModeBoxDocker
 
+
+在 KoView::KoView(KoPart *part, KoDocument *document, QWidget *parent) 中     // add all plugins.  
+   foreach(const QString & docker, KoDockRegistry::instance()->keys())
+
