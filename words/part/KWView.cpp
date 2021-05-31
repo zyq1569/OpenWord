@@ -44,6 +44,7 @@
 #include "gemini/ViewModeSwitchEvent.h"
 #include "WordsDebug.h"
 
+
 // calligra libs includes
 #include <KoShapeCreateCommand.h>
 #include <CalligraVersionWrapper.h>
@@ -115,6 +116,9 @@
 
 #include <limits>
 
+#include <QLocale>
+
+
 KWView::KWView(KoPart *part, KWDocument *document, QWidget *parent)
     : KoView(part, document, parent)
     , m_canvas(0)
@@ -136,8 +140,19 @@ KWView::KWView(KoPart *part, KWDocument *document, QWidget *parent)
     layout->setMargin(0);
     layout->addWidget(m_gui);
 
+
+    //openword
+    const QString langName = QLocale::system().name();
+    //"zh_CN"
+    QString resoucefile = "calligrawords.rc";
+    if (langName == "zh_CN")
+    {
+        resoucefile =  "calligrawords_zh_CN.rc";
+    }
+
     setComponentName(KWFactory::componentData().componentName(), KWFactory::componentData().componentDisplayName());
-    setXMLFile("calligrawords.rc");
+    //setXMLFile("calligrawords.rc");
+    setXMLFile(resoucefile);
 
     m_currentPage = m_document->pageManager()->begin();
 

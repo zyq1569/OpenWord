@@ -35,6 +35,10 @@
 #include <ksharedconfig.h>
 #include <kconfig.h>
 
+
+#include <QLocale>
+
+
 Q_GLOBAL_STATIC(KoGlobal, s_instance)
 
 KoGlobal* KoGlobal::self()
@@ -92,6 +96,13 @@ QStringList KoGlobal::_listOfLanguages()
         createListOfLanguages();
     }
     return m_langMap.keys();
+
+}
+QString KoGlobal::sysLanguageName()
+{
+    //
+    static QString translatorFileName = QLocale::system().name();
+    return translatorFileName;
 }
 
 void KoGlobal::createListOfLanguages()

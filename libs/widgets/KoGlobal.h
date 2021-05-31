@@ -81,6 +81,9 @@ public:
 
     ~KoGlobal();
 
+    //add QLocale::system().name();
+    static QString sysLanguageName();
+
 private:
     static KoGlobal* self();
 
