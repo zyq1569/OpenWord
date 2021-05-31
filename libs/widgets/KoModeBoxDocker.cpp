@@ -32,7 +32,7 @@ KoModeBoxDocker::KoModeBoxDocker(KoModeBox *modeBox)
     setWidget(modeBox);
 //    setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
     setFeatures(AllDockWidgetFeatures);
-    setWindowTitle("");
+    setWindowTitle("MainTool");//openword20210531
     setObjectName("ModeBox");
 
     connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), this, SLOT(locationChanged(Qt::DockWidgetArea)));
