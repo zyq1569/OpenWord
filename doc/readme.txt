@@ -44,6 +44,11 @@ void KoOpenPane::initRecentDocs()
 通过KoModeBox嵌入 容器KoModeBoxDocker 中
 
 
+
+KoDockerManager::KoDockerManager(KoMainWindow *mainWindow)
+
+
+KoModeBoxFactory.cpp
 QDockWidget* KoModeBoxFactory::createDockWidget() 中 【 dockWidget = factory->createDockWidget();】创建 KoModeBoxDocker容器 然后把创建的KoModeBox嵌入容器KoModeBoxDocker
 
 
