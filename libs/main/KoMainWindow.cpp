@@ -90,7 +90,7 @@
 #include <QMenuBar>
 
 #include "MainDebug.h"
-
+#include "KoGlobal.h"
 
 #define SHAREDHEALTH "SharedHealth"
 
@@ -267,13 +267,25 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
 
     connect(this, SIGNAL(restoringDone()), this, SLOT(forceDockTabFonts()));
 
+    const QString langName = KoGlobal::sysLanguageName();
+    //"zh_CN"
+    QString resoucefile = "calligra/calligra_shell.rc";
+    bool bzh_CN = false;
+    if (langName == "zh_CN")
+    {
+        resoucefile =  "calligra/calligra_shell_zh_CN.rc";
+        bzh_CN = true;
+    }
     // PartManager
     // End
 
     QString doc;
-    const QStringList allFiles = KoResourcePaths::findAllResources("data", "calligra/calligra_shell.rc");
+    //const QStringList allFiles = KoResourcePaths::findAllResources("data", "calligra/calligra_shell.rc");
+    const QStringList allFiles = KoResourcePaths::findAllResources("data", resoucefile);
     setXMLFile(findMostRecentXMLFile(allFiles, doc));
-    setLocalXMLFile(KoResourcePaths::locateLocal("data", "calligra/calligra_shell.rc"));
+    //setLocalXMLFile(KoResourcePaths::locateLocal("data", "calligra/calligra_shell.rc"));
+    setLocalXMLFile(KoResourcePaths::locateLocal("data", resoucefile));
+
 
     actionCollection()->addAction(KStandardAction::New, "file_new", this, SLOT(slotFileNew()));
     actionCollection()->addAction(KStandardAction::Open, "file_open", this, SLOT(slotFileOpen()));
@@ -284,7 +296,14 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
     d->printAction = actionCollection()->addAction(KStandardAction::Print,  "file_print", this, SLOT(slotFilePrint()));
     d->printActionPreview = actionCollection()->addAction(KStandardAction::PrintPreview,  "file_print_preview", this, SLOT(slotFilePrintPreview()));
 
-    d->exportPdf  = new QAction(i18n("Export as PDF..."), this);
+    if (bzh_CN && "Export as PDF..." == i18n("Export as PDF..."))
+    {
+        d->exportPdf  = new QAction(i18n("导出为PDF..."), this);
+    }
+    else
+    {
+        d->exportPdf  = new QAction(i18n("Export as PDF..."), this);
+    }
     d->exportPdf->setIcon(koIcon("application-pdf"));
     actionCollection()->addAction("file_export_pdf", d->exportPdf);
     connect(d->exportPdf, SIGNAL(triggered()), this, SLOT(exportToPdf()));
@@ -294,19 +313,50 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
     d->closeFile = actionCollection()->addAction(KStandardAction::Close,  "file_close", this, SLOT(slotFileClose()));
     actionCollection()->addAction(KStandardAction::Quit,  "file_quit", this, SLOT(slotFileQuit()));
 
-    d->reloadFile  = new QAction(i18n("Reload"), this);
+    if (bzh_CN && "Reload" == i18n("Reload"))
+    {
+        d->reloadFile  = new QAction(i18n("重新打开"), this);
+    }
+    else
+    {
+        d->reloadFile  = new QAction(i18n("Reload"), this);
+    }
+
     actionCollection()->addAction("file_reload_file", d->reloadFile);
     connect(d->reloadFile, SIGNAL(triggered(bool)), this, SLOT(slotReloadFile()));
 
-    d->showFileVersions  = new QAction(i18n("Versions..."), this);
+    if (bzh_CN && "Versions..." == i18n("Versions..."))
+    {
+        d->showFileVersions  = new QAction(i18n("版本..."), this);
+    }
+    else
+    {
+        d->showFileVersions  = new QAction(i18n("Versions..."), this);
+    }
+
     actionCollection()->addAction("file_versions_file", d->showFileVersions);
     connect(d->showFileVersions, SIGNAL(triggered(bool)), this, SLOT(slotVersionsFile()));
 
-    d->importFile  = new QAction(koIcon("document-import"), i18n("Open ex&isting Document as Untitled Document..."), this);
+    if (bzh_CN && "Open ex&isting Document as Untitled Document..." == i18n("Open ex&isting Document as Untitled Document..."))
+    {
+        d->importFile  = new QAction(koIcon("document-import"), i18n("打开文档另存..."), this);
+    }
+    else
+    {
+        d->importFile  = new QAction(koIcon("document-import"), i18n("Open ex&isting Document as Untitled Document..."), this);
+    }
     actionCollection()->addAction("file_import_file", d->importFile);
     connect(d->importFile, SIGNAL(triggered(bool)), this, SLOT(slotImportFile()));
 
-    d->exportFile  = new QAction(koIcon("document-export"), i18n("E&xport..."), this);
+    if (bzh_CN && "E&xport..." == i18n("E&xport..."))
+    {
+        d->exportFile  = new QAction(koIcon("document-export"), i18n("E&导出..."), this);
+    }
+    else
+    {
+        d->exportFile  = new QAction(koIcon("document-export"), i18n("E&xport..."), this);
+    }
+
     actionCollection()->addAction("file_export_file", d->exportFile);
     connect(d->exportFile, SIGNAL(triggered(bool)), this, SLOT(slotExportFile()));
 
@@ -326,7 +376,15 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
 
     /* The following entry opens the document information dialog.  Since the action is named so it
         intends to show data this entry should not have a trailing ellipses (...).  */
-    d->showDocumentInfo  = new QAction(koIcon("document-properties"), i18n("Document Information"), this);
+    if (bzh_CN && "Document Information" == i18n("Document Information"))
+    {
+        d->showDocumentInfo  = new QAction(koIcon("document-properties"), i18n("文档信息"), this);
+    }
+    else
+    {
+        d->showDocumentInfo  = new QAction(koIcon("document-properties"), i18n("Document Information"), this);
+    }
+
     actionCollection()->addAction("file_documentinfo", d->showDocumentInfo);
     connect(d->showDocumentInfo, SIGNAL(triggered(bool)), this, SLOT(slotDocumentInfo()));
 
@@ -350,24 +408,53 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
     d->uncompressToDir->setEnabled(false);
 #endif
 
-    KToggleAction *fullscreenAction  = new KToggleAction(koIcon("view-fullscreen"), i18n("Full Screen Mode"), this);
+    KToggleAction *fullscreenAction;
+    if (bzh_CN && "Full Screen Mode" == i18n("Full Screen Mode"))
+    {
+        fullscreenAction  = new KToggleAction(koIcon("view-fullscreen"), i18n("全屏"), this);
+    }
+    else
+    {
+        /*KToggleAction **/fullscreenAction  = new KToggleAction(koIcon("view-fullscreen"), i18n("Full Screen Mode"), this);
+    }
     actionCollection()->addAction("view_fullscreen", fullscreenAction);
     actionCollection()->setDefaultShortcut(fullscreenAction, QKeySequence::FullScreen);
     connect(fullscreenAction, SIGNAL(toggled(bool)), this, SLOT(viewFullscreen(bool)));
 
-    d->toggleDockers = new KToggleAction(i18n("Show Dockers"), this);
+    if (bzh_CN && "Show Dockers" == i18n("Show Dockers"))
+    {
+        d->toggleDockers = new KToggleAction(i18n("显示组件"), this);
+    }
+    else
+    {
+        d->toggleDockers = new KToggleAction(i18n("Show Dockers"), this);
+    }
     d->toggleDockers->setChecked(true);
     actionCollection()->addAction("view_toggledockers", d->toggleDockers);
     connect(d->toggleDockers, SIGNAL(toggled(bool)), SLOT(toggleDockersVisibility(bool)));
 
-    d->toggleDockerTitleBars = new KToggleAction(i18nc("@action:inmenu", "Show Docker Titlebars"), this);
+    if (bzh_CN && "Show Docker Titlebars" == i18n("Show Docker Titlebars"))
+    {
+        d->toggleDockerTitleBars = new KToggleAction(i18nc("@action:inmenu", "显示组件名称"), this);
+    }
+    else
+    {
+        d->toggleDockerTitleBars = new KToggleAction(i18nc("@action:inmenu", "Show Docker Titlebars"), this);
+    }
     KConfigGroup configGroupInterface =  KSharedConfig::openConfig()->group("Interface");
     d->toggleDockerTitleBars->setChecked(configGroupInterface.readEntry("ShowDockerTitleBars", true));
     d->toggleDockerTitleBars->setVisible(false);
     actionCollection()->addAction("view_toggledockertitlebars", d->toggleDockerTitleBars);
     connect(d->toggleDockerTitleBars, SIGNAL(toggled(bool)), SLOT(showDockerTitleBars(bool)));
 
-    d->dockWidgetMenu  = new KActionMenu(i18n("Dockers"), this);
+    if (bzh_CN && "Dockers" == i18n("Dockers"))
+    {
+        d->dockWidgetMenu  = new KActionMenu(i18n("组件"), this);
+    }
+    else
+    {
+        d->dockWidgetMenu  = new KActionMenu(i18n("Dockers"), this);
+    }
     actionCollection()->addAction("settings_dockers_menu", d->dockWidgetMenu);
     d->dockWidgetMenu->setVisible(false);
     d->dockWidgetMenu->setDelayed(false);
