@@ -80,7 +80,8 @@ public:
 
     void restoringDone()
     {
-        if (ignore) {
+        if (ignore)
+        {
             ignore = false;
             toolOptionsDocker->setVisible(showOptionsDocker);
         }
