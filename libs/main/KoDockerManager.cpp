@@ -62,8 +62,7 @@ KoDockerManager::KoDockerManager(KoMainWindow *mainWindow)
     : QObject(mainWindow), d( new Private(mainWindow) )
 {
     ToolDockerFactory toolDockerFactory;
-    d->toolOptionsDocker =
-        qobject_cast<KoToolDocker*>(mainWindow->createDockWidget(&toolDockerFactory));
+    d->toolOptionsDocker = qobject_cast<KoToolDocker*>(mainWindow->createDockWidget(&toolDockerFactory));
     Q_ASSERT(d->toolOptionsDocker);
     d->toolOptionsDocker->setVisible(false);
 
