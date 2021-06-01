@@ -25,25 +25,46 @@
 #include <kundo2stack.h>
 #include <klocalizedstring.h>
 #include <kstandardshortcut.h>
-
+#include <QLocale>
 KoUndoStackAction::KoUndoStackAction(KUndo2Stack* stack, Type type)
     : QAction(stack)
     , m_type(type)
 {
-    if (m_type == UNDO) {
+    const QString langName = QLocale::system().name();
+    if (m_type == UNDO)
+    {
         connect(this, SIGNAL(triggered()), stack, SLOT(undo()));
         connect(stack, SIGNAL(canUndoChanged(bool)), this, SLOT(setEnabled(bool)));
         connect(stack, SIGNAL(undoTextChanged(QString)), this, SLOT(slotUndoTextChanged(QString)));
         setIcon(koIcon("edit-undo"));
-        setText(i18n("Undo"));
+
+        if (langName == "zh_CN"&&"Undo"==i18n("Undo"))
+        {
+            setText(i18n("撤销"));
+        }
+        else
+        {
+            setText(i18n("Undo"));
+        }
+//        setText(i18n("Undo"));
         setShortcuts(KStandardShortcut::undo());
         setEnabled(stack->canUndo());
-    } else {
+    }
+    else
+    {
         connect(this, SIGNAL(triggered()), stack, SLOT(redo()));
         connect(stack, SIGNAL(canRedoChanged(bool)), this, SLOT(setEnabled(bool)));
         connect(stack, SIGNAL(redoTextChanged(QString)), this, SLOT(slotUndoTextChanged(QString)));
         setIcon(koIcon("edit-redo"));
-        setText(i18n("Redo"));
+        if (langName == "zh_CN"&&"Redo"==i18n("Redo"))
+        {
+            setText(i18n("恢复"));
+        }
+        else
+        {
+            setText(i18n("Redo"));
+        }
+//        setText(i18n("Redo"));
         setShortcuts(KStandardShortcut::redo());
         setEnabled(stack->canRedo());
     }
