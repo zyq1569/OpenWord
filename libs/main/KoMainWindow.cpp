@@ -267,6 +267,7 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
 
     connect(this, SIGNAL(restoringDone()), this, SLOT(forceDockTabFonts()));
 
+    //QStringList str = KLocalizedString::languages();
     const QString langName = KoGlobal::sysLanguageName();
     //"zh_CN"
     QString resoucefile = "calligra/calligra_shell.rc";
@@ -2000,8 +2001,23 @@ void KoMainWindow::slotConfigureKeys()
         redoAction = currentView()->actionCollection()->action("edit_redo");
         oldUndoText = undoAction->text();
         oldRedoText = redoAction->text();
-        undoAction->setText(i18n("Undo"));
-        redoAction->setText(i18n("Redo"));
+        const QString langName = KoGlobal::sysLanguageName();
+        if (langName == "zh_CN"&&"Undo"==i18n("Undo"))
+        {
+            undoAction->setText(i18n("撤销"));
+        }
+        else
+        {
+            undoAction->setText(i18n("Undo"));
+        }
+        if (langName == "zh_CN"&&"Redo"==i18n("Redo"))
+        {
+            redoAction->setText(i18n("恢复"));
+        }
+        else
+        {
+            redoAction->setText(i18n("Redo"));
+        }
     }
 
     guiFactory()->configureShortcuts();
