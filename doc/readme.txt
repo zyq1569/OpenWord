@@ -35,7 +35,16 @@ void KoOpenPane::initRecentDocs()
 
 }
 
-所有插件通过KoPluginLoader::load( 来添加
+所有插件通过KoPluginLoader::load( 来添加的
+例如：
+void KoDockRegistry::init()
+{
+    KoPluginLoader::PluginsConfig config;
+    config.whiteList = "DockerPlugins";
+    config.blacklist = "DockerPluginsDisabled";
+    config.group = "calligra";
+    KoPluginLoader::load(QStringLiteral("calligra/dockers"), config);
+}
 
 
 ##-----------------$$ 修改右侧的工具内容显示方式：--------------------------------------------------------------
@@ -49,6 +58,21 @@ void KoOpenPane::initRecentDocs()
 KoDockerManager::KoDockerManager(KoMainWindow *mainWindow)
 
 
+
+插件的添加方式：
+KoToolRegistry::instance()->add(new TextToolFactory()){
+   KoToolRegistry::instance()->add(new TextToolFactory());
+    KoToolRegistry::instance()->add(new ReviewToolFactory());
+    KoToolRegistry::instance()->add(new ReferencesToolFactory());
+    KoShapeRegistry::instance()->add(new TextShapeFactory());
+    KoShapeRegistry::instance()->add(new AnnotationTextShapeFactory());
+	KoDockRegistry::instance()->add(new TextDocumentInspectionDockerFactory());
+	}
+	dockRegistry->add(new KWStatisticsDockerFactory());
+    dockRegistry->add(new KWNavigationDockerFactory());
+	
+
+--------------------------->	
 KoModeBoxFactory.cpp
 QDockWidget* KoModeBoxFactory::createDockWidget() 中 【 dockWidget = factory->createDockWidget();】创建 KoModeBoxDocker容器 然后把创建的KoModeBox嵌入容器KoModeBoxDocker
 
