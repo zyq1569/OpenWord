@@ -35,6 +35,7 @@ void KoOpenPane::initRecentDocs()
 
 }
 
+所有插件通过KoPluginLoader::load( 来添加
 
 
 ##-----------------$$ 修改右侧的工具内容显示方式：--------------------------------------------------------------
@@ -54,4 +55,13 @@ QDockWidget* KoModeBoxFactory::createDockWidget() 中 【 dockWidget = factory->
 
 在 KoView::KoView(KoPart *part, KoDocument *document, QWidget *parent) 中     // add all plugins.  
    foreach(const QString & docker, KoDockRegistry::instance()->keys())
+   
+   
+   
+ KoMainWindow::KoMainWindow( ) ---->    d->dockerManager = new KoDockerManager(this);  --->
+ d->toolOptionsDocker = qobject_cast<KoToolDocker*>(mainWindow->createDockWidget(&toolDockerFactory));  ---->
+ dockWidget = factory->createDockWidget();
+ 
+ 
+ 
 
