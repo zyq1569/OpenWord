@@ -35,7 +35,8 @@ void KoTextEditingRegistry::init()
 
 KoTextEditingRegistry* KoTextEditingRegistry::instance()
 {
-    if (!s_instance.exists()) {
+    if (!s_instance.exists())
+    {
         s_instance->init();
     }
     return s_instance;

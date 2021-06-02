@@ -50,16 +50,21 @@ void KoInlineObjectRegistry::Private::init(KoInlineObjectRegistry *q)
     config.group = "calligra";
     KoPluginLoader::load(QStringLiteral("calligra/textinlineobjects"), config);
 
-    foreach (KoInlineObjectFactoryBase *factory, q->values()) {
+    foreach (KoInlineObjectFactoryBase *factory, q->values())
+    {
         QString nameSpace = factory->odfNameSpace();
-        if (nameSpace.isEmpty() || factory->odfElementNames().isEmpty()) {
+        if (nameSpace.isEmpty() || factory->odfElementNames().isEmpty())
+        {
             debugText << "Variable factory" << factory->id() << " does not have odfNameSpace defined, ignoring";
-        } else {
-            foreach (const QString &elementName, factory->odfElementNames()) {
+        }
+        else
+        {
+            foreach (const QString &elementName, factory->odfElementNames())
+            {
                 factories.insert(QPair<QString, QString>(nameSpace, elementName), factory);
 
                 debugText << "Inserting variable factory" << factory->id() << " for"
-                    << nameSpace << ":" << elementName;
+                          << nameSpace << ":" << elementName;
             }
         }
     }
@@ -67,7 +72,8 @@ void KoInlineObjectRegistry::Private::init(KoInlineObjectRegistry *q)
 
 KoInlineObjectRegistry* KoInlineObjectRegistry::instance()
 {
-    if (!s_instance.exists()) {
+    if (!s_instance.exists())
+    {
         s_instance->d->init(s_instance);
     }
     return s_instance;
@@ -76,16 +82,20 @@ KoInlineObjectRegistry* KoInlineObjectRegistry::instance()
 QList<QAction*> KoInlineObjectRegistry::createInsertVariableActions(KoCanvasBase *host) const
 {
     QList<QAction*> answer;
-    foreach (const QString &key, keys()) {
+    foreach (const QString &key, keys())
+    {
         KoInlineObjectFactoryBase *factory = value(key);
-        if (factory->type() == KoInlineObjectFactoryBase::TextVariable) {
-            foreach (const KoInlineObjectTemplate &templ, factory->templates()) {
+        if (factory->type() == KoInlineObjectFactoryBase::TextVariable)
+        {
+            foreach (const KoInlineObjectTemplate &templ, factory->templates())
+            {
                 answer.append(new InsertVariableAction(host, factory, templ));
             }
 #ifndef NDEBUG
-           if (factory->templates().isEmpty()) {
+            if (factory->templates().isEmpty())
+            {
                 warnText << "Variable factory" << factory->id() << "has no templates, skipping.";
-           }
+            }
 #endif
         }
     }
@@ -96,13 +106,15 @@ KoInlineObject *KoInlineObjectRegistry::createFromOdf(const KoXmlElement &elemen
 {
     KoInlineObjectFactoryBase *factory = d->factories.value(
             QPair<QString, QString>(element.namespaceURI(), element.tagName()));
-    if (factory == 0) {
+    if (factory == 0)
+    {
         debugText << "No factory for" << element.namespaceURI() << ":" << element.tagName();
         return 0;
     }
 
     KoInlineObject *object = factory->createInlineObject(0);
-    if (object) {
+    if (object)
+    {
         object->loadOdf(element, context);
     }
 
@@ -117,6 +129,6 @@ KoInlineObjectRegistry::~KoInlineObjectRegistry()
 }
 
 KoInlineObjectRegistry::KoInlineObjectRegistry()
-        : d(new Private())
+    : d(new Private())
 {
 }
