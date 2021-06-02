@@ -31,7 +31,7 @@
 Q_GLOBAL_STATIC(KoDockRegistry, s_instance)
 
 KoDockRegistry::KoDockRegistry()
-  : d(0)
+    : d(0)
 {
 }
 
@@ -53,7 +53,8 @@ KoDockRegistry::~KoDockRegistry()
 KoDockRegistry* KoDockRegistry::instance()
 {
 
-    if (!s_instance.exists()) {
+    if (!s_instance.exists())
+    {
         s_instance->init();
     }
     return s_instance;
@@ -68,13 +69,16 @@ QFont KoDockRegistry::dockFont()
     int pointSize = group.readEntry("palettefontsize", dockWidgetFont.pointSize());
 
     // Not set by the user
-    if (pointSize == dockWidgetFont.pointSize()) {
+    if (pointSize == dockWidgetFont.pointSize())
+    {
         // and there is no setting for the smallest readable font, calculate something small
-        if (smallFont.pointSize() >= pointSize) {
+        if (smallFont.pointSize() >= pointSize)
+        {
             smallFont.setPointSizeF(pointSize * 0.9);
         }
     }
-    else {
+    else
+    {
         // paletteFontSize was set, use that
         smallFont.setPointSize(pointSize);
     }

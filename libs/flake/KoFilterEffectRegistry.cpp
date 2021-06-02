@@ -30,7 +30,7 @@
 Q_GLOBAL_STATIC(KoFilterEffectRegistry, s_instance)
 
 KoFilterEffectRegistry::KoFilterEffectRegistry()
-  : d(0)
+    : d(0)
 {
 }
 
@@ -51,7 +51,8 @@ KoFilterEffectRegistry::~KoFilterEffectRegistry()
 
 KoFilterEffectRegistry* KoFilterEffectRegistry::instance()
 {
-    if (!s_instance.exists()) {
+    if (!s_instance.exists())
+    {
         s_instance->init();
     }
     return s_instance;
@@ -61,11 +62,15 @@ KoFilterEffect * KoFilterEffectRegistry::createFilterEffectFromXml(const KoXmlEl
 {
     KoFilterEffectFactoryBase * factory = get(element.tagName());
     if (!factory)
+    {
         return 0;
+    }
 
     KoFilterEffect * filterEffect = factory->createFilterEffect();
     if (filterEffect->load(element, context))
+    {
         return filterEffect;
+    }
 
     delete filterEffect;
     return 0;

@@ -37,22 +37,28 @@ void KoInputDeviceHandlerRegistry::init()
     config.group = "calligra";
     KoPluginLoader::load(QStringLiteral("calligra/devices"), config);
 
-    foreach(const QString & id, keys()) {
+    foreach(const QString & id, keys())
+    {
         KoInputDeviceHandler * d = value(id);
         if (d)
+        {
             d->start();
+        }
     }
 }
 
 KoInputDeviceHandlerRegistry::~KoInputDeviceHandlerRegistry()
 {
-    foreach(const QString & id, keys()) {
+    foreach(const QString & id, keys())
+    {
         KoInputDeviceHandler * d = value(id);
-        if (d) {
+        if (d)
+        {
             d->stop();
         }
     }
-    foreach(const QString &id, keys()) {
+    foreach(const QString &id, keys())
+    {
         get(id)->deleteLater();
     }
     // just leak on exit -- we get into trouble for explicitly
@@ -62,7 +68,8 @@ KoInputDeviceHandlerRegistry::~KoInputDeviceHandlerRegistry()
 
 KoInputDeviceHandlerRegistry* KoInputDeviceHandlerRegistry::instance()
 {
-    if (!s_instance.exists()) {
+    if (!s_instance.exists())
+    {
         s_instance->init();
     }
     return s_instance;

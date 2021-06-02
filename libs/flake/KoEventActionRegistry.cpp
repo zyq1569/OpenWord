@@ -35,7 +35,7 @@ class KoEventActionRegistry::Singleton
 {
 public:
     Singleton()
-            : initDone(false) {}
+        : initDone(false) {}
 
     KoEventActionRegistry q;
     bool initDone;
@@ -54,7 +54,8 @@ public:
 KoEventActionRegistry * KoEventActionRegistry::instance()
 {
     KoEventActionRegistry * registry = &(singleton->q);
-    if (! singleton->initDone) {
+    if (! singleton->initDone)
+    {
         singleton->initDone = true;
         registry->init();
     }
@@ -62,7 +63,7 @@ KoEventActionRegistry * KoEventActionRegistry::instance()
 }
 
 KoEventActionRegistry::KoEventActionRegistry()
-        : d(new Private())
+    : d(new Private())
 {
 }
 
@@ -74,7 +75,8 @@ KoEventActionRegistry::~KoEventActionRegistry()
 void KoEventActionRegistry::addPresentationEventAction(KoEventActionFactoryBase * factory)
 {
     const QString & action = factory->action();
-    if (! action.isEmpty()) {
+    if (! action.isEmpty())
+    {
         d->presentationEventActionFactories.insert(factory->id(), factory);
         d->presentationEventActions.insert(action, factory);
     }
@@ -112,36 +114,55 @@ QSet<KoEventAction*> KoEventActionRegistry::createEventActionsFromOdf(const KoXm
 {
     QSet<KoEventAction *> eventActions;
 
-    if (e.namespaceURI() == KoXmlNS::office && e.tagName() == "event-listeners") {
+    if (e.namespaceURI() == KoXmlNS::office && e.tagName() == "event-listeners")
+    {
         KoXmlElement element;
-        forEachElement(element, e) {
-            if (element.tagName() == "event-listener") {
-                if (element.namespaceURI() == KoXmlNS::presentation) {
+        forEachElement(element, e)
+        {
+            if (element.tagName() == "event-listener")
+            {
+                if (element.namespaceURI() == KoXmlNS::presentation)
+                {
                     QString action(element.attributeNS(KoXmlNS::presentation, "action", QString()));
                     QHash<QString, KoEventActionFactoryBase *>::const_iterator it(d->presentationEventActions.find(action));
 
-                    if (it != d->presentationEventActions.constEnd()) {
+                    if (it != d->presentationEventActions.constEnd())
+                    {
                         KoEventAction * eventAction = it.value()->createEventAction();
-                        if (eventAction) {
-                            if (eventAction->loadOdf(element, context)) {
+                        if (eventAction)
+                        {
+                            if (eventAction->loadOdf(element, context))
+                            {
                                 eventActions.insert(eventAction);
-                            } else {
+                            }
+                            else
+                            {
                                 delete eventAction;
                             }
                         }
-                    } else {
+                    }
+                    else
+                    {
                         warnFlake << "presentation:event-listerer action = " << action << "not supported";
                     }
-                } else if (element.namespaceURI() == KoXmlNS::script) {
+                }
+                else if (element.namespaceURI() == KoXmlNS::script)
+                {
                     // TODO
-                } else {
+                }
+                else
+                {
                     warnFlake << "element" << e.namespaceURI() << e.tagName() << "not supported";
                 }
-            } else {
+            }
+            else
+            {
                 warnFlake << "element" << e.namespaceURI() << e.tagName() << "not supported";
             }
         }
-    } else {
+    }
+    else
+    {
         warnFlake << "office:event-listeners not found got:" << e.namespaceURI() << e.tagName();
     }
 
