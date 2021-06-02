@@ -71,7 +71,7 @@ TextPlugin::TextPlugin()
 }
 
 TextPlugin::TextPlugin(QObject * parent, const QVariantList &)
-        : QObject(parent)
+    : QObject(parent)
 {
     KoToolRegistry::instance()->add(new TextToolFactory());
     KoToolRegistry::instance()->add(new ReviewToolFactory());
@@ -83,7 +83,8 @@ TextPlugin::TextPlugin(QObject * parent, const QVariantList &)
     KConfigGroup debugConfigGroup( KSharedConfig::openConfig(), "Debug");
     const bool isInspectorEnabled  = (debugConfigGroup.readEntry("EnableTextDocumentInspector", QString()) == "true");
 
-    if (isInspectorEnabled) {
+    if (isInspectorEnabled)
+    {
         KoDockRegistry::instance()->add(new TextDocumentInspectionDockerFactory());
     }
 #endif

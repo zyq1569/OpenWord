@@ -35,7 +35,10 @@ class KoResourceItemView : public KoTableView
 public:
 
     explicit KoResourceItemView(QWidget *parent = nullptr);
-    ~KoResourceItemView() override { disconnect(); }
+    ~KoResourceItemView() override
+    {
+        disconnect();
+    }
 
     /// reimplemented
     bool viewportEvent(QEvent *event) override;
