@@ -34,7 +34,8 @@
 
 #include <QStackedWidget>
 
-class ShapePropertiesDocker::Private {
+class ShapePropertiesDocker::Private
+{
 public:
     Private() : widgetStack(0), currentShape(0), currentPanel(0), canvas(0) {}
     QStackedWidget * widgetStack;
@@ -46,7 +47,7 @@ public:
 
 ShapePropertiesDocker::ShapePropertiesDocker(QWidget *parent)
     : QDockWidget(i18n("Shape Properties"), parent),
-    d( new Private() )
+      d( new Private() )
 {
     d->widgetStack = new QStackedWidget();
     setWidget(d->widgetStack);
@@ -67,32 +68,40 @@ void ShapePropertiesDocker::setCanvas( KoCanvasBase *canvas )
 {
     setEnabled(canvas != 0);
 
-    if (d->canvas) {
+    if (d->canvas)
+    {
         d->canvas->disconnectCanvasObserver(this); // "Every connection you make emits a signal, so duplicate connections emit two signals"
     }
 
     d->canvas = canvas;
 
-    if( d->canvas )  {
+    if( d->canvas )
+    {
         connect( d->canvas->shapeManager(), SIGNAL(selectionChanged()),
-            this, SLOT(selectionChanged()) );
+                 this, SLOT(selectionChanged()) );
         connect( d->canvas->shapeManager(), SIGNAL(selectionContentChanged()),
-            this, SLOT(selectionChanged()) );
+                 this, SLOT(selectionChanged()) );
         connect( d->canvas->resourceManager(), SIGNAL(canvasResourceChanged(int,QVariant)),
-            this, SLOT(canvasResourceChanged(int,QVariant)) );
+                 this, SLOT(canvasResourceChanged(int,QVariant)) );
     }
 }
 
 void ShapePropertiesDocker::selectionChanged()
 {
     if( ! d->canvas )
+    {
         return;
+    }
 
     KoSelection *selection = d->canvas->shapeManager()->selection();
     if( selection->count() == 1 )
+    {
         addWidgetForShape( selection->firstSelectedShape() );
+    }
     else
+    {
         addWidgetForShape( 0 );
+    }
 }
 
 void ShapePropertiesDocker::addWidgetForShape( KoShape * shape )
@@ -101,7 +110,9 @@ void ShapePropertiesDocker::addWidgetForShape( KoShape * shape )
     if( ! shape || shape != d->currentShape )
     {
         while( d->widgetStack->count() )
+        {
             d->widgetStack->removeWidget( d->widgetStack->widget( 0 ) );
+        }
     }
 
     if( ! shape )
@@ -116,7 +127,9 @@ void ShapePropertiesDocker::addWidgetForShape( KoShape * shape )
         // get the config widget and insert it into the option widget
         d->currentShape = shape;
         if( ! d->currentShape )
+        {
             return;
+        }
         QString shapeId = shape->shapeId();
         KoPathShape * path = dynamic_cast<KoPathShape*>( shape );
         if( path )
@@ -126,20 +139,27 @@ void ShapePropertiesDocker::addWidgetForShape( KoShape * shape )
             // check if we have an edited parametric shape, then we use the path shape id
             KoParameterShape * paramShape = dynamic_cast<KoParameterShape*>( shape );
             if( paramShape && ! paramShape->isParametricShape() )
+            {
                 shapeId = shape->shapeId();
+            }
         }
         KoShapeFactoryBase *factory = KoShapeRegistry::instance()->value( shapeId );
         if( ! factory )
+        {
             return;
+        }
         QList<KoShapeConfigWidgetBase*> panels = factory->createShapeOptionPanels();
         if( ! panels.count() )
+        {
             return;
+        }
 
         d->currentPanel = 0;
         uint panelCount = panels.count();
         for( uint i = 0; i < panelCount; ++i )
         {
-            if( panels[i]->showOnShapeSelect() ) {
+            if( panels[i]->showOnShapeSelect() )
+            {
                 d->currentPanel = panels[i];
                 break;
             }
@@ -147,7 +167,9 @@ void ShapePropertiesDocker::addWidgetForShape( KoShape * shape )
         if( d->currentPanel )
         {
             if( d->canvas )
+            {
                 d->currentPanel->setUnit( d->canvas->unit() );
+            }
             d->widgetStack->insertWidget( 0, d->currentPanel );
             connect( d->currentPanel, SIGNAL(propertyChanged()),
                      this, SLOT(shapePropertyChanged()));
@@ -155,7 +177,9 @@ void ShapePropertiesDocker::addWidgetForShape( KoShape * shape )
     }
 
     if( d->currentPanel )
+    {
         d->currentPanel->open( shape );
+    }
 }
 
 void ShapePropertiesDocker::shapePropertyChanged()
@@ -164,7 +188,9 @@ void ShapePropertiesDocker::shapePropertyChanged()
     {
         KUndo2Command * cmd = d->currentPanel->createCommand();
         if( ! cmd )
+        {
             return;
+        }
         d->canvas->addCommand( cmd );
     }
 }
@@ -172,5 +198,7 @@ void ShapePropertiesDocker::shapePropertyChanged()
 void ShapePropertiesDocker::canvasResourceChanged(int key, const QVariant &variant)
 {
     if (key == KoCanvasResourceManager::Unit && d->currentPanel)
+    {
         d->currentPanel->setUnit(variant.value<KoUnit>());
+    }
 }
