@@ -74,17 +74,22 @@ void KWDebugWidget::initLayout()
 void KWDebugWidget::updateData()
 {
     QTimer().singleShot(100, this, SLOT(updateData()));
-    if (!isVisible()) {
+    if (!isVisible())
+    {
         return;
     }
 
     KoTextEditor *editor = 0;
-    if (m_canvas) {
+    if (m_canvas)
+    {
         editor = KoTextEditor::getTextEditorFromCanvas(m_canvas);
-        if (!editor) {
+        if (!editor)
+        {
             return;
         }
-    } else {
+    }
+    else
+    {
         return;
     }
 
@@ -92,14 +97,16 @@ void KWDebugWidget::updateData()
     QTextBlockFormat fmt = curBlock.blockFormat();
 
     QString willShow = "This sections starts here :";
-    foreach (const KoSection *sec, KoSectionUtils::sectionStartings(fmt)) {
+    foreach (const KoSection *sec, KoSectionUtils::sectionStartings(fmt))
+    {
         QPair<int, int> bnds = sec->bounds();
         willShow += " \"" + sec->name() + "\"(" + QString::number(bnds.first) + "; " + QString::number(bnds.second) + ")";
     }
     willShow.append("\n");
 
     willShow += "This sections end here :";
-    foreach (const KoSectionEnd *sec, KoSectionUtils::sectionEndings(fmt)) {
+    foreach (const KoSectionEnd *sec, KoSectionUtils::sectionEndings(fmt))
+    {
         willShow += " \"" + sec->name() + "\"";
     }
     willShow.append("\n");

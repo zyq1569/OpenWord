@@ -77,9 +77,10 @@ void KWNavigationWidget::initLayout()
 
 void KWNavigationWidget::navigationClicked(QModelIndex idx)
 {
-    if (idx.column() == 0) {
+    if (idx.column() == 0)
+    {
         QTextDocument *doc = static_cast<QTextDocument *>(
-            m_model->itemFromIndex(idx)->data(Qt::UserRole + 2).value<void *>());
+                                 m_model->itemFromIndex(idx)->data(Qt::UserRole + 2).value<void *>());
 
         int position = m_model->itemFromIndex(idx)->data(Qt::UserRole + 1).toInt();
 
@@ -93,12 +94,14 @@ void KWNavigationWidget::navigationClicked(QModelIndex idx)
 
 void KWNavigationWidget::updateData()
 {
-    if (!isVisible()) {
+    if (!isVisible())
+    {
         return;
     }
 
     // don't refresh too often
-    if (m_updateTimer->isActive()) {
+    if (m_updateTimer->isActive())
+    {
         return;
     }
 
@@ -116,17 +119,23 @@ void KWNavigationWidget::updateData()
     QStack< QPair<QStandardItem *, int> > curChain;
     curChain.push(QPair<QStandardItem *, int>(m_model->invisibleRootItem(), 0));
 
-    foreach (KWFrameSet *fs, m_document->frameSets()) {
+    foreach (KWFrameSet *fs, m_document->frameSets())
+    {
         KWTextFrameSet *tfs = dynamic_cast<KWTextFrameSet*>(fs);
-        if (tfs == 0) continue;
+        if (tfs == 0)
+        {
+            continue;
+        }
 
         tfs->wordsDocument();
         QTextDocument *doc = tfs->document();
         QTextBlock block = doc->begin();
-        while (block.isValid()) {
+        while (block.isValid())
+        {
             int blockLevel = block.blockFormat().intProperty(KoParagraphStyle::OutlineLevel);
 
-            if (!blockLevel) {
+            if (!blockLevel)
+            {
                 block = block.next();
                 continue;
             }
@@ -141,7 +150,8 @@ void KWNavigationWidget::updateData()
             buf.append(item);
             buf.append(new QStandardItem(QString::number(a->page()->visiblePageNumber())));
 
-            while (curChain.top().second >= blockLevel) {
+            while (curChain.top().second >= blockLevel)
+            {
                 curChain.pop();
             }
 
@@ -160,16 +170,22 @@ void KWNavigationWidget::updateData()
 void KWNavigationWidget::setCanvas(KWCanvas* canvas)
 {
     if (!canvas)
+    {
         return;
+    }
     m_document = canvas->document();
-    if (m_layout) {
+    if (m_layout)
+    {
         disconnect(m_layout, SIGNAL(finishedLayout()), this, SLOT(updateData()));
     }
-    if (m_document->mainFrameSet()) {
+    if (m_document->mainFrameSet())
+    {
         m_layout = qobject_cast<KoTextDocumentLayout *>(
-            m_document->mainFrameSet()->document()->documentLayout());
+                       m_document->mainFrameSet()->document()->documentLayout());
         connect(m_layout, SIGNAL(finishedLayout()), this, SLOT(updateData()));
-    } else {
+    }
+    else
+    {
         m_layout = 0;
     }
     m_canvas = canvas;
@@ -178,7 +194,8 @@ void KWNavigationWidget::setCanvas(KWCanvas* canvas)
 void KWNavigationWidget::unsetCanvas()
 {
     m_document = 0;
-    if (m_layout) {
+    if (m_layout)
+    {
         disconnect(m_layout, SIGNAL(finishedLayout()), this, SLOT(updateData()));
     }
     m_layout = 0;
