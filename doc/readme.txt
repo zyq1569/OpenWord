@@ -47,11 +47,26 @@ void KoDockRegistry::init()
 }
 
 
+////----------当前的激活得到窗体  -----------------
+KoView *KoMainWindow::rootView() const
+{
+    if (d->rootViews.indexOf(d->activeView) != -1)
+    {
+        return d->activeView;
+    }
+    return d->rootViews.empty() ? nullptr : d->rootViews.first();
+}
+///----------------------------------------------------
+
+///------------dockers 中 shape properties 对应的组件 class ShapePropertiesDocker : public QDockWidget, public KoCanvasObserverBase
+显示时无法调整组件所在窗体
+
+
 ##-----------------$$ 修改右侧的工具内容显示方式：--------------------------------------------------------------
 能够显示或者隐藏，有一个竖形线显示（参考libreoffice）
 
 目前 判断 整个面板容器是KoModeBoxDocker，需求对这个容器进行显示或者隐藏
-通过KoModeBox嵌入 容器KoModeBoxDocker 中
+通过KoModeBox（目前定义的名称 为main tool）嵌入 容器KoModeBoxDocker 中
 
 
 
@@ -88,4 +103,24 @@ QDockWidget* KoModeBoxFactory::createDockWidget() 中 【 dockWidget = factory->
  
  
  
+ 
+$$$---------------------------------------------------------------------------------
+bool KoApplication::start()-------->
 
+KoPart *part = entry.createKoPart(&errorMsg);  ----> 调用下面函数
+
+KoPart *KoDocumentEntry::createKoPart(QString* errorMsg) const  ---->
+{
+KPluginFactory *factory = qobject_cast<KPluginFactory *>(obj);
+KoPart *part            = factory->create<KoPart>(0, QVariantList());		
+}
+通过下面 创建窗体 
+KoMainWindow *mainWindow = part->createMainWindow();
+
+然后显示窗体
+KWPart::showStartUpWidget(KoMainWindow *parent, bool alwaysShow)
+
+
+
+$$$------------------------------------------------------------------------------------
+KoToolProxy 代理所有鼠标键盘事件响应
