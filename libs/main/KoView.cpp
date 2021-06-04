@@ -204,6 +204,7 @@ KoView::KoView(KoPart *part, KoDocument *document, QWidget *parent)
     // add all plugins.
     foreach(const QString & docker, KoDockRegistry::instance()->keys())
     {
+        debugMain<<"foreach(const QString & docker, KoDockRegistry::instance()->keys())"<<docker;
         KoDockFactoryBase *factory = KoDockRegistry::instance()->value(docker);
         if (mainWindow())
         {

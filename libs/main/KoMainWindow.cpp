@@ -656,7 +656,7 @@ KoMainWindow::~KoMainWindow()
     }
 
     delete d;
-    DEBUG_LOG("KoMainWindow::~KoMainWindow()");
+//    DEBUG_LOG("KoMainWindow::~KoMainWindow()");
 }
 
 void KoMainWindow::setRootDocument(KoDocument *doc, KoPart *part, bool deletePrevious)
@@ -763,17 +763,7 @@ void KoMainWindow::setRootDocument(KoDocument *doc, KoPart *part, bool deletePre
     {
         delete oldRootViews.takeFirst();
     }
-//    for (int size = oldRootViews.size(),i=0; i<size; i++)
-//    {
-//        KoView *v = oldRootViews.takeAt(i);
-//        if (v->hasFocus())
-//        {
 
-//            oldRootViews.removeAt(i);
-//            delete  v;
-//            break;
-//        }
-//    }
     ///-----
 
 
@@ -2340,7 +2330,7 @@ KoComponentData KoMainWindow::componentData() const
 QDockWidget* KoMainWindow::createDockWidget(KoDockFactoryBase* factory)
 {
     QDockWidget* dockWidget = 0;
-
+    QString id = factory->id();
     if (!d->dockWidgetsMap.contains(factory->id()))
     {
         dockWidget = factory->createDockWidget();
@@ -2624,7 +2614,7 @@ void KoMainWindow::setActivePart(KoPart *part, QWidget *widget )
     if (part && d->m_registeredPart.data() != part)
     {
         warnMain << "trying to activate a non-registered part!" << part->objectName();
-        INFO_LOG("trying to activate a non-registered part!" + part->objectName());
+        ERROR_LOG("trying to activate a non-registered part!" + part->objectName());
         // don't allow someone call setActivePart with a part we don't know about
         return;
     }
