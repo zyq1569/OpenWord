@@ -78,25 +78,33 @@ private:
 };
 
 void KoResourcePathsImpl::addResourceTypeInternal(const QString &type, const QString &basetype,
-                                                  const QString &relativename,
-                                                  bool priority)
+        const QString &relativename,
+        bool priority)
 {
-    if (relativename.isEmpty()) return;
+    if (relativename.isEmpty())
+    {
+        return;
+    }
 
     QString copy = relativename;
 
     Q_ASSERT(basetype == "data");
 
-    if (!copy.endsWith(QLatin1Char('/'))) {
+    if (!copy.endsWith(QLatin1Char('/')))
+    {
         copy += QLatin1Char('/');
     }
 
     QStringList &rels = m_relatives[type]; // find or insert
 
-    if (!rels.contains(copy, cs)) {
-        if (priority) {
+    if (!rels.contains(copy, cs))
+    {
+        if (priority)
+        {
             rels.prepend(copy);
-        } else {
+        }
+        else
+        {
             rels.append(copy);
         }
     }
@@ -106,19 +114,27 @@ void KoResourcePathsImpl::addResourceTypeInternal(const QString &type, const QSt
 
 void KoResourcePathsImpl::addResourceDirInternal(const QString &type, const QString &absdir, bool priority)
 {
-    if (absdir.isEmpty() || type.isEmpty()) return;
+    if (absdir.isEmpty() || type.isEmpty())
+    {
+        return;
+    }
 
     // find or insert entry in the map
     QString copy = absdir;
-    if (!copy.endsWith(QLatin1Char('/'))) {
+    if (!copy.endsWith(QLatin1Char('/')))
+    {
         copy += QLatin1Char('/');
     }
 
     QStringList &paths = m_absolutes[type];
-    if (!paths.contains(copy, cs)) {
-        if (priority) {
+    if (!paths.contains(copy, cs))
+    {
+        if (priority)
+        {
             paths.prepend(copy);
-        } else {
+        }
+        else
+        {
             paths.append(copy);
         }
     }
@@ -130,18 +146,24 @@ QString KoResourcePathsImpl::findResourceInternal(const QString &type, const QSt
 {
     const QStandardPaths::StandardLocation location = mapTypeToQStandardPaths(type);
     QString resource = QStandardPaths::locate(location, fileName, QStandardPaths::LocateFile);
-    if (resource.isEmpty()) {
-        foreach(const QString &relative, m_relatives.value(type)) {
+    if (resource.isEmpty())
+    {
+        foreach(const QString &relative, m_relatives.value(type))
+        {
             resource = QStandardPaths::locate(location, relative + fileName, QStandardPaths::LocateFile);
-            if (!resource.isEmpty()) {
+            if (!resource.isEmpty())
+            {
                 break;
             }
         }
     }
-    if (resource.isEmpty()) {
-        foreach(const QString &absolute, m_absolutes.value(type)) {
+    if (resource.isEmpty())
+    {
+        foreach(const QString &absolute, m_absolutes.value(type))
+        {
             const QString filePath = absolute + fileName;
-            if (QFileInfo::exists(filePath)) {
+            if (QFileInfo::exists(filePath))
+            {
                 resource = filePath;
                 break;
             }
@@ -158,13 +180,16 @@ QStringList KoResourcePathsImpl::findDirsInternal(const QString &type, const QSt
 
     QStringList dirs = QStandardPaths::locateAll(location, relDir, QStandardPaths::LocateDirectory);
 
-    foreach(const QString &relative, m_relatives.value(type)) {
+    foreach(const QString &relative, m_relatives.value(type))
+    {
         dirs << QStandardPaths::locateAll(location, relative + relDir, QStandardPaths::LocateDirectory);
     }
 
-    foreach(const QString &absolute, m_absolutes.value(type)) {
+    foreach(const QString &absolute, m_absolutes.value(type))
+    {
         const QString dirPath = absolute + relDir;
-        if (QDir(dirPath).exists()) {
+        if (QDir(dirPath).exists())
+        {
             dirs << dirPath;
         }
     }
@@ -185,15 +210,18 @@ QStringList filesInDir(const QString &startdir, const QString & filter, bool nod
     nameFilters << filter;
     const QStringList fileNames = QDir(startdir).entryList(nameFilters, QDir::Files | QDir::CaseSensitive, QDir::Name);
     //qDebug() << "\tFound:" << fileNames.size() << ":" << fileNames;
-    Q_FOREACH (const QString &fileName, fileNames) {
+    Q_FOREACH (const QString &fileName, fileNames)
+    {
         QString file = startdir + '/' + fileName;
         result << file;
     }
 
     // And then everything underneath, if recursive is specified
-    if (recursive) {
+    if (recursive)
+    {
         const QStringList entries = QDir(startdir).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-        Q_FOREACH (const QString &subdir, entries) {
+        Q_FOREACH (const QString &subdir, entries)
+        {
             //qDebug() << "\tGoing to look in subdir" << subdir << "of" << startdir;
             result << filesInDir(startdir + '/' + subdir, filter, noduplicates, recursive);
         }
@@ -202,8 +230,8 @@ QStringList filesInDir(const QString &startdir, const QString & filter, bool nod
 }
 
 QStringList KoResourcePathsImpl::findAllResourcesInternal(const QString &type,
-                                                          const QString &_filter,
-                                                          KoResourcePaths::SearchOptions options) const
+        const QString &_filter,
+        KoResourcePaths::SearchOptions options) const
 {
     //qDebug() << "=====================================================";
 
@@ -219,39 +247,46 @@ QStringList KoResourcePathsImpl::findAllResourcesInternal(const QString &type,
     QString prefix;
 
     // In cases where the filter  is like "color-schemes/*.colors" instead of "*.kpp", used with unregistgered resource types
-    if (filter.indexOf('*') > 0) {
+    if (filter.indexOf('*') > 0)
+    {
         prefix = filter.split('*').first();
         filter = '*' + filter.split('*')[1];
         //qDebug() << "Split up alias" << relatives << "filter" << filter;
     }
 
     QStringList resources;
-    if (relatives.isEmpty()) {
+    if (relatives.isEmpty())
+    {
         resources << QStandardPaths::locateAll(location, prefix + filter, QStandardPaths::LocateFile);
     }
 
     ////qDebug() << "\tresources from qstandardpaths:" << resources.size();
 
 
-    foreach(const QString &relative, relatives) {
+    foreach(const QString &relative, relatives)
+    {
         //qDebug() << "\t\relative:" << relative;
         const QStringList dirs = QStandardPaths::locateAll(location, relative + prefix, QStandardPaths::LocateDirectory);
         QSet<QString> s = QSet<QString>::fromList(dirs);
 
         //qDebug() << "\t\tdirs:" << dirs;
-        Q_FOREACH (const QString &dir, s) {
+        Q_FOREACH (const QString &dir, s)
+        {
             resources << filesInDir(dir, filter, noDuplicates, recursive);
         }
     }
 
-    foreach(const QString &absolute, m_absolutes.value(type)) {
+    foreach(const QString &absolute, m_absolutes.value(type))
+    {
         const QString dir = absolute + prefix;
-        if (QDir(dir).exists()) {
+        if (QDir(dir).exists())
+        {
             resources << filesInDir(dir, filter, noDuplicates, recursive);
         }
     }
 
-    if (noDuplicates) {
+    if (noDuplicates)
+    {
         QSet<QString> s = QSet<QString>::fromList(resources);
         resources = s.toList();
     }
@@ -270,11 +305,14 @@ QStringList KoResourcePathsImpl::resourceDirsInternal(const QString &type)
     QStringList resourceDirs;
 
     const QStandardPaths::StandardLocation location = mapTypeToQStandardPaths(type);
-    foreach(const QString &relative, m_relatives.value(type)) {
+    foreach(const QString &relative, m_relatives.value(type))
+    {
         resourceDirs << QStandardPaths::locateAll(location, relative, QStandardPaths::LocateDirectory);
     }
-    foreach(const QString &absolute, m_absolutes.value(type)) {
-        if (QDir(absolute).exists()) {
+    foreach(const QString &absolute, m_absolutes.value(type))
+    {
+        if (QDir(absolute).exists())
+        {
             resourceDirs << absolute;
         }
     }
@@ -287,7 +325,8 @@ QString KoResourcePathsImpl::saveLocationInternal(const QString &type, const QSt
 {
     QString path = QStandardPaths::writableLocation(mapTypeToQStandardPaths(type)) + '/' + suffix;
     QDir d(path);
-    if (!d.exists() && create) {
+    if (!d.exists() && create)
+    {
         d.mkpath(path);
     }
     //qDebug() << "saveLocation: type" << type << "suffix" << suffix << "create" << create << "path" << path;
@@ -327,8 +366,8 @@ QStringList KoResourcePaths::findDirs(const char *type, const QString &reldir)
 }
 
 QStringList KoResourcePaths::findAllResources(const char *type,
-                                              const QString &filter,
-                                              SearchOptions options)
+        const QString &filter,
+        SearchOptions options)
 {
     return s_instance->findAllResourcesInternal(QString::fromLatin1(type), filter, options);
 }
