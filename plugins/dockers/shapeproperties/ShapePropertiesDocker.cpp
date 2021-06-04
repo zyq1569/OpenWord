@@ -171,8 +171,7 @@ void ShapePropertiesDocker::addWidgetForShape( KoShape * shape )
                 d->currentPanel->setUnit( d->canvas->unit() );
             }
             d->widgetStack->insertWidget( 0, d->currentPanel );
-            connect( d->currentPanel, SIGNAL(propertyChanged()),
-                     this, SLOT(shapePropertyChanged()));
+            connect( d->currentPanel, SIGNAL(propertyChanged()), this, SLOT(shapePropertyChanged()));
         }
     }
 

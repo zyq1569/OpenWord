@@ -82,7 +82,8 @@ public:
     static void proposeShapeMove(const KoShape *shape, QPointF &delta, const KWPage &page);
 
     /// Set the document to be passed to new instances of the KWTextFrameSet
-    void setDocument(KWDocument *document) {
+    void setDocument(KWDocument *document)
+    {
         m_document = document;
     }
 
@@ -115,7 +116,8 @@ private Q_SLOTS:
     void mainShapeRemoved(KoShape *shape);
 
 private:
-    struct FrameSets {
+    struct FrameSets
+    {
         FrameSets() : oddHeaders(0), evenHeaders(0), oddFooters(0), evenFooters(0), pageBackground(0) {}
         KWTextFrameSet *oddHeaders;
         KWTextFrameSet *evenHeaders;

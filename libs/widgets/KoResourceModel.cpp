@@ -50,7 +50,8 @@ KoResourceModel::KoResourceModel(QSharedPointer<KoAbstractResourceServerAdapter>
 
 KoResourceModel::~KoResourceModel()
 {
-    if (!m_currentTag.isEmpty()) {
+    if (!m_currentTag.isEmpty())
+    {
         KConfigGroup group =  KSharedConfig::openConfig()->group("SelectedTags");
         group.writeEntry(serverType(), m_currentTag);
     }
@@ -61,7 +62,9 @@ int KoResourceModel::rowCount( const QModelIndex &/*parent*/ ) const
 {
     int resourceCount = m_resourceAdapter->resources().count();
     if (!resourceCount)
+    {
         return 0;
+    }
 
     return static_cast<int>(ceil(static_cast<qreal>(resourceCount) / m_columnCount));
 }
@@ -74,7 +77,9 @@ int KoResourceModel::columnCount ( const QModelIndex & ) const
 QVariant KoResourceModel::data( const QModelIndex &index, int role ) const
 {
     if( ! index.isValid() )
-         return QVariant();
+    {
+        return QVariant();
+    }
 
     switch( role )
     {
@@ -82,10 +87,13 @@ QVariant KoResourceModel::data( const QModelIndex &index, int role ) const
         {
             KoResource * resource = static_cast<KoResource*>(index.internalPointer());
             if( ! resource )
+            {
                 return QVariant();
+            }
             QString resName = i18n( resource->name().toUtf8().data());
 
-            if (m_resourceAdapter->assignedTagsList(resource).count()) {
+            if (m_resourceAdapter->assignedTagsList(resource).count())
+            {
                 QString taglist = m_resourceAdapter->assignedTagsList(resource).join("] , [");
                 QString tagListToolTip = QString(" - %1: [%2]").arg(i18n("Tags"), taglist);
                 return QVariant( resName + tagListToolTip );
@@ -96,7 +104,9 @@ QVariant KoResourceModel::data( const QModelIndex &index, int role ) const
         {
             KoResource * resource = static_cast<KoResource*>(index.internalPointer());
             if( ! resource )
+            {
                 return QVariant();
+            }
 
             return QVariant( resource->image() );
         }
@@ -104,11 +114,14 @@ QVariant KoResourceModel::data( const QModelIndex &index, int role ) const
         {
             KoResource * resource = static_cast<KoResource*>(index.internalPointer());
             if( ! resource )
+            {
                 return QVariant();
+            }
 
             QSize imageSize = resource->image().size();
             QSize thumbSize( 100, 100 );
-            if(imageSize.height() > thumbSize.height() || imageSize.width() > thumbSize.width()) {
+            if(imageSize.height() > thumbSize.height() || imageSize.width() > thumbSize.width())
+            {
                 qreal scaleW = static_cast<qreal>( thumbSize.width() ) / static_cast<qreal>( imageSize.width() );
                 qreal scaleH = static_cast<qreal>( thumbSize.height() ) / static_cast<qreal>( imageSize.height() );
 
@@ -120,7 +133,9 @@ QVariant KoResourceModel::data( const QModelIndex &index, int role ) const
                 return QVariant(resource->image().scaled( thumbW, thumbH, Qt::IgnoreAspectRatio ));
             }
             else
+            {
                 return QVariant(resource->image());
+            }
         }
 
         default:
@@ -133,7 +148,9 @@ QModelIndex KoResourceModel::index ( int row, int column, const QModelIndex & ) 
     int index = row * m_columnCount + column;
     const QList<KoResource*> resources = m_resourceAdapter->resources();
     if( index >= resources.count() || index < 0)
+    {
         return QModelIndex();
+    }
 
     return createIndex( row, column, resources[index] );
 }
@@ -148,7 +165,8 @@ void KoResourceModel::doSafeLayoutReset(KoResource *activateAfterReformat)
 
 void KoResourceModel::setColumnCount( int columnCount )
 {
-    if (columnCount != m_columnCount) {
+    if (columnCount != m_columnCount)
+    {
         emit beforeResourcesLayoutReset(0);
         beginResetModel();
         m_columnCount = columnCount;
@@ -160,7 +178,8 @@ void KoResourceModel::setColumnCount( int columnCount )
 void KoResourceModel::resourceAdded(KoResource *resource)
 {
     int newIndex = m_resourceAdapter->resources().indexOf(resource);
-    if (newIndex >= 0) {
+    if (newIndex >= 0)
+    {
         doSafeLayoutReset(0);
     }
 }
@@ -180,7 +199,8 @@ void KoResourceModel::resourceChanged(KoResource* resource)
     int column = resourceIndex % columnCount();
 
     QModelIndex modelIndex = index(row, column);
-    if (!modelIndex.isValid()) {
+    if (!modelIndex.isValid())
+    {
         return;
     }
 
@@ -206,7 +226,8 @@ void KoResourceModel::tagBoxEntryWasRemoved(const QString& tag)
 QModelIndex KoResourceModel::indexFromResource(KoResource* resource) const
 {
     int resourceIndex = m_resourceAdapter->resources().indexOf(resource);
-    if (columnCount() > 0) {
+    if (columnCount() > 0)
+    {
         int row = resourceIndex / columnCount();
         int column = resourceIndex % columnCount();
         return index(row, column);
@@ -293,7 +314,7 @@ int KoResourceModel::resourcesCount() const
 
 QList<KoResource *> KoResourceModel::currentlyVisibleResources() const
 {
-  return m_resourceAdapter->resources();
+    return m_resourceAdapter->resources();
 }
 
 void KoResourceModel::tagCategoryMembersChanged()

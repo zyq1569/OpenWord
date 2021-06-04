@@ -30,29 +30,37 @@
 #include "frames/KWFrameSet.h"
 
 KWFrameDialog::KWFrameDialog(const QList<KoShape *> &shapes, KWDocument *document, KWCanvas *canvas)
-        : KPageDialog(canvas)
-        , m_frameConnectSelector(0)
-        , m_canvas(canvas)
+    : KPageDialog(canvas)
+    , m_frameConnectSelector(0)
+    , m_canvas(canvas)
 {
     m_state = new FrameConfigSharedState(document);
     setFaceType(Tabbed);
 
     m_anchoringProperties = new KWAnchoringProperties(m_state);
     if (m_anchoringProperties->open(shapes))
+    {
         addPage(m_anchoringProperties, i18n("Smart Positioning"));
+    }
 
     m_runAroundProperties = new KWRunAroundProperties(m_state);
     if (m_runAroundProperties->open(shapes))
+    {
         addPage(m_runAroundProperties, i18n("Text Run Around"));
+    }
 
-    if (shapes.count() == 1) {
+    if (shapes.count() == 1)
+    {
         m_frameConnectSelector = new KWFrameConnectSelector(m_state);
         KoShape *shape = shapes.first();
         m_state->setKeepAspectRatio(shape->keepAspectRatio());
-        if (m_frameConnectSelector->canOpen(shape)) {
+        if (m_frameConnectSelector->canOpen(shape))
+        {
             m_frameConnectSelector->open(shape);
             addPage(m_frameConnectSelector, i18n("Connect Text Frames"));
-        } else {
+        }
+        else
+        {
             delete m_frameConnectSelector;
             m_frameConnectSelector = 0;
         }
@@ -69,7 +77,9 @@ KWFrameDialog::~KWFrameDialog()
 void KWFrameDialog::okClicked()
 {
     if (m_frameConnectSelector)
+    {
         m_frameConnectSelector->save();
+    }
 
     // create the master command
     class MasterCommand : public KUndo2Command
@@ -82,12 +92,16 @@ void KWFrameDialog::okClicked()
             , m_canvas(canvas)
         {}
 
-        void redo() override {
-            if (m_first) {
+        void redo() override
+        {
+            if (m_first)
+            {
                 m_first = false;
                 KUndo2Command::redo();
                 m_anchoringProperties->save(this, m_canvas);
-            } else {
+            }
+            else
+            {
                 KUndo2Command::redo();
             }
         }

@@ -25,13 +25,14 @@
 #include "KWPage.h"
 
 KWFrame::KWFrame(KoShape *shape, KWFrameSet *parent)
-        : m_shape(shape),
-        m_anchoredFrameOffset(0.0),
-        m_frameSet(parent)
+    : m_shape(shape),
+      m_anchoredFrameOffset(0.0),
+      m_frameSet(parent)
 {
     Q_ASSERT(shape);
     Q_ASSERT(parent);
-    if (shape->applicationData()) {
+    if (shape->applicationData())
+    {
         delete shape->applicationData();
     }
     shape->setApplicationData(this);

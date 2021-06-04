@@ -70,15 +70,18 @@ public:
     QPointF viewToDocument(const QPointF &viewPoint) const override;
 
     /// reimplemented method from superclass
-    QWidget *canvasWidget() override {
+    QWidget *canvasWidget() override
+    {
         return this;
     }
     /// reimplemented method from superclass
-    const QWidget *canvasWidget() const override {
+    const QWidget *canvasWidget() const override
+    {
         return this;
     }
 
-    KWView *view() {
+    KWView *view()
+    {
         return m_view;
     }
 
@@ -129,7 +132,10 @@ protected: // QWidget
     /// reimplemented method from superclass
     void updateInputMethodInfo() override;
     /// reimplemented method from superclass
-    void updateCanvasInternal(const QRectF &clip) override { update(clip.toRect()); }
+    void updateCanvasInternal(const QRectF &clip) override
+    {
+        update(clip.toRect());
+    }
 
 private Q_SLOTS:
     /// Called whenever there was a page added/removed or simply resized.

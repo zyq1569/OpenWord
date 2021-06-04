@@ -55,9 +55,12 @@ void KWStatisticsDocker::unsetCanvas()
 
 void KWStatisticsDocker::ondockLocationChanged(Qt::DockWidgetArea newArea)
 {
-    if (newArea == Qt::TopDockWidgetArea || newArea == Qt::BottomDockWidgetArea) {
+    if (newArea == Qt::TopDockWidgetArea || newArea == Qt::BottomDockWidgetArea)
+    {
         m_statisticsWidget->setLayoutDirection(KWStatisticsWidget::LayoutHorizontal);
-    } else {
+    }
+    else
+    {
         m_statisticsWidget->setLayoutDirection(KWStatisticsWidget::LayoutVertical);
     }
 }
