@@ -124,3 +124,46 @@ KWPart::showStartUpWidget(KoMainWindow *parent, bool alwaysShow)
 
 $$$------------------------------------------------------------------------------------
 KoToolProxy 代理所有鼠标键盘事件响应
+
+
+
+
+
+[[[[
+KoView *view = d->rootPart->createView(doc, this); ----------------------->>>>>>>>>>
+KoView *KWPart::createViewInstance(KoDocument *document, QWidget *parent)
+{
+    KWView *view = new KWView(this, qobject_cast<KWDocument*>(document), parent);
+    setupViewInstance(document, view);
+    return view;
+}
+
+------------------------>
+
+KWView::KWView(KoPart *part, KWDocument *document, QWidget *parent)
+    : KoView(part, document, parent)
+    , m_canvas(0)
+    , m_textMinX(1)
+    , m_textMaxX(600)
+    , m_minPageNum(1)
+    , m_maxPageNum(1)
+    , m_isFullscreenMode(false)
+{
+    setAcceptDrops(true);
+
+    m_document = document;
+    m_snapToGrid = m_document->gridData().snapToGrid();
+    m_gui = new KWGui(QString(), this);
+    m_canvas = m_gui->canvas();
+	}   
+}
+----------------------->    KWGui::KWGui(const QString &viewMode, KWView *parent)
+
+
+
+文档编辑中，文字中光标选中时间，对应的响应事件
+void TextTool::editingPluginEvents()
+
+编辑中 对应的文字中URL 的链接 函数 void TextTool::runUrl(KoPointerEvent *event, QString &url)
+
+
