@@ -215,3 +215,51 @@ $$-----------------------------
 style manager界面的语言调试通过
 void KoGlobal::createListOfLanguages() 
 读取语言进行翻译
+
+
+
+$$$$$$$$$$$$$$$$$$$---------------------------------------------------------------------------
+文档编辑中，滚动条工具
+class FLAKE_EXPORT KoCanvasControllerWidget : public QAbstractScrollArea, public KoCanvasController
+
+KWGui::KWGui(const QString &viewMode, KWView *parent) ------------------->
+KoCanvasControllerWidget *canvasController = new KoCanvasControllerWidget(m_view->actionCollection(), this);
+    m_canvasController = canvasController;
+	
+	------------------------>>>>>>>>>>>>>>>>>>>
+gridLayout->addWidget(canvasController, 1, 1);
+
+
+
+------------------------------------------------------------------
+显示各个组件的标题内容title
+void KoMainWindow::showDockerTitleBars(bool show)
+{
+    foreach (QDockWidget *dock, dockWidgets())
+    {
+        if (dock->titleBarWidget())
+        {
+            dock->titleBarWidget()->setVisible(show);
+        }
+    }
+
+    KConfigGroup configGroupInterface =  KSharedConfig::openConfig()->group("Interface");
+    configGroupInterface.writeEntry("ShowDockerTitleBars", show);
+}
+////////////////
+
+添加了显示或者隐藏工具箱的按钮
+在 KWGui::KWGui(const QString &viewMode, KWView *parent)：
+{
+    //openword
+    m_showtoolbox = new QToolButton();
+    if (m_showtoolbox)
+    {
+        m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
+        m_showtoolbox->setAutoRaise(true);
+        m_showtoolbox->setToolTip("显示工具箱");
+        gridLayout->addWidget(m_showtoolbox, 1, 2);
+    }
+}
+
+
