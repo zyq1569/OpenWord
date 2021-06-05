@@ -30,6 +30,7 @@ class KoRuler;
 
 class QMouseEvent;
 
+class QToolButton;
 /**
  * This class is a widget that is the sole widget under a KWView instance
  * separating concerns.
@@ -103,6 +104,8 @@ private:
     KoRuler *m_verticalRuler;
 
     KoCanvasController *m_canvasController;
+private:
+    QToolButton *m_showtoolbox;
 };
 
 #endif

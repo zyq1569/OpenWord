@@ -89,6 +89,16 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
     gridLayout->addWidget(m_horizontalRuler, 0, 1);
     gridLayout->addWidget(m_verticalRuler, 1, 0);
     gridLayout->addWidget(canvasController, 1, 1);
+    //openword------------
+    m_showtoolbox = new QToolButton();
+    if (m_showtoolbox)
+    {
+        m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
+        m_showtoolbox->setAutoRaise(true);
+        m_showtoolbox->setToolTip("显示工具箱");
+        gridLayout->addWidget(m_showtoolbox, 1, 2);
+    }
+    //openword-------------
 
     new KoRulerController(m_horizontalRuler, m_canvas->resourceManager());
 
@@ -114,6 +124,10 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
 
 KWGui::~KWGui()
 {
+    //-----m_showtoolbox->deleteLater();
+    delete m_showtoolbox;//openword
+    m_showtoolbox = 0;
+    //-----------------------------
 }
 
 int KWGui::visibleWidth() const
