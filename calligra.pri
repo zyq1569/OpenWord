@@ -33,6 +33,8 @@ SDK_LIB_PREFIX      = E:/KDE/DEBUG/lib
 SDK_INSTALL_PREFIX  = E:/KDE/RelWithDebInfo/include
 SDK_LIB_PREFIX      = E:/KDE/RelWithDebInfo/lib
 
+SDK_INSTALL_PREFIX  = G:/KDE/RelWithDebInfo/include
+SDK_LIB_PREFIX      = G:/KDE/RelWithDebInfo/lib
 
 DESTDIR             = $$PWD/MS_bin/bin
 
