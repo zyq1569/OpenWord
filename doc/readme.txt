@@ -67,6 +67,44 @@ KoView *KoMainWindow::rootView() const
 
 目前 判断 整个面板容器是KoModeBoxDocker，需求对这个容器进行显示或者隐藏
 通过KoModeBox（目前定义的名称 为main tool）嵌入 容器KoModeBoxDocker 中
+KoModeBoxDocker::KoModeBoxDocker(KoModeBox *modeBox)
+    : m_modeBox(modeBox)
+{
+    setWidget(modeBox);
+//    setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
+    setFeatures(AllDockWidgetFeatures);
+    setWindowTitle("MainTool");//openword20210531
+    setObjectName("ModeBox");
+
+    connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), this, SLOT(locationChanged(Qt::DockWidgetArea)));
+}
+
+
+
+$$$---------------------------------------------------------------
+class ToolDockerFactory : public KoDockFactoryBase
+{
+public:
+    ToolDockerFactory() : KoDockFactoryBase() { }
+
+    QString id() const override
+    {
+        return "sharedtooldocker";////??????????????当前是那个控件？？？？？20210605
+    }
+
+    QDockWidget* createDockWidget() override
+    {
+        KoToolDocker * dockWidget = new KoToolDocker();
+        return dockWidget;
+    }
+
+    DockPosition defaultDockPosition() const override
+    {
+        return DockRight;
+    }
+};
+
+$$------------------------------------------------------------------
 
 
 
@@ -155,7 +193,7 @@ KWView::KWView(KoPart *part, KWDocument *document, QWidget *parent)
     m_snapToGrid = m_document->gridData().snapToGrid();
     m_gui = new KWGui(QString(), this);
     m_canvas = m_gui->canvas();
-	}   
+}   
 }
 ----------------------->    KWGui::KWGui(const QString &viewMode, KWView *parent)
 
@@ -167,3 +205,13 @@ void TextTool::editingPluginEvents()
 编辑中 对应的文字中URL 的链接 函数 void TextTool::runUrl(KoPointerEvent *event, QString &url)
 
 
+
+$$------------------------------
+KoDocument.cpp 中存储了各个文档的类型 后缀
+
+
+
+$$-----------------------------
+style manager界面的语言调试通过
+void KoGlobal::createListOfLanguages() 
+读取语言进行翻译
