@@ -90,6 +90,7 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
     gridLayout->addWidget(m_verticalRuler, 1, 0);
     gridLayout->addWidget(canvasController, 1, 1);
     //openword------------
+    ///需要改善为类似LibreOffice方式伸缩工具箱
     m_showtoolbox = new QToolButton();
     if (m_showtoolbox)
     {
