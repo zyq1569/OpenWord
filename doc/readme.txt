@@ -251,6 +251,17 @@ void KoMainWindow::showDockerTitleBars(bool show)
 添加了显示或者隐藏工具箱的按钮
 在 KWGui::KWGui(const QString &viewMode, KWView *parent)：
 {
+	//将QDockWidget 和 窗体关联起来代码设置
+    if (m_view->mainWindow())
+    {
+        KoModeBoxFactory modeBoxFactory(canvasController, qApp->applicationName(), i18n("Tools"));
+        QDockWidget* modeBox = m_view->mainWindow()->createDockWidget(&modeBoxFactory);
+        m_view->mainWindow()->dockerManager()->removeToolOptionsDocker();
+        dynamic_cast<KoCanvasObserverBase*>(modeBox)->setObservedCanvas(m_canvas);
+    }
+	
+	
+	....
     //openword  add2021-0605
     m_showtoolbox = new QToolButton();
     if (m_showtoolbox)
