@@ -79,7 +79,17 @@ KoModeBoxDocker::KoModeBoxDocker(KoModeBox *modeBox)
     connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), this, SLOT(locationChanged(Qt::DockWidgetArea)));
 }
 
+///
+void KoModeBoxDocker::locationChanged(Qt::DockWidgetArea area)
 
+KoModeBoxDocker 中选中某一项响应
+void KoModeBox::toolSelected(int index)
+{
+    if (index != -1)
+    {
+        d->addedToolActions.at(index)->trigger();
+    }
+}
 
 $$$---------------------------------------------------------------
 class ToolDockerFactory : public KoDockFactoryBase
@@ -129,6 +139,7 @@ KoToolRegistry::instance()->add(new TextToolFactory()){
 KoModeBoxFactory.cpp
 QDockWidget* KoModeBoxFactory::createDockWidget() 中 【 dockWidget = factory->createDockWidget();】创建 KoModeBoxDocker容器 然后把创建的KoModeBox嵌入容器KoModeBoxDocker
 
+https://blog.csdn.net/czyt1988/article/details/51209619 可以参考容器的关系
 
 在 KoView::KoView(KoPart *part, KoDocument *document, QWidget *parent) 中     // add all plugins.  
    foreach(const QString & docker, KoDockRegistry::instance()->keys())
