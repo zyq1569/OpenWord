@@ -256,7 +256,10 @@ void KoMainWindow::showDockerTitleBars(bool show)
     {
         KoModeBoxFactory modeBoxFactory(canvasController, qApp->applicationName(), i18n("Tools"));
         QDockWidget* modeBox = m_view->mainWindow()->createDockWidget(&modeBoxFactory);
+		
         m_view->mainWindow()->dockerManager()->removeToolOptionsDocker();
+		//modeBox = class KoModeBoxDocker : public QDockWidget, public KoCanvasObserverBase
+		//所以可以使用dynamic_cast<KoCanvasObserverBase*>进行关联
         dynamic_cast<KoCanvasObserverBase*>(modeBox)->setObservedCanvas(m_canvas);
     }
 	
