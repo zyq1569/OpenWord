@@ -293,3 +293,6 @@ void KoMainWindow::showDockerTitleBars(bool show)
 是否为maintool 工具列表组合？？？
 void KoModeBox::setOptionWidgets(const QList<QPointer<QWidget> > &optionWidgetList)
 
+
+/// 组件的锁的功能
+void KoDockWidgetTitleBar::setLocked(bool locked)
