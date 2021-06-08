@@ -91,6 +91,7 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
     gridLayout->addWidget(canvasController, 1, 1);
     //openword------------
     ///需要改善为类似LibreOffice方式伸缩工具箱
+    /// to do  定制化QWidget 的QToolButton
     m_showtoolbox = new QToolButton();
     if (m_showtoolbox)
     {
