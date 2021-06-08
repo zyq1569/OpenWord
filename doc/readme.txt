@@ -288,3 +288,8 @@ void KoMainWindow::showDockerTitleBars(bool show)
 }
 
 
+
+//----
+是否为maintool 工具列表组合？？？
+void KoModeBox::setOptionWidgets(const QList<QPointer<QWidget> > &optionWidgetList)
+
