@@ -97,6 +97,10 @@ private Q_SLOTS:
     void shapeSelectionChanged();
     void setupUnitActions();
 
+///add show dockwidget 20210609
+private Q_SLOTS:
+    void visibleDockWidget(bool checked);
+
 private:
     KWView *m_view;
     KWCanvas *m_canvas;

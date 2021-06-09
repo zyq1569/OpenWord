@@ -96,8 +96,9 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
     {
         m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
         m_showtoolbox->setAutoRaise(true);
-        m_showtoolbox->setToolTip("显示工具箱");
+//        m_showtoolbox->setToolTip("显示工具箱");
         gridLayout->addWidget(m_showtoolbox, 1, 2);
+        connect(m_showtoolbox,SIGNAL(clicked(bool)),this,SLOT(visibleDockWidget(bool)));
     }
     //openword-------------
 
@@ -121,6 +122,7 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
     pageSetupChanged();
 
     QTimer::singleShot(0, this, SLOT(setupUnitActions()));
+    visibleDockWidget(true);
 }
 
 KWGui::~KWGui()
@@ -211,4 +213,72 @@ void KWGui::setupUnitActions()
 void KWGui::mouseMoveEvent(QMouseEvent *e)
 {
     m_view->viewMouseMoveEvent(e);
+}
+
+
+void KWGui::visibleDockWidget(bool checked)
+{
+    //m_view->mainWindow()->dockWidgets();
+    //m_showtoolbox
+    static  QString langName = QLocale::system().name();
+    bool bzh = false;
+    if (langName == "zh_CN")
+    {
+        bzh = true;
+    }
+    bool visible = false;
+    foreach (QDockWidget *dock, m_view->mainWindow()->dockWidgets())
+    {
+        QString str = dock->windowTitle();
+        if (str != "Tool Options" && str !=  "&Stencil Box")
+        {
+            if (dock->isVisible())
+            {
+                visible = true;
+                break;
+            }
+        }
+    }
+
+    if (visible)
+    {
+        m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
+        if (bzh)
+        {
+            m_showtoolbox->setToolTip("显示工具箱？");
+        }
+        else
+        {
+            m_showtoolbox->setToolTip("show tools box?");
+        }
+    }
+    else
+    {
+        m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
+        if (bzh)
+        {
+            m_showtoolbox->setToolTip("隐藏工具箱？");
+        }
+        else
+        {
+            m_showtoolbox->setToolTip("hide tools box?");
+        }
+
+    }
+
+    foreach (QDockWidget *dock, m_view->mainWindow()->dockWidgets())
+    {
+        QString str = dock->windowTitle();
+        if (str != "Tool Options" && str !=  "&Stencil Box")
+        {
+            if (visible)
+            {
+                dock->setVisible(false);
+            }
+            else
+            {
+                dock->setVisible(true);
+            }
+        }
+    }
 }
