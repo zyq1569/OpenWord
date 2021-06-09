@@ -269,7 +269,7 @@ void KWGui::visibleDockWidget(bool checked)
     foreach (QDockWidget *dock, m_view->mainWindow()->dockWidgets())
     {
         QString str = dock->windowTitle();
-        if (str != "Tool Options" && str !=  "&Stencil Box")
+        if (!str.contains("Options") /*!= "Tool Options"*/ && !str.contains("Stencil")/* !=  "&Stencil Box"*/)
         {
             if (visible)
             {
