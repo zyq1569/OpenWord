@@ -300,3 +300,15 @@ void KoDockWidgetTitleBar::setLocked(bool locked)
 
 //增加按钮来显示或者隐藏工具箱
 void KWGui::visibleDockWidget(bool checked)
+
+
+    // add all plugins. 读取配置信息
+    foreach(const QString & docker, KoDockRegistry::instance()->keys())
+    {
+        debugMain<<"foreach(const QString & docker, KoDockRegistry::instance()->keys())"<<docker;
+        KoDockFactoryBase *factory = KoDockRegistry::instance()->value(docker);
+        if (mainWindow())
+        {
+            mainWindow()->createDockWidget(factory);
+        }
+    }
