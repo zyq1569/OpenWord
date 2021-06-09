@@ -97,7 +97,7 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
     {
         m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
         m_showtoolbox->setAutoRaise(true);
-//        m_showtoolbox->setToolTip("显示工具箱");
+        //m_showtoolbox->setToolTip("显示工具箱");
         gridLayout->addWidget(m_showtoolbox, 1, 2);
         connect(m_showtoolbox,SIGNAL(clicked(bool)),this,SLOT(visibleDockWidget(bool)));
     }
