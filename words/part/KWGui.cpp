@@ -219,8 +219,6 @@ void KWGui::mouseMoveEvent(QMouseEvent *e)
 
 void KWGui::visibleDockWidget(bool checked)
 {
-    //m_view->mainWindow()->dockWidgets();
-    //m_showtoolbox
     static  QString langName = QLocale::system().name();
     bool bzh = false;
     if (langName == "zh_CN")
@@ -228,6 +226,7 @@ void KWGui::visibleDockWidget(bool checked)
         bzh = true;
     }
     bool visible = false;
+
     foreach (QDockWidget *dock, m_view->mainWindow()->dockWidgets())
     {
         QString str = dock->windowTitle();
