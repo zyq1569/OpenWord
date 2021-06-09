@@ -312,3 +312,21 @@ void KWGui::visibleDockWidget(bool checked)
             mainWindow()->createDockWidget(factory);
         }
     }
+	
+
+		KConfigGroup group =  KSharedConfig::openConfig()->group(d->rootPart->componentData().componentName()).group("DockWidget " + factory->id());
+	collapsed = group.readEntry("Collapsed", collapsed);
+	locked = group.readEntry("Locked", locked);
+	
+			// Save collapsable state of dock widgets
+for (QMap<QString, QDockWidget*>::const_iterator i = d->dockWidgetsMap.constBegin();
+		i != d->dockWidgetsMap.constEnd(); ++i)
+{
+	if (i.value()->widget())
+	{
+		KConfigGroup dockGroup = group.group(QString("DockWidget ") + i.key());
+		dockGroup.writeEntry("Collapsed", i.value()->widget()->isHidden());
+		dockGroup.writeEntry("Locked", i.value()->property("Locked").toBool());
+		dockGroup.writeEntry("DockArea", (int) dockWidgetArea(i.value()));
+	}
+}
