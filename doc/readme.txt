@@ -296,3 +296,7 @@ void KoModeBox::setOptionWidgets(const QList<QPointer<QWidget> > &optionWidgetLi
 
 /// 组件的锁的功能
 void KoDockWidgetTitleBar::setLocked(bool locked)
+
+
+//增加按钮来显示或者隐藏工具箱
+void KWGui::visibleDockWidget(bool checked)
