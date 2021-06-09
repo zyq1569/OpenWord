@@ -79,7 +79,17 @@ KoModeBoxDocker::KoModeBoxDocker(KoModeBox *modeBox)
     connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), this, SLOT(locationChanged(Qt::DockWidgetArea)));
 }
 
+///
+void KoModeBoxDocker::locationChanged(Qt::DockWidgetArea area)
 
+KoModeBoxDocker 中选中某一项响应
+void KoModeBox::toolSelected(int index)
+{
+    if (index != -1)
+    {
+        d->addedToolActions.at(index)->trigger();
+    }
+}
 
 $$$---------------------------------------------------------------
 class ToolDockerFactory : public KoDockFactoryBase
@@ -129,6 +139,7 @@ KoToolRegistry::instance()->add(new TextToolFactory()){
 KoModeBoxFactory.cpp
 QDockWidget* KoModeBoxFactory::createDockWidget() 中 【 dockWidget = factory->createDockWidget();】创建 KoModeBoxDocker容器 然后把创建的KoModeBox嵌入容器KoModeBoxDocker
 
+https://blog.csdn.net/czyt1988/article/details/51209619 可以参考容器的关系
 
 在 KoView::KoView(KoPart *part, KoDocument *document, QWidget *parent) 中     // add all plugins.  
    foreach(const QString & docker, KoDockRegistry::instance()->keys())
@@ -251,6 +262,20 @@ void KoMainWindow::showDockerTitleBars(bool show)
 添加了显示或者隐藏工具箱的按钮
 在 KWGui::KWGui(const QString &viewMode, KWView *parent)：
 {
+	//将QDockWidget 和 窗体关联起来代码设置
+    if (m_view->mainWindow())
+    {
+        KoModeBoxFactory modeBoxFactory(canvasController, qApp->applicationName(), i18n("Tools"));
+        QDockWidget* modeBox = m_view->mainWindow()->createDockWidget(&modeBoxFactory);
+		
+        m_view->mainWindow()->dockerManager()->removeToolOptionsDocker();
+		//modeBox = class KoModeBoxDocker : public QDockWidget, public KoCanvasObserverBase
+		//所以可以使用dynamic_cast<KoCanvasObserverBase*>进行关联
+        dynamic_cast<KoCanvasObserverBase*>(modeBox)->setObservedCanvas(m_canvas);
+    }
+	
+	
+	....
     //openword  add2021-0605
     m_showtoolbox = new QToolButton();
     if (m_showtoolbox)
@@ -263,3 +288,11 @@ void KoMainWindow::showDockerTitleBars(bool show)
 }
 
 
+
+//----
+是否为maintool 工具列表组合？？？
+void KoModeBox::setOptionWidgets(const QList<QPointer<QWidget> > &optionWidgetList)
+
+
+/// 组件的锁的功能
+void KoDockWidgetTitleBar::setLocked(bool locked)
