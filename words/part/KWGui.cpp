@@ -123,6 +123,7 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
     pageSetupChanged();
 
     QTimer::singleShot(0, this, SLOT(setupUnitActions()));
+    initDockWidget = true;
     visibleDockWidget(true);
 }
 
@@ -220,8 +221,7 @@ void KWGui::mouseMoveEvent(QMouseEvent *e)
 void KWGui::visibleDockWidget(bool checked)
 {
     static  QString langName = QLocale::system().name();
-    bool bzh = false;
-    static bool init = true;
+    bool bzh = false;;
     if (langName == "zh_CN")
     {
         bzh = true;
@@ -241,10 +241,10 @@ void KWGui::visibleDockWidget(bool checked)
         }
     }
     bool tipvisible = visible;
-    if (init)
+    if (initDockWidget)
     {
         tipvisible = !visible;
-        init = false;
+        initDockWidget = false;
     }
     if (tipvisible)
     {

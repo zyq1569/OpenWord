@@ -88,6 +88,8 @@ public:
         return m_canvasController;
     }
 
+public:
+    bool initDockWidget;
 protected :
     void mouseMoveEvent(QMouseEvent *e) override;
 
