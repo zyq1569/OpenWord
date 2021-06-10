@@ -221,6 +221,7 @@ void KWGui::visibleDockWidget(bool checked)
 {
     static  QString langName = QLocale::system().name();
     bool bzh = false;
+    static bool init = true;
     if (langName == "zh_CN")
     {
         bzh = true;
@@ -230,7 +231,7 @@ void KWGui::visibleDockWidget(bool checked)
     foreach (QDockWidget *dock, m_view->mainWindow()->dockWidgets())
     {
         QString str = dock->windowTitle();
-        if (str != "Tool Options" && str !=  "&Stencil Box")
+        if (!str.contains("Options") && !str.contains("Stencil"))
         {
             if (dock->isVisible())
             {
@@ -239,8 +240,13 @@ void KWGui::visibleDockWidget(bool checked)
             }
         }
     }
-
-    if (visible)
+    bool tipvisible = visible;
+    if (init)
+    {
+        tipvisible = !visible;
+        init = false;
+    }
+    if (tipvisible)
     {
         m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
         if (bzh)
