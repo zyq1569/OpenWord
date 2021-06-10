@@ -1555,6 +1555,7 @@ void KoMainWindow::saveWindowSettings()
                 KConfigGroup dockGroup = group.group(QString("DockWidget ") + i.key());
                 dockGroup.writeEntry("Collapsed", i.value()->widget()->isHidden());
                 dockGroup.writeEntry("Locked", i.value()->property("Locked").toBool());
+                dockGroup.writeEntry("Visible", i.value()->widget()->isVisible());//20210610 openword 当前没有找到显示与否的配置信息地方,暂时先保存一份
                 dockGroup.writeEntry("DockArea", (int) dockWidgetArea(i.value()));
             }
         }
@@ -2407,11 +2408,15 @@ QDockWidget* KoMainWindow::createDockWidget(KoDockFactoryBase* factory)
 
         bool collapsed = factory->defaultCollapsed();
         bool locked = false;
+        bool visibleDockWidget = visible;
         if (rootDocument())
         {
+            //debugMain << "KConfigGroup group: "<<"DockWidget " + factory->id();
             KConfigGroup group =  KSharedConfig::openConfig()->group(d->rootPart->componentData().componentName()).group("DockWidget " + factory->id());
             collapsed = group.readEntry("Collapsed", collapsed);
             locked = group.readEntry("Locked", locked);
+            visibleDockWidget =  group.readEntry("Visible", visibleDockWidget);//20210610 openword 当前没有找到显示与否的配置信息地方,暂时先保存一份
+            dockWidget->setVisible(visibleDockWidget);
         }
         if (titleBar && collapsed)
         {
