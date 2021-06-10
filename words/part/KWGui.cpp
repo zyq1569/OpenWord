@@ -44,6 +44,7 @@
 #include <QScrollBar>
 #include <KoMainWindow.h>
 
+static Qt::ArrowType sg_arrowType = Qt::ArrowType::NoArrow;
 KWGui::KWGui(const QString &viewMode, KWView *parent)
     : QWidget(parent),
       m_view(parent)
@@ -245,6 +246,64 @@ void KWGui::visibleDockWidget(bool checked)
     {
         tipvisible = !visible;
         initDockWidget = false;
+        if (sg_arrowType != Qt::ArrowType::NoArrow)//如果已经有打开的则只需要使用最后一个打开的状态即可
+        {
+            m_showtoolbox->setArrowType(sg_arrowType);
+            return;
+        }
+
+        if (tipvisible)
+        {
+            m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
+            if (bzh)
+            {
+                m_showtoolbox->setToolTip("显示工具箱？");
+            }
+            else
+            {
+                m_showtoolbox->setToolTip("show?");
+            }
+        }
+        else
+        {
+            m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
+            if (bzh)
+            {
+                m_showtoolbox->setToolTip("隐藏工具箱？");
+            }
+            else
+            {
+                m_showtoolbox->setToolTip("hide");
+            }
+        }
+
+    }
+    else
+    {
+        if (visible)
+        {
+            m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
+            if (bzh)
+            {
+                m_showtoolbox->setToolTip("显示工具箱？");
+            }
+            else
+            {
+                m_showtoolbox->setToolTip("show?");
+            }
+        }
+        else
+        {
+            m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
+            if (bzh)
+            {
+                m_showtoolbox->setToolTip("隐藏工具箱？");
+            }
+            else
+            {
+                m_showtoolbox->setToolTip("hide");
+            }
+        }
     }
     if (tipvisible)
     {
@@ -255,7 +314,7 @@ void KWGui::visibleDockWidget(bool checked)
         }
         else
         {
-            m_showtoolbox->setToolTip("show tools box?");
+            m_showtoolbox->setToolTip("show?");
         }
     }
     else
@@ -267,9 +326,8 @@ void KWGui::visibleDockWidget(bool checked)
         }
         else
         {
-            m_showtoolbox->setToolTip("hide tools box?");
+            m_showtoolbox->setToolTip("hide");
         }
-
     }
 
     foreach (QDockWidget *dock, m_view->mainWindow()->dockWidgets())
@@ -280,10 +338,12 @@ void KWGui::visibleDockWidget(bool checked)
             if (visible)
             {
                 dock->setVisible(false);
+                sg_arrowType = Qt::ArrowType::LeftArrow;
             }
             else
             {
                 dock->setVisible(true);
+                sg_arrowType = Qt::ArrowType::RightArrow;
             }
         }
     }
