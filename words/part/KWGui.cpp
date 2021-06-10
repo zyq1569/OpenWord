@@ -246,6 +246,11 @@ void KWGui::visibleDockWidget(bool checked)
     {
         tipvisible = !visible;
         initDockWidget = false;
+        foreach (QDockWidget *dock, m_view->mainWindow()->dockWidgets())
+        {
+            dock->setFeatures(dock->features()&~QDockWidget::DockWidgetMovable);
+        }
+
         if (sg_arrowType != Qt::ArrowType::NoArrow)//如果已经有打开的则只需要使用最后一个打开的状态即可
         {
             m_showtoolbox->setArrowType(sg_arrowType);
@@ -255,6 +260,7 @@ void KWGui::visibleDockWidget(bool checked)
         if (tipvisible)
         {
             m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
+            sg_arrowType = Qt::ArrowType::LeftArrow;
             if (bzh)
             {
                 m_showtoolbox->setToolTip("显示工具箱？");
@@ -267,6 +273,7 @@ void KWGui::visibleDockWidget(bool checked)
         else
         {
             m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
+            sg_arrowType = Qt::ArrowType::RightArrow;
             if (bzh)
             {
                 m_showtoolbox->setToolTip("隐藏工具箱？");
@@ -276,6 +283,7 @@ void KWGui::visibleDockWidget(bool checked)
                 m_showtoolbox->setToolTip("hide");
             }
         }
+        return;
 
     }
     else
