@@ -263,7 +263,7 @@ void KWGui::visibleDockWidget(bool checked)
             sg_arrowType = Qt::ArrowType::LeftArrow;
             if (bzh)
             {
-                m_showtoolbox->setToolTip("显示工具箱？");
+                m_showtoolbox->setToolTip("显示工具箱?");
             }
             else
             {
@@ -276,7 +276,7 @@ void KWGui::visibleDockWidget(bool checked)
             sg_arrowType = Qt::ArrowType::RightArrow;
             if (bzh)
             {
-                m_showtoolbox->setToolTip("隐藏工具箱？");
+                m_showtoolbox->setToolTip("隐藏工具箱?");
             }
             else
             {
@@ -284,7 +284,6 @@ void KWGui::visibleDockWidget(bool checked)
             }
         }
         return;
-
     }
     else
     {
@@ -293,7 +292,7 @@ void KWGui::visibleDockWidget(bool checked)
             m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
             if (bzh)
             {
-                m_showtoolbox->setToolTip("显示工具箱？");
+                m_showtoolbox->setToolTip("显示工具箱?");
             }
             else
             {
@@ -305,7 +304,7 @@ void KWGui::visibleDockWidget(bool checked)
             m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
             if (bzh)
             {
-                m_showtoolbox->setToolTip("隐藏工具箱？");
+                m_showtoolbox->setToolTip("隐藏工具箱?");
             }
             else
             {
@@ -318,7 +317,7 @@ void KWGui::visibleDockWidget(bool checked)
         m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
         if (bzh)
         {
-            m_showtoolbox->setToolTip("显示工具箱？");
+            m_showtoolbox->setToolTip("显示工具箱?");
         }
         else
         {
@@ -330,7 +329,7 @@ void KWGui::visibleDockWidget(bool checked)
         m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
         if (bzh)
         {
-            m_showtoolbox->setToolTip("隐藏工具箱？");
+            m_showtoolbox->setToolTip("隐藏工具箱?");
         }
         else
         {
@@ -346,13 +345,20 @@ void KWGui::visibleDockWidget(bool checked)
             if (visible)
             {
                 dock->setVisible(false);
-                sg_arrowType = Qt::ArrowType::LeftArrow;
             }
             else
             {
                 dock->setVisible(true);
-                sg_arrowType = Qt::ArrowType::RightArrow;
             }
         }
     }
+    if (visible)
+    {
+        sg_arrowType = Qt::ArrowType::LeftArrow;
+    }
+    else
+    {
+        sg_arrowType = Qt::ArrowType::RightArrow;
+    }
+
 }
