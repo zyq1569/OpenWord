@@ -261,7 +261,7 @@ void KWGui::visibleDockWidget(bool checked)
             }
             else
             {
-                m_showtoolbox->setToolTip("show?");
+                m_showtoolbox->setToolTip("show");
             }
         }
         else
@@ -289,7 +289,7 @@ void KWGui::visibleDockWidget(bool checked)
             }
             else
             {
-                m_showtoolbox->setToolTip("show?");
+                m_showtoolbox->setToolTip("show");
             }
         }
         else
@@ -314,7 +314,7 @@ void KWGui::visibleDockWidget(bool checked)
         }
         else
         {
-            m_showtoolbox->setToolTip("show?");
+            m_showtoolbox->setToolTip("show");
         }
     }
     else
