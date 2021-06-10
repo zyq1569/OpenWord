@@ -98,7 +98,7 @@ private Q_SLOTS:
     void setupUnitActions();
 
 ///add show dockwidget 20210609
-private Q_SLOTS:
+public Q_SLOTS:
     void visibleDockWidget(bool checked);
 
 private:
