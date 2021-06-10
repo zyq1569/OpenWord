@@ -10,9 +10,20 @@
 
 #if defined(_MSC_VER)
 // Windows平台  Visual Statuio 编译器特定代码
-#include "easylog_export.h"
+
+//#include "easylog_export.h"
+#ifndef LOG_EXPORT
+#    ifdef easylog_EXPORTS
+/* We are building this library */
+#      define LOG_EXPORT __declspec(dllexport)
+#    else
+/* We are using this library */
+#      define LOG_EXPORT __declspec(dllimport)
+#    endif
+#endif
+
 #else
-#define KOSTORE_EXPORT
+#define LOG_EXPORT
 #endif
 #if defined(__GNUC__)
 // Windows平台 GCC编译器特定的代码
@@ -22,12 +33,12 @@
 
 namespace  LOG
 {
-void KOSTORE_EXPORT beginLogging(QString appName="");
+void LOG_EXPORT beginLogging(QString appName="");
 /**
  * Returns the path where the log should be outputted to.
  * @return Log file path
  */
-QString KOSTORE_EXPORT getLogFilePath(QString appName);
+QString LOG_EXPORT getLogFilePath(QString appName);
 /**
  * Location of log.conf file.
  *
@@ -36,15 +47,15 @@ QString KOSTORE_EXPORT getLogFilePath(QString appName);
  *
  * @return Path where log.conf is expected to be found
  */
-QString KOSTORE_EXPORT getLogConfFilePath();
+QString LOG_EXPORT getLogConfFilePath();
 
-void KOSTORE_EXPORT debugLog(const QString &msg, const QString &file, int line, const QString &function);
-void KOSTORE_EXPORT infoLog(const QString &msg, const QString &file, int line, const QString &function);
-void KOSTORE_EXPORT warnLog(const QString &msg, const QString &file, int line, const QString &function);
-void KOSTORE_EXPORT errorLog(const QString &msg, const QString &file, int line, const QString &function);
-void KOSTORE_EXPORT fatalLog(const QString &msg, const QString &file, int line, const QString &function);
-void KOSTORE_EXPORT verboseLog(int vLevel, const QString &msg, const QString &file, int line, const QString &function);
-void KOSTORE_EXPORT traceLog(const QString &msg, const QString &file, int line, const QString &function);
+void LOG_EXPORT debugLog(const QString &msg, const QString &file, int line, const QString &function);
+void LOG_EXPORT infoLog(const QString &msg, const QString &file, int line, const QString &function);
+void LOG_EXPORT warnLog(const QString &msg, const QString &file, int line, const QString &function);
+void LOG_EXPORT errorLog(const QString &msg, const QString &file, int line, const QString &function);
+void LOG_EXPORT fatalLog(const QString &msg, const QString &file, int line, const QString &function);
+void LOG_EXPORT verboseLog(int vLevel, const QString &msg, const QString &file, int line, const QString &function);
+void LOG_EXPORT traceLog(const QString &msg, const QString &file, int line, const QString &function);
 
 }
 
