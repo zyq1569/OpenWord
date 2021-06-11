@@ -262,6 +262,11 @@ void KWGui::visibleDockWidget(bool checked)
         if (sg_arrowType != Qt::ArrowType::NoArrow)//如果已经有打开的则只需要使用最后一个打开的状态即可
         {
             m_showtoolbox->setArrowType(sg_arrowType);
+            m_showtoolbox->setToolTip(hideTip);
+            if (sg_arrowType == Qt::ArrowType::LeftArrow)
+            {
+                m_showtoolbox->setToolTip(showTip);
+            }
             return;
         }
 
