@@ -124,7 +124,7 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
     pageSetupChanged();
 
     QTimer::singleShot(0, this, SLOT(setupUnitActions()));
-    initDockWidget = true;
+    m_initDockWidget = true;
     visibleDockWidget(true);
 }
 
@@ -221,12 +221,12 @@ void KWGui::mouseMoveEvent(QMouseEvent *e)
 
 void KWGui::visibleDockWidget(bool checked)
 {
-    static  QString langName = QLocale::system().name();
-    static  QString showTip = "show", hideTip = "hide";
-    static bool initLang = true;
-    bool bzh = false;
+    static  QString showTip("show"), hideTip("hide");
+    static  bool initLang = true;
+
     if (initLang)
     {
+        QString langName = QLocale::system().name();
         if (langName == "zh_CN")
         {
             showTip = "显示工具箱";
@@ -236,7 +236,6 @@ void KWGui::visibleDockWidget(bool checked)
     }
 
     bool visible = false;
-
     foreach (QDockWidget *dock, m_view->mainWindow()->dockWidgets())
     {
         QString str = dock->windowTitle();
@@ -249,11 +248,10 @@ void KWGui::visibleDockWidget(bool checked)
             }
         }
     }
-    bool tipvisible = visible;
-    if (initDockWidget)
+
+    if (m_initDockWidget)
     {
-        tipvisible = !visible;
-        initDockWidget = false;
+        m_initDockWidget = false;
         foreach (QDockWidget *dock, m_view->mainWindow()->dockWidgets())
         {
             dock->setFeatures(dock->features()&~QDockWidget::DockWidgetMovable);
@@ -270,53 +268,20 @@ void KWGui::visibleDockWidget(bool checked)
             return;
         }
 
-        if (tipvisible)
-        {
-            m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
-            sg_arrowType = Qt::ArrowType::LeftArrow;
-
-            m_showtoolbox->setToolTip(showTip);
-        }
-        else
+        if (visible)
         {
             m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
             sg_arrowType = Qt::ArrowType::RightArrow;
-
             m_showtoolbox->setToolTip(hideTip);
-
-        }
-        return;
-    }
-    else
-    {
-        if (visible)
-        {
-            m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
-
-            m_showtoolbox->setToolTip(showTip);
-
         }
         else
         {
-            m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
 
-            m_showtoolbox->setToolTip(hideTip);
-
+            m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
+            sg_arrowType = Qt::ArrowType::LeftArrow;
+            m_showtoolbox->setToolTip(showTip);
         }
-    }
-    if (tipvisible)
-    {
-        m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
-
-        m_showtoolbox->setToolTip(showTip);
-
-    }
-    else
-    {
-        m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
-
-        m_showtoolbox->setToolTip(hideTip);
-
+        return;
     }
 
     foreach (QDockWidget *dock, m_view->mainWindow()->dockWidgets())
@@ -336,11 +301,15 @@ void KWGui::visibleDockWidget(bool checked)
     }
     if (visible)
     {
+        m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
         sg_arrowType = Qt::ArrowType::LeftArrow;
+        m_showtoolbox->setToolTip(showTip);
     }
     else
     {
+        m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
         sg_arrowType = Qt::ArrowType::RightArrow;
+        m_showtoolbox->setToolTip(hideTip);
     }
 
 }

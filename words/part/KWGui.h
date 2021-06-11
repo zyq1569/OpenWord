@@ -89,7 +89,7 @@ public:
     }
 
 public:
-    bool initDockWidget;
+    bool m_initDockWidget;
 protected :
     void mouseMoveEvent(QMouseEvent *e) override;
 
