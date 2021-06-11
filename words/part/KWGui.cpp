@@ -222,11 +222,19 @@ void KWGui::mouseMoveEvent(QMouseEvent *e)
 void KWGui::visibleDockWidget(bool checked)
 {
     static  QString langName = QLocale::system().name();
-    bool bzh = false;;
-    if (langName == "zh_CN")
+    static  QString showTip = "show", hideTip = "hide";
+    static bool initLang = true;
+    bool bzh = false;
+    if (initLang)
     {
-        bzh = true;
+        if (langName == "zh_CN")
+        {
+            showTip = "显示工具箱";
+            hideTip = "隐藏工具箱";
+        }
+        initLang=  false;
     }
+
     bool visible = false;
 
     foreach (QDockWidget *dock, m_view->mainWindow()->dockWidgets())
@@ -261,27 +269,16 @@ void KWGui::visibleDockWidget(bool checked)
         {
             m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
             sg_arrowType = Qt::ArrowType::LeftArrow;
-            if (bzh)
-            {
-                m_showtoolbox->setToolTip("显示工具箱?");
-            }
-            else
-            {
-                m_showtoolbox->setToolTip("show");
-            }
+
+            m_showtoolbox->setToolTip(showTip);
         }
         else
         {
             m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
             sg_arrowType = Qt::ArrowType::RightArrow;
-            if (bzh)
-            {
-                m_showtoolbox->setToolTip("隐藏工具箱?");
-            }
-            else
-            {
-                m_showtoolbox->setToolTip("hide");
-            }
+
+            m_showtoolbox->setToolTip(hideTip);
+
         }
         return;
     }
@@ -290,51 +287,31 @@ void KWGui::visibleDockWidget(bool checked)
         if (visible)
         {
             m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
-            if (bzh)
-            {
-                m_showtoolbox->setToolTip("显示工具箱?");
-            }
-            else
-            {
-                m_showtoolbox->setToolTip("show");
-            }
+
+            m_showtoolbox->setToolTip(showTip);
+
         }
         else
         {
             m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
-            if (bzh)
-            {
-                m_showtoolbox->setToolTip("隐藏工具箱?");
-            }
-            else
-            {
-                m_showtoolbox->setToolTip("hide");
-            }
+
+            m_showtoolbox->setToolTip(hideTip);
+
         }
     }
     if (tipvisible)
     {
         m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
-        if (bzh)
-        {
-            m_showtoolbox->setToolTip("显示工具箱?");
-        }
-        else
-        {
-            m_showtoolbox->setToolTip("show");
-        }
+
+        m_showtoolbox->setToolTip(showTip);
+
     }
     else
     {
         m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
-        if (bzh)
-        {
-            m_showtoolbox->setToolTip("隐藏工具箱?");
-        }
-        else
-        {
-            m_showtoolbox->setToolTip("hide");
-        }
+
+        m_showtoolbox->setToolTip(hideTip);
+
     }
 
     foreach (QDockWidget *dock, m_view->mainWindow()->dockWidgets())
