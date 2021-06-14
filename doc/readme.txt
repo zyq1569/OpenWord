@@ -330,3 +330,11 @@ for (QMap<QString, QDockWidget*>::const_iterator i = d->dockWidgetsMap.constBegi
 		dockGroup.writeEntry("DockArea", (int) dockWidgetArea(i.value()));
 	}
 }
+
+
+//选择图片的对话框
+KUndo2Command* addShape(KoShape *shape, bool showDialog, KUndo2Command *parent)
+
+KoShape *KoShapeRegistry::Private::createShapeInternal(const KoXmlElement &fullElement,
+        KoShapeLoadingContext &context,
+        const KoXmlElement &element) const
