@@ -167,18 +167,18 @@ KoApplication::KoApplication(const QByteArray &nativeMimeType,
     KoGlobal::initialize();
 
 #ifndef QT_NO_DBUS
-    if (_WIN32 || _WIN64)
-    {
-        ERROR_LOG( "KDBusService service(KDBusService::Multiple); error! in windows!");
-        errorMain << "KDBusService service(KDBusService::Multiple); error! in windows!" << endl;
-    }
-    else
-    {
-        ///----- openword : not start ???? why (in windows)???
-        KDBusService service(KDBusService::Multiple);
-        new KoApplicationAdaptor(this);
-        QDBusConnection::sessionBus().registerObject("/application", this);
-    }
+//    if (_WIN32 || _WIN64)
+//    {
+//        ERROR_LOG( "KDBusService service(KDBusService::Multiple); error! in windows!");
+//        errorMain << "KDBusService service(KDBusService::Multiple); error! in windows!" << endl;
+//    }
+//    else
+//    {
+    ///----- openword : not start ???? why (in windows)???--------->nedd dbus-daemon.exe 20210615
+    KDBusService service(KDBusService::Multiple);
+    new KoApplicationAdaptor(this);
+    QDBusConnection::sessionBus().registerObject("/application", this);
+//    }
 
 #endif
 
