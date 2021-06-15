@@ -56,7 +56,8 @@ class FLAKE_EXPORT KoImageData : public KoShapeUserData
     Q_OBJECT
 public:
     /// Various error codes representing what has gone wrong
-    enum ErrorCode {
+    enum ErrorCode
+    {
         Success,
         OpenFailed,
         StorageFailed, ///< This is set if the image data has to be stored on disk in a temporary file, but we failed to do so
@@ -69,7 +70,10 @@ public:
     ~KoImageData() override;
     KoImageData(const KoImageData &imageData);
     KoImageData &operator=(const KoImageData &other);
-    inline bool operator!=(const KoImageData &other) const { return !operator==(other); }
+    inline bool operator!=(const KoImageData &other) const
+    {
+        return !operator==(other);
+    }
     bool operator==(const KoImageData &other) const;
 
     void setImage(const QString &location, KoStore *store, KoImageCollection *collection = 0);
@@ -114,7 +118,10 @@ public:
     bool isValid() const;
 
     /// \internal
-    KoImageDataPrivate *priv() { return d; }
+    KoImageDataPrivate *priv()
+    {
+        return d;
+    }
 
 private:
     friend class KoImageCollection;
@@ -171,7 +178,8 @@ public:
 
     static qint64 generateKey(const QByteArray &bytes);
 
-    enum DataStoreState {
+    enum DataStoreState
+    {
         StateEmpty,     ///< No image data, either as url or as QImage
         StateNotLoaded, ///< Image data is set as Url
         StateImageLoaded,///< Image data is loaded from Url, so both are present.
