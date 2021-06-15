@@ -337,6 +337,10 @@ KUndo2Command* addShape(KoShape *shape, bool showDialog, KUndo2Command *parent)
 
 获取选择的图片的路径
 
+----------->
+void PictureShapeLoadWaiter::setImageData(KJob *job)
+
+
 
 KoShape *KoShapeRegistry::Private::createShapeInternal(const KoXmlElement &fullElement,
         KoShapeLoadingContext &context,
