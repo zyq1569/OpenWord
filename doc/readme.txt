@@ -340,7 +340,7 @@ KUndo2Command* addShape(KoShape *shape, bool showDialog, KUndo2Command *parent)
 ----------->
 void PictureShapeLoadWaiter::setImageData(KJob *job)
 
-
+是否关系到 QImage KoImageData::image() const   ???
 
 KoShape *KoShapeRegistry::Private::createShapeInternal(const KoXmlElement &fullElement,
         KoShapeLoadingContext &context,
