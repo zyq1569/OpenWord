@@ -332,10 +332,11 @@ for (QMap<QString, QDockWidget*>::const_iterator i = d->dockWidgetsMap.constBegi
 }
 
 
-//选择图片的对话框
+//选择图片的对话框  ------>
 KUndo2Command* addShape(KoShape *shape, bool showDialog, KUndo2Command *parent)
 
 获取选择的图片的路径
+
 
 KoShape *KoShapeRegistry::Private::createShapeInternal(const KoXmlElement &fullElement,
         KoShapeLoadingContext &context,
