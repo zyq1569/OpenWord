@@ -3480,7 +3480,8 @@ void TextTool::runUrl(KoPointerEvent *event, QString &url)
         QString type = db.mimeTypeForUrl(_url).name();
 
         ///openword 2021-01-09 ?????
-        //if (KRun::isExecutableFile(_url, type)) {
+//        if (KRun::isExecutableFile(_url, type))
+//        {
         QString question = i18n("This link points to the program or script '%1'.\n"
                                 "Malicious programs can harm your computer. "
                                 "Are you sure that you want to run this program?", url);

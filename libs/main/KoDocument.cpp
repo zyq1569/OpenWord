@@ -1873,7 +1873,7 @@ bool KoDocument::oldLoadAndParse(KoStore *store, const QString& filename, KoXmlD
         ///openword
         d->lastErrorMessage = i18n("Parsing error in %1 at line %2, column %3\nError message: %4"
                                    , filename, errorLine, errorColumn,
-                                   QCoreApplication::translate("QXml", errorMsg.toUtf8(), 0));
+                                   QCoreApplication::translate("QXml", errorMsg.toUtf8(), 0,0));
         return false;
     }
     debugMain << "File" << filename << " loaded and parsed";

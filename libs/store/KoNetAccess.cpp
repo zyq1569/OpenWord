@@ -92,12 +92,15 @@ NetAccess::~NetAccess()
 
 bool NetAccess::download(const QUrl &u, QString &target, QWidget *window)
 {
-    if (u.isLocalFile()) {
+    if (u.isLocalFile())
+    {
         // file protocol. We do not need the network
         target = u.toLocalFile();
         const bool readable = QFileInfo(target).isReadable();
-        if (!readable) {
-            if (!lastErrorMsg) {
+        if (!readable)
+        {
+            if (!lastErrorMsg)
+            {
                 lastErrorMsg = new QString;
             }
             *lastErrorMsg = i18n("File '%1' is not readable", target);
@@ -106,12 +109,14 @@ bool NetAccess::download(const QUrl &u, QString &target, QWidget *window)
         return readable;
     }
 
-    if (target.isEmpty()) {
+    if (target.isEmpty())
+    {
         QTemporaryFile tmpFile;
         tmpFile.setAutoRemove(false);
         tmpFile.open();
         target = tmpFile.fileName();
-        if (!tmpfiles) {
+        if (!tmpfiles)
+        {
             tmpfiles = new QStringList;
         }
         tmpfiles->append(target);
@@ -124,14 +129,16 @@ bool NetAccess::download(const QUrl &u, QString &target, QWidget *window)
 
 bool NetAccess::upload(const QString &src, const QUrl &target, QWidget *window)
 {
-    if (target.isEmpty()) {
+    if (target.isEmpty())
+    {
         return false;
     }
 
     // If target is local... well, just copy. This can be useful
     // when the client code uses a temp file no matter what.
     // Let's make sure it's not the exact same file though
-    if (target.isLocalFile() && target.toLocalFile() == src) {
+    if (target.isLocalFile() && target.toLocalFile() == src)
+    {
         return true;
     }
 
@@ -194,7 +201,8 @@ bool NetAccess::move(const QList<QUrl> &srcList, const QUrl &target, QWidget *wi
 #ifndef KDELIBS4SUPPORT_NO_DEPRECATED
 bool NetAccess::exists(const QUrl &url, bool source, QWidget *window)
 {
-    if (url.isLocalFile()) {
+    if (url.isLocalFile())
+    {
         return QFile::exists(url.toLocalFile());
     }
     NetAccess kioNet;
@@ -205,7 +213,8 @@ bool NetAccess::exists(const QUrl &url, bool source, QWidget *window)
 
 bool NetAccess::exists(const QUrl &url, StatSide side, QWidget *window)
 {
-    if (url.isLocalFile()) {
+    if (url.isLocalFile())
+    {
         return QFile::exists(url.toLocalFile());
     }
     NetAccess kioNet;
@@ -216,7 +225,8 @@ bool NetAccess::stat(const QUrl &url, KIO::UDSEntry &entry, QWidget *window)
 {
     NetAccess kioNet;
     bool ret = kioNet.statInternal(url, 2 /*all details*/, SourceSide, window);
-    if (ret) {
+    if (ret)
+    {
         entry = kioNet.d->m_entry;
     }
     return ret;
@@ -224,17 +234,20 @@ bool NetAccess::stat(const QUrl &url, KIO::UDSEntry &entry, QWidget *window)
 
 QUrl NetAccess::mostLocalUrl(const QUrl &url, QWidget *window)
 {
-    if (url.isLocalFile()) {
+    if (url.isLocalFile())
+    {
         return url;
     }
 
     KIO::UDSEntry entry;
-    if (!stat(url, entry, window)) {
+    if (!stat(url, entry, window))
+    {
         return url;
     }
 
     const QString path = entry.stringValue(KIO::UDSEntry::UDS_LOCAL_PATH);
-    if (!path.isEmpty()) {
+    if (!path.isEmpty())
+    {
         QUrl new_url = QUrl::fromLocalFile(path);
         return new_url;
     }
@@ -273,7 +286,8 @@ bool NetAccess::synchronousRun(Job *job, QWidget *window, QByteArray *data,
     const bool wasAutoDelete = job->isAutoDelete();
     job->setAutoDelete(false);
     const bool ok = kioNet.synchronousRunInternal(job, window, data, finalURL, metaData);
-    if (wasAutoDelete) {
+    if (wasAutoDelete)
+    {
         job->deleteLater();
     }
     return ok;
@@ -297,10 +311,12 @@ int NetAccess::lastError()
 
 void NetAccess::removeTempFile(const QString &name)
 {
-    if (!tmpfiles) {
+    if (!tmpfiles)
+    {
         return;
     }
-    if (tmpfiles->contains(name)) {
+    if (tmpfiles->contains(name))
+    {
         QFile::remove(name);
         tmpfiles->removeAll(name);
     }
@@ -402,7 +418,8 @@ QString NetAccess::fish_executeInternal(const QUrl &url, const QString &command,
     QTemporaryFile tmpFile;
     tmpFile.open();
 
-    if (url.scheme() == "fish") {
+    if (url.scheme() == "fish")
+    {
         // construct remote temp filename
         QUrl tempPathUrl = url;
         remoteTempFileName = tmpFile.fileName();
@@ -423,17 +440,21 @@ QString NetAccess::fish_executeInternal(const QUrl &url, const QString &command,
         enter_loop();
 
         // since the KIO::special does not provide feedback we need to download the result
-        if (NetAccess::download(tempPathUrl, target, window)) {
+        if (NetAccess::download(tempPathUrl, target, window))
+        {
             QFile resultFile(target);
 
-            if (resultFile.open(QIODevice::ReadOnly)) {
+            if (resultFile.open(QIODevice::ReadOnly))
+            {
                 QTextStream ts(&resultFile);   // default encoding is Locale
                 resultData = ts.readAll();
                 resultFile.close();
                 NetAccess::del(tempPathUrl, window);
             }
         }
-    } else {
+    }
+    else
+    {
         resultData = i18n("ERROR: Unknown protocol '%1'", url.scheme());
     }
     return resultData;
@@ -445,15 +466,19 @@ bool NetAccess::synchronousRunInternal(Job *job, QWidget *window, QByteArray *da
     KJobWidgets::setWindow(job, window);
 
     d->m_metaData = metaData;
-    if (d->m_metaData) {
-        for (QMap<QString, QString>::iterator it = d->m_metaData->begin(); it != d->m_metaData->end(); ++it) {
+    if (d->m_metaData)
+    {
+        for (QMap<QString, QString>::iterator it = d->m_metaData->begin(); it != d->m_metaData->end(); ++it)
+        {
             job->addMetaData(it.key(), it.value());
         }
     }
 
-    if (finalURL) {
+    if (finalURL)
+    {
         SimpleJob *sj = qobject_cast<SimpleJob *>(job);
-        if (sj) {
+        if (sj)
+        {
             d->m_url = sj->url();
         }
     }
@@ -464,23 +489,27 @@ bool NetAccess::synchronousRunInternal(Job *job, QWidget *window, QByteArray *da
     const QMetaObject *meta = job->metaObject();
 
     static const char dataSignal[] = "data(KIO::Job*,QByteArray)";
-    if (meta->indexOfSignal(dataSignal) != -1) {
+    if (meta->indexOfSignal(dataSignal) != -1)
+    {
         connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
                 this, SLOT(slotData(KIO::Job*,QByteArray)));
     }
 
     static const char redirSignal[] = "redirection(KIO::Job*,QUrl)";
-    if (meta->indexOfSignal(redirSignal) != -1) {
+    if (meta->indexOfSignal(redirSignal) != -1)
+    {
         connect(job, SIGNAL(redirection(KIO::Job*,QUrl)),
                 this, SLOT(slotRedirection(KIO::Job*,QUrl)));
     }
 
     enter_loop();
 
-    if (finalURL) {
+    if (finalURL)
+    {
         *finalURL = d->m_url;
     }
-    if (data) {
+    if (data)
+    {
         *data = d->m_data;
     }
 
@@ -499,19 +528,23 @@ void NetAccess::slotResult(KJob *job)
 {
     lastErrorCode = job->error();
     d->bJobOK = !job->error();
-    if (!d->bJobOK) {
-        if (!lastErrorMsg) {
+    if (!d->bJobOK)
+    {
+        if (!lastErrorMsg)
+        {
             lastErrorMsg = new QString;
         }
         *lastErrorMsg = job->errorString();
     }
     KIO::StatJob *statJob = qobject_cast<KIO::StatJob *>(job);
-    if (statJob) {
+    if (statJob)
+    {
         d->m_entry = statJob->statResult();
     }
 
     KIO::Job *kioJob = qobject_cast<KIO::Job *>(job);
-    if (kioJob && d->m_metaData) {
+    if (kioJob && d->m_metaData)
+    {
         *d->m_metaData = kioJob->metaData();
     }
 
@@ -520,7 +553,8 @@ void NetAccess::slotResult(KJob *job)
 
 void NetAccess::slotData(KIO::Job *, const QByteArray &data)
 {
-    if (data.isEmpty()) {
+    if (data.isEmpty())
+    {
         return;
     }
 

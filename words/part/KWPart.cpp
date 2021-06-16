@@ -163,7 +163,8 @@ void KWPart::showStartUpWidget(KoMainWindow *parent, bool alwaysShow)
 
 void KWPart::showErrorAndDie()
 {
-    KMessageBox::error(0,i18n("Can not find needed text component: {-KChart.dll or KChart.dll-}, Words will quit now.{-KWPart.cpp-void KWPart::showErrorAndDie()}"),
+    KMessageBox::error(0,
+                       i18n("Can not find needed text component{ eg. calligra_shape_text.dll ... error?}, Words will quit now"),
                        i18n("Installation Error"));
     //QCoreApplication::exit(10);///openword
 }
