@@ -107,23 +107,33 @@ void PictureShapeConfigWidget::open(KoShape *shape)
     m_fileWidget->setMimeFilter(imageFilters);
     layout->addWidget(m_fileWidget);
     setLayout(layout);
-    connect(m_fileWidget, SIGNAL(accepted()), this, SIGNAL(accept()));
+    connect(m_fileWidget, &KFileWidget::accepted, this, &PictureShapeConfigWidget::slotAccept);
 }
 
+// The page dialog's own accept() is called by the OK button
+// This makes exec() return, then we get here.
+// For KFileWidget, nothing happened yet. It still needs to process things in slotOk.
 void PictureShapeConfigWidget::save()
 {
     if (!m_shape)
     {
         return;
     }
+    m_fileWidget->slotOk(); // emits accepted, possibly async
+}
+
+// Called by slotOk, possibly async
+void PictureShapeConfigWidget::slotAccept()
+{
     m_fileWidget->accept();
-    QUrl url = m_fileWidget->selectedUrl();
+    const QUrl url = m_fileWidget->selectedUrl();
     if (!url.isEmpty())
     {
-        KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::NoReload, 0);
+        KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::NoReload, {});
         PictureShapeLoadWaiter *waiter = new PictureShapeLoadWaiter(m_shape);
-        connect(job, SIGNAL(result(KJob*)), waiter, SLOT(setImageData(KJob*)));
+        connect(job, &KJob::result, waiter, &PictureShapeLoadWaiter::setImageData);
     }
+    Q_EMIT accept();
 }
 
 bool PictureShapeConfigWidget::showOnShapeCreate()

@@ -70,7 +70,7 @@ _Private::PixmapScaler::PixmapScaler(PictureShape *pictureShape, const QSize &pi
 {
     m_image = pictureShape->imageData()->image();
     m_imageKey = pictureShape->imageData()->key();
-    connect(this, SIGNAL(finished(QString,QImage)), &pictureShape->m_proxy, SLOT(setImage(QString,QImage)));
+    connect(this, &PixmapScaler::finished, &pictureShape->m_proxy, &PictureShapeProxy::setImage);
 }
 
 void _Private::PixmapScaler::run()
@@ -421,25 +421,11 @@ void PictureShape::waitUntilReady(const KoViewConverter &converter, bool asynchr
     {
         QSize pixmapSize = calcOptimalPixmapSize(converter.documentToView(QRectF(QPointF(0,0), size())).size(), imageData->image().size());
         QString key(generate_key(imageData->key(), pixmapSize));
-
-#if QT_DEPRECATED_SINCE(5, 13)
-        QPixmap pm;
-        if (!QPixmapCache::find(key, &pm))
-        {
-//pm.load(key);
-//QPixmapCache::insert(key, pm);
-            QPixmap pixmap = imageData->pixmap(pixmapSize);
-            QPixmapCache::insert(key, pixmap);
-        }
-#else
-        if (QPixmapCache::find(key) == 0)
+        if (QPixmapCache::find(key, nullptr) == 0)
         {
             QPixmap pixmap = imageData->pixmap(pixmapSize);
             QPixmapCache::insert(key, pixmap);
         }
-#endif
-
-
     }
 }
 
@@ -690,7 +676,7 @@ void PictureShape::loadStyle(const KoXmlElement& element, KoShapeLoadingContext&
     {
         QString mirrorMode = styleStack.property(KoXmlNS::style, "mirror");
 
-        QFlags<PictureShape::MirrorMode>  mode = 0;
+        QFlags<PictureShape::MirrorMode> mode = {};
 
         // Only one of the horizontal modes
         if (mirrorMode.contains("horizontal-on-even"))
@@ -737,20 +723,20 @@ void PictureShape::loadStyle(const KoXmlElement& element, KoShapeLoadingContext&
     QString blue = styleStack.property(KoXmlNS::draw, "blue");
     QString luminance = styleStack.property(KoXmlNS::draw, "luminance");
     QString contrast = styleStack.property(KoXmlNS::draw, "contrast");
-    setColoring(red.right(1) == "%" ? (red.left(red.length() - 1).toDouble() / 100.0) : 0.0
-                , green.right(1) == "%" ? (green.left(green.length() - 1).toDouble() / 100.0) : 0.0
-                , blue.right(1) == "%" ? (blue.left(blue.length() - 1).toDouble() / 100.0) : 0.0
-                , luminance.right(1) == "%" ? (luminance.left(luminance.length() - 1).toDouble() / 100.0) : 0.0
-                , contrast.right(1) == "%" ? (contrast.left(contrast.length() - 1).toDouble() / 100.0) : 0.0);
+    setColoring(red.right(1) == "%" ? (red.leftRef(red.length() - 1).toDouble() / 100.0) : 0.0
+                , green.right(1) == "%" ? (green.leftRef(green.length() - 1).toDouble() / 100.0) : 0.0
+                , blue.right(1) == "%" ? (blue.leftRef(blue.length() - 1).toDouble() / 100.0) : 0.0
+                , luminance.right(1) == "%" ? (luminance.leftRef(luminance.length() - 1).toDouble() / 100.0) : 0.0
+                , contrast.right(1) == "%" ? (contrast.leftRef(contrast.length() - 1).toDouble() / 100.0) : 0.0);
 
     QString gamma = styleStack.property(KoXmlNS::draw, "gamma");
-    setGamma(gamma.right(1) == "%" ? (gamma.left(gamma.length() - 1).toDouble() / 100.0) : 0.0);
+    setGamma(gamma.right(1) == "%" ? (gamma.leftRef(gamma.length() - 1).toDouble() / 100.0) : 0.0);
 
     // image opacity
     QString opacity(styleStack.property(KoXmlNS::draw, "image-opacity"));
     if (! opacity.isEmpty() && opacity.right(1) == "%")
     {
-        setTransparency(1.0 - (opacity.left(opacity.length() - 1).toFloat() / 100.0));
+        setTransparency(1.0 - (opacity.leftRef(opacity.length() - 1).toFloat() / 100.0));
     }
 
     // clip rect

@@ -35,6 +35,7 @@ PluginFactory::PluginFactory()
 {
     registerPlugin<Plugin>();
 }
+
 PluginFactory::~PluginFactory()
 {
 

@@ -27,6 +27,7 @@ ClippingRect::ClippingRect():
     uniform(true),
     inverted(false)
 {
+
 }
 
 ClippingRect::ClippingRect(const ClippingRect& rect):
@@ -37,6 +38,17 @@ ClippingRect::ClippingRect(const ClippingRect& rect):
     uniform(rect.uniform),
     inverted(rect.inverted)
 {
+}
+
+ClippingRect & ClippingRect::operator=(const ClippingRect& rect)
+{
+    top = rect.top;
+    right = rect.right;
+    bottom = rect.bottom;
+    left = rect.left;
+    uniform = rect.uniform;
+    inverted = rect.inverted;
+    return *this;
 }
 
 ClippingRect::ClippingRect(const QRectF& rect, bool isUniform)
