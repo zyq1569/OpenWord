@@ -93,7 +93,8 @@ public:
     /**
      * Enum to describe the text document's automatic resizing behaviour.
      */
-    enum ResizeMethod {
+    enum ResizeMethod
+    {
         /// Resize the shape to fit the content. This makes sure that the text shape takes op
         /// only as much space as absolutely necessary to fit the entire text into its boundaries.
         AutoResize,

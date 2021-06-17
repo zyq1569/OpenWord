@@ -49,7 +49,8 @@ class QPainter;
  * The KoUnavailShape always has to be present, and is the only shape
  * that is not implemented as a plugin.
  */
-class KoUnavailShape : public KoFrameShape, public KoShapeContainer {
+class KoUnavailShape : public KoFrameShape, public KoShapeContainer
+{
 public:
     KoUnavailShape();
     ~KoUnavailShape() override;
@@ -66,7 +67,7 @@ public:
     bool loadOdf( const KoXmlElement & element, KoShapeLoadingContext &context ) override;
     /// Load the real contents of the frame shape.
     bool loadOdfFrameElement(const KoXmlElement& frameElement,
-                                     KoShapeLoadingContext& context) override;
+                             KoShapeLoadingContext& context) override;
 
 private:
     class Private;

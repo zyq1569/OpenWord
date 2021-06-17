@@ -1,21 +1,8 @@
 /* This file is part of the KDE project
  *
- * Copyright (C) 2010 Boudewijn Rempt <boud@kogmbh.com>
+ * SPDX-FileCopyrightText: 2010 Boudewijn Rempt <boud@kogmbh.com>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
- *
- * You should have received a copy of the GNU Library General Public License
- * along with this library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
 #include "KoCanvasController.h"
@@ -24,26 +11,26 @@
 #include <QSize>
 #include <QPoint>
 
-//class Q_DECL_HIDDEN KoCanvasController::Private
-//{
-//public:
-//    Private()
-//        : canvasMode(Centered)
-//        , margin(0)
-//        , preferredCenterFractionX(0.5)
-//        , preferredCenterFractionY(0.5)
-//        , actionCollection(0)
-//    {
-//    }
+class Q_DECL_HIDDEN KoCanvasController::Private
+{
+public:
+    Private()
+        : canvasMode(Centered)
+        , margin(0)
+        , preferredCenterFractionX(0.5)
+        , preferredCenterFractionY(0.5)
+        , actionCollection(0)
+    {
+    }
 
-//    CanvasMode canvasMode;
-//    int margin;
-//    QSize documentSize;
-//    QPoint documentOffset;
-//    qreal preferredCenterFractionX;
-//    qreal preferredCenterFractionY;
-//    KActionCollection* actionCollection;
-//};
+    CanvasMode canvasMode;
+    int margin;
+    QSize documentSize;
+    QPoint documentOffset;
+    qreal preferredCenterFractionX;
+    qreal preferredCenterFractionY;
+    KActionCollection* actionCollection;
+};
 
 KoCanvasController::KoCanvasController(KActionCollection* actionCollection)
     : d(new Private())
@@ -62,20 +49,21 @@ KoCanvasController::~KoCanvasController()
 void KoCanvasController::setCanvasMode(CanvasMode mode)
 {
     d->canvasMode = mode;
-    switch (mode) {
-    case AlignTop:
-        d->preferredCenterFractionX = 0;
-        d->preferredCenterFractionY = 0.5;
-        break;
-    case Infinite:
-    case Centered:
-        d->preferredCenterFractionX = 0.5;
-        d->preferredCenterFractionY = 0.5;
-        break;
-    case Spreadsheet:
-        d->preferredCenterFractionX = 0;
-        d->preferredCenterFractionY = 0;
-        break;
+    switch (mode)
+    {
+        case AlignTop:
+            d->preferredCenterFractionX = 0;
+            d->preferredCenterFractionY = 0.5;
+            break;
+        case Infinite:
+        case Centered:
+            d->preferredCenterFractionX = 0.5;
+            d->preferredCenterFractionY = 0.5;
+            break;
+        case Spreadsheet:
+            d->preferredCenterFractionX = 0;
+            d->preferredCenterFractionY = 0;
+            break;
     };
 }
 

@@ -1,23 +1,10 @@
 /* This file is part of the KDE project
- * Copyright (C) 2007, 2009 Thomas Zander <zander@kde.org>
- * Copyright (C) 2007 Jan Hambrecht <jaham@gmx.net>
- * Copyright (C) 2008 C. Boemann <cbo@boemann.dk>
- * Copyright (C) 2008 Thorsten Zachmann <zachmann@kde.org>
+ * SPDX-FileCopyrightText: 2007, 2009 Thomas Zander <zander@kde.org>
+ * SPDX-FileCopyrightText: 2007 Jan Hambrecht <jaham@gmx.net>
+ * SPDX-FileCopyrightText: 2008 C. Boemann <cbo@boemann.dk>
+ * SPDX-FileCopyrightText: 2008 Thorsten Zachmann <zachmann@kde.org>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
- *
- * You should have received a copy of the GNU Library General Public License
- * along with this library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
 #include "KoImageData.h"
@@ -180,10 +167,9 @@ QImage KoImageData::image() const
             {
                 d->errorCode = OpenFailed;
             }
-            else if (d->errorCode == Success && !d->image.load(d->temporaryFile->fileName(), d->suffix.toLatin1().data()))
+            else if (d->errorCode == Success && !d->image.load(d->temporaryFile->fileName(), d->suffix.toLatin1()))
             {
-                /// openword need :imageformats[ size = 9 : qjpeg.dll qgif.dll qwbmp.dll ....]
-                INFO_LOG("need dll (in imageformats/) : qjpeg.dll qgif.dll qwbmp.dll ....!");
+                qWarning() << "Failed to open image" << d->temporaryFile->fileName() << "with format" << d->suffix;
                 d->errorCode = OpenFailed;
             }
             d->temporaryFile->close();
@@ -389,6 +375,7 @@ void KoImageData::setImage(const QByteArray &imageData, KoImageCollection *colle
             buffer.setData(imageData);
             buffer.open(QIODevice::ReadOnly);
             d->copyToTemporary(buffer);
+            d->suffix.clear(); // let QImage find out what the data contains
         }
 
         QCryptographicHash md5(QCryptographicHash::Md5);
@@ -405,7 +392,8 @@ void KoImageData::setImage(const QByteArray &imageData, KoImageCollection *colle
 
 bool KoImageData::isValid() const
 {
-    return d && d->dataStoreState != KoImageDataPrivate::StateEmpty  && d->errorCode == Success;
+    return d && d->dataStoreState != KoImageDataPrivate::StateEmpty
+           && d->errorCode == Success;
 }
 
 bool KoImageData::operator==(const KoImageData &other) const
@@ -448,4 +436,4 @@ bool KoImageData::saveData(QIODevice &device)
 }
 
 //have to include this because of Q_PRIVATE_SLOT
-//#include "moc_KoImageData.cpp"
+#include "moc_KoImageData.cpp"

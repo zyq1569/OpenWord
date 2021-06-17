@@ -1,20 +1,7 @@
 /* This file is part of the KDE project
- * Copyright (C) 2008 Jan Hambrecht <jaham@gmx.net>
+ * SPDX-FileCopyrightText: 2008 Jan Hambrecht <jaham@gmx.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
- *
- * You should have received a copy of the GNU Library General Public License
- * along with this library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
 #include "SnapGuideConfigWidget.h"
@@ -23,7 +10,7 @@
 #include <KoIcon.h>
 
 SnapGuideConfigWidget::SnapGuideConfigWidget(KoSnapGuide * snapGuide, QWidget * parent)
-        : QWidget(parent), m_snapGuide(snapGuide)
+    : QWidget(parent), m_snapGuide(snapGuide)
 {
     widget.setupUi(this);
 
@@ -36,14 +23,14 @@ SnapGuideConfigWidget::SnapGuideConfigWidget(KoSnapGuide * snapGuide, QWidget * 
 
     updateControls();
 
-    connect(widget.useSnapGuides, SIGNAL(toggled(bool)), this, SLOT(snappingEnabled(bool)));
-    connect(widget.orthogonalSnapGuide, SIGNAL(toggled(bool)), this, SLOT(strategyChanged()));
-    connect(widget.nodeSnapGuide, SIGNAL(toggled(bool)), this, SLOT(strategyChanged()));
-    connect(widget.extensionSnapGuide, SIGNAL(toggled(bool)), this, SLOT(strategyChanged()));
-    connect(widget.intersectionSnapGuide, SIGNAL(toggled(bool)), this, SLOT(strategyChanged()));
-    connect(widget.boundingBoxSnapGuide, SIGNAL(toggled(bool)), this, SLOT(strategyChanged()));
-    connect(widget.lineGuideSnapGuide, SIGNAL(toggled(bool)), this, SLOT(strategyChanged()));
-    connect(widget.snapDistance, SIGNAL(valueChanged(int)), this, SLOT(distanceChanged(int)));
+    connect(widget.useSnapGuides, &QAbstractButton::toggled, this, &SnapGuideConfigWidget::snappingEnabled);
+    connect(widget.orthogonalSnapGuide, &QAbstractButton::toggled, this, &SnapGuideConfigWidget::strategyChanged);
+    connect(widget.nodeSnapGuide, &QAbstractButton::toggled, this, &SnapGuideConfigWidget::strategyChanged);
+    connect(widget.extensionSnapGuide, &QAbstractButton::toggled, this, &SnapGuideConfigWidget::strategyChanged);
+    connect(widget.intersectionSnapGuide, &QAbstractButton::toggled, this, &SnapGuideConfigWidget::strategyChanged);
+    connect(widget.boundingBoxSnapGuide, &QAbstractButton::toggled, this, &SnapGuideConfigWidget::strategyChanged);
+    connect(widget.lineGuideSnapGuide, &QAbstractButton::toggled, this, &SnapGuideConfigWidget::strategyChanged);
+    connect(widget.snapDistance, QOverload<int>::of(&QSpinBox::valueChanged), this, &SnapGuideConfigWidget::distanceChanged);
 
     widget.useSnapGuides->setChecked(snapGuide->isSnapping());
 }
@@ -69,17 +56,29 @@ void SnapGuideConfigWidget::strategyChanged()
 {
     KoSnapGuide::Strategies strategies;
     if (widget.orthogonalSnapGuide->isChecked())
+    {
         strategies |= KoSnapGuide::OrthogonalSnapping;
+    }
     if (widget.nodeSnapGuide->isChecked())
+    {
         strategies |= KoSnapGuide::NodeSnapping;
+    }
     if (widget.extensionSnapGuide->isChecked())
+    {
         strategies |= KoSnapGuide::ExtensionSnapping;
+    }
     if (widget.intersectionSnapGuide->isChecked())
+    {
         strategies |= KoSnapGuide::IntersectionSnapping;
+    }
     if (widget.boundingBoxSnapGuide->isChecked())
+    {
         strategies |= KoSnapGuide::BoundingBoxSnapping;
+    }
     if (widget.lineGuideSnapGuide->isChecked())
+    {
         strategies |= KoSnapGuide::GuideLineSnapping;
+    }
 
     m_snapGuide->enableSnapStrategies(strategies);
 }

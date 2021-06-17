@@ -94,25 +94,33 @@ QList<QString> KoFilterEffect::inputs() const
 void KoFilterEffect::addInput(const QString &input)
 {
     if (d->inputs.count() < d->maximalInputCount)
+    {
         d->inputs.append(input);
+    }
 }
 
 void KoFilterEffect::insertInput(int index, const QString &input)
 {
     if (d->inputs.count() < d->maximalInputCount)
+    {
         d->inputs.insert(index, input);
+    }
 }
 
 void KoFilterEffect::setInput(int index, const QString &input)
 {
     if (index < d->inputs.count())
+    {
         d->inputs[index] = input;
+    }
 }
 
 void KoFilterEffect::removeInput(int index)
 {
     if (d->inputs.count() > d->requiredInputCount)
+    {
         d->inputs.removeAt(index);
+    }
 }
 
 void KoFilterEffect::setOutput(const QString &output)
@@ -159,23 +167,29 @@ void KoFilterEffect::setRequiredInputCount(int count)
 {
     d->requiredInputCount = qMax(0, count);
     for (int i = d->inputs.count(); i < d->requiredInputCount; ++i)
+    {
         d->inputs.append(QString());
+    }
 }
 
 void KoFilterEffect::setMaximalInputCount(int count)
 {
     d->maximalInputCount = qMax(0,count);
-    if (d->inputs.count() > maximalInputCount()) {
+    if (d->inputs.count() > maximalInputCount())
+    {
         int removeCount = d->inputs.count()-maximalInputCount();
         for (int i = 0; i < removeCount; ++i)
+        {
             d->inputs.pop_back();
+        }
     }
 }
 
 void KoFilterEffect::saveCommonAttributes(KoXmlWriter &writer)
 {
     writer.addAttribute("result", output());
-    if (requiredInputCount() == 1 && maximalInputCount() == 1 && d->inputs.count() == 1) {
+    if (requiredInputCount() == 1 && maximalInputCount() == 1 && d->inputs.count() == 1)
+    {
         writer.addAttribute("in", d->inputs[0]);
     }
     writer.addAttribute("x", d->filterRect.x());

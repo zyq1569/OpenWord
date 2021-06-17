@@ -1,23 +1,10 @@
 /* This file is part of the KDE project
-   Copyright (C) 2006-2008, 2010-2011 Thorsten Zachmann <zachmann@kde.org>
-   Copyright (C) 2006-2011 Jan Hambrecht <jaham@gmx.net>
-   Copyright (C) 2007-2009 Thomas Zander <zander@kde.org>
-   Copyright (C) 2011 Jean-Nicolas Artaud <jeannicolasartaud@gmail.com>
+   SPDX-FileCopyrightText: 2006-2008, 2010-2011 Thorsten Zachmann <zachmann@kde.org>
+   SPDX-FileCopyrightText: 2006-2011 Jan Hambrecht <jaham@gmx.net>
+   SPDX-FileCopyrightText: 2007-2009 Thomas Zander <zander@kde.org>
+   SPDX-FileCopyrightText: 2011 Jean-Nicolas Artaud <jeannicolasartaud@gmail.com>
 
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "KoPathShape.h"
@@ -1612,9 +1599,9 @@ void updateNodeType(KoPathPoint * point, const QChar & nodeType)
 void KoPathShapePrivate::loadNodeTypes(const KoXmlElement &element)
 {
     Q_Q(KoPathShape);
-    if (element.hasAttributeNS(KoXmlNS::calligra, "nodeTypes"))    ///openword
+    if (element.hasAttributeNS(KoXmlNS::calligra, "nodeTypes"))
     {
-        QString nodeTypes = element.attributeNS(KoXmlNS::calligra, "nodeTypes");///openword
+        QString nodeTypes = element.attributeNS(KoXmlNS::calligra, "nodeTypes");
         QString::const_iterator nIt(nodeTypes.constBegin());
         KoSubpathList::const_iterator pathIt(q->m_subpaths.constBegin());
         for (; pathIt != q->m_subpaths.constEnd(); ++pathIt)

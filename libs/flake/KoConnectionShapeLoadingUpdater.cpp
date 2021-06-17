@@ -22,8 +22,8 @@
 #include "KoConnectionShape.h"
 
 KoConnectionShapeLoadingUpdater::KoConnectionShapeLoadingUpdater(KoConnectionShape * connectionShape, ConnectionPosition position)
-: m_connectionShape(connectionShape)
-, m_position(position)
+    : m_connectionShape(connectionShape)
+    , m_position(position)
 {
 }
 
@@ -33,9 +33,12 @@ KoConnectionShapeLoadingUpdater::~KoConnectionShapeLoadingUpdater()
 
 void KoConnectionShapeLoadingUpdater::update(KoShape * shape)
 {
-    if (m_position == First) {
+    if (m_position == First)
+    {
         m_connectionShape->connectFirst(shape, m_connectionShape->firstConnectionId());
-    } else {
+    }
+    else
+    {
         m_connectionShape->connectSecond(shape, m_connectionShape->secondConnectionId());
     }
     m_connectionShape->finishLoadingConnection();

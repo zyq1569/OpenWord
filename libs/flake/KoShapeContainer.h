@@ -156,7 +156,7 @@ public:
      * Return the allowed interactions set for this container
      * If we (or our parent(s)) are not visible, no interaction is allowed.
      * If we have a model the model is called, else the childs interaction flags is returned.
-     * 
+     *
      * @see KoShapeContainerModel::allowedInteractions()
      */
     KoShape::AllowedInteractions allowedInteractions(const KoShape *child) const;

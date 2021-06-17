@@ -100,7 +100,10 @@ const QGradient * KoGradientBackground::gradient() const
 void KoGradientBackground::paint(QPainter &painter, const KoViewConverter &/*converter*/, KoShapePaintingContext &/*context*/, const QPainterPath &fillPath) const
 {
     Q_D(const KoGradientBackground);
-    if (!d->gradient) return;
+    if (!d->gradient)
+    {
+        return;
+    }
     QBrush brush(*d->gradient);
     brush.setTransform(d->matrix);
 
@@ -111,7 +114,10 @@ void KoGradientBackground::paint(QPainter &painter, const KoViewConverter &/*con
 void KoGradientBackground::fillStyle(KoGenStyle &style, KoShapeSavingContext &context)
 {
     Q_D(KoGradientBackground);
-    if (!d->gradient) return;
+    if (!d->gradient)
+    {
+        return;
+    }
     QBrush brush(*d->gradient);
     brush.setTransform(d->matrix);
     KoOdfGraphicStyles::saveOdfFillStyle(style, context.mainStyles(), brush);
@@ -122,24 +128,31 @@ bool KoGradientBackground::loadStyle(KoOdfLoadingContext &context, const QSizeF 
     Q_D(KoGradientBackground);
     KoStyleStack &styleStack = context.styleStack();
     if (! styleStack.hasProperty(KoXmlNS::draw, "fill"))
+    {
         return false;
+    }
 
     QString fillStyle = styleStack.property(KoXmlNS::draw, "fill");
-    if (fillStyle == "gradient") {
+    if (fillStyle == "gradient")
+    {
         QBrush brush = KoOdfGraphicStyles::loadOdfGradientStyle(styleStack, context.stylesReader(), shapeSize);
         const QGradient * gradient = brush.gradient();
-        if (gradient) {
+        if (gradient)
+        {
             d->gradient = KoFlake::cloneGradient(gradient);
             d->matrix = brush.transform();
 
             //Gopalakrishna Bhat: If the brush has transparency then we ignore the draw:opacity property and use the brush transparency.
             // Brush will have transparency if the svg:linearGradient stop point has stop-opacity property otherwise it is opaque
-            if (brush.isOpaque() && styleStack.hasProperty(KoXmlNS::draw, "opacity")) {
+            if (brush.isOpaque() && styleStack.hasProperty(KoXmlNS::draw, "opacity"))
+            {
                 QString opacityPercent = styleStack.property(KoXmlNS::draw, "opacity");
-                if (! opacityPercent.isEmpty() && opacityPercent.right(1) == "%") {
+                if (! opacityPercent.isEmpty() && opacityPercent.right(1) == "%")
+                {
                     float opacity = qMin(opacityPercent.leftRef(opacityPercent.length() - 1).toDouble(), 100.0) / 100;
                     QGradientStops stops;
-                    foreach(QGradientStop stop, d->gradient->stops()) {
+                    foreach(QGradientStop stop, d->gradient->stops())
+                    {
                         stop.second.setAlphaF(opacity);
                         stops << stop;
                     }

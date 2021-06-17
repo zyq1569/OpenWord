@@ -1,24 +1,11 @@
 /* This file is part of the KDE project
  *
- * Copyright (c) 2005-2010 Boudewijn Rempt <boud@valdyas.org>
- * Copyright (C) 2006-2008 Thomas Zander <zander@kde.org>
- * Copyright (C) 2006 Thorsten Zachmann <zachmann@kde.org>
- * Copyright (C) 2008 Jan Hambrecht <jaham@gmx.net>
+ * SPDX-FileCopyrightText: 2005-2010 Boudewijn Rempt <boud@valdyas.org>
+ * SPDX-FileCopyrightText: 2006-2008 Thomas Zander <zander@kde.org>
+ * SPDX-FileCopyrightText: 2006 Thorsten Zachmann <zachmann@kde.org>
+ * SPDX-FileCopyrightText: 2008 Jan Hambrecht <jaham@gmx.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
- *
- * You should have received a copy of the GNU Library General Public License
- * along with this library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
 // flake
@@ -67,11 +54,11 @@
 
 Q_GLOBAL_STATIC(KoToolManager, s_instance)
 
-//class Q_DECL_HIDDEN KoToolAction::Private
-//{
-//public:
-//    ToolHelper* toolHelper;
-//};
+class Q_DECL_HIDDEN KoToolAction::Private
+{
+public:
+    ToolHelper* toolHelper;
+};
 
 KoToolAction::KoToolAction(ToolHelper* toolHelper)
     : QObject(toolHelper)
@@ -328,9 +315,10 @@ void KoToolManager::Private::setup()
 
     // connect to all tools so we can hear their button-clicks
     foreach(ToolHelper *tool, tools)
+        connect(tool, &ToolHelper::toolActivated, q, [this] (ToolHelper *tool)
     {
-        connect(tool, SIGNAL(toolActivated(ToolHelper*)), q, SLOT(toolActivated(ToolHelper*)));
-    }
+        toolActivated(tool);
+    });
 
     // load pluggable input devices
     KoInputDeviceHandlerRegistry::instance();
@@ -340,15 +328,18 @@ void KoToolManager::Private::connectActiveTool()
 {
     if (canvasData->activeTool)
     {
-        connect(canvasData->activeTool, SIGNAL(cursorChanged(QCursor)),
-                q, SLOT(updateCursor(QCursor)));
-        connect(canvasData->activeTool, SIGNAL(activateTool(QString)),
-                q, SLOT(switchToolRequested(QString)));
-        connect(canvasData->activeTool, SIGNAL(activateTemporary(QString)),
-                q, SLOT(switchToolTemporaryRequested(QString)));
-        connect(canvasData->activeTool, SIGNAL(done()), q, SLOT(switchBackRequested()));
-        connect(canvasData->activeTool, SIGNAL(statusTextChanged(QString)),
-                q, SIGNAL(changedStatusText(QString)));
+        connect(canvasData->activeTool, &KoToolBase::cursorChanged,
+                q, [this] (const QCursor &cursor)
+        {
+            updateCursor(cursor);
+        });
+        connect(canvasData->activeTool, &KoToolBase::activateTool,
+                q, &KoToolManager::switchToolRequested);
+        connect(canvasData->activeTool, &KoToolBase::activateTemporary,
+                q, &KoToolManager::switchToolTemporaryRequested);
+        connect(canvasData->activeTool, &KoToolBase::done, q, &KoToolManager::switchBackRequested);
+        connect(canvasData->activeTool, &KoToolBase::statusTextChanged,
+                q, &KoToolManager::changedStatusText);
     }
 
     // we expect the tool to emit a cursor on activation.
@@ -363,15 +354,15 @@ void KoToolManager::Private::disconnectActiveTool()
         // repaint the decorations before we deactivate the tool as it might deleted
         // data needed for the repaint
         canvasData->activeTool->deactivate();
-        disconnect(canvasData->activeTool, SIGNAL(cursorChanged(QCursor)),
-                   q, SLOT(updateCursor(QCursor)));
-        disconnect(canvasData->activeTool, SIGNAL(activateTool(QString)),
-                   q, SLOT(switchToolRequested(QString)));
-        disconnect(canvasData->activeTool, SIGNAL(activateTemporary(QString)),
-                   q, SLOT(switchToolTemporaryRequested(QString)));
-        disconnect(canvasData->activeTool, SIGNAL(done()), q, SLOT(switchBackRequested()));
-        disconnect(canvasData->activeTool, SIGNAL(statusTextChanged(QString)),
-                   q, SIGNAL(changedStatusText(QString)));
+        disconnect(canvasData->activeTool, &KoToolBase::cursorChanged,
+                   q, nullptr);
+        disconnect(canvasData->activeTool, &KoToolBase::activateTool,
+                   q, &KoToolManager::switchToolRequested);
+        disconnect(canvasData->activeTool, &KoToolBase::activateTemporary,
+                   q, &KoToolManager::switchToolTemporaryRequested);
+        disconnect(canvasData->activeTool, &KoToolBase::done, q, &KoToolManager::switchBackRequested);
+        disconnect(canvasData->activeTool, &KoToolBase::statusTextChanged,
+                   q, &KoToolManager::changedStatusText);
     }
 
     // emit a empty status text to clear status text from last active tool
@@ -704,11 +695,19 @@ void KoToolManager::Private::attachCanvas(KoCanvasController *controller)
     }
 
     Connector *connector = new Connector(controller->canvas()->shapeManager());
-    connect(connector, SIGNAL(selectionChanged(QList<KoShape*>)), q,
-            SLOT(selectionChanged(QList<KoShape*>)));
+    connect(connector, &Connector::selectionChanged,
+            q, [this](const QList<KoShape*> &list)
+    {
+        selectionChanged(list);
+    });
+
     connect(controller->canvas()->shapeManager()->selection(),
-            SIGNAL(currentLayerChanged(const KoShapeLayer*)),
-            q, SLOT(currentLayerChanged(const KoShapeLayer*)));
+            &KoSelection::currentLayerChanged,
+            q,
+            [this](const KoShapeLayer *layer)
+    {
+        currentLayerChanged(layer);
+    });
 
     emit q->changedCanvas(canvasData ? canvasData->canvas->canvas() : 0);
 }
@@ -958,8 +957,11 @@ KoToolManager::KoToolManager()
     : QObject(),
       d(new Private(this))
 {
-    connect(QApplication::instance(), SIGNAL(focusChanged(QWidget*,QWidget*)),
-            this, SLOT(movedFocus(QWidget*,QWidget*)));
+    connect(qApp, &QApplication::focusChanged,
+            this, [this] (QWidget *old, QWidget *now)
+    {
+        d->movedFocus(old, now);
+    });
 }
 
 KoToolManager::~KoToolManager()
@@ -1051,16 +1053,24 @@ void KoToolManager::addController(KoCanvasController *controller)
     }
     d->setup();
     d->attachCanvas(controller);
-    connect(controller->proxyObject, SIGNAL(destroyed(QObject*)), this, SLOT(attemptCanvasControllerRemoval(QObject*)));
-    connect(controller->proxyObject, SIGNAL(canvasRemoved(KoCanvasController*)), this, SLOT(detachCanvas(KoCanvasController*)));
-    connect(controller->proxyObject, SIGNAL(canvasSet(KoCanvasController*)), this, SLOT(attachCanvas(KoCanvasController*)));
+    connect(controller->proxyObject, &QObject::destroyed, this, &KoToolManager::attemptCanvasControllerRemoval);
+    connect(controller->proxyObject, &KoCanvasControllerProxyObject::canvasRemoved,
+            this, [this](KoCanvasController* c)
+    {
+        d->detachCanvas(c);
+    });
+    connect(controller->proxyObject, &KoCanvasControllerProxyObject::canvasSet,
+            this, [this](KoCanvasController* c)
+    {
+        d->attachCanvas(c);
+    });
 }
 
 void KoToolManager::removeCanvasController(KoCanvasController *controller)
 {
     Q_ASSERT(controller);
-    disconnect(controller->proxyObject, SIGNAL(canvasRemoved(KoCanvasController*)), this, SLOT(detachCanvas(KoCanvasController*)));
-    disconnect(controller->proxyObject, SIGNAL(canvasSet(KoCanvasController*)), this, SLOT(attachCanvas(KoCanvasController*)));
+    disconnect(controller->proxyObject, &KoCanvasControllerProxyObject::canvasRemoved, this, nullptr);
+    disconnect(controller->proxyObject, &KoCanvasControllerProxyObject::canvasSet, this, nullptr);
     d->detachCanvas(controller);
 }
 
@@ -1241,7 +1251,11 @@ void KoToolManager::addDeferredToolFactory(KoToolFactoryBase *toolFactory)
     d->tools.append(tool);
 
     // connect to all tools so we can hear their button-clicks
-    connect(tool, SIGNAL(toolActivated(ToolHelper*)), this, SLOT(toolActivated(ToolHelper*)));
+    connect(tool, &ToolHelper::toolActivated,
+            this, [this](ToolHelper *helper)
+    {
+        d->toolActivated(helper);
+    });
 
     // now create tools for all existing canvases
     foreach(KoCanvasController *controller, d->canvasses.keys())
@@ -1341,4 +1355,4 @@ KoToolManager::Private *KoToolManager::priv()
 }
 
 //have to include this because of Q_PRIVATE_SLOT
-//#include "moc_KoToolManager.cpp"
+#include "moc_KoToolManager.cpp"

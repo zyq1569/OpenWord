@@ -1,22 +1,9 @@
 /* This file is part of the KDE project
- * Copyright (C) 2007, 2009 Thomas Zander <zander@kde.org>
- * Copyright (C) 2011 Matus Hanzes <matus.hanzes@ixonos.com>
- * Copyright (C) 2013 C. Boemann <cbo@boemann.dk>
+ * SPDX-FileCopyrightText: 2007, 2009 Thomas Zander <zander@kde.org>
+ * SPDX-FileCopyrightText: 2011 Matus Hanzes <matus.hanzes@ixonos.com>
+ * SPDX-FileCopyrightText: 2013 C. Boemann <cbo@boemann.dk>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
- *
- * You should have received a copy of the GNU Library General Public License
- * along with this library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: LGPL-2.0-or-later
  */
 #ifndef KOSHAPEANCHOR_H
 #define KOSHAPEANCHOR_H
@@ -67,10 +54,11 @@ public:
     /**
     * This class is an interface that positions the shape linked to text anchor
     */
-    class PlacementStrategy {
+    class PlacementStrategy
+    {
     public:
-        PlacementStrategy(){};
-        virtual ~PlacementStrategy(){};
+        PlacementStrategy() {};
+        virtual ~PlacementStrategy() {};
 
         /**
          * Reparent the anchored shape to not have a parent shape container (and model)
@@ -87,15 +75,17 @@ public:
         virtual void updateContainerModel() = 0;
     };
 
-    class TextLocation {
+    class TextLocation
+    {
     public:
-        TextLocation(){};
-        virtual ~TextLocation(){};
+        TextLocation() {};
+        virtual ~TextLocation() {};
         virtual const QTextDocument *document() const = 0;
         virtual int position() const = 0;
     };
 
-    enum HorizontalPos {
+    enum HorizontalPos
+    {
         HCenter,
         HFromInside,
         HFromLeft,
@@ -105,7 +95,8 @@ public:
         HRight
     };
 
-    enum HorizontalRel { //NOTE: update KWAnchoringProperties if you change this
+    enum HorizontalRel   //NOTE: update KWAnchoringProperties if you change this
+    {
         HChar,
         HPage,
         HPageContent,
@@ -121,7 +112,8 @@ public:
         HParagraphStartMargin
     };
 
-    enum VerticalPos {
+    enum VerticalPos
+    {
         VBelow,
         VBottom,
         VFromTop,
@@ -129,7 +121,8 @@ public:
         VTop
     };
 
-    enum VerticalRel { //NOTE: update KWAnchoringProperties if you change this
+    enum VerticalRel   //NOTE: update KWAnchoringProperties if you change this
+    {
         VBaseline,
         VChar,
         VFrame,
@@ -142,7 +135,8 @@ public:
         VText
     };
 
-    enum AnchorType {
+    enum AnchorType
+    {
         AnchorAsCharacter,
         AnchorToCharacter,
         AnchorParagraph,

@@ -40,9 +40,9 @@ class KoHatchBackgroundPrivate : public KoColorBackgroundPrivate
 {
 public:
     KoHatchBackgroundPrivate()
-    : angle(0.0)
-    , distance(1.0)
-    , style(KoHatchBackground::Single)
+        : angle(0.0)
+        , distance(1.0)
+        , style(KoHatchBackground::Single)
     {}
 
     QColor lineColor;
@@ -60,7 +60,8 @@ KoHatchBackground::KoHatchBackground()
 void KoHatchBackground::paint(QPainter &painter, const KoViewConverter &converter, KoShapePaintingContext &context, const QPainterPath &fillPath) const
 {
     Q_D(const KoHatchBackground);
-    if (d->color.isValid()) {
+    if (d->color.isValid())
+    {
         // paint background color if set by using the color background
         KoColorBackground::paint(painter, converter, context, fillPath);
     }
@@ -82,11 +83,13 @@ void KoHatchBackground::paint(QPainter &painter, const KoViewConverter &converte
     // The number of loops is defined by the style.
     int loops = (d->style == Single) ? 1 : (d->style == Double) ? 2 : 3;
 
-    for (int i = 0; i < loops; ++i) {
+    for (int i = 0; i < loops; ++i)
+    {
         int angle = d->angle - angleOffset[i];
         qreal cosAngle = ::cos(angle/180.0*M_PI);
         // if cos is nearly 0 the lines are horizontal. Use a special case for that
-        if (qAbs(cosAngle) > 0.00001) {
+        if (qAbs(cosAngle) > 0.00001)
+        {
             qreal xDiff = tan(angle/180.0*M_PI) * targetRect.height();
             // calculate the distance we need to increase x when creating the lines so that the
             // distance between the lines is also correct for rotated lines.
@@ -94,27 +97,33 @@ void KoHatchBackground::paint(QPainter &painter, const KoViewConverter &converte
 
             // if the lines go to the right we need to start more to the left. Get the correct start.
             qreal xStart = 0;
-            while (-xDiff < xStart) {
+            while (-xDiff < xStart)
+            {
                 xStart -= xOffset;
             }
 
             // if the lines go to the left we need to stop more at the right. Get the correct end offset
             qreal xEndOffset = 0;
-            if (xDiff < 0) {
-                while (xDiff < -xEndOffset) {
+            if (xDiff < 0)
+            {
+                while (xDiff < -xEndOffset)
+                {
                     xEndOffset += xOffset;
                 }
             }
             // create line objects.
             lines.reserve(lines.size() + int((targetRect.width() + xEndOffset - xStart) / xOffset) + 1);
-            for (qreal x = xStart; x < targetRect.width() + xEndOffset; x += xOffset) {
+            for (qreal x = xStart; x < targetRect.width() + xEndOffset; x += xOffset)
+            {
                 lines.append(QLineF(x, 0, x + xDiff, targetRect.height()));
             }
         }
-        else {
+        else
+        {
             // horizontal lines
             lines.reserve(lines.size() + int(targetRect.height()/d->distance) + 1);
-            for (qreal y = 0; y < targetRect.height(); y += d->distance) {
+            for (qreal y = 0; y < targetRect.height(); y += d->distance)
+            {
                 lines.append(QLineF(0, y, targetRect.width(), y));
             }
         }
@@ -130,14 +139,15 @@ void KoHatchBackground::fillStyle(KoGenStyle &style, KoShapeSavingContext &conte
 
     KoGenStyle::Type type = style.type();
     KoGenStyle::PropertyType propertyType = (type == KoGenStyle::GraphicStyle || type == KoGenStyle::GraphicAutoStyle ||
-                                             type == KoGenStyle::DrawingPageStyle || type == KoGenStyle::DrawingPageAutoStyle )
+                                            type == KoGenStyle::DrawingPageStyle || type == KoGenStyle::DrawingPageAutoStyle )
                                             ? KoGenStyle::DefaultType : KoGenStyle::GraphicType;
 
     style.addProperty("draw:fill", "hatch", propertyType);
     style.addProperty("draw:fill-hatch-name", saveHatchStyle(context), propertyType);
     bool fillHatchSolid = d->color.isValid();
     style.addProperty("draw:fill-hatch-solid", fillHatchSolid, propertyType);
-    if (fillHatchSolid) {
+    if (fillHatchSolid)
+    {
         style.addProperty("draw:fill-color", d->color.name(), propertyType);
     }
 }
@@ -153,16 +163,17 @@ QString KoHatchBackground::saveHatchStyle(KoShapeSavingContext &context) const
 
     hatchStyle.addAttribute("draw:rotation", QString("%1").arg(d->angle * 10));
 
-    switch (d->style) {
-    case Single:
-        hatchStyle.addAttribute("draw:style", "single");
-        break;
-    case Double:
-        hatchStyle.addAttribute("draw:style", "double");
-        break;
-    case Triple:
-        hatchStyle.addAttribute("draw:style", "triple");
-        break;
+    switch (d->style)
+    {
+        case Single:
+            hatchStyle.addAttribute("draw:style", "single");
+            break;
+        case Double:
+            hatchStyle.addAttribute("draw:style", "double");
+            break;
+        case Triple:
+            hatchStyle.addAttribute("draw:style", "triple");
+            break;
     }
 
     return context.mainStyles().insert(hatchStyle, "hatch");
@@ -176,19 +187,23 @@ bool KoHatchBackground::loadStyle(KoOdfLoadingContext &context, const QSizeF &sh
 
     KoStyleStack &styleStack = context.styleStack();
     QString fillStyle = styleStack.property(KoXmlNS::draw, "fill");
-    if (fillStyle == "hatch") {
+    if (fillStyle == "hatch")
+    {
         QString style = styleStack.property(KoXmlNS::draw, "fill-hatch-name");
         debugFlake << " hatch style is  :" << style;
 
         KoXmlElement* draw = context.stylesReader().drawStyles("hatch").value(style);
-        if (draw) {
+        if (draw)
+        {
             debugFlake << "Hatch style found for:" << style;
 
             QString angle = draw->attributeNS(KoXmlNS::draw, "rotation", QString("0"));
-            if (angle.at(angle.size()-1).isLetter()) {
+            if (angle.at(angle.size()-1).isLetter())
+            {
                 d->angle = KoUnit::parseAngle(angle);
             }
-            else {
+            else
+            {
                 // OO saves the angle value without unit and multiplied by a factor of 10
                 d->angle = int(angle.toInt() / 10);
             }
@@ -197,32 +212,39 @@ bool KoHatchBackground::loadStyle(KoOdfLoadingContext &context, const QSizeF &sh
 
             d->name = draw->attributeNS(KoXmlNS::draw, "display-name");
 
-            // use 2mm as default, just in case it is not given in a document so we show something sensible. 
+            // use 2mm as default, just in case it is not given in a document so we show something sensible.
             d->distance = KoUnit::parseValue(draw->attributeNS(KoXmlNS::draw, "distance", "2mm"));
 
             bool fillHatchSolid = styleStack.property(KoXmlNS::draw, "fill-hatch-solid") == QLatin1String("true");
-            if (fillHatchSolid) {
+            if (fillHatchSolid)
+            {
                 QString fillColor = styleStack.property(KoXmlNS::draw, "fill-color");
-                if (!fillColor.isEmpty()) {
+                if (!fillColor.isEmpty())
+                {
                     d->color.setNamedColor(fillColor);
                 }
-                else {
+                else
+                {
                     d->color =QColor();
                 }
             }
-            else {
+            else
+            {
                 d->color = QColor();
             }
             d->lineColor.setNamedColor(draw->attributeNS(KoXmlNS::draw, "color", QString("#000000")));
 
             QString style = draw->attributeNS(KoXmlNS::draw, "style", QString());
-            if (style == "double") {
+            if (style == "double")
+            {
                 d->style = Double;
             }
-            else if (style == "triple") {
+            else if (style == "triple")
+            {
                 d->style = Triple;
             }
-            else {
+            else
+            {
                 d->style = Single;
             }
         }

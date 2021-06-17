@@ -38,10 +38,14 @@
 #include <KoEmbeddedDocumentSaver.h>
 #include "KoShapeSavingContext.h"
 
-class KoDragPrivate {
+class KoDragPrivate
+{
 public:
     KoDragPrivate() : mimeData(0) { }
-    ~KoDragPrivate() { delete mimeData; }
+    ~KoDragPrivate()
+    {
+        delete mimeData;
+    }
     QMimeData *mimeData;
 };
 
@@ -57,9 +61,11 @@ KoDrag::~KoDrag()
 
 bool KoDrag::setOdf(const char *mimeType, KoDragOdfSaveHelper &helper)
 {
-    struct Finally {
+    struct Finally
+    {
         Finally(KoStore *s) : store(s) { }
-        ~Finally() {
+        ~Finally()
+        {
             delete store;
         }
         KoStore *store;
@@ -77,7 +83,8 @@ bool KoDrag::setOdf(const char *mimeType, KoDragOdfSaveHelper &helper)
     KoXmlWriter *manifestWriter = odfStore.manifestWriter(mimeType);
     KoXmlWriter *contentWriter = odfStore.contentWriter();
 
-    if (!contentWriter) {
+    if (!contentWriter)
+    {
         return false;
     }
 
@@ -85,7 +92,8 @@ bool KoDrag::setOdf(const char *mimeType, KoDragOdfSaveHelper &helper)
     KoXmlWriter *bodyWriter = odfStore.bodyWriter();
     KoShapeSavingContext *context = helper.context(bodyWriter, mainStyles, embeddedSaver);
 
-    if (!helper.writeBody()) {
+    if (!helper.writeBody())
+    {
         return false;
     }
 
@@ -97,24 +105,28 @@ bool KoDrag::setOdf(const char *mimeType, KoDragOdfSaveHelper &helper)
     manifestWriter->addManifestEntry("content.xml", "text/xml");
 
 
-    if (!mainStyles.saveOdfStylesDotXml(store, manifestWriter)) {
+    if (!mainStyles.saveOdfStylesDotXml(store, manifestWriter))
+    {
         return false;
     }
 
-    if (!context->saveDataCenter(store, manifestWriter)) {
+    if (!context->saveDataCenter(store, manifestWriter))
+    {
         debugFlake << "save data centers failed";
         return false;
     }
 
     // Save embedded objects
     KoDocumentBase::SavingContext documentContext(odfStore, embeddedSaver);
-    if (!embeddedSaver.saveEmbeddedDocuments(documentContext)) {
+    if (!embeddedSaver.saveEmbeddedDocuments(documentContext))
+    {
         debugFlake << "save embedded documents failed";
         return false;
     }
 
     // Write out manifest file
-    if (!odfStore.closeManifestWriter()) {
+    if (!odfStore.closeManifestWriter())
+    {
         return false;
     }
 
@@ -127,7 +139,8 @@ bool KoDrag::setOdf(const char *mimeType, KoDragOdfSaveHelper &helper)
 
 void KoDrag::setData(const QString &mimeType, const QByteArray &data)
 {
-    if (d->mimeData == 0) {
+    if (d->mimeData == 0)
+    {
         d->mimeData = new QMimeData();
     }
     d->mimeData->setData(mimeType, data);
@@ -135,7 +148,8 @@ void KoDrag::setData(const QString &mimeType, const QByteArray &data)
 
 void KoDrag::addToClipboard()
 {
-    if (d->mimeData) {
+    if (d->mimeData)
+    {
         QApplication::clipboard()->setMimeData(d->mimeData);
         d->mimeData = 0;
     }

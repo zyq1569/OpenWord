@@ -36,7 +36,7 @@ public:
 };
 
 KoFilterEffectRenderContext::KoFilterEffectRenderContext(const KoViewConverter &converter)
-: d(new Private(converter))
+    : d(new Private(converter))
 {
 }
 

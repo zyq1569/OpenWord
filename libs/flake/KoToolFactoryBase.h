@@ -49,7 +49,7 @@ class QKeySequence;
  * };
  * K_PLUGIN_FACTORY_WITH_JSON((MyToolFactoryFactory, "mytool.json", registerPlugin<MyToolFactory>();)
  * </pre>
- * 
+ *
  */
 class FLAKE_EXPORT KoToolFactoryBase
 {
@@ -162,7 +162,8 @@ public:
      * @see toolType()
      * @see setToolType()
      */
-    static QString mainToolType() {
+    static QString mainToolType()
+    {
         return "main";
     }
     /**
@@ -174,7 +175,8 @@ public:
      * @see toolType()
      * @see setToolType()
      */
-    static QString navigationToolType() {
+    static QString navigationToolType()
+    {
         return "navigation";
     }
     /**
@@ -186,7 +188,8 @@ public:
      * @see toolType()
      * @see setToolType()
      */
-    static QString dynamicToolType() {
+    static QString dynamicToolType()
+    {
         return "dynamic";
     }
 

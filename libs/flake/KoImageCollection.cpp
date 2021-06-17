@@ -38,7 +38,9 @@ public:
     ~Private()
     {
         foreach(KoImageDataPrivate *id, images)
+        {
             id->collection = 0;
+        }
     }
 
     QMap<qint64, KoImageDataPrivate*> images;
@@ -48,7 +50,7 @@ public:
 
 KoImageCollection::KoImageCollection(QObject *parent)
     : QObject(parent),
-    d(new Private())
+      d(new Private())
 {
 }
 
@@ -71,35 +73,48 @@ bool KoImageCollection::completeSaving(KoStore *store, KoXmlWriter *manifestWrit
 
     QMap<qint64, KoImageDataPrivate *>::ConstIterator knownImagesIter(d->images.constBegin());
 
-    while (imagesToSaveIter != imagesToSave.constEnd()) {
-        if (knownImagesIter == d->images.constEnd()) {
+    while (imagesToSaveIter != imagesToSave.constEnd())
+    {
+        if (knownImagesIter == d->images.constEnd())
+        {
             // this should not happen
             warnFlake << "image not found";
             Q_ASSERT(0);
             break;
         }
-        else if (knownImagesIter.key() == imagesToSaveIter.key()) {
+        else if (knownImagesIter.key() == imagesToSaveIter.key())
+        {
             KoImageDataPrivate *imageData = knownImagesIter.value();
-            if (store->open(imagesToSaveIter.value())) {
+            if (store->open(imagesToSaveIter.value()))
+            {
                 KoStoreDevice device(store);
                 bool ok = imageData->saveData(device);
                 store->close();
                 // TODO error handling
-                if (ok) {
+                if (ok)
+                {
                     QMimeDatabase db;
                     const QString mimetype(db.mimeTypeForFile(imagesToSaveIter.value(), QMimeDatabase::MatchExtension).name());
                     manifestWriter->addManifestEntry(imagesToSaveIter.value(), mimetype);
-                } else {
+                }
+                else
+                {
                     warnFlake << "saving image" << imagesToSaveIter.value() << "failed";
                 }
-            } else {
+            }
+            else
+            {
                 warnFlake << "saving image failed: open store failed";
             }
             ++knownImagesIter;
             ++imagesToSaveIter;
-        } else if (knownImagesIter.key() < imagesToSaveIter.key()) {
+        }
+        else if (knownImagesIter.key() < imagesToSaveIter.key())
+        {
             ++knownImagesIter;
-        } else {
+        }
+        else
+        {
             // this should not happen
             warnFlake << "image not found";
             abort();
@@ -132,7 +147,9 @@ KoImageData *KoImageCollection::createImageData(const QString &href, KoStore *st
     //
     QByteArray storeKey = (QString::number((qint64) store) + href).toLatin1();
     if (d->storeImages.contains(storeKey))
+    {
         return new KoImageData(d->storeImages.value(storeKey));
+    }
 
     KoImageData *data = new KoImageData();
     data->setImage(href, store);
@@ -148,7 +165,9 @@ KoImageData *KoImageCollection::createImageData(const QByteArray &imageData)
     md5.addData(imageData);
     qint64 key = KoImageDataPrivate::generateKey(md5.result());
     if (d->images.contains(key))
+    {
         return new KoImageData(d->images.value(key));
+    }
     KoImageData *data = new KoImageData();
     data->setImage(imageData);
     data->priv()->collection = this;
@@ -160,11 +179,13 @@ KoImageData *KoImageCollection::createImageData(const QByteArray &imageData)
 KoImageData *KoImageCollection::cacheImage(KoImageData *data)
 {
     QMap<qint64, KoImageDataPrivate*>::const_iterator it(d->images.constFind(data->key()));
-    if (it == d->images.constEnd()) {
+    if (it == d->images.constEnd())
+    {
         d->images.insert(data->key(), data->priv());
         data->priv()->collection = this;
     }
-    else {
+    else
+    {
         delete data;
         data = new KoImageData(it.value());
     }
@@ -173,7 +194,8 @@ KoImageData *KoImageCollection::cacheImage(KoImageData *data)
 
 bool KoImageCollection::fillFromKey(KoImageData &idata, qint64 key)
 {
-    if (d->images.contains(key)) {
+    if (d->images.contains(key))
+    {
         idata = KoImageData(d->images.value(key));
         return true;
     }
@@ -192,10 +214,12 @@ int KoImageCollection::count() const
 
 void KoImageCollection::update(qint64 oldKey, qint64 newKey)
 {
-    if (oldKey == newKey) {
+    if (oldKey == newKey)
+    {
         return;
     }
-    if (d->images.contains(oldKey)) {
+    if (d->images.contains(oldKey))
+    {
         KoImageDataPrivate *imageData = d->images[oldKey];
         d->images.remove(oldKey);
         d->images.insert(newKey, imageData);

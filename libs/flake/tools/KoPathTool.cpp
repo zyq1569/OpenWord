@@ -1,23 +1,10 @@
 /* This file is part of the KDE project
- * Copyright (C) 2006-2012 Jan Hambrecht <jaham@gmx.net>
- * Copyright (C) 2006,2007 Thorsten Zachmann <zachmann@kde.org>
- * Copyright (C) 2007, 2010 Thomas Zander <zander@kde.org>
- * Copyright (C) 2007 Boudewijn Rempt <boud@valdyas.org>
+ * SPDX-FileCopyrightText: 2006-2012 Jan Hambrecht <jaham@gmx.net>
+ * SPDX-FileCopyrightText: 2006, 2007 Thorsten Zachmann <zachmann@kde.org>
+ * SPDX-FileCopyrightText: 2007, 2010 Thomas Zander <zander@kde.org>
+ * SPDX-FileCopyrightText: 2007 Boudewijn Rempt <boud@valdyas.org>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
- *
- * You should have received a copy of the GNU Library General Public License
- * along with this library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
 #include "KoPathTool.h"
@@ -124,56 +111,56 @@ KoPathTool::KoPathTool(KoCanvasBase *canvas)
 
     m_actionCurvePoint = new QAction(koIcon("format-node-curve"), i18n("Make curve point"), this);
     addAction("pathpoint-curve", m_actionCurvePoint);
-    connect(m_actionCurvePoint, SIGNAL(triggered()), this, SLOT(pointToCurve()));
+    connect(m_actionCurvePoint, &QAction::triggered, this, &KoPathTool::pointToCurve);
 
     m_actionLinePoint = new QAction(koIcon("format-node-line"), i18n("Make line point"), this);
     addAction("pathpoint-line", m_actionLinePoint);
-    connect(m_actionLinePoint, SIGNAL(triggered()), this, SLOT(pointToLine()));
+    connect(m_actionLinePoint, &QAction::triggered, this, &KoPathTool::pointToLine);
 
     m_actionLineSegment = new QAction(koIcon("format-segment-line"), i18n("Segment to Line"), this);
     m_actionLineSegment->setShortcut(Qt::Key_F);
     addAction("pathsegment-line", m_actionLineSegment);
-    connect(m_actionLineSegment, SIGNAL(triggered()), this, SLOT(segmentToLine()));
+    connect(m_actionLineSegment, &QAction::triggered, this, &KoPathTool::segmentToLine);
 
     m_actionCurveSegment = new QAction(koIcon("format-segment-curve"), i18n("Segment to Curve"), this);
     m_actionCurveSegment->setShortcut(Qt::Key_C);
     addAction("pathsegment-curve", m_actionCurveSegment);
-    connect(m_actionCurveSegment, SIGNAL(triggered()), this, SLOT(segmentToCurve()));
+    connect(m_actionCurveSegment, &QAction::triggered, this, &KoPathTool::segmentToCurve);
 
     m_actionAddPoint = new QAction(koIcon("format-insert-node"), i18n("Insert point"), this);
     addAction("pathpoint-insert", m_actionAddPoint);
     m_actionAddPoint->setShortcut(Qt::Key_Insert);
-    connect(m_actionAddPoint, SIGNAL(triggered()), this, SLOT(insertPoints()));
+    connect(m_actionAddPoint, &QAction::triggered, this, &KoPathTool::insertPoints);
 
     m_actionRemovePoint = new QAction(koIcon("format-remove-node"), i18n("Remove point"), this);
     m_actionRemovePoint->setShortcut(Qt::Key_Backspace);
     addAction("pathpoint-remove", m_actionRemovePoint);
-    connect(m_actionRemovePoint, SIGNAL(triggered()), this, SLOT(removePoints()));
+    connect(m_actionRemovePoint, &QAction::triggered, this, &KoPathTool::removePoints);
 
     m_actionBreakPoint = new QAction(koIcon("format-break-node"), i18n("Break at point"), this);
     addAction("path-break-point", m_actionBreakPoint);
-    connect(m_actionBreakPoint, SIGNAL(triggered()), this, SLOT(breakAtPoint()));
+    connect(m_actionBreakPoint, &QAction::triggered, this, &KoPathTool::breakAtPoint);
 
     m_actionBreakSegment = new QAction(koIcon("format-disconnect-node"), i18n("Break at segment"), this);
     addAction("path-break-segment", m_actionBreakSegment);
-    connect(m_actionBreakSegment, SIGNAL(triggered()), this, SLOT(breakAtSegment()));
+    connect(m_actionBreakSegment, &QAction::triggered, this, &KoPathTool::breakAtSegment);
 
     m_actionJoinSegment = new QAction(koIcon("format-connect-node"), i18n("Join with segment"), this);
     m_actionJoinSegment->setShortcut(Qt::Key_J);
     addAction("pathpoint-join", m_actionJoinSegment);
-    connect(m_actionJoinSegment, SIGNAL(triggered()), this, SLOT(joinPoints()));
+    connect(m_actionJoinSegment, &QAction::triggered, this, &KoPathTool::joinPoints);
 
     m_actionMergePoints = new QAction(koIcon("format-join-node"), i18n("Merge points"), this);
     addAction("pathpoint-merge", m_actionMergePoints);
-    connect(m_actionMergePoints, SIGNAL(triggered()), this, SLOT(mergePoints()));
+    connect(m_actionMergePoints, &QAction::triggered, this, &KoPathTool::mergePoints);
 
     m_actionConvertToPath = new QAction(koIcon("format-convert-to-path"), i18n("To Path"), this);
     m_actionConvertToPath->setShortcut(Qt::Key_P);
     addAction("convert-to-path", m_actionConvertToPath);
-    connect(m_actionConvertToPath, SIGNAL(triggered()), this, SLOT(convertToPath()));
+    connect(m_actionConvertToPath, &QAction::triggered, this, &KoPathTool::convertToPath);
 
-    connect(points, SIGNAL(triggered(QAction*)), this, SLOT(pointTypeChanged(QAction*)));
-    connect(&m_pointSelection, SIGNAL(selectionChanged()), this, SLOT(pointSelectionChanged()));
+    connect(points, &QActionGroup::triggered, this, &KoPathTool::pointTypeChanged);
+    connect(&m_pointSelection, &KoPathToolSelection::selectionChanged, this, &KoPathTool::pointSelectionChanged);
 
     QBitmap b = QBitmap::fromData(QSize(16, 16), needle_bits);
     QBitmap m = b.createHeuristicMask(false);
@@ -198,7 +185,7 @@ QList<QPointer<QWidget> >  KoPathTool::createOptionWidgets()
     QList<QPointer<QWidget> > list;
 
     PathToolOptionWidget * toolOptions = new PathToolOptionWidget(this);
-    connect(this, SIGNAL(typeChanged(int)), toolOptions, SLOT(setSelectionType(int)));
+    connect(this, &KoPathTool::typeChanged, toolOptions, &PathToolOptionWidget::setSelectionType);
     updateOptionsWidget();
     toolOptions->setWindowTitle(i18n("Line/Curve"));
     list.append(toolOptions);
@@ -849,7 +836,7 @@ void KoPathTool::activate(ToolActivation toolActivation, const QSet<KoShape*> &s
     }
     m_pointSelection.setSelectedShapes(selectedShapes);
     useCursor(m_selectCursor);
-    connect(d->canvas->shapeManager()->selection(), SIGNAL(selectionChanged()), this, SLOT(activate()));
+    connect(d->canvas->shapeManager()->selection(), &KoSelection::selectionChanged, this, QOverload<>::of(&KoPathTool::activate));
     updateOptionsWidget();
     updateActions();
 }
@@ -913,7 +900,7 @@ void KoPathTool::updateActions()
 void KoPathTool::deactivate()
 {
     Q_D(KoToolBase);
-    disconnect(d->canvas->shapeManager()->selection(), SIGNAL(selectionChanged()), this, SLOT(activate()));
+    disconnect(d->canvas->shapeManager()->selection(), &KoSelection::selectionChanged, this, QOverload<>::of(&KoPathTool::activate));
     m_pointSelection.clear();
     m_pointSelection.setSelectedShapes(QList<KoPathShape*>());
     delete m_activeHandle;
@@ -935,7 +922,7 @@ void KoPathTool::documentResourceChanged(int key, const QVariant & res)
         // repaint with the bigger of old and new handle radius
         int maxRadius = qMax(m_handleRadius, oldHandleRadius);
         foreach(KoPathShape *shape, m_pointSelection.selectedShapes()) {
-            QRectF controlPointRect = shape->absoluteTransformation(0).map(shape->outline()).controlPointRect();
+            QRectF controlPointRect = shape->absoluteTransformation(nullptr).map(shape->outline()).controlPointRect();
             repaint(controlPointRect.adjusted(-maxRadius, -maxRadius, maxRadius, maxRadius));
         }
     }
@@ -945,7 +932,7 @@ void KoPathTool::pointSelectionChanged()
 {
     Q_D(KoToolBase);
     updateActions();
-    d->canvas->snapGuide()->setIgnoredPathPoints(m_pointSelection.selectedPoints().toList());
+    d->canvas->snapGuide()->setIgnoredPathPoints(m_pointSelection.selectedPoints().values());
     emit selectionChanged(m_pointSelection.hasSelection());
 }
 

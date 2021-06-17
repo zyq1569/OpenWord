@@ -27,8 +27,8 @@ class Q_DECL_HIDDEN KoToolFactoryBase::Private
 {
 public:
     Private(const QString &i)
-            : priority(100),
-            id(i)
+        : priority(100),
+          id(i)
     {
     }
     int priority;
@@ -42,7 +42,7 @@ public:
 
 
 KoToolFactoryBase::KoToolFactoryBase(const QString &id)
-        : d(new Private(id))
+    : d(new Private(id))
 {
 }
 

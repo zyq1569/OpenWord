@@ -1,22 +1,9 @@
 /* This file is part of the KDE project
  *
- * Copyright (c) 2006, 2010 Boudewijn Rempt <boud@valdyas.org>
- * Copyright (C) 2006-2010 Thomas Zander <zander@kde.org>
+ * SPDX-FileCopyrightText: 2006, 2010 Boudewijn Rempt <boud@valdyas.org>
+ * SPDX-FileCopyrightText: 2006-2010 Thomas Zander <zander@kde.org>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
- *
- * You should have received a copy of the GNU Library General Public License
- * along with this library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: LGPL-2.0-or-later
  */
 #ifndef _KO_TOOL_PROXY_H_
 #define _KO_TOOL_PROXY_H_
@@ -25,14 +12,6 @@
 
 #include <QObject>
 #include <QHash>
-
-#include <QTimer>
-#include <QTime>
-#include <QPoint>
-class KoPointerEvent;
-class KoToolBase;
-class KoCanvasController;
-class KoToolProxy;
 
 class QAction;
 class QAction;
@@ -51,7 +30,7 @@ class QDragLeaveEvent;
 class QDropEvent;
 class QTouchEvent;
 class QPainter;
-//class QPointF;
+class QPointF;
 
 /**
  * Tool proxy object which allows an application to address the current tool.
@@ -198,41 +177,4 @@ private:
     KoToolProxyPrivate * const d;
 };
 
-
-class KoToolProxyPrivate
-{
-public:
-    explicit KoToolProxyPrivate(KoToolProxy *p);
-
-    void timeout(); // Auto scroll the canvas
-
-    void checkAutoScroll(const KoPointerEvent &event);
-
-    void selectionChanged(bool newSelection);
-
-    bool isActiveLayerEditable();
-
-    /// the toolManager tells us which KoCanvasController this toolProxy is working for.
-    void setCanvasController(KoCanvasController *controller);
-
-    KoToolBase *activeTool;
-    bool tabletPressed;
-    bool hasSelection;
-    QTimer scrollTimer;
-    QPoint widgetScrollPoint;
-    KoCanvasController *controller;
-    KoToolProxy *parent;
-
-    // used to determine if the mouse-release is after a drag or a simple click
-    QPoint mouseDownPoint;
-
-    // up until at least 4.3.0 we get a mouse move event when the tablet leaves the canvas.
-    bool mouseLeaveWorkaround;
-
-    // for multi clicking (double click or triple click) we need the following
-    int multiClickCount;
-    Qt::MouseButton multiClickButton;
-    QPointF multiClickGlobalPoint;
-    QTime multiClickTimeStamp;
-};
 #endif // _KO_TOOL_PROXY_H_

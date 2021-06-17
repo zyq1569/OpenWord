@@ -51,7 +51,9 @@ public:
     ~Private()
     {
         if (deleteClipShapes)
+        {
             qDeleteAll(clipPathShapes);
+        }
     }
 
     QList<KoPathShape*> clipPathShapes;
@@ -59,14 +61,14 @@ public:
 };
 
 KoClipData::KoClipData(KoPathShape *clipPathShape)
-        : d(new Private())
+    : d(new Private())
 {
     Q_ASSERT(clipPathShape);
     d->clipPathShapes.append(clipPathShape);
 }
 
 KoClipData::KoClipData(const QList<KoPathShape*> &clipPathShapes)
-        : d(new Private())
+    : d(new Private())
 {
     Q_ASSERT(clipPathShapes.count());
     d->clipPathShapes = clipPathShapes;
@@ -91,7 +93,7 @@ class Q_DECL_HIDDEN KoClipPath::Private
 {
 public:
     Private(KoClipData *data)
-            : clipData(data)
+        : clipData(data)
     {}
 
     ~Private()
@@ -102,22 +104,31 @@ public:
     {
         QList<KoPathShape*> clipShapes = clipData->clipPathShapes();
         if (!clipShapes.count())
+        {
             return;
+        }
 
         initialShapeSize = clippedShape->outline().boundingRect().size();
         initialTransformToShape = clippedShape->absoluteTransformation(0).inverted();
 
         QTransform transformToShape = initialTransformToShape * scaleToPercent(initialShapeSize);
 
-        foreach(KoPathShape *path, clipShapes) {
+        foreach(KoPathShape *path, clipShapes)
+        {
             if (!path)
+            {
                 continue;
+            }
             // map clip path to shape coordinates of clipped shape
             QTransform m = path->absoluteTransformation(0) * transformToShape;
             if (clipPath.isEmpty())
+            {
                 clipPath = m.map(path->outline());
+            }
             else
+            {
                 clipPath |= m.map(path->outline());
+            }
         }
     }
 
@@ -128,7 +139,7 @@ public:
 };
 
 KoClipPath::KoClipPath(KoShape *clippedShape, KoClipData *clipData)
-        : d( new Private(clipData) )
+    : d( new Private(clipData) )
 {
     d->compileClipPath(clippedShape);
 }
@@ -152,18 +163,25 @@ void KoClipPath::applyClipping(KoShape *clippedShape, QPainter &painter, const K
 {
     QPainterPath clipPath;
     KoShape *shape = clippedShape;
-    while (shape) {
-        if (shape->clipPath()) {
+    while (shape)
+    {
+        if (shape->clipPath())
+        {
             QTransform m = scaleFromPercent(shape->outline().boundingRect().size()) * shape->absoluteTransformation(0);
             if (clipPath.isEmpty())
+            {
                 clipPath = m.map(shape->clipPath()->path());
+            }
             else
+            {
                 clipPath |= m.map(shape->clipPath()->path());
+            }
         }
         shape = shape->parent();
     }
 
-    if (!clipPath.isEmpty()) {
+    if (!clipPath.isEmpty())
+    {
         QTransform viewMatrix;
         qreal zoomX, zoomY;
         converter.zoom(&zoomX, &zoomY);
@@ -190,7 +208,9 @@ QList<KoPathShape*> KoClipPath::clipPathShapes() const
 QTransform KoClipPath::clipDataTransformation(KoShape *clippedShape) const
 {
     if (!clippedShape)
+    {
         return d->initialTransformToShape;
+    }
 
     // the current transformation of the clipped shape
     QTransform currentShapeTransform = clippedShape->absoluteTransformation(0);

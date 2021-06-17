@@ -1,23 +1,10 @@
 /*
-   Copyright (c) 2006 Boudewijn Rempt (boud@valdyas.org)
-   Copyright (C) 2007, 2010 Thomas Zander <zander@kde.org>
-   Copyright (c) 2008 Carlos Licea <carlos.licea@kdemail.net>
-   Copyright (c) 2011 Jan Hambrecht <jaham@gmx.net>
+   SPDX-FileCopyrightText: 2006 Boudewijn Rempt (boud@valdyas.org)
+   SPDX-FileCopyrightText: 2007, 2010 Thomas Zander <zander@kde.org>
+   SPDX-FileCopyrightText: 2008 Carlos Licea <carlos.licea@kdemail.net>
+   SPDX-FileCopyrightText: 2011 Jan Hambrecht <jaham@gmx.net>
 
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: LGPL-2.0-or-later
  */
 #include "KoDocumentResourceManager.h"
 
@@ -36,8 +23,8 @@ public:
 };
 
 KoDocumentResourceManager::KoDocumentResourceManager(QObject *parent)
-        : QObject(parent),
-        d(new Private())
+    : QObject(parent),
+      d(new Private())
 {
 }
 
@@ -119,7 +106,9 @@ void KoDocumentResourceManager::clearResource(int key)
 KUndo2Stack *KoDocumentResourceManager::undoStack() const
 {
     if (!hasResource(UndoStack))
+    {
         return 0;
+    }
     return static_cast<KUndo2Stack*>(resource(UndoStack).value<void*>());
 }
 
@@ -127,28 +116,36 @@ void KoDocumentResourceManager::setHandleRadius(int handleRadius)
 {
     // do not allow arbitrary small handles
     if (handleRadius < 3)
+    {
         handleRadius = 3;
+    }
     setResource(HandleRadius, QVariant(handleRadius));
 }
 
 int KoDocumentResourceManager::handleRadius() const
 {
     if (hasResource(HandleRadius))
+    {
         return intResource(HandleRadius);
+    }
     return 3; // default value.
 }
 void KoDocumentResourceManager::setGrabSensitivity(int grabSensitivity)
 {
     // do not allow arbitrary small grab sensitivity
     if (grabSensitivity < 3)
+    {
         grabSensitivity = 3;
+    }
     setResource(GrabSensitivity, QVariant(grabSensitivity));
 }
 
 int KoDocumentResourceManager::grabSensitivity() const
 {
     if (hasResource(GrabSensitivity))
+    {
         return intResource(GrabSensitivity);
+    }
     return 3; // default value
 }
 
@@ -183,7 +180,9 @@ void KoDocumentResourceManager::setUndoStack(KUndo2Stack *undoStack)
 KoImageCollection *KoDocumentResourceManager::imageCollection() const
 {
     if (!hasResource(ImageCollection))
+    {
         return 0;
+    }
     return static_cast<KoImageCollection*>(resource(ImageCollection).value<void*>());
 }
 
@@ -197,7 +196,9 @@ void KoDocumentResourceManager::setImageCollection(KoImageCollection *ic)
 KoDocumentBase *KoDocumentResourceManager::odfDocument() const
 {
     if (!hasResource(OdfDocument))
+    {
         return 0;
+    }
     return static_cast<KoDocumentBase*>(resource(OdfDocument).value<void*>());
 }
 
@@ -211,7 +212,9 @@ void KoDocumentResourceManager::setOdfDocument(KoDocumentBase *currentDocument)
 KoShapeController *KoDocumentResourceManager::shapeController() const
 {
     if (!hasResource(ShapeController))
+    {
         return 0;
+    }
     return resource(ShapeController).value<KoShapeController *>();
 }
 

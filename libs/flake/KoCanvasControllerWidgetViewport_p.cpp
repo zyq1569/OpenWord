@@ -46,12 +46,12 @@
 
 // ********** Viewport **********
 Viewport::Viewport(KoCanvasControllerWidget *parent)
-        : QWidget(parent)
-        , m_draggedShape(0)
-        , m_drawShadow(false)
-        , m_canvas(0)
-        , m_documentOffset(QPoint(0, 0))
-        , m_margin(0)
+    : QWidget(parent)
+    , m_draggedShape(0)
+    , m_drawShadow(false)
+    , m_canvas(0)
+    , m_documentOffset(QPoint(0, 0))
+    , m_margin(0)
 {
     setAutoFillBackground(true);
     setAcceptDrops(true);
@@ -61,15 +61,20 @@ Viewport::Viewport(KoCanvasControllerWidget *parent)
 
 void Viewport::setCanvas(QWidget *canvas)
 {
-    if (m_canvas) {
+    if (m_canvas)
+    {
         m_canvas->hide();
         delete m_canvas;
     }
     m_canvas = canvas;
-    if (!canvas) return;
+    if (!canvas)
+    {
+        return;
+    }
     m_canvas->setParent(this);
     m_canvas->show();
-    if (!m_canvas->minimumSize().isNull()) {
+    if (!m_canvas->minimumSize().isNull())
+    {
         m_documentSize = m_canvas->minimumSize();
     }
     resetLayout();
@@ -98,22 +103,30 @@ void Viewport::handleDragEnterEvent(QDragEnterEvent *event)
     // if not a canvas set then ignore this, makes it possible to assume
     // we have a canvas in all the support methods.
     if (!(m_parent->canvas() && m_parent->canvas()->canvasWidget()))
+    {
         return;
+    }
 
     // only allow dropping when active layer is editable
     KoSelection *selection = m_parent->canvas()->shapeManager()->selection();
     KoShapeLayer *activeLayer = selection->activeLayer();
     if (activeLayer && (!activeLayer->isEditable() || activeLayer->isGeometryProtected()))
+    {
         return;
+    }
 
     const QMimeData *data = event->mimeData();
     if (data->hasFormat(SHAPETEMPLATE_MIMETYPE) ||
-            data->hasFormat(SHAPEID_MIMETYPE)) {
+            data->hasFormat(SHAPEID_MIMETYPE))
+    {
         QByteArray itemData;
         bool isTemplate = true;
         if (data->hasFormat(SHAPETEMPLATE_MIMETYPE))
+        {
             itemData = data->data(SHAPETEMPLATE_MIMETYPE);
-        else {
+        }
+        else
+        {
             isTemplate = false;
             itemData = data->data(SHAPEID_MIMETYPE);
         }
@@ -122,7 +135,9 @@ void Viewport::handleDragEnterEvent(QDragEnterEvent *event)
         dataStream >> id;
         QString properties;
         if (isTemplate)
+        {
             dataStream >> properties;
+        }
 
         // and finally, there is a point.
         QPointF offset;
@@ -131,52 +146,68 @@ void Viewport::handleDragEnterEvent(QDragEnterEvent *event)
         // The rest of this method is mostly a copy paste from the KoCreateShapeStrategy
         // So, lets remove this again when Zagge adds his new class that does this kind of thing. (KoLoadSave)
         KoShapeFactoryBase *factory = KoShapeRegistry::instance()->value(id);
-        if (! factory) {
+        if (! factory)
+        {
             warnFlake << "Application requested a shape that is not registered '" <<
-            id << "', Ignoring";
+                      id << "', Ignoring";
             event->ignore();
             return;
         }
         event->setDropAction(Qt::CopyAction);
         event->accept();
 
-        if (isTemplate) {
+        if (isTemplate)
+        {
             KoProperties props;
             props.load(properties);
             m_draggedShape = factory->createShape(&props, m_parent->canvas()->shapeController()->resourceManager());
-        } else
+        }
+        else
+        {
             m_draggedShape = factory->createDefaultShape(m_parent->canvas()->shapeController()->resourceManager());
+        }
 
         Q_ASSERT(m_draggedShape);
-        if (!m_draggedShape) return;
+        if (!m_draggedShape)
+        {
+            return;
+        }
 
         if (m_draggedShape->shapeId().isEmpty())
+        {
             m_draggedShape->setShapeId(factory->id());
+        }
         m_draggedShape->setZIndex(KoShapePrivate::MaxZIndex);
         m_draggedShape->setAbsolutePosition(correctPosition(event->pos()));
 
         m_parent->canvas()->shapeManager()->addShape(m_draggedShape);
     }
-    else if (data->hasFormat(KoOdf::mimeType(KoOdf::Text))) {
+    else if (data->hasFormat(KoOdf::mimeType(KoOdf::Text)))
+    {
         KoShapeManager *sm = m_parent->canvas()->shapeManager();
         KoShapePaste paste(m_parent->canvas(), sm->selection()->activeLayer());
-        if (paste.paste(KoOdf::Text, data)) {
+        if (paste.paste(KoOdf::Text, data))
+        {
             QList<KoShape *> shapes = paste.pastedShapes();
-            if (shapes.count() == 1) {
+            if (shapes.count() == 1)
+            {
                 m_draggedShape = shapes.first();
                 m_draggedShape->setZIndex(KoShapePrivate::MaxZIndex);
                 event->setDropAction(Qt::CopyAction);
             }
             event->accept();
         }
-    } else {
+    }
+    else
+    {
         event->ignore();
     }
 }
 
 void Viewport::handleDropEvent(QDropEvent *event)
 {
-    if (!m_draggedShape) {
+    if (!m_draggedShape)
+    {
         m_parent->canvas()->toolProxy()->dropEvent(event, correctPosition(event->pos()));
         return;
     }
@@ -189,18 +220,24 @@ void Viewport::handleDropEvent(QDropEvent *event)
     m_parent->canvas()->clipToDocument(m_draggedShape, newPos); // ensure the shape is dropped inside the document.
     m_draggedShape->setAbsolutePosition(newPos);
     KUndo2Command * cmd = m_parent->canvas()->shapeController()->addShape(m_draggedShape);
-    if (cmd) {
+    if (cmd)
+    {
         m_parent->canvas()->addCommand(cmd);
         KoSelection *selection = m_parent->canvas()->shapeManager()->selection();
 
         // repaint selection before selecting newly create shape
         foreach(KoShape * shape, selection->selectedShapes())
+        {
             shape->update();
+        }
 
         selection->deselectAll();
         selection->select(m_draggedShape);
-    } else
+    }
+    else
+    {
         delete m_draggedShape;
+    }
 
     m_draggedShape = 0;
 }
@@ -216,7 +253,8 @@ QPointF Viewport::correctPosition(const QPoint &point) const
 
 void Viewport::handleDragMoveEvent(QDragMoveEvent *event)
 {
-    if (!m_draggedShape) {
+    if (!m_draggedShape)
+    {
         m_parent->canvas()->toolProxy()->dragMoveEvent(event, correctPosition(event->pos()));
         return;
     }
@@ -241,12 +279,15 @@ void Viewport::repaint(KoShape *shape)
 
 void Viewport::handleDragLeaveEvent(QDragLeaveEvent *event)
 {
-    if (m_draggedShape) {
+    if (m_draggedShape)
+    {
         repaint(m_draggedShape);
         m_parent->canvas()->shapeManager()->remove(m_draggedShape);
         delete m_draggedShape;
         m_draggedShape = 0;
-    } else {
+    }
+    else
+    {
         m_parent->canvas()->toolProxy()->dragLeaveEvent(event);
     }
 }
@@ -255,7 +296,8 @@ void Viewport::handlePaintEvent(QPainter &painter, QPaintEvent *event)
 {
     Q_UNUSED(event);
     // Draw the shadow around the canvas.
-    if (m_parent->canvas() && m_parent->canvas()->canvasWidget() && m_drawShadow) {
+    if (m_parent->canvas() && m_parent->canvas()->canvasWidget() && m_drawShadow)
+    {
         QWidget *canvas = m_parent->canvas()->canvasWidget();
         painter.setPen(QPen(Qt::black, 0));
         QRect rect(canvas->x(), canvas->y(), canvas->width(), canvas->height());
@@ -264,14 +306,15 @@ void Viewport::handlePaintEvent(QPainter &painter, QPaintEvent *event)
         painter.drawLine(rect.right() + 2, rect.top() + 2, rect.right() + 2, rect.bottom() + 2);
         painter.drawLine(rect.left() + 2, rect.bottom() + 2, rect.right() + 2, rect.bottom() + 2);
     }
-    if (m_draggedShape) {
+    if (m_draggedShape)
+    {
         const KoViewConverter *vc = m_parent->canvas()->viewConverter();
 
         painter.save();
         QWidget *canvasWidget = m_parent->canvas()->canvasWidget();
         Q_ASSERT(canvasWidget); // since we should not allow drag if there is not.
         painter.translate(canvasWidget->x() - m_documentOffset.x(),
-                canvasWidget->y() - m_documentOffset.y());
+                          canvasWidget->y() - m_documentOffset.y());
         QPointF offset = vc->documentToView(m_draggedShape->position());
         painter.setOpacity(0.6);
         painter.translate(offset.x(), offset.y());
@@ -304,17 +347,22 @@ void Viewport::resetLayout()
 //              << "viewW: " << viewW << endl
 //              << "docW: " << docW << endl;
 
-    if (viewH == docH && viewW == docW) {
+    if (viewH == docH && viewW == docW)
+    {
         // Do nothing
         resizeW = docW;
         resizeH = docH;
-    } else if (viewH > docH && viewW > docW) {
+    }
+    else if (viewH > docH && viewW > docW)
+    {
         // Show entire canvas centered
         moveX = (viewW - docW) / 2;
         moveY = (viewH - docH) / 2;
         resizeW = docW;
         resizeH = docH;
-    } else  if (viewW > docW) {
+    }
+    else  if (viewW > docW)
+    {
         // Center canvas horizontally
         moveX = (viewW - docW) / 2;
         resizeW = docW;
@@ -322,10 +370,21 @@ void Viewport::resetLayout()
         int marginTop = m_margin - m_documentOffset.y();
         int marginBottom = viewH  - (m_documentSize.height() - m_documentOffset.y());
 
-        if (marginTop > 0) moveY = marginTop;
-        if (marginTop > 0) resizeH = viewH - marginTop;
-        if (marginBottom > 0) resizeH = viewH - marginBottom;
-    } else  if (viewH > docH) {
+        if (marginTop > 0)
+        {
+            moveY = marginTop;
+        }
+        if (marginTop > 0)
+        {
+            resizeH = viewH - marginTop;
+        }
+        if (marginBottom > 0)
+        {
+            resizeH = viewH - marginBottom;
+        }
+    }
+    else  if (viewH > docH)
+    {
         // Center canvas vertically
         moveY = (viewH - docH) / 2;
         resizeH = docH;
@@ -333,47 +392,86 @@ void Viewport::resetLayout()
         int marginLeft = m_margin - m_documentOffset.x();
         int marginRight = viewW - (m_documentSize.width() - m_documentOffset.x());
 
-        if (marginLeft > 0) moveX = marginLeft;
-        if (marginLeft > 0) resizeW = viewW - marginLeft;
-        if (marginRight > 0) resizeW = viewW - marginRight;
-    } else {
+        if (marginLeft > 0)
+        {
+            moveX = marginLeft;
+        }
+        if (marginLeft > 0)
+        {
+            resizeW = viewW - marginLeft;
+        }
+        if (marginRight > 0)
+        {
+            resizeW = viewW - marginRight;
+        }
+    }
+    else
+    {
         // Take care of the margin around the canvas
         int marginTop = m_margin - m_documentOffset.y();
         int marginLeft = m_margin - m_documentOffset.x();
         int marginRight = viewW - (m_documentSize.width() - m_documentOffset.x());
         int marginBottom = viewH  - (m_documentSize.height() - m_documentOffset.y());
 
-        if (marginTop > 0) moveY = marginTop;
-        if (marginLeft > 0) moveX = marginLeft;
+        if (marginTop > 0)
+        {
+            moveY = marginTop;
+        }
+        if (marginLeft > 0)
+        {
+            moveX = marginLeft;
+        }
 
-        if (marginTop > 0) resizeH = viewH - marginTop;
-        if (marginLeft > 0) resizeW = viewW - marginLeft;
-        if (marginRight > 0) resizeW = viewW - marginRight;
-        if (marginBottom > 0) resizeH = viewH - marginBottom;
+        if (marginTop > 0)
+        {
+            resizeH = viewH - marginTop;
+        }
+        if (marginLeft > 0)
+        {
+            resizeW = viewW - marginLeft;
+        }
+        if (marginRight > 0)
+        {
+            resizeW = viewW - marginRight;
+        }
+        if (marginBottom > 0)
+        {
+            resizeH = viewH - marginBottom;
+        }
     }
-    if (m_parent->canvasMode() == KoCanvasController::AlignTop) {
+    if (m_parent->canvasMode() == KoCanvasController::AlignTop)
+    {
         // have up to m_margin pixels at top.
         moveY = qMin(m_margin, moveY);
     }
-    if (m_canvas) {
+    if (m_canvas)
+    {
         QRect geom;
         if (m_parent->canvasMode() == KoCanvasController::Infinite)
+        {
             geom = QRect(0, 0, viewW, viewH);
+        }
         else
+        {
             geom = QRect(moveX, moveY, resizeW, resizeH);
-        if (m_canvas->geometry() != geom) {
+        }
+        if (m_canvas->geometry() != geom)
+        {
             m_canvas->setGeometry(geom);
             m_canvas->update();
         }
     }
-    if (m_drawShadow) {
+    if (m_drawShadow)
+    {
         update();
     }
 
     emit sizeChanged();
 #if 0
-     debugFlake <<"View port geom:" << geometry();
-     if (m_canvas)
+    debugFlake <<"View port geom:" << geometry();
+    if (m_canvas)
+    {
         debugFlake <<"Canvas widget geom:" << m_canvas->geometry();
+    }
 #endif
 }

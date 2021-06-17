@@ -65,7 +65,9 @@ void KoFilterEffectLoadingContext::enableFilterPrimitiveUnitsConversion(bool ena
 QPointF KoFilterEffectLoadingContext::convertFilterUnits(const QPointF &value) const
 {
     if (!d->convertFilterUnits)
+    {
         return value;
+    }
 
     return QPointF(convertFilterUnitsX(value.x()), convertFilterUnitsY(value.y()));
 }
@@ -73,7 +75,9 @@ QPointF KoFilterEffectLoadingContext::convertFilterUnits(const QPointF &value) c
 qreal KoFilterEffectLoadingContext::convertFilterUnitsX(qreal value) const
 {
     if (!d->convertFilterUnits)
+    {
         return value;
+    }
 
     return value / d->shapeBound.width();
 }
@@ -81,7 +85,9 @@ qreal KoFilterEffectLoadingContext::convertFilterUnitsX(qreal value) const
 qreal KoFilterEffectLoadingContext::convertFilterUnitsY(qreal value) const
 {
     if (!d->convertFilterUnits)
+    {
         return value;
+    }
 
     return value / d->shapeBound.height();
 }
@@ -89,7 +95,9 @@ qreal KoFilterEffectLoadingContext::convertFilterUnitsY(qreal value) const
 QPointF KoFilterEffectLoadingContext::convertFilterPrimitiveUnits(const QPointF &value) const
 {
     if (!d->convertFilterPrimitiveUnits)
+    {
         return value;
+    }
 
     return QPointF(convertFilterPrimitiveUnitsX(value.x()), convertFilterPrimitiveUnitsY(value.y()));
 }
@@ -97,7 +105,9 @@ QPointF KoFilterEffectLoadingContext::convertFilterPrimitiveUnits(const QPointF 
 qreal KoFilterEffectLoadingContext::convertFilterPrimitiveUnitsX(qreal value) const
 {
     if (!d->convertFilterPrimitiveUnits)
+    {
         return value;
+    }
 
     return value / d->shapeBound.width();
 }
@@ -105,7 +115,9 @@ qreal KoFilterEffectLoadingContext::convertFilterPrimitiveUnitsX(qreal value) co
 qreal KoFilterEffectLoadingContext::convertFilterPrimitiveUnitsY(qreal value) const
 {
     if (!d->convertFilterPrimitiveUnits)
+    {
         return value;
+    }
 
     return value / d->shapeBound.height();
 }
@@ -114,12 +126,15 @@ QString KoFilterEffectLoadingContext::pathFromHref(const QString &href) const
 {
     QFileInfo info(href);
     if (! info.isRelative())
+    {
         return href;
+    }
 
     QFileInfo pathInfo(QFileInfo(d->basePath).filePath());
 
     QString relFile = href;
-    while (relFile.startsWith(QLatin1String("../"))) {
+    while (relFile.startsWith(QLatin1String("../")))
+    {
         relFile.remove(0, 3);
         pathInfo.setFile(pathInfo.dir(), QString());
     }

@@ -1,20 +1,7 @@
 /* This file is part of the KDE project
-   Copyright (C) 2006 Peter Simonsson <peter.simonsson@gmail.com>
+   SPDX-FileCopyrightText: 2006 Peter Simonsson <peter.simonsson@gmail.com>
 
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #ifndef KODOCKFACTORY_H
@@ -33,8 +20,7 @@ class QString;
 class FLAKE_EXPORT KoDockFactoryBase
 {
 public:
-    enum DockPosition
-    {
+    enum DockPosition {
         DockTornOff, ///< Floating as its own top level window
         DockTop,    ///< Above the central widget
         DockBottom, ///< Below the central widget
@@ -54,13 +40,11 @@ public:
 
     /// @return the dockers default visibility
     /// Default is true.
-    virtual bool defaultVisible() const
-    {
+    virtual bool defaultVisible() const {
         return true;
     }
     /// Returns true if the dock widget should get a collapsable header.
-    virtual bool isCollapsable() const
-    {
+    virtual bool isCollapsable() const {
         return true;
     }
 
@@ -68,8 +52,7 @@ public:
      * In case the docker is collapsable, returns true if the dock widget
      * will start collapsed by default.
      */
-    virtual bool defaultCollapsed() const
-    {
+    virtual bool defaultCollapsed() const {
         return false;
     }
 

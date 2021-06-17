@@ -1,22 +1,9 @@
 /* This file is part of the KDE project
- * Copyright (C) 2010 Thomas Zander <zander@kde.org>
- * Copyright (C) 2010 KO GmbH <boud@kogbmh.com>
- * Copyright (C) 2010 Thorsten Zachmann <zachmann@kde.org>
+ * SPDX-FileCopyrightText: 2010 Thomas Zander <zander@kde.org>
+ * SPDX-FileCopyrightText: 2010 KO GmbH <boud@kogbmh.com>
+ * SPDX-FileCopyrightText: 2010 Thorsten Zachmann <zachmann@kde.org>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
- *
- * You should have received a copy of the GNU Library General Public License
- * along with this library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
 #ifndef KOTOSCONTAINER_H
@@ -51,7 +38,8 @@ public:
     virtual void saveText(KoShapeSavingContext &context) const;
 
     /// different kinds of resizing behavior to determine how to treat text overflow
-    enum ResizeBehavior {
+    enum ResizeBehavior
+    {
         TextFollowsSize,  ///< Text area is same size as content, extra text will be clipped
         FollowTextSize,   ///< Content shape will get resized if text grows/shrinks
         IndependentSizes,  ///< The text can get bigger than the content

@@ -1,24 +1,11 @@
 /* This file is part of the KDE project
-   Copyright (C) 2006 C. Boemann Rasmussen <cbo@boemann.dk>
-   Copyright (C) 2006-2010 Thomas Zander <zander@kde.org>
-   Copyright (C) 2006-2010 Thorsten Zachmann <zachmann@kde.org>
-   Copyright (C) 2007-2009,2011 Jan Hambrecht <jaham@gmx.net>
-   CopyRight (C) 2010 Boudewijn Rempt <boud@kogmbh.com>
+   SPDX-FileCopyrightText: 2006 C. Boemann Rasmussen <cbo@boemann.dk>
+   SPDX-FileCopyrightText: 2006-2010 Thomas Zander <zander@kde.org>
+   SPDX-FileCopyrightText: 2006-2010 Thorsten Zachmann <zachmann@kde.org>
+   SPDX-FileCopyrightText: 2007-2009, 2011 Jan Hambrecht <jaham@gmx.net>
+   CopyRight SPDX-FileCopyrightText: 2010 Boudewijn Rempt <boud@kogmbh.com>
 
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include "KoShape.h"
@@ -1996,9 +1983,9 @@ KoShapeStrokeModel *KoShape::loadOdfStroke(const KoXmlElement &element, KoShapeL
 
         KoShapeStroke *stroke = new KoShapeStroke();
 
-        if (styleStack.hasProperty(KoXmlNS::calligra, "stroke-gradient"))   ///openword  KoXmlNS::calligra
+        if (styleStack.hasProperty(KoXmlNS::calligra, "stroke-gradient"))
         {
-            QString gradientName = styleStack.property(KoXmlNS::calligra, "stroke-gradient");  ///openword  KoXmlNS::calligra
+            QString gradientName = styleStack.property(KoXmlNS::calligra, "stroke-gradient");
             QBrush brush = KoOdfGraphicStyles::loadOdfGradientStyleByName(stylesReader, gradientName, size());
             stroke->setLineBrush(brush);
         }
@@ -2053,7 +2040,7 @@ KoShapeShadow *KoShapePrivate::loadOdfShadow(KoShapeLoadingContext &context) con
         qreal offsetX = KoUnit::parseValue(styleStack.property(KoXmlNS::draw, "shadow-offset-x"));
         qreal offsetY = KoUnit::parseValue(styleStack.property(KoXmlNS::draw, "shadow-offset-y"));
         shadow->setOffset(QPointF(offsetX, offsetY));
-        qreal blur = KoUnit::parseValue(styleStack.property(KoXmlNS::calligra, "shadow-blur-radius")); ///openword
+        qreal blur = KoUnit::parseValue(styleStack.property(KoXmlNS::calligra, "shadow-blur-radius"));
         shadow->setBlur(blur);
 
         QString opacity = styleStack.property(KoXmlNS::draw, "shadow-opacity");

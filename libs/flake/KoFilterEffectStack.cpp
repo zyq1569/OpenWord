@@ -30,7 +30,7 @@ class Q_DECL_HIDDEN KoFilterEffectStack::Private
 {
 public:
     Private()
-    : clipRect(-0.1, -0.1, 1.2, 1.2) // initialize as per svg spec
+        : clipRect(-0.1, -0.1, 1.2, 1.2) // initialize as per svg spec
     {
     }
 
@@ -45,7 +45,7 @@ public:
 };
 
 KoFilterEffectStack::KoFilterEffectStack()
-: d(new Private())
+    : d(new Private())
 {
 }
 
@@ -67,13 +67,17 @@ bool KoFilterEffectStack::isEmpty() const
 void KoFilterEffectStack::insertFilterEffect(int index, KoFilterEffect * filter)
 {
     if (filter)
+    {
         d->filterEffects.insert(index, filter);
+    }
 }
 
 void KoFilterEffectStack::appendFilterEffect(KoFilterEffect *filter)
 {
     if (filter)
+    {
         d->filterEffects.append(filter);
+    }
 }
 
 void KoFilterEffectStack::removeFilterEffect(int index)
@@ -85,7 +89,9 @@ void KoFilterEffectStack::removeFilterEffect(int index)
 KoFilterEffect* KoFilterEffectStack::takeFilterEffect(int index)
 {
     if (index >= d->filterEffects.size())
+    {
         return 0;
+    }
     return d->filterEffects.takeAt(index);
 }
 
@@ -134,7 +140,8 @@ void KoFilterEffectStack::save(KoXmlWriter &writer, const QString &filterId)
     writer.addAttribute("width", d->clipRect.width());
     writer.addAttribute("height", d->clipRect.height());
 
-    foreach(KoFilterEffect *effect, d->filterEffects) {
+    foreach(KoFilterEffect *effect, d->filterEffects)
+    {
         effect->save(writer);
     }
 
@@ -144,24 +151,32 @@ void KoFilterEffectStack::save(KoXmlWriter &writer, const QString &filterId)
 QSet<QString> KoFilterEffectStack::requiredStandarsInputs() const
 {
     static QSet<QString> stdInputs = QSet<QString>()
-        << "SourceGraphic"
-        << "SourceAlpha"
-        << "BackgroundImage"
-        << "BackgroundAlpha"
-        << "FillPaint"
-        << "StrokePaint";
+                                     << "SourceGraphic"
+                                     << "SourceAlpha"
+                                     << "BackgroundImage"
+                                     << "BackgroundAlpha"
+                                     << "FillPaint"
+                                     << "StrokePaint";
 
     QSet<QString> requiredInputs;
     if (isEmpty())
+    {
         return requiredInputs;
+    }
 
     if (d->filterEffects.first()->inputs().contains(""))
+    {
         requiredInputs.insert("SourceGraphic");
+    }
 
-    foreach(KoFilterEffect *effect, d->filterEffects) {
-        foreach(const QString &input, effect->inputs()) {
+    foreach(KoFilterEffect *effect, d->filterEffects)
+    {
+        foreach(const QString &input, effect->inputs())
+        {
             if (stdInputs.contains(input))
+            {
                 requiredInputs.insert(input);
+            }
         }
     }
 

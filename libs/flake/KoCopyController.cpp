@@ -1,21 +1,8 @@
 /* This file is part of the KDE project
- * Copyright (C) 2006-2008 Thomas Zander <zander@kde.org>
- * Copyright (C) 2011 Boudewijn Rempt <boud@valdyas.org>
+ * SPDX-FileCopyrightText: 2006-2008 Thomas Zander <zander@kde.org>
+ * SPDX-FileCopyrightText: 2011 Boudewijn Rempt <boud@valdyas.org>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
- *
- * You should have received a copy of the GNU Library General Public License
- * along with this library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
 #include "KoCopyController.h"
@@ -27,31 +14,12 @@
 
 #include <FlakeDebug.h>
 #include <QAction>
-
-//// KoCopyControllerPrivate
-//class KoCopyControllerPrivate
-//{
-//public:
-//    KoCopyControllerPrivate(KoCopyController *p, KoCanvasBase *c, QAction *a);
-
-//    // request to start the actual copy
-//    void copy();
-
-//    // request to start the actual cut
-//    void cut();
-
-//    void selectionChanged(bool hasSelection);
-
-//    KoCopyController *parent;
-//    KoCanvasBase *canvas;
-//    QAction *action;
-//    bool appHasSelection;
-//};
+#include "KoCopyController_p.h"
 
 KoCopyControllerPrivate::KoCopyControllerPrivate(KoCopyController *p, KoCanvasBase *c, QAction *a)
     : parent(p),
-    canvas(c),
-    action(a)
+      canvas(c),
+      action(a)
 {
     appHasSelection = false;
 }
@@ -60,17 +28,23 @@ void KoCopyControllerPrivate::copy()
 {
     if (canvas->toolProxy()->hasSelection())
         // means the copy can be done by a flake tool
+    {
         canvas->toolProxy()->copy();
+    }
     else // if not; then the application gets a request to do the copy
+    {
         emit parent->copyRequested();
+    }
 }
 
 void KoCopyControllerPrivate::cut()
 {
-    if (canvas->toolProxy()->hasSelection()) {
+    if (canvas->toolProxy()->hasSelection())
+    {
         canvas->toolProxy()->cut();
     }
-    else {
+    else
+    {
         emit parent->copyRequested();
     }
 }
@@ -84,10 +58,16 @@ void KoCopyControllerPrivate::selectionChanged(bool hasSelection)
 // KoCopyController
 KoCopyController::KoCopyController(KoCanvasBase *canvas, QAction *copyAction)
     : QObject(copyAction),
-    d(new KoCopyControllerPrivate(this, canvas, copyAction))
+      d(new KoCopyControllerPrivate(this, canvas, copyAction))
 {
-    connect(canvas->toolProxy(), SIGNAL(selectionChanged(bool)), this, SLOT(selectionChanged(bool)));
-    connect(copyAction, SIGNAL(triggered()), this, SLOT(copy()));
+    connect(canvas->toolProxy(), &KoToolProxy::selectionChanged, this, [this](bool v)
+    {
+        d->selectionChanged(v);
+    });
+    connect(copyAction, &QAction::triggered, this, [this]()
+    {
+        d->copy();
+    });
     hasSelection(false);
 }
 
@@ -104,4 +84,4 @@ void KoCopyController::hasSelection(bool selection)
 }
 
 //have to include this because of Q_PRIVATE_SLOT
-//#include "moc_KoCopyController.cpp"
+#include "moc_KoCopyController.cpp"

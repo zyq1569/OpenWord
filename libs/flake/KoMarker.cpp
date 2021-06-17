@@ -46,7 +46,7 @@ public:
 };
 
 KoMarker::KoMarker()
-: d(new Private())
+    : d(new Private())
 {
 }
 
@@ -64,7 +64,8 @@ bool KoMarker::loadOdf(const KoXmlElement &element, KoShapeLoadingContext &conte
     //<draw:marker draw:name="Arrowheads_20_1" draw:display-name="Arrowheads 1" svg:viewBox="0 0 10 10" svg:d="m0 0h10v10h-10z"/>
 
     d->d =element.attributeNS(KoXmlNS::svg, "d");
-    if (d->d.isEmpty()) {
+    if (d->d.isEmpty())
+    {
         return false;
     }
 
@@ -80,7 +81,8 @@ bool KoMarker::loadOdf(const KoXmlElement &element, KoShapeLoadingContext &conte
     d->viewBox = KoPathShape::loadOdfViewbox(element);
 
     QString displayName(element.attributeNS(KoXmlNS::draw, "display-name"));
-    if (displayName.isEmpty()) {
+    if (displayName.isEmpty())
+    {
         displayName = element.attributeNS(KoXmlNS::draw, "name");
     }
     d->name = displayName;
@@ -93,8 +95,8 @@ QString KoMarker::saveOdf(KoShapeSavingContext &context) const
     style.addAttribute("draw:display-name", d->name);
     style.addAttribute("svg:d", d->d);
     const QString viewBox = QString::fromLatin1("%1 %2 %3 %4")
-        .arg(d->viewBox.x()).arg(d->viewBox.y())
-        .arg(d->viewBox.width()).arg(d->viewBox.height());
+                            .arg(d->viewBox.x()).arg(d->viewBox.y())
+                            .arg(d->viewBox.width()).arg(d->viewBox.height());
     style.addAttribute(QLatin1String("svg:viewBox"), viewBox);
     QString name = QString(QUrl::toPercentEncoding(d->name, "", " ")).replace('%', '_');
     return context.mainStyles().insert(style, name, KoGenStyles::DontAddNumberToName);
@@ -107,7 +109,8 @@ QString KoMarker::name() const
 
 QPainterPath KoMarker::path(qreal width) const
 {
-    if (!d->viewBox.isValid() || width == 0) {
+    if (!d->viewBox.isValid() || width == 0)
+    {
         return QPainterPath();
     }
 

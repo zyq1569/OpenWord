@@ -1,26 +1,13 @@
 /* This file is part of the KDE project
  *
- * Copyright (C) 2006, 2008-2009 Thomas Zander <zander@kde.org>
- * Copyright (C) 2006 Peter Simonsson <peter.simonsson@gmail.com>
- * Copyright (C) 2006, 2009 Thorsten Zachmann <zachmann@kde.org>
- * Copyright (C) 2007-2010 Boudewijn Rempt <boud@valdyas.org>
- * Copyright (C) 2007 C. Boemann <cbo@boemann.dk>
- * Copyright (C) 2006-2008 Jan Hambrecht <jaham@gmx.net>
+ * SPDX-FileCopyrightText: 2006, 2008-2009 Thomas Zander <zander@kde.org>
+ * SPDX-FileCopyrightText: 2006 Peter Simonsson <peter.simonsson@gmail.com>
+ * SPDX-FileCopyrightText: 2006, 2009 Thorsten Zachmann <zachmann@kde.org>
+ * SPDX-FileCopyrightText: 2007-2010 Boudewijn Rempt <boud@valdyas.org>
+ * SPDX-FileCopyrightText: 2007 C. Boemann <cbo@boemann.dk>
+ * SPDX-FileCopyrightText: 2006-2008 Jan Hambrecht <jaham@gmx.net>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
- *
- * You should have received a copy of the GNU Library General Public License
- * along with this library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
 #include "KoCanvasControllerWidget.h"
@@ -219,16 +206,18 @@ KoCanvasControllerWidget::KoCanvasControllerWidget(KActionCollection * actionCol
     setMinimumSize(QSize(50, 50));
     setMouseTracking(true);
 
-    connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateCanvasOffsetX()));
-    connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateCanvasOffsetY()));
-    connect(d->viewportWidget, SIGNAL(sizeChanged()), this, SLOT(updateCanvasOffsetX()));
-    connect(proxyObject, SIGNAL(moveDocumentOffset(QPoint)), d->viewportWidget, SLOT(documentOffsetMoved(QPoint)));
+    connect(horizontalScrollBar(), &QAbstractSlider::valueChanged, this, &KoCanvasControllerWidget::updateCanvasOffsetX);
+    connect(verticalScrollBar(), &QAbstractSlider::valueChanged, this, &KoCanvasControllerWidget::updateCanvasOffsetY);
+    connect(d->viewportWidget, &Viewport::sizeChanged, this, &KoCanvasControllerWidget::updateCanvasOffsetX);
+    connect(proxyObject, &KoCanvasControllerProxyObject::moveDocumentOffset, d->viewportWidget, &Viewport::documentOffsetMoved);
 }
 
 KoCanvasControllerWidget::~KoCanvasControllerWidget()
 {
     d->viewportWidget->canvas()->removeEventFilter(this);
     d->unsetCanvas();
+    // The canvas may get a query after canvasController() has been deleted.
+    d->canvas->setCanvasController(nullptr);
     delete d;
 }
 
@@ -280,7 +269,7 @@ void KoCanvasControllerWidget::setCanvas(KoCanvasBase *canvas)
     changeCanvasWidget(canvas->canvasWidget());
 
     proxyObject->emitCanvasSet(this);
-    QTimer::singleShot(0, this, SLOT(activate()));
+    QTimer::singleShot(0, this, &KoCanvasControllerWidget::activate);
 
     setPreferredCenterFractionX(0);
     setPreferredCenterFractionY(0);
@@ -680,4 +669,4 @@ KoCanvasControllerWidget::Private *KoCanvasControllerWidget::priv()
 }
 
 //have to include this because of Q_PRIVATE_SLOT
-//#include "moc_KoCanvasControllerWidget.cpp"
+#include "moc_KoCanvasControllerWidget.cpp"

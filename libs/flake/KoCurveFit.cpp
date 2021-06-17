@@ -1,21 +1,8 @@
 /* This file is part of the KDE project
-   Copyright (C) 2001-2003 Rob Buis <buis@kde.org>
-   Copyright (C) 2007, 2009 Jan Hambrecht <jaham@gmx.net>
+   SPDX-FileCopyrightText: 2001-2003 Rob Buis <buis@kde.org>
+   SPDX-FileCopyrightText: 2007, 2009 Jan Hambrecht <jaham@gmx.net>
 
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include "KoCurveFit.h"
@@ -35,54 +22,67 @@ const qreal Zero = 10e-12;
     http://tog.acm.org/resources/GraphicsGems/gems/README
 */
 
-class FitVector {
+class FitVector
+{
 public:
-    FitVector(const QPointF &p) {
+    FitVector(const QPointF &p)
+    {
         m_X = p.x();
         m_Y = p.y();
     }
 
-    FitVector() {
+    FitVector()
+    {
         m_X = 0;
         m_Y = 0;
     }
 
-    FitVector(const QPointF &a, const QPointF &b) {
+    FitVector(const QPointF &a, const QPointF &b)
+    {
         m_X = a.x() - b.x();
         m_Y = a.y() - b.y();
     }
 
-    void normalize() {
+    void normalize()
+    {
         qreal len = length();
-        if (qFuzzyCompare(len, qreal(0.0))) {
+        if (qFuzzyCompare(len, qreal(0.0)))
+        {
             return;
         }
-        m_X /= len; m_Y /= len;
+        m_X /= len;
+        m_Y /= len;
     }
 
-    void negate() {
+    void negate()
+    {
         m_X = -m_X;
         m_Y = -m_Y;
     }
 
-    void scale(qreal s) {
+    void scale(qreal s)
+    {
         qreal len = length();
-        if (qFuzzyCompare(len, qreal(0.0))) {
+        if (qFuzzyCompare(len, qreal(0.0)))
+        {
             return;
         }
         m_X *= s / len;
         m_Y *= s / len;
     }
 
-    qreal dot(const FitVector &v) const {
+    qreal dot(const FitVector &v) const
+    {
         return ((m_X*v.m_X) + (m_Y*v.m_Y));
     }
 
-    qreal length() const {
+    qreal length() const
+    {
         return (qreal) sqrt(m_X*m_X + m_Y*m_Y);
     }
 
-    QPointF operator+(const QPointF &p) {
+    QPointF operator+(const QPointF &p)
+    {
         QPointF b(p.x() + m_X, p.y() + m_Y);
         return b;
     }
@@ -130,17 +130,20 @@ static qreal *ChordLengthParameterize(const QVector<QPointF> &points, int first,
     u = new qreal[(last-first+1)];
 
     u[0] = 0.0;
-    for (i = first + 1; i <= last; ++i) {
+    for (i = first + 1; i <= last; ++i)
+    {
         u[i-first] = u[i-first-1] +
                      distance(points.at(i), points.at(i - 1));
     }
 
     qreal denominator = u[last-first];
-    if (qFuzzyCompare(denominator, qreal(0.0))) {
+    if (qFuzzyCompare(denominator, qreal(0.0)))
+    {
         denominator = Zero;
     }
 
-    for (i = first + 1; i <= last; ++i) {
+    for (i = first + 1; i <= last; ++i)
+    {
         u[i-first] = u[i-first] / denominator;
     }
 
@@ -150,20 +153,23 @@ static qreal *ChordLengthParameterize(const QVector<QPointF> &points, int first,
 static FitVector VectorAdd(FitVector a, FitVector b)
 {
     FitVector   c;
-    c.m_X = a.m_X + b.m_X;  c.m_Y = a.m_Y + b.m_Y;
+    c.m_X = a.m_X + b.m_X;
+    c.m_Y = a.m_Y + b.m_Y;
     return (c);
 }
 static FitVector VectorScale(FitVector v, qreal s)
 {
     FitVector result;
-    result.m_X = v.m_X * s; result.m_Y = v.m_Y * s;
+    result.m_X = v.m_X * s;
+    result.m_Y = v.m_Y * s;
     return (result);
 }
 
 static FitVector VectorSub(FitVector a, FitVector b)
 {
     FitVector   c;
-    c.m_X = a.m_X - b.m_X; c.m_Y = a.m_Y - b.m_Y;
+    c.m_X = a.m_X - b.m_X;
+    c.m_Y = a.m_Y - b.m_Y;
     return (c);
 }
 
@@ -223,10 +229,10 @@ QPointF* GenerateBezier(const QVector<QPointF> &points, int first, int last, qre
     qreal   C[2][2];            /* Matrix C     */
     qreal   X[2];           /* Matrix X         */
     qreal   det_C0_C1,      /* Determinants of matrices */
-    det_C0_X,
-    det_X_C1;
+            det_C0_X,
+            det_X_C1;
     qreal   alpha_l,        /* Alpha values, left and right */
-    alpha_r;
+            alpha_r;
     FitVector   tmp;            /* Utility variable     */
     QPointF *curve;
 
@@ -238,7 +244,8 @@ QPointF* GenerateBezier(const QVector<QPointF> &points, int first, int last, qre
     QVector< QVector<FitVector> > A(nPts, QVector<FitVector>(2));
 
     /* Compute the A's  */
-    for (i = 0; i < nPts; ++i) {
+    for (i = 0; i < nPts; ++i)
+    {
         FitVector v1, v2;
         v1 = tHat1;
         v2 = tHat2;
@@ -256,7 +263,8 @@ QPointF* GenerateBezier(const QVector<QPointF> &points, int first, int last, qre
     X[0]    = 0.0;
     X[1]    = 0.0;
 
-    for (i = 0; i < nPts; ++i) {
+    for (i = 0; i < nPts; ++i)
+    {
         C[0][0] += (A[i][0]).dot(A[i][0]);
         C[0][1] += A[i][0].dot(A[i][1]);
         /* C[1][0] += V2Dot(&A[i][0], &A[i][1]);*/
@@ -287,9 +295,11 @@ QPointF* GenerateBezier(const QVector<QPointF> &points, int first, int last, qre
     det_X_C1  = X[0]    * C[1][1] - X[1]    * C[0][1];
 
     /* Finally, derive alpha values */
-    if (qFuzzyCompare(det_C0_C1, qreal(0.0))) {
+    if (qFuzzyCompare(det_C0_C1, qreal(0.0)))
+    {
         det_C0_C1 = (C[0][0] * C[1][1]) * 10e-12;
-        if (qFuzzyCompare(det_C0_C1, qreal(0.0))) {
+        if (qFuzzyCompare(det_C0_C1, qreal(0.0)))
+        {
             det_C0_C1 = Zero;
         }
     }
@@ -300,7 +310,8 @@ QPointF* GenerateBezier(const QVector<QPointF> &points, int first, int last, qre
     /*  If alpha negative, use the Wu/Barsky heuristic (see text) */
     /* (if alpha is 0, you get coincident control points that lead to
      * divide by zero in any subsequent NewtonRaphsonRootFind() call. */
-    if (alpha_l < 1.0e-6 || alpha_r < 1.0e-6) {
+    if (alpha_l < 1.0e-6 || alpha_r < 1.0e-6)
+    {
         qreal dist = distance(points.at(last), points.at(first)) / 3.0;
 
         curve[0] = points.at(first);
@@ -343,13 +354,16 @@ static QPointF BezierII(int degree, QPointF *V, qreal t)
 
     Vtemp = new QPointF[degree+1];
 
-    for (i = 0; i <= degree; ++i) {
+    for (i = 0; i <= degree; ++i)
+    {
         Vtemp[i] = V[i];
     }
 
     /* Triangle computation */
-    for (i = 1; i <= degree; ++i) {
-        for (j = 0; j <= degree - i; ++j) {
+    for (i = 1; i <= degree; ++i)
+    {
+        for (j = 0; j <= degree - i; ++j)
+        {
             Vtemp[j].setX((1.0 - t) * Vtemp[j].x() + t * Vtemp[j+1].x());
             Vtemp[j].setY((1.0 - t) * Vtemp[j].y() + t * Vtemp[j+1].y());
         }
@@ -375,11 +389,13 @@ static qreal ComputeMaxError(const QVector<QPointF> &points, int first, int last
 
     *splitPoint = (last - first + 1) / 2;
     maxDist = 0.0;
-    for (i = first + 1; i < last; ++i) {
+    for (i = first + 1; i < last; ++i)
+    {
         P = BezierII(3, curve, u[i-first]);
         v = VectorSub(P, points.at(i));
         dist = v.length();
-        if (dist >= maxDist) {
+        if (dist >= maxDist)
+        {
             maxDist = dist;
             *splitPoint = i;
         }
@@ -404,13 +420,15 @@ static qreal NewtonRaphsonRootFind(QPointF *Q, QPointF P, qreal u)
     Q_u = BezierII(3, Q, u);
 
     /* Generate control vertices for Q' */
-    for (i = 0; i <= 2; ++i) {
+    for (i = 0; i <= 2; ++i)
+    {
         Q1[i].setX((Q[i+1].x() - Q[i].x()) * 3.0);
         Q1[i].setY((Q[i+1].y() - Q[i].y()) * 3.0);
     }
 
     /* Generate control vertices for Q'' */
-    for (i = 0; i <= 1; ++i) {
+    for (i = 0; i <= 1; ++i)
+    {
         Q2[i].setX((Q1[i+1].x() - Q1[i].x()) * 2.0);
         Q2[i].setY((Q1[i+1].y() - Q1[i].y()) * 2.0);
     }
@@ -424,7 +442,8 @@ static qreal NewtonRaphsonRootFind(QPointF *Q, QPointF P, qreal u)
     denominator = (Q1_u.x()) * (Q1_u.x()) + (Q1_u.y()) * (Q1_u.y()) +
                   (Q_u.x() - P.x()) * (Q2_u.x()) + (Q_u.y() - P.y()) * (Q2_u.y());
 
-    if (qFuzzyCompare(denominator, qreal(0.0))) {
+    if (qFuzzyCompare(denominator, qreal(0.0)))
+    {
         denominator = Zero;
     }
 
@@ -446,7 +465,8 @@ static qreal *Reparameterize(const QVector<QPointF> &points, int first, int last
     qreal   *uPrime;        /*  New parameter values    */
 
     uPrime = new qreal[nPts];
-    for (i = first; i <= last; ++i) {
+    for (i = first; i <= last; ++i)
+    {
         uPrime[i-first] = NewtonRaphsonRootFind(curve, points.at(i), u[i-first]);
     }
     return (uPrime);
@@ -471,7 +491,8 @@ QPointF *FitCubic(const QVector<QPointF> &points, int first, int last, FitVector
     iterationError = error * error;
     nPts = last - first + 1;
 
-    if (nPts == 2) {
+    if (nPts == 2)
+    {
         qreal dist = distance(points.at(last), points.at(first)) / 3.0;
 
         curve = new QPointF[4];
@@ -496,7 +517,8 @@ QPointF *FitCubic(const QVector<QPointF> &points, int first, int last, FitVector
 
     /*  Find max deviation of points to fitted curve */
     maxError = ComputeMaxError(points, first, last, curve, u, &splitPoint);
-    if (maxError < error) {
+    if (maxError < error)
+    {
         delete[] u;
         width = 4;
         return curve;
@@ -505,14 +527,17 @@ QPointF *FitCubic(const QVector<QPointF> &points, int first, int last, FitVector
 
     /*  If error not too large, try some reparameterization  */
     /*  and iteration */
-    if (maxError < iterationError) {
-        for (i = 0; i < maxIterations; ++i) {
+    if (maxError < iterationError)
+    {
+        for (i = 0; i < maxIterations; ++i)
+        {
             uPrime = Reparameterize(points, first, last, u, curve);
             delete[] curve;
             curve = GenerateBezier(points, first, last, uPrime, tHat1, tHat2);
             maxError = ComputeMaxError(points, first, last,
                                        curve, uPrime, &splitPoint);
-            if (maxError < error) {
+            if (maxError < error)
+            {
                 delete[] u;
                 delete[] uPrime;
                 width = 4;
@@ -536,10 +561,12 @@ QPointF *FitCubic(const QVector<QPointF> &points, int first, int last, FitVector
     cu2 = FitCubic(points, splitPoint, last, tHatCenter, tHat2, error, w2);
 
     QPointF *newcurve = new QPointF[w1+w2];
-    for (int i = 0; i < w1; ++i) {
+    for (int i = 0; i < w1; ++i)
+    {
         newcurve[i] = cu1[i];
     }
-    for (int i = 0; i < w2; ++i) {
+    for (int i = 0; i < w2; ++i)
+    {
         newcurve[i+w1] = cu2[i];
     }
 
@@ -563,10 +590,12 @@ KoPathShape * bezierFit(const QVector<QPointF> &points, float error)
 
     KoPathShape * path = new KoPathShape();
 
-    if (width > 3) {
+    if (width > 3)
+    {
         path->moveTo(curve[0]);
         path->curveTo(curve[1], curve[2], curve[3]);
-        for (int i = 4; i < width; i += 4) {
+        for (int i = 4; i < width; i += 4)
+        {
             path->curveTo(curve[i+1], curve[i+2], curve[i+3]);
         }
     }

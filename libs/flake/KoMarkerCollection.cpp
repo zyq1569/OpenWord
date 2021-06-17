@@ -39,8 +39,8 @@ public:
 };
 
 KoMarkerCollection::KoMarkerCollection(QObject *parent)
-: QObject(parent)
-, d(new Private)
+    : QObject(parent)
+    , d(new Private)
 {
     // Add no marker so the user can remove a marker from the line.
     d->markers.append(QExplicitlySharedDataPointer<KoMarker>(0));
@@ -77,21 +77,25 @@ void KoMarkerCollection::loadDefaultMarkers()
     KoXmlDocument doc;
     QString filePath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "calligra/styles/markers.xml");
 
-    if (!filePath.isEmpty()) {
+    if (!filePath.isEmpty())
+    {
         QFile file(filePath);
         QString errorMessage;
-        if (KoOdfReadStore::loadAndParse(&file, doc, errorMessage, filePath)) {
+        if (KoOdfReadStore::loadAndParse(&file, doc, errorMessage, filePath))
+        {
             markerReader.createStyleMap(doc, true);
 
             QHash<QString, KoMarker*> lookupTable;
             const QHash<QString, KoXmlElement*> defaultMarkers = markerReader.drawStyles("marker");
             loadOdfMarkers(defaultMarkers, shapeContext, lookupTable);
         }
-        else {
+        else
+        {
             warnFlake << "reading of" << filePath << "failed:" << errorMessage;
         }
     }
-    else {
+    else
+    {
         debugFlake << "markers.xml not found";
     }
 }
@@ -99,17 +103,21 @@ void KoMarkerCollection::loadDefaultMarkers()
 void KoMarkerCollection::loadOdfMarkers(const QHash<QString, KoXmlElement*> &markers, KoShapeLoadingContext &context, QHash<QString, KoMarker*> &lookupTable)
 {
     QHash<QString, KoXmlElement*>::const_iterator it(markers.constBegin());
-    for (; it != markers.constEnd(); ++it) {
+    for (; it != markers.constEnd(); ++it)
+    {
         KoMarker *marker = new KoMarker();
-        if (marker->loadOdf(*(it.value()), context)) {
+        if (marker->loadOdf(*(it.value()), context))
+        {
             KoMarker *m = addMarker(marker);
             lookupTable.insert(it.key(), m);
             debugFlake << "loaded marker" << it.key() << marker << m;
-            if (m != marker) {
+            if (m != marker)
+            {
                 delete marker;
             }
         }
-        else {
+        else
+        {
             delete marker;
         }
     }
@@ -118,7 +126,8 @@ void KoMarkerCollection::loadOdfMarkers(const QHash<QString, KoXmlElement*> &mar
 QList<KoMarker*> KoMarkerCollection::markers() const
 {
     QMap<QString, KoMarker*> markerMap;
-    foreach (const QExplicitlySharedDataPointer<KoMarker>& m, d->markers) {
+    foreach (const QExplicitlySharedDataPointer<KoMarker>& m, d->markers)
+    {
         const auto name = m ? m->name() : QString();
         markerMap[name] = m.data();
     }
@@ -127,11 +136,14 @@ QList<KoMarker*> KoMarkerCollection::markers() const
 
 KoMarker * KoMarkerCollection::addMarker(KoMarker *marker)
 {
-    foreach (const QExplicitlySharedDataPointer<KoMarker>& m, d->markers) {
-        if (marker == m.data()) {
+    foreach (const QExplicitlySharedDataPointer<KoMarker>& m, d->markers)
+    {
+        if (marker == m.data())
+        {
             return marker;
         }
-        if (m && *marker == *m) {
+        if (m && *marker == *m)
+        {
             debugFlake << "marker is the same as other";
             return m.data();
         }
