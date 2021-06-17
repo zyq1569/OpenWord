@@ -251,7 +251,7 @@ public:
         }
         else
         {
-            ///open word ---> to find print file problem??? 20210424
+            ///open word ---> to find print file problem??? 20210424  解决打印PDF文件中图像丢失///
             const int progressPart = 45 / shapes.count();
             foreach(KoShape *shape, shapes)
             {
