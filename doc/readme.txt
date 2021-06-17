@@ -332,6 +332,7 @@ for (QMap<QString, QDockWidget*>::const_iterator i = d->dockWidgetsMap.constBegi
 }
 
 
+
 //选择图片的对话框  ------>
 KUndo2Command* addShape(KoShape *shape, bool showDialog, KUndo2Command *parent)
 
@@ -345,3 +346,32 @@ void PictureShapeLoadWaiter::setImageData(KJob *job)
 KoShape *KoShapeRegistry::Private::createShapeInternal(const KoXmlElement &fullElement,
         KoShapeLoadingContext &context,
         const KoXmlElement &element) const
+		
+		
+		
+###########代码错误修改bug
+// 解决doc docx文件导入的错误
+KoFilter* KoFilterEntry::createFilter(KoFilterChain* chain, QObject* parent)
+
+
+解决打印PDF文件中图像丢失 
+在void preparePage(const QVariant &page)中修改的20210424
+{
+
+....
+ ///open word ---> to find print file problem??? 20210424  解决打印PDF文件中图像丢失///
+            const int progressPart = 45 / shapes.count();
+            foreach(KoShape *shape, shapes)
+            {
+                debugMain << "Calling waitUntilReady on shape;" << shape;
+                if(! stop)
+                {
+                    ///set false:for error! {print or export PDF file: loss image! }
+                    shape->waitUntilReady(zoomer,false);
+                }
+                debugMain << "done";
+                updater->setProgress(updater->progress() + progressPart);
+            }
+			
+...
+}
