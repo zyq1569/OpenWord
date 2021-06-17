@@ -43,33 +43,35 @@
 
 class KoFontFamilyAction::KoFontFamilyActionPrivate
 {
-    public:
-        KoFontFamilyActionPrivate(KoFontFamilyAction *parent)
-            : q(parent),
-              settingFont(0)
+public:
+    KoFontFamilyActionPrivate(KoFontFamilyAction *parent)
+        : q(parent),
+          settingFont(0)
+    {
+    }
+
+    void _ko_slotFontChanged(const QFont &font)
+    {
+        debugTextShape << "KoFontComboBox - slotFontChanged("
+                       << font.family() << ") settingFont=" << settingFont;
+        if (settingFont)
         {
+            return;
         }
 
-        void _ko_slotFontChanged(const QFont &font)
-        {
-            debugTextShape << "KoFontComboBox - slotFontChanged("
-                        << font.family() << ") settingFont=" << settingFont;
-            if (settingFont)
-                return;
+        q->setFont(font.family());
+        q->triggered(font.family());
 
-            q->setFont(font.family());
-            q->triggered(font.family());
-
-            debugTextShape << "\tslotFontChanged done";
-        }
+        debugTextShape << "\tslotFontChanged done";
+    }
 
 
-        KoFontFamilyAction *q;
-        int settingFont;
+    KoFontFamilyAction *q;
+    int settingFont;
 };
 
 KoFontFamilyAction::KoFontFamilyAction(uint fontListCriteria, QObject *parent)
-  : KSelectAction(parent), d(new KoFontFamilyActionPrivate(this))
+    : KSelectAction(parent), d(new KoFontFamilyActionPrivate(this))
 {
     QStringList list;
     KFontChooser::getFontList( list, fontListCriteria );
@@ -78,7 +80,7 @@ KoFontFamilyAction::KoFontFamilyAction(uint fontListCriteria, QObject *parent)
 }
 
 KoFontFamilyAction::KoFontFamilyAction(QObject *parent)
-  : KSelectAction(parent), d(new KoFontFamilyActionPrivate(this))
+    : KSelectAction(parent), d(new KoFontFamilyActionPrivate(this))
 {
     QStringList list;
     KFontChooser::getFontList( list, 0 );
@@ -87,7 +89,7 @@ KoFontFamilyAction::KoFontFamilyAction(QObject *parent)
 }
 
 KoFontFamilyAction::KoFontFamilyAction(const QString & text, QObject *parent)
-  : KSelectAction(text, parent), d(new KoFontFamilyActionPrivate(this))
+    : KSelectAction(text, parent), d(new KoFontFamilyActionPrivate(this))
 {
     QStringList list;
     KFontChooser::getFontList( list, 0 );
@@ -96,7 +98,7 @@ KoFontFamilyAction::KoFontFamilyAction(const QString & text, QObject *parent)
 }
 
 KoFontFamilyAction::KoFontFamilyAction(const QIcon &icon, const QString &text, QObject *parent)
-  : KSelectAction(icon, text, parent), d(new KoFontFamilyActionPrivate(this))
+    : KSelectAction(icon, text, parent), d(new KoFontFamilyActionPrivate(this))
 {
     QStringList list;
     KFontChooser::getFontList( list, 0 );
@@ -152,7 +154,10 @@ void KoFontFamilyAction::setFont( const QString &family )
         KoFontComboBox *cb = qobject_cast<KoFontComboBox *>(w);
         debugTextShape << "\tw=" << w << "cb=" << cb;
 
-        if(!cb) continue;
+        if(!cb)
+        {
+            continue;
+        }
 
         cb->setCurrentFont(QFont(family.toLower()));
         debugTextShape << "\t\tw spit back=" << cb->currentFont().family();
@@ -164,20 +169,26 @@ void KoFontFamilyAction::setFont( const QString &family )
 
     QString lowerName = family.toLower();
     if (setCurrentAction(lowerName, Qt::CaseInsensitive))
-       return;
+    {
+        return;
+    }
 
     int i = lowerName.indexOf(" [");
     if (i > -1)
     {
-       lowerName = lowerName.left(i);
-       i = 0;
-       if (setCurrentAction(lowerName, Qt::CaseInsensitive))
-          return;
+        lowerName = lowerName.left(i);
+        i = 0;
+        if (setCurrentAction(lowerName, Qt::CaseInsensitive))
+        {
+            return;
+        }
     }
 
     lowerName += " [";
     if (setCurrentAction(lowerName, Qt::CaseInsensitive))
-      return;
+    {
+        return;
+    }
 
     // TODO: Inconsistent state if KFontComboBox::setCurrentFont() succeeded
     //       but setCurrentAction() did not and vice-versa.

@@ -19,15 +19,37 @@
 #ifndef AUTOCORRECTPLUGIN_H
 #define AUTOCORRECTPLUGIN_H
 
+#include <kpluginfactory.h>
+
 #include <QObject>
 #include <QVariant>
 
-class AutocorrectPlugin : public QObject {
+class AutocorrectPlugin : public QObject
+{
     Q_OBJECT
-
 public:
     AutocorrectPlugin(QObject * parent,  const QVariantList & );
-    ~AutocorrectPlugin() override {}
+    ~AutocorrectPlugin() override ;//{}
 };
+
+
+class AutocorrectPluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE  "calligra_textediting_autocorrect.json")
+public:
+    explicit AutocorrectPluginFactory();
+    ~AutocorrectPluginFactory();
+};
+
+//AutocorrectPluginFactory::AutocorrectPluginFactory()
+//{
+//    registerPlugin<AutocorrectPlugin>();
+//}
+//AutocorrectPluginFactory::~AutocorrectPluginFactory()
+//{
+
+//}
 
 #endif

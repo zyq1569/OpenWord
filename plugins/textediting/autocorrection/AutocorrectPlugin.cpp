@@ -20,18 +20,42 @@
 #include "AutocorrectPlugin.h"
 #include "AutocorrectFactory.h"
 
-#include <kpluginfactory.h>
+//#include <kpluginfactory.h>
 #include <kpluginloader.h>
 
 #include <KoTextEditingRegistry.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(AutocorrectPluginFactory, "calligra_textediting_autocorrect.json",
-                           registerPlugin<AutocorrectPlugin>(); )
+//K_PLUGIN_FACTORY_WITH_JSON(AutocorrectPluginFactory, "calligra_textediting_autocorrect.json",
+//                           registerPlugin<AutocorrectPlugin>(); )
+
+//class AutocorrectPluginFactory : public KPluginFactory
+//{
+//    Q_OBJECT
+//    Q_INTERFACES(KPluginFactory)
+//    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE  "calligra_textediting_autocorrect.json")
+//public:
+//    explicit AutocorrectPluginFactory();
+//    ~AutocorrectPluginFactory();
+//};
+
+AutocorrectPluginFactory::AutocorrectPluginFactory()
+{
+    registerPlugin<AutocorrectPlugin>();
+}
+AutocorrectPluginFactory::~AutocorrectPluginFactory()
+{
+
+}
+
 
 AutocorrectPlugin::AutocorrectPlugin( QObject *parent, const QVariantList& )
     : QObject(parent)
 {
     KoTextEditingRegistry::instance()->add( new AutocorrectFactory());
+}
+AutocorrectPlugin::~AutocorrectPlugin()
+{
+
 }
 
 //#include <AutocorrectPlugin.moc>
