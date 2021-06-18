@@ -45,7 +45,8 @@ class KoInteractionToolPrivate;
     public:
         MyTool::MyTool(KoCanvasBase *canvas) : KoInteractionTool( canvas ) { }
 
-        KoInteractionStrategy *MyTool::createStrategy(KoPointerEvent *event) {
+        KoInteractionStrategy *MyTool::createStrategy(KoPointerEvent *event)
+        {
             return new MyStrategy(this, m_canvas, event->point);
         }
     };

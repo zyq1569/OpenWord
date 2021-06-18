@@ -28,7 +28,7 @@ KoParameterChangeStrategy::KoParameterChangeStrategy(KoToolBase *tool, KoParamet
 }
 
 KoParameterChangeStrategy::KoParameterChangeStrategy(KoParameterChangeStrategyPrivate& dd)
-: KoInteractionStrategy(dd)
+    : KoInteractionStrategy(dd)
 {
 
 }
@@ -50,7 +50,8 @@ KUndo2Command* KoParameterChangeStrategy::createCommand()
     Q_D(KoParameterChangeStrategy);
     KoParameterHandleMoveCommand *cmd = 0;
     // check if handle position changed
-    if (d->startPoint != QPointF(0, 0) && d->startPoint != d->releasePoint) {
+    if (d->startPoint != QPointF(0, 0) && d->startPoint != d->releasePoint)
+    {
         cmd = new KoParameterHandleMoveCommand(d->parameterShape, d->handleId, d->startPoint, d->releasePoint, d->lastModifierUsed);
     }
     return cmd;

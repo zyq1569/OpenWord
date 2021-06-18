@@ -108,7 +108,10 @@ public:
     void copy() const override;
 
     /// reimplemented from KoUndoableTool
-    void setAddUndoCommandAllowed(bool allowed) override { m_allowAddUndoCommand = allowed; }
+    void setAddUndoCommandAllowed(bool allowed) override
+    {
+        m_allowAddUndoCommand = allowed;
+    }
 
     ///reimplemented
     void deleteSelection() override;
@@ -139,7 +142,9 @@ public:
     void inputMethodEvent(QInputMethodEvent * event) override;
 
 
-    /// The following two methods allow an undo/redo command to tell the tool, it will modify the QTextDocument and wants to be parent of the undo/redo commands resulting from these changes.
+    /// The following two methods allow an undo/redo command to tell the tool,
+    ///  it will modify the QTextDocument and wants to be parent of the
+    /// undo/redo commands resulting from these changes.
 
     void startEditing(KUndo2Command* command);
 
@@ -153,16 +158,22 @@ public:
 
 protected:
     virtual void createActions();
-    TextShape *textShape() {return m_textShape;}
+    TextShape *textShape()
+    {
+        return m_textShape;
+    }
 
     friend class SimpleParagraphWidget;
     friend class ParagraphSettingsDialog;
 
-    KoTextEditor *textEditor() { return m_textEditor.data(); }
+    KoTextEditor *textEditor()
+    {
+        return m_textEditor.data();
+    }
 
 public Q_SLOTS:
     /// Insert comment to document.
-     void insertAnnotation();
+    void insertAnnotation();
     /// start the textedit-plugin.
     void startTextEditingPlugin(const QString &pluginId);
     /// reimplemented from KoToolBase
