@@ -50,6 +50,10 @@ SUBDIRS    +=   log/easylog.pro \
                 libs/kross/kokross.pro \
                 extras/thumbnail/calligraimagethumbnail.pro \
                 extras/thumbnail/calligrathumbnail.pro \
+#                plugins/textediting/autocorrection/calligra_textediting_autocorrect.pro \
+#                plugins/textediting/changecase/calligra_textediting_changecase.pro \
+#                plugins/textediting/spellcheck/calligra_textediting_spellcheck.pro \
+#                plugins/textediting/thesaurus/calligra_textediting_thesaurus.pro \
                 words/app/calligrawords.pro
 #-------------------------------------------------
 #                karbon/karbonpart.pro \
@@ -81,10 +85,6 @@ SUBDIRS    +=   log/easylog.pro \
                 #filters/karbon/wmf/calligra_filter_wmf2svg.pro \
                 #filters/karbon/xfig/calligra_filter_xfig2odg.pro \
 #plugins/shapefiltereffects/calligra_filtereffects.pro \
-#plugins/textediting/autocorrection/calligra_textediting_autocorrect.pro \
-#plugins/textediting/changecase/calligra_textediting_changecase.pro \
-#plugins/textediting/spellcheck/calligra_textediting_spellcheck.pro \
-#plugins/textediting/thesaurus/calligra_textediting_thesaurus.pro \
 #plugins/variables/calligra_textinlineobject_variables.pro
                 #extras/properties/calligradocinfopropspage.pro \
                 #stage/plugins/eventactions/calligrastageeventactions.pro \
