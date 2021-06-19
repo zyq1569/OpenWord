@@ -97,6 +97,7 @@ KoFilter* KoFilterEntry::createFilter(KoFilterChain* chain, QObject* parent)
     if (!factory)
     {
         warnMain << m_loader->errorString();
+        ERROR_LOG("factory = 0; "+m_loader->fileName()+m_loader->errorString());
         return 0;
     }
 
