@@ -22,7 +22,8 @@ class KoConnectionShapePrivate;
 class FLAKE_EXPORT KoConnectionShape : public KoParameterShape
 {
 public:
-    enum Type {
+    enum Type
+    {
         Standard, ///< escapes connected shapes with straight lines, connects with perpendicular lines
         Lines,    ///< escapes connected shapes with straight lines, connects with straight line
         Straight, ///< one straight line between connected shapes
@@ -30,7 +31,8 @@ public:
     };
 
     // IDs of the connecting handles
-    enum HandleId {
+    enum HandleId
+    {
         StartHandle,
         EndHandle,
         ControlHandle_1,

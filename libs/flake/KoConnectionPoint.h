@@ -1,5 +1,5 @@
 /* This file is part of the KDE project
- * 
+ *
  * Copyright (C) 2011 Jan Hambrecht <jaham@gmx.net>
  *
  * This library is free software; you can redistribute it and/or
@@ -29,7 +29,8 @@
 struct FLAKE_EXPORT KoConnectionPoint
 {
     /// Default connection point ids
-    enum PointId {
+    enum PointId
+    {
         TopConnectionPoint = 0,         ///< default connection point on the middle of the top edge
         RightConnectionPoint = 1,       ///< default connection point on the middle of the right edge
         BottomConnectionPoint = 2,      ///< default connection point on the middle of the bottom edge
@@ -38,7 +39,8 @@ struct FLAKE_EXPORT KoConnectionPoint
     };
 
     /// Escape directions for connections connected to connection points
-    enum EscapeDirection {
+    enum EscapeDirection
+    {
         AllDirections,        ///< connection can escape in all directions
         HorizontalDirections, ///< connection can escape left and right
         VerticalDirections,   ///< connection can escape top and down
@@ -49,7 +51,8 @@ struct FLAKE_EXPORT KoConnectionPoint
     };
 
     /// Alignments for connection points for shape resizing
-    enum Alignment {
+    enum Alignment
+    {
         AlignNone,         ///< align to nothing
         AlignTopLeft,      ///< align to top and left edge
         AlignTop,          ///< align to top edge, centered
