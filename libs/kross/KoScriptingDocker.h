@@ -28,9 +28,10 @@
 #include <QPointer>
 #include <QMap>
 
-namespace Kross {
-    class Action;
-    class ActionCollectionView;
+namespace Kross
+{
+class Action;
+class ActionCollectionView;
 }
 
 class KoScriptingModule;

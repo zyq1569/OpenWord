@@ -29,9 +29,10 @@ class QRadioButton;
 class KPageWidgetItem;
 class KFileWidget;
 
-namespace Kross {
-    class ActionCollection;
-    class ActionCollectionEditor;
+namespace Kross
+{
+class ActionCollection;
+class ActionCollectionEditor;
 }
 
 /**
