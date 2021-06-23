@@ -44,7 +44,8 @@
 #include <QScrollBar>
 #include <KoMainWindow.h>
 
-static Qt::ArrowType sg_arrowType = Qt::ArrowType::NoArrow;
+//static Qt::ArrowType sg_arrowType = Qt::ArrowType::NoArrow;
+static QString sg_iconname = "none";
 KWGui::KWGui(const QString &viewMode, KWView *parent)
     : QWidget(parent),
       m_view(parent)
@@ -96,12 +97,13 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
     m_showtoolbox = new QToolButton();
     if (m_showtoolbox)
     {
-        m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
+        m_showtoolbox->setToolButtonStyle(Qt::ToolButtonStyle::ToolButtonIconOnly);
+        m_showtoolbox->setIcon(QIcon(":/images/right.png"));
         m_showtoolbox->setAutoRaise(true);
-        m_showtoolbox->setFixedSize(9,99);
+        m_showtoolbox->setFixedSize(9,120);
+        QSize size(12, 12);
+        m_showtoolbox->setIconSize(size);
         m_showtoolbox->setStyleSheet("QToolButton{background-color:rgb(105,105,105)}QToolButton:hover{background-color:rgb(97,225,248)}");
-        m_showtoolbox->setIconSize(QSize(50,50));
-        //m_showtoolbox->setToolTip("显示工具箱");
         gridLayout->addWidget(m_showtoolbox, 1, 2);
         connect(m_showtoolbox,SIGNAL(clicked(bool)),this,SLOT(visibleDockWidget(bool)));
     }
@@ -260,11 +262,14 @@ void KWGui::visibleDockWidget(bool checked)
             dock->setFeatures(dock->features()&~QDockWidget::DockWidgetMovable);
         }
 
-        if (sg_arrowType != Qt::ArrowType::NoArrow)//如果已经有打开的则只需要使用最后一个打开的状态即可
+        //if (sg_arrowType != Qt::ArrowType::NoArrow)//如果已经有打开的则只需要使用最后一个打开的状态即可
+        if (sg_iconname != "none")
         {
-            m_showtoolbox->setArrowType(sg_arrowType);
+            //m_showtoolbox->setArrowType(sg_arrowType);
+            m_showtoolbox->setIcon(QIcon(":/images/"+sg_iconname+".png"));
             m_showtoolbox->setToolTip(hideTip);
-            if (sg_arrowType == Qt::ArrowType::LeftArrow)
+            //if (sg_arrowType == Qt::ArrowType::LeftArrow)
+            if (sg_iconname == "right")
             {
                 m_showtoolbox->setToolTip(showTip);
             }
@@ -273,17 +278,19 @@ void KWGui::visibleDockWidget(bool checked)
 
         if (visible)
         {
-            m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
-            sg_arrowType = Qt::ArrowType::RightArrow;
+            sg_iconname = "right";
+            //m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
+            //sg_arrowType = Qt::ArrowType::RightArrow;
             m_showtoolbox->setToolTip(hideTip);
         }
         else
         {
-
-            m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
-            sg_arrowType = Qt::ArrowType::LeftArrow;
+            sg_iconname = "left";
+            //m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
+            //sg_arrowType = Qt::ArrowType::LeftArrow;
             m_showtoolbox->setToolTip(showTip);
         }
+        m_showtoolbox->setIcon(QIcon(":/images/"+sg_iconname+".png"));
         return;
     }
 
@@ -304,15 +311,20 @@ void KWGui::visibleDockWidget(bool checked)
     }
     if (visible)
     {
-        m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
-        sg_arrowType = Qt::ArrowType::LeftArrow;
+        //m_showtoolbox->setArrowType(Qt::ArrowType::LeftArrow);
+        //sg_arrowType = Qt::ArrowType::LeftArrow;
+        //m_showtoolbox->setIcon(QIcon(":/images/right.png"));
+        sg_iconname = "left";
         m_showtoolbox->setToolTip(showTip);
     }
     else
     {
-        m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
-        sg_arrowType = Qt::ArrowType::RightArrow;
+        //m_showtoolbox->setArrowType(Qt::ArrowType::RightArrow);
+        //m_showtoolbox->setIcon(QIcon(":/images/right.png"));
+        //sg_arrowType = Qt::ArrowType::RightArrow;
+        sg_iconname = "right";
         m_showtoolbox->setToolTip(hideTip);
     }
+    m_showtoolbox->setIcon(QIcon(":/images/"+sg_iconname+".png"));
 
 }
