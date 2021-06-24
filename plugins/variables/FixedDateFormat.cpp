@@ -35,8 +35,8 @@ static void createTimeAction(QMenu *parent, const QString &title, const QString 
 }
 
 FixedDateFormat::FixedDateFormat(DateVariable *variable)
-        : m_variable(variable),
-        m_popup(0)
+    : m_variable(variable),
+      m_popup(0)
 {
     widget.setupUi(this);
 
@@ -68,10 +68,13 @@ FixedDateFormat::FixedDateFormat(DateVariable *variable)
     widget.customString->setText(variable->definition());
 
     int index = listDateFormat.indexOf(variable->definition());
-    if (index >= 0) {
+    if (index >= 0)
+    {
         widget.widgetStack->setCurrentWidget(widget.normalPage);
         widget.formatList->setItemSelected(widget.formatList->item(index), true);
-    } else {
+    }
+    else
+    {
         widget.widgetStack->setCurrentWidget(widget.customPage);
         widget.custom->setChecked(true);
     }
@@ -88,22 +91,35 @@ FixedDateFormat::FixedDateFormat(DateVariable *variable)
 void FixedDateFormat::customClicked(int state)
 {
     if (state == Qt::Unchecked)
+    {
         widget.widgetStack->setCurrentWidget(widget.normalPage);
+    }
     else
+    {
         widget.widgetStack->setCurrentWidget(widget.customPage);
+    }
 }
 
 void FixedDateFormat::listClicked(QListWidgetItem *item)
 {
     // TODO parse out the first two values...
     QString format;
-    switch (widget.formatList->row(item)) {
-    case 0: format = QLocale().dateFormat(QLocale::LongFormat); break;
-    case 1: format = QLocale().dateFormat(QLocale::ShortFormat); break;
-    case 2: format = QLocale().dateTimeFormat(QLocale::LongFormat); break;
-    case 3: format = QLocale().dateTimeFormat(QLocale::ShortFormat); break;
-    default:
-        format = item->text();
+    switch (widget.formatList->row(item))
+    {
+        case 0:
+            format = QLocale().dateFormat(QLocale::LongFormat);
+            break;
+        case 1:
+            format = QLocale().dateFormat(QLocale::ShortFormat);
+            break;
+        case 2:
+            format = QLocale().dateTimeFormat(QLocale::LongFormat);
+            break;
+        case 3:
+            format = QLocale().dateTimeFormat(QLocale::ShortFormat);
+            break;
+        default:
+            format = item->text();
     }
     m_variable->setDefinition(format);
     widget.customString->setText(format);
@@ -116,7 +132,8 @@ void FixedDateFormat::offsetChanged(int offset)
 
 void FixedDateFormat::insertCustomButtonPressed()
 {
-    if (m_popup == 0) {
+    if (m_popup == 0)
+    {
         m_popup = new QMenu(this);
         QMenu *day = new QMenu(i18n("Day"), m_popup);
         QMenu *month = new QMenu(i18n("Month"), m_popup);
@@ -155,18 +172,23 @@ void FixedDateFormat::insertCustomButtonPressed()
     QPoint position = widget.formatButton->mapToGlobal(QPoint(0, widget.formatButton->height()));
     QAction *action = m_popup->exec(position);
     if (action)
+    {
         widget.customString->insert(qvariant_cast<QString>(action->data()));
+    }
 }
 
 void FixedDateFormat::customTextChanged(const QString& text)
 {
     m_variable->setDefinition(text);
 
-    if (widget.custom->isChecked()) {
+    if (widget.custom->isChecked())
+    {
         // altering the custom text will deselect the list item so the user can easily switch
         // back by selecting one.
         QListWidgetItem * item = widget.formatList->currentItem();
         if (item) // deselect it.
+        {
             widget.formatList->setItemSelected(item, false);
+        }
     }
 }

@@ -48,7 +48,9 @@ KoInlineObject *ChapterVariableFactory::createInlineObject(const KoProperties *p
 {
     ChapterVariable *var = new ChapterVariable();
     if (properties)
+    {
         var->readProperties(properties);
+    }
     return var;
 }
 

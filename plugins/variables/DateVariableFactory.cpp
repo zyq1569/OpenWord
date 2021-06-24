@@ -27,7 +27,7 @@
 #include <klocalizedstring.h>
 
 DateVariableFactory::DateVariableFactory()
-        : KoInlineObjectFactoryBase("date", TextVariable)
+    : KoInlineObjectFactoryBase("date", TextVariable)
 {
     KoInlineObjectTemplate var;
     var.id = "fixed";
@@ -48,10 +48,14 @@ KoInlineObject *DateVariableFactory::createInlineObject(const KoProperties *prop
 {
     DateVariable::DateType dt = DateVariable::Fixed;
     if (properties)
+    {
         dt = static_cast<DateVariable::DateType>(properties->intProperty("id", dt));
+    }
 
     DateVariable *var = new DateVariable(dt);
     if (properties)
+    {
         var->readProperties(properties);
+    }
     return var;
 }

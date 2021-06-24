@@ -19,6 +19,8 @@
 #ifndef KOVARIABLESPLUGIN_H
 #define KOVARIABLESPLUGIN_H
 
+#include <kpluginfactory.h>
+
 #include <QObject>
 #include <QVariantList>
 
@@ -31,4 +33,14 @@ public:
     ~VariablesPlugin() override {}
 };
 
+
+class VariablesPluginFactory : public KPluginFactory
+{
+  Q_OBJECT
+  Q_INTERFACES(KPluginFactory)
+  Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_textinlineobject_variables.json")
+public:
+  explicit VariablesPluginFactory();
+  ~VariablesPluginFactory();
+};
 #endif

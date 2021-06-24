@@ -23,15 +23,35 @@
 #include "InfoVariableFactory.h"
 #include "ChapterVariableFactory.h"
 #include "UserVariableFactory.h"
-#include <kpluginfactory.h>
+//#include <kpluginfactory.h>
 
 #include <KoInlineObjectRegistry.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(VariablesPluginFactory, "calligra_textinlineobject_variables.json",
-                           registerPlugin<VariablesPlugin>();)
+//K_PLUGIN_FACTORY_WITH_JSON(VariablesPluginFactory, "calligra_textinlineobject_variables.json",
+//                           registerPlugin<VariablesPlugin>();)
+
+//class VariablesPluginFactory : public KPluginFactory
+//{
+//    Q_OBJECT
+//    Q_INTERFACES(KPluginFactory)
+//    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_textinlineobject_variables.json")
+//public:
+//    explicit VariablesPluginFactory();
+//    ~VariablesPluginFactory();
+//};
+
+VariablesPluginFactory::VariablesPluginFactory()
+{
+    registerPlugin<VariablesPlugin>();
+}
+
+VariablesPluginFactory::~VariablesPluginFactory()
+{
+
+}
 
 VariablesPlugin::VariablesPlugin(QObject *parent, const QVariantList&)
-        : QObject(parent)
+    : QObject(parent)
 {
     KoInlineObjectRegistry::instance()->add(new PageVariableFactory());
     KoInlineObjectRegistry::instance()->add(new DateVariableFactory());
@@ -40,5 +60,5 @@ VariablesPlugin::VariablesPlugin(QObject *parent, const QVariantList&)
     KoInlineObjectRegistry::instance()->add(new UserVariableFactory());
 }
 
-#include <VariablesPlugin.moc>
+//#include <VariablesPlugin.moc>
 
