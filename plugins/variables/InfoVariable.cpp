@@ -29,11 +29,13 @@
 
 #include <QGlobalStatic>
 
-static const struct {
+static const struct
+{
     KoInlineObject::Property property;
     const char * tag;
     const char * saveTag;
-} propertyData[] = {
+} propertyData[] =
+{
     { KoInlineObject::AuthorName, "creator", "text:creator" },
     { KoInlineObject::DocumentURL, "file-name", "text:file-name" },
     { KoInlineObject::Title, "title", "text:title" },
@@ -48,15 +50,16 @@ static const unsigned int numPropertyData = sizeof(propertyData) / sizeof(*prope
 QStringList InfoVariable::tags()
 {
     QStringList tagList;
-    for (unsigned int i = 0; i < numPropertyData; ++i) {
+    for (unsigned int i = 0; i < numPropertyData; ++i)
+    {
         tagList << propertyData[i].tag;
     }
     return tagList;
 }
 
 InfoVariable::InfoVariable()
-        : KoVariable(true),
-        m_type(KoInlineObject::AuthorName)
+    : KoVariable(true),
+      m_type(KoInlineObject::AuthorName)
 {
 }
 
@@ -67,7 +70,8 @@ void InfoVariable::readProperties(const KoProperties *props)
 
 void InfoVariable::propertyChanged(Property property, const QVariant &value)
 {
-    if (property == m_type) {
+    if (property == m_type)
+    {
         setValue(value.toString());
     }
 }
@@ -80,13 +84,16 @@ void InfoVariable::saveOdf(KoShapeSavingContext & context)
 {
     KoXmlWriter *writer = &context.xmlWriter();
 
-    if (!s_saveInfo.exists() ) {
-        for (unsigned int i = 0; i < numPropertyData; ++i) {
+    if (!s_saveInfo.exists() )
+    {
+        for (unsigned int i = 0; i < numPropertyData; ++i)
+        {
             s_saveInfo->insert(propertyData[i].property, propertyData[i].saveTag);
         }
     }
     const char *nodeName = s_saveInfo->value(m_type, 0);
-    if (nodeName) {
+    if (nodeName)
+    {
         writer->startElement(nodeName, false);
         writer->addTextNode(value());
         writer->endElement();
@@ -99,8 +106,10 @@ Q_GLOBAL_STATIC(LoadMap, s_loadInfo)
 
 bool InfoVariable::loadOdf(const KoXmlElement & element, KoShapeLoadingContext & /*context*/)
 {
-    if (!s_loadInfo.exists() ) {
-        for (unsigned int i = 0; i < numPropertyData; ++i) {
+    if (!s_loadInfo.exists() )
+    {
+        for (unsigned int i = 0; i < numPropertyData; ++i)
+        {
             s_loadInfo->insert(propertyData[i].tag, propertyData[i].property);
         }
     }
@@ -108,8 +117,10 @@ bool InfoVariable::loadOdf(const KoXmlElement & element, KoShapeLoadingContext &
     const QString localName(element.localName());
     m_type = s_loadInfo->value(localName);
 
-    for(KoXmlNode node = element.firstChild(); !node.isNull(); node = node.nextSibling() ) {
-        if (node.isText()) {
+    for(KoXmlNode node = element.firstChild(); !node.isNull(); node = node.nextSibling() )
+    {
+        if (node.isText())
+        {
             setValue(node.toText().data());
             break;
         }

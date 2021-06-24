@@ -46,7 +46,8 @@ UserVariable::UserVariable()
 
 KoVariableManager *UserVariable::variableManager()
 {
-    if (m_variableManager) {
+    if (m_variableManager)
+    {
         return m_variableManager;
     }
 
@@ -121,21 +122,31 @@ void UserVariable::propertyChanged(Property property, const QVariant &value)
 void UserVariable::saveOdf(KoShapeSavingContext &context)
 {
     if (m_property == 0 && !variableManager()->userVariables().contains(m_name))
+    {
         return;
+    }
 
     KoXmlWriter *writer = &context.xmlWriter();
 
     if (m_property == KoInlineObject::UserGet)
+    {
         writer->startElement("text:user-field-get", false);
+    }
     else
+    {
         writer->startElement("text:user-field-input", false);
+    }
 
     if (!m_name.isEmpty())
+    {
         writer->addAttribute("text:name", m_name);
+    }
 
     QString styleName = KoOdfNumberStyles::saveOdfNumberStyle(context.mainStyles(), m_numberstyle);
     if (!styleName.isEmpty())
+    {
         writer->addAttribute("style:data-style-name", styleName);
+    }
 
     writer->addTextNode(value());
     writer->endElement();
@@ -143,20 +154,28 @@ void UserVariable::saveOdf(KoShapeSavingContext &context)
 
 bool UserVariable::loadOdf(const KoXmlElement &element, KoShapeLoadingContext &context)
 {
-    if (element.localName() == "user-field-get") {
+    if (element.localName() == "user-field-get")
+    {
         m_property = KoInlineObject::UserGet;
-    } else if (element.localName() == "user-field-input") {
+    }
+    else if (element.localName() == "user-field-input")
+    {
         m_property = KoInlineObject::UserInput;
-    } else {
+    }
+    else
+    {
         m_property = 0;
     }
 
     m_name = element.attributeNS(KoXmlNS::text, "name");
 
     QString dataStyle = element.attributeNS(KoXmlNS::style, "data-style-name");
-    if (!dataStyle.isEmpty() && context.odfLoadingContext().stylesReader().dataFormats().contains(dataStyle)) {
+    if (!dataStyle.isEmpty() && context.odfLoadingContext().stylesReader().dataFormats().contains(dataStyle))
+    {
         m_numberstyle = context.odfLoadingContext().stylesReader().dataFormats().value(dataStyle).first;
-    } else {
+    }
+    else
+    {
         m_numberstyle = KoOdfNumberStyles::NumericStyleFormat();
     }
 
@@ -167,7 +186,8 @@ void UserVariable::resize(const QTextDocument *document, QTextInlineObject &obje
 {
     KoVariable::resize(document, object, posInDocument, format, pd);
 
-    if (!m_variableManager) {
+    if (!m_variableManager)
+    {
         variableManager();
     }
 }

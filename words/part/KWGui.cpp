@@ -110,7 +110,6 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
     //openword-------------
 
     new KoRulerController(m_horizontalRuler, m_canvas->resourceManager());
-
     connect(m_view->kwdocument(), SIGNAL(unitChanged(KoUnit)), m_horizontalRuler, SLOT(setUnit(KoUnit)));
     connect(m_view->kwdocument(), SIGNAL(unitChanged(KoUnit)), m_verticalRuler, SLOT(setUnit(KoUnit)));
     connect(m_view->kwdocument(), SIGNAL(pageSetupChanged()), this, SLOT(pageSetupChanged()));

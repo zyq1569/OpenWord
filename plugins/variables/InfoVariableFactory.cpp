@@ -31,7 +31,7 @@
 
 
 InfoVariableFactory::InfoVariableFactory()
-        : KoInlineObjectFactoryBase("info", TextVariable)
+    : KoInlineObjectFactoryBase("info", TextVariable)
 {
     KoInlineObjectTemplate var1;
     var1.id = "author";
@@ -89,6 +89,8 @@ KoInlineObject *InfoVariableFactory::createInlineObject(const KoProperties *prop
 {
     InfoVariable *var = new InfoVariable();
     if (properties)
+    {
         var->readProperties(properties);
+    }
     return var;
 }

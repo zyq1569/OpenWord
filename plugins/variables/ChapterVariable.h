@@ -48,7 +48,8 @@ private Q_SLOTS:
 private:
     void resize(const QTextDocument *document, QTextInlineObject &object, int posInDocument, const QTextCharFormat &format, QPaintDevice *pd) override;
 
-    enum FormatTypes {
+    enum FormatTypes
+    {
         ChapterName,
         ChapterNumber,
         ChapterNumberName,

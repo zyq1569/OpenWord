@@ -159,7 +159,8 @@ void UserVariableOptionsWidget::newClicked()
     };
     Validator validator(variableManager());
     QString name = QInputDialog::getText(this, i18n("New Variable"), i18n("Name for new variable:")/*QT5TODO:, &validator*/).trimmed();
-    if (name.isEmpty()) {
+    if (name.isEmpty())
+    {
         return;
     }
     userVariable->setName(name);
@@ -170,16 +171,18 @@ void UserVariableOptionsWidget::newClicked()
 
 void UserVariableOptionsWidget::deleteClicked()
 {
-    if (!variableManager()->userVariables().contains(userVariable->name())) {
+    if (!variableManager()->userVariables().contains(userVariable->name()))
+    {
         return;
     }
     if (KMessageBox::questionYesNo(this,
-            i18n("Delete variable <b>%1</b>?", userVariable->name()),
-            i18n("Delete Variable"),
-            KStandardGuiItem::yes(),
-            KStandardGuiItem::cancel(),
-            QString(),
-            KMessageBox::Dangerous | KMessageBox::Notify) != KMessageBox::Yes) {
+                                   i18n("Delete variable <b>%1</b>?", userVariable->name()),
+                                   i18n("Delete Variable"),
+                                   KStandardGuiItem::yes(),
+                                   KStandardGuiItem::cancel(),
+                                   QString(),
+                                   KMessageBox::Dangerous | KMessageBox::Notify) != KMessageBox::Yes)
+    {
         return;
     }
     variableManager()->remove(userVariable->name());
@@ -194,7 +197,8 @@ void UserVariableOptionsWidget::updateNameEdit()
     nameEdit->clear();
     nameEdit->addItems(names);
     nameEdit->blockSignals(wasBlocked);
-    if (userVariable->name().isNull() && !names.isEmpty()) {
+    if (userVariable->name().isNull() && !names.isEmpty())
+    {
         userVariable->setName(names.first());
     }
     nameEdit->setCurrentIndex(qMax(0, names.indexOf(userVariable->name())));

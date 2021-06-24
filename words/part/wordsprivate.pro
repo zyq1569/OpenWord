@@ -61,3 +61,8 @@ LIBS     +=  -L$${DESTDIR} \
              -lpigmentcms \
              -lkowidgetutils \
              -lkoversion
+
+DISTFILES +=
+
+RESOURCES += \
+    icon.qrc
