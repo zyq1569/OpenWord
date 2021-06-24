@@ -85,7 +85,7 @@ SUBDIRS    +=   log/easylog.pro \
                 #filters/karbon/svg/calligra_filter_svg2karbon.pro \
                 #filters/karbon/wmf/calligra_filter_wmf2svg.pro \
                 #filters/karbon/xfig/calligra_filter_xfig2odg.pro \
-#plugins/shapefiltereffects/calligra_filtereffects.pro \
+                #plugins/shapefiltereffects/calligra_filtereffects.pro \
                 #extras/properties/calligradocinfopropspage.pro \
                 #stage/plugins/eventactions/calligrastageeventactions.pro \
                 #stage/part/calligrastagepart.pro \
