@@ -101,8 +101,8 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
         m_showtoolbox->setIcon(QIcon(":/images/right.png"));
         m_showtoolbox->setAutoRaise(true);
         m_showtoolbox->setFixedSize(9,120);
-        QSize size(12, 12);
-        m_showtoolbox->setIconSize(size);
+        //QSize size(12, 12);
+        //m_showtoolbox->setIconSize(size);
         m_showtoolbox->setStyleSheet("QToolButton{background-color:rgb(105,105,105)}QToolButton:hover{background-color:rgb(97,225,248)}");
         gridLayout->addWidget(m_showtoolbox, 1, 2);
         connect(m_showtoolbox,SIGNAL(clicked(bool)),this,SLOT(visibleDockWidget(bool)));
@@ -294,6 +294,7 @@ void KWGui::visibleDockWidget(bool checked)
         return;
     }
 
+    //todo: 须要调整为控件隐藏2个状态 和显示2个状态
     foreach (QDockWidget *dock, m_view->mainWindow()->dockWidgets())
     {
         QString str = dock->windowTitle();
