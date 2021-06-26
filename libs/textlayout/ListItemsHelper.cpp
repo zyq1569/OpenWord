@@ -34,8 +34,8 @@
 // ------------------- ListItemsHelper ------------
 /// \internal helper class for calculating text-lists prefixes and indents
 ListItemsHelper::ListItemsHelper(QTextList *textList, const QFont &font)
-        : m_textList(textList)
-        , m_fm(font, textList->document()->documentLayout()->paintDevice())
+    : m_textList(textList)
+    , m_fm(font, textList->document()->documentLayout()->paintDevice())
 {
 }
 
@@ -50,7 +50,9 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
     const int level = format.intProperty(KoListStyle::Level);
     int dp = format.intProperty(KoListStyle::DisplayLevel);
     if (dp > level)
+    {
         dp = level;
+    }
     const int displayLevel = dp ? dp : 1;
 
     QTextBlockFormat blockFormat = block.blockFormat();
@@ -61,35 +63,46 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
 
     int startValue = 1;
     if (format.hasProperty(KoListStyle::StartValue))
+    {
         startValue = format.intProperty(KoListStyle::StartValue);
+    }
 
     int index = startValue;
     bool fixed = false;
-    if (blockFormat.boolProperty(KoParagraphStyle::RestartListNumbering)) {
+    if (blockFormat.boolProperty(KoParagraphStyle::RestartListNumbering))
+    {
         index = format.intProperty(KoListStyle::StartValue);
         fixed = true;
     }
     const int paragIndex = blockFormat.intProperty(KoParagraphStyle::ListStartValue);
-    if (paragIndex > 0) {
+    if (paragIndex > 0)
+    {
         index = paragIndex;
         fixed = true;
     }
 
-    if (!fixed) {
+    if (!fixed)
+    {
         //if this is the first item then find if the list has to be continued from any other list
         KoList *listContinued = 0;
-        if (m_textList->itemNumber(block) == 0 && KoTextDocument(m_textList->document()).list(m_textList) && (listContinued = KoTextDocument(m_textList->document()).list(m_textList)->listContinuedFrom())) {
+        if (m_textList->itemNumber(block) == 0 && KoTextDocument(m_textList->document()).list(m_textList) && (listContinued = KoTextDocument(m_textList->document()).list(m_textList)->listContinuedFrom()))
+        {
             //find the previous list of the same level
             QTextList *previousTextList = listContinued->textLists().at(level - 1).data();
-            if (previousTextList) {
+            if (previousTextList)
+            {
                 QTextBlock textBlock = previousTextList->item(previousTextList->count() - 1);
-                if (textBlock.isValid()) {
+                if (textBlock.isValid())
+                {
                     index = KoTextBlockData(textBlock).counterIndex() + 1; //resume the previous list count
                 }
             }
-        } else if (m_textList->itemNumber(block) > 0) {
+        }
+        else if (m_textList->itemNumber(block) > 0)
+        {
             QTextBlock textBlock = m_textList->item(m_textList->itemNumber(block) - 1);
-            if (textBlock.isValid()) {
+            if (textBlock.isValid())
+            {
                 index = KoTextBlockData(textBlock).counterIndex() + 1; //resume the previous list count
             }
         }
@@ -99,7 +112,8 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
     KoTextBlockData blockData(block);
 
     if (blockFormat.boolProperty(KoParagraphStyle::UnnumberedListItem)
-        || blockFormat.boolProperty(KoParagraphStyle::IsListHeader)) {
+            || blockFormat.boolProperty(KoParagraphStyle::IsListHeader))
+    {
         blockData.setCounterPlainText(QString());
         blockData.setCounterPrefix(QString());
         blockData.setCounterSuffix(QString());
@@ -107,7 +121,8 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
         // set the counter for the current un-numbered list to the counter index of the previous list item.
         // index-1 because the list counter would have already incremented by one
         blockData.setCounterIndex(index - 1);
-        if (blockFormat.boolProperty(KoParagraphStyle::IsListHeader)) {
+        if (blockFormat.boolProperty(KoParagraphStyle::IsListHeader))
+        {
             blockData.setCounterWidth(format.doubleProperty(KoListStyle::MinimumWidth));
             blockData.setCounterSpacing(0);
         }
@@ -115,71 +130,92 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
     }
 
     QString item;
-    if (displayLevel > 1) {
+    if (displayLevel > 1)
+    {
         int checkLevel = level;
         int tmpDisplayLevel = displayLevel;
         bool counterResetRequired = true;
-        for (QTextBlock b = block.previous(); tmpDisplayLevel > 1 && b.isValid(); b = b.previous()) {
+        for (QTextBlock b = block.previous(); tmpDisplayLevel > 1 && b.isValid(); b = b.previous())
+        {
             if (b.textList() == 0)
+            {
                 continue;
+            }
             QTextListFormat lf = b.textList()->format();
             if (lf.property(KoListStyle::StyleId) != format.property(KoListStyle::StyleId))
-               continue; // uninteresting for us
+            {
+                continue;    // uninteresting for us
+            }
             if (isOutline != bool(b.blockFormat().intProperty(KoParagraphStyle::OutlineLevel)))
-                continue; // also uninteresting cause the one is an outline-listitem while the other is not
+            {
+                continue;    // also uninteresting cause the one is an outline-listitem while the other is not
+            }
 
-            if (! KoListStyle::isNumberingStyle(static_cast<KoListStyle::LabelType>(lf.style()))) {
+            if (! KoListStyle::isNumberingStyle(static_cast<KoListStyle::LabelType>(lf.style())))
+            {
                 continue;
             }
 
-            if (b.blockFormat().boolProperty(KoParagraphStyle::UnnumberedListItem)) {
+            if (b.blockFormat().boolProperty(KoParagraphStyle::UnnumberedListItem))
+            {
                 continue; //unnumbered listItems are irrelevant
             }
 
             const int otherLevel  = lf.intProperty(KoListStyle::Level);
-            if (isOutline && checkLevel == otherLevel) {
+            if (isOutline && checkLevel == otherLevel)
+            {
                 counterResetRequired = false;
             }
 
             if (checkLevel <= otherLevel)
-                continue;
-
-            KoTextBlockData otherData(b);
-            if (!otherData.hasCounterData()) {
+            {
                 continue;
             }
-            if (tmpDisplayLevel - 1 < otherLevel) { // can't just copy it fully since we are
+
+            KoTextBlockData otherData(b);
+            if (!otherData.hasCounterData())
+            {
+                continue;
+            }
+            if (tmpDisplayLevel - 1 < otherLevel)   // can't just copy it fully since we are
+            {
                 // displaying less then the full counter
                 item += otherData.partialCounterText();
                 tmpDisplayLevel--;
                 checkLevel--;
-                for (int i = otherLevel + 1; i < level; i++) {
+                for (int i = otherLevel + 1; i < level; i++)
+                {
                     tmpDisplayLevel--;
                     KoOdfNumberDefinition numberFormat;
                     numberFormat.setFormatSpecification(static_cast<KoOdfNumberDefinition::FormatSpecification>(format.intProperty(KoListStyle::NumberFormat)));
                     numberFormat.setLetterSynchronization(format.boolProperty(KoListStyle::LetterSynchronization));
                     item += "." + numberFormat.formattedNumber(index); // add missing counters.
                 }
-            } else { // just copy previous counter as prefix
+            }
+            else     // just copy previous counter as prefix
+            {
                 QString otherPrefix = lf.stringProperty(KoListStyle::ListItemPrefix);
                 QString otherSuffix = lf.stringProperty(KoListStyle::ListItemSuffix);
                 QString pureCounter = otherData.counterText().mid(otherPrefix.size());
                 pureCounter = pureCounter.left(pureCounter.size() - otherSuffix.size());
                 item += pureCounter;
-                for (int i = otherLevel + 1; i < level; i++) {
+                for (int i = otherLevel + 1; i < level; i++)
+                {
                     KoOdfNumberDefinition numberFormat;
                     numberFormat.setFormatSpecification(static_cast<KoOdfNumberDefinition::FormatSpecification>(format.intProperty(KoListStyle::NumberFormat)));
                     numberFormat.setLetterSynchronization(format.boolProperty(KoListStyle::LetterSynchronization));
                     item += "." + numberFormat.formattedNumber(index); // add missing counters.
                 }
                 tmpDisplayLevel = 0;
-                if (isOutline && counterResetRequired) {
+                if (isOutline && counterResetRequired)
+                {
                     index = 1;
                 }
                 break;
             }
         }
-        for (int i = 1; i < tmpDisplayLevel; i++) {
+        for (int i = 1; i < tmpDisplayLevel; i++)
+        {
             KoOdfNumberDefinition numberFormat;
             numberFormat.setFormatSpecification(static_cast<KoOdfNumberDefinition::FormatSpecification>(format.intProperty(KoListStyle::NumberFormat)));
             numberFormat.setLetterSynchronization(format.boolProperty(KoListStyle::LetterSynchronization));
@@ -188,44 +224,53 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
     }
     bool calcWidth = true;
     QString partialCounterText;
-    switch (labelType) {
-    case KoListStyle::NumberLabelType: {
-        KoOdfNumberDefinition::FormatSpecification spec = static_cast<KoOdfNumberDefinition::FormatSpecification>(format.intProperty(KoListStyle::NumberFormat));
+    switch (labelType)
+    {
+        case KoListStyle::NumberLabelType:
+        {
+            KoOdfNumberDefinition::FormatSpecification spec = static_cast<KoOdfNumberDefinition::FormatSpecification>(format.intProperty(KoListStyle::NumberFormat));
 
-        if (!(item.isEmpty() || item.endsWith('.') || item.endsWith(' '))) {
-            if (spec == KoOdfNumberDefinition::Numeric || spec == KoOdfNumberDefinition::AlphabeticLowerCase ||
-            spec == KoOdfNumberDefinition::AlphabeticUpperCase ||
-            spec == KoOdfNumberDefinition::RomanLowerCase ||
-            spec == KoOdfNumberDefinition::RomanUpperCase) {
-                item += '.';
+            if (!(item.isEmpty() || item.endsWith('.') || item.endsWith(' ')))
+            {
+                if (spec == KoOdfNumberDefinition::Numeric || spec == KoOdfNumberDefinition::AlphabeticLowerCase ||
+                        spec == KoOdfNumberDefinition::AlphabeticUpperCase ||
+                        spec == KoOdfNumberDefinition::RomanLowerCase ||
+                        spec == KoOdfNumberDefinition::RomanUpperCase)
+                {
+                    item += '.';
+                }
             }
-        }
 
-        KoOdfNumberDefinition numberFormat;
-        numberFormat.setFormatSpecification(spec);
-        partialCounterText = numberFormat.formattedNumber(index);
-        break;
-    }
-    case KoListStyle::BulletCharLabelType: {
-        calcWidth = false;
-        if (format.intProperty(KoListStyle::BulletCharacter))
-            item = QString(QChar(format.intProperty(KoListStyle::BulletCharacter)));
-        width = m_fm.width(item);
-        int percent = format.intProperty(KoListStyle::RelativeBulletSize);
-        if (percent > 0)
-            width = width * (percent / 100.0);
-        break;
-    }
-    case KoListStyle::None:
-        calcWidth = false;
-        width =  0.0;
-        break;
-    case KoListStyle::ImageLabelType:
-        calcWidth = false;
-        width = qMax(format.doubleProperty(KoListStyle::Width), (qreal)1.0);
-        break;
-    default:  // others we ignore.
-        calcWidth = false;
+            KoOdfNumberDefinition numberFormat;
+            numberFormat.setFormatSpecification(spec);
+            partialCounterText = numberFormat.formattedNumber(index);
+            break;
+        }
+        case KoListStyle::BulletCharLabelType:
+        {
+            calcWidth = false;
+            if (format.intProperty(KoListStyle::BulletCharacter))
+            {
+                item = QString(QChar(format.intProperty(KoListStyle::BulletCharacter)));
+            }
+            width = m_fm.width(item);
+            int percent = format.intProperty(KoListStyle::RelativeBulletSize);
+            if (percent > 0)
+            {
+                width = width * (percent / 100.0);
+            }
+            break;
+        }
+        case KoListStyle::None:
+            calcWidth = false;
+            width =  0.0;
+            break;
+        case KoListStyle::ImageLabelType:
+            calcWidth = false;
+            width = qMax(format.doubleProperty(KoListStyle::Width), (qreal)1.0);
+            break;
+        default:  // others we ignore.
+            calcWidth = false;
     }
 
     blockData.setCounterIsImage(labelType == KoListStyle::ImageLabelType);
@@ -236,20 +281,27 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
     blockData.setCounterPrefix(prefix);
     blockData.setCounterSuffix(suffix);
     if (calcWidth)
+    {
         width = m_fm.width(item);
+    }
     index++;
 
     width += m_fm.width(prefix + suffix);
 
     qreal counterSpacing = 0;
-    if (format.boolProperty(KoListStyle::AlignmentMode)) {
+    if (format.boolProperty(KoListStyle::AlignmentMode))
+    {
         // for aligmentmode spacing should be 0
         counterSpacing = 0;
-    } else {
-        if (labelType != KoListStyle::None) {
+    }
+    else
+    {
+        if (labelType != KoListStyle::None)
+        {
             // see ODF spec 1.2 item 20.422
             counterSpacing = format.doubleProperty(KoListStyle::MinimumDistance);
-            if (width < format.doubleProperty(KoListStyle::MinimumWidth)) {
+            if (width < format.doubleProperty(KoListStyle::MinimumWidth))
+            {
                 counterSpacing -= format.doubleProperty(KoListStyle::MinimumWidth) - width;
             }
             counterSpacing = qMax(counterSpacing, qreal(0.0));

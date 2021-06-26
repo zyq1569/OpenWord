@@ -35,8 +35,9 @@ class QTableWidgetItem;
  * widget provides two buttons - save and load formula. For saving and loading it
  * uses the loadOdf() and saveOdf() methods of KoFormulaShape.
  */
-class FormulaToolWidget : public QTabWidget, Ui::mainTabWidget {
-Q_OBJECT
+class FormulaToolWidget : public QTabWidget, Ui::mainTabWidget
+{
+    Q_OBJECT
 public:
     /// Standard constructor
     explicit FormulaToolWidget( KoFormulaTool* tool, QWidget* parent = 0 );
@@ -54,7 +55,7 @@ private:
     void setupButton(QToolButton* button, QMenu& menu, const QString& text, QList<QString>, int length=8);
 
     static QList<QString> symbolsInRange(int start, int length);
-    
+
 private:
     /// The KoFormulaTool this options widget belongs to
     KoFormulaTool* m_tool;

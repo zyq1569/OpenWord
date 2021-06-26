@@ -60,25 +60,34 @@ void KoPointedAt::fillInLinks(const QTextCursor &cursor, KoInlineTextObjectManag
     note = 0;
 
     if (!inlineManager)
+    {
         return;
+    }
 
     // Is there an href here ?
-    if (cursor.charFormat().isAnchor()) {
+    if (cursor.charFormat().isAnchor())
+    {
         QString href = cursor.charFormat().anchorHref();
         // local href starts with #
-        if (href.startsWith('#')) {
+        if (href.startsWith('#'))
+        {
             // however bookmark does not contain it, so strip it
             href = href.right(href.size() - 1);
 
-            if (!href.isEmpty()) {
+            if (!href.isEmpty())
+            {
                 bookmark = rangeManager->bookmarkManager()->bookmark(href);
             }
             return;
-        } else {
+        }
+        else
+        {
             // Nope, then it must be external;
             externalHRef = href;
         }
-    } else {
+    }
+    else
+    {
         note = dynamic_cast<KoInlineNote*>(inlineManager->inlineTextObject(cursor));
     }
 }

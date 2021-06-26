@@ -20,19 +20,20 @@
 
 #include "kochart_global.h"
 
-namespace KoChart {
+namespace KoChart
+{
 
 bool isPolar(ChartType type)
 {
     switch (type)
     {
-    case CircleChartType:
-    case RingChartType:
-    case RadarChartType:
-    case FilledRadarChartType:
-        return true;
-    default:
-        return false;
+        case CircleChartType:
+        case RingChartType:
+        case RadarChartType:
+        case FilledRadarChartType:
+            return true;
+        default:
+            return false;
     }
     return false;
 }
@@ -44,7 +45,8 @@ bool isCartesian(ChartType type)
 
 ChartSubtype defaultChartSubtype(ChartType type)
 {
-    switch (type) {
+    switch (type)
+    {
         case BarChartType:
         case LineChartType:
         case AreaChartType:
@@ -73,32 +75,33 @@ int numDimensions(ChartType type, ChartSubtype subtype)
 {
     int dimensions = 1;
 
-    switch (type) {
-    case BarChartType:
-    case LineChartType:
-    case AreaChartType:
-    case CircleChartType:
-    case RingChartType:
-    case RadarChartType:
-    case FilledRadarChartType:
-        dimensions = 1;
-        break;
-    case ScatterChartType:
-    case SurfaceChartType:
-        dimensions = 2;
-        break;
-    case BubbleChartType:
-        dimensions = 3;
-        break;
-    case StockChartType:
-        dimensions = 1;
-        break;
-    case GanttChartType:
-        // FIXME: Figure out correct number of dimensions
-        dimensions = 1;
-        break;
-    case LastChartType:
-        dimensions = 1;
+    switch (type)
+    {
+        case BarChartType:
+        case LineChartType:
+        case AreaChartType:
+        case CircleChartType:
+        case RingChartType:
+        case RadarChartType:
+        case FilledRadarChartType:
+            dimensions = 1;
+            break;
+        case ScatterChartType:
+        case SurfaceChartType:
+            dimensions = 2;
+            break;
+        case BubbleChartType:
+            dimensions = 3;
+            break;
+        case StockChartType:
+            dimensions = 1;
+            break;
+        case GanttChartType:
+            // FIXME: Figure out correct number of dimensions
+            dimensions = 1;
+            break;
+        case LastChartType:
+            dimensions = 1;
     }
 
     return dimensions;
@@ -168,7 +171,8 @@ void initchartTypeIconMap()
 QLatin1String chartTypeIconName(ChartType type, ChartSubtype subtype)
 {
     QPair<qint64, qint64> entry((qint64)(type), (qint64)(subtype));
-    if (chartTypeIconMap.isEmpty()) {
+    if (chartTypeIconMap.isEmpty())
+    {
         initchartTypeIconMap();
     }
     return chartTypeIconMap.value(entry);
@@ -178,53 +182,117 @@ QLatin1String chartTypeIconName(ChartType type, ChartSubtype subtype)
 
 QDebug operator<<(QDebug dbg, KoChart::Position p)
 {
-    switch (p) {
-    case KoChart::StartPosition: dbg << "(StartPosition)"; break;
-    case KoChart::TopPosition: dbg << "(TopPosition)"; break;
-    case KoChart::EndPosition: dbg << "(EndPosition)"; break;
-    case KoChart::BottomPosition: dbg << "(BottomPosition)"; break;
-    case KoChart::TopStartPosition: dbg << "(BottomPosition)"; break;
-    case KoChart::TopEndPosition: dbg << "(TopEndPosition)"; break;
-    case KoChart::BottomStartPosition: dbg << "(BottomStartPosition)"; break;
-    case KoChart::BottomEndPosition: dbg << "(BottomEndPosition)"; break;
-    case KoChart::CenterPosition: dbg << "(CenterPosition)"; break;
-    case KoChart::FloatingPosition: dbg << "(FloatingPosition)"; break;
-    default: break;
-        Q_ASSERT(false); // Unknown position
+    switch (p)
+    {
+        case KoChart::StartPosition:
+            dbg << "(StartPosition)";
+            break;
+        case KoChart::TopPosition:
+            dbg << "(TopPosition)";
+            break;
+        case KoChart::EndPosition:
+            dbg << "(EndPosition)";
+            break;
+        case KoChart::BottomPosition:
+            dbg << "(BottomPosition)";
+            break;
+        case KoChart::TopStartPosition:
+            dbg << "(BottomPosition)";
+            break;
+        case KoChart::TopEndPosition:
+            dbg << "(TopEndPosition)";
+            break;
+        case KoChart::BottomStartPosition:
+            dbg << "(BottomStartPosition)";
+            break;
+        case KoChart::BottomEndPosition:
+            dbg << "(BottomEndPosition)";
+            break;
+        case KoChart::CenterPosition:
+            dbg << "(CenterPosition)";
+            break;
+        case KoChart::FloatingPosition:
+            dbg << "(FloatingPosition)";
+            break;
+        default:
+            break;
+            Q_ASSERT(false); // Unknown position
     }
     return dbg;
 }
 
 QDebug operator<<(QDebug dbg, KoChart::ChartType ct)
 {
-    switch (ct) {
-        case KoChart::BarChartType: dbg << "(BarChartType)"; break;
-        case KoChart::LineChartType: dbg << "(LineChartType)"; break;
-        case KoChart::AreaChartType: dbg << "(AreaChartType)"; break;
-        case KoChart::CircleChartType: dbg << "(CircleChartType)"; break;
-        case KoChart::RingChartType: dbg << "(RingChartType)"; break;
-        case KoChart::RadarChartType: dbg << "(RadarChartType)"; break;
-        case KoChart::FilledRadarChartType: dbg << "(FilledRadarChartType)"; break;
-        case KoChart::ScatterChartType: dbg << "(ScatterChartType)"; break;
-        case KoChart::SurfaceChartType: dbg << "(SurfaceChartType)"; break;
-        case KoChart::BubbleChartType: dbg << "(BubbleChartType)"; break;
-        case KoChart::StockChartType: dbg << "(StockChartType)"; break;
-        case KoChart::GanttChartType: dbg << "(StockChartType)"; break;
-        case KoChart::LastChartType: dbg << "(LastChartType)"; break;
+    switch (ct)
+    {
+        case KoChart::BarChartType:
+            dbg << "(BarChartType)";
+            break;
+        case KoChart::LineChartType:
+            dbg << "(LineChartType)";
+            break;
+        case KoChart::AreaChartType:
+            dbg << "(AreaChartType)";
+            break;
+        case KoChart::CircleChartType:
+            dbg << "(CircleChartType)";
+            break;
+        case KoChart::RingChartType:
+            dbg << "(RingChartType)";
+            break;
+        case KoChart::RadarChartType:
+            dbg << "(RadarChartType)";
+            break;
+        case KoChart::FilledRadarChartType:
+            dbg << "(FilledRadarChartType)";
+            break;
+        case KoChart::ScatterChartType:
+            dbg << "(ScatterChartType)";
+            break;
+        case KoChart::SurfaceChartType:
+            dbg << "(SurfaceChartType)";
+            break;
+        case KoChart::BubbleChartType:
+            dbg << "(BubbleChartType)";
+            break;
+        case KoChart::StockChartType:
+            dbg << "(StockChartType)";
+            break;
+        case KoChart::GanttChartType:
+            dbg << "(StockChartType)";
+            break;
+        case KoChart::LastChartType:
+            dbg << "(LastChartType)";
+            break;
     }
     return dbg;
 }
 
 QDebug operator<<(QDebug dbg, KoChart::ChartSubtype st)
 {
-    switch (st) {
-        case KoChart::NoChartSubtype: dbg << "(NoChartSubtype)"; break;
-        case KoChart::NormalChartSubtype: dbg << "(NormalChartSubtype)"; break;
-        case KoChart::StackedChartSubtype: dbg << "(StackedChartSubtype)"; break;
-        case KoChart::PercentChartSubtype: dbg << "(PercentChartSubtype)"; break;
-        case KoChart::HighLowCloseChartSubtype: dbg << "(HighLowCloseChartSubtype)"; break;
-        case KoChart::OpenHighLowCloseChartSubtype: dbg << "(OpenHighLowCloseChartSubtype)"; break;
-        case KoChart::CandlestickChartSubtype: dbg << "(CandlestickChartSubtype)"; break;
+    switch (st)
+    {
+        case KoChart::NoChartSubtype:
+            dbg << "(NoChartSubtype)";
+            break;
+        case KoChart::NormalChartSubtype:
+            dbg << "(NormalChartSubtype)";
+            break;
+        case KoChart::StackedChartSubtype:
+            dbg << "(StackedChartSubtype)";
+            break;
+        case KoChart::PercentChartSubtype:
+            dbg << "(PercentChartSubtype)";
+            break;
+        case KoChart::HighLowCloseChartSubtype:
+            dbg << "(HighLowCloseChartSubtype)";
+            break;
+        case KoChart::OpenHighLowCloseChartSubtype:
+            dbg << "(OpenHighLowCloseChartSubtype)";
+            break;
+        case KoChart::CandlestickChartSubtype:
+            dbg << "(CandlestickChartSubtype)";
+            break;
     }
     return dbg;
 }

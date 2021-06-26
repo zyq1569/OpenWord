@@ -1,7 +1,8 @@
 #include <KoToolFactoryBase.h>
 
 
-class KoM2MMLFormulaToolFactory : public KoToolFactoryBase {
+class KoM2MMLFormulaToolFactory : public KoToolFactoryBase
+{
 public:
     /// The constructor - reimplemented from KoToolFactoryBase
     explicit KoM2MMLFormulaToolFactory();

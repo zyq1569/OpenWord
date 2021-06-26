@@ -33,19 +33,23 @@
 #include <klocalizedstring.h>
 
 FormulaCommand::FormulaCommand(KUndo2Command* parent)
-              : KUndo2Command(parent)
+    : KUndo2Command(parent)
 {
     m_done=false;
 }
 
 void FormulaCommand::changeCursor ( FormulaCursor& cursor, bool undo ) const
 {
-    if (undo) {
+    if (undo)
+    {
         cursor.moveTo(m_undoCursorPosition);
-    } else {
+    }
+    else
+    {
         cursor.moveTo(m_redoCursorPosition);
     }
-    if (!cursor.isAccepted()) {
+    if (!cursor.isAccepted())
+    {
         cursor.move(MoveRight);
     }
 }
@@ -60,8 +64,8 @@ void FormulaCommand::setRedoCursorPosition ( const FormulaCursor& position )
     m_redoCursorPosition=position;
 }
 
-FormulaCommandReplaceText::FormulaCommandReplaceText( TokenElement* owner, int position, int length, const QString& added , KUndo2Command* parent)
-                  : FormulaCommand(parent)
+FormulaCommandReplaceText::FormulaCommandReplaceText( TokenElement* owner, int position, int length, const QString& added, KUndo2Command* parent)
+    : FormulaCommand(parent)
 {
     m_ownerElement = owner;
     m_position = position;
@@ -81,7 +85,8 @@ FormulaCommandReplaceText::~FormulaCommandReplaceText()
 void FormulaCommandReplaceText::redo()
 {
     m_done=true;
-    if (m_length>0) {
+    if (m_length>0)
+    {
         m_glyphpos=m_ownerElement->removeText(m_position,m_length);
     }
     m_ownerElement->insertText(m_position, m_added);
@@ -96,7 +101,7 @@ void FormulaCommandReplaceText::undo()
 }
 
 FormulaCommandReplaceElements::FormulaCommandReplaceElements ( RowElement* owner, int position, int length, QList< BasicElement* > elements, bool wrap,KUndo2Command* parent )
-                            : FormulaCommand(parent)
+    : FormulaCommand(parent)
 {
     m_ownerElement=owner;
     m_position=position;
@@ -105,26 +110,34 @@ FormulaCommandReplaceElements::FormulaCommandReplaceElements ( RowElement* owner
     m_wrap=wrap;
     m_removed=m_ownerElement->childElements().mid(m_position,m_length);
     m_placeholderPosition=0;
-    
+
     //we have to remember to which descendant of m_added the elements got moved
     BasicElement* placeholder=0;
-    foreach (BasicElement* tmp, m_added) {
-        if ( (placeholder=tmp->emptyDescendant()) ) {
+    foreach (BasicElement* tmp, m_added)
+    {
+        if ( (placeholder=tmp->emptyDescendant()) )
+        {
             break;
         }
     }
-    if (placeholder) { //we are actually wrapping stuff
+    if (placeholder)   //we are actually wrapping stuff
+    {
         //empty descandant only returns a element hows parent is an inferred mrow
         m_placeholderParent=static_cast<RowElement*>(placeholder->parentElement());
         m_placeholderPosition=m_placeholderParent->positionOfChild(placeholder);
         m_placeholderParent->removeChild(placeholder);
         delete placeholder;
-        if (m_wrap) {
+        if (m_wrap)
+        {
             setRedoCursorPosition(FormulaCursor(m_placeholderParent,m_placeholderPosition+m_removed.count()));
-        } else {
+        }
+        else
+        {
             setRedoCursorPosition(FormulaCursor(m_placeholderParent,m_placeholderPosition));
         }
-    } else {
+    }
+    else
+    {
         m_placeholderParent=0;
         setRedoCursorPosition(FormulaCursor(m_ownerElement,m_position+m_added.length()));
     }
@@ -133,14 +146,20 @@ FormulaCommandReplaceElements::FormulaCommandReplaceElements ( RowElement* owner
 
 FormulaCommandReplaceElements::~FormulaCommandReplaceElements()
 {
-    if (m_done) {
-        if (!(m_wrap && m_placeholderParent)) {
-            foreach (BasicElement* tmp, m_removed) {
+    if (m_done)
+    {
+        if (!(m_wrap && m_placeholderParent))
+        {
+            foreach (BasicElement* tmp, m_removed)
+            {
                 delete tmp;
             }
         }
-    } else {
-        foreach (BasicElement* tmp, m_added) {
+    }
+    else
+    {
+        foreach (BasicElement* tmp, m_added)
+        {
             delete tmp;
         }
     }
@@ -149,17 +168,21 @@ FormulaCommandReplaceElements::~FormulaCommandReplaceElements()
 void FormulaCommandReplaceElements::redo()
 {
     m_done=true;
-    for (int i=0; i<m_length; ++i) {
+    for (int i=0; i<m_length; ++i)
+    {
         m_ownerElement->removeChild(m_removed[i]);
     }
-    if (m_wrap &&  m_placeholderParent!=0) {
+    if (m_wrap &&  m_placeholderParent!=0)
+    {
         int counter=0;
-        foreach (BasicElement *tmp, m_removed) {
+        foreach (BasicElement *tmp, m_removed)
+        {
             m_placeholderParent->insertChild(m_placeholderPosition+counter,tmp);
             counter++;
         }
     }
-    for (int i=0; i<m_added.length(); ++i) {
+    for (int i=0; i<m_added.length(); ++i)
+    {
         m_ownerElement->insertChild(m_position+i,m_added[i]);
     }
 }
@@ -167,21 +190,25 @@ void FormulaCommandReplaceElements::redo()
 void FormulaCommandReplaceElements::undo()
 {
     m_done=false;
-    for (int i=0; i<m_added.length(); ++i) {
+    for (int i=0; i<m_added.length(); ++i)
+    {
         m_ownerElement->removeChild(m_added[i]);
     }
-    if (m_wrap &&  m_placeholderParent!=0) {
-        foreach (BasicElement *tmp, m_removed) {
+    if (m_wrap &&  m_placeholderParent!=0)
+    {
+        foreach (BasicElement *tmp, m_removed)
+        {
             m_placeholderParent->removeChild(tmp);
         }
     }
-    for (int i=0; i<m_length; ++i) {
+    for (int i=0; i<m_length; ++i)
+    {
         m_ownerElement->insertChild(m_position+i,m_removed[i]);
     }
 }
 
 FormulaCommandLoad::FormulaCommandLoad ( FormulaData* data, FormulaElement* newelement, KUndo2Command* parent )
-                   : FormulaCommand ( parent)
+    : FormulaCommand ( parent)
 {
     m_data=data;
     m_newel=newelement;
@@ -192,8 +219,11 @@ FormulaCommandLoad::FormulaCommandLoad ( FormulaData* data, FormulaElement* newe
 
 FormulaCommandLoad::~FormulaCommandLoad()
 {
-    if (m_done) {
-    } else {
+    if (m_done)
+    {
+    }
+    else
+    {
     }
 }
 
@@ -217,32 +247,44 @@ FormulaCommandReplaceRow::FormulaCommandReplaceRow ( FormulaData* data, FormulaC
     m_empty=0;
     int columnnumber=m_table->childElements()[0]->childElements().count();
     TableRowElement* tmpRow;
-    for (int i=0; i<newlength;i++) {
+    for (int i=0; i<newlength; i++)
+    {
         tmpRow = new TableRowElement();
-        for (int j=0; j<columnnumber; j++) {
+        for (int j=0; j<columnnumber; j++)
+        {
             tmpRow->insertChild(i,new TableDataElement());
         }
         m_newRows<<tmpRow;
     }
     m_oldRows=table->childElements().mid(number, oldlength);
     setText( kundo2_i18n( "Change rows" ) );
-    if (newlength==0 && oldlength>=table->childElements().count()) {
+    if (newlength==0 && oldlength>=table->childElements().count())
+    {
         m_empty=new TableRowElement();
         m_empty->insertChild(0, new TableDataElement());
     }
     setUndoCursorPosition(oldposition);
 
-    if (newlength>0) {
+    if (newlength>0)
+    {
         setRedoCursorPosition(FormulaCursor(m_newRows[0]->childElements()[0],0));
-    } else {
-        if (m_empty) {
+    }
+    else
+    {
+        if (m_empty)
+        {
             setRedoCursorPosition(FormulaCursor(m_empty->childElements()[0],0));
-        } else {
+        }
+        else
+        {
             int rowcount=m_table->childElements().count();
-            if (number+oldlength < rowcount) {
+            if (number+oldlength < rowcount)
+            {
                 //we can place the cursor after the removed elements
                 setRedoCursorPosition(FormulaCursor(table->childElements()[number+oldlength]->childElements()[0],0));
-            } else {
+            }
+            else
+            {
                 //we have to place the cursor before the removed rows
                 setRedoCursorPosition(FormulaCursor(table->childElements()[number==0 ? 0: number-1]->childElements()[0],0));
             }
@@ -252,12 +294,18 @@ FormulaCommandReplaceRow::FormulaCommandReplaceRow ( FormulaData* data, FormulaC
 
 FormulaCommandReplaceRow::~FormulaCommandReplaceRow()
 {
-    if (m_done) {
+    if (m_done)
+    {
         qDeleteAll(m_oldRows);
-    } else {
-        if (m_empty) {
+    }
+    else
+    {
+        if (m_empty)
+        {
             delete m_empty;
-        } else {
+        }
+        else
+        {
             qDeleteAll(m_newRows);
         }
     }
@@ -265,13 +313,18 @@ FormulaCommandReplaceRow::~FormulaCommandReplaceRow()
 
 void FormulaCommandReplaceRow::redo()
 {
-    for (int i=0; i<m_oldRows.count(); i++) {
+    for (int i=0; i<m_oldRows.count(); i++)
+    {
         m_table->removeChild(m_oldRows[i]);
     }
-    if (m_empty) {
+    if (m_empty)
+    {
         m_table->insertChild(0,m_empty);
-    } else {
-        for (int i=0; i<m_newRows.count(); i++) {
+    }
+    else
+    {
+        for (int i=0; i<m_newRows.count(); i++)
+        {
             m_table->insertChild(i+m_number,m_newRows[i]);
         }
     }
@@ -279,14 +332,19 @@ void FormulaCommandReplaceRow::redo()
 
 void FormulaCommandReplaceRow::undo()
 {
-    if (m_empty) {
+    if (m_empty)
+    {
         m_table->removeChild(m_empty);
-    } else {
-        for (int i=0; i<m_newRows.count(); i++) {
+    }
+    else
+    {
+        for (int i=0; i<m_newRows.count(); i++)
+        {
             m_table->removeChild(m_newRows[i]);
         }
     }
-    for (int i=0; i<m_oldRows.count(); i++) {
+    for (int i=0; i<m_oldRows.count(); i++)
+    {
         m_table->insertChild(i+m_number,m_oldRows[i]);
     }
 }
@@ -301,21 +359,28 @@ FormulaCommandReplaceColumn::FormulaCommandReplaceColumn ( FormulaData* data, Fo
     int rownumber=m_table->childElements().count();
     QList<BasicElement*> tmp;
 
-    if (newlength==0 && oldlength>=table->childElements().count()) {
+    if (newlength==0 && oldlength>=table->childElements().count())
+    {
         //we remove the whole table
         m_empty=new TableRowElement();
         m_empty->insertChild(0, new TableDataElement());
         m_oldRows=table->childElements();
-    } else {
-        for (int i=0; i<newlength;i++) {
-            for (int j=0; j<rownumber;j++) {
+    }
+    else
+    {
+        for (int i=0; i<newlength; i++)
+        {
+            for (int j=0; j<rownumber; j++)
+            {
                 tmp<<new TableDataElement();
             }
             m_newColumns<<tmp;
             tmp.clear();
         }
-        for (int i=0; i<oldlength;i++) {
-            for (int j=0; j<rownumber;j++) {
+        for (int i=0; i<oldlength; i++)
+        {
+            for (int j=0; j<rownumber; j++)
+            {
                 tmp<<table->childElements()[j]->childElements()[m_position+i];
             }
             m_oldColumns<<tmp;
@@ -324,17 +389,26 @@ FormulaCommandReplaceColumn::FormulaCommandReplaceColumn ( FormulaData* data, Fo
     }
     setUndoCursorPosition(oldcursor);
 
-    if (newlength>0) {
+    if (newlength>0)
+    {
         setRedoCursorPosition(FormulaCursor(m_newColumns[0][0],0));
-    } else {
-        if (m_empty) {
+    }
+    else
+    {
+        if (m_empty)
+        {
             setRedoCursorPosition(FormulaCursor(m_empty->childElements()[0],0));
-        } else {
+        }
+        else
+        {
             int columncount=m_table->childElements()[0]->childElements().count();
-            if (position+oldlength < columncount) {
+            if (position+oldlength < columncount)
+            {
                 //we can place the cursor after the removed elements
                 setRedoCursorPosition(FormulaCursor(table->childElements()[0]->childElements()[position+oldlength],0));
-            } else {
+            }
+            else
+            {
                 //we have to place the cursor before the removed rows
                 setRedoCursorPosition(FormulaCursor(table->childElements()[0]->childElements()[position==0 ? 0: position-1],0));
             }
@@ -344,22 +418,35 @@ FormulaCommandReplaceColumn::FormulaCommandReplaceColumn ( FormulaData* data, Fo
 
 FormulaCommandReplaceColumn::~FormulaCommandReplaceColumn()
 {
-    if (m_done) {
-        if (m_empty) {
+    if (m_done)
+    {
+        if (m_empty)
+        {
             qDeleteAll(m_oldRows);
-        } else {
-            foreach (QList<BasicElement*> column, m_oldColumns) {
-                foreach( BasicElement* element, column) {
+        }
+        else
+        {
+            foreach (QList<BasicElement*> column, m_oldColumns)
+            {
+                foreach( BasicElement* element, column)
+                {
                     delete element;
                 }
             }
         }
-    } else {
-        if (m_empty) {
+    }
+    else
+    {
+        if (m_empty)
+        {
             delete m_empty;
-        } else {
-            foreach (QList<BasicElement*> column, m_newColumns) {
-                foreach( BasicElement* element, column) {
+        }
+        else
+        {
+            foreach (QList<BasicElement*> column, m_newColumns)
+            {
+                foreach( BasicElement* element, column)
+                {
                     delete element;
                 }
             }
@@ -369,18 +456,25 @@ FormulaCommandReplaceColumn::~FormulaCommandReplaceColumn()
 
 void FormulaCommandReplaceColumn::redo()
 {
-    if (m_empty) {
-        for (int i=0; i<m_oldRows.count();i++) {
+    if (m_empty)
+    {
+        for (int i=0; i<m_oldRows.count(); i++)
+        {
             m_table->removeChild(m_oldRows[i]);
         }
         m_table->insertChild(0,m_empty);
-    } else {
-        for (int i=0; i<m_table->childElements().count(); i++) {
+    }
+    else
+    {
+        for (int i=0; i<m_table->childElements().count(); i++)
+        {
             TableRowElement* row=static_cast<TableRowElement*>(m_table->childElements()[i]);
-            for (int j=0; j<m_oldColumns.count(); j++) {
+            for (int j=0; j<m_oldColumns.count(); j++)
+            {
                 row->removeChild(m_oldColumns[j][i]);
             }
-            for (int j=0; j<m_newColumns.count(); j++) {
+            for (int j=0; j<m_newColumns.count(); j++)
+            {
                 row->insertChild(m_position+j,m_newColumns[j][i]);
             }
         }
@@ -389,18 +483,25 @@ void FormulaCommandReplaceColumn::redo()
 
 void FormulaCommandReplaceColumn::undo()
 {
-    if (m_empty) {
+    if (m_empty)
+    {
         m_table->removeChild(m_empty);
-        for (int i=0; i<m_oldRows.count(); ++i) {
+        for (int i=0; i<m_oldRows.count(); ++i)
+        {
             m_table->insertChild(i,m_oldRows[i]);
         }
-    } else {
-        for (int i=0; i<m_table->childElements().count(); i++) {
+    }
+    else
+    {
+        for (int i=0; i<m_table->childElements().count(); i++)
+        {
             TableRowElement* row=static_cast<TableRowElement*>(m_table->childElements()[i]);
-            for (int j=0; j<m_newColumns.count(); j++) {
+            for (int j=0; j<m_newColumns.count(); j++)
+            {
                 row->removeChild(m_newColumns[j][i]);
             }
-            for (int j=0; j<m_oldColumns.count(); j++) {
+            for (int j=0; j<m_oldColumns.count(); j++)
+            {
                 row->insertChild(m_position+j,m_oldColumns[j][i]);
             }
         }
@@ -422,15 +523,15 @@ void FormulaCommandReplaceColumn::undo()
 // 	if( !m_attributes.contains( i.key() ) )
 //             m_attributes.insert( i.key(), i.value() );
 //     }
-// 
+//
 //     setText( kundo2_i18n( "Attribute Changed" ) );
 // }
-// 
+//
 // void FormulaCommandAttribute::redo()
 // {
 //     m_ownerElement->setAttributes( m_attributes );
 // }
-// 
+//
 // void FormulaCommandAttribute::undo()
 // {
 //     m_ownerElement->setAttributes( m_oldAttributes );

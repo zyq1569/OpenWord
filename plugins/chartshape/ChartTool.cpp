@@ -140,16 +140,20 @@ void ChartTool::shapeSelectionChanged()
     // We activate the default tool to rectify this.
     // FIXME: could probably be done in KoToolBase (or wherever appropriate)
 
-    if (!d->shape) {
+    if (!d->shape)
+    {
         return;
     }
     QList<KoShape*> lst = canvas()->shapeManager()->selection()->selectedShapes(KoFlake::StrippedSelection);
-    if (lst.contains(d->shape)) {
+    if (lst.contains(d->shape))
+    {
         return;
     }
-    for (KoShape *s : lst) {
+    for (KoShape *s : lst)
+    {
         ChartShape *chart = dynamic_cast<ChartShape*>(s);
-        if (chart && chart != d->shape) {
+        if (chart && chart != d->shape)
+        {
             activateTool(KoInteractionTool_ID);
         }
     }
@@ -157,7 +161,8 @@ void ChartTool::shapeSelectionChanged()
 
 void ChartTool::paint(QPainter &painter, const KoViewConverter &converter)
 {
-    if (d->shape) {
+    if (d->shape)
+    {
         QPen pen;
         //Use the #00adf5 color with 50% opacity
         pen.setColor(QColor(0, 173, 245, 127));
@@ -180,19 +185,23 @@ void ChartTool::mousePressEvent(KoPointerEvent *event)
 #else
     // Select dataset
     if (!d->shape || !d->shape->kdChart() || ! d->shape->kdChart()->coordinatePlane()
-        || !d->shape->kdChart()->coordinatePlane()->diagram())
+            || !d->shape->kdChart()->coordinatePlane()->diagram())
+    {
         return;
+    }
     QPointF point = event->point - d->shape->position();
     QModelIndex selection = d->shape->kdChart()->coordinatePlane()->diagram()->indexAt(point.toPoint());
     // Note: the dataset will always stay column() due to the transformations being
     // done internally by the ChartProxyModel
     int dataset = selection.column();
 
-    if (d->datasetSelection.isValid()) {
+    if (d->datasetSelection.isValid())
+    {
         d->shape->kdChart()->coordinatePlane()->diagram()->setPen(d->datasetSelection.column(), d->datasetSelectionPen);
         //d->shape->kdChart()->coordinatePlane()->diagram()->setBrush(d->datasetSelection, d->datasetSelectionBrush);
     }
-    if (selection.isValid()) {
+    if (selection.isValid())
+    {
         d->datasetSelection = selection;
 
         QPen pen(Qt::DotLine);
@@ -226,38 +235,48 @@ void ChartTool::activate(ToolActivation, const QSet<KoShape*> &shapes)
 {
     debugChartTool<<shapes;
     d->shape = 0;
-    for (KoShape *s : shapes) {
+    for (KoShape *s : shapes)
+    {
         d->shape = dynamic_cast<ChartShape*>(s);
-        if (!d->shape) {
-            for (KoShape *parent = s->parent(); parent; parent = parent->parent()) {
+        if (!d->shape)
+        {
+            for (KoShape *parent = s->parent(); parent; parent = parent->parent())
+            {
                 d->shape = dynamic_cast<ChartShape*>(parent);
-                if (d->shape) {
+                if (d->shape)
+                {
                     break;
                 }
             }
         }
-        if (d->shape) {
+        if (d->shape)
+        {
             break;
         }
     }
     debugChartTool<<shapes<<d->shape;
-    if (!d->shape) {
+    if (!d->shape)
+    {
         emit done();
         return;
     }
     useCursor(Qt::ArrowCursor);
 
-    foreach (QWidget *w, optionWidgets()) {
+    foreach (QWidget *w, optionWidgets())
+    {
         ConfigWidgetBase *widget = dynamic_cast<ConfigWidgetBase*>(w);
         Q_ASSERT(widget);
-        if (widget) {
+        if (widget)
+        {
             widget->open(d->shape);
         }
     }
-    foreach (QWidget *w, optionWidgets()) {
+    foreach (QWidget *w, optionWidgets())
+    {
         ConfigWidgetBase *widget = dynamic_cast<ConfigWidgetBase*>(w);
         Q_ASSERT(widget);
-        if (widget) {
+        if (widget)
+        {
             widget->updateData();
         }
     }
@@ -268,12 +287,16 @@ void ChartTool::deactivate()
 {
     debugChartTool<<d->shape;
 
-    foreach (QWidget *w, optionWidgets()) {
+    foreach (QWidget *w, optionWidgets())
+    {
         ConfigWidgetBase *configWidget = dynamic_cast<ConfigWidgetBase*>(w);
         if (configWidget)
+        {
             configWidget->deactivate();
+        }
     }
-    if (d->shape) {
+    if (d->shape)
+    {
         d->shape->update(); // to get rid of decoration
     }
     d->shape = 0;
@@ -484,17 +507,21 @@ QList<QPointer<QWidget> > ChartTool::createOptionWidgets()
 void ChartTool::setChartType(ChartType type, ChartSubtype subtype)
 {
     Q_ASSERT(d->shape);
-    if (!d->shape) {
+    if (!d->shape)
+    {
         return;
     }
     ChartTypeCommand *command = new ChartTypeCommand(d->shape);
-    if (command!=0) {
+    if (command!=0)
+    {
         command->setChartType(type, subtype);
         canvas()->addCommand(command);
     }
-    foreach (QWidget *w, optionWidgets()) {
+    foreach (QWidget *w, optionWidgets())
+    {
         ConfigWidgetBase *cw = dynamic_cast<ConfigWidgetBase*>(w);
-        if (cw) {
+        if (cw)
+        {
             cw->updateData();
         }
     }
@@ -505,7 +532,9 @@ void ChartTool::setChartSubType(ChartSubtype subtype)
 {
     Q_ASSERT(d->shape);
     if (!d->shape)
+    {
         return;
+    }
 
     d->shape->setChartSubType(subtype);
     d->shape->update();
@@ -516,7 +545,9 @@ void ChartTool::setDataSetXDataRegion(DataSet *dataSet, const CellRegion &region
 {
     debugChartTool<<dataSet<<region.toString();
     if (!dataSet)
+    {
         return;
+    }
 
     dataSet->setXDataRegion(region);
     d->shape->update();
@@ -525,7 +556,9 @@ void ChartTool::setDataSetXDataRegion(DataSet *dataSet, const CellRegion &region
 void ChartTool::setDataSetYDataRegion(DataSet *dataSet, const CellRegion &region)
 {
     if (!dataSet)
+    {
         return;
+    }
 
     dataSet->setYDataRegion(region);
     d->shape->update();
@@ -534,7 +567,9 @@ void ChartTool::setDataSetYDataRegion(DataSet *dataSet, const CellRegion &region
 void ChartTool::setDataSetCustomDataRegion(DataSet *dataSet, const CellRegion &region)
 {
     if (!dataSet)
+    {
         return;
+    }
 
     dataSet->setCustomDataRegion(region);
 }
@@ -542,7 +577,9 @@ void ChartTool::setDataSetCustomDataRegion(DataSet *dataSet, const CellRegion &r
 void ChartTool::setDataSetLabelDataRegion(DataSet *dataSet, const CellRegion &region)
 {
     if (!dataSet)
+    {
         return;
+    }
 
     dataSet->setLabelDataRegion(region);
     d->shape->update();
@@ -551,15 +588,19 @@ void ChartTool::setDataSetLabelDataRegion(DataSet *dataSet, const CellRegion &re
 
 void ChartTool::setDataSetCategoryDataRegion(DataSet *dataSet, const CellRegion &region)
 {
-    if (!dataSet) {
+    if (!dataSet)
+    {
         return;
     }
-    if (isCartesian(d->shape->chartType())) {
+    if (isCartesian(d->shape->chartType()))
+    {
         // FIXME: Seems strange the way things are stored in multiple places
         // Categories are labels on the categories axis
         dataSet->setCategoryDataRegion(region); // probably should not be stored here, as datasets cannot have individual categories
         d->shape->plotArea()->proxyModel()->setCategoryDataRegion(region); // this seems to be for odf only!?
-    } else {
+    }
+    else
+    {
         // Categories are legend texts
         dataSet->setCategoryDataRegion(region);
     }
@@ -572,7 +613,8 @@ void ChartTool::setDataSetChartType(DataSet *dataSet, ChartType type, ChartSubty
 {
     Q_ASSERT(d->shape);
     Q_ASSERT(dataSet);
-    if (dataSet) {
+    if (dataSet)
+    {
         DatasetCommand *cmd = new DatasetCommand(dataSet, d->shape);
         cmd->setDataSetChartType(type, subType);
         canvas()->addCommand(cmd);
@@ -587,20 +629,25 @@ void ChartTool::setDataSetBrush(DataSet *dataSet, const QColor& color, int secti
     Q_ASSERT(d->shape);
     Q_ASSERT(dataSet || section >= 0);
     debugChartTool<<dataSet<<color<<section;
-    if (!dataSet) {
+    if (!dataSet)
+    {
         QList<DataSet*> lst = d->shape->proxyModel()->dataSets();
-        if (lst.isEmpty()) {
+        if (lst.isEmpty())
+        {
             return;
         }
         // we set brush for section in all datasets
         KUndo2Command *command = new KUndo2Command();
-        for (int i = 0; i < lst.count(); ++i) {
+        for (int i = 0; i < lst.count(); ++i)
+        {
             DatasetCommand *cmd = new DatasetCommand(lst.at(i), d->shape, section, command);
             cmd->setDataSetBrush(color);
             command->setText(cmd->text());
         }
         canvas()->addCommand(command);
-    } else {
+    }
+    else
+    {
         DatasetCommand *command = new DatasetCommand(dataSet, d->shape, section);
         command->setDataSetBrush(color);
         canvas()->addCommand(command);
@@ -612,20 +659,25 @@ void ChartTool::setDataSetPen(DataSet *dataSet, const QColor& color, int section
     Q_ASSERT(d->shape);
     Q_ASSERT(dataSet || section >= 0);
     debugChartTool<<color<<section;
-    if (!dataSet) {
+    if (!dataSet)
+    {
         QList<DataSet*> lst = d->shape->proxyModel()->dataSets();
-        if (lst.isEmpty()) {
+        if (lst.isEmpty())
+        {
             return;
         }
         // we set brush for section in all datasets
         KUndo2Command *command = new KUndo2Command();
-        for (int i = 0; i < lst.count(); ++i) {
+        for (int i = 0; i < lst.count(); ++i)
+        {
             DatasetCommand *cmd = new DatasetCommand(lst.at(i), d->shape, section, command);
             cmd->setDataSetPen(color);
             command->setText(cmd->text());
         }
         canvas()->addCommand(command);
-    } else {
+    }
+    else
+    {
         DatasetCommand *command = new DatasetCommand(dataSet, d->shape, section);
         command->setDataSetPen(color);
         canvas()->addCommand(command);
@@ -635,7 +687,8 @@ void ChartTool::setDataSetPen(DataSet *dataSet, const QColor& color, int section
 void ChartTool::setDataSetMarker(DataSet *dataSet, OdfSymbolType type, OdfMarkerStyle style)
 {
     Q_ASSERT(d->shape);
-    if (!dataSet) {
+    if (!dataSet)
+    {
         return;
     }
     DatasetCommand *command = new DatasetCommand(dataSet, d->shape);
@@ -646,7 +699,9 @@ void ChartTool::setDataSetAxis(DataSet *dataSet, Axis *axis)
 {
     Q_ASSERT(d->shape);
     if (!dataSet || !axis)
+    {
         return;
+    }
 
     DatasetCommand *command = new DatasetCommand(dataSet, d->shape);
     command->setDataSetAxis(axis);
@@ -657,20 +712,25 @@ void ChartTool::setDataSetShowCategory(DataSet *dataSet, bool b, int section)
 {
     Q_ASSERT(d->shape);
     Q_ASSERT(dataSet || section >= 0);
-    if (!dataSet) {
+    if (!dataSet)
+    {
         QList<DataSet*> lst = d->shape->proxyModel()->dataSets();
-        if (lst.isEmpty()) {
+        if (lst.isEmpty())
+        {
             return;
         }
         // we set brush for section in all datasets
         KUndo2Command *command = new KUndo2Command();
-        for (int i = 0; i < lst.count(); ++i) {
+        for (int i = 0; i < lst.count(); ++i)
+        {
             DatasetCommand *cmd = new DatasetCommand(lst.at(i), d->shape, section, command);
             cmd->setDataSetShowCategory(b);
             command->setText(cmd->text());
         }
         canvas()->addCommand(command);
-    } else {
+    }
+    else
+    {
         DatasetCommand *command = new DatasetCommand(dataSet, d->shape, section);
         command->setDataSetShowCategory(b);
         canvas()->addCommand(command);
@@ -684,20 +744,25 @@ void ChartTool::setDataSetShowNumber(DataSet *dataSet, bool b, int section)
     debugChartTool<<b<<section<<dataSet;
     Q_ASSERT(d->shape);
     Q_ASSERT(dataSet || section >= 0);
-    if (!dataSet) {
+    if (!dataSet)
+    {
         QList<DataSet*> lst = d->shape->proxyModel()->dataSets();
-        if (lst.isEmpty()) {
+        if (lst.isEmpty())
+        {
             return;
         }
         // we set brush for section in all datasets
         KUndo2Command *command = new KUndo2Command();
-        for (int i = 0; i < lst.count(); ++i) {
+        for (int i = 0; i < lst.count(); ++i)
+        {
             DatasetCommand *cmd = new DatasetCommand(lst.at(i), d->shape, section, command);
             cmd->setDataSetShowNumber(b);
             command->setText(cmd->text());
         }
         canvas()->addCommand(command);
-    } else {
+    }
+    else
+    {
         DatasetCommand *command = new DatasetCommand(dataSet, d->shape, section);
         command->setDataSetShowNumber(b);
         canvas()->addCommand(command);
@@ -709,20 +774,25 @@ void ChartTool::setDataSetShowPercent(DataSet *dataSet, bool b, int section)
 {
     Q_ASSERT(d->shape);
     Q_ASSERT(dataSet || section >= 0);
-    if (!dataSet) {
+    if (!dataSet)
+    {
         QList<DataSet*> lst = d->shape->proxyModel()->dataSets();
-        if (lst.isEmpty()) {
+        if (lst.isEmpty())
+        {
             return;
         }
         // we set brush for section in all datasets
         KUndo2Command *command = new KUndo2Command();
-        for (int i = 0; i < lst.count(); ++i) {
+        for (int i = 0; i < lst.count(); ++i)
+        {
             DatasetCommand *cmd = new DatasetCommand(lst.at(i), d->shape, section, command);
             cmd->setDataSetShowPercent(b);
             command->setText(cmd->text());
         }
         canvas()->addCommand(command);
-    } else {
+    }
+    else
+    {
         DatasetCommand *command = new DatasetCommand(dataSet, d->shape, section);
         command->setDataSetShowPercent(b);
         canvas()->addCommand(command);
@@ -735,20 +805,25 @@ void ChartTool::setDataSetShowSymbol(DataSet *dataSet, bool b, int section)
 {
     Q_ASSERT(d->shape);
     Q_ASSERT(dataSet || section >= 0);
-    if (!dataSet) {
+    if (!dataSet)
+    {
         QList<DataSet*> lst = d->shape->proxyModel()->dataSets();
-        if (lst.isEmpty()) {
+        if (lst.isEmpty())
+        {
             return;
         }
         // we set brush for section in all datasets
         KUndo2Command *command = new KUndo2Command();
-        for (int i = 0; i < lst.count(); ++i) {
+        for (int i = 0; i < lst.count(); ++i)
+        {
             DatasetCommand *cmd = new DatasetCommand(lst.at(i), d->shape, section, command);
             cmd->setDataSetShowSymbol(b);
             command->setText(cmd->text());
         }
         canvas()->addCommand(command);
-    } else {
+    }
+    else
+    {
         DatasetCommand *command = new DatasetCommand(dataSet, d->shape, section);
         command->setDataSetShowSymbol(b);
         canvas()->addCommand(command);
@@ -760,7 +835,9 @@ void ChartTool::setThreeDMode(bool threeD)
 {
     Q_ASSERT(d->shape);
     if (!d->shape)
+    {
         return;
+    }
 
     d->shape->setThreeD(threeD);
     d->shape->update();
@@ -770,7 +847,9 @@ void ChartTool::setShowTitle(bool show)
 {
     Q_ASSERT(d->shape);
     if (!d->shape)
+    {
         return;
+    }
 
     ChartTextShapeCommand *command = new ChartTextShapeCommand(d->shape->title(), d->shape, show);
     canvas()->addCommand(command);
@@ -779,7 +858,8 @@ void ChartTool::setShowTitle(bool show)
 void ChartTool::setTitlePositioning(int index)
 {
     Q_ASSERT(d->shape);
-    if (!d->shape) {
+    if (!d->shape)
+    {
         return;
     }
     // TODD: undo command
@@ -792,12 +872,14 @@ void ChartTool::setTitlePositioning(int index)
 void ChartTool::setTitleResize(int index)
 {
     Q_ASSERT(d->shape);
-    if (!d->shape) {
+    if (!d->shape)
+    {
         return;
     }
     // TODD: undo command
     TextLabelData *labelData = dynamic_cast<TextLabelData*>(d->shape->title()->userData());
-    if (labelData == 0) {
+    if (labelData == 0)
+    {
         return;
     }
     labelData->setResizeMethod(index == 0 ? KoTextShapeDataBase::AutoResize : KoTextShapeDataBase::NoResize);
@@ -810,7 +892,9 @@ void ChartTool::setShowSubTitle(bool show)
 {
     Q_ASSERT(d->shape);
     if (!d->shape)
+    {
         return;
+    }
 
     ChartTextShapeCommand *command = new ChartTextShapeCommand(d->shape->subTitle(), d->shape, show);
     canvas()->addCommand(command);
@@ -819,7 +903,8 @@ void ChartTool::setShowSubTitle(bool show)
 void ChartTool::setSubTitlePositioning(int index)
 {
     Q_ASSERT(d->shape);
-    if (!d->shape) {
+    if (!d->shape)
+    {
         return;
     }
     // TODD: undo command
@@ -832,12 +917,14 @@ void ChartTool::setSubTitlePositioning(int index)
 void ChartTool::setSubTitleResize(int index)
 {
     Q_ASSERT(d->shape);
-    if (!d->shape) {
+    if (!d->shape)
+    {
         return;
     }
     // TODD: undo command
     TextLabelData *labelData = dynamic_cast<TextLabelData*>(d->shape->subTitle()->userData());
-    if (labelData == 0) {
+    if (labelData == 0)
+    {
         return;
     }
     labelData->setResizeMethod(index == 0 ? KoTextShapeDataBase::AutoResize : KoTextShapeDataBase::NoResize);
@@ -850,7 +937,9 @@ void ChartTool::setShowFooter(bool show)
 {
     Q_ASSERT(d->shape);
     if (!d->shape)
+    {
         return;
+    }
 
     ChartTextShapeCommand *command = new ChartTextShapeCommand(d->shape->footer(), d->shape, show);
     canvas()->addCommand(command);
@@ -859,7 +948,8 @@ void ChartTool::setShowFooter(bool show)
 void ChartTool::setFooterPositioning(int index)
 {
     Q_ASSERT(d->shape);
-    if (!d->shape) {
+    if (!d->shape)
+    {
         return;
     }
     // TODD: undo command
@@ -872,12 +962,14 @@ void ChartTool::setFooterPositioning(int index)
 void ChartTool::setFooterResize(int index)
 {
     Q_ASSERT(d->shape);
-    if (!d->shape) {
+    if (!d->shape)
+    {
         return;
     }
     // TODD: undo command
     TextLabelData *labelData = dynamic_cast<TextLabelData*>(d->shape->footer()->userData());
-    if (labelData == 0) {
+    if (labelData == 0)
+    {
         return;
     }
     labelData->setResizeMethod(index == 0 ? KoTextShapeDataBase::AutoResize : KoTextShapeDataBase::NoResize);
@@ -890,7 +982,9 @@ void ChartTool::setDataDirection(Qt::Orientation direction)
 {
     Q_ASSERT(d->shape);
     if (!d->shape)
+    {
         return;
+    }
 
     d->shape->proxyModel()->setDataDirection(direction);
     d->shape->relayout();
@@ -899,7 +993,8 @@ void ChartTool::setDataDirection(Qt::Orientation direction)
 void ChartTool::setChartOrientation(Qt::Orientation direction)
 {
     Q_ASSERT(d->shape);
-    if (!d->shape) {
+    if (!d->shape)
+    {
         return;
     }
     PlotAreaCommand *command = new PlotAreaCommand(d->shape->plotArea());
@@ -977,9 +1072,12 @@ void ChartTool::addAxis(AxisDimension dimension, const QString& title)
     Q_ASSERT(d->shape);
 
     Axis *axis = new Axis(d->shape->plotArea(), dimension); // automatically adds axis to plot area
-    if (axis == d->shape->plotArea()->secondaryYAxis()) {
+    if (axis == d->shape->plotArea()->secondaryYAxis())
+    {
         axis->setOdfAxisPosition("end"); // right
-    } else if (axis == d->shape->plotArea()->secondaryXAxis()) {
+    }
+    else if (axis == d->shape->plotArea()->secondaryXAxis())
+    {
         axis->setOdfAxisPosition("end"); // top
         axis->updateKChartAxisPosition();
     }
@@ -1000,7 +1098,8 @@ void ChartTool::removeAxis(Axis *axis)
 void ChartTool::setAxisShowTitle(Axis *axis, bool show)
 {
     Q_ASSERT(d->shape);
-    if (show && axis->titleText().isEmpty()) {
+    if (show && axis->titleText().isEmpty())
+    {
         axis->setTitleText(i18n("Axistitle"));
     }
     AxisCommand *command = new AxisCommand(axis, d->shape);
@@ -1148,9 +1247,12 @@ void ChartTool::setShowLegend(bool show)
     Q_ASSERT(d->shape);
 
     ChartTextShapeCommand *command = new ChartTextShapeCommand(d->shape->legend(), d->shape, show);
-    if (show) {
+    if (show)
+    {
         command->setText(kundo2_i18n("Show Legend"));
-    } else {
+    }
+    else
+    {
         command->setText(kundo2_i18n("Hide Legend"));
     }
     canvas()->addCommand(command);

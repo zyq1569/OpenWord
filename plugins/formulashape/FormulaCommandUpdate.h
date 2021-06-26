@@ -33,7 +33,8 @@ class KoFormulaShape;
  *
  **/
 
-class FormulaCommandUpdate : public KUndo2Command {
+class FormulaCommandUpdate : public KUndo2Command
+{
 public:
     FormulaCommandUpdate(KoFormulaShape* shape, FormulaCommand* command);
 
@@ -42,7 +43,7 @@ public:
 
     /// Revert the actions done in redo()
     void undo() override;
-    
+
 private:
     /// The BasicElement that owns the newly added Text
     FormulaCommand* m_command;

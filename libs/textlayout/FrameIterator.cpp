@@ -54,14 +54,22 @@ FrameIterator::FrameIterator(FrameIterator *other)
     fragmentIterator = other->fragmentIterator;
     endNoteIndex = other->endNoteIndex;
     if (other->currentTableIterator)
+    {
         currentTableIterator = new TableIterator(other->currentTableIterator);
+    }
     else
+    {
         currentTableIterator = 0;
+    }
 
     if (other->currentSubFrameIterator)
+    {
         currentSubFrameIterator = new FrameIterator(other->currentSubFrameIterator);
+    }
     else
+    {
         currentSubFrameIterator = 0;
+    }
 }
 
 FrameIterator::~FrameIterator()
@@ -78,28 +86,44 @@ bool FrameIterator::isValid() const
 bool FrameIterator::operator ==(const FrameIterator &other) const
 {
     if (it != other.it)
+    {
         return false;
+    }
     if (endNoteIndex != other.endNoteIndex)
+    {
         return false;
-    if (currentTableIterator || other.currentTableIterator) {
+    }
+    if (currentTableIterator || other.currentTableIterator)
+    {
         if (!currentTableIterator || !other.currentTableIterator)
+        {
             return false;
+        }
         return *currentTableIterator == *(other.currentTableIterator);
-    } else if (currentSubFrameIterator || other.currentSubFrameIterator) {
+    }
+    else if (currentSubFrameIterator || other.currentSubFrameIterator)
+    {
         if (!currentSubFrameIterator || !other.currentSubFrameIterator)
+        {
             return false;
+        }
         return *currentSubFrameIterator == *(other.currentSubFrameIterator);
-    } else {
+    }
+    else
+    {
         return lineTextStart == other.lineTextStart;
     }
 }
 
 TableIterator *FrameIterator::tableIterator(QTextTable *table)
 {
-    if(table == 0) {
+    if(table == 0)
+    {
         delete currentTableIterator;
         currentTableIterator = 0;
-    } else if(currentTableIterator == 0) {
+    }
+    else if(currentTableIterator == 0)
+    {
         currentTableIterator = new TableIterator(table);
         currentTableIterator->masterPageName = masterPageName;
     }
@@ -108,10 +132,13 @@ TableIterator *FrameIterator::tableIterator(QTextTable *table)
 
 FrameIterator *FrameIterator::subFrameIterator(QTextFrame *subFrame)
 {
-    if(subFrame == 0) {
+    if(subFrame == 0)
+    {
         delete currentSubFrameIterator;
         currentSubFrameIterator = 0;
-    } else if(currentSubFrameIterator == 0) {
+    }
+    else if(currentSubFrameIterator == 0)
+    {
         currentSubFrameIterator = new FrameIterator(subFrame);
         currentSubFrameIterator->masterPageName = masterPageName;
     }

@@ -41,9 +41,11 @@
 class DocxXmlCommentReader::Private
 {
 public:
-    Private() : counter(0) {
+    Private() : counter(0)
+    {
     }
-    ~Private() {
+    ~Private()
+    {
     }
     QString pathAndFile;
     int counter;
@@ -73,16 +75,19 @@ KoFilter::ConversionStatus DocxXmlCommentReader::read(MSOOXML::MsooXmlReaderCont
 
     debugDocx << "=============================";
     readNext();
-    if (!isStartDocument()) {
+    if (!isStartDocument())
+    {
         return KoFilter::WrongFormat;
     }
     readNext();
 
     debugDocx << *this << namespaceUri();
-    if (!expectEl(QList<QByteArray>() << "w:comments")) {
+    if (!expectEl(QList<QByteArray>() << "w:comments"))
+    {
         return KoFilter::WrongFormat;
     }
-    if (!expectNS(MSOOXML::Schemas::wordprocessingml)) {
+    if (!expectNS(MSOOXML::Schemas::wordprocessingml))
+    {
         return KoFilter::WrongFormat;
     }
 
@@ -90,7 +95,8 @@ KoFilter::ConversionStatus DocxXmlCommentReader::read(MSOOXML::MsooXmlReaderCont
 
     //! @todo find out whether the namespace returned by namespaceUri()
     //!       is exactly the same ref as the element of namespaceDeclarations()
-    if (!namespaces.contains(QXmlStreamNamespaceDeclaration("w", MSOOXML::Schemas::wordprocessingml))) {
+    if (!namespaces.contains(QXmlStreamNamespaceDeclaration("w", MSOOXML::Schemas::wordprocessingml)))
+    {
         raiseError(i18n("Namespace \"%1\" not found", QLatin1String(MSOOXML::Schemas::wordprocessingml)));
         return KoFilter::WrongFormat;
     }
@@ -99,7 +105,8 @@ KoFilter::ConversionStatus DocxXmlCommentReader::read(MSOOXML::MsooXmlReaderCont
 
     RETURN_IF_ERROR(read_comments())
 
-    if (!expectElEnd(qn)) {
+    if (!expectElEnd(qn))
+    {
         return KoFilter::WrongFormat;
     }
     debugDocx << "===========finished============";
@@ -122,10 +129,12 @@ KoFilter::ConversionStatus DocxXmlCommentReader::read_comments()
 {
     READ_PROLOGUE
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(comment)
             ELSE_WRONG_FORMAT
         }
@@ -184,7 +193,8 @@ KoFilter::ConversionStatus DocxXmlCommentReader::read_comment()
 
     TRY_READ_ATTR(author)
     TRY_READ_ATTR(date)
-    if (date.endsWith(QLatin1Char('Z'))) {
+    if (date.endsWith(QLatin1Char('Z')))
+    {
         date.chop(1);
     }
 
@@ -197,21 +207,25 @@ KoFilter::ConversionStatus DocxXmlCommentReader::read_comment()
     KoXmlWriter *oldBody = body;
     body = new KoXmlWriter(&buffer);
 
-    if (!author.isEmpty()) {
+    if (!author.isEmpty())
+    {
         body->startElement("dc:creator");
         body->addTextSpan(author);
         body->endElement(); // dc:creator
     }
-    if (!date.isEmpty()) {
+    if (!date.isEmpty())
+    {
         body->startElement("dc:date");
         body->addTextSpan(date);
         body->endElement(); // dc:date
     }
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(p)
             ELSE_TRY_READ_IF_NS(m, oMath)
             ELSE_TRY_READ_IF(sdt)
@@ -224,7 +238,8 @@ KoFilter::ConversionStatus DocxXmlCommentReader::read_comment()
     delete body;
     body = oldBody;
 
-    if (!id.isEmpty()) {
+    if (!id.isEmpty())
+    {
         m_context->m_comments[id] = content;
     }
 

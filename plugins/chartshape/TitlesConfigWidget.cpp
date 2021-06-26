@@ -42,7 +42,8 @@ TitlesConfigWidget::~TitlesConfigWidget()
 
 void TitlesConfigWidget::updateData()
 {
-    if (!chart) {
+    if (!chart)
+    {
         return;
     }
     blockSignals(true);

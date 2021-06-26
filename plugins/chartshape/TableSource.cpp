@@ -104,7 +104,9 @@ void TableSource::Private::updateEmptySamColumn(int col)
     QString tableName = sheetAccessModel->headerData(col, Qt::Horizontal).toString();
     QAbstractItemModel *model = getModel(sheetAccessModel, col);
     if (tableName.isEmpty() || model == 0)
+    {
         return;
+    }
 
     // Ok. Column is valid now. Add table in this column.
     samEmptyColumns.removeAll(col);
@@ -124,14 +126,18 @@ TableSource::~TableSource()
 Table *TableSource::get(const QString &tableName) const
 {
     if(!d->tablesByName.contains(tableName))
+    {
         return 0;
+    }
     return d->tablesByName[tableName];
 }
 
 Table *TableSource::get(const QAbstractItemModel *model) const
 {
     if(!d->tablesByModel.contains(model))
+    {
         return 0;
+    }
     return d->tablesByModel[model];
 }
 
@@ -144,11 +150,14 @@ void TableSource::setSheetAccessModel(QAbstractItemModel *model)
 {
     // Disconnect slots from signals in old sheetAccessModel
     if (d->sheetAccessModel)
+    {
         d->sheetAccessModel->disconnect(this);
+    }
 
     d->sheetAccessModel = model;
 
-    if (model) {
+    if (model)
+    {
         connect(model, SIGNAL(columnsInserted(QModelIndex,int,int)),
                 this,  SLOT(samColumnsInserted(QModelIndex,int,int)));
         connect(model, SIGNAL(columnsAboutToBeRemoved(QModelIndex,int,int)),
@@ -181,7 +190,8 @@ void TableSource::remove(const QString &name)
     Q_ASSERT(d->tablesByName.contains(name));
 
     Table *table = get(name);
-    if (table) {
+    if (table)
+    {
         d->tablesByName.remove(table->m_name);
         d->tablesByModel.remove(table->m_model);
         d->tables.remove(table);
@@ -196,7 +206,8 @@ void TableSource::rename(const QString &from, const QString &to)
     Q_ASSERT(!d->tablesByName.contains(to));
 
     Table *table = get(from);
-    if (table) {
+    if (table)
+    {
         d->tablesByName.remove(from);
         d->tablesByName.insert(to, table);
         table->m_name = to;
@@ -214,13 +225,18 @@ void TableSource::samColumnsInserted(QModelIndex, int first, int last)
 {
     Q_ASSERT(d->sheetAccessModel);
 
-    for (int col = first; col <= last; col++) {
+    for (int col = first; col <= last; col++)
+    {
         QString tableName = d->sheetAccessModel->headerData(col, Qt::Horizontal).toString();
         QAbstractItemModel *model = getModel(d->sheetAccessModel, col);
         if (tableName.isEmpty() || model == 0)
+        {
             d->samEmptyColumns.append(col);
+        }
         else
+        {
             add(tableName, getModel(d->sheetAccessModel, col));
+        }
     }
 }
 
@@ -228,7 +244,8 @@ void TableSource::samColumnsRemoved(QModelIndex, int first, int last)
 {
     Q_ASSERT(d->sheetAccessModel);
 
-    for (int col = first; col <= last; col++) {
+    for (int col = first; col <= last; col++)
+    {
         QString tableName = d->sheetAccessModel->headerData(col, Qt::Horizontal).toString();
         remove(tableName);
     }
@@ -238,14 +255,21 @@ void TableSource::samDataChanged(const QModelIndex &first, const QModelIndex &la
 {
     // Only the first row contains useful information for us
     if (first.row() != 0)
+    {
         return;
+    }
 
-    for (int col = first.column(); col <= last.column(); col++) {
+    for (int col = first.column(); col <= last.column(); col++)
+    {
         // If this column wasn't valid before check if it is now and update
         if (d->samEmptyColumns.contains(col))
+        {
             d->updateEmptySamColumn(col);
+        }
         else
+        {
             Q_ASSERT("Changing the model of an existing table is not supported!");
+        }
     }
 }
 
@@ -253,11 +277,15 @@ void TableSource::samHeaderDataChanged(Qt::Orientation orientation, int first, i
 {
     // There's no useful information for us in vertical headers
     if (orientation == Qt::Vertical)
+    {
         return;
+    }
 
-    for (int col = first; col <= last; col++) {
+    for (int col = first; col <= last; col++)
+    {
         // If this column wasn't valid before check if it is now and update
-        if (d->samEmptyColumns.contains(col)) {
+        if (d->samEmptyColumns.contains(col))
+        {
             d->updateEmptySamColumn(col);
             continue;
         }

@@ -45,7 +45,8 @@
 #include "ChartDebug.h"
 
 
-namespace KoChart {
+namespace KoChart
+{
 
 class ChartDocument::Private
 {
@@ -84,17 +85,20 @@ bool ChartDocument::loadOdf(KoOdfReadStore &odfStore)
 {
     KoXmlDocument doc = odfStore.contentDoc();
     KoXmlNode bodyNode = doc.documentElement().namedItemNS(KoXmlNS::office, "body");
-    if (bodyNode.isNull()) {
+    if (bodyNode.isNull())
+    {
         errorChart << "No <office:body> element found.";
         return false;
     }
     KoXmlNode chartElementParentNode = bodyNode.namedItemNS(KoXmlNS::office, "chart");
-    if (chartElementParentNode.isNull()) {
+    if (chartElementParentNode.isNull())
+    {
         errorChart << "No <office:chart> element found.";
         return false;
     }
     KoXmlElement chartElement = chartElementParentNode.namedItemNS(KoXmlNS::chart, "chart").toElement();
-    if (chartElement.isNull()) {
+    if (chartElement.isNull())
+    {
         errorChart << "No <chart:chart> element found.";
         return false;
     }
@@ -119,12 +123,16 @@ bool ChartDocument::saveOdf(SavingContext &context)
     KoXmlWriter *manifestWriter = odfStore.manifestWriter();
     KoXmlWriter *contentWriter  = odfStore.contentWriter();
     if (!contentWriter)
+    {
         return false;
+    }
 
     KoGenStyles mainStyles;
     KoXmlWriter *bodyWriter = odfStore.bodyWriter();
     if (!bodyWriter)
+    {
         return false;
+    }
 
     KoEmbeddedDocumentSaver& embeddedSaver = context.embeddedSaver;
 
@@ -147,9 +155,12 @@ bool ChartDocument::saveOdf(SavingContext &context)
 
     // save the styles.xml
     if (!mainStyles.saveOdfStylesDotXml(store, manifestWriter))
+    {
         return false;
+    }
 
-    if (!savingContext.saveDataCenter(store, manifestWriter)) {
+    if (!savingContext.saveDataCenter(store, manifestWriter))
+    {
         return false;
     }
 

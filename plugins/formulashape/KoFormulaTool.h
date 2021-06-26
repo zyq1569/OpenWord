@@ -1,12 +1,12 @@
 /* This file is part of the KDE project
-   Copyright (C) 2006 Martin Pfeiffer <hubipete@gmx.net> 
+   Copyright (C) 2006 Martin Pfeiffer <hubipete@gmx.net>
                  2009 Jeremias Epperlein <jeeree@web.de>
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
    License as published by the Free Software Foundation; either
    version 2 of the License, or (at your option) any later version.
-  
+
    This library is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -27,7 +27,8 @@ class KoFormulaShape;
 class FormulaEditor;
 class FormulaCommand;
 
-struct TemplateAction {
+struct TemplateAction
+{
     QAction *action;
     QString data;
 };
@@ -36,7 +37,8 @@ struct TemplateAction {
  * @short The flake tool for a formula
  * @author Martin Pfeiffer <hubipete@gmx.net>
  */
-class KoFormulaTool : public KoToolBase {
+class KoFormulaTool : public KoToolBase
+{
     Q_OBJECT
 public:
     /// The standard constructor
@@ -86,7 +88,7 @@ public Q_SLOTS:
     void insert( const QString& action );
 
     void changeTable( QAction* action);
-    
+
     void insertSymbol( const QString& symbol);
 
     /// Reposition the cursor according to the data change
@@ -96,7 +98,7 @@ public Q_SLOTS:
 
     void loadFormula();
 
-    
+
 protected:
     /// Create default option widget
     QWidget* createOptionWidget() override;
@@ -108,7 +110,7 @@ protected:
     bool paste() override;
 
     QStringList supportedPasteMimeTypes() const override;
-    
+
 private:
     /// Repaint the cursor and selection
     void repaintCursor();

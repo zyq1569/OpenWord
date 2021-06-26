@@ -46,10 +46,11 @@ class TableRowElement;
  *
  **/
 
-class FormulaCommand :  public KUndo2Command {
+class FormulaCommand :  public KUndo2Command
+{
 public:
     explicit FormulaCommand(KUndo2Command *parent=0);
-    
+
     virtual void changeCursor(FormulaCursor& cursor, bool undo) const;
 
     void setUndoCursorPosition(const FormulaCursor& position);
@@ -66,9 +67,10 @@ private:
 Q_DECLARE_METATYPE(FormulaCommand*)
 
 
-class FormulaCommandReplaceText : public FormulaCommand {
+class FormulaCommandReplaceText : public FormulaCommand
+{
 public:
-    FormulaCommandReplaceText( TokenElement* owner, int position,int length, const QString& added , KUndo2Command *parent=0);
+    FormulaCommandReplaceText( TokenElement* owner, int position,int length, const QString& added, KUndo2Command *parent=0);
 
     ~FormulaCommandReplaceText() override;
 
@@ -88,7 +90,7 @@ private:
     int m_length;
 
     int m_glyphpos;
-    
+
     /// The list of added elements
     QString m_added;
 
@@ -97,9 +99,10 @@ private:
     QList<GlyphElement*> m_removedGlyphs;
 };
 
-class FormulaCommandReplaceElements : public FormulaCommand {
+class FormulaCommandReplaceElements : public FormulaCommand
+{
 public:
-    FormulaCommandReplaceElements( RowElement* owner, int position, int length, QList<BasicElement*> elements , bool wrap=false, KUndo2Command *parent=0);
+    FormulaCommandReplaceElements( RowElement* owner, int position, int length, QList<BasicElement*> elements, bool wrap=false, KUndo2Command *parent=0);
 
     ~FormulaCommandReplaceElements() override;
 
@@ -117,7 +120,7 @@ private:
     int m_position;
 
     int m_placeholderPosition;
-    
+
     int m_length;
 
     bool m_wrap;
@@ -133,12 +136,13 @@ private:
     QList<BasicElement*> m_removed;
 };
 
-class FormulaCommandLoad : public FormulaCommand {
+class FormulaCommandLoad : public FormulaCommand
+{
 public:
     FormulaCommandLoad( FormulaData* data, FormulaElement* newelement, KUndo2Command *parent=0);
 
     ~FormulaCommandLoad () override;
-    
+
     /// Execute the command
     void redo() override;
 
@@ -151,7 +155,8 @@ private:
     FormulaElement* m_newel;
 };
 
-class FormulaCommandReplaceRow : public FormulaCommand {
+class FormulaCommandReplaceRow : public FormulaCommand
+{
 public:
     FormulaCommandReplaceRow ( FormulaData* data, FormulaCursor oldPosition, TableElement* table, int number, int oldlength, int newlength );
 
@@ -172,7 +177,8 @@ private:
     QList<BasicElement*> m_oldRows;
 };
 
-class FormulaCommandReplaceColumn : public FormulaCommand {
+class FormulaCommandReplaceColumn : public FormulaCommand
+{
 public:
     FormulaCommandReplaceColumn ( FormulaData* data, FormulaCursor oldPosition, TableElement* table, int number, int oldlength, int newlength );
 
@@ -210,7 +216,7 @@ private:
 
 // /**
 //  * @short The command for changes of an element's attributes
-//  * 
+//  *
 //  * Whenever the user changes the attributes assigned to an element an instance of this
 //  * class is created to make it possible to revert the changes. The former attributes
 //  * are stored in m_oldAttributes.
@@ -219,24 +225,24 @@ private:
 // public:
 //     /**
 //      * The constructor
-//      * @param cursor The FormulaCursor where the elements will be replaced 
+//      * @param cursor The FormulaCursor where the elements will be replaced
 //      * @param attributes The list of the old attributes
 //      */
 //     FormulaCommandAttribute( FormulaCursor* cursor, QHash<QString,QString> attributes );
-// 
+//
 //     /// Execute the command
 //     void redo();
-// 
+//
 //     /// Revert the actions done in redo()
 //     void undo();
-//     
+//
 // private:
 //     /// The BasicElement whose attributes have been changed
 //     BasicElement* m_ownerElement;
-//     
+//
 //     /// All attributes that are set newly
 //     QHash<QString,QString> m_attributes;
-//     
+//
 //     /// All attributes the element had before
 //     QHash<QString,QString> m_oldAttributes;
 // };

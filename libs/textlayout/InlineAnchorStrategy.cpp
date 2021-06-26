@@ -40,12 +40,14 @@ InlineAnchorStrategy::~InlineAnchorStrategy()
 
 bool InlineAnchorStrategy::moveSubject()
 {
-    if (!m_anchor->shape()->parent()) {
+    if (!m_anchor->shape()->parent())
+    {
         return false; // let's fake we moved to force another relayout
     }
 
     KoTextShapeData *data = qobject_cast<KoTextShapeData*>(m_anchor->shape()->parent()->userData());
-    if (!data) {
+    if (!data)
+    {
         return false; // let's fake we moved to force another relayout
     }
 
@@ -54,19 +56,22 @@ bool InlineAnchorStrategy::moveSubject()
     QTextLayout *layout = block.layout();
 
     // set anchor bounding rectangle horizontal position and size
-    if (!countHorizontalPos(newPosition, block, layout)) {
+    if (!countHorizontalPos(newPosition, block, layout))
+    {
         return false; // let's fake we moved to force another relayout
     }
 
     // set anchor bounding rectangle vertical position
-    if (!countVerticalPos(newPosition, data, block, layout)) {
+    if (!countVerticalPos(newPosition, data, block, layout))
+    {
         return false; // let's fake we moved to force another relayout
     }
 
     // check the border of the parent shape an move the shape back to have it inside the parent shape
     checkParentBorder(newPosition);
 
-    if (newPosition == m_anchor->shape()->position()) {
+    if (newPosition == m_anchor->shape()->position())
+    {
         return true;
     }
 
@@ -80,14 +85,20 @@ bool InlineAnchorStrategy::moveSubject()
 
 bool InlineAnchorStrategy::countHorizontalPos(QPointF &newPosition, QTextBlock &block, QTextLayout *layout)
 {
-    if (layout->lineCount() != 0) {
+    if (layout->lineCount() != 0)
+    {
         QTextLine tl = layout->lineForTextPosition(m_anchorObject->position() - block.position());
-        if (tl.isValid()) {
+        if (tl.isValid())
+        {
             newPosition.setX(tl.cursorToX(m_anchorObject->position() - block.position()));
-        } else {
+        }
+        else
+        {
             return false; // lets go for a second round.
         }
-    } else {
+    }
+    else
+    {
         return false; // lets go for a second round.
     }
     return true;
@@ -95,15 +106,21 @@ bool InlineAnchorStrategy::countHorizontalPos(QPointF &newPosition, QTextBlock &
 
 bool InlineAnchorStrategy::countVerticalPos(QPointF &newPosition, KoTextShapeData *data, QTextBlock &block, QTextLayout *layout)
 {
-    if (layout->lineCount()) {
+    if (layout->lineCount())
+    {
         QTextLine tl = layout->lineForTextPosition(m_anchorObject->position() - block.position());
         Q_ASSERT(tl.isValid());
-        if (m_anchorObject->inlineObjectAscent() > 0) {
+        if (m_anchorObject->inlineObjectAscent() > 0)
+        {
             newPosition.setY(tl.y() + tl.ascent() - m_anchorObject->inlineObjectAscent() - data->documentOffset());
-        } else {
+        }
+        else
+        {
             newPosition.setY(tl.y() + tl.ascent() + m_anchorObject->inlineObjectDescent() - m_anchor->shape()->size().height() - data->documentOffset());
         }
-    } else {
+    }
+    else
+    {
         return false; // lets go for a second round.
     }
     return true;
@@ -119,10 +136,12 @@ void InlineAnchorStrategy::checkParentBorder(QPointF &newPosition)
 {
     QSizeF size = m_anchor->shape()->boundingRect().size();
     QSizeF container = m_anchor->shape()->parent()->boundingRect().size();
-    if ((newPosition.x() + size.width()) > container.width()) {
+    if ((newPosition.x() + size.width()) > container.width())
+    {
         newPosition.setX(container.width() - size.width());
     }
-    if (newPosition.x() < 0.0) {
+    if (newPosition.x() < 0.0)
+    {
         newPosition.setX(0.0);
     }
 }

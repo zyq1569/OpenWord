@@ -50,14 +50,14 @@ KoFormulaShapeFactory::KoFormulaShapeFactory()
     setXmlElements(elementNamesList);
 
     setLoadingPriority( 1 );
-/*    KoShapeTemplate t;
-    t.id = KoFormulaShapeId;
-    t.name = i18n("Formula");
-    t.toolTip = i18n("A formula");
-    t.icon = ""; //TODO add it
-    props = new KoProperties();
-    t.properties = props;
-    addTemplate( t );*/
+    /*    KoShapeTemplate t;
+        t.id = KoFormulaShapeId;
+        t.name = i18n("Formula");
+        t.toolTip = i18n("A formula");
+        t.icon = ""; //TODO add it
+        props = new KoProperties();
+        t.properties = props;
+        addTemplate( t );*/
 }
 
 KoFormulaShapeFactory::~KoFormulaShapeFactory()
@@ -73,15 +73,19 @@ KoShape *KoFormulaShapeFactory::createDefaultShape(KoDocumentResourceManager *re
 bool KoFormulaShapeFactory::supports(const KoXmlElement& e, KoShapeLoadingContext &context) const
 {
     Q_UNUSED(context);
-    if ((e.localName() == "math" && e.namespaceURI() == KoXmlNS::math)) {
+    if ((e.localName() == "math" && e.namespaceURI() == KoXmlNS::math))
+    {
         return true;
     }
 
-    if (e.localName() == "object" && e.namespaceURI() == KoXmlNS::draw) {
+    if (e.localName() == "object" && e.namespaceURI() == KoXmlNS::draw)
+    {
         QString href = e.attribute("href");
-        if (!href.isEmpty()) {
+        if (!href.isEmpty())
+        {
             // check the mimetype
-            if (href.startsWith(QLatin1String("./"))) {
+            if (href.startsWith(QLatin1String("./")))
+            {
                 href.remove(0, 2);
             }
 

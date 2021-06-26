@@ -32,7 +32,8 @@ class KoShape;
  * It follows the factory design pattern and implements the two virtual methods
  * createDefaultShape() and createShape() of KoShapeFactoryBase.
  */
-class KoFormulaShapeFactory : public KoShapeFactoryBase {
+class KoFormulaShapeFactory : public KoShapeFactoryBase
+{
 public:
     /// The constructor - reimplemented from KoShapeFactoryBase
     explicit KoFormulaShapeFactory();

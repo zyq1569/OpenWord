@@ -72,10 +72,13 @@ void ScreenConversions::scaleFromPtToPx(QPainter &painter)
     const qreal inPerPt = KoUnit::toInch(1.0);
     int dpiX;
     int dpiY;
-    if (dynamic_cast<QWidget*>(painter.device()) != 0) {
+    if (dynamic_cast<QWidget*>(painter.device()) != 0)
+    {
         dpiX = KoDpi::dpiX();
         dpiY = KoDpi::dpiY();
-    } else {
+    }
+    else
+    {
         dpiX = painter.device()->logicalDpiX();
         dpiY = painter.device()->logicalDpiY();
     }
@@ -91,7 +94,8 @@ QSize ScreenConversions::scaleFromPtToPx(const QSizeF &size, const QPaintDevice*
 QSize ScreenConversions::scaleFromPtToPx(const QSizeF &size, QPainter &painter)
 {
     QPaintDevice* paintDevice = painter.device();
-    if (dynamic_cast<QWidget*>(paintDevice) != 0) {
+    if (dynamic_cast<QWidget*>(paintDevice) != 0)
+    {
         paintDevice = 0;
     }
 
@@ -117,7 +121,8 @@ QPoint ScreenConversions::scaleFromPtToPx(const QPointF &point, const QPaintDevi
 QRect ScreenConversions::scaleFromPtToPx(const QRectF &rect, QPainter &painter)
 {
     QPaintDevice* paintDevice = painter.device();
-    if (dynamic_cast<QWidget*>(paintDevice) != 0) {
+    if (dynamic_cast<QWidget*>(paintDevice) != 0)
+    {
         paintDevice = 0;
     }
 
@@ -148,7 +153,8 @@ QSizeF ScreenConversions::fromWidgetDpi(QWidget *widget, const QSizeF &size)
 void ScreenConversions::scaleToWidgetDpi(QWidget *widget, QPainter &painter)
 {
     // only scale if we paint into a QWidget
-    if (dynamic_cast<QWidget*>(painter.device())) {
+    if (dynamic_cast<QWidget*>(painter.device()))
+    {
         const qreal scaleX = static_cast<qreal>(KoDpi::dpiX()) / widget->logicalDpiX();
         const qreal scaleY = static_cast<qreal>(KoDpi::dpiY()) / widget->logicalDpiY();
         painter.scale(scaleX, scaleY);

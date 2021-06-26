@@ -72,7 +72,8 @@ void StockConfigWidget::open(ChartShape* shape)
 {
     ConfigSubWidgetBase::open(shape);
     m_plotArea = 0;
-    if (!chart) {
+    if (!chart)
+    {
         return;
     }
     m_plotArea = chart->plotArea();
@@ -83,7 +84,8 @@ void StockConfigWidget::updateData(ChartType type, ChartSubtype subtype)
 {
     Q_UNUSED(subtype);
 
-    if (!chart || !chartTypes.contains(type)) {
+    if (!chart || !chartTypes.contains(type))
+    {
         return;
     }
     m_ui.rangeLineStroke->updateData();

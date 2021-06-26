@@ -64,7 +64,8 @@
 
 using namespace KoChart;
 
-class Legend::Private {
+class Legend::Private
+{
 public:
     Private();
     ~Private();
@@ -346,7 +347,8 @@ void Legend::paint(QPainter &painter, const KoViewConverter &converter, KoShapeP
     }*/
 
     // Paint the background
-    if (background()) {
+    if (background())
+    {
         QPainterPath p;
         p.addRect(paintRect);
         background()->paint(painter, converter, paintContext, p);
@@ -374,15 +376,17 @@ bool Legend::loadOdf(const KoXmlElement &legendElement,
 {
     KoStyleStack &styleStack = context.odfLoadingContext().styleStack();
     styleStack.clear();
-    
+
     // FIXME: If the style isn't present we shouldn't care about it at all
     // and move everything related to the legend style in this if clause
-    if (legendElement.hasAttributeNS(KoXmlNS::chart, "style-name")) {
+    if (legendElement.hasAttributeNS(KoXmlNS::chart, "style-name"))
+    {
         context.odfLoadingContext().fillStyleStack(legendElement, KoXmlNS::chart, "style-name", "chart");
         styleStack.setTypeProperties("graphic");
     }
 
-    if (!legendElement.isNull()) {
+    if (!legendElement.isNull())
+    {
         int attributesToLoad = OdfAllAttributes;
         QString lp = legendElement.attributeNS(KoXmlNS::chart, "legend-position", QString());
 
@@ -391,77 +395,103 @@ bool Legend::loadOdf(const KoXmlElement &legendElement,
 
         QString lalign = legendElement.attributeNS(KoXmlNS::chart, "legend-align", QString());
 
-        if (legendElement.hasAttributeNS(KoXmlNS::style, "legend-expansion")) {
+        if (legendElement.hasAttributeNS(KoXmlNS::style, "legend-expansion"))
+        {
             QString lexpansion = legendElement.attributeNS(KoXmlNS::style, "legend-expansion", QString());
             if (lexpansion == "wide")
+            {
                 setExpansion(WideLegendExpansion);
+            }
             else if (lexpansion == "high")
+            {
                 setExpansion(HighLegendExpansion);
+            }
             else
+            {
                 setExpansion(BalancedLegendExpansion);
+            }
         }
 
-        if (lalign == "start") {
+        if (lalign == "start")
+        {
             setAlignment(Qt::AlignLeft);
         }
-        else if (lalign == "end") {
+        else if (lalign == "end")
+        {
             setAlignment(Qt::AlignRight);
         }
-        else {
+        else
+        {
             setAlignment(Qt::AlignCenter); // default
         }
 
-        if (lp == "start") {
+        if (lp == "start")
+        {
             setLegendPosition(StartPosition);
         }
-        else if (lp == "top") {
+        else if (lp == "top")
+        {
             setLegendPosition(TopPosition);
         }
-        else if (lp == "bottom") {
+        else if (lp == "bottom")
+        {
             setLegendPosition(BottomPosition);
         }
-        else if (lp == "end") {
+        else if (lp == "end")
+        {
             setLegendPosition(EndPosition);
         }
-        else if (lp == "top-start") {
+        else if (lp == "top-start")
+        {
             setLegendPosition(TopStartPosition);
         }
-        else if (lp == "bottom-start") {
+        else if (lp == "bottom-start")
+        {
             setLegendPosition(BottomStartPosition);
         }
-        else if (lp == "top-end") {
+        else if (lp == "top-end")
+        {
             setLegendPosition(TopEndPosition);
         }
-        else if (lp == "bottom-end") {
+        else if (lp == "bottom-end")
+        {
             setLegendPosition(BottomEndPosition);
-        } else {
+        }
+        else
+        {
             setLegendPosition(FloatingPosition);
         }
 
-        if (legendElement.hasAttributeNS(KoXmlNS::office, "title")) {
+        if (legendElement.hasAttributeNS(KoXmlNS::office, "title"))
+        {
             setTitle(legendElement.attributeNS(KoXmlNS::office, "title", QString()));
         }
 
         styleStack.setTypeProperties("text");
 
-        if (styleStack.hasProperty(KoXmlNS::fo, "font-family")) {
+        if (styleStack.hasProperty(KoXmlNS::fo, "font-family"))
+        {
             QString fontFamily = styleStack.property(KoXmlNS::fo, "font-family");
             QFont font = d->font;
             font.setFamily(fontFamily);
             setFont(font);
         }
-        if (styleStack.hasProperty(KoXmlNS::fo, "font-size")) {
+        if (styleStack.hasProperty(KoXmlNS::fo, "font-size"))
+        {
             qreal fontSize = KoUnit::parseValue(styleStack.property(KoXmlNS::fo, "font-size"));
             setFontSize(fontSize);
         }
-        if (styleStack.hasProperty(KoXmlNS::fo, "font-color")) {
+        if (styleStack.hasProperty(KoXmlNS::fo, "font-color"))
+        {
             QColor color = styleStack.property(KoXmlNS::fo, "font-color");
-            if (color.isValid()) {
+            if (color.isValid())
+            {
                 setFontColor(color);
             }
         }
     }
-    else {
+    else
+    {
         // No legend element, use default legend.
         setLegendPosition(EndPosition);
         setAlignment(Qt::AlignCenter);
@@ -481,17 +511,27 @@ void Legend::saveOdf(KoShapeSavingContext &context) const
 
     // Legend specific attributes
     QString lp = PositionToString(d->position);
-    if (!lp.isEmpty()) {
+    if (!lp.isEmpty())
+    {
         bodyWriter.addAttribute("chart:legend-position", lp);
     }
     QString lalign;
-    switch (d->alignment) {
-        case Qt::AlignLeft: lalign = "start"; break;
-        case Qt::AlignRight: lalign = "end"; break;
-        case Qt::AlignCenter: lalign = "center"; break;
-        default: break;
+    switch (d->alignment)
+    {
+        case Qt::AlignLeft:
+            lalign = "start";
+            break;
+        case Qt::AlignRight:
+            lalign = "end";
+            break;
+        case Qt::AlignCenter:
+            lalign = "center";
+            break;
+        default:
+            break;
     }
-    if (!lalign.isEmpty()) {
+    if (!lalign.isEmpty())
+    {
         bodyWriter.addAttribute("chart:legend-align", lalign);
     }
 
@@ -501,15 +541,24 @@ void Legend::saveOdf(KoShapeSavingContext &context) const
     bodyWriter.addAttribute("chart:style-name", saveStyle(style, context));
 
     QString  lexpansion;
-    switch (expansion()) {
-    case WideLegendExpansion:      lexpansion = "wide";      break;
-    case HighLegendExpansion:      lexpansion = "high";      break;
-    case BalancedLegendExpansion:  lexpansion = "balanced";  break;
+    switch (expansion())
+    {
+        case WideLegendExpansion:
+            lexpansion = "wide";
+            break;
+        case HighLegendExpansion:
+            lexpansion = "high";
+            break;
+        case BalancedLegendExpansion:
+            lexpansion = "balanced";
+            break;
     };
     bodyWriter.addAttribute("style:legend-expansion", lexpansion);
 
     if (!title().isEmpty())
+    {
         bodyWriter.addAttribute("office:title", title());
+    }
 
     bodyWriter.endElement(); // chart:legend
 }
@@ -547,13 +596,14 @@ void Legend::slotChartTypeChanged(ChartType chartType)
 {
     // TODO: Once we support markers, this switch will have to be
     // more clever.
-    switch (chartType) {
-    case LineChartType:
-    case ScatterChartType:
-        d->kdLegend->setLegendStyle(KChart::Legend::MarkersAndLines);
-        break;
-    default:
-        d->kdLegend->setLegendStyle(KChart::Legend::MarkersOnly);
-        break;
+    switch (chartType)
+    {
+        case LineChartType:
+        case ScatterChartType:
+            d->kdLegend->setLegendStyle(KChart::Legend::MarkersAndLines);
+            break;
+        default:
+            d->kdLegend->setLegendStyle(KChart::Legend::MarkersOnly);
+            break;
     }
 }

@@ -279,4 +279,4 @@ void KoToolDocker::unsetCanvas()
 }
 
 //have to include this because of Q_PRIVATE_SLOT
-//#include <moc_KoToolDocker.cpp>
+#include <moc_KoToolDocker.cpp>

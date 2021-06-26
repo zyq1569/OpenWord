@@ -72,8 +72,10 @@
 #include <KoOdfGraphicStyles.h>
 #include "kochart_global.h"
 
-namespace KoChart {
-namespace OdfHelper {
+namespace KoChart
+{
+namespace OdfHelper
+{
 
 
 // HACK: To get correct position also for rotated titles
@@ -83,52 +85,95 @@ QPointF itemPosition(const KoShape *shape)
 }
 
 //fo:font-weight attribute are normal, bold, 100, 200, 300, 400, 500, 600, 700, 800 or 900.
-int fromOdfFontWeight(const QString &odfweight) {
-    if (odfweight.isEmpty() || odfweight == "normal") {
+int fromOdfFontWeight(const QString &odfweight)
+{
+    if (odfweight.isEmpty() || odfweight == "normal")
+    {
         return QFont::Normal;
     }
-    if (odfweight == "bold") {
+    if (odfweight == "bold")
+    {
         return QFont::Bold;
     }
     bool ok;
     int weight = odfweight.toInt(&ok);
-    if (!ok) {
+    if (!ok)
+    {
         return 50;
     }
-    switch (weight) {
-        case 100: weight = 1; break;
-        case 200: weight = 17; break;
-        case 300: weight = 33; break;
-        case 400: weight = 50; break;
-        case 500: weight = 58; break;
-        case 600: weight = 66; break;
-        case 700: weight = 75; break;
-        case 800: weight = 87; break;
-        case 900: weight = 99; break;
-        default: weight = 50; break;
+    switch (weight)
+    {
+        case 100:
+            weight = 1;
+            break;
+        case 200:
+            weight = 17;
+            break;
+        case 300:
+            weight = 33;
+            break;
+        case 400:
+            weight = 50;
+            break;
+        case 500:
+            weight = 58;
+            break;
+        case 600:
+            weight = 66;
+            break;
+        case 700:
+            weight = 75;
+            break;
+        case 800:
+            weight = 87;
+            break;
+        case 900:
+            weight = 99;
+            break;
+        default:
+            weight = 50;
+            break;
     }
     return weight;
 }
 
-QString toOdfFontWeight(int weight) {
+QString toOdfFontWeight(int weight)
+{
     QString w;
-    if (weight < 8) {
+    if (weight < 8)
+    {
         w = "100";
-    } else if (weight < 25) {
+    }
+    else if (weight < 25)
+    {
         w = "200";
-    } else if (weight < 41) {
+    }
+    else if (weight < 41)
+    {
         w = "300";
-    } else if (weight < 54) {
+    }
+    else if (weight < 54)
+    {
         w = "normal";
-    } else if (weight < 62) {
+    }
+    else if (weight < 62)
+    {
         w = "500";
-    } else if (weight < 70) {
+    }
+    else if (weight < 70)
+    {
         w = "600";
-    } else if (weight < 81) {
+    }
+    else if (weight < 81)
+    {
         w = "bold";
-    } else if (weight < 92) {
+    }
+    else if (weight < 92)
+    {
         w = "800";
-    } else {
+    }
+    else
+    {
         w = "900";
     }
     return w;
@@ -165,29 +210,38 @@ void saveOdfTitleStyle(KoShape *title, KoGenStyle &style, KoShapeSavingContext &
     // title->saveStyle(style, context) is protected,
     // so we duplicate some code:
     KoShapeStrokeModel *sm = title->stroke();
-    if (sm) {
+    if (sm)
+    {
         sm->fillStyle(style, context);
-    } else {
+    }
+    else
+    {
         style.addProperty("draw:stroke", "none", KoGenStyle::GraphicType);
     }
     KoShapeShadow *s = title->shadow();
-    if (s) {
+    if (s)
+    {
         s->fillStyle(style, context);
     }
     QSharedPointer<KoShapeBackground> bg = title->background();
-    if (bg) {
+    if (bg)
+    {
         bg->fillStyle(style, context);
-    } else {
+    }
+    else
+    {
         style.addProperty("draw:fill", "none", KoGenStyle::GraphicType);
     }
 
     KoBorder *b = title->border();
-    if (b) {
+    if (b)
+    {
         b->saveOdf(style);
     }
 
     QMap<QByteArray, QString>::const_iterator it(title->additionalStyleAttributes().constBegin());
-    for (; it != title->additionalStyleAttributes().constEnd(); ++it) {
+    for (; it != title->additionalStyleAttributes().constEnd(); ++it)
+    {
         style.addProperty(it.key(), it.value(), KoGenStyle::ChartType);
     }
     style.addProperty("chart:auto-size", (titleData->resizeMethod() == KoTextShapeDataBase::AutoResize), KoGenStyle::ChartType);
@@ -198,11 +252,15 @@ void saveOdfTitle(KoShape *title, KoXmlWriter &bodyWriter, const char *titleType
     // Don't save hidden titles, as that's the way of removing them
     // from a chart.
     if (!title->isVisible())
+    {
         return;
+    }
 
     TextLabelData *titleData = qobject_cast<TextLabelData*>(title->userData());
     if (!titleData)
+    {
         return;
+    }
 
     bodyWriter.startElement(titleType);
 
@@ -239,7 +297,8 @@ QString getStyleProperty(const char *property, KoShapeLoadingContext &context)
     KoStyleStack &styleStack = context.odfLoadingContext().styleStack();
     QString value;
 
-    if (styleStack.hasProperty(KoXmlNS::draw, property)) {
+    if (styleStack.hasProperty(KoXmlNS::draw, property))
+    {
         value = styleStack.property(KoXmlNS::draw, property);
     }
 
@@ -250,37 +309,52 @@ QSharedPointer<KoShapeBackground> loadOdfFill(KoShape *title, KoShapeLoadingCont
 {
     QString fill = getStyleProperty("fill", context);
     QSharedPointer<KoShapeBackground> bg;
-    if (fill == "solid") {
+    if (fill == "solid")
+    {
         bg = QSharedPointer<KoShapeBackground>(new KoColorBackground());
     }
-    else if (fill == "hatch") {
+    else if (fill == "hatch")
+    {
         bg = QSharedPointer<KoShapeBackground>(new KoHatchBackground());
-    } else if (fill == "gradient") {
+    }
+    else if (fill == "gradient")
+    {
         QString styleName = getStyleProperty("fill-gradient-name", context);
         KoXmlElement *e = context.odfLoadingContext().stylesReader().drawStyles("gradient").value(styleName);
         QString style;
-        if (e) {
+        if (e)
+        {
             style = e->attributeNS(KoXmlNS::draw, "style", QString());
         }
-        if ((style == "rectangular") || (style == "square")) {
+        if ((style == "rectangular") || (style == "square"))
+        {
             bg = QSharedPointer<KoShapeBackground>(new KoOdfGradientBackground());
-        } else {
+        }
+        else
+        {
             QGradient *gradient = new QLinearGradient();
             gradient->setCoordinateMode(QGradient::ObjectBoundingMode);
             bg = QSharedPointer<KoShapeBackground>(new KoGradientBackground(gradient));
         }
-    } else if (fill == "bitmap") {
+    }
+    else if (fill == "bitmap")
+    {
         bg = QSharedPointer<KoShapeBackground>(new KoPatternBackground(context.imageCollection()));
 #ifndef NWORKAROUND_ODF_BUGS
-    } else if (fill.isEmpty()) {
+    }
+    else if (fill.isEmpty())
+    {
         bg = QSharedPointer<KoShapeBackground>(KoOdfWorkaround::fixBackgroundColor(title, context));
         return bg;
 #endif
-    } else {
+    }
+    else
+    {
         return QSharedPointer<KoShapeBackground>(0);
     }
 
-    if (!bg->loadStyle(context.odfLoadingContext(), title->size())) {
+    if (!bg->loadStyle(context.odfLoadingContext(), title->size()))
+    {
         return QSharedPointer<KoShapeBackground>(0);
     }
 
@@ -293,16 +367,20 @@ KoShapeStrokeModel *loadOdfStroke(KoShape *title, const KoXmlElement &element, K
     KoOdfStylesReader &stylesReader = context.odfLoadingContext().stylesReader();
 
     QString stroke = getStyleProperty("stroke", context);
-    if (stroke == "solid" || stroke == "dash") {
+    if (stroke == "solid" || stroke == "dash")
+    {
         QPen pen = KoOdfGraphicStyles::loadOdfStrokeStyle(styleStack, stroke, stylesReader);
 
         KoShapeStroke *stroke = new KoShapeStroke();
 
-        if (styleStack.hasProperty(KoXmlNS::calligra, "stroke-gradient")) {
+        if (styleStack.hasProperty(KoXmlNS::calligra, "stroke-gradient"))
+        {
             QString gradientName = styleStack.property(KoXmlNS::calligra, "stroke-gradient");
             QBrush brush = KoOdfGraphicStyles::loadOdfGradientStyleByName(stylesReader, gradientName, title->size());
             stroke->setLineBrush(brush);
-        } else {
+        }
+        else
+        {
             stroke->setColor(pen.color());
         }
 
@@ -316,9 +394,12 @@ KoShapeStrokeModel *loadOdfStroke(KoShape *title, const KoXmlElement &element, K
 
         return stroke;
 #ifndef NWORKAROUND_ODF_BUGS
-    } else if (stroke.isEmpty()) {
+    }
+    else if (stroke.isEmpty())
+    {
         QPen pen = KoOdfGraphicStyles::loadOdfStrokeStyle(styleStack, "solid", stylesReader);
-        if (KoOdfWorkaround::fixMissingStroke(pen, element, context, title)) {
+        if (KoOdfWorkaround::fixMissingStroke(pen, element, context, title))
+        {
             KoShapeStroke *stroke = new KoShapeStroke();
 
 #ifndef NWORKAROUND_ODF_BUGS
@@ -343,7 +424,8 @@ KoShapeShadow *loadOdfShadow(KoShape *title, KoShapeLoadingContext &context)
     Q_UNUSED(title);
     KoStyleStack &styleStack = context.odfLoadingContext().styleStack();
     QString shadowStyle = getStyleProperty("shadow", context);
-    if (shadowStyle == "visible" || shadowStyle == "hidden") {
+    if (shadowStyle == "visible" || shadowStyle == "hidden")
+    {
         KoShapeShadow *shadow = new KoShapeShadow();
         QColor shadowColor(styleStack.property(KoXmlNS::draw, "shadow-color"));
         qreal offsetX = KoUnit::parseValue(styleStack.property(KoXmlNS::draw, "shadow-offset-x"));
@@ -354,7 +436,9 @@ KoShapeShadow *loadOdfShadow(KoShape *title, KoShapeLoadingContext &context)
 
         QString opacity = styleStack.property(KoXmlNS::draw, "shadow-opacity");
         if (! opacity.isEmpty() && opacity.right(1) == "%")
+        {
             shadowColor.setAlphaF(opacity.leftRef(opacity.length() - 1).toFloat() / 100.0);
+        }
         shadow->setColor(shadowColor);
         shadow->setVisible(shadowStyle == "visible");
 
@@ -369,7 +453,8 @@ KoBorder *loadOdfBorder(KoShape *title, KoShapeLoadingContext &context)
     KoStyleStack &styleStack = context.odfLoadingContext().styleStack();
 
     KoBorder *border = new KoBorder();
-    if (border->loadOdf(styleStack)) {
+    if (border->loadOdf(styleStack))
+    {
         return border;
     }
     delete border;
@@ -380,7 +465,9 @@ bool loadOdfTitle(KoShape *title, KoXmlElement &titleElement, KoShapeLoadingCont
 {
     TextLabelData *titleData = qobject_cast<TextLabelData*>(title->userData());
     if (!titleData)
+    {
         return false;
+    }
 
     // Following will always return false cause KoTextShapeData::loadOdf will try to load
     // a frame while our text:p is not within a frame. So, let's just not call loadOdf then...
@@ -398,22 +485,27 @@ bool loadOdfTitle(KoShape *title, KoXmlElement &titleElement, KoShapeLoadingCont
     bool autoSize = !(titleElement.hasAttributeNS(KoXmlNS::svg, "width") && titleElement.hasAttributeNS(KoXmlNS::svg, "height"));
     qreal rotationAngle = title->rotation();
     // Set the styles
-    if (titleElement.hasAttributeNS(KoXmlNS::chart, "style-name")) {
+    if (titleElement.hasAttributeNS(KoXmlNS::chart, "style-name"))
+    {
         KoStyleStack &styleStack = context.odfLoadingContext().styleStack();
         styleStack.clear();
         context.odfLoadingContext().fillStyleStack(titleElement, KoXmlNS::chart, "style-name", "chart");
 
         styleStack.setTypeProperties("chart");
-        if (styleStack.hasProperty(KoXmlNS::style, "rotation-angle")) {
+        if (styleStack.hasProperty(KoXmlNS::style, "rotation-angle"))
+        {
             rotationAngle = 360 - KoUnit::parseValue(styleStack.property(KoXmlNS::style, "rotation-angle"));
-            if (rotationAngle != title->rotation()) {
+            if (rotationAngle != title->rotation())
+            {
                 title->rotate(rotationAngle);
             }
         }
-        if (styleStack.hasProperty(KoXmlNS::style, "auto-position")) {
+        if (styleStack.hasProperty(KoXmlNS::style, "auto-position"))
+        {
             autoPosition |= styleStack.property(KoXmlNS::style, "auto-position") == "true";
         }
-        if (styleStack.hasProperty(KoXmlNS::style, "auto-size")) {
+        if (styleStack.hasProperty(KoXmlNS::style, "auto-size"))
+        {
             autoSize |= styleStack.property(KoXmlNS::style, "auto-size") == "true" ;
         }
         // title->loadStyle(titleElement, context) is protected
@@ -428,52 +520,66 @@ bool loadOdfTitle(KoShape *title, KoXmlElement &titleElement, KoShapeLoadingCont
         styleStack.setTypeProperties("text");
 
         QFont font = doc->defaultFont();
-        if (styleStack.hasProperty(KoXmlNS::fo, "font-size")) {
+        if (styleStack.hasProperty(KoXmlNS::fo, "font-size"))
+        {
             const qreal fontSize = KoUnit::parseValue(styleStack.property(KoXmlNS::fo, "font-size"));
             font.setPointSizeF(fontSize);
         }
-        if (styleStack.hasProperty(KoXmlNS::fo, "font-family")) {
+        if (styleStack.hasProperty(KoXmlNS::fo, "font-family"))
+        {
             const QString fontFamily = styleStack.property(KoXmlNS::fo, "font-family");
             font.setFamily(fontFamily);
         }
-        if (styleStack.hasProperty(KoXmlNS::fo, "font-style")) {
+        if (styleStack.hasProperty(KoXmlNS::fo, "font-style"))
+        {
             QString fontStyle = styleStack.property(KoXmlNS::fo, "font-style");
-            if (fontStyle == "italic") {
+            if (fontStyle == "italic")
+            {
                 font.setItalic(true);
-            } else if (fontStyle == "oblique") {
+            }
+            else if (fontStyle == "oblique")
+            {
                 font.setStyle(QFont::StyleOblique);
             }
         }
-        if (styleStack.hasProperty(KoXmlNS::fo, "font-weight")) {
+        if (styleStack.hasProperty(KoXmlNS::fo, "font-weight"))
+        {
             QString fontWeight = styleStack.property(KoXmlNS::fo, "font-weight");
             font.setWeight(fromOdfFontWeight(fontWeight));
         }
         doc->setDefaultFont(font);
         charFormat.setFont(doc->defaultFont());
 
-        if (styleStack.hasProperty(KoXmlNS::fo, "color")) {
+        if (styleStack.hasProperty(KoXmlNS::fo, "color"))
+        {
             const QColor color(styleStack.property(KoXmlNS::fo, "color"));
             charFormat.setForeground(color);
         }
         cursor.setCharFormat(charFormat);
     }
     title->setAdditionalStyleAttribute("chart:auto-position", autoPosition ? "true" : "false");
-    if (!autoPosition) {
+    if (!autoPosition)
+    {
         QPointF pos;
         pos.setX(KoUnit::parseValue(titleElement.attributeNS(KoXmlNS::svg, "x", QString())));
-        if (pos.x() < 0) {
+        if (pos.x() < 0)
+        {
             pos.setX(0);
         }
         pos.setY(KoUnit::parseValue(titleElement.attributeNS(KoXmlNS::svg, "y", QString())));
-        if (pos.y() < 0) {
+        if (pos.y() < 0)
+        {
             pos.setY(0);
         }
         title->setPosition(pos);
         debugChartOdf<<"position:"<<"odf:"<<pos<<"title"<<title->position();
     }
-    if (autoSize) {
+    if (autoSize)
+    {
         titleData->setResizeMethod(KoTextShapeDataBase::AutoResize);
-    } else {
+    }
+    else
+    {
         titleData->setResizeMethod(KoTextShapeDataBase::NoResize);
         QSizeF size;
         size.setWidth(KoUnit::parseValue(titleElement.attributeNS(KoXmlNS::svg, "width")));
@@ -484,16 +590,20 @@ bool loadOdfTitle(KoShape *title, KoXmlElement &titleElement, KoShapeLoadingCont
 
     // load text
     bool loaded = false;
-    if (context.documentResourceManager()) {
+    if (context.documentResourceManager())
+    {
         const KoXmlElement textElement = KoXml::namedItemNS(titleElement, KoXmlNS::calligra, "text");
-        if (!textElement.isNull()) {
+        if (!textElement.isNull())
+        {
             loaded = titleData->loadOdf(textElement, context, 0, title);
             title->setVisible(true);
         }
     }
-    if (!loaded) {
+    if (!loaded)
+    {
         const KoXmlElement textElement = KoXml::namedItemNS(titleElement, KoXmlNS::text, "p");
-        if (!textElement.isNull()) {
+        if (!textElement.isNull())
+        {
             cursor.insertText(textElement.text(), charFormat);
             title->setVisible(true);
         }

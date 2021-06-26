@@ -73,33 +73,43 @@ void WordsTableHandler::tableStart(Words::Table* table)
     m_currentY = 0;
 
 #ifdef DEBUG_TABLEHANDLER
-    for (unsigned int i = 0; i < (unsigned int)table->m_cellEdges.size(); i++) {
+    for (unsigned int i = 0; i < (unsigned int)table->m_cellEdges.size(); i++)
+    {
         debugMsDoc << table->m_cellEdges[i];
     }
 #endif
 
-    if (m_currentTable->floating) {
+    if (m_currentTable->floating)
+    {
         const KoGenStyle::PropertyType gt = KoGenStyle::GraphicType;
         KoGenStyle style(KoGenStyle::GraphicAutoStyle, "graphic");
-        if (document()->writingHeader()) {
+        if (document()->writingHeader())
+        {
             style.setAutoStyleInStylesDotXml(true);
         }
 
         //style:wrap
-        if (tap->textWrap) {
-            if (tap->dxaAbs == -8) {
+        if (tap->textWrap)
+        {
+            if (tap->dxaAbs == -8)
+            {
                 style.addProperty("style:wrap", "left", gt);
             }
-            else if (tap->dxaAbs == 0) {
+            else if (tap->dxaAbs == 0)
+            {
                 style.addProperty("style:wrap", "right", gt);
-            } else {
+            }
+            else
+            {
                 style.addProperty("style:wrap", "parallel", gt);
             }
             //ODF-1.2: Specifies the number of paragraphs that can wrap around
             //a frame if wrap mode is in {left, right, parallel, dynamic} and
             //anchor type is in {char, paragraph}.
             style.addProperty("style:number-wrapped-paragraphs", "no-limit", gt);
-        } else {
+        }
+        else
+        {
             style.addProperty("style:wrap", "none", gt);
         }
         //fo:margin
@@ -114,23 +124,27 @@ void WordsTableHandler::tableStart(Words::Table* table)
         //style:horizontal-pos - horizontal position of the anchor
         QString pos = Conversion::getHorizontalPos(tap->dxaAbs);
         style.addProperty("style:horizontal-pos", pos, gt);
-        if (pos == "from-left") {
+        if (pos == "from-left")
+        {
             dxaAbs = tap->dxaAbs;
         }
         //style:vertical-pos - vertical position of the anchor
         pos = Conversion::getVerticalPos(tap->dyaAbs);
         style.addProperty("style:vertical-pos", pos, gt);
-        if (pos == "from-top") {
+        if (pos == "from-top")
+        {
             dyaAbs = tap->dyaAbs;
         }
         //style:vertical-rel - relative vertical position of the anchor
         pos = Conversion::getVerticalRel(tap->pcVert);
-	if (!pos.isEmpty()) {
+        if (!pos.isEmpty())
+        {
             style.addProperty("style:vertical-rel", pos, gt);
         }
         //style:horizontal-rel - relative horizontal position of the anchor
         pos = Conversion::getHorizontalRel(tap->pcHorz);
-        if (!pos.isEmpty()) {
+        if (!pos.isEmpty())
+        {
             style.addProperty("style:horizontal-rel", pos, gt);
         }
         //draw:auto-grow-height
@@ -145,7 +159,8 @@ void WordsTableHandler::tableStart(Words::Table* table)
         int width = table->m_cellEdges[table->m_cellEdges.size() - 1] - table->m_cellEdges[0];
         writer->addAttributePt("svg:width", twipsToPt(width));
 
-        if (style.property("style:horizontal-pos", gt) == "from-left") {
+        if (style.property("style:horizontal-pos", gt) == "from-left")
+        {
             writer->addAttributePt("svg:x", twipsToPt(dxaAbs + tap->rgdxaCenter[0]));
         }
 
@@ -154,33 +169,41 @@ void WordsTableHandler::tableStart(Words::Table* table)
     } //absolutely positioned table
 
     KoGenStyle tableStyle(KoGenStyle::TableAutoStyle, "table");
-    if (document()->writingHeader()) {
+    if (document()->writingHeader())
+    {
         tableStyle.setAutoStyleInStylesDotXml(true);
     }
 
     //TODO: process the border color information <table:border-color>
 
-    if (tap->fBiDi == 1) {
+    if (tap->fBiDi == 1)
+    {
         tableStyle.addProperty("style:writing-mode", "rl-tb");
-    } else {
+    }
+    else
+    {
         tableStyle.addProperty("style:writing-mode", "lr-tb");
     }
 
     //process horizontal align information
     QString align;
-    if (m_currentTable->floating) {
+    if (m_currentTable->floating)
+    {
         align = QString("margins");
-    } else {
-        switch (tap->jc) {
-        case hAlignLeft:
-            align = QString("left");
-            break;
-        case hAlignCenter:
-            align = QString("center");
-            break;
-        case hAlignRight:
-            align = QString("right");
-            break;
+    }
+    else
+    {
+        switch (tap->jc)
+        {
+            case hAlignLeft:
+                align = QString("left");
+                break;
+            case hAlignCenter:
+                align = QString("center");
+                break;
+            case hAlignRight:
+                align = QString("right");
+                break;
         }
     }
     tableStyle.addProperty("table:align", align);
@@ -190,12 +213,14 @@ void WordsTableHandler::tableStart(Words::Table* table)
     tableStyle.addProperty("table:border-model", "collapsing");
 
     //process the margin information
-    if (!m_currentTable->floating) {
+    if (!m_currentTable->floating)
+    {
         tableStyle.addPropertyPt("fo:margin-left", twipsToPt(tap->rgdxaCenter[0]));
     }
 
     //check if we need a master page name attribute.
-    if (document()->writeMasterPageName() && !document()->writingHeader()) {
+    if (document()->writeMasterPageName() && !document()->writingHeader())
+    {
         tableStyle.addAttribute("style:master-page-name", document()->masterPageName());
         document()->set_writeMasterPageName(false);
     }
@@ -207,11 +232,13 @@ void WordsTableHandler::tableStart(Words::Table* table)
     writer->addAttribute("table:style-name", tableStyleName);
 
     // Write the table:table-column descriptions.
-    for (int r = 0; r < table->m_cellEdges.size() - 1; r++) {
+    for (int r = 0; r < table->m_cellEdges.size() - 1; r++)
+    {
         KoGenStyle tableColumnStyle(KoGenStyle::TableColumnAutoStyle, "table-column");
 
         //in case a header or footer is processed, save the style into styles.xml
-        if (document()->writingHeader()) {
+        if (document()->writingHeader())
+        {
             tableColumnStyle.setAutoStyleInStylesDotXml(true);
         }
 
@@ -219,9 +246,12 @@ void WordsTableHandler::tableStart(Words::Table* table)
                                        (table->m_cellEdges[r+1] - table->m_cellEdges[r]) / 20.0);
 
         QString tableColumnStyleName;
-        if (r >= 26) {
+        if (r >= 26)
+        {
             tableColumnStyleName = m_mainStyles->insert(tableColumnStyle, tableStyleName + ".A" + QChar('A' + r - 26), KoGenStyles::DontAddNumberToName);
-        } else {
+        }
+        else
+        {
             tableColumnStyleName = m_mainStyles->insert(tableColumnStyle, tableStyleName + '.' + QChar('A' + r), KoGenStyles::DontAddNumberToName);
         }
 
@@ -239,7 +269,8 @@ void WordsTableHandler::tableEnd()
     writer->endElement(); //table:table
 
     //check if the table is inside of an absolutely positioned frame
-    if (m_currentTable->floating) {
+    if (m_currentTable->floating)
+    {
         writer->endElement(); //draw:text-box
         writer->endElement(); //draw:frame
     }
@@ -250,7 +281,8 @@ void WordsTableHandler::tableEnd()
 void WordsTableHandler::tableRowStart(wvWare::SharedPtr<const wvWare::Word97::TAP> tap)
 {
     debugMsDoc ;
-    if (m_row == -2) {
+    if (m_row == -2)
+    {
         warnMsDoc << "tableRowStart: tableStart not called previously!";
         return;
     }
@@ -266,13 +298,15 @@ void WordsTableHandler::tableRowStart(wvWare::SharedPtr<const wvWare::Word97::TA
     KoGenStyle rowStyle(KoGenStyle::TableRowAutoStyle, "table-row");
 
     //in case a header or footer is processed, save the style into styles.xml
-    if (document()->writingHeader()) {
+    if (document()->writingHeader())
+    {
         rowStyle.setAutoStyleInStylesDotXml(true);
     }
 
     // The 6 BRC objects are for top, left, bottom, right,
     // insidehorizontal, insidevertical (default values).
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 6; i++)
+    {
         const wvWare::Word97::BRC& brc = tap->rgbrcTable[i];
         //debugMsDoc << "default border" << brc.brcType << (brc.dptLineWidth / 8.0);
         m_borderStyle[i] = Conversion::setBorderAttributes(brc);
@@ -281,13 +315,17 @@ void WordsTableHandler::tableRowStart(wvWare::SharedPtr<const wvWare::Word97::TA
     // We ignore brc.dptSpace (spacing), brc.fShadow (shadow), and brc.fFrame (?)
     QString rowHeightString = QString::number(twipsToPt(qAbs(tap->dyaRowHeight)), 'f').append("pt");
 
-    if (tap->dyaRowHeight > 0) {
+    if (tap->dyaRowHeight > 0)
+    {
         rowStyle.addProperty("style:min-row-height", rowHeightString);
-    } else if (tap->dyaRowHeight < 0) {
+    }
+    else if (tap->dyaRowHeight < 0)
+    {
         rowStyle.addProperty("style:row-height", rowHeightString);
     }
 
-    if (tap->fCantSplit) {
+    if (tap->fCantSplit)
+    {
         rowStyle.addProperty("fo:keep-together", "always");
     }
 
@@ -309,15 +347,20 @@ void WordsTableHandler::tableRowEnd()
 
 static const wvWare::Word97::BRC& brcWinner(const wvWare::Word97::BRC& brc1, const wvWare::Word97::BRC& brc2)
 {
-    if (brc1.brcType == 0 || brc1.brcType >= 64) {
+    if (brc1.brcType == 0 || brc1.brcType >= 64)
+    {
         return brc2;
     }
-    else if (brc2.brcType == 0 || brc2.brcType >= 64) {
+    else if (brc2.brcType == 0 || brc2.brcType >= 64)
+    {
         return brc1;
     }
-    else if (brc1.dptLineWidth >= brc2.dptLineWidth) {
+    else if (brc1.dptLineWidth >= brc2.dptLineWidth)
+    {
         return brc1;
-    } else {
+    }
+    else
+    {
         return brc2;
     }
 }
@@ -326,7 +369,8 @@ void WordsTableHandler::tableCellStart()
 {
     debugMsDoc ;
 
-    if (!m_tap) {
+    if (!m_tap)
+    {
         return;
     }
     KoXmlWriter*  writer = currentWriter();
@@ -338,7 +382,8 @@ void WordsTableHandler::tableCellStart()
     //make sure we didn't get more columns than possible number of cells
     Q_ASSERT(m_column < nbCells);
     //if our column number is greater than or equal to number of cells
-    if (m_column >= nbCells) {
+    if (m_column >= nbCells)
+    {
         return;
     }
     // Get table cell descriptor
@@ -354,11 +399,13 @@ void WordsTableHandler::tableCellStart()
     // ## We can ignore that one. Our cell-edge magic is much more flexible.
 #if 0
     int colSize = 1;
-    if (tc.fFirstMerged) {
+    if (tc.fFirstMerged)
+    {
         // This cell is the first one of a series of merged cells ->
         // we want to find out its size.
         int i = m_column + 1;
-        while (i < nbCells && m_tap->rgtc[ i ].fMerged && !m_tap->rgtc[i].fFirstMerged) {
+        while (i < nbCells && m_tap->rgtc[ i ].fMerged && !m_tap->rgtc[i].fFirstMerged)
+        {
             ++colSize;
             ++i;
         }
@@ -366,26 +413,33 @@ void WordsTableHandler::tableCellStart()
 #endif
     int rowSpan = 1;
     //if this is the first of some vertically merged cells...
-    if (tc.fVertRestart) {
+    if (tc.fVertRestart)
+    {
 //         debugMsDoc <<"fVertRestart is set!";
         // This cell is the first one of a series of vertically merged cells ->
         // we want to find out its size.
         QList<Words::Row>::ConstIterator it = m_currentTable->rows.constBegin() +  m_row + 1;
-        for (; it != m_currentTable->rows.constEnd(); ++it)  {
+        for (; it != m_currentTable->rows.constEnd(); ++it)
+        {
             // Find cell right below us in row (*it), if any
             Words::TAPptr tapBelow = (*it).tap;
             const wvWare::Word97::TC* tcBelow = 0L;
-            for (int c = 0; !tcBelow && c < tapBelow->itcMac ; ++c) {
+            for (int c = 0; !tcBelow && c < tapBelow->itcMac ; ++c)
+            {
                 if (qAbs(tapBelow->rgdxaCenter[ c ] - leftEdgePos) <= 3
-                        && qAbs(tapBelow->rgdxaCenter[ c + 1 ] - rightEdgePos) <= 3) {
+                        && qAbs(tapBelow->rgdxaCenter[ c + 1 ] - rightEdgePos) <= 3)
+                {
                     tcBelow = &tapBelow->rgtc[ c ];
 //                     debugMsDoc <<"found cell below, at (Word) column" << c
 //                                   <<" fVertMerge:" << tcBelow->fVertMerge;
                 }
             }
-            if (tcBelow && tcBelow->fVertMerge && !tcBelow->fVertRestart) {
+            if (tcBelow && tcBelow->fVertMerge && !tcBelow->fVertRestart)
+            {
                 ++rowSpan;
-            } else {
+            }
+            else
+            {
                 break;
             }
         }
@@ -400,7 +454,8 @@ void WordsTableHandler::tableCellStart()
     // column spans the remainder of the table.
     // ### It would actually be more closer to the original if we created
     // an empty cell from m_column+1 to the last column. (table-6.doc)
-    if (m_column == nbCells - 1)  {
+    if (m_column == nbCells - 1)
+    {
         rightCellNumber = m_currentTable->m_cellEdges.size() - 1;
         rightEdgePos = m_currentTable->m_cellEdges[ rightCellNumber ];
     }
@@ -420,7 +475,8 @@ void WordsTableHandler::tableCellStart()
     // Put a filler in for cells that are part of a merged cell.  According to
     // the [MS-DOC] spec. those must be empty (we'll get a warning if not).
     //
-    if (tc.fVertMerge && !tc.fVertRestart) {
+    if (tc.fVertMerge && !tc.fVertRestart)
+    {
         m_cellOpen = true;
         writer->startElement("table:covered-table-cell");
         // store colSpan so covered elements can be added on cell close
@@ -435,10 +491,10 @@ void WordsTableHandler::tableCellStart()
     // I can pass these sizes to ODF now...
 #ifdef DEBUG_TABLEHANDLER
     debugMsDoc << " tableCellStart row=" << m_row << ", column=" << m_column <<
-                     " colSpan=" << colSpan <<
-                     " (from" << leftCellNumber << " to" << rightCellNumber << " for Words)" <<
-                     " rowSpan=" << rowSpan <<
-                     " cellRect=" << cellRect;
+               " colSpan=" << colSpan <<
+               " (from" << leftCellNumber << " to" << rightCellNumber << " for Words)" <<
+               " rowSpan=" << rowSpan <<
+               " cellRect=" << cellRect;
 #endif
 
     // Sort out the borders.
@@ -461,17 +517,17 @@ void WordsTableHandler::tableCellStart()
     //
 #ifdef DEBUG_TABLEHANDLER
     debugMsDoc << "CellBorders=" << m_row << m_column
-                  << "top" << tc.brcTop.brcType << tc.brcTop.dptLineWidth
-                  << "left" << tc.brcLeft.brcType << tc.brcLeft.dptLineWidth
-                  << "bottom" << tc.brcBottom.brcType << tc.brcBottom.dptLineWidth
-                  << "right" << tc.brcRight.brcType << tc.brcRight.dptLineWidth;
+               << "top" << tc.brcTop.brcType << tc.brcTop.dptLineWidth
+               << "left" << tc.brcLeft.brcType << tc.brcLeft.dptLineWidth
+               << "bottom" << tc.brcBottom.brcType << tc.brcBottom.dptLineWidth
+               << "right" << tc.brcRight.brcType << tc.brcRight.dptLineWidth;
 #endif
 
     const wvWare::Word97::BRC brcNone;
     const wvWare::Word97::BRC& brcTop = (m_row > 0) ?
                                         brcWinner(tc.brcTop, m_tap->rgbrcTable[4]) :
                                         ((tc.brcTop.brcType > 0 && tc.brcTop.brcType < 64) ? tc.brcTop :
-                                        m_tap->rgbrcTable[0]);
+                                         m_tap->rgbrcTable[0]);
     const wvWare::Word97::BRC& brcBottom = (m_row < m_currentTable->rows.size() - 1) ?
                                            brcWinner(tc.brcBottom, m_tap->rgbrcTable[4]) :
                                            brcWinner(tc.brcBottom, m_tap->rgbrcTable[2]);
@@ -488,84 +544,103 @@ void WordsTableHandler::tableCellStart()
     KoGenStyle cellStyle(KoGenStyle::TableCellAutoStyle, "table-cell");
 
     //in case a header or footer is processed, save the style into styles.xml
-    if (document()->writingHeader()) {
+    if (document()->writingHeader())
+    {
         cellStyle.setAutoStyleInStylesDotXml(true);
     }
 
     //set borders for the four edges of the cell
-    if (brcTop.brcType > 0 && brcTop.brcType < 64) {
+    if (brcTop.brcType > 0 && brcTop.brcType < 64)
+    {
         cellStyle.addProperty("fo:border-top", Conversion::setBorderAttributes(brcTop));
         QString kba = Conversion::borderCalligraAttributes(brcTop);
-        if (!kba.isEmpty()) {
+        if (!kba.isEmpty())
+        {
             cellStyle.addProperty("calligra:specialborder-top",kba);
         }
         QString dba = Conversion::setDoubleBorderAttributes(brcTop);
-        if (!dba.isEmpty()) {
+        if (!dba.isEmpty())
+        {
             cellStyle.addProperty("style:border-line-width-top", dba);
         }
     }
 
     //left
-    if (brcLeft.brcType > 0 && brcLeft.brcType < 64) {
+    if (brcLeft.brcType > 0 && brcLeft.brcType < 64)
+    {
         cellStyle.addProperty("fo:border-left", Conversion::setBorderAttributes(brcLeft));
         QString kba = Conversion::borderCalligraAttributes(brcLeft);
-        if (!kba.isEmpty()) {
+        if (!kba.isEmpty())
+        {
             cellStyle.addProperty("calligra:specialborder-left",kba);
         }
         QString dba = Conversion::setDoubleBorderAttributes(brcLeft);
-        if (!dba.isEmpty()) {
+        if (!dba.isEmpty())
+        {
             cellStyle.addProperty("style:border-line-width-left", dba);
         }
     }
 
     //bottom
-    if (brcBottom.brcType != 0 && brcBottom.brcType < 64) {
+    if (brcBottom.brcType != 0 && brcBottom.brcType < 64)
+    {
         cellStyle.addProperty("fo:border-bottom", Conversion::setBorderAttributes(brcBottom));
         QString kba = Conversion::borderCalligraAttributes(brcBottom);
-        if (!kba.isEmpty()) {
+        if (!kba.isEmpty())
+        {
             cellStyle.addProperty("calligra:specialborder-bottom",kba);
         }
         QString dba = Conversion::setDoubleBorderAttributes(brcBottom);
-        if (!dba.isEmpty()) {
+        if (!dba.isEmpty())
+        {
             cellStyle.addProperty("style:border-line-width-bottom", dba);
         }
     }
 
     //right
-    if (brcRight.brcType > 0 && brcRight.brcType < 64) {
+    if (brcRight.brcType > 0 && brcRight.brcType < 64)
+    {
         cellStyle.addProperty("fo:border-right", Conversion::setBorderAttributes(brcRight));
         QString kba = Conversion::borderCalligraAttributes(brcRight);
-        if (!kba.isEmpty()) {
+        if (!kba.isEmpty())
+        {
             cellStyle.addProperty("calligra:specialborder-right",kba);
         }
         QString dba = Conversion::setDoubleBorderAttributes(brcRight);
-        if (!dba.isEmpty()) {
+        if (!dba.isEmpty())
+        {
             cellStyle.addProperty("style:border-line-width-right", dba);
         }
     }
 
     //top left to bottom right
-    if (brcTL2BR.brcType > 0 && brcTL2BR.brcType < 64) {
+    if (brcTL2BR.brcType > 0 && brcTL2BR.brcType < 64)
+    {
         cellStyle.addProperty("style:diagonal-tl-br", Conversion::setBorderAttributes(brcTL2BR));
         QString kba = Conversion::borderCalligraAttributes(brcTL2BR);
-        if (!kba.isEmpty()) {
+        if (!kba.isEmpty())
+        {
             cellStyle.addProperty("calligra:specialborder-tl-br",kba);
         }
         QString dba = Conversion::setDoubleBorderAttributes(brcTL2BR);
-        if (!dba.isEmpty()) {
+        if (!dba.isEmpty())
+        {
             cellStyle.addProperty("style:diagonal-tl-br-widths", dba);
         }
     }
 
     //top right to bottom left
-    if (brcTR2BL.brcType > 0 && brcTR2BL.brcType < 64) {
+    if (brcTR2BL.brcType > 0 && brcTR2BL.brcType < 64)
+    {
         cellStyle.addProperty("style:diagonal-bl-tr", Conversion::setBorderAttributes(brcTR2BL));
         QString kba = Conversion::borderCalligraAttributes(brcTR2BL);
-        if (!kba.isEmpty()) {
+        if (!kba.isEmpty())
+        {
             cellStyle.addProperty("calligra:specialborder-tr-bl",kba);
         }
         QString dba = Conversion::setDoubleBorderAttributes(brcTR2BL);
-        if (!dba.isEmpty()) {
+        if (!dba.isEmpty())
+        {
             cellStyle.addProperty("style:diagonal-bl-tr-widths", dba);
         }
     }
@@ -577,16 +652,17 @@ void WordsTableHandler::tableCellStart()
 
     //process vertical alignment information
     QString align;
-    switch (tc.vertAlign) {
-    case vAlignTop:
-        align = QString("top");
-        break;
-    case vAlignMiddle:
-        align = QString("middle");
-        break;
-    case vAlignBottom:
-        align = QString("bottom");
-        break;
+    switch (tc.vertAlign)
+    {
+        case vAlignTop:
+            align = QString("top");
+            break;
+        case vAlignMiddle:
+            align = QString("middle");
+            break;
+        case vAlignBottom:
+            align = QString("bottom");
+            break;
     }
     cellStyle.addProperty("style:vertical-align", align);
 
@@ -608,13 +684,17 @@ void WordsTableHandler::tableCellStart()
     m_cellOpen = true;
     writer->addAttribute("table:style-name", cellStyleName.toUtf8());
 
-    if (rowSpan > 1) {
+    if (rowSpan > 1)
+    {
         writer->addAttribute("table:number-rows-spanned", rowSpan);
     }
-    if (colSpan > 1) {
+    if (colSpan > 1)
+    {
         writer->addAttribute("table:number-columns-spanned", colSpan);
         m_colSpan = colSpan;
-    } else {
+    }
+    else
+    {
         // If not set to colSpan, we need to (re)set it to a known value.
         m_colSpan = 1;
     }
@@ -625,7 +705,8 @@ void WordsTableHandler::tableCellEnd()
 {
     debugMsDoc;
 
-    if (!m_cellOpen) {
+    if (!m_cellOpen)
+    {
         debugMsDoc << "BUG: !m_cellOpen";
         return;
     }
@@ -633,14 +714,16 @@ void WordsTableHandler::tableCellEnd()
     // Text lists aren't closed explicitly so we have to close them
     // when something happens like a new paragraph or, in this case,
     // the table cell ends.
-    if (document()->textHandler()->listIsOpen()) {
+    if (document()->textHandler()->listIsOpen())
+    {
         document()->textHandler()->closeList();
     }
     KoXmlWriter*  writer = currentWriter();
 
 
     QList<const char*> openTags = writer->tagHierarchy();
-    for (int i = 0; i < openTags.size(); ++i) {
+    for (int i = 0; i < openTags.size(); ++i)
+    {
         debugMsDoc << openTags[i];
     }
     writer->endElement();//table:table-cell
@@ -648,7 +731,8 @@ void WordsTableHandler::tableCellEnd()
 
     // If this cell covers other cells (i.e. is merged), then create as many
     // table:covered-table-cell tags as there are covered columns.
-    for (int i = 1; i < m_colSpan; i++) {
+    for (int i = 1; i < m_colSpan; i++)
+    {
         writer->startElement("table:covered-table-cell");
         writer->endElement();
     }
@@ -656,20 +740,23 @@ void WordsTableHandler::tableCellEnd()
 
     //Leaving out the table:style-name attribute and creation of the
     //corresponding style for covered table cells in the tableCellStart f.
-    if (!m_tap || m_cellStyleName.isEmpty()) {
+    if (!m_tap || m_cellStyleName.isEmpty())
+    {
         return;
     }
 
     //process shading information
     const wvWare::Word97::SHD& shd = m_tap->rgshd[ m_column ];
     QString color = Conversion::shdToColorStr(shd,
-                                              document()->textHandler()->paragraphBgColor(),
-                                              document()->textHandler()->paragraphBaseFontColorBkp());
+                    document()->textHandler()->paragraphBgColor(),
+                    document()->textHandler()->paragraphBaseFontColorBkp());
 
-    if (!color.isNull()) {
+    if (!color.isNull())
+    {
         KoGenStyle* cellStyle = m_mainStyles->styleForModification(m_cellStyleName, "table-cell");
         Q_ASSERT(cellStyle);
-        if (cellStyle) {
+        if (cellStyle)
+        {
             cellStyle->addProperty("fo:background-color", color, KoGenStyle::TableCellType);
         }
         m_cellStyleName.clear();
@@ -680,7 +767,7 @@ void WordsTableHandler::tableCellEnd()
 }
 
 Words::Table::Table()
-: floating(false)
+    : floating(false)
 {
 }
 
@@ -689,13 +776,16 @@ void Words::Table::cacheCellEdge(int cellEdge)
     debugMsDoc ;
     uint size = m_cellEdges.size();
     // Do we already know about this edge?
-    for (unsigned int i = 0; i < size; i++) {
-        if (m_cellEdges[i] == cellEdge)  {
+    for (unsigned int i = 0; i < size; i++)
+    {
+        if (m_cellEdges[i] == cellEdge)
+        {
             debugMsDoc << cellEdge << " -> found";
             return;
         }
         //insert it in the right place if necessary
-        if (m_cellEdges[i] > cellEdge) {
+        if (m_cellEdges[i] > cellEdge)
+        {
             m_cellEdges.insert(i, cellEdge);
             debugMsDoc << cellEdge << " -> added. Size=" << size + 1;
             return;
@@ -709,8 +799,10 @@ void Words::Table::cacheCellEdge(int cellEdge)
 int Words::Table::columnNumber(int cellEdge) const
 {
     debugMsDoc ;
-    for (unsigned int i = 0; i < (unsigned int)m_cellEdges.size(); i++) {
-        if (m_cellEdges[i] == cellEdge) {
+    for (unsigned int i = 0; i < (unsigned int)m_cellEdges.size(); i++)
+    {
+        if (m_cellEdges[i] == cellEdge)
+        {
             return i;
         }
     }

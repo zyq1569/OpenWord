@@ -35,9 +35,9 @@ class KoM2MMLFormulaTool : public KoToolBase
     Q_OBJECT
 public:
     explicit KoM2MMLFormulaTool(KoCanvasBase *canvas);
-    
+
     void activate(ToolActivation toolActivation, const QSet< KoShape* >& shapes) override;
-    
+
     void mouseReleaseEvent(KoPointerEvent* event) override;
     void mousePressEvent(KoPointerEvent* event) override;
     void mouseMoveEvent(KoPointerEvent* event) override;

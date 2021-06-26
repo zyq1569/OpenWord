@@ -27,7 +27,7 @@ ConfigSubWidgetBase::ConfigSubWidgetBase(QWidget *parent)
     : QWidget(parent)
     , chart(0)
 {
-    
+
 }
 
 ConfigSubWidgetBase::ConfigSubWidgetBase(QList<ChartType> types, QWidget *parent)
@@ -35,7 +35,7 @@ ConfigSubWidgetBase::ConfigSubWidgetBase(QList<ChartType> types, QWidget *parent
     , chart(0)
     , chartTypes(types)
 {
-    
+
 }
 
 ConfigSubWidgetBase::~ConfigSubWidgetBase()
@@ -51,14 +51,16 @@ void ConfigSubWidgetBase::setChartTypes(QList<ChartType> types)
 void ConfigSubWidgetBase::open(ChartShape *shape)
 {
     chart = shape;
-    if (chart) {
+    if (chart)
+    {
         connect(chart, &ChartShape::chartTypeChanged, this, &ConfigSubWidgetBase::removeSubDialogs);
     }
 }
 
 void ConfigSubWidgetBase::deactivate()
 {
-    if (chart) {
+    if (chart)
+    {
         deleteSubDialogs();
         disconnect(chart, &ChartShape::chartTypeChanged, this, &ConfigSubWidgetBase::removeSubDialogs);
     }
@@ -83,14 +85,16 @@ void ConfigSubWidgetBase::blockSignals(bool block)
 void ConfigSubWidgetBase::blockSignals(QWidget *w, bool block)
 {
     QList<QWidget*> lst = w->findChildren<QWidget*>();
-    for (int i = 0; i < lst.count(); ++i) {
+    for (int i = 0; i < lst.count(); ++i)
+    {
         lst.at(i)->blockSignals(block);
     }
 }
 
 void ConfigSubWidgetBase::removeSubDialogs(ChartType type, ChartType prev)
 {
-    if (type != prev) {
+    if (type != prev)
+    {
         deleteSubDialogs();
     }
 }

@@ -74,7 +74,7 @@ public:
 };
 
 KoStyleThumbnailer::KoStyleThumbnailer()
-        : d(new Private())
+    : d(new Private())
 {
 }
 
@@ -85,9 +85,12 @@ KoStyleThumbnailer::~KoStyleThumbnailer()
 
 QImage KoStyleThumbnailer::thumbnail(KoParagraphStyle *style, const QSize &_size, bool recreateThumbnail, KoStyleThumbnailerFlags flags)
 {
-    if ((flags & UseStyleNameText)  && (!style || style->name().isNull())) {
+    if ((flags & UseStyleNameText)  && (!style || style->name().isNull()))
+    {
         return QImage();
-    } else if ((! (flags & UseStyleNameText)) && d->thumbnailText.isEmpty()) {
+    }
+    else if ((! (flags & UseStyleNameText)) && d->thumbnailText.isEmpty())
+    {
         return QImage();
     }
 
@@ -95,7 +98,8 @@ QImage KoStyleThumbnailer::thumbnail(KoParagraphStyle *style, const QSize &_size
 
     QString imageKey = "p_" + QString::number(reinterpret_cast<uintptr_t>(style)) + "_" + QString::number(size.width()) + "_" + QString::number(size.height());
 
-    if (!recreateThumbnail && d->thumbnailCache.object(imageKey)) {
+    if (!recreateThumbnail && d->thumbnailCache.object(imageKey))
+    {
         return QImage(*(d->thumbnailCache.object(imageKey)));
     }
 
@@ -122,9 +126,12 @@ QImage KoStyleThumbnailer::thumbnail(KoParagraphStyle *style, const QSize &_size
     // would be used, which might be too bright with dark UI color schemes
     format.setForeground(QColor(Qt::black));
     clone->KoCharacterStyle::applyStyle(format);
-    if (flags & UseStyleNameText) {
+    if (flags & UseStyleNameText)
+    {
         cursor.insertText(clone->name(), format);
-    } else {
+    }
+    else
+    {
         cursor.insertText(d->thumbnailText, format);
     }
     layoutThumbnail(size, im, flags);
@@ -139,22 +146,27 @@ QImage KoStyleThumbnailer::thumbnail(KoParagraphStyle *style, const QSize &_size
 
 QImage KoStyleThumbnailer::thumbnail(KoCharacterStyle *characterStyle, KoParagraphStyle *paragraphStyle, const QSize &_size, bool recreateThumbnail, KoStyleThumbnailerFlags flags)
 {
-    if ((flags & UseStyleNameText)  && (!characterStyle || characterStyle->name().isNull())) {
-        return QImage();
-    } else if ((! (flags & UseStyleNameText)) && d->thumbnailText.isEmpty()) {
+    if ((flags & UseStyleNameText)  && (!characterStyle || characterStyle->name().isNull()))
+    {
         return QImage();
     }
-    else if (characterStyle == 0) {
+    else if ((! (flags & UseStyleNameText)) && d->thumbnailText.isEmpty())
+    {
+        return QImage();
+    }
+    else if (characterStyle == 0)
+    {
         return QImage();
     }
 
     const QSize &size = (!_size.isValid() || _size.isNull()) ? d->defaultSize : _size;
 
     QString imageKey = "c_" + QString::number(reinterpret_cast<uintptr_t>(characterStyle)) + "_"
-                     + "p_" + QString::number(reinterpret_cast<uintptr_t>(paragraphStyle)) + "_"
-                     + QString::number(size.width()) + "_" + QString::number(size.height());
+                       + "p_" + QString::number(reinterpret_cast<uintptr_t>(paragraphStyle)) + "_"
+                       + QString::number(size.width()) + "_" + QString::number(size.height());
 
-    if (!recreateThumbnail && d->thumbnailCache.object(imageKey)) {
+    if (!recreateThumbnail && d->thumbnailCache.object(imageKey))
+    {
         return QImage(*(d->thumbnailCache.object(imageKey)));
     }
 
@@ -174,18 +186,22 @@ QImage KoStyleThumbnailer::thumbnail(KoCharacterStyle *characterStyle, KoParagra
     cursor.setBlockCharFormat(QTextCharFormat());
     cursor.setCharFormat(QTextCharFormat());
 
-    if (paragraphStyle) {
+    if (paragraphStyle)
+    {
         KoParagraphStyle *paragraphStyleClone = paragraphStyle->clone();
-       // paragraphStyleClone->KoCharacterStyle::applyStyle(format);
+        // paragraphStyleClone->KoCharacterStyle::applyStyle(format);
         QTextBlock block = cursor.block();
         paragraphStyleClone->applyStyle(block, true);
         delete paragraphStyleClone;
         paragraphStyleClone = 0;
     }
 
-    if (flags & UseStyleNameText) {
+    if (flags & UseStyleNameText)
+    {
         cursor.insertText(characterStyleClone->name(), format);
-    } else {
+    }
+    else
+    {
         cursor.insertText(d->thumbnailText, format);
     }
 
@@ -215,7 +231,8 @@ void KoStyleThumbnailer::layoutThumbnail(const QSize &size, QImage *im, KoStyleT
     QSizeF documentSize = rootArea.boundingRect().size();
     documentSize.setWidth(documentSize.width() * qt_defaultDpiX() / 72.0);
     documentSize.setHeight(documentSize.height() * qt_defaultDpiY() / 72.0);
-    if (documentSize.width() > size.width() || documentSize.height() > size.height()) {
+    if (documentSize.width() > size.width() || documentSize.height() > size.height())
+    {
         //calculate the space needed for the font size indicator (should the preview be too big with the style's font size
         QTextCursor cursor(d->thumbnailHelperDocument);
         cursor.select(QTextCursor::Document);
@@ -229,7 +246,8 @@ void KoStyleThumbnailer::layoutThumbnail(const QSize &size, QImage *im, KoStyleT
         qreal width = qMax<qreal>(0., size.width()-sizeHintRect.width());
 
         QTextCharFormat fmt = cursor.charFormat();
-        if (flags & ScaleThumbnailFont) {
+        if (flags & ScaleThumbnailFont)
+        {
             //calculate the font reduction factor so that the text + the sizeHint fits
             qreal reductionFactor = qMin(width/documentSize.width(), size.height()/documentSize.height());
 
@@ -248,7 +266,8 @@ void KoStyleThumbnailer::layoutThumbnail(const QSize &size, QImage *im, KoStyleT
         //center the preview in the pixmap
         qreal yOffset = (size.height()-documentSize.height())/2;
         p.save();
-        if ((flags & CenterAlignThumbnail) && yOffset) {
+        if ((flags & CenterAlignThumbnail) && yOffset)
+        {
             p.translate(0, yOffset);
         }
 
@@ -263,10 +282,12 @@ void KoStyleThumbnailer::layoutThumbnail(const QSize &size, QImage *im, KoStyleT
         p.drawText(QRectF(size.width()-sizeHintRect.width(), 0, sizeHintRect.width(),
                           size.height() /*because we want to be vertically centered in the pixmap, like the style name*/),Qt::AlignCenter, sizeHint);
     }
-    else {
+    else
+    {
         //center the preview in the pixmap
         qreal yOffset = (size.height()-documentSize.height())/2;
-        if ((flags & CenterAlignThumbnail) && yOffset) {
+        if ((flags & CenterAlignThumbnail) && yOffset)
+        {
             p.translate(0, yOffset);
         }
 
@@ -297,8 +318,10 @@ void KoStyleThumbnailer::setText(const QString &text)
 void KoStyleThumbnailer::removeFromCache(const QString &expr)
 {
     QList<QString> keys = d->thumbnailCache.keys();
-    foreach (const QString &key, keys) {
-        if (key.contains(expr)) {
+    foreach (const QString &key, keys)
+    {
+        if (key.contains(expr))
+        {
             d->thumbnailCache.remove(key);
         }
     }

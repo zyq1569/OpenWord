@@ -34,18 +34,18 @@
 #include <QMenu>
 
 FormulaToolWidget::FormulaToolWidget( KoFormulaTool* tool, QWidget* parent )
-                  : QTabWidget( parent )
+    : QTabWidget( parent )
 {
     m_tool = tool;
     setupUi( this );
     // setup the element insert menus
     m_fractionMenu.addAction( m_tool->action( "insert_fraction" ) );
     m_fractionMenu.addAction( m_tool->action( "insert_bevelled_fraction" ) );
-    
-    
+
+
     m_fenceMenu.addAction( m_tool->action( "insert_fence" ) );
     m_fenceMenu.addAction( m_tool->action( "insert_enclosed" ) );
-    
+
 
     m_tableMenu.addAction( m_tool->action( "insert_33table" ) );
     m_tableMenu.addAction( m_tool->action( "insert_21table" ) );
@@ -59,7 +59,7 @@ FormulaToolWidget::FormulaToolWidget( KoFormulaTool* tool, QWidget* parent )
     m_scriptsMenu.addAction( m_tool->action( "insert_underscript" ) );
     m_scriptsMenu.addAction( m_tool->action( "insert_overscript" ) );
     m_scriptsMenu.addAction( m_tool->action( "insert_underoverscript" ) );
-    
+
 
     m_alterTableMenu.addAction( m_tool->action( "insert_row") );
     m_alterTableMenu.addAction( m_tool->action( "insert_column") );
@@ -85,18 +85,18 @@ FormulaToolWidget::FormulaToolWidget( KoFormulaTool* tool, QWidget* parent )
     setupButton(buttonArrows,m_arrowMenu,i18n("Arrows"), symbolsInRange(0x2190,0x21FF));
     buttonGreek->setText(QChar(0x03B2));
     setupButton(buttonGreek,m_greekMenu,i18n("Greek"), symbolsInRange(0x0391,0x03A1)
-                                                     <<symbolsInRange(0x03A3,0x03A9)
-                                                     <<symbolsInRange(0x03B1,0x03C9));
+                <<symbolsInRange(0x03A3,0x03A9)
+                <<symbolsInRange(0x03B1,0x03C9));
     buttonRelation->setText(QChar(0x2265));
     setupButton(buttonRelation,m_relationMenu,i18n("Relations"), symbolsInRange(0x223C,0x2292)
-                                                               <<symbolsInRange(0x2AAE,0x2ABA));
+                <<symbolsInRange(0x2AAE,0x2ABA));
     buttonOperators->setText(QChar(0x2211));
     setupButton(buttonOperators,m_operatorMenu,i18n("Operators"), symbolsInRange(0x220F,0x2219)
-                                                               <<symbolsInRange(0x2227,0x2233)
-                                                               <<symbolsInRange(0x2207,0x2208));
+                <<symbolsInRange(0x2227,0x2233)
+                <<symbolsInRange(0x2207,0x2208));
     buttonMisc->setText(QChar(0x211A));
     setupButton(buttonMisc,m_miscMenu,i18n("Miscellaneous"), symbolsInRange(0x2200,0x2205)
-                                                                   <<symbolsInRange(0x221F,0x2222));
+                <<symbolsInRange(0x221F,0x2222));
 
     buttonRow->hide();
     connect( buttonLoad, SIGNAL(clicked()), m_tool, SLOT(loadFormula()) );
@@ -124,7 +124,8 @@ void FormulaToolWidget::setupButton ( QToolButton* button, QMenu& menu, const QS
 {
     QWidgetAction *widgetaction=new QWidgetAction(button);
     QTableWidget* table= new QTableWidget(list.length()/length,length,button);
-    for (int i=0; i<list.length();i++) {
+    for (int i=0; i<list.length(); i++)
+    {
         QTableWidgetItem *newItem = new QTableWidgetItem(list[i]);
         newItem->setFlags(Qt::ItemIsEnabled);
         table->setItem(i/length,i%length, newItem);
@@ -147,7 +148,7 @@ void FormulaToolWidget::setupButton ( QToolButton* button, QMenu& menu, const QS
              &menu, SLOT(hide()));
     button->setPopupMode(QToolButton::InstantPopup);
     button->setMenu(&menu);
-    
+
     widgetaction->setDefaultWidget(table);
     menu.addAction(widgetaction);
 }
@@ -155,7 +156,8 @@ void FormulaToolWidget::setupButton ( QToolButton* button, QMenu& menu, const QS
 QList< QString > FormulaToolWidget::symbolsInRange ( int first, int last )
 {
     QList<QString> list;
-    for (int i=first;i<=last;++i) {
+    for (int i=first; i<=last; ++i)
+    {
         list.append(QChar(i));
     }
     return list;

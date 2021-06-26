@@ -82,7 +82,8 @@ bool FormulaDocument::loadOdf( KoOdfReadStore &odfStore )
 
     debugFormula << bodyElement.nodeName();
 
-    if (bodyElement.localName() != "math" || bodyElement.namespaceURI() != KoXmlNS::math) {
+    if (bodyElement.localName() != "math" || bodyElement.namespaceURI() != KoXmlNS::math)
+    {
         errorFormula << "No <math:math> element found.";
         return false;
     }
@@ -92,7 +93,8 @@ bool FormulaDocument::loadOdf( KoOdfReadStore &odfStore )
     // actual formula.  I have to check with the MathML spec what this
     // actually means and if it is obligatory.  /iw
     KoXmlNode semanticsNode = bodyElement.namedItemNS( KoXmlNS::math, "semantics" );
-    if ( !semanticsNode.isNull() ) {
+    if ( !semanticsNode.isNull() )
+    {
         bodyElement = semanticsNode.toElement();
     }
 
@@ -120,12 +122,16 @@ bool FormulaDocument::saveOdf( SavingContext &context )
     KoXmlWriter *manifestWriter = odfStore.manifestWriter();
     KoXmlWriter *contentWriter  = odfStore.contentWriter();
     if ( !contentWriter )
+    {
         return false;
+    }
 
     KoGenStyles mainStyles;
     KoXmlWriter *bodyWriter = odfStore.bodyWriter();
     if ( !bodyWriter )
+    {
         return false;
+    }
 
     KoEmbeddedDocumentSaver& embeddedSaver = context.embeddedSaver;
 
@@ -148,9 +154,12 @@ bool FormulaDocument::saveOdf( SavingContext &context )
 
     // save the styles.xml
     if ( !mainStyles.saveOdfStylesDotXml( store, manifestWriter ) )
+    {
         return false;
+    }
 
-    if ( !savingContext.saveDataCenter( store, manifestWriter ) ) {
+    if ( !savingContext.saveDataCenter( store, manifestWriter ) )
+    {
         return false;
     }
 

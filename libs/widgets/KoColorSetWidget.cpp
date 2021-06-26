@@ -53,13 +53,16 @@ void KoColorSetWidget::KoColorSetWidgetPrivate::fillColors()
     colorSetLayout->setMargin(3);
     colorSetLayout->setSpacing(0); // otherwise the use can click where there is none
     colorSetContainer->setBackgroundRole(QPalette::Dark);
-    for(int i = 0; i<16; i++) {
+    for(int i = 0; i<16; i++)
+    {
         colorSetLayout->setColumnMinimumWidth(i, 12);
     }
     colorSetContainer->setLayout(colorSetLayout);
 
-    if (colorSet) {
-        for( int i = 0, p= 0; i < colorSet->nColors(); i++) {
+    if (colorSet)
+    {
+        for( int i = 0, p= 0; i < colorSet->nColors(); i++)
+        {
             KoColorPatch *patch = new KoColorPatch(colorSetContainer);
             patch->setFrameStyle(QFrame::Plain | QFrame::Box);
             patch->setLineWidth(1);
@@ -80,15 +83,18 @@ void KoColorSetWidget::KoColorSetWidgetPrivate::addRemoveColors()
 
     Q_ASSERT(colorSet);
     KoEditColorSetDialog *dlg = new KoEditColorSetDialog(palettes, colorSet->name(), thePublic);
-    if (dlg->exec() == KoDialog::Accepted ) { // always reload the color set
+    if (dlg->exec() == KoDialog::Accepted )   // always reload the color set
+    {
         KoColorSet * cs = dlg->activeColorSet();
         // check if the selected colorset is predefined
-        if( cs && !palettes.contains( cs ) ) {
+        if( cs && !palettes.contains( cs ) )
+        {
             int i = 1;
             QFileInfo fileInfo;
             QString savePath = srv->saveLocation();
 
-            do {
+            do
+            {
                 fileInfo.setFile( savePath + QString("%1.gpl").arg( i++, 4, 10, QChar('0') ) );
             }
             while (fileInfo.exists());
@@ -97,13 +103,15 @@ void KoColorSetWidget::KoColorSetWidgetPrivate::addRemoveColors()
             cs->setValid( true );
 
             // add new colorset to predefined colorsets
-            if (!srv->addResource(cs)) {
+            if (!srv->addResource(cs))
+            {
 
                 delete cs;
                 cs = 0;
             }
         }
-        if (cs) {
+        if (cs)
+        {
             thePublic->setColorSet(cs);
         }
     }
@@ -112,7 +120,8 @@ void KoColorSetWidget::KoColorSetWidgetPrivate::addRemoveColors()
 
 void KoColorSetWidget::KoColorSetWidgetPrivate::addRecent(const KoColor &color)
 {
-    if(numRecents<6) {
+    if(numRecents<6)
+    {
         recentPatches[numRecents] = new KoColorPatch(thePublic);
         recentPatches[numRecents]->setFrameShape(QFrame::Box);
         recentsLayout->insertWidget(numRecents+1, recentPatches[numRecents]);
@@ -120,7 +129,8 @@ void KoColorSetWidget::KoColorSetWidgetPrivate::addRecent(const KoColor &color)
         numRecents++;
     }
     // shift colors to the right
-    for (int i = numRecents- 1; i >0; i--) {
+    for (int i = numRecents- 1; i >0; i--)
+    {
         recentPatches[i]->setColor(recentPatches[i-1]->color());
     }
 
@@ -132,7 +142,8 @@ void KoColorSetWidget::KoColorSetWidgetPrivate::activateRecent(int i)
 {
     KoColor color = recentPatches[i]->color();
 
-    while (i >0) {
+    while (i >0)
+    {
         recentPatches[i]->setColor(recentPatches[i-1]->color());
         i--;
     }
@@ -140,7 +151,7 @@ void KoColorSetWidget::KoColorSetWidgetPrivate::activateRecent(int i)
 }
 
 KoColorSetWidget::KoColorSetWidget(QWidget *parent)
-   : QFrame(parent)
+    : QFrame(parent)
     ,d(new KoColorSetWidgetPrivate())
 {
     d->thePublic = this;
@@ -187,7 +198,8 @@ KoColorSetWidget::~KoColorSetWidget()
 {
     KoResourceServer<KoColorSet>* srv = KoResourceServerProvider::instance()->paletteServer();
     QList<KoColorSet*> palettes = srv->resources();
-    if (!palettes.contains(d->colorSet)) {
+    if (!palettes.contains(d->colorSet))
+    {
         delete d->colorSet;
     }
     delete d;
@@ -200,22 +212,29 @@ void KoColorSetWidget::KoColorSetWidgetPrivate::colorTriggered(KoColorPatch *pat
     emit thePublic->colorChanged(patch->color(), true);
 
     for(i = 0; i <numRecents; i++)
-        if(patch == recentPatches[i]) {
+        if(patch == recentPatches[i])
+        {
             activateRecent(i);
             break;
         }
 
     if(i == numRecents) // we didn't find it above
+    {
         addRecent(patch->color());
+    }
 }
 
 void KoColorSetWidget::setColorSet(KoColorSet *colorSet)
 {
-    if (colorSet == d->colorSet) return;
+    if (colorSet == d->colorSet)
+    {
+        return;
+    }
 
     KoResourceServer<KoColorSet>* srv = KoResourceServerProvider::instance()->paletteServer();
     QList<KoColorSet*> palettes = srv->resources();
-    if (!palettes.contains(d->colorSet)) {
+    if (!palettes.contains(d->colorSet))
+    {
         delete d->colorSet;
     }
 
@@ -235,5 +254,5 @@ void KoColorSetWidget::resizeEvent(QResizeEvent *event)
 }
 
 //have to include this because of Q_PRIVATE_SLOT
-//#include "moc_KoColorSetWidget.cpp"
+#include "moc_KoColorSetWidget.cpp"
 

@@ -77,7 +77,9 @@ ChartLayout::ChartLayout()
 ChartLayout::~ChartLayout()
 {
     foreach(LayoutData *data, m_layoutItems.values())
+    {
         delete data;
+    }
 }
 
 void ChartLayout::add(KoShape *shape)
@@ -89,7 +91,8 @@ void ChartLayout::add(KoShape *shape)
 void ChartLayout::remove(KoShape *shape)
 {
     m_shapes.remove(m_shapes.key(shape));
-    if (m_layoutItems.contains(shape)) {
+    if (m_layoutItems.contains(shape))
+    {
         // delete LayoutData
         delete m_layoutItems.value(shape);
         m_layoutItems.remove(shape);
@@ -131,7 +134,8 @@ QList<KoShape*> ChartLayout::shapes() const
 
 void ChartLayout::setContainerRect(const QRectF &rect)
 {
-    if (rect != m_containerRect) {
+    if (rect != m_containerRect)
+    {
         m_containerRect = rect;
         scheduleRelayout();
     }
@@ -139,9 +143,11 @@ void ChartLayout::setContainerRect(const QRectF &rect)
 
 void ChartLayout::containerChanged(KoShapeContainer *container, KoShape::ChangeType type)
 {
-    switch(type) {
+    switch(type)
+    {
         case KoShape::StrokeChanged:
-        case KoShape::SizeChanged: {
+        case KoShape::SizeChanged:
+        {
             QRectF rect(QPointF(0,0), container->size());
             KoInsets insets = container->strokeInsets();
             rect.adjust(insets.left / 2., insets.top / 2., -insets.right / 2., -insets.bottom / 2.);
@@ -164,7 +170,8 @@ bool ChartLayout::isChildLocked(const KoShape *shape) const
 void ChartLayout::setItemType(const KoShape *shape, ItemType itemType)
 {
     LayoutData *data = m_layoutItems.value(const_cast<KoShape*>(shape));
-    if (!data) {
+    if (!data)
+    {
         data = new LayoutData();
         m_layoutItems.insert(const_cast<KoShape*>(shape), data);
     }
@@ -186,14 +193,20 @@ void ChartLayout::proposeMove(KoShape *child, QPointF &move)
 {
     QRectF current = itemRect(child);
     QRectF newRect = current.adjusted(move.x(), move.y(), move.x(), move.y());
-    if (newRect.left() < m_containerRect.left()) {
+    if (newRect.left() < m_containerRect.left())
+    {
         move.setX(m_containerRect.left() - current.left());
-    } else if (newRect.right() > m_containerRect.right()) {
+    }
+    else if (newRect.right() > m_containerRect.right())
+    {
         move.setX(m_containerRect.right() - current.right());
     }
-    if (newRect.top() < m_containerRect.top()) {
+    if (newRect.top() < m_containerRect.top())
+    {
         move.setY(m_containerRect.top() - current.top());
-    } else if (newRect.bottom() > m_containerRect.bottom()) {
+    }
+    else if (newRect.bottom() > m_containerRect.bottom())
+    {
         move.setY(m_containerRect.bottom() - current.bottom());
     }
 }
@@ -205,17 +218,20 @@ void ChartLayout::childChanged(KoShape *shape, KoShape::ChangeType type)
     // Do not relayout again if we're currently in the process of a relayout.
     // Repositioning a layout item or resizing it will result in a cull of this method.
     if (m_doingLayout)
+    {
         return;
+    }
 
     // This can be fine-tuned, but right now, simply everything will be re-layouted.
-    switch (type) {
-    case KoShape::PositionChanged:
-    case KoShape::SizeChanged:
-        scheduleRelayout();
-    // FIXME: There's some cases that would require relayouting but that don't make sense
-    // for chart items, e.g. ShearChanged. How should these changes be avoided or handled?
-    default:
-        break;
+    switch (type)
+    {
+        case KoShape::PositionChanged:
+        case KoShape::SizeChanged:
+            scheduleRelayout();
+        // FIXME: There's some cases that would require relayouting but that don't make sense
+        // for chart items, e.g. ShearChanged. How should these changes be avoided or handled?
+        default:
+            break;
     }
 }
 
@@ -227,27 +243,36 @@ void ChartLayout::scheduleRelayout()
 KChart::CartesianAxis::Position axisPosition(PlotArea *plotarea, ItemType type)
 {
     KChart::CartesianAxis::Position apos = KChart::CartesianAxis::Bottom;
-    switch (type) {
-        case XAxisTitleType: {
-            if (plotarea && plotarea->xAxis()) {
+    switch (type)
+    {
+        case XAxisTitleType:
+        {
+            if (plotarea && plotarea->xAxis())
+            {
                 apos = plotarea->xAxis()->kchartAxisPosition();
             }
             break;
         }
-        case YAxisTitleType: {
-            if (plotarea && plotarea->yAxis()) {
+        case YAxisTitleType:
+        {
+            if (plotarea && plotarea->yAxis())
+            {
                 apos = plotarea->yAxis()->kchartAxisPosition();
             }
             break;
         }
-        case SecondaryXAxisTitleType: {
-            if (plotarea && plotarea->secondaryXAxis()) {
+        case SecondaryXAxisTitleType:
+        {
+            if (plotarea && plotarea->secondaryXAxis())
+            {
                 apos = plotarea->secondaryXAxis()->kchartAxisPosition();
             }
             break;
         }
-        case SecondaryYAxisTitleType: {
-            if (plotarea && plotarea->secondaryYAxis()) {
+        case SecondaryYAxisTitleType:
+        {
+            if (plotarea && plotarea->secondaryYAxis())
+            {
                 apos = plotarea->secondaryYAxis()->kchartAxisPosition();
             }
             break;
@@ -268,18 +293,23 @@ qreal ChartLayout::yOffset(const QRectF &top, const QRectF &bottom, bool center)
     return center ? y / 2.0 : y;
 }
 
-void ChartLayout::rotateAxisTitles(PlotArea *plotarea) {
-    switch (plotarea->chartType()) {
+void ChartLayout::rotateAxisTitles(PlotArea *plotarea)
+{
+    switch (plotarea->chartType())
+    {
         case BarChartType:
         case LineChartType:
         case AreaChartType:
         case ScatterChartType:
         case BubbleChartType:
-        case StockChartType: {
-            for (Axis *axis : plotarea->axes()) {
+        case StockChartType:
+        {
+            for (Axis *axis : plotarea->axes())
+            {
                 KoShape *title = axis->title();
                 title->rotate(-title->rotation());
-                switch (axis->kchartAxisPosition()) {
+                switch (axis->kchartAxisPosition())
+                {
                     case KChart::CartesianAxis::Left:
                         title->rotate(-90);
                         break;
@@ -301,29 +331,35 @@ void ChartLayout::layoutAxisTitles(int pos, const QMultiMap<int, KoShape*> &map,
 {
     debugChartLayout<<pos<<rect;
     const QList<KoShape*> shapes = map.values(pos);
-    if (shapes.isEmpty()) {
+    if (shapes.isEmpty())
+    {
         return;
     }
     QRectF layoutRect = rect;
     QList<QRectF> rects;
-    switch (pos) {
+    switch (pos)
+    {
         case 1: // bottom
         case 3: // top
             layoutRect.adjust((plotarea.center().x() - layoutRect.center().x()) / 2., 0, 0, 0);
-            for (int i = shapes.count()-1; i >= 0; --i) {
-                if (!rects.isEmpty()) {
+            for (int i = shapes.count()-1; i >= 0; --i)
+            {
+                if (!rects.isEmpty())
+                {
                     layoutRect.adjust(0, rects.last().height(), 0, 0);
                 }
                 QRectF r = layoutRect;
                 QRectF itmRect = itemRect(shapes[i]);
                 r.setHeight(itmRect.height());
-                if (r.width() > itmRect.width()) {
+                if (r.width() > itmRect.width())
+                {
                     qreal w = (r.width() - itmRect.width()) / 2;
                     r.adjust(w, 0, -w, 0);
                 }
                 rects.prepend(r);
             }
-            for (int i = 0; i < shapes.count(); ++i) {
+            for (int i = 0; i < shapes.count(); ++i)
+            {
                 m_layoutItems[shapes[i]]->rect = rects.at(i);
                 debugChartLayout<<(pos==1?"bottom title":"top title")<<i<<':'<<dbg(shapes[i])<<rects.at(i)<<rects;
             }
@@ -331,20 +367,24 @@ void ChartLayout::layoutAxisTitles(int pos, const QMultiMap<int, KoShape*> &map,
         case 2: // left
         case 4: // right
             layoutRect.adjust(0, (plotarea.center().y() - layoutRect.center().y()) / 2., 0, 0);
-            for (int i = shapes.count()-1; i >= 0; --i) {
-                if (!rects.isEmpty()) {
+            for (int i = shapes.count()-1; i >= 0; --i)
+            {
+                if (!rects.isEmpty())
+                {
                     layoutRect.adjust(rects.first().width(), 0, 0, 0);
                 }
                 QRectF r = layoutRect;
                 QRectF itmRect = itemRect(shapes[i]);
                 r.setWidth(itemRect(shapes[i]).width());
-                if (r.height() > itmRect.height()) {
+                if (r.height() > itmRect.height())
+                {
                     qreal h = (r.height() - itmRect.height()) / 2;
                     r.adjust(0, h, 0, -h);
                 }
                 rects.prepend(r);
             }
-            for (int i = 0; i < shapes.count(); ++i) {
+            for (int i = 0; i < shapes.count(); ++i)
+            {
                 m_layoutItems[shapes[i]]->rect = rects.at(i);
                 debugChartLayout<<(pos==2?"left title":"right title")<<i<<':'<<dbg(shapes[i])<<rects.at(i)<<rects;
             }
@@ -357,7 +397,8 @@ void ChartLayout::calculateLayout()
     QRectF area = m_containerRect;
     area.adjust(m_padding.left, m_padding.top, -m_padding.right, -m_padding.bottom);
 
-    if (area.size().width() < 0 && area.size().height() < 0) {
+    if (area.size().width() < 0 && area.size().height() < 0)
+    {
         debugChartLayout<<"invalid size:"<<area;
         m_doingLayout = false;
         m_relayoutScheduled = false;
@@ -367,26 +408,33 @@ void ChartLayout::calculateLayout()
 
     PlotArea *plotarea = dynamic_cast<PlotArea*>(m_shapes.value(PlotAreaType));
     QRectF plotareaRect = area;
-    if (plotarea->chartType() == BarChartType && plotarea->isVertical()) debugChartLayout<<"Vertical bar chart";
+    if (plotarea->chartType() == BarChartType && plotarea->isVertical())
+    {
+        debugChartLayout<<"Vertical bar chart";
+    }
 
     QRectF titleRect;
     KoShape *title = m_shapes.value(TitleLabelType);
-    if (title && title->isVisible()) {
+    if (title && title->isVisible())
+    {
         titleRect = itemRect(title);
     }
     QRectF subtitleRect;
     KoShape *subtitle = m_shapes.value(SubTitleLabelType);
-    if (subtitle && subtitle->isVisible()) {
+    if (subtitle && subtitle->isVisible())
+    {
         subtitleRect = itemRect(subtitle);
     }
     QRectF footerRect;
     KoShape *footer = m_shapes.value(FooterLabelType);
-    if (footer && footer->isVisible()) {
+    if (footer && footer->isVisible())
+    {
         footerRect = itemRect(footer);
     }
     QRectF legendRect;
     Legend *legend = dynamic_cast<Legend*>(m_shapes.value(LegendType));
-    if (legend && legend->isVisible()) {
+    if (legend && legend->isVisible())
+    {
         legendRect = itemRect(legend);
         debugChartLayout<<"legend rect:"<<legendRect;
     }
@@ -400,14 +448,21 @@ void ChartLayout::calculateLayout()
     QRectF rightTitleRect; // 4
 
     KoShape *xtitle = m_shapes.value(XAxisTitleType);
-    if (xtitle && xtitle->isVisible()) {
-        switch (axisPosition(plotarea, XAxisTitleType)) {
-            case KChart::CartesianAxis::Bottom: {
+    if (xtitle && xtitle->isVisible())
+    {
+        switch (axisPosition(plotarea, XAxisTitleType))
+        {
+            case KChart::CartesianAxis::Bottom:
+            {
                 QRectF r = itemRect(xtitle);
-                if (bottomTitleRect.isNull()) {
+                if (bottomTitleRect.isNull())
+                {
                     bottomTitleRect = r;
-                } else {
-                    if (bottomTitleRect.width() < r.width()) {
+                }
+                else
+                {
+                    if (bottomTitleRect.width() < r.width())
+                    {
                         bottomTitleRect.setWidth(r.width());
                     }
                     bottomTitleRect.setHeight(bottomTitleRect.height() + r.height());
@@ -415,25 +470,35 @@ void ChartLayout::calculateLayout()
                 axisTitles.insert(1, xtitle);
                 break;
             }
-            case KChart::CartesianAxis::Left: {
+            case KChart::CartesianAxis::Left:
+            {
                 QRectF r = itemRect(xtitle);
-                if (leftTitleRect.isNull()) {
+                if (leftTitleRect.isNull())
+                {
                     leftTitleRect = r;
-                } else {
+                }
+                else
+                {
                     leftTitleRect.setWidth(leftTitleRect.width() + r.width());
-                    if (leftTitleRect.height() < r.height()) {
+                    if (leftTitleRect.height() < r.height())
+                    {
                         leftTitleRect.setHeight(r.height());
                     }
                 }
                 axisTitles.insert(2, xtitle);
                 break;
             }
-            case KChart::CartesianAxis::Top: {
+            case KChart::CartesianAxis::Top:
+            {
                 QRectF r = itemRect(xtitle);
-                if (topTitleRect.isNull()) {
+                if (topTitleRect.isNull())
+                {
                     topTitleRect = r;
-                } else {
-                    if (topTitleRect.width() < r.width()) {
+                }
+                else
+                {
+                    if (topTitleRect.width() < r.width())
+                    {
                         topTitleRect.setWidth(r.width());
                     }
                     topTitleRect.setHeight(topTitleRect.height() + r.height());
@@ -441,13 +506,18 @@ void ChartLayout::calculateLayout()
                 axisTitles.insert(3, xtitle);
                 break;
             }
-            case KChart::CartesianAxis::Right: {
+            case KChart::CartesianAxis::Right:
+            {
                 QRectF r = itemRect(xtitle);
-                if (rightTitleRect.isNull()) {
+                if (rightTitleRect.isNull())
+                {
                     rightTitleRect = r;
-                } else {
+                }
+                else
+                {
                     rightTitleRect.setWidth(rightTitleRect.width() + r.width());
-                    if (rightTitleRect.height() < r.height()) {
+                    if (rightTitleRect.height() < r.height())
+                    {
                         rightTitleRect.setHeight(r.height());
                     }
                 }
@@ -457,14 +527,21 @@ void ChartLayout::calculateLayout()
         }
     }
     KoShape *ytitle = m_shapes.value(YAxisTitleType);
-    if (ytitle && ytitle->isVisible()) {
-        switch (axisPosition(plotarea, YAxisTitleType)) {
-            case KChart::CartesianAxis::Bottom: {
+    if (ytitle && ytitle->isVisible())
+    {
+        switch (axisPosition(plotarea, YAxisTitleType))
+        {
+            case KChart::CartesianAxis::Bottom:
+            {
                 QRectF r = itemRect(ytitle);
-                if (bottomTitleRect.isNull()) {
+                if (bottomTitleRect.isNull())
+                {
                     bottomTitleRect = r;
-                } else {
-                    if (bottomTitleRect.width() < r.width()) {
+                }
+                else
+                {
+                    if (bottomTitleRect.width() < r.width())
+                    {
                         bottomTitleRect.setWidth(r.width());
                     }
                     bottomTitleRect.setHeight(bottomTitleRect.height() + r.height());
@@ -472,25 +549,35 @@ void ChartLayout::calculateLayout()
                 axisTitles.insert(1, ytitle);
                 break;
             }
-            case KChart::CartesianAxis::Left: {
+            case KChart::CartesianAxis::Left:
+            {
                 QRectF r = itemRect(ytitle);
-                if (leftTitleRect.isNull()) {
+                if (leftTitleRect.isNull())
+                {
                     leftTitleRect = r;
-                } else {
+                }
+                else
+                {
                     leftTitleRect.setWidth(leftTitleRect.width() + r.width());
-                    if (leftTitleRect.height() < r.height()) {
+                    if (leftTitleRect.height() < r.height())
+                    {
                         leftTitleRect.setHeight(r.height());
                     }
                 }
                 axisTitles.insert(2, ytitle);
                 break;
             }
-            case KChart::CartesianAxis::Top: {
+            case KChart::CartesianAxis::Top:
+            {
                 QRectF r = itemRect(ytitle);
-                if (topTitleRect.isNull()) {
+                if (topTitleRect.isNull())
+                {
                     topTitleRect = r;
-                } else {
-                    if (topTitleRect.width() < r.width()) {
+                }
+                else
+                {
+                    if (topTitleRect.width() < r.width())
+                    {
                         topTitleRect.setWidth(r.width());
                     }
                     topTitleRect.setHeight(topTitleRect.height() + r.height());
@@ -498,13 +585,18 @@ void ChartLayout::calculateLayout()
                 axisTitles.insert(3, ytitle);
                 break;
             }
-            case KChart::CartesianAxis::Right: {
+            case KChart::CartesianAxis::Right:
+            {
                 QRectF r = itemRect(ytitle);
-                if (rightTitleRect.isNull()) {
+                if (rightTitleRect.isNull())
+                {
                     rightTitleRect = r;
-                } else {
+                }
+                else
+                {
                     rightTitleRect.setWidth(rightTitleRect.width() + r.width());
-                    if (rightTitleRect.height() < r.height()) {
+                    if (rightTitleRect.height() < r.height())
+                    {
                         rightTitleRect.setHeight(r.height());
                     }
                 }
@@ -515,14 +607,21 @@ void ChartLayout::calculateLayout()
     }
     KoShape *sxtitle = m_shapes.value(SecondaryXAxisTitleType);
     debugChartLayout<<sxtitle<<(sxtitle && sxtitle->isVisible())<<SecondaryXAxisTitleType;
-    if (sxtitle && sxtitle->isVisible()) {
-        switch (axisPosition(plotarea, SecondaryXAxisTitleType)) {
-            case KChart::CartesianAxis::Bottom: {
+    if (sxtitle && sxtitle->isVisible())
+    {
+        switch (axisPosition(plotarea, SecondaryXAxisTitleType))
+        {
+            case KChart::CartesianAxis::Bottom:
+            {
                 QRectF r = itemRect(sxtitle);
-                if (bottomTitleRect.isNull()) {
+                if (bottomTitleRect.isNull())
+                {
                     bottomTitleRect = r;
-                } else {
-                    if (bottomTitleRect.width() < r.width()) {
+                }
+                else
+                {
+                    if (bottomTitleRect.width() < r.width())
+                    {
                         bottomTitleRect.setWidth(r.width());
                     }
                     bottomTitleRect.setHeight(bottomTitleRect.height() + r.height());
@@ -530,25 +629,35 @@ void ChartLayout::calculateLayout()
                 axisTitles.insert(1, sxtitle);
                 break;
             }
-            case KChart::CartesianAxis::Left: {
+            case KChart::CartesianAxis::Left:
+            {
                 QRectF r = itemRect(sxtitle);
-                if (leftTitleRect.isNull()) {
+                if (leftTitleRect.isNull())
+                {
                     leftTitleRect = r;
-                } else {
+                }
+                else
+                {
                     leftTitleRect.setWidth(leftTitleRect.width() + r.width());
-                    if (leftTitleRect.height() < r.height()) {
+                    if (leftTitleRect.height() < r.height())
+                    {
                         leftTitleRect.setHeight(r.height());
                     }
                 }
                 axisTitles.insert(2, sxtitle);
                 break;
             }
-            case KChart::CartesianAxis::Top: {
+            case KChart::CartesianAxis::Top:
+            {
                 QRectF r = itemRect(sxtitle);
-                if (topTitleRect.isNull()) {
+                if (topTitleRect.isNull())
+                {
                     topTitleRect = r;
-                } else {
-                    if (topTitleRect.width() < r.width()) {
+                }
+                else
+                {
+                    if (topTitleRect.width() < r.width())
+                    {
                         topTitleRect.setWidth(r.width());
                     }
                     topTitleRect.setHeight(topTitleRect.height() + r.height());
@@ -556,13 +665,18 @@ void ChartLayout::calculateLayout()
                 axisTitles.insert(3, sxtitle);
                 break;
             }
-            case KChart::CartesianAxis::Right: {
+            case KChart::CartesianAxis::Right:
+            {
                 QRectF r = itemRect(sxtitle);
-                if (rightTitleRect.isNull()) {
+                if (rightTitleRect.isNull())
+                {
                     rightTitleRect = r;
-                } else {
+                }
+                else
+                {
                     rightTitleRect.setWidth(rightTitleRect.width() + r.width());
-                    if (rightTitleRect.height() < r.height()) {
+                    if (rightTitleRect.height() < r.height())
+                    {
                         rightTitleRect.setHeight(r.height());
                     }
                 }
@@ -572,14 +686,21 @@ void ChartLayout::calculateLayout()
         }
     }
     KoShape *sytitle = m_shapes.value(SecondaryYAxisTitleType);
-    if (sytitle && sytitle->isVisible()) {
-        switch (axisPosition(plotarea, SecondaryYAxisTitleType)) {
-            case KChart::CartesianAxis::Bottom: {
+    if (sytitle && sytitle->isVisible())
+    {
+        switch (axisPosition(plotarea, SecondaryYAxisTitleType))
+        {
+            case KChart::CartesianAxis::Bottom:
+            {
                 QRectF r = itemRect(sytitle);
-                if (bottomTitleRect.isNull()) {
+                if (bottomTitleRect.isNull())
+                {
                     bottomTitleRect = r;
-                } else {
-                    if (bottomTitleRect.width() < r.width()) {
+                }
+                else
+                {
+                    if (bottomTitleRect.width() < r.width())
+                    {
                         bottomTitleRect.setWidth(r.width());
                     }
                     bottomTitleRect.setHeight(bottomTitleRect.height() + r.height());
@@ -587,25 +708,35 @@ void ChartLayout::calculateLayout()
                 axisTitles.insert(1, sytitle);
                 break;
             }
-            case KChart::CartesianAxis::Left: {
+            case KChart::CartesianAxis::Left:
+            {
                 QRectF r = itemRect(sytitle);
-                if (leftTitleRect.isNull()) {
+                if (leftTitleRect.isNull())
+                {
                     leftTitleRect = r;
-                } else {
+                }
+                else
+                {
                     leftTitleRect.setWidth(leftTitleRect.width() + r.width());
-                    if (leftTitleRect.height() < r.height()) {
+                    if (leftTitleRect.height() < r.height())
+                    {
                         leftTitleRect.setHeight(r.height());
                     }
                 }
                 axisTitles.insert(2, sytitle);
                 break;
             }
-            case KChart::CartesianAxis::Top: {
+            case KChart::CartesianAxis::Top:
+            {
                 QRectF r = itemRect(sytitle);
-                if (topTitleRect.isNull()) {
+                if (topTitleRect.isNull())
+                {
                     topTitleRect = r;
-                } else {
-                    if (topTitleRect.width() < r.width()) {
+                }
+                else
+                {
+                    if (topTitleRect.width() < r.width())
+                    {
                         topTitleRect.setWidth(r.width());
                     }
                     topTitleRect.setHeight(topTitleRect.height() + r.height());
@@ -613,13 +744,18 @@ void ChartLayout::calculateLayout()
                 axisTitles.insert(3, sytitle);
                 break;
             }
-            case KChart::CartesianAxis::Right: {
+            case KChart::CartesianAxis::Right:
+            {
                 QRectF r = itemRect(sytitle);
-                if (rightTitleRect.isNull()) {
+                if (rightTitleRect.isNull())
+                {
                     rightTitleRect = r;
-                } else {
+                }
+                else
+                {
                     rightTitleRect.setWidth(rightTitleRect.width() + r.width());
-                    if (rightTitleRect.height() < r.height()) {
+                    if (rightTitleRect.height() < r.height())
+                    {
                         rightTitleRect.setHeight(r.height());
                     }
                 }
@@ -638,24 +774,30 @@ void ChartLayout::calculateLayout()
     debugChartLayout<<"left:"<<leftcenter<<"right:"<<rightcenter<<"top:"<<topcenter<<"bottom:"<<bottomcenter;
 
     // title/subtitle/footer is aligned with container
-    if (!titleRect.isNull()) {
-        if (autoPosition(title)) {
+    if (!titleRect.isNull())
+    {
+        if (autoPosition(title))
+        {
             titleRect.moveLeft(topcenter.x() - titleRect.width() / 2.0);
             titleRect.moveTop(topcenter.y());
         }
         topcenter.setY(titleRect.bottom() + m_spacing.y());
         debugChartLayout<<"title: auto:"<<autoPosition(title)<<titleRect;
     }
-    if (!subtitleRect.isNull()) {
-        if (autoPosition(subtitle)) {
+    if (!subtitleRect.isNull())
+    {
+        if (autoPosition(subtitle))
+        {
             subtitleRect.moveLeft(topcenter.x() - subtitleRect.width() / 2.0);
             subtitleRect.moveTop(topcenter.y());
         }
         topcenter.setY(subtitleRect.bottom() + m_spacing.y());
         debugChartLayout<<"subtitle:"<<subtitleRect;
     }
-    if (!footerRect.isNull()) {
-        if (autoPosition(footer)) {
+    if (!footerRect.isNull())
+    {
+        if (autoPosition(footer))
+        {
             footerRect.moveLeft(bottomcenter.x() - footerRect.width() / 2.0);
             footerRect.moveBottom(bottomcenter.y());
         }
@@ -669,23 +811,29 @@ void ChartLayout::calculateLayout()
     plotareaRect.setRight(rightcenter.x());
     plotareaRect.setBottom(bottomcenter.y());
 
-    if (!legendRect.isNull()) {
+    if (!legendRect.isNull())
+    {
         // Legend is aligned with plot area so axis titles may resize plot area
-        switch (legend->legendPosition()) {
+        switch (legend->legendPosition())
+        {
             case StartPosition:
-                switch(legend->alignment()) {
-                    case Qt::AlignLeft: {
+                switch(legend->alignment())
+                {
+                    case Qt::AlignLeft:
+                    {
                         // Align at top of the area to the left of plot area
                         qreal offset = yOffset(topTitleRect, QRectF());
                         legendRect.moveTop(plotareaRect.top() + offset);
                         break;
                     }
-                    case Qt::AlignCenter: {
+                    case Qt::AlignCenter:
+                    {
                         qreal centerOffset = yOffset(topTitleRect, bottomTitleRect, true);
                         legendRect.moveTop(plotareaRect.center().y() + centerOffset - legendRect.height() / 2.0);
                         break;
                     }
-                    case Qt::AlignRight: {
+                    case Qt::AlignRight:
+                    {
                         // Align at bottom of the area to the left of plot area
                         qreal offset = yOffset(QRectF(), bottomTitleRect);
                         legendRect.moveBottom(plotareaRect.bottom() + offset);
@@ -696,20 +844,24 @@ void ChartLayout::calculateLayout()
                 plotareaRect.setLeft(legendRect.right() + m_spacing.x());
                 break;
             case TopPosition:
-                switch(legend->alignment()) {
-                    case Qt::AlignLeft: {
+                switch(legend->alignment())
+                {
+                    case Qt::AlignLeft:
+                    {
                         // Align at left of the area on top of plot area
                         qreal offset = xOffset(leftTitleRect, QRectF());
                         legendRect.moveLeft(plotareaRect.left() + offset);
                         break;
                     }
-                    case Qt::AlignCenter: {
+                    case Qt::AlignCenter:
+                    {
                         qreal centerOffset = xOffset(leftTitleRect, rightTitleRect, true);
                         legendRect.moveLeft(plotareaRect.center().x() + centerOffset - legendRect.width() / 2.0);
                         debugChartLayout<<"legend top/center:"<<"to"<<legendRect.left()<<"coffs="<<centerOffset<<"h/2"<<(legendRect.height()/2.0);
                         break;
                     }
-                    case Qt::AlignRight: {
+                    case Qt::AlignRight:
+                    {
                         // Align at right of the area on top of plot area
                         qreal offset = xOffset(QRectF(), rightTitleRect);
                         legendRect.moveRight(plotareaRect.right() + offset);
@@ -720,21 +872,25 @@ void ChartLayout::calculateLayout()
                 plotareaRect.setTop(legendRect.bottom() + m_spacing.y());
                 break;
             case EndPosition:
-                switch(legend->alignment()) {
-                    case Qt::AlignLeft: {
+                switch(legend->alignment())
+                {
+                    case Qt::AlignLeft:
+                    {
                         // Align at top of the area right of plot area
                         qreal offset = yOffset(topTitleRect, QRectF());
                         legendRect.moveTop(plotareaRect.top() + offset);
                         debugChartLayout<<"legend end/top:"<<"to"<<legendRect.top()<<"offs="<<offset;
                         break;
                     }
-                    case Qt::AlignCenter: {
+                    case Qt::AlignCenter:
+                    {
                         qreal centerOffset = yOffset(topTitleRect, bottomTitleRect, true);
                         legendRect.moveTop(plotareaRect.center().y() + centerOffset - legendRect.height() / 2.0);
                         debugChartLayout<<"legend end/center:"<<"to"<<legendRect.top()<<"coffs="<<centerOffset<<"h/2"<<(legendRect.height()/2.0)<<"pa:"<<plotareaRect.center().y();
                         break;
                     }
-                    case Qt::AlignRight: {
+                    case Qt::AlignRight:
+                    {
                         // Align at bottom of the area right of plot area
                         qreal offset = yOffset(QRectF(), bottomTitleRect);
                         legendRect.moveBottom(plotareaRect.bottom() + offset);
@@ -747,19 +903,23 @@ void ChartLayout::calculateLayout()
                 debugChartLayout<<"legend end:"<<legendRect;
                 break;
             case BottomPosition:
-                switch(legend->alignment()) {
-                    case Qt::AlignLeft: {
+                switch(legend->alignment())
+                {
+                    case Qt::AlignLeft:
+                    {
                         // Align at left of the area below of plot area
                         qreal offset = xOffset(leftTitleRect, QRectF());
                         legendRect.moveLeft(plotareaRect.left() + offset);
                         break;
                     }
-                    case Qt::AlignCenter: {
+                    case Qt::AlignCenter:
+                    {
                         qreal centerOffset = xOffset(leftTitleRect, rightTitleRect, true);
                         legendRect.moveLeft(bottomcenter.x() + centerOffset - legendRect.width() / 2.0);
                         break;
                     }
-                    case Qt::AlignRight: {
+                    case Qt::AlignRight:
+                    {
                         // Align at right of the area on below plot area
                         qreal offset = xOffset(QRectF(), rightTitleRect);
                         legendRect.moveRight(plotareaRect.right() + offset);
@@ -769,71 +929,92 @@ void ChartLayout::calculateLayout()
                 legendRect.moveBottom(plotareaRect.bottom());
                 plotareaRect.setBottom(legendRect.top() - m_spacing.y());
                 break;
-            case TopStartPosition: {
+            case TopStartPosition:
+            {
                 qreal xoffset = xOffset(leftTitleRect, QRectF());
                 qreal yoffset = yOffset(topTitleRect, QRectF());
                 legendRect.moveTopLeft(area.topLeft());
-                if (legendRect.right() + m_spacing.x() - xoffset > plotareaRect.left()) {
+                if (legendRect.right() + m_spacing.x() - xoffset > plotareaRect.left())
+                {
                     plotareaRect.setLeft(legendRect.right() + m_spacing.x() - xoffset);
                 }
-                if (legendRect.bottom() + m_spacing.y() - yoffset > plotareaRect.top()) {
+                if (legendRect.bottom() + m_spacing.y() - yoffset > plotareaRect.top())
+                {
                     plotareaRect.setTop(legendRect.bottom() + m_spacing.y() - yoffset);
                 }
                 debugChartLayout<<"legend top/start"<<legendRect<<plotareaRect<<"xo:"<<xoffset<<"yo:"<<yoffset;
                 break;
             }
-            case TopEndPosition: {
+            case TopEndPosition:
+            {
                 qreal xoffset = xOffset(QRectF(), rightTitleRect);
                 qreal yoffset = yOffset(topTitleRect, QRectF());
                 legendRect.moveTopRight(area.topRight());
-                if (legendRect.left() - m_spacing.x() + xoffset < plotareaRect.right()) {
+                if (legendRect.left() - m_spacing.x() + xoffset < plotareaRect.right())
+                {
                     plotareaRect.setRight(legendRect.left() - m_spacing.x() + xoffset);
                 }
-                if (legendRect.bottom() + m_spacing.y() - yoffset > plotareaRect.top()) {
+                if (legendRect.bottom() + m_spacing.y() - yoffset > plotareaRect.top())
+                {
                     plotareaRect.setTop(legendRect.bottom() + m_spacing.y() - yoffset);
                 }
                 debugChartLayout<<"legend top/end"<<legendRect<<plotareaRect;
                 break;
             }
-            case BottomStartPosition: {
+            case BottomStartPosition:
+            {
                 qreal xoffset = xOffset(leftTitleRect, QRectF());
                 qreal yoffset = yOffset(QRectF(), bottomTitleRect);
                 legendRect.moveBottomLeft(area.bottomLeft());
-                if (legendRect.right() + m_spacing.x() - xoffset > plotareaRect.left()) {
+                if (legendRect.right() + m_spacing.x() - xoffset > plotareaRect.left())
+                {
                     plotareaRect.setLeft(legendRect.right() + m_spacing.x() - xoffset);
                 }
-                if (legendRect.top() - m_spacing.y() + yoffset < plotareaRect.bottom()) {
+                if (legendRect.top() - m_spacing.y() + yoffset < plotareaRect.bottom())
+                {
                     plotareaRect.setBottom(legendRect.top() - m_spacing.y() - yoffset);
                 }
                 debugChartLayout<<"legend bottom/start"<<legendRect<<plotareaRect<<"offs:"<<xoffset<<','<<yoffset;
                 break;
             }
-            case BottomEndPosition: {
+            case BottomEndPosition:
+            {
                 qreal xoffset = xOffset(QRectF(), rightTitleRect);
                 qreal yoffset = yOffset(QRectF(), bottomTitleRect);
                 legendRect.moveBottomRight(area.bottomRight());
-                if (legendRect.left() - m_spacing.x() + xoffset < plotareaRect.right()) {
+                if (legendRect.left() - m_spacing.x() + xoffset < plotareaRect.right())
+                {
                     plotareaRect.setRight(legendRect.left() - m_spacing.x() + xoffset);
                 }
-                if (legendRect.top() - m_spacing.y() + yoffset < plotareaRect.bottom()) {
+                if (legendRect.top() - m_spacing.y() + yoffset < plotareaRect.bottom())
+                {
                     plotareaRect.setBottom(legendRect.top() - m_spacing.y() - yoffset);
                 }
                 debugChartLayout<<"legend bottom/end"<<legendRect<<plotareaRect;
                 break;
             }
             default:
-                if (plotarea) {
+                if (plotarea)
+                {
                     // try to be backwards compatible with loaded shapes
                     QRectF pr = itemRect(plotarea); // use actual plotarea rect here
                     debugChartLayout<<"legend:"<<legendRect<<"plot:"<<pr<<legendRect.intersects(pr);
-                    if (!legendRect.intersects(pr) && legendRect.intersects(plotareaRect)) {
-                        if (legendRect.right() < pr.left()) {
+                    if (!legendRect.intersects(pr) && legendRect.intersects(plotareaRect))
+                    {
+                        if (legendRect.right() < pr.left())
+                        {
                             plotareaRect.setLeft(qMax(plotareaRect.left(), legendRect.right() + m_spacing.x()));
-                        } else if (legendRect.left() > pr.right()) {
+                        }
+                        else if (legendRect.left() > pr.right())
+                        {
                             plotareaRect.setRight(qMin(plotareaRect.right(), legendRect.left() - m_spacing.x()));
-                        } else if (legendRect.bottom() < pr.top()) {
+                        }
+                        else if (legendRect.bottom() < pr.top())
+                        {
                             plotareaRect.setTop(qMax(plotareaRect.top(), legendRect.bottom() + m_spacing.y()));
-                        } else if (legendRect.top() > pr.bottom()) {
+                        }
+                        else if (legendRect.top() > pr.bottom())
+                        {
                             plotareaRect.setBottom(qMin(plotareaRect.bottom(), legendRect.top() - m_spacing.y()));
                         }
                         debugChartLayout<<"legend manual:"<<legendRect<<"plot moved to:"<<plotareaRect;
@@ -845,56 +1026,68 @@ void ChartLayout::calculateLayout()
     }
 
     debugChartLayout<<"axis titles:"<<axisTitles;
-    if (!leftTitleRect.isNull()) {
+    if (!leftTitleRect.isNull())
+    {
         qreal centerOffset = yOffset(topTitleRect, bottomTitleRect, true);
         leftTitleRect.moveTop(plotareaRect.center().y() + centerOffset - leftTitleRect.height() / 2.0);
         leftTitleRect.moveLeft(plotareaRect.left());
         debugChartLayout<<"left axis:"<<leftTitleRect;
     }
-    if (!rightTitleRect.isNull()) {
+    if (!rightTitleRect.isNull())
+    {
         qreal centerOffset = yOffset(topTitleRect, bottomTitleRect, true);
         rightTitleRect.moveTop(plotareaRect.center().y() + centerOffset - rightTitleRect.height() / 2.0);
         rightTitleRect.moveRight(plotareaRect.right());
         debugChartLayout<<"right axis:"<<rightTitleRect;
     }
-    if (!topTitleRect.isNull()) {
+    if (!topTitleRect.isNull())
+    {
         qreal centerOffset = xOffset(leftTitleRect, rightTitleRect, true);
         topTitleRect.moveLeft(plotareaRect.center().x() + centerOffset - topTitleRect.width() / 2.0);
         topTitleRect.moveTop(plotareaRect.top());
         debugChartLayout<<"top axis:"<<topTitleRect;
     }
-    if (!bottomTitleRect.isNull()) {
+    if (!bottomTitleRect.isNull())
+    {
         qreal centerOffset = xOffset(leftTitleRect, rightTitleRect, true);
         bottomTitleRect.moveLeft(plotareaRect.center().x() + centerOffset - bottomTitleRect.width() / 2.0);
         bottomTitleRect.moveBottom(plotareaRect.bottom());
         debugChartLayout<<"bottom axis:"<<bottomTitleRect;
     }
     // now resize plot area
-    if (!leftTitleRect.isNull()) {
+    if (!leftTitleRect.isNull())
+    {
         plotareaRect.setLeft(leftTitleRect.right() + m_spacing.x());
     }
-    if (!rightTitleRect.isNull()) {
+    if (!rightTitleRect.isNull())
+    {
         plotareaRect.setRight(rightTitleRect.left() - m_spacing.x());
     }
-    if (!topTitleRect.isNull()) {
+    if (!topTitleRect.isNull())
+    {
         plotareaRect.setTop(topTitleRect.bottom() + m_spacing.y());
     }
-    if (!bottomTitleRect.isNull()) {
+    if (!bottomTitleRect.isNull())
+    {
         plotareaRect.setBottom(bottomTitleRect.top() - m_spacing.y());
     }
-    if (title && title->isVisible()) {
+    if (title && title->isVisible())
+    {
         m_layoutItems[title]->rect = titleRect;
         debugChartLayout<<"title"<<dbg(title)<<titleRect;
     }
-    if (subtitle && subtitle->isVisible()) {
+    if (subtitle && subtitle->isVisible())
+    {
         m_layoutItems[subtitle]->rect = subtitleRect;
         debugChartLayout<<"subtitle"<<dbg(subtitle)<<subtitleRect;
     }
-    if (footer && footer->isVisible()) {
+    if (footer && footer->isVisible())
+    {
         m_layoutItems[footer]->rect = footerRect;
         debugChartLayout<<"footer"<<dbg(footer)<<footerRect;
     }
-    if (legend && legend->isVisible()) {
+    if (legend && legend->isVisible())
+    {
         m_layoutItems[legend]->rect = legendRect;
         debugChartLayout<<"legend"<<dbg(legend)<<legendRect<<legendRect.center();
     }
@@ -904,7 +1097,8 @@ void ChartLayout::calculateLayout()
     layoutAxisTitles(3, axisTitles, topTitleRect, plotareaRect);
     layoutAxisTitles(4, axisTitles, rightTitleRect, plotareaRect);
 
-    if (plotarea && plotarea->isVisible()) {
+    if (plotarea && plotarea->isVisible())
+    {
         m_layoutItems[plotarea]->rect = plotareaRect;
         debugChartLayout<<"plot area"<<dbg(plotarea)<<plotareaRect<<plotareaRect.center();
     }
@@ -914,18 +1108,22 @@ void ChartLayout::layout()
 {
     Q_ASSERT(!m_doingLayout);
 
-    if (!m_layoutingEnabled || !m_relayoutScheduled) {
+    if (!m_layoutingEnabled || !m_relayoutScheduled)
+    {
         return;
     }
     m_doingLayout = true;
 
     calculateLayout();
     QMap<KoShape*, LayoutData*>::const_iterator it;
-    for (it = m_layoutItems.constBegin(); it != m_layoutItems.constEnd(); ++it) {
-        if (it.key()->isVisible()) {
+    for (it = m_layoutItems.constBegin(); it != m_layoutItems.constEnd(); ++it)
+    {
+        if (it.key()->isVisible())
+        {
             setItemPosition(it.key(), it.value()->rect.topLeft());
             debugChartLayout<<dbg(it.key())<<it.value()->rect.topLeft()<<itemPosition(it.key());
-            if (it.value()->itemType == PlotAreaType) {
+            if (it.value()->itemType == PlotAreaType)
+            {
                 setItemSize(it.key(), it.value()->rect.size());
                 debugChartLayout<<dbg(it.key())<<it.value()->rect.size()<<itemSize(it.key());
             }
@@ -995,7 +1193,8 @@ QRectF ChartLayout::diagramArea(const KoShape *shape)
 QRectF ChartLayout::diagramArea(const KoShape *shape, const QRectF &rect)
 {
     const PlotArea* plotArea = dynamic_cast<const PlotArea*>(shape);
-    if (!plotArea) {
+    if (!plotArea)
+    {
         return rect;
     }
     qreal bottom = 0.0;
@@ -1005,19 +1204,23 @@ QRectF ChartLayout::diagramArea(const KoShape *shape, const QRectF &rect)
     // HACK: KChart has some spacing between axis and label
     qreal xspace = ScreenConversions::pxToPtX(6.0) * 2.0;
     qreal yspace = ScreenConversions::pxToPtY(6.0) * 2.0;
-    if (plotArea->xAxis() && plotArea->xAxis()->showLabels()) {
+    if (plotArea->xAxis() && plotArea->xAxis()->showLabels())
+    {
         bottom = plotArea->xAxis()->fontSize();
         bottom += yspace;
     }
-    if (plotArea->yAxis() && plotArea->yAxis()->showLabels()) {
+    if (plotArea->yAxis() && plotArea->yAxis()->showLabels())
+    {
         left = plotArea->yAxis()->fontSize();
         left += xspace;
     }
-    if (plotArea->secondaryXAxis() && plotArea->secondaryXAxis()->showLabels()) {
+    if (plotArea->secondaryXAxis() && plotArea->secondaryXAxis()->showLabels())
+    {
         top = plotArea->secondaryXAxis()->fontSize();
         top += yspace;
     }
-    if (plotArea->secondaryYAxis() && plotArea->secondaryYAxis()->showLabels()) {
+    if (plotArea->secondaryYAxis() && plotArea->secondaryYAxis()->showLabels())
+    {
         right = plotArea->secondaryYAxis()->fontSize();
         right += xspace;
     }
@@ -1028,27 +1231,57 @@ QString ChartLayout::dbg(const KoShape *shape) const
 {
     QString s;
     LayoutData *data = m_layoutItems[const_cast<KoShape*>(shape)];
-    switch(data->itemType) {
-        case GenericItemType: s = "KoShape[Generic:"+ shape->shapeId() + "]"; break;
-        case TitleLabelType: s = "KoShape[ChartTitle]"; break;
-        case SubTitleLabelType: s = "KoShape[ChartSubTitle]"; break;
-        case FooterLabelType: s = "KoShape[ChartFooter]"; break;
-        case PlotAreaType: s = "KoShape[PlotArea]"; break;
+    switch(data->itemType)
+    {
+        case GenericItemType:
+            s = "KoShape[Generic:"+ shape->shapeId() + "]";
+            break;
+        case TitleLabelType:
+            s = "KoShape[ChartTitle]";
+            break;
+        case SubTitleLabelType:
+            s = "KoShape[ChartSubTitle]";
+            break;
+        case FooterLabelType:
+            s = "KoShape[ChartFooter]";
+            break;
+        case PlotAreaType:
+            s = "KoShape[PlotArea]";
+            break;
         case LegendType:
             s = "KoShape[Legend";
-            switch(static_cast<const Legend*>(shape)->alignment()) {
-                case Qt::AlignLeft: s += ":Start"; break;
-                case Qt::AlignCenter: s += ":Center"; break;
-                case Qt::AlignRight: s += ":End"; break;
-                default: s += ":Float"; break;
+            switch(static_cast<const Legend*>(shape)->alignment())
+            {
+                case Qt::AlignLeft:
+                    s += ":Start";
+                    break;
+                case Qt::AlignCenter:
+                    s += ":Center";
+                    break;
+                case Qt::AlignRight:
+                    s += ":End";
+                    break;
+                default:
+                    s += ":Float";
+                    break;
             }
             s += ']';
             break;
-        case XAxisTitleType: s = "KoShape[XAxisTitle]"; break;
-        case YAxisTitleType: s = "KoShape[YAxisTitle]"; break;
-        case SecondaryXAxisTitleType: s = "KoShape[SXAxisTitle]"; break;
-        case SecondaryYAxisTitleType: s = "KoShape[SYAxisTitle]"; break;
-        default: s = "KoShape[Unknown]"; break;
+        case XAxisTitleType:
+            s = "KoShape[XAxisTitle]";
+            break;
+        case YAxisTitleType:
+            s = "KoShape[YAxisTitle]";
+            break;
+        case SecondaryXAxisTitleType:
+            s = "KoShape[SXAxisTitle]";
+            break;
+        case SecondaryYAxisTitleType:
+            s = "KoShape[SYAxisTitle]";
+            break;
+        default:
+            s = "KoShape[Unknown]";
+            break;
     }
     return s;
 }
@@ -1056,8 +1289,12 @@ QString ChartLayout::dbg(const KoShape *shape) const
 QString ChartLayout::dbg(const QList<KoShape*> &shapes) const
 {
     QString s = "(";
-    for (int i = 0; i < shapes.count(); ++i) {
-        if (i > 0) s += ',';
+    for (int i = 0; i < shapes.count(); ++i)
+    {
+        if (i > 0)
+        {
+            s += ',';
+        }
         s += dbg(shapes.at(i));
     }
     s += ')';

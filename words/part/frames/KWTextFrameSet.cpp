@@ -52,9 +52,12 @@ KWTextFrameSet::KWTextFrameSet(KWDocument *wordsDocument, Words::TextFrameSetTyp
     , m_pageManager(wordsDocument->pageManager())
     , m_wordsDocument(wordsDocument)
 {
-    if(type == Words::OtherTextFrameSet) {
+    if(type == Words::OtherTextFrameSet)
+    {
         m_rootAreaProvider = new KWRootAreaProviderTextBox(this);
-    } else {
+    }
+    else
+    {
         m_rootAreaProvider = new KWRootAreaProvider(this);
     }
     Q_ASSERT(m_wordsDocument);
@@ -78,16 +81,20 @@ void KWTextFrameSet::setupShape(KoShape *shape)
     Q_ASSERT(shapes().contains(shape));
 
     KWPage page = m_pageManager->page(shape);
-    if (!page.isValid()) {
+    if (!page.isValid())
+    {
         // This can happen if the KWFrame was created by someone else at a time where we didn't start
         // layouting yet and therefore things are not proper setup yet. That's okay and they will be
         // proper setup at a later time once we start layouting.
-    } else {
+    }
+    else
+    {
         m_rootAreaProvider->clearPages(page.pageNumber());
     }
 
     KoTextShapeData *data = qobject_cast<KoTextShapeData*>(shape->userData());
-    if (!data) {
+    if (!data)
+    {
         // copy-frames don't need to be setup cause they only point to the referenced KWFrame which
         // contains everything needed and which was or will be proper setup.
         Q_ASSERT(dynamic_cast<KWCopyShape*>(shape));
@@ -96,16 +103,18 @@ void KWTextFrameSet::setupShape(KoShape *shape)
 
     debugWords << "frameSet=" << this << "shape=" << shape << "pageNumber=" << page.pageNumber();
 
-    if (Words::isHeaderFooter(this)) {
+    if (Words::isHeaderFooter(this))
+    {
         // header and footer are always auto-grow-height independent of whatever
         // was defined for them in the document.
         data->setResizeMethod(KoTextShapeDataBase::AutoGrowHeight);
     }
 
-    if(textFrameSetType() != Words::OtherTextFrameSet) {
+    if(textFrameSetType() != Words::OtherTextFrameSet)
+    {
         shape->setGeometryProtected(true);
     }
- 
+
     // We need to keep collision detection on or we will not relayout when page anchored shapes are
     // moved. For page anchored shapes (which are different from anchored shapes which are usually
     // children of the shape they are anchored too and therefore the ShapeManager filters collision
@@ -118,7 +127,8 @@ void KWTextFrameSet::setupShape(KoShape *shape)
     // to take over. This is the case with OtherTextFrameSet's where the KWTextFrameSet
     // and the KWFrame are created after the TextShape was created and it's loadOdf was called which
     // means that the QTextDocument of the KoTextShapeData already has content we like to take over.
-    if (textFrameSetType() == Words::OtherTextFrameSet && shapeCount() == 1 && data->document() && m_document->isEmpty() && !data->document()->isEmpty()) {
+    if (textFrameSetType() == Words::OtherTextFrameSet && shapeCount() == 1 && data->document() && m_document->isEmpty() && !data->document()->isEmpty())
+    {
         // FIXME probably better to test if rangemanager has anything rather than tesing if shape
         // is not empty
         Q_ASSERT(m_document != data->document());
@@ -141,15 +151,19 @@ void KWTextFrameSet::setupShape(KoShape *shape)
 #endif
 }
 
-void KWTextFrameSet::cleanupShape(KoShape *shape) {
+void KWTextFrameSet::cleanupShape(KoShape *shape)
+{
     // it is no longer set when document is destroyed
-    if (rootAreaProvider()) {
+    if (rootAreaProvider())
+    {
         KoTextDocumentLayout *lay = dynamic_cast<KoTextDocumentLayout*>(document()->documentLayout());
         Q_ASSERT(lay);
         QList<KoTextLayoutRootArea *> layoutRootAreas = lay->rootAreas();
-        for(int i = 0; i < layoutRootAreas.count(); ++i) {
+        for(int i = 0; i < layoutRootAreas.count(); ++i)
+        {
             KoTextLayoutRootArea *rootArea = layoutRootAreas[i];
-            if (rootArea->associatedShape() == shape) {
+            if (rootArea->associatedShape() == shape)
+            {
                 KoTextLayoutRootArea *prevRootArea = i >= 1 ? layoutRootAreas[i - 1] : 0;
                 rootAreaProvider()->releaseAllAfter(prevRootArea);
                 lay->removeRootArea(prevRootArea);
@@ -194,8 +208,10 @@ void KWTextFrameSet::setPageStyle(const KWPageStyle &style)
     m_pageStyle = style;
     // TODO: check if this is really needed here, when KWFrameLayout::layoutFramesOnPage() also
     // ensures the background is set. Especially as the separator data is only set there to the text background shape
-    if (style.isValid()) {
-        foreach(KoShape *shape, shapes()) {
+    if (style.isValid())
+    {
+        foreach(KoShape *shape, shapes())
+        {
             shape->setBackground(style.background());
         }
     }

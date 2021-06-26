@@ -38,8 +38,8 @@
 #include <KoRuler.h>
 
 KoRulerController::KoRulerController(KoRuler *horizontalRuler, KoCanvasResourceManager *crp)
-        : QObject(horizontalRuler),
-        d(new Private(horizontalRuler, crp))
+    : QObject(horizontalRuler),
+      d(new Private(horizontalRuler, crp))
 {
     connect(crp, SIGNAL(canvasResourceChanged(int,QVariant)), this, SLOT(canvasResourceChanged(int)));
     connect(horizontalRuler, SIGNAL(indentsChanged(bool)), this, SLOT(indentsChanged()));
@@ -53,4 +53,4 @@ KoRulerController::~KoRulerController()
 }
 
 //have to include this because of Q_PRIVATE_SLOT
-//#include <moc_KoRulerController.cpp>
+#include <moc_KoRulerController.cpp>

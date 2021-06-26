@@ -52,8 +52,8 @@ public:
 };
 
 KoTextLayoutEndNotesArea::KoTextLayoutEndNotesArea(KoTextLayoutArea *parent, KoTextDocumentLayout *documentLayout)
-  : KoTextLayoutArea(parent, documentLayout)
-  , d(new Private)
+    : KoTextLayoutArea(parent, documentLayout)
+    , d(new Private)
 {
     d->endNoteAutoCount = 0;
 }
@@ -82,7 +82,8 @@ bool KoTextLayoutEndNotesArea::layout(FrameIterator *cursor)
     while (cursor->endNoteIndex < list.length())
     {
         KoInlineNote *note = list[cursor->endNoteIndex];
-        if (note->autoNumbering()) {
+        if (note->autoNumbering())
+        {
             note->setAutoNumber(d->endNoteAutoCount++);
         }
         QTextFrame *subFrame = note->textFrame();
@@ -90,7 +91,8 @@ bool KoTextLayoutEndNotesArea::layout(FrameIterator *cursor)
         d->endNoteAreas.append(noteArea);
         d->endNoteFrames.append(subFrame);
         noteArea->setReferenceRect(left(), right(), y, maximumAllowedBottom());
-        if (noteArea->layout(cursor->subFrameIterator(subFrame)) == false) {
+        if (noteArea->layout(cursor->subFrameIterator(subFrame)) == false)
+        {
             d->endOfArea = new FrameIterator(cursor);
             setBottom(noteArea->bottom());
             return false;
@@ -101,7 +103,8 @@ bool KoTextLayoutEndNotesArea::layout(FrameIterator *cursor)
         cursor->currentSubFrameIterator = 0;
         cursor->endNoteIndex++;
     }
-    if (cursor->endNoteIndex == 0) {
+    if (cursor->endNoteIndex == 0)
+    {
         setBottom(top() + shiftDown);
     }
     d->endOfArea = new FrameIterator(cursor);
@@ -111,10 +114,12 @@ KoPointedAt KoTextLayoutEndNotesArea::hitTest(const QPointF &p, Qt::HitTestAccur
 {
     KoPointedAt pointedAt;
     int endNoteIndex = 0;
-    while (endNoteIndex < d->endNoteAreas.length()) {
+    while (endNoteIndex < d->endNoteAreas.length())
+    {
         // check if p is over end notes area
         if (p.y() > d->endNoteAreas[endNoteIndex]->top()
-                && p.y() < d->endNoteAreas[endNoteIndex]->bottom()) {
+                && p.y() < d->endNoteAreas[endNoteIndex]->bottom())
+        {
             pointedAt = d->endNoteAreas[endNoteIndex]->hitTest(p, accuracy);
             return pointedAt;
         }
@@ -127,11 +132,13 @@ QVector<KoCharAreaInfo> KoTextLayoutEndNotesArea::generateCharAreaInfos() const
 {
     QVector<KoCharAreaInfo> result;
 
-    if (d->startOfArea == 0) {// We have not been layouted yet
+    if (d->startOfArea == 0)  // We have not been layouted yet
+    {
         return result;
     }
 
-    foreach(KoTextLayoutNoteArea *area, d->endNoteAreas) {
+    foreach(KoTextLayoutNoteArea *area, d->endNoteAreas)
+    {
         result.append(area->generateCharAreaInfos());
     }
 
@@ -143,10 +150,13 @@ QRectF KoTextLayoutEndNotesArea::selectionBoundingBox(QTextCursor &cursor) const
 {
     QTextFrame *subFrame;
     int endNoteIndex = 0;
-    while (endNoteIndex < d->endNoteFrames.length()) {
+    while (endNoteIndex < d->endNoteFrames.length())
+    {
         subFrame = d->endNoteFrames[endNoteIndex];
-        if (subFrame != 0) {
-            if (cursor.selectionStart() >= subFrame->firstPosition() && cursor.selectionEnd() <= subFrame->lastPosition()) {
+        if (subFrame != 0)
+        {
+            if (cursor.selectionStart() >= subFrame->firstPosition() && cursor.selectionEnd() <= subFrame->lastPosition())
+            {
                 return d->endNoteAreas[endNoteIndex]->selectionBoundingBox(cursor);
             }
             ++endNoteIndex;
@@ -158,15 +168,19 @@ QRectF KoTextLayoutEndNotesArea::selectionBoundingBox(QTextCursor &cursor) const
 void KoTextLayoutEndNotesArea::paint(QPainter *painter, const KoTextDocumentLayout::PaintContext &context)
 {
     if (d->startOfArea == 0) // We have not been layouted yet
+    {
         return;
+    }
 
-    if (!d->endNoteAreas.isEmpty()) {
+    if (!d->endNoteAreas.isEmpty())
+    {
         int left = 2;
         int right = 150;
         int shiftDown = 10;
         painter->drawLine(left, top()+shiftDown, right, top()+shiftDown);
     }
-    foreach(KoTextLayoutNoteArea *area, d->endNoteAreas) {
+    foreach(KoTextLayoutNoteArea *area, d->endNoteAreas)
+    {
         area->paint(painter, context);
     }
 }

@@ -94,22 +94,27 @@ void PieConfigWidget::updateData(ChartType type, ChartSubtype subtype)
 {
     Q_UNUSED(subtype);
 
-    if (!chart || !chartTypes.contains(type)) {
+    if (!chart || !chartTypes.contains(type))
+    {
         return;
     }
     m_dataSet = chart->plotArea()->dataSets().value(0);
-    if (!m_dataSet) {
+    if (!m_dataSet)
+    {
         return;
     }
     int index = m_ui.dataPoints->currentIndex();
     blockSignals(true);
     m_ui.dataPoints->clear();
-    if (m_dataSet->size() == 0) {
+    if (m_dataSet->size() == 0)
+    {
         return;
     }
-    for (int i = 0; i < m_dataSet->size(); ++i) {
+    for (int i = 0; i < m_dataSet->size(); ++i)
+    {
         QString title = m_dataSet->categoryData(i).toString();
-        if (title.isEmpty()) {
+        if (title.isEmpty())
+        {
             title = i18n("Data Point %1", i + 1);
         }
         m_ui.dataPoints->addItem(title);
@@ -123,7 +128,8 @@ void PieConfigWidget::dataPointSelectionChanged(int index)
 {
     // Check for valid index
     qInfo()<<Q_FUNC_INFO<<index;
-    if (index < 0) {
+    if (index < 0)
+    {
         return;
     }
     blockSignals(true);
@@ -149,7 +155,8 @@ void PieConfigWidget::dataPointSelectionChanged(int index)
 void PieConfigWidget::brushChanged(const QColor& color)
 {
     int index = m_ui.dataPoints->currentIndex();
-    if (index < 0) {
+    if (index < 0)
+    {
         return;
     }
     emit brushChanged(m_dataSet, color, index);
@@ -158,7 +165,8 @@ void PieConfigWidget::brushChanged(const QColor& color)
 void PieConfigWidget::penChanged(const QColor& color)
 {
     int index = m_ui.dataPoints->currentIndex();
-    if (index < 0) {
+    if (index < 0)
+    {
         return;
     }
     emit penChanged(m_dataSet, color, index);
@@ -167,7 +175,8 @@ void PieConfigWidget::penChanged(const QColor& color)
 void PieConfigWidget::explodeFactorChanged(int percent)
 {
     int index = m_ui.dataPoints->currentIndex();
-    if (index < 0) {
+    if (index < 0)
+    {
         return;
     }
     emit explodeFactorChanged(m_dataSet, index, percent);
@@ -176,16 +185,18 @@ void PieConfigWidget::explodeFactorChanged(int percent)
 void PieConfigWidget::showCategoryChanged(bool b)
 {
     int index = m_ui.dataPoints->currentIndex();
-    if (index < 0) {
+    if (index < 0)
+    {
         return;
     }
-    emit showCategoryChanged(m_dataSet, b, index);    
+    emit showCategoryChanged(m_dataSet, b, index);
 }
 
 void PieConfigWidget::showNumberChanged(bool b)
 {
     int index = m_ui.dataPoints->currentIndex();
-    if (index < 0) {
+    if (index < 0)
+    {
         return;
     }
     emit showNumberChanged(m_dataSet, b, index);
@@ -194,7 +205,8 @@ void PieConfigWidget::showNumberChanged(bool b)
 void PieConfigWidget::showPercentChanged(bool b)
 {
     int index = m_ui.dataPoints->currentIndex();
-    if (index < 0) {
+    if (index < 0)
+    {
         return;
     }
     emit showPercentChanged(m_dataSet, b, index);

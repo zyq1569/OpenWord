@@ -60,7 +60,8 @@ void SingleModelHelper::slotModelStructureChanged()
     const int columnCount = model->columnCount();
     const int rowCount = model->rowCount();
     CellRegion region(m_table);
-    if (columnCount >= 1 && rowCount >= 1) {
+    if (columnCount >= 1 && rowCount >= 1)
+    {
         QPoint topLeft(1, 1);
         QPoint bottomRight(columnCount, rowCount);
         region.add(QRect(topLeft, bottomRight));

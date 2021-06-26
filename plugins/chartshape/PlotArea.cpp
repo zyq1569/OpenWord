@@ -162,26 +162,26 @@ public:
 PlotArea::Private::Private(PlotArea *q, ChartShape *parent)
     : q(q)
     , shape(parent)
-    // Default type: normal bar chart
+      // Default type: normal bar chart
     , chartType(BarChartType)
     , chartSubtype(NormalChartSubtype)
     , wall(0)
     , floor(0)
     , threeD(false)
     , threeDScene(0)
-    // By default, x and y axes are not swapped.
+      // By default, x and y axes are not swapped.
     , vertical(false)
-    // OpenOffice.org's default. It means the first pie slice starts at the
-    // very top (and then going counter-clockwise).
+      // OpenOffice.org's default. It means the first pie slice starts at the
+      // very top (and then going counter-clockwise).
     , angleOffset(90.0)
     , holeSize(50.0) // KCharts approx default
-    // KD Chart stuff
+      // KD Chart stuff
     , kdChart(new KChart::Chart())
     , kdCartesianPlanePrimary(new KChart::CartesianCoordinatePlane(kdChart))
     , kdCartesianPlaneSecondary(new KChart::CartesianCoordinatePlane(kdChart))
     , kdPolarPlane(new KChart::PolarCoordinatePlane(kdChart))
     , kdRadarPlane(new KChart::RadarCoordinatePlane(kdChart))
-    // Cache
+      // Cache
     , paintPixmap(true)
     , pixmapRepaintRequested(true)
     , symbolType("automatic")
@@ -222,7 +222,8 @@ PlotArea::Private::Private(PlotArea *q, ChartShape *parent)
 PlotArea::Private::~Private()
 {
     // remove first to avoid crash
-    while (!kdChart->coordinatePlanes().isEmpty()) {
+    while (!kdChart->coordinatePlanes().isEmpty())
+    {
         kdChart->takeCoordinatePlane(kdChart->coordinatePlanes().last());
     }
 
@@ -243,11 +244,14 @@ void PlotArea::Private::initAxes()
     // axis defines the Axis::categoryDataRegion(). So, clear it now.
     q->proxyModel()->setCategoryDataRegion(CellRegion());
     // Remove all old axes
-    while(!axes.isEmpty()) {
+    while(!axes.isEmpty())
+    {
         Axis *axis = axes.takeLast();
         Q_ASSERT(axis);
         if (axis->title())
+        {
             automaticallyHiddenAxisTitles.removeAll(axis->title());
+        }
         delete axis;
     }
     // There need to be at least these two axes. Their constructor will
@@ -262,7 +266,8 @@ void PlotArea::Private::initAxes()
 void PlotArea::Private::updateAxesPosition()
 {
     debugChartAxis<<axes;
-    for (int i = 0; i < axes.count(); ++i) {
+    for (int i = 0; i < axes.count(); ++i)
+    {
         axes.at(i)->updateKChartAxisPosition();
     }
 }
@@ -326,7 +331,9 @@ void PlotArea::plotAreaInit()
 void PlotArea::proxyModelStructureChanged()
 {
     if (proxyModel()->isLoading())
+    {
         return;
+    }
 
     Q_ASSERT(xAxis());
     Q_ASSERT(yAxis());
@@ -335,21 +342,30 @@ void PlotArea::proxyModelStructureChanged()
 
     // Remember to what y axis each data set belongs
     foreach(DataSet *dataSet, dataSets)
+    {
         attachedAxes.insert(dataSet, dataSet->attachedAxis());
+    }
 
     // Proxy structure and thus data sets changed, drop old state and
     // clear all axes of data sets
     foreach(Axis *axis, axes())
+    {
         axis->clearDataSets();
+    }
 
     // Now add the new list of data sets to the axis they belong to
-    foreach(DataSet *dataSet, dataSets) {
+    foreach(DataSet *dataSet, dataSets)
+    {
         xAxis()->attachDataSet(dataSet);
         // If they weren't assigned to a y axis before, use default y axis
         if (attachedAxes[dataSet])
+        {
             attachedAxes[dataSet]->attachDataSet(dataSet);
+        }
         else
+        {
             yAxis()->attachDataSet(dataSet);
+        }
     }
 }
 
@@ -371,9 +387,12 @@ QList<DataSet*> PlotArea::dataSets() const
 
 Axis *PlotArea::xAxis() const
 {
-    foreach(Axis *axis, d->axes) {
+    foreach(Axis *axis, d->axes)
+    {
         if (axis->dimension() == XAxisDimension)
+        {
             return axis;
+        }
     }
 
     return 0;
@@ -381,9 +400,12 @@ Axis *PlotArea::xAxis() const
 
 Axis *PlotArea::yAxis() const
 {
-    foreach(Axis *axis, d->axes) {
+    foreach(Axis *axis, d->axes)
+    {
         if (axis->dimension() == YAxisDimension)
+        {
             return axis;
+        }
     }
 
     return 0;
@@ -393,12 +415,18 @@ Axis *PlotArea::secondaryXAxis() const
 {
     bool firstXAxisFound = false;
 
-    foreach(Axis *axis, d->axes) {
-        if (axis->dimension() == XAxisDimension) {
+    foreach(Axis *axis, d->axes)
+    {
+        if (axis->dimension() == XAxisDimension)
+        {
             if (firstXAxisFound)
+            {
                 return axis;
+            }
             else
+            {
                 firstXAxisFound = true;
+            }
         }
     }
 
@@ -409,12 +437,18 @@ Axis *PlotArea::secondaryYAxis() const
 {
     bool firstYAxisFound = false;
 
-    foreach(Axis *axis, d->axes) {
-        if (axis->dimension() == YAxisDimension) {
+    foreach(Axis *axis, d->axes)
+    {
+        if (axis->dimension() == YAxisDimension)
+        {
             if (firstYAxisFound)
+            {
                 return axis;
+            }
             else
+            {
                 firstYAxisFound = true;
+            }
         }
     }
 
@@ -464,22 +498,28 @@ void PlotArea::setHoleSize(qreal value)
 // FIXME: this should add the axxis as a child (set axis->parent())
 bool PlotArea::addAxis(Axis *axis)
 {
-    if (d->axes.contains(axis)) {
+    if (d->axes.contains(axis))
+    {
         warnChart << "PlotArea::addAxis(): Trying to add already added axis.";
         return false;
     }
 
-    if (!axis) {
+    if (!axis)
+    {
         warnChart << "PlotArea::addAxis(): Pointer to axis is NULL!";
         return false;
     }
     d->axes.append(axis);
 
-    if (axis->dimension() == XAxisDimension) {
+    if (axis->dimension() == XAxisDimension)
+    {
         // let each axis know about the other axis
-        foreach (Axis *_axis, d->axes) {
+        foreach (Axis *_axis, d->axes)
+        {
             if (_axis->isVisible())
+            {
                 _axis->registerAxis(axis);
+            }
         }
     }
 
@@ -491,7 +531,8 @@ bool PlotArea::addAxis(Axis *axis)
 bool PlotArea::removeAxis(Axis *axis)
 {
     bool removed = takeAxis(axis);
-    if (removed) {
+    if (removed)
+    {
         // This also removes the axis' title, which is a shape as well
         delete axis;
     }
@@ -501,15 +542,18 @@ bool PlotArea::removeAxis(Axis *axis)
 // FIXME: this should remove the axis as a child (set axis->parent())
 bool PlotArea::takeAxis(Axis *axis)
 {
-    if (!d->axes.contains(axis)) {
+    if (!d->axes.contains(axis))
+    {
         warnChart << "PlotArea::takeAxis(): Trying to remove non-added axis.";
         return false;
     }
-    if (!axis) {
+    if (!axis)
+    {
         warnChart << "PlotArea::takeAxis(): Pointer to axis is NULL!";
         return false;
     }
-    if (axis->title()) {
+    if (axis->title())
+    {
         d->automaticallyHiddenAxisTitles.removeAll(axis->title());
     }
     d->axes.removeAll(axis);
@@ -521,29 +565,30 @@ bool PlotArea::takeAxis(Axis *axis)
 CoordinatePlaneList PlotArea::Private::coordinatePlanesForChartType(ChartType type)
 {
     CoordinatePlaneList result;
-    switch (type) {
-    case BarChartType:
-    case LineChartType:
-    case AreaChartType:
-    case ScatterChartType:
-    case GanttChartType:
-    case SurfaceChartType:
-    case StockChartType:
-    case BubbleChartType:
-        result.append(kdCartesianPlanePrimary);
-        result.append(kdCartesianPlaneSecondary);
-        break;
-    case CircleChartType:
-    case RingChartType:
-        result.append(kdPolarPlane);
-        break;
-    case RadarChartType:
-    case FilledRadarChartType:
-        result.append(kdRadarPlane);
-        break;
-    case LastChartType:
-        Q_ASSERT("There's no coordinate plane for LastChartType");
-        break;
+    switch (type)
+    {
+        case BarChartType:
+        case LineChartType:
+        case AreaChartType:
+        case ScatterChartType:
+        case GanttChartType:
+        case SurfaceChartType:
+        case StockChartType:
+        case BubbleChartType:
+            result.append(kdCartesianPlanePrimary);
+            result.append(kdCartesianPlaneSecondary);
+            break;
+        case CircleChartType:
+        case RingChartType:
+            result.append(kdPolarPlane);
+            break;
+        case RadarChartType:
+        case FilledRadarChartType:
+            result.append(kdRadarPlane);
+            break;
+        case LastChartType:
+            Q_ASSERT("There's no coordinate plane for LastChartType");
+            break;
     }
 
     Q_ASSERT(!result.isEmpty());
@@ -554,8 +599,10 @@ CoordinatePlaneList PlotArea::Private::coordinatePlanesForChartType(ChartType ty
 void PlotArea::Private::autoHideAxisTitles()
 {
     automaticallyHiddenAxisTitles.clear();
-    foreach (Axis *axis, axes) {
-        if (axis->title()->isVisible()) {
+    foreach (Axis *axis, axes)
+    {
+        if (axis->title()->isVisible())
+        {
             axis->title()->setVisible(false);
             automaticallyHiddenAxisTitles.append(axis->title());
         }
@@ -565,28 +612,36 @@ void PlotArea::Private::autoHideAxisTitles()
 void PlotArea::setChartType(ChartType type)
 {
     if (d->chartType == type)
+    {
         return;
+    }
 
     // Lots of things to do if the old and new types of coordinate
     // systems don't match.
-    if (!isPolar(d->chartType) && isPolar(type)) {
+    if (!isPolar(d->chartType) && isPolar(type))
+    {
         d->autoHideAxisTitles();
     }
-    else if (isPolar(d->chartType) && !isPolar(type)) {
-        foreach (KoShape *title, d->automaticallyHiddenAxisTitles) {
+    else if (isPolar(d->chartType) && !isPolar(type))
+    {
+        foreach (KoShape *title, d->automaticallyHiddenAxisTitles)
+        {
             title->setVisible(true);
         }
         d->automaticallyHiddenAxisTitles.clear();
     }
     CellRegion region = d->shape->proxyModel()->cellRangeAddress();
-    if (type == CircleChartType || type == RingChartType) {
+    if (type == CircleChartType || type == RingChartType)
+    {
         d->shape->proxyModel()->setManualControl(false);
         xAxis()->clearDataSets();
         yAxis()->clearDataSets();
-        if (secondaryYAxis()) {
+        if (secondaryYAxis())
+        {
             secondaryYAxis()->clearDataSets();
         }
-        if (secondaryXAxis()) {
+        if (secondaryXAxis())
+        {
             secondaryXAxis()->clearDataSets();
         }
     }
@@ -597,21 +652,28 @@ void PlotArea::setChartType(ChartType type)
     planesToRemove << d->kdCartesianPlaneSecondary << d->kdCartesianPlanePrimary
                    << d->kdPolarPlane << d->kdRadarPlane;
     foreach(KChart::AbstractCoordinatePlane *plane, planesToRemove)
+    {
         d->kdChart->takeCoordinatePlane(plane);
+    }
     CoordinatePlaneList newPlanes = d->coordinatePlanesForChartType(type);
     foreach(KChart::AbstractCoordinatePlane *plane, newPlanes)
+    {
         d->kdChart->addCoordinatePlane(plane);
+    }
     Q_ASSERT(d->kdChart->coordinatePlanes() == newPlanes);
 
     d->chartType = type;
 
-    foreach (Axis *axis, d->axes) {
+    foreach (Axis *axis, d->axes)
+    {
         axis->plotAreaChartTypeChanged(type);
     }
-    if (type == CircleChartType || type == RingChartType) {
+    if (type == CircleChartType || type == RingChartType)
+    {
         d->shape->proxyModel()->reset(region);
     }
-    if (type != BarChartType) {
+    if (type != BarChartType)
+    {
         setVertical(false); // Only supported by bar charts
     }
     requestRepaint();
@@ -621,7 +683,8 @@ void PlotArea::setChartSubType(ChartSubtype subType)
 {
     d->chartSubtype = subType;
 
-    foreach (Axis *axis, d->axes) {
+    foreach (Axis *axis, d->axes)
+    {
         axis->plotAreaChartSubTypeChanged(subType);
     }
 }
@@ -631,7 +694,9 @@ void PlotArea::setThreeD(bool threeD)
     d->threeD = threeD;
 
     foreach(Axis *axis, d->axes)
+    {
         axis->setThreeD(threeD);
+    }
 
     requestRepaint();
 }
@@ -640,7 +705,9 @@ void PlotArea::setVertical(bool vertical)
 {
     d->vertical = vertical;
     foreach(Axis *axis, d->axes)
+    {
         axis->plotAreaIsVerticalChanged();
+    }
 }
 
 // ----------------------------------------------------------------
@@ -672,13 +739,16 @@ bool PlotArea::loadOdf(const KoXmlElement &plotAreaElement,
     loadOdfAttributes(plotAreaElement, context, OdfAllAttributes);
 
     // First step is to clear all old axis instances.
-    while (!d->axes.isEmpty()) {
+    while (!d->axes.isEmpty())
+    {
         Axis *axis = d->axes.takeLast();
         Q_ASSERT(axis);
         // Clear this axis of all data sets, deleting any diagram associated with it.
         axis->clearDataSets();
         if (axis->title())
+        {
             d->automaticallyHiddenAxisTitles.removeAll(axis->title());
+        }
         delete axis;
     }
 
@@ -691,78 +761,95 @@ bool PlotArea::loadOdf(const KoXmlElement &plotAreaElement,
     // there loadOdf method cause the axis will evaluate settings
     // like the PlotArea::isVertical boolean.
     bool candleStick = false;
-    if (plotAreaElement.hasAttributeNS(KoXmlNS::chart, "style-name")) {
+    if (plotAreaElement.hasAttributeNS(KoXmlNS::chart, "style-name"))
+    {
         styleStack.clear();
         context.odfLoadingContext().fillStyleStack(plotAreaElement, KoXmlNS::chart, "style-name", "chart");
 
         styleStack.setTypeProperties("graphic");
         styleStack.setTypeProperties("chart");
 
-        if (styleStack.hasProperty(KoXmlNS::chart, "auto-position")) {
+        if (styleStack.hasProperty(KoXmlNS::chart, "auto-position"))
+        {
             autoPosition |= styleStack.property(KoXmlNS::chart, "auto-position") == "true";
-        } else {
+        }
+        else
+        {
             // To be backwards compatible we set auto-position to true as this was the original behaviour
             // and is the way LO works
             autoPosition = true;
         }
-        if (styleStack.hasProperty(KoXmlNS::chart, "auto-size")) {
+        if (styleStack.hasProperty(KoXmlNS::chart, "auto-size"))
+        {
             autoSize |= styleStack.property(KoXmlNS::chart, "auto-size") == "true" ;
-        } else {
+        }
+        else
+        {
             // To be backwards compatible we set auto-size to true as this was the original behaviour
             // and is the way LO works
             autoSize = true;
         }
 
         // ring and pie
-        if (styleStack.hasProperty(KoXmlNS::chart, "angle-offset")) {
+        if (styleStack.hasProperty(KoXmlNS::chart, "angle-offset"))
+        {
             bool ok;
             const qreal angleOffset = styleStack.property(KoXmlNS::chart, "angle-offset").toDouble(&ok);
-            if (ok) {
+            if (ok)
+            {
                 setAngleOffset(angleOffset);
             }
         }
         // ring
-        if (styleStack.hasProperty(KoXmlNS::chart, "hole-size")) {
+        if (styleStack.hasProperty(KoXmlNS::chart, "hole-size"))
+        {
             bool ok;
             const qreal value = styleStack.property(KoXmlNS::chart, "hole-size").toDouble(&ok);
-            if (ok) {
+            if (ok)
+            {
                 setHoleSize(value);
             }
         }
 
         // Check for 3D.
         if (styleStack.hasProperty(KoXmlNS::chart, "three-dimensional"))
+        {
             setThreeD(styleStack.property(KoXmlNS::chart, "three-dimensional") == "true");
+        }
         d->threeDScene = load3dScene(plotAreaElement);
 
         // Set subtypes stacked or percent.
         // These are valid for Bar, Line, Area and Radar types.
         if (styleStack.hasProperty(KoXmlNS::chart, "percentage")
-             && styleStack.property(KoXmlNS::chart, "percentage") == "true")
+                && styleStack.property(KoXmlNS::chart, "percentage") == "true")
         {
             setChartSubType(PercentChartSubtype);
         }
         else if (styleStack.hasProperty(KoXmlNS::chart, "stacked")
-                  && styleStack.property(KoXmlNS::chart, "stacked") == "true")
+                 && styleStack.property(KoXmlNS::chart, "stacked") == "true")
         {
             setChartSubType(StackedChartSubtype);
         }
 
         // Data specific to bar charts
         if (styleStack.hasProperty(KoXmlNS::chart, "vertical"))
+        {
             setVertical(styleStack.property(KoXmlNS::chart, "vertical") == "true");
+        }
 
         // Data specific to stock charts
-        if (styleStack.hasProperty(KoXmlNS::chart, "japanese-candle-stick")) {
+        if (styleStack.hasProperty(KoXmlNS::chart, "japanese-candle-stick"))
+        {
             candleStick = styleStack.property(KoXmlNS::chart, "japanese-candle-stick") == "true";
         }
 
         // Special properties for various chart types
 #if 0
-        switch () {
-        case BarChartType:
-            if (styleStack)
-                ;
+        switch ()
+        {
+            case BarChartType:
+                if (styleStack)
+                    ;
         }
 #endif
         styleStack.clear();
@@ -777,26 +864,47 @@ bool PlotArea::loadOdf(const KoXmlElement &plotAreaElement,
     // depending on them. This is especially required for the
     // PlotArea::isVertical() boolean flag else things will go wrong.
     KoXmlElement n;
-    forEachElement (n, plotAreaElement) {
+    forEachElement (n, plotAreaElement)
+    {
         if (n.namespaceURI() != KoXmlNS::chart)
+        {
             continue;
+        }
 
-        if (n.localName() == "axis") {
-            if (!n.hasAttributeNS(KoXmlNS::chart, "dimension")) {
+        if (n.localName() == "axis")
+        {
+            if (!n.hasAttributeNS(KoXmlNS::chart, "dimension"))
+            {
                 // We have to know what dimension the axis is supposed to be..
                 qInfo()<<Q_FUNC_INFO<<"No axis dimension";
                 continue;
             }
             const QString dimension = n.attributeNS(KoXmlNS::chart, "dimension", QString());
             AxisDimension dim;
-            if      (dimension == "x") dim = XAxisDimension;
-            else if (dimension == "y") dim = YAxisDimension;
-            else if (dimension == "z") dim = ZAxisDimension;
-            else continue;
+            if      (dimension == "x")
+            {
+                dim = XAxisDimension;
+            }
+            else if (dimension == "y")
+            {
+                dim = YAxisDimension;
+            }
+            else if (dimension == "z")
+            {
+                dim = ZAxisDimension;
+            }
+            else
+            {
+                continue;
+            }
             Axis *axis = new Axis(this, dim);
-            if (dim == YAxisDimension) {
-                if (axis == yAxis()) {
-                } else if (axis == secondaryYAxis()) {
+            if (dim == YAxisDimension)
+            {
+                if (axis == yAxis())
+                {
+                }
+                else if (axis == secondaryYAxis())
+                {
                 }
             }
             debugChartOdf<<"axis dimension"<<dimension<<dim;
@@ -805,11 +913,13 @@ bool PlotArea::loadOdf(const KoXmlElement &plotAreaElement,
     }
 
     // Two axes are mandatory, check that we have them.
-    if (!xAxis()) {
+    if (!xAxis())
+    {
         Axis *xAxis = new Axis(this, XAxisDimension);
         xAxis->setVisible(false);
     }
-    if (!yAxis()) {
+    if (!yAxis())
+    {
         Axis *yAxis = new Axis(this, YAxisDimension);
         yAxis->setVisible(false);
     }
@@ -823,78 +933,110 @@ bool PlotArea::loadOdf(const KoXmlElement &plotAreaElement,
 
     // Now load the surfaces (wall and possibly floor)
     // FIXME: Use named tags instead of looping?
-    forEachElement (n, plotAreaElement) {
+    forEachElement (n, plotAreaElement)
+    {
         if (n.namespaceURI() != KoXmlNS::chart)
+        {
             continue;
+        }
 
-        if (n.localName() == "wall") {
+        if (n.localName() == "wall")
+        {
             d->wall->loadOdf(n, context);
         }
-        else if (n.localName() == "floor") {
+        else if (n.localName() == "floor")
+        {
             // The floor is not always present, so allocate it if needed.
             // FIXME: Load floor, even if we don't really support it yet
             // and save it back to ODF.
             //if (!d->floor)
             //    d->floor = new Surface(this);
             //d->floor->loadOdf(n, context);
-        } else if (n.localName() == "stock-gain-marker") {
+        }
+        else if (n.localName() == "stock-gain-marker")
+        {
             styleStack.clear();
             context.odfLoadingContext().fillStyleStack(n, KoXmlNS::chart, "style-name", "chart");
             styleStack.setTypeProperties("graphic");
-            if (styleStack.hasProperty(KoXmlNS::draw, "fill")) {
+            if (styleStack.hasProperty(KoXmlNS::draw, "fill"))
+            {
                 d->stockGainBrush = KoOdfGraphicStyles::loadOdfFillStyle(styleStack, styleStack.property(KoXmlNS::draw, "fill"), stylesReader);
                 debugChartOdf<<n.localName()<<d->stockGainBrush;
-            } else {
+            }
+            else
+            {
                 warnChartOdf<<n.localName()<<"Missing 'draw:fill' property in style"<<n.attributeNS(KoXmlNS::chart, "style-name");
             }
-        } else if (n.localName() == "stock-loss-marker") {
+        }
+        else if (n.localName() == "stock-loss-marker")
+        {
             styleStack.clear();
             context.odfLoadingContext().fillStyleStack(n, KoXmlNS::chart, "style-name", "chart");
             styleStack.setTypeProperties("graphic");
-            if (styleStack.hasProperty(KoXmlNS::draw, "fill")) {
+            if (styleStack.hasProperty(KoXmlNS::draw, "fill"))
+            {
                 d->stockLossBrush = KoOdfGraphicStyles::loadOdfFillStyle(styleStack, styleStack.property(KoXmlNS::draw, "fill"), stylesReader);
                 debugChartOdf<<n.localName()<<d->stockLossBrush;
-            } else {
+            }
+            else
+            {
                 warnChartOdf<<n.localName()<<"Missing 'draw:fill' property in style"<<n.attributeNS(KoXmlNS::chart, "style-name");
             }
-        } else if (n.localName() == "stock-range-line") {
+        }
+        else if (n.localName() == "stock-range-line")
+        {
             styleStack.clear();
             context.odfLoadingContext().fillStyleStack(n, KoXmlNS::chart, "style-name", "chart");
             styleStack.setTypeProperties("graphic");
-            if (styleStack.hasProperty(KoXmlNS::draw, "stroke")) {
+            if (styleStack.hasProperty(KoXmlNS::draw, "stroke"))
+            {
                 d->stockRangeLinePen = KoOdfGraphicStyles::loadOdfStrokeStyle(styleStack, styleStack.property(KoXmlNS::draw, "stroke"), stylesReader);
                 debugChartOdf<<n.localName()<<d->stockRangeLinePen;
-            } else {
+            }
+            else
+            {
                 warnChartOdf<<n.localName()<<"Missing 'draw:stroke' property in style"<<n.attributeNS(KoXmlNS::chart, "style-name");
             }
-        } else if (n.localName() != "axis" && n.localName() != "series") {
+        }
+        else if (n.localName() != "axis" && n.localName() != "series")
+        {
             warnChart << "PlotArea::loadOdf(): Unknown tag name " << n.localName();
         }
     }
-    if (d->chartType == StockChartType) {
+    if (d->chartType == StockChartType)
+    {
         // The number of data sets determines stock chart subtype
-        if (proxyModel()->rowCount() > 3) {
-            if (candleStick) {
+        if (proxyModel()->rowCount() > 3)
+        {
+            if (candleStick)
+            {
                 setChartSubType(CandlestickChartSubtype);
-            } else {
+            }
+            else
+            {
                 setChartSubType(OpenHighLowCloseChartSubtype);
             }
         }
     }
 
     // Connect axes to datasets and cleanup
-    foreach(DataSet *ds, d->shape->proxyModel()->dataSets()) {
-        foreach(Axis *axis, d->axes) {
-            if (axis->name() == ds->axisName()) {
+    foreach(DataSet *ds, d->shape->proxyModel()->dataSets())
+    {
+        foreach(Axis *axis, d->axes)
+        {
+            if (axis->name() == ds->axisName())
+            {
                 axis->attachDataSet(ds);
             }
         }
     }
     debugChartOdf<<d->chartType<<d->chartSubtype<<d->axes;
-    if (isPolar(d->chartType)) {
+    if (isPolar(d->chartType))
+    {
         d->autoHideAxisTitles();
     }
-    foreach(Axis *axis, d->axes) {
+    foreach(Axis *axis, d->axes)
+    {
         axis->setName(QString());
     }
 
@@ -917,21 +1059,22 @@ void PlotArea::saveOdf(KoShapeSavingContext &context) const
     // Data direction
     const Qt::Orientation direction = proxyModel()->dataDirection();
     plotAreaStyle.addProperty("chart:series-source",
-                               (direction == Qt::Horizontal)
-                               ? "rows" : "columns");
+                              (direction == Qt::Horizontal)
+                              ? "rows" : "columns");
 
     // Save chart subtype
     saveOdfSubType(bodyWriter, plotAreaStyle);
 
     // Save extra stuff (like auto-position)
     QMap<QByteArray, QString>::const_iterator it(additionalStyleAttributes().constBegin());
-    for (; it != additionalStyleAttributes().constEnd(); ++it) {
+    for (; it != additionalStyleAttributes().constEnd(); ++it)
+    {
         plotAreaStyle.addProperty(it.key(), it.value(), KoGenStyle::ChartType);
     }
 
     // save graphic-properties and insert style
     bodyWriter.addAttribute("chart:style-name",
-                             saveStyle(plotAreaStyle, context));
+                            saveStyle(plotAreaStyle, context));
 
     const QSizeF s(size());
     const QPointF p(position());
@@ -946,24 +1089,37 @@ void PlotArea::saveOdf(KoShapeSavingContext &context) const
     // About the data:
     //   Save if the first row / column contain headers.
     QString  dataSourceHasLabels;
-    if (proxyModel()->firstRowIsLabel()) {
+    if (proxyModel()->firstRowIsLabel())
+    {
         if (proxyModel()->firstColumnIsLabel())
+        {
             dataSourceHasLabels = "both";
+        }
         else
+        {
             dataSourceHasLabels = "row";
-    } else {
+        }
+    }
+    else
+    {
         if (proxyModel()->firstColumnIsLabel())
+        {
             dataSourceHasLabels = "column";
+        }
         else
+        {
             dataSourceHasLabels = "none";
+        }
     }
     // Note: this is saved in the plotarea attributes and not the style.
     bodyWriter.addAttribute("chart:data-source-has-labels", dataSourceHasLabels);
 
-    if (d->threeDScene) {
+    if (d->threeDScene)
+    {
         d->threeDScene->saveOdfAttributes(bodyWriter);
     }
-    if (d->chartType == StockChartType) {
+    if (d->chartType == StockChartType)
+    {
         QString styleName;
 
         bodyWriter.startElement("chart:stock-gain-marker");
@@ -991,11 +1147,13 @@ void PlotArea::saveOdf(KoShapeSavingContext &context) const
     // Done with the attributes, start writing the children.
 
     // Save the axes.
-    foreach(Axis *axis, d->axes) {
+    foreach(Axis *axis, d->axes)
+    {
         axis->saveOdf(context);
     }
 
-    if (d->threeDScene) {
+    if (d->threeDScene)
+    {
         d->threeDScene->saveOdfChildren(bodyWriter);
     }
 
@@ -1011,126 +1169,138 @@ void PlotArea::saveOdf(KoShapeSavingContext &context) const
 }
 
 void PlotArea::saveOdfSubType(KoXmlWriter& xmlWriter,
-                               KoGenStyle& plotAreaStyle) const
+                              KoGenStyle& plotAreaStyle) const
 {
     Q_UNUSED(xmlWriter);
 
-    switch (d->chartType) {
-    case BarChartType:
-        switch(d->chartSubtype) {
-        case NoChartSubtype:
-        case NormalChartSubtype:
+    switch (d->chartType)
+    {
+        case BarChartType:
+            switch(d->chartSubtype)
+            {
+                case NoChartSubtype:
+                case NormalChartSubtype:
+                    break;
+                case StackedChartSubtype:
+                    plotAreaStyle.addProperty("chart:stacked", "true");
+                    break;
+                case PercentChartSubtype:
+                    plotAreaStyle.addProperty("chart:percentage", "true");
+                    break;
+            }
+
+            if (d->threeD)
+            {
+                plotAreaStyle.addProperty("chart:three-dimensional", "true");
+            }
+
+            // Data specific to bar charts
+            if (d->vertical)
+            {
+                plotAreaStyle.addProperty("chart:vertical", "true");
+            }
+            // Don't save this if zero, because that's the default.
+            //plotAreaStyle.addProperty("chart:lines-used", 0); // FIXME: for now
             break;
-        case StackedChartSubtype:
-            plotAreaStyle.addProperty("chart:stacked", "true");
+
+        case LineChartType:
+            switch(d->chartSubtype)
+            {
+                case NoChartSubtype:
+                case NormalChartSubtype:
+                    break;
+                case StackedChartSubtype:
+                    plotAreaStyle.addProperty("chart:stacked", "true");
+                    break;
+                case PercentChartSubtype:
+                    plotAreaStyle.addProperty("chart:percentage", "true");
+                    break;
+            }
+            if (d->threeD)
+            {
+                plotAreaStyle.addProperty("chart:three-dimensional", "true");
+                // FIXME: Save all 3D attributes too.
+            }
+            // FIXME: What does this mean?
+            plotAreaStyle.addProperty("chart:symbol-type", "automatic");
             break;
-        case PercentChartSubtype:
-            plotAreaStyle.addProperty("chart:percentage", "true");
+
+        case AreaChartType:
+            switch(d->chartSubtype)
+            {
+                case NoChartSubtype:
+                case NormalChartSubtype:
+                    break;
+                case StackedChartSubtype:
+                    plotAreaStyle.addProperty("chart:stacked", "true");
+                    break;
+                case PercentChartSubtype:
+                    plotAreaStyle.addProperty("chart:percentage", "true");
+                    break;
+            }
+
+            if (d->threeD)
+            {
+                plotAreaStyle.addProperty("chart:three-dimensional", "true");
+                // FIXME: Save all 3D attributes too.
+            }
             break;
+
+        case CircleChartType:
+            plotAreaStyle.addProperty("chart:angle-offset", QString::number(d->angleOffset));
+            break;
+
+        case RingChartType:
+            plotAreaStyle.addProperty("chart:angle-offset", QString::number(d->angleOffset));
+            plotAreaStyle.addProperty("chart:hole-size", QString::number(d->holeSize));
+            break;
+
+        case ScatterChartType:
+            // FIXME
+            break;
+        case RadarChartType:
+        case FilledRadarChartType:
+            // Save subtype of the Radar chart.
+            switch(d->chartSubtype)
+            {
+                case NoChartSubtype:
+                case NormalChartSubtype:
+                    break;
+                case StackedChartSubtype:
+                    plotAreaStyle.addProperty("chart:stacked", "true");
+                    break;
+                case PercentChartSubtype:
+                    plotAreaStyle.addProperty("chart:percentage", "true");
+                    break;
+            }
+            break;
+
+        case StockChartType:
+        {
+            switch(d->chartSubtype)
+            {
+                case NoChartSubtype:
+                case HighLowCloseChartSubtype:
+                case OpenHighLowCloseChartSubtype:
+                    plotAreaStyle.addProperty("chart:japanese-candle-stick", "false");
+                    break;
+                case CandlestickChartSubtype:
+                    plotAreaStyle.addProperty("chart:japanese-candle-stick", "true");
+                    break;
+            }
         }
-
-        if (d->threeD) {
-            plotAreaStyle.addProperty("chart:three-dimensional", "true");
-        }
-
-        // Data specific to bar charts
-        if (d->vertical)
-            plotAreaStyle.addProperty("chart:vertical", "true");
-        // Don't save this if zero, because that's the default.
-        //plotAreaStyle.addProperty("chart:lines-used", 0); // FIXME: for now
-        break;
-
-    case LineChartType:
-        switch(d->chartSubtype) {
-        case NoChartSubtype:
-        case NormalChartSubtype:
+        case BubbleChartType:
+        case SurfaceChartType:
+        case GanttChartType:
+            // FIXME
             break;
-        case StackedChartSubtype:
-            plotAreaStyle.addProperty("chart:stacked", "true");
-            break;
-        case PercentChartSubtype:
-            plotAreaStyle.addProperty("chart:percentage", "true");
-            break;
-        }
-        if (d->threeD) {
-            plotAreaStyle.addProperty("chart:three-dimensional", "true");
-            // FIXME: Save all 3D attributes too.
-        }
-        // FIXME: What does this mean?
-        plotAreaStyle.addProperty("chart:symbol-type", "automatic");
-        break;
-
-    case AreaChartType:
-        switch(d->chartSubtype) {
-        case NoChartSubtype:
-        case NormalChartSubtype:
-            break;
-        case StackedChartSubtype:
-            plotAreaStyle.addProperty("chart:stacked", "true");
-            break;
-        case PercentChartSubtype:
-            plotAreaStyle.addProperty("chart:percentage", "true");
-            break;
-        }
-
-        if (d->threeD) {
-            plotAreaStyle.addProperty("chart:three-dimensional", "true");
-            // FIXME: Save all 3D attributes too.
-        }
-        break;
-
-    case CircleChartType:
-        plotAreaStyle.addProperty("chart:angle-offset", QString::number(d->angleOffset));
-        break;
-
-    case RingChartType:
-        plotAreaStyle.addProperty("chart:angle-offset", QString::number(d->angleOffset));
-        plotAreaStyle.addProperty("chart:hole-size", QString::number(d->holeSize));
-        break;
-
-    case ScatterChartType:
-        // FIXME
-        break;
-    case RadarChartType:
-    case FilledRadarChartType:
-        // Save subtype of the Radar chart.
-        switch(d->chartSubtype) {
-        case NoChartSubtype:
-        case NormalChartSubtype:
-            break;
-        case StackedChartSubtype:
-            plotAreaStyle.addProperty("chart:stacked", "true");
-            break;
-        case PercentChartSubtype:
-            plotAreaStyle.addProperty("chart:percentage", "true");
-            break;
-        }
-        break;
-
-    case StockChartType: {
-        switch(d->chartSubtype) {
-        case NoChartSubtype:
-        case HighLowCloseChartSubtype:
-        case OpenHighLowCloseChartSubtype:
-            plotAreaStyle.addProperty("chart:japanese-candle-stick", "false");
-            break;
-        case CandlestickChartSubtype:
-            plotAreaStyle.addProperty("chart:japanese-candle-stick", "true");
-            break;
-        }
-    }
-    case BubbleChartType:
-    case SurfaceChartType:
-    case GanttChartType:
-        // FIXME
-        break;
 
         // This is not a valid type, but needs to be handled to avoid
         // a warning from gcc.
-    case LastChartType:
-    default:
-        // FIXME
-        break;
+        case LastChartType:
+        default:
+            // FIXME
+            break;
     }
 }
 
@@ -1150,11 +1320,14 @@ ChartShape *PlotArea::parent() const
 
 KChart::CartesianCoordinatePlane *PlotArea::kdCartesianPlane(Axis *axis) const
 {
-    if (axis) {
+    if (axis)
+    {
         Q_ASSERT(d->axes.contains(axis));
         // Only a secondary y axis gets the secondary plane
         if (axis->dimension() == YAxisDimension && axis != yAxis())
+        {
             return d->kdCartesianPlaneSecondary;
+        }
     }
 
     return d->kdCartesianPlanePrimary;
@@ -1178,7 +1351,9 @@ KChart::Chart *PlotArea::kdChart() const
 bool PlotArea::registerKdDiagram(KChart::AbstractDiagram *diagram)
 {
     if (d->kdDiagrams.contains(diagram))
+    {
         return false;
+    }
 
     d->kdDiagrams.append(diagram);
     return true;
@@ -1187,7 +1362,9 @@ bool PlotArea::registerKdDiagram(KChart::AbstractDiagram *diagram)
 bool PlotArea::deregisterKdDiagram(KChart::AbstractDiagram *diagram)
 {
     if (!d->kdDiagrams.contains(diagram))
+    {
         return false;
+    }
 
     d->kdDiagrams.removeAll(diagram);
     return true;
@@ -1197,11 +1374,14 @@ bool PlotArea::deregisterKdDiagram(KChart::AbstractDiagram *diagram)
 void PlotArea::registerKdPlane(KChart::AbstractCoordinatePlane *plane)
 {
     int pos = d->kdChart->coordinatePlanes().indexOf(plane);
-    if (pos >= 1) {
+    if (pos >= 1)
+    {
         // secondary plane
         d->kdChart->takeCoordinatePlane(plane);
         d->kdChart->insertCoordinatePlane(pos, plane);
-    } else if (pos < 0) {
+    }
+    else if (pos < 0)
+    {
         d->kdChart->addCoordinatePlane(plane);
     }
 }
@@ -1209,12 +1389,15 @@ void PlotArea::registerKdPlane(KChart::AbstractCoordinatePlane *plane)
 void PlotArea::plotAreaUpdate()
 {
     parent()->legend()->update();
-    if (d->chartType == StockChartType) {
+    if (d->chartType == StockChartType)
+    {
         updateKChartStockAttributes();
     }
     requestRepaint();
     foreach(Axis* axis, d->axes)
+    {
         axis->update();
+    }
 
     KoShape::update();
 }
@@ -1235,7 +1418,8 @@ void PlotArea::paintPixmap(QPainter &painter, const KoViewConverter &converter)
     // Only use a pixmap with sane sizes
     d->paintPixmap = false;//paintRectSize.width() < MAX_PIXMAP_SIZE || paintRectSize.height() < MAX_PIXMAP_SIZE;
 
-    if (d->paintPixmap) {
+    if (d->paintPixmap)
+    {
         d->image = QImage(paintRectSize, QImage::Format_RGB32);
 
         // Copy the painter's render hints, such as antialiasing
@@ -1248,8 +1432,10 @@ void PlotArea::paintPixmap(QPainter &painter, const KoViewConverter &converter)
 
         d->kdChart->paint(&pixmapPainter, QRect(QPoint(borderX, borderY),
                                                 QSize(plotAreaSize.width() - 2 * borderX,
-                                                      plotAreaSize.height() - 2 * borderY)));
-    } else {
+                                                        plotAreaSize.height() - 2 * borderY)));
+    }
+    else
+    {
         d->kdChart->paint(&painter, QRect(QPoint(borderX, borderY),
                                           QSize(plotAreaSize.width() - 2 * borderX,
                                                 plotAreaSize.height() - 2 * borderY)));
@@ -1268,7 +1454,8 @@ void PlotArea::paint(QPainter& painter, const KoViewConverter& converter, KoShap
     painter.setClipRect(paintRect, Qt::IntersectClip);
 
     // Paint the background
-    if (background()) {
+    if (background())
+    {
         QPainterPath p;
         p.addRect(paintRect);
         background()->paint(painter, converter, paintContext, p);
@@ -1312,7 +1499,8 @@ void PlotArea::paint(QPainter& painter, const KoViewConverter& converter, KoShap
     // Turn off clipping so that border (or "frame") drawn by KChart::Chart
     // is not not cut off.
     painter.setClipping(false);
-    if (kdchartRect.width() > 10 && kdchartRect.height() > 10) {
+    if (kdchartRect.width() > 10 && kdchartRect.height() > 10)
+    {
         d->kdChart->paint(&painter, kdchartRect);
     }
     //painter.restore();
@@ -1340,22 +1528,26 @@ void PlotArea::addAxesTitlesToLayout()
 {
     ChartLayout *layout = d->shape->layout();
     Axis *axis = xAxis();
-    if (axis) {
+    if (axis)
+    {
         layout->remove(axis->title());
         layout->setItemType(axis->title(), XAxisTitleType);
     }
     axis = yAxis();
-    if (axis) {
+    if (axis)
+    {
         layout->remove(axis->title());
         layout->setItemType(axis->title(), YAxisTitleType);
     }
     axis = secondaryXAxis();
-    if (axis) {
+    if (axis)
+    {
         layout->remove(axis->title());
         layout->setItemType(axis->title(), SecondaryXAxisTitleType);
     }
     axis = secondaryYAxis();
-    if (axis) {
+    if (axis)
+    {
         layout->remove(axis->title());
         layout->setItemType(axis->title(), SecondaryYAxisTitleType);
     }
@@ -1393,7 +1585,8 @@ QBrush PlotArea::stockLossBrush() const
 
 void PlotArea::updateKChartStockAttributes()
 {
-    for (Axis *a : d->axes) {
+    for (Axis *a : d->axes)
+    {
         a->updateKChartStockAttributes();
     }
 }

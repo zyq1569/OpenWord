@@ -1928,4 +1928,4 @@ const QTextTable *KoTextEditor::currentTable () const
 }
 
 //have to include this because of Q_PRIVATE_SLOT
-/*#include "moc_KoTextEditor.cpp"*/
+#include "moc_KoTextEditor.cpp"

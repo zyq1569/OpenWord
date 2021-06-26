@@ -98,15 +98,32 @@ QAction * LegendConfigWidget::createAction()
 int toIndex(Position pos)
 {
     int index = 0;
-    switch (pos) {
-        case StartPosition: index = 2; break;
-        case TopPosition: index = 1; break;
-        case EndPosition: index = 0; break;
-        case BottomPosition: index = 3; break;
-        case TopStartPosition: index = 4; break;
-        case TopEndPosition: index = 5; break;
-        case BottomStartPosition: index = 6; break;
-        case BottomEndPosition: index = 7; break;
+    switch (pos)
+    {
+        case StartPosition:
+            index = 2;
+            break;
+        case TopPosition:
+            index = 1;
+            break;
+        case EndPosition:
+            index = 0;
+            break;
+        case BottomPosition:
+            index = 3;
+            break;
+        case TopStartPosition:
+            index = 4;
+            break;
+        case TopEndPosition:
+            index = 5;
+            break;
+        case BottomStartPosition:
+            index = 6;
+            break;
+        case BottomEndPosition:
+            index = 7;
+            break;
         case CenterPosition:
         case FloatingPosition:
             index = 8;
@@ -118,10 +135,17 @@ int toIndex(Position pos)
 int toIndex(Qt::Alignment align)
 {
     int index = 0;
-    switch (align) {
-        case Qt::AlignLeft: index = 0; break;
-        case Qt::AlignCenter: index = 1; break;
-        case Qt::AlignRight: index = 2; break;
+    switch (align)
+    {
+        case Qt::AlignLeft:
+            index = 0;
+            break;
+        case Qt::AlignCenter:
+            index = 1;
+            break;
+        case Qt::AlignRight:
+            index = 2;
+            break;
         default:
             break;
     }
@@ -130,10 +154,12 @@ int toIndex(Qt::Alignment align)
 
 void LegendConfigWidget::updateData()
 {
-    if (!chart) {
+    if (!chart)
+    {
         return;
     }
-    if (chart->legend()) {
+    if (chart->legend())
+    {
         blockSignals(true);
         d->ui.showLegend->setChecked(chart->legend()->isVisible());
 
@@ -166,10 +192,17 @@ void LegendConfigWidget::setLegendShowTitle(bool show)
 void LegendConfigWidget::setLegendAlignment(int index)
 {
     Qt::Alignment align = Qt::AlignCenter;
-    switch (index) {
-        case 0: align = Qt::AlignLeft; break;
-        case 1: align = Qt::AlignCenter; break;
-        case 2: align = Qt::AlignRight; break;
+    switch (index)
+    {
+        case 0:
+            align = Qt::AlignLeft;
+            break;
+        case 1:
+            align = Qt::AlignCenter;
+            break;
+        case 2:
+            align = Qt::AlignRight;
+            break;
         default:
             break;
     }
@@ -179,22 +212,31 @@ void LegendConfigWidget::setLegendAlignment(int index)
 void LegendConfigWidget::setLegendPosition(int index)
 {
     Position pos;
-    switch (index) {
-        case 0: pos = EndPosition;
+    switch (index)
+    {
+        case 0:
+            pos = EndPosition;
             break;
-        case 1: pos = TopPosition;
+        case 1:
+            pos = TopPosition;
             break;
-        case 2: pos = BottomPosition;
+        case 2:
+            pos = BottomPosition;
             break;
-        case 3: pos = StartPosition;
+        case 3:
+            pos = StartPosition;
             break;
-        case 4: pos = TopStartPosition;
+        case 4:
+            pos = TopStartPosition;
             break;
-        case 5: pos = TopEndPosition;
+        case 5:
+            pos = TopEndPosition;
             break;
-        case 6: pos = BottomStartPosition;
+        case 6:
+            pos = BottomStartPosition;
             break;
-        case 7: pos = BottomEndPosition;
+        case 7:
+            pos = BottomEndPosition;
             break;
         default: // manual
             pos = CenterPosition;

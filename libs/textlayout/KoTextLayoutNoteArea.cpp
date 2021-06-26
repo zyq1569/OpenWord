@@ -49,8 +49,8 @@ public:
 };
 
 KoTextLayoutNoteArea::KoTextLayoutNoteArea(KoInlineNote *note, KoTextLayoutArea *parent, KoTextDocumentLayout *documentLayout)
-  : KoTextLayoutArea(parent, documentLayout)
-  , d(new Private)
+    : KoTextLayoutArea(parent, documentLayout)
+    , d(new Private)
 {
     Q_ASSERT(note);
     Q_ASSERT(parent);
@@ -68,12 +68,14 @@ KoTextLayoutNoteArea::~KoTextLayoutNoteArea()
 void KoTextLayoutNoteArea::paint(QPainter *painter, const KoTextDocumentLayout::PaintContext &context)
 {
     painter->save();
-    if (d->isContinuedArea) {
+    if (d->isContinuedArea)
+    {
         painter->translate(0, -OVERLAPPREVENTION);
     }
 
     KoTextLayoutArea::paint(painter, context);
-    if (d->postLayout) {
+    if (d->postLayout)
+    {
         d->postLayout->draw(painter, QPointF(left() + d->labelIndent, top() + d->labelYOffset));
     }
     d->textLayout->draw(painter, QPointF(left() + d->labelIndent, top() + d->labelYOffset));
@@ -83,20 +85,27 @@ void KoTextLayoutNoteArea::paint(QPainter *painter, const KoTextDocumentLayout::
 bool KoTextLayoutNoteArea::layout(FrameIterator *cursor)
 {
     KoOdfNotesConfiguration *notesConfig = 0;
-    if (d->note->type() == KoInlineNote::Footnote) {
+    if (d->note->type() == KoInlineNote::Footnote)
+    {
         notesConfig = KoTextDocument(d->note->textFrame()->document()).styleManager()->notesConfiguration(KoOdfNotesConfiguration::Footnote);
-    } else if (d->note->type() == KoInlineNote::Endnote) {
+    }
+    else if (d->note->type() == KoInlineNote::Endnote)
+    {
         notesConfig = KoTextDocument(d->note->textFrame()->document()).styleManager()->notesConfiguration(KoOdfNotesConfiguration::Endnote);
     }
 
     QString label;
-    if (d->isContinuedArea) {
-        if (! notesConfig->footnoteContinuationBackward().isEmpty()) {
+    if (d->isContinuedArea)
+    {
+        if (! notesConfig->footnoteContinuationBackward().isEmpty())
+        {
             label = notesConfig->footnoteContinuationBackward() + " " + d->note->label();
         }
         setReferenceRect(left(), right(), top() + OVERLAPPREVENTION
-                                    , maximumAllowedBottom() + OVERLAPPREVENTION);
-    } else {
+                         , maximumAllowedBottom() + OVERLAPPREVENTION);
+    }
+    else
+    {
         label = d->note->label();
     }
     label.prepend(notesConfig->numberFormat().prefix());
@@ -105,7 +114,8 @@ bool KoTextLayoutNoteArea::layout(FrameIterator *cursor)
     QTextBlock block = cursor->it.currentBlock();
     QTextCharFormat format = block.charFormat();
     KoCharacterStyle *style = static_cast<KoCharacterStyle *>(notesConfig->citationTextStyle());
-    if (style) {
+    if (style)
+    {
         style->applyStyle(format);
     }
     QFont font(format.font(), pd);
@@ -126,9 +136,12 @@ bool KoTextLayoutNoteArea::layout(FrameIterator *cursor)
 
     KoParagraphStyle pStyle(block.blockFormat(), QTextCharFormat());
     d->labelIndent = textIndent(d->note->textFrame()->begin().currentBlock(), 0, pStyle);
-    if (line.naturalTextWidth() > -d->labelIndent) {
+    if (line.naturalTextWidth() > -d->labelIndent)
+    {
         KoTextLayoutArea::setExtraTextIndent(line.naturalTextWidth());
-    } else {
+    }
+    else
+    {
         KoTextLayoutArea::setExtraTextIndent(-d->labelIndent);
     }
     d->labelIndent += pStyle.leftMargin();
@@ -140,11 +153,13 @@ bool KoTextLayoutNoteArea::layout(FrameIterator *cursor)
 
     QTextLine blockLayoutLine = block.layout()->lineAt(0);
 
-    if (blockLayoutLine.isValid()) {
+    if (blockLayoutLine.isValid())
+    {
         d->labelYOffset += blockLayoutLine.ascent();
     }
 
-    if (!contNotNeeded) {
+    if (!contNotNeeded)
+    {
         QString contNote = notesConfig->footnoteContinuationForward();
         font.setBold(true);
         d->postLayout = new QTextLayout(contNote, font, pd);
@@ -165,7 +180,7 @@ bool KoTextLayoutNoteArea::layout(FrameIterator *cursor)
         contTextLine.setPosition(QPointF(right() - contTextLine.naturalTextWidth(), bottom() - contTextLine.height()));
 
         documentLayout()->setContinuationObstruction(new
-                                    KoTextLayoutObstruction(contTextLine.naturalTextRect(), false));
+                KoTextLayoutObstruction(contTextLine.naturalTextRect(), false));
     }
     return contNotNeeded;
 }
@@ -195,6 +210,6 @@ KoPointedAt KoTextLayoutNoteArea::hitTest(const QPointF &p, Qt::HitTestAccuracy 
 QRectF KoTextLayoutNoteArea::selectionBoundingBox(QTextCursor &cursor) const
 {
     return KoTextLayoutArea::selectionBoundingBox(cursor).translated(0
-                                        , d->isContinuedArea ? -OVERLAPPREVENTION : 0);
+            , d->isContinuedArea ? -OVERLAPPREVENTION : 0);
 
 }
