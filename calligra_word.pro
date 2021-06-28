@@ -50,7 +50,7 @@ SUBDIRS    +=   log/easylog.pro \
                 libs/kross/kokross.pro \
                 extras/thumbnail/calligraimagethumbnail.pro \
                 extras/thumbnail/calligrathumbnail.pro \
-                plugins/variables/calligra_textinlineobject_variables.pro
+                plugins/variables/calligra_textinlineobject_variables.pro \
 #                plugins/textediting/autocorrection/calligra_textediting_autocorrect.pro \
 #                plugins/textediting/changecase/calligra_textediting_changecase.pro \
 #                plugins/textediting/spellcheck/calligra_textediting_spellcheck.pro \
