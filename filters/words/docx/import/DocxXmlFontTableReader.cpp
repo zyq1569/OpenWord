@@ -38,19 +38,19 @@
 
 
 DocxXmlFontTableReaderContext::DocxXmlFontTableReaderContext(KoGenStyles& _styles)
-        : styles(&_styles)
+    : styles(&_styles)
 {
 }
 
 DocxXmlFontTableReader::DocxXmlFontTableReader(KoOdfWriters *writers)
-        : MSOOXML::MsooXmlReader(writers)
-        , m_context(0)
+    : MSOOXML::MsooXmlReader(writers)
+    , m_context(0)
 {
 }
 
 DocxXmlFontTableReader::DocxXmlFontTableReader(QIODevice* io, KoOdfWriters *writers)
-        : MSOOXML::MsooXmlReader(io, writers)
-        , m_context(0)
+    : MSOOXML::MsooXmlReader(io, writers)
+    , m_context(0)
 {
 }
 
@@ -63,7 +63,8 @@ KoFilter::ConversionStatus DocxXmlFontTableReader::read(MSOOXML::MsooXmlReaderCo
     m_context = dynamic_cast<DocxXmlFontTableReaderContext*>(context);
     debugDocx << "=============================";
     readNext();
-    if (!isStartDocument()) {
+    if (!isStartDocument())
+    {
         return KoFilter::WrongFormat;
     }
 
@@ -71,10 +72,12 @@ KoFilter::ConversionStatus DocxXmlFontTableReader::read(MSOOXML::MsooXmlReaderCo
     readNext();
     debugDocx << namespaceUri();
 
-    if (!expectEl("w:fonts")) {
+    if (!expectEl("w:fonts"))
+    {
         return KoFilter::WrongFormat;
     }
-    if (!expectNS(MSOOXML::Schemas::wordprocessingml)) {
+    if (!expectNS(MSOOXML::Schemas::wordprocessingml))
+    {
         return KoFilter::WrongFormat;
     }
     /*
@@ -84,12 +87,14 @@ KoFilter::ConversionStatus DocxXmlFontTableReader::read(MSOOXML::MsooXmlReaderCo
         }*/
 
     QXmlStreamNamespaceDeclarations namespaces(namespaceDeclarations());
-    for (int i = 0; i < namespaces.count(); i++) {
+    for (int i = 0; i < namespaces.count(); i++)
+    {
         debugDocx << "NS prefix:" << namespaces[i].prefix() << "uri:" << namespaces[i].namespaceUri();
     }
 //! @todo find out whether the namespace returned by namespaceUri()
 //!       is exactly the same ref as the element of namespaceDeclarations()
-    if (!namespaces.contains(QXmlStreamNamespaceDeclaration("w", MSOOXML::Schemas::wordprocessingml))) {
+    if (!namespaces.contains(QXmlStreamNamespaceDeclaration("w", MSOOXML::Schemas::wordprocessingml)))
+    {
         raiseError(i18n("Namespace \"%1\" not found", QLatin1String(MSOOXML::Schemas::wordprocessingml)));
         return KoFilter::WrongFormat;
     }
@@ -97,7 +102,8 @@ KoFilter::ConversionStatus DocxXmlFontTableReader::read(MSOOXML::MsooXmlReaderCo
 
     TRY_READ(fonts)
 
-    if (!expectElEnd("w:fonts")) {
+    if (!expectElEnd("w:fonts"))
+    {
         return KoFilter::WrongFormat;
     }
 
@@ -123,15 +129,20 @@ KoFilter::ConversionStatus DocxXmlFontTableReader::read(MSOOXML::MsooXmlReaderCo
 KoFilter::ConversionStatus DocxXmlFontTableReader::read_fonts()
 {
     READ_PROLOGUE
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         debugDocx << *this;
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
-            if (QUALIFIED_NAME_IS(font)) {
+        if (isStartElement())
+        {
+            if (QUALIFIED_NAME_IS(font))
+            {
                 TRY_READ(font)
                 if (m_currentFontFace.isNull())
+                {
                     return KoFilter::WrongFormat;
+                }
                 debugDocx << "added font face:" << m_currentFontFace.name();
                 m_context->styles->insertFontFace(m_currentFontFace);
                 m_currentFontFace = KoFontFace();
@@ -180,11 +191,13 @@ KoFilter::ConversionStatus DocxXmlFontTableReader::read_font()
     m_currentFontFace.setName(currentFontFaceName);
     m_currentFontFace.setFamily(currentFontFaceName);
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         debugDocx << *this;
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(family)
             ELSE_TRY_READ_IF(pitch)
             SKIP_UNKNOWN

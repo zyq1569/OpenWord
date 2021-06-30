@@ -18,90 +18,93 @@
 
 #include "KoTblStyle.h"
 
+#include "Odf2Debug.h"
+
 KOSTYLE_DECLARE_SHARED_POINTER_IMPL(KoTblStyle)
 
-namespace {
-    class BreakStyleMap : public QMap<KoTblStyle::BreakType, QString>
+namespace
+{
+class BreakStyleMap : public QMap<KoTblStyle::BreakType, QString>
+{
+public:
+    BreakStyleMap()
     {
-    public:
-        BreakStyleMap()
-        {
-            insert(KoTblStyle::NoBreak, QString());
-            insert(KoTblStyle::AutoBreak, "auto");
-            insert(KoTblStyle::ColumnBreak, "column");
-            insert(KoTblStyle::PageBreak, "page");
-        }
-    } breakStyleMap;
+        insert(KoTblStyle::NoBreak, QString());
+        insert(KoTblStyle::AutoBreak, "auto");
+        insert(KoTblStyle::ColumnBreak, "column");
+        insert(KoTblStyle::PageBreak, "page");
+    }
+} breakStyleMap;
 
-    class HorizontalAlignMap : public QMap<KoTblStyle::HorizontalAlign, QString>
+class HorizontalAlignMap : public QMap<KoTblStyle::HorizontalAlign, QString>
+{
+public:
+    HorizontalAlignMap()
     {
-    public:
-        HorizontalAlignMap()
-        {
-            insert(KoTblStyle::CenterAlign, "center");
-            insert(KoTblStyle::LeftAlign, "left");
-            insert(KoTblStyle::MarginsAlign, "margins");
-            insert(KoTblStyle::RightAlign, "right");
-        }
-    } horizontalAlignMap;
+        insert(KoTblStyle::CenterAlign, "center");
+        insert(KoTblStyle::LeftAlign, "left");
+        insert(KoTblStyle::MarginsAlign, "margins");
+        insert(KoTblStyle::RightAlign, "right");
+    }
+} horizontalAlignMap;
 
-    class BorderModelMap : public QMap<KoTblStyle::BorderModel, QString>
+class BorderModelMap : public QMap<KoTblStyle::BorderModel, QString>
+{
+public:
+    BorderModelMap()
     {
-    public:
-        BorderModelMap()
-        {
-            insert(KoTblStyle::CollapsingModel, "collapsing");
-            insert(KoTblStyle::SeparatingModel, "separating");
-        }
-    } borderModelMap;
+        insert(KoTblStyle::CollapsingModel, "collapsing");
+        insert(KoTblStyle::SeparatingModel, "separating");
+    }
+} borderModelMap;
 
-    class KeepWithNextMap : public QMap<KoTblStyle::KeepWithNext, QString>
+class KeepWithNextMap : public QMap<KoTblStyle::KeepWithNext, QString>
+{
+public:
+    KeepWithNextMap()
     {
-    public:
-        KeepWithNextMap()
-        {
-            insert(KoTblStyle::AutoKeepWithNext, "auto");
-            insert(KoTblStyle::AlwaysKeepWithNext, "always");
-        }
-    } keepWithNextMap;
+        insert(KoTblStyle::AutoKeepWithNext, "auto");
+        insert(KoTblStyle::AlwaysKeepWithNext, "always");
+    }
+} keepWithNextMap;
 
-    class WritingModeMap : public QMap<KoTblStyle::WritingMode, QString>
+class WritingModeMap : public QMap<KoTblStyle::WritingMode, QString>
+{
+public:
+    WritingModeMap()
     {
-    public:
-        WritingModeMap()
-        {
-            insert(KoTblStyle::LrTbWritingMode, "lr-tb");
-            insert(KoTblStyle::RlTbWritingMode, "rl-tb");
-            insert(KoTblStyle::TbRlWritingMode, "tb-rl");
-            insert(KoTblStyle::TbLrWritingMode, "tb-lr");
-            insert(KoTblStyle::LrWritingMode, "lr");
-            insert(KoTblStyle::RlWritingMode, "rl");
-            insert(KoTblStyle::TbWritingMode, "tb");
-            insert(KoTblStyle::PageWritingMode, "page");
-        }
-    } writingModeMap;
+        insert(KoTblStyle::LrTbWritingMode, "lr-tb");
+        insert(KoTblStyle::RlTbWritingMode, "rl-tb");
+        insert(KoTblStyle::TbRlWritingMode, "tb-rl");
+        insert(KoTblStyle::TbLrWritingMode, "tb-lr");
+        insert(KoTblStyle::LrWritingMode, "lr");
+        insert(KoTblStyle::RlWritingMode, "rl");
+        insert(KoTblStyle::TbWritingMode, "tb");
+        insert(KoTblStyle::PageWritingMode, "page");
+    }
+} writingModeMap;
 
-    QString prefix = "table";
-    const char familyName[] = "table";
+QString prefix = "table";
+const char familyName[] = "table";
 }
 
 KoTblStyle::KoTblStyle()
-  : KoStyle()
-  , m_backgroundColor()
-  , m_breakAfter(NoBreak)
-  , m_breakBefore(NoBreak)
-  , m_allowBreakBetweenRows(false)
-  , m_leftMargin(0.0)
-  , m_topMargin(0.0)
-  , m_rightMargin(0.0)
-  , m_bottomMargin(0.0)
-  , m_width(0.0)
-  , m_widthUnit(PointsUnit)
-  , m_horizontalAlign(LeftAlign)
-  , m_borderModel(CollapsingModel)
-  , m_keepWithNext(AutoKeepWithNext)
-  , m_writingMode(PageWritingMode)
-  , m_display(true)
+    : KoStyle()
+    , m_backgroundColor()
+    , m_breakAfter(NoBreak)
+    , m_breakBefore(NoBreak)
+    , m_allowBreakBetweenRows(false)
+    , m_leftMargin(0.0)
+    , m_topMargin(0.0)
+    , m_rightMargin(0.0)
+    , m_bottomMargin(0.0)
+    , m_width(0.0)
+    , m_widthUnit(PointsUnit)
+    , m_horizontalAlign(LeftAlign)
+    , m_borderModel(CollapsingModel)
+    , m_keepWithNext(AutoKeepWithNext)
+    , m_writingMode(PageWritingMode)
+    , m_display(true)
 {
 }
 
@@ -292,13 +295,16 @@ QString KoTblStyle::defaultPrefix() const
 
 void KoTblStyle::prepareStyle(KoGenStyle& style) const
 {
-    if(m_backgroundColor.isValid()) {
+    if(m_backgroundColor.isValid())
+    {
         style.addProperty("fo:background-color", m_backgroundColor.name());
     }
-    if (m_breakAfter != KoTblStyle::NoBreak) {
+    if (m_breakAfter != KoTblStyle::NoBreak)
+    {
         style.addProperty("fo:break-after", breakStyleMap.value(m_breakAfter));
     }
-    if (m_breakBefore != KoTblStyle::NoBreak) {
+    if (m_breakBefore != KoTblStyle::NoBreak)
+    {
         style.addProperty("fo:break-before", breakStyleMap.value(m_breakBefore));
     }
     style.addProperty("fo:keep-with-next", keepWithNextMap.value(m_keepWithNext));
@@ -307,11 +313,14 @@ void KoTblStyle::prepareStyle(KoGenStyle& style) const
     style.addPropertyPt("fo:margin-right", m_rightMargin);
     style.addPropertyPt("fo:margin-bottom", m_bottomMargin);
     style.addPropertyPt("fo:margin-left", m_leftMargin);
-
+    debugOdf2<<"---openword----m_topMargin"<<m_topMargin<<"m_bottomMargin"<<m_bottomMargin;
     // style:width may not be 0, use style:rel-width if width is 0
-    if (m_widthUnit == PercentageUnit || m_width <= 0) {
+    if (m_widthUnit == PercentageUnit || m_width <= 0)
+    {
         style.addProperty("style:rel-width", QString::number(m_width) + QLatin1Char('%'));
-    } else {
+    }
+    else
+    {
         style.addPropertyPt("style:width", m_width);
     }
 
@@ -320,11 +329,13 @@ void KoTblStyle::prepareStyle(KoGenStyle& style) const
     style.addProperty("table:align", horizontalAlignMap.value(m_horizontalAlign));
     style.addProperty("table:border-model", borderModelMap.value(m_borderModel));
 
-    if(!m_display) {
+    if(!m_display)
+    {
         style.addProperty("table:display", "false");
     }
 
-    if(!m_masterPageName.isEmpty()) {
+    if(!m_masterPageName.isEmpty())
+    {
         style.addAttribute("style:master-page-name", m_masterPageName);
     }
 }

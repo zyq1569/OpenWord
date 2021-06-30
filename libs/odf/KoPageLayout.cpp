@@ -38,10 +38,12 @@ KoGenStyle KoPageLayout::saveOdf() const
     style.addPropertyPt("fo:page-height", height);
 
     // Save margins. If all margins are the same, only one value needs to be saved.
-    if (leftMargin == topMargin && leftMargin == rightMargin && leftMargin == bottomMargin) {
+    if (leftMargin == topMargin && leftMargin == rightMargin && leftMargin == bottomMargin)
+    {
         style.addPropertyPt("fo:margin", leftMargin);
     }
-    else {
+    else
+    {
         style.addPropertyPt("fo:margin-left", leftMargin);
         style.addPropertyPt("fo:margin-right", rightMargin);
         style.addPropertyPt("fo:margin-top", topMargin);
@@ -49,10 +51,12 @@ KoGenStyle KoPageLayout::saveOdf() const
     }
 
     // Save padding. If all paddings are the same, only one value needs to be saved.
-    if (leftPadding == topPadding && leftPadding == rightPadding && leftPadding == bottomPadding) {
+    if (leftPadding == topPadding && leftPadding == rightPadding && leftPadding == bottomPadding)
+    {
         style.addPropertyPt("fo:padding", leftPadding);
     }
-    else {
+    else
+    {
         style.addPropertyPt("fo:padding-left", leftPadding);
         style.addPropertyPt("fo:padding-right", rightPadding);
         style.addPropertyPt("fo:padding-top", topPadding);
@@ -71,31 +75,39 @@ KoGenStyle KoPageLayout::saveOdf() const
 void KoPageLayout::loadOdf(const KoXmlElement &style)
 {
     KoXmlElement  properties(KoXml::namedItemNS(style, KoXmlNS::style,
-                                                "page-layout-properties"));
+                             "page-layout-properties"));
 
-    if (!properties.isNull()) {
+    if (!properties.isNull())
+    {
         KoPageLayout standard;
 
         // Page dimension -- width / height
-        width = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "page-width"),
+        width  = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "page-width"),
                                    standard.width);
         height = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "page-height"),
                                     standard.height);
 
         // Page orientation
         if (properties.attributeNS(KoXmlNS::style, "print-orientation", QString()) == "portrait")
+        {
             orientation = KoPageFormat::Portrait;
+        }
         else
+        {
             orientation = KoPageFormat::Landscape;
+        }
 
         // Margins.  Check if there is one "margin" attribute and use it for all
         // margins if there is.  Otherwise load the individual margins.
-        if (properties.hasAttributeNS(KoXmlNS::fo, "margin")) {
-            leftMargin  = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "margin"));
-            topMargin = leftMargin;
-            rightMargin = leftMargin;
+        if (properties.hasAttributeNS(KoXmlNS::fo, "margin"))
+        {
+            leftMargin   = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "margin"));
+            topMargin    = leftMargin;
+            rightMargin  = leftMargin;
             bottomMargin = leftMargin;
-        } else {
+        }
+        else
+        {
             /*
                 If one of the individual margins is specified then the default for the others is zero.
                 Otherwise all of them are set to 20mm.
@@ -105,50 +117,60 @@ void KoPageLayout::loadOdf(const KoXmlElement &style)
                     || properties.hasAttributeNS(KoXmlNS::fo, "margin-top")
                     || properties.hasAttributeNS(KoXmlNS::fo, "margin-right")
                     || properties.hasAttributeNS(KoXmlNS::fo, "margin-bottom")))
-                defaultValue = MM_TO_POINT(20.0); // no margin specified at all, lets make it 20mm
+            {
+                defaultValue = MM_TO_POINT(20.0);    // no margin specified at all, lets make it 20mm
+            }
 
             leftMargin   = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "margin-left"), defaultValue);
             topMargin    = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "margin-top"), defaultValue);
             rightMargin  = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "margin-right"), defaultValue);
             bottomMargin = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "margin-bottom"), defaultValue);
+            warnOdf<<"use topMargin:"<<topMargin<<"topPadding"<<topPadding<<"bottomPadding"<<bottomPadding<<"bottomMargin"<<bottomMargin;
         }
-
+        debugOdf<<"topMargin"<<topMargin<<"topPadding"<<topPadding<<"bottomPadding"<<bottomPadding<<"bottomMargin"<<bottomMargin;
         // Padding.  Same reasoning as for margins
-        if (properties.hasAttributeNS(KoXmlNS::fo, "padding")) {
-            leftPadding  = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "padding"));
-            topPadding = leftPadding;
-            rightPadding = leftPadding;
+        if (properties.hasAttributeNS(KoXmlNS::fo, "padding"))
+        {
+            leftPadding   = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "padding"));
+            topPadding    = leftPadding;
+            rightPadding  = leftPadding;
             bottomPadding = leftPadding;
         }
-        else {
+        else
+        {
             leftPadding   = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "padding-left"));
             topPadding    = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "padding-top"));
             rightPadding  = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "padding-right"));
             bottomPadding = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "padding-bottom"));
         }
-
         // Parse border properties if there are any.
         border.loadOdf(properties);
 
         // guessFormat takes millimeters
         if (orientation == KoPageFormat::Landscape)
+        {
             format = KoPageFormat::guessFormat(POINT_TO_MM(height), POINT_TO_MM(width));
+        }
         else
+        {
             format = KoPageFormat::guessFormat(POINT_TO_MM(width), POINT_TO_MM(height));
+        }
     }
+    debugOdf<<"topMargin"<<topMargin<<"topPadding"<<topPadding<<"bottomPadding"<<bottomPadding<<"bottomMargin"<<bottomMargin;
+    debugOdf<<"leftPadding"<<leftPadding<<"rightPadding"<<rightPadding;
 }
 
 bool KoPageLayout::operator==(const KoPageLayout &l) const
 {
     return qFuzzyCompare(width,l.width)
-        && qFuzzyCompare(height,l.height)
-        && qFuzzyCompare(leftMargin,l.leftMargin)
-        && qFuzzyCompare(rightMargin,l.rightMargin)
-        && qFuzzyCompare(topMargin,l.topMargin)
-        && qFuzzyCompare(bottomMargin,l.bottomMargin)
-        && qFuzzyCompare(pageEdge,l.pageEdge)
-        && qFuzzyCompare(bindingSide,l.bindingSide)
-        && border == l.border;
+           && qFuzzyCompare(height,l.height)
+           && qFuzzyCompare(leftMargin,l.leftMargin)
+           && qFuzzyCompare(rightMargin,l.rightMargin)
+           && qFuzzyCompare(topMargin,l.topMargin)
+           && qFuzzyCompare(bottomMargin,l.bottomMargin)
+           && qFuzzyCompare(pageEdge,l.pageEdge)
+           && qFuzzyCompare(bindingSide,l.bindingSide)
+           && border == l.border;
 }
 
 bool KoPageLayout::operator!=(const KoPageLayout& l) const
@@ -157,20 +179,20 @@ bool KoPageLayout::operator!=(const KoPageLayout& l) const
 }
 
 KoPageLayout::KoPageLayout()
-  : format(KoPageFormat::defaultFormat())
-  , orientation(KoPageFormat::Portrait)
-  , width(MM_TO_POINT(KoPageFormat::width(format, orientation)))
-  , height(MM_TO_POINT(KoPageFormat::height(format, orientation)))
-  , leftMargin(MM_TO_POINT(20.0))
-  , rightMargin(MM_TO_POINT(20.0))
-  , topMargin(MM_TO_POINT(20.0))
-  , bottomMargin(MM_TO_POINT(20.0))
-  , pageEdge(-1)
-  , bindingSide(-1)
-  , leftPadding(0)
-  , rightPadding(0)
-  , topPadding(0)
-  , bottomPadding(0)
-  , border()
+    : format(KoPageFormat::defaultFormat())
+    , orientation(KoPageFormat::Portrait)
+    , width(MM_TO_POINT(KoPageFormat::width(format, orientation)))
+    , height(MM_TO_POINT(KoPageFormat::height(format, orientation)))
+    , leftMargin(MM_TO_POINT(20.0))
+    , rightMargin(MM_TO_POINT(20.0))
+    , topMargin(MM_TO_POINT(20.0))
+    , bottomMargin(MM_TO_POINT(20.0))
+    , pageEdge(-1)
+    , bindingSide(-1)
+    , leftPadding(0)
+    , rightPadding(0)
+    , topPadding(0)
+    , bottomPadding(0)
+    , border()
 {
 }

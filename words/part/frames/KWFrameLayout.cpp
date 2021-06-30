@@ -287,18 +287,19 @@ void KWFrameLayout::layoutFramesOnPage(int pageNumber)
     qreal requestedHeight[7], minimumHeight[7], resultingPositions[7];
     for (int i = 0; i < 7; i++)   // zero fill.
     {
-        requestedHeight[i] = 0;
-        minimumHeight[i] = 0;
+        requestedHeight[i]    = 0;
+        minimumHeight[i]      = 0;
         resultingPositions[i] = 0;
     }
     minimumHeight[0] = page.topMargin() + page.topPadding();
     minimumHeight[6] = page.bottomMargin() + page.bottomPadding();
-
-    KoPageLayout layout = page.pageStyle().pageLayout();
-    layout.leftMargin = page.leftMargin();
-    layout.rightMargin = page.rightMargin();
-    layout.leftPadding = page.leftPadding();
-    layout.rightPadding = page.rightPadding();
+    //debugWords << "--openword---minimumHeight[0]="<<minimumHeight[0]<<"page.topMargin()="<<page.topMargin()<<"page.topPadding(()"<<page.topPadding();
+    //debugWords << "--openword---pageStyle->pageLayout()->bottomMargin="<<page.bottomMargin()<<"page.bottomPadding(()"<<page.bottomPadding();
+    KoPageLayout layout   = page.pageStyle().pageLayout();
+    layout.leftMargin     = page.leftMargin();
+    layout.rightMargin    = page.rightMargin();
+    layout.leftPadding    = page.leftPadding();
+    layout.rightPadding   = page.rightPadding();
     const qreal left = 0, width = page.width();
     const qreal textWidth = width - layout.leftMargin - layout.rightMargin
                             - layout.leftPadding - layout.rightPadding;

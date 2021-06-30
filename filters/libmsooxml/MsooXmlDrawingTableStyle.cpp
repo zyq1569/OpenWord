@@ -8,8 +8,8 @@
 using namespace MSOOXML;
 
 DrawingTableStyleConverterProperties::DrawingTableStyleConverterProperties()
-: TableStyleConverterProperties()
-, m_role(DrawingTableStyle::WholeTbl)
+    : TableStyleConverterProperties()
+    , m_role(DrawingTableStyle::WholeTbl)
 {
 }
 
@@ -28,9 +28,9 @@ void DrawingTableStyleConverterProperties::setRoles(DrawingTableStyleConverterPr
 }
 
 DrawingTableStyleConverter::DrawingTableStyleConverter(MSOOXML::DrawingTableStyleConverterProperties const& properties, DrawingTableStyle* style)
-: TableStyleConverter(properties.rowCount(), properties.columnCount())
-, m_style(style)
-, m_properties(properties)
+    : TableStyleConverter(properties.rowCount(), properties.columnCount())
+    , m_style(style)
+    , m_properties(properties)
 {
 }
 
@@ -39,9 +39,10 @@ DrawingTableStyleConverter::~DrawingTableStyleConverter()
 }
 
 void DrawingTableStyleConverter::applyStyle(MSOOXML::DrawingTableStyle::Type type, KoCellStyle::Ptr& style,
-                                            int row, int column, const QPair<int, int> &spans)
+        int row, int column, const QPair<int, int> &spans)
 {
-    if (!m_style) {
+    if (!m_style)
+    {
         return;
     }
 
@@ -104,68 +105,86 @@ KoCellStyle::Ptr DrawingTableStyleConverter::style(int row, int column, const QP
     debugMsooXml << "<== [END] [local] TABLE-level:";
 #endif
 
-    if (role & DrawingTableStyleConverterProperties::ColumnBanded) {
+    if (role & DrawingTableStyleConverterProperties::ColumnBanded)
+    {
         // If last column is activated and it's last column, banding is not applied
-        if (!(role & DrawingTableStyleConverterProperties::LastCol && column == lastColumn)) {
+        if (!(role & DrawingTableStyleConverterProperties::LastCol && column == lastColumn))
+        {
             // First column active means that the banding is shifted by one
-            if (role & DrawingTableStyleConverterProperties::FirstCol) {
+            if (role & DrawingTableStyleConverterProperties::FirstCol)
+            {
 #ifdef MSOOXMLDRAWING_DEBUG_TABLES
                 debugMsooXml << "====> [ColumnBanded] FirstCol:";
 #endif
                 // Banding not applied if it's the first column
-                if (column != 0) {
+                if (column != 0)
+                {
                     // Banding reversed
-                    if ((column % (m_properties.columnBandSize() * 2)) < m_properties.columnBandSize()) {
+                    if ((column % (m_properties.columnBandSize() * 2)) < m_properties.columnBandSize())
+                    {
                         applyStyle(DrawingTableStyle::Band2Vertical, cellStyle, row, column, spans);
                     }
-                    else {
+                    else
+                    {
                         applyStyle(DrawingTableStyle::Band1Vertical, cellStyle, row, column, spans);
                     }
                 }
             }
-            else {
+            else
+            {
 #ifdef MSOOXMLDRAWING_DEBUG_TABLES
                 debugMsooXml << "====> [ColumnBanded] Other:";
 #endif
                 //Is the column in the even band?
-                if ((column % (m_properties.columnBandSize() * 2)) < m_properties.columnBandSize()) {
+                if ((column % (m_properties.columnBandSize() * 2)) < m_properties.columnBandSize())
+                {
                     applyStyle(DrawingTableStyle::Band1Vertical, cellStyle, row, column, spans);
                 }
-                else {
+                else
+                {
                     applyStyle(DrawingTableStyle::Band2Vertical, cellStyle, row, column, spans);
                 }
             }
         }
     }
 
-    if (role & DrawingTableStyleConverterProperties::RowBanded) {
+    if (role & DrawingTableStyleConverterProperties::RowBanded)
+    {
         // If last row is activated and it's last row, banding is not applied
-        if (!(role & DrawingTableStyleConverterProperties::LastRow && row == lastRow)) {
+        if (!(role & DrawingTableStyleConverterProperties::LastRow && row == lastRow))
+        {
             // First row active means that the banding is shifted by one
-            if (role & DrawingTableStyleConverterProperties::FirstRow) {
+            if (role & DrawingTableStyleConverterProperties::FirstRow)
+            {
 #ifdef MSOOXMLDRAWING_DEBUG_TABLES
                 debugMsooXml << "====> [RowBanded] FirstRow:";
 #endif
                 // Banding not applied if it's the first row
-                if (row != 0) {
+                if (row != 0)
+                {
                     // In case the first row is activated, the banding applying is reversed
-                    if( (row % (m_properties.rowBandSize() * 2)) < m_properties.rowBandSize()) {
+                    if( (row % (m_properties.rowBandSize() * 2)) < m_properties.rowBandSize())
+                    {
                         applyStyle(DrawingTableStyle::Band2Horizontal, cellStyle, row, column, spans);
                     }
-                    else {
+                    else
+                    {
                         applyStyle(DrawingTableStyle::Band1Horizontal, cellStyle, row, column, spans);
                     }
                 }
             }
-            else {
+            else
+            {
 #ifdef MSOOXMLDRAWING_DEBUG_TABLES
                 debugMsooXml << "====> [RowBanded] Other:";
 #endif
                 //Is the row in the even band?
-                if( (row % (m_properties.rowBandSize() * 2)) < m_properties.rowBandSize()) {
+                if( (row % (m_properties.rowBandSize() * 2)) < m_properties.rowBandSize())
+                {
                     applyStyle(DrawingTableStyle::Band1Horizontal, cellStyle, row, column, spans);
                 }
-                else {
+                else
+                {
                     applyStyle(DrawingTableStyle::Band2Horizontal, cellStyle, row, column, spans);
                 }
             }
@@ -176,8 +195,10 @@ KoCellStyle::Ptr DrawingTableStyleConverter::style(int row, int column, const QP
     //FirstCol format applies before the FirstRow format.  Also the previous
     //approach with RowBanded cells might be an option.
 
-    if(role & DrawingTableStyleConverterProperties::FirstCol) {
-        if(column == 0) {
+    if(role & DrawingTableStyleConverterProperties::FirstCol)
+    {
+        if(column == 0)
+        {
 #ifdef MSOOXMLDRAWING_DEBUG_TABLES
             debugMsooXml << "====> FirstCol:";
 #endif
@@ -185,8 +206,10 @@ KoCellStyle::Ptr DrawingTableStyleConverter::style(int row, int column, const QP
         }
     }
 
-    if (role & DrawingTableStyleConverterProperties::FirstRow) {
-        if(row == 0) {
+    if (role & DrawingTableStyleConverterProperties::FirstRow)
+    {
+        if(row == 0)
+        {
 #ifdef MSOOXMLDRAWING_DEBUG_TABLES
             debugMsooXml << "====> FirstRow:";
 #endif
@@ -194,8 +217,10 @@ KoCellStyle::Ptr DrawingTableStyleConverter::style(int row, int column, const QP
         }
     }
 
-    if (role & DrawingTableStyleConverterProperties::LastRow) {
-        if(row == lastRow) {
+    if (role & DrawingTableStyleConverterProperties::LastRow)
+    {
+        if(row == lastRow)
+        {
 #ifdef MSOOXMLDRAWING_DEBUG_TABLES
             debugMsooXml << "====> LastRow:";
 #endif
@@ -205,8 +230,10 @@ KoCellStyle::Ptr DrawingTableStyleConverter::style(int row, int column, const QP
 
 
 
-    if(role & DrawingTableStyleConverterProperties::LastCol) {
-        if(column == lastColumn) {
+    if(role & DrawingTableStyleConverterProperties::LastCol)
+    {
+        if(column == lastColumn)
+        {
 #ifdef MSOOXMLDRAWING_DEBUG_TABLES
             debugMsooXml << "====> LastCol:";
 #endif
@@ -214,8 +241,10 @@ KoCellStyle::Ptr DrawingTableStyleConverter::style(int row, int column, const QP
         }
     }
 
-    if(role & DrawingTableStyleConverterProperties::NeCell) {
-        if(row == 0 && column == 0) {
+    if(role & DrawingTableStyleConverterProperties::NeCell)
+    {
+        if(row == 0 && column == 0)
+        {
 #ifdef MSOOXMLDRAWING_DEBUG_TABLES
             debugMsooXml << "====> NeCell:";
 #endif
@@ -223,8 +252,10 @@ KoCellStyle::Ptr DrawingTableStyleConverter::style(int row, int column, const QP
         }
     }
 
-    if(role & DrawingTableStyleConverterProperties::NwCell) {
-        if(row == 0 && column == lastColumn) {
+    if(role & DrawingTableStyleConverterProperties::NwCell)
+    {
+        if(row == 0 && column == lastColumn)
+        {
 #ifdef MSOOXMLDRAWING_DEBUG_TABLES
             debugMsooXml << "====> NwCell:";
 #endif
@@ -232,8 +263,10 @@ KoCellStyle::Ptr DrawingTableStyleConverter::style(int row, int column, const QP
         }
     }
 
-    if(role & DrawingTableStyleConverterProperties::SeCell) {
-        if(row == lastRow && column == 0) {
+    if(role & DrawingTableStyleConverterProperties::SeCell)
+    {
+        if(row == lastRow && column == 0)
+        {
 #ifdef MSOOXMLDRAWING_DEBUG_TABLES
             debugMsooXml << "====> SeCell:";
 #endif
@@ -241,8 +274,10 @@ KoCellStyle::Ptr DrawingTableStyleConverter::style(int row, int column, const QP
         }
     }
 
-    if(role & DrawingTableStyleConverterProperties::SwCell) {
-        if(row == lastRow && column == lastColumn) {
+    if(role & DrawingTableStyleConverterProperties::SwCell)
+    {
+        if(row == lastRow && column == lastColumn)
+        {
 #ifdef MSOOXMLDRAWING_DEBUG_TABLES
             debugMsooXml << "====> SwCell:";
 #endif
@@ -251,7 +286,8 @@ KoCellStyle::Ptr DrawingTableStyleConverter::style(int row, int column, const QP
     }
 
     TableStyleProperties* localProperties = m_properties.localStyles().localStyle(row, -1);
-    if (localProperties) {
+    if (localProperties)
+    {
 #ifdef MSOOXMLDRAWING_DEBUG_TABLES
         debugMsooXml << "==> ROW-level:";
 #endif
@@ -263,7 +299,8 @@ KoCellStyle::Ptr DrawingTableStyleConverter::style(int row, int column, const QP
     }
 
     localProperties = m_properties.localStyles().localStyle(row, column);
-    if (localProperties) {
+    if (localProperties)
+    {
 #ifdef MSOOXMLDRAWING_DEBUG_TABLES
         debugMsooXml << "==> CELL-level:";
 #endif
@@ -279,7 +316,8 @@ KoCellStyle::Ptr DrawingTableStyleConverter::style(int row, int column, const QP
     debugMsooXml << "==> [REAPPLY]: TABLE/ROW-level properties";
 #endif
     TableStyleProperties* tableProperties = 0;
-    if (m_style) {
+    if (m_style)
+    {
         tableProperties = m_style->properties(DrawingTableStyle::WholeTbl);
     }
     reapplyTableLevelBordersStyle(tableProperties,
@@ -294,7 +332,7 @@ KoCellStyle::Ptr DrawingTableStyleConverter::style(int row, int column, const QP
 }
 
 DrawingTableStyle::DrawingTableStyle()
-: m_properties()
+    : m_properties()
 {
 }
 

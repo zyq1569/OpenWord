@@ -120,16 +120,18 @@ protected:
     KoFilter::ConversionStatus read_b();
     KoFilter::ConversionStatus read_u();
     KoFilter::ConversionStatus read_sz();
-    enum jcCaller {
-       jc_tblPr,
-       jc_pPr
+    enum jcCaller
+    {
+        jc_tblPr,
+        jc_pPr
     };
     KoFilter::ConversionStatus read_jc(jcCaller caller);
     KoFilter::ConversionStatus read_spacing();
     KoFilter::ConversionStatus read_trPr();
     KoFilter::ConversionStatus read_cnfStyle();
     KoFilter::ConversionStatus read_trHeight();
-    enum shdCaller {
+    enum shdCaller
+    {
         shd_rPr,
         shd_pPr,
         shd_tcPr
@@ -185,12 +187,14 @@ protected:
     KoFilter::ConversionStatus read_r_m();
     KoFilter::ConversionStatus read_t_m();
 
-    enum posOffsetCaller {
+    enum posOffsetCaller
+    {
         posOffset_positionH,
         posOffset_positionV
     };
 
-    enum alignCaller {
+    enum alignCaller
+    {
         align_positionH,
         align_positionV
     };
@@ -224,7 +228,8 @@ protected:
 
     KoOdfWriters *m_writers; // Needed to create new relationship for header/footer
 
-    enum PageMargin {
+    enum PageMargin
+    {
         MarginTop, MarginBottom, MarginLeft, MarginRight
     };
 
@@ -232,7 +237,8 @@ protected:
     QMap<PageMargin, qreal> m_pageMargins;
     QString m_pageBorderOffsetFrom;
 
-    enum BorderSide {
+    enum BorderSide
+    {
         TopBorder, BottomBorder, LeftBorder, RightBorder, InsideH, InsideV
     };
 
@@ -293,7 +299,7 @@ private:
 
     //! Reads CT_Border complex type (p.392), used by children of pgBorders and children of pBdr
     KoFilter::ConversionStatus readBorderElement(BorderSide borderSide, const char *borderSideName,
-                                         QMap<BorderSide, QString> &sourceBorder, QMap<BorderSide, qreal> &sourcePadding);
+            QMap<BorderSide, QString> &sourceBorder, QMap<BorderSide, qreal> &sourcePadding);
 
     ///reads the border in a table style
     KoBorder::BorderData getBorderData();
@@ -312,13 +318,14 @@ private:
 
     //! Applies border styles and paddings for page
     void applyPageBorders(KoGenStyle &style, QMap<PageMargin, qreal> &pageMargins, QMap<BorderSide,QString> &pageBorder,
-                         QMap<BorderSide, qreal> &pagePadding, QString & offsetFrom);
+                          QMap<BorderSide, qreal> &pagePadding, QString & offsetFrom);
     void defineTableStyles();
 
-    enum ComplexFieldCharType {
-       NoComplexFieldCharType, HyperlinkComplexFieldCharType, ReferenceComplexFieldCharType,
-       ReferenceNextComplexFieldCharType, InternalHyperlinkComplexFieldCharType,
-       MacroButtonFieldCharType
+    enum ComplexFieldCharType
+    {
+        NoComplexFieldCharType, HyperlinkComplexFieldCharType, ReferenceComplexFieldCharType,
+        ReferenceNextComplexFieldCharType, InternalHyperlinkComplexFieldCharType,
+        MacroButtonFieldCharType
     };
     //! Type of complex field characters we have
     ComplexFieldCharType m_complexCharType;
@@ -326,7 +333,8 @@ private:
     //! Value of the complex field char if applicable
     QString m_complexCharValue;
 
-    enum ComplexCharStatus {
+    enum ComplexCharStatus
+    {
         NoneAllowed, InstrAllowed, InstrExecute, ExecuteInstrNow
     };
     //! State of fldChar
@@ -334,7 +342,8 @@ private:
 
     int m_z_index;
 
-    enum DropCapStatus {
+    enum DropCapStatus
+    {
         NoDropCap, DropCapRead, DropCapDone
     };
     //! State of dropCap
@@ -386,13 +395,14 @@ private:
     // ************************************************
     //  State
     // ************************************************
-    struct DocumentReaderState {
+    struct DocumentReaderState
+    {
         explicit DocumentReaderState(const QMap<QString, QString> &usedListStyles,
                                      const QMap <QString, QPair<int, bool> > &continueListNum,
                                      const QMap <QString, QPair<int, QString> > &numIdXmlId)
-        : usedListStyles(usedListStyles),
-          continueListNum(continueListNum),
-          numIdXmlId(numIdXmlId) {}
+            : usedListStyles(usedListStyles),
+              continueListNum(continueListNum),
+              numIdXmlId(numIdXmlId) {}
 
         DocumentReaderState() {}
 
