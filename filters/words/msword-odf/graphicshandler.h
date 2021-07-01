@@ -95,19 +95,19 @@ private:
         QString getPicturePath(const quint32 pib) override;
         bool onlyClientData(const MSO::OfficeArtClientData& o) override;
         void processClientData(const MSO::OfficeArtClientTextBox* ct,
-                                       const MSO::OfficeArtClientData& o,
-                                       Writer& out) override;
+                               const MSO::OfficeArtClientData& o,
+                               Writer& out) override;
         void processClientTextBox(const MSO::OfficeArtClientTextBox& ct,
-                                          const MSO::OfficeArtClientData* cd,
-                                          Writer& out) override;
+                                  const MSO::OfficeArtClientData* cd,
+                                  Writer& out) override;
         bool processRectangleAsTextBox(const MSO::OfficeArtClientData& cd) override;
         KoGenStyle createGraphicStyle(const MSO::OfficeArtClientTextBox* ct,
-                                              const MSO::OfficeArtClientData* cd,
-                                              const DrawStyle& ds,
-                                              Writer& out) override;
+                                      const MSO::OfficeArtClientData* cd,
+                                      const DrawStyle& ds,
+                                      Writer& out) override;
         void addTextStyles(const MSO::OfficeArtClientTextBox* clientTextbox,
-                                   const MSO::OfficeArtClientData* clientData,
-                                   KoGenStyle& style, Writer& out) override;
+                           const MSO::OfficeArtClientData* clientData,
+                           KoGenStyle& style, Writer& out) override;
 
         QColor toQColor(const MSO::OfficeArtCOLORREF& c) override;
         QString formatPos(qreal v) override;
@@ -118,7 +118,7 @@ private:
         WordsGraphicsHandler* const gh;
     public:
         explicit DrawClient(WordsGraphicsHandler *p) :gh(p) {}
-};
+    };
 public:
     WordsGraphicsHandler(Document* document,
                          KoXmlWriter* bodyWriter,
@@ -132,7 +132,10 @@ public:
      * Set the appropriate writer for object properties and content.
      * @param writer KoXmlWriter provided by the Document class
      */
-    void setCurrentWriter(KoXmlWriter* writer) { m_currentWriter = writer; };
+    void setCurrentWriter(KoXmlWriter* writer)
+    {
+        m_currentWriter = writer;
+    };
 
     /**
      * This method gets called when a floating object is found by wv2 parser.

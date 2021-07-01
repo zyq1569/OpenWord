@@ -55,7 +55,8 @@ namespace wvWare
 class Style;
 class Parser;
 class FunctorBase;
-namespace Word97 {
+namespace Word97
+{
 struct PAP;
 }
 }
@@ -83,12 +84,12 @@ public:
     void pageBreak() override;
     void headersFound(const wvWare::HeaderFunctor& parseHeaders) override;
     void footnoteFound(wvWare::FootnoteData data, wvWare::UString characters,
-                               wvWare::SharedPtr<const wvWare::Word97::SEP> sep,
-                               wvWare::SharedPtr<const wvWare::Word97::CHP> chp,
-                               const wvWare::FootnoteFunctor& parseFootnote) override;
+                       wvWare::SharedPtr<const wvWare::Word97::SEP> sep,
+                       wvWare::SharedPtr<const wvWare::Word97::CHP> chp,
+                       const wvWare::FootnoteFunctor& parseFootnote) override;
     void annotationFound(wvWare::UString characters,
-                                 wvWare::SharedPtr<const wvWare::Word97::CHP> chp,
-                                 const wvWare::AnnotationFunctor& parseAnnotation) override;
+                         wvWare::SharedPtr<const wvWare::Word97::CHP> chp,
+                         const wvWare::AnnotationFunctor& parseAnnotation) override;
 
     void paragraphStart(wvWare::SharedPtr<const wvWare::ParagraphProperties> paragraphProperties, wvWare::SharedPtr<const wvWare::Word97::CHP> chp) override;
     void paragraphEnd() override;
@@ -131,7 +132,10 @@ public:
      *
      * @return font color in the format "#RRGGBB" or an empty string.
      */
-    QString paragraphBaseFontColorBkp() const { return m_paragraphBaseFontColorBkp; }
+    QString paragraphBaseFontColorBkp() const
+    {
+        return m_paragraphBaseFontColorBkp;
+    }
 
     /**
      * Provides access to the background color of the lately processed
@@ -140,7 +144,10 @@ public:
      *
      * @return background color in the format "#RRGGBB" or an empty string.
      */
-    QString paragraphBgColor() const { return m_paragraph ? m_paragraph->currentBgColor() : QString(); }
+    QString paragraphBgColor() const
+    {
+        return m_paragraph ? m_paragraph->currentBgColor() : QString();
+    }
 
     /**
      * TODO:
@@ -163,11 +170,26 @@ public:
     void closeList();
 
     // Provide access to private attributes for our handlers
-    Document* document() const { return m_document; }
-    void setDocument(Document * document) { m_document = document; }
-    void set_breakBeforePage(bool val) { m_breakBeforePage = val; }
-    bool breakBeforePage(void) const { return m_breakBeforePage; }
-    int sectionNumber(void) const { return m_sectionNumber; }
+    Document* document() const
+    {
+        return m_document;
+    }
+    void setDocument(Document * document)
+    {
+        m_document = document;
+    }
+    void set_breakBeforePage(bool val)
+    {
+        m_breakBeforePage = val;
+    }
+    bool breakBeforePage(void) const
+    {
+        return m_breakBeforePage;
+    }
+    int sectionNumber(void) const
+    {
+        return m_sectionNumber;
+    }
 
     // Communication with Document, without having to know about Document
 Q_SIGNALS:
@@ -180,7 +202,7 @@ Q_SIGNALS:
     void tableFound(Words::Table* table);
     void inlineObjectFound(const wvWare::PictureData& data, KoXmlWriter* writer);
     void floatingObjectFound(unsigned int globalCP, KoXmlWriter* writer);
-/*     void updateListDepth(int); */
+    /*     void updateListDepth(int); */
 
 private:
 
@@ -273,7 +295,8 @@ private:
     // ************************************************
 
     //save/restore (very similar to the wv2 method)
-    struct State {
+    struct State
+    {
         State(Words::Table* table, Paragraph* paragraph,
               int listDepth, int listID,
               KoXmlWriter* drawingWriter, bool insideDrawing) :
@@ -445,7 +468,7 @@ private:
 
         // Stores the field result. NOTE: Disabled, because we use either
         // m_writer or save the result as vanilla text.
-/*         QString m_result; */
+        /*         QString m_result; */
 
         // A writer and buffer used to interpret bookmark elements and tabs in
         // the field result (if applicable to the field type).

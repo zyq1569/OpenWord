@@ -53,7 +53,8 @@ class KoStore;
 namespace wvWare
 {
 class Parser;
-namespace Word97 {
+namespace Word97
+{
 struct BRC;
 }
 }
@@ -70,7 +71,7 @@ class Document : public QObject, public wvWare::SubDocumentHandler
 public:
     Document(const std::string& fileName,
              MSWordOdfImport* filter,
-/*              KoFilterChain* chain, */
+             /*              KoFilterChain* chain, */
              KoXmlWriter* bodyWriter, KoXmlWriter* metaWriter, KoXmlWriter* manifestWriter,
              KoStore* store, KoGenStyles* mainStyles,
              LEInputStream& wordDocument, POLE::Stream& table, LEInputStream *data, LEInputStream *si);
@@ -103,9 +104,10 @@ public:
     void finishDocument();
 
     typedef const wvWare::FunctorBase* FunctorPtr;
-    struct SubDocument {
+    struct SubDocument
+    {
         SubDocument(FunctorPtr ptr, int d, const QString& n, const QString& extra)
-                : functorPtr(ptr), data(d), name(n), extraName(extra) {}
+            : functorPtr(ptr), data(d), name(n), extraName(extra) {}
         ~SubDocument() {}
         FunctorPtr functorPtr;
         int data;
@@ -114,45 +116,89 @@ public:
     };
 
     // Provide access to private attributes for other handlers
-    QString masterPageName(void) const {
+    QString masterPageName(void) const
+    {
         return m_masterPageName_list.size() ? m_masterPageName_list.first() : m_lastMasterPageName;
     }
-    void set_writeMasterPageName(bool val) { m_writeMasterPageName = val; }
-    bool writeMasterPageName(void) const { return m_writeMasterPageName; }
-    bool omittMasterPage(void) const { return m_omittMasterPage; }
-    bool useLastMasterPage(void) const { return m_useLastMasterPage; }
-    bool writingHeader(void) const { return m_writingHeader; }
-    KoXmlWriter* headerWriter(void) const { return m_headerWriter; }
-    WordsTextHandler *textHandler(void) const { return m_textHandler; }
-    bool hasParser(void) const { return m_parser != 0L; }
-    bool bodyFound(void) const { return m_bodyFound; }
+    void set_writeMasterPageName(bool val)
+    {
+        m_writeMasterPageName = val;
+    }
+    bool writeMasterPageName(void) const
+    {
+        return m_writeMasterPageName;
+    }
+    bool omittMasterPage(void) const
+    {
+        return m_omittMasterPage;
+    }
+    bool useLastMasterPage(void) const
+    {
+        return m_useLastMasterPage;
+    }
+    bool writingHeader(void) const
+    {
+        return m_writingHeader;
+    }
+    KoXmlWriter* headerWriter(void) const
+    {
+        return m_headerWriter;
+    }
+    WordsTextHandler *textHandler(void) const
+    {
+        return m_textHandler;
+    }
+    bool hasParser(void) const
+    {
+        return m_parser != 0L;
+    }
+    bool bodyFound(void) const
+    {
+        return m_bodyFound;
+    }
 
     /**
      * Add a color item to the background-color stack.
      * @param color in the format "#RRGGBB"
      */
-    void addBgColor(const QString& val) { m_bgColors.push(val); }
+    void addBgColor(const QString& val)
+    {
+        m_bgColors.push(val);
+    }
 
     /**
      * Remove the last item from the background-color stack.
      */
-    void rmBgColor(void) { m_bgColors.pop(); }
+    void rmBgColor(void)
+    {
+        m_bgColors.pop();
+    }
 
     /**
      * Update the last item of the background-color stack.
      * @param color in the format "#RRGGBB"
      */
-    void updateBgColor(const QString& val) { m_bgColors.pop(); m_bgColors.push(val); }
+    void updateBgColor(const QString& val)
+    {
+        m_bgColors.pop();
+        m_bgColors.push(val);
+    }
 
     /**
      * @return the current background-color in the format "#RRGGBB".
      */
-    QString currentBgColor(void) { return m_bgColors.isEmpty() ? QString() : m_bgColors.top(); }
+    QString currentBgColor(void)
+    {
+        return m_bgColors.isEmpty() ? QString() : m_bgColors.top();
+    }
 
     /**
      * @return the list of names of TOC related styles.
      */
-    QList<QString> tocStyleNames(void) { return m_tocStyleNames; }
+    QList<QString> tocStyleNames(void)
+    {
+        return m_tocStyleNames;
+    }
 
     /**
      * Checks if the header/footer content of the current section differs from
@@ -164,13 +210,28 @@ public:
     bool headersChanged(void) const;
 
     // Provide access to POLE/LEInput streams to other handlers.
-    POLE::Stream& poleTableStream(void) const { return m_tblstm_pole; }
-    LEInputStream& wdocumentStream(void) const { return m_wdstm; }
-    LEInputStream* tableStream(void) const { return m_tblstm; }
-    LEInputStream* dataStream(void) const { return m_datastm; }
+    POLE::Stream& poleTableStream(void) const
+    {
+        return m_tblstm_pole;
+    }
+    LEInputStream& wdocumentStream(void) const
+    {
+        return m_wdstm;
+    }
+    LEInputStream* tableStream(void) const
+    {
+        return m_tblstm;
+    }
+    LEInputStream* dataStream(void) const
+    {
+        return m_datastm;
+    }
 
     // get the style name used for line numbers
-    QString lineNumbersStyleName() const { return m_lineNumbersStyleName; }
+    QString lineNumbersStyleName() const
+    {
+        return m_lineNumbersStyleName;
+    }
 
 public Q_SLOTS:
     // Connected to the WordsTextHandler only when parsing the body
@@ -197,12 +258,12 @@ public Q_SLOTS:
     void slotTextBoxFound(unsigned int index, bool stylesxml);
 
     // Similar to footnoteStart/footnoteEnd but cells, connected to WordsTableHandler
-/*     void slotTableCellStart(int row, int column, int rowSize, int columnSize, const QRectF& cellRect, */
-/*                             const QString& tableName, */
-/*                             const wvWare::Word97::BRC& brcTop, const wvWare::Word97::BRC& brcBottom, */
-/*                             const wvWare::Word97::BRC& brcLeft, const wvWare::Word97::BRC& brcRight, */
-/*                             const wvWare::Word97::SHD& shd ); */
-/*     void slotTableCellEnd(); */
+    /*     void slotTableCellStart(int row, int column, int rowSize, int columnSize, const QRectF& cellRect, */
+    /*                             const QString& tableName, */
+    /*                             const wvWare::Word97::BRC& brcTop, const wvWare::Word97::BRC& brcBottom, */
+    /*                             const wvWare::Word97::BRC& brcLeft, const wvWare::Word97::BRC& brcRight, */
+    /*                             const wvWare::Word97::SHD& shd ); */
+    /*     void slotTableCellEnd(); */
 
 private:
     void processStyles();
@@ -218,12 +279,12 @@ private:
     WordsGraphicsHandler*    m_graphicsHandler;
 
     MSWordOdfImport* m_filter;
-/*     KoFilterChain* m_chain; */
+    /*     KoFilterChain* m_chain; */
 
     wvWare::SharedPtr<wvWare::Parser> m_parser;
 
     std::queue<SubDocument> m_subdocQueue;
-/*     std::queue<Words::Table> m_tableQueue; */
+    /*     std::queue<Words::Table> m_tableQueue; */
 
     bool m_bodyFound;
 

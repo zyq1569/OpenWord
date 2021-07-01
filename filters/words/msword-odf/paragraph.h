@@ -85,7 +85,8 @@ public:
      * @param CHPs provided by wv2 for empty paragraphs to set proper
      * font-size, line-height, etc. into text-properties.
      */
-    void setCharacterProperties(wvWare::SharedPtr<const wvWare::Word97::CHP> chp) {
+    void setCharacterProperties(wvWare::SharedPtr<const wvWare::Word97::CHP> chp)
+    {
         m_characterProperties = chp;
     }
 
@@ -97,18 +98,27 @@ public:
     /**
      * @return the built-in (named) style that applies to the paragraph.
      */
-    const wvWare::Style* paragraphStyle() const { return m_paragraphStyle; }
+    const wvWare::Style* paragraphStyle() const
+    {
+        return m_paragraphStyle;
+    }
 
     /**
      * @return the KoGenStyle of family Paragraph prepared for the current
      * paragraph to other handlers.
      */
-    KoGenStyle* koGenStyle() const { return m_odfParagraphStyle; };
+    KoGenStyle* koGenStyle() const
+    {
+        return m_odfParagraphStyle;
+    };
 
     /**
      * @return true in case this paragraph is a heading
      */
-    bool isHeading() const { return m_isHeading; };
+    bool isHeading() const
+    {
+        return m_isHeading;
+    };
 
     // DropCaps related
     typedef enum { NoDropCap, IsDropCapPara, HasDropCapIntegrated }  DropCapStatus;
@@ -121,20 +131,25 @@ public:
      * @return true in case the current paragraph contains a field of type in
      * {PAGE, NUMPAGES}.
      */
-    bool containsPageNumberField() const { return m_containsPageNumberField; }
+    bool containsPageNumberField() const
+    {
+        return m_containsPageNumberField;
+    }
 
     /**
      * Provide the information that a field of type in {PAGE, NUMPAGES} was
      * detected in the current paragraph.
      */
-    void setContainsPageNumberField(bool containsPageNumberField) {
+    void setContainsPageNumberField(bool containsPageNumberField)
+    {
         m_containsPageNumberField = containsPageNumberField;
     }
 
     /**
      * Set the combined characters flag.
      */
-    void setCombinedCharacters(bool isCombined) {
+    void setCombinedCharacters(bool isCombined)
+    {
         m_combinedCharacters = isCombined;
     }
 
@@ -155,7 +170,10 @@ public:
      * Add a color item to the background-color stack.
      * @param color in the format "#RRGGBB"
      */
-    static void pushBgColor(const QString& val) { m_bgColors.push(val); }
+    static void pushBgColor(const QString& val)
+    {
+        m_bgColors.push(val);
+    }
 
     /**
      * Remove the last item from the background-color stack.
@@ -171,7 +189,10 @@ public:
     /**
      * @return the background color in the format "#RRGGBB" or an empty string.
      */
-    static QString currentBgColor(void) { return m_bgColors.isEmpty() ? QString() : m_bgColors.top(); }
+    static QString currentBgColor(void)
+    {
+        return m_bgColors.isEmpty() ? QString() : m_bgColors.top();
+    }
 
     /**
      * NOTE: DEPRECATED
