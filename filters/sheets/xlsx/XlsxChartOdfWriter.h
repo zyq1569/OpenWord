@@ -28,7 +28,7 @@ class KoGenStyle;
 
 namespace MSOOXML
 {
-    class DrawingMLTheme;
+class DrawingMLTheme;
 }
 
 
@@ -36,7 +36,7 @@ class XlsxChartOdfWriter : public KoOdfChartWriter
 {
 public:
     explicit XlsxChartOdfWriter(KoChart::Chart* chart,
-				const MSOOXML::DrawingMLTheme* const contextWithThemeInfo = nullptr);
+                                const MSOOXML::DrawingMLTheme* const contextWithThemeInfo = nullptr);
     ~XlsxChartOdfWriter() override;
 
 
@@ -48,7 +48,7 @@ private:
     QString genChartAreaStyle(KoGenStyle& style, KoGenStyles& styles, KoGenStyles& mainStyles) override;
     QString genPlotAreaStyle(KoGenStyle& style, KoGenStyles& styles, KoGenStyles& mainStyles) override;
     void addDataThemeToStyle(KoGenStyle& style,
-			     int dataNumber, int maxNumData = 1, bool strokes = true) override;
+                             int dataNumber, int maxNumData = 1, bool strokes = true) override;
 
     QColor calculateColorFromGradientStop(const KoChart::Gradient::GradientStop& grad) override;
     QColor labelFontColor() const override;

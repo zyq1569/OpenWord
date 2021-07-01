@@ -50,28 +50,35 @@ MsooXmlDocPropertiesReader::MsooXmlDocPropertiesReader(KoOdfWriters* writers) : 
 
 KoFilter::ConversionStatus MsooXmlDocPropertiesReader::read(MsooXmlReaderContext*)
 {
-    debugMsooXml << "=============================";
+    debugMsooXml << "===========MsooXmlDocPropertiesReader::read==================";
 
     readNext();
-    if (!isStartDocument()) {
+    if (!isStartDocument())
+    {
         return KoFilter::WrongFormat;
     }
 
     readNext();
 
     if (!expectEl("cp:coreProperties"))
+    {
         return KoFilter::WrongFormat;
+    }
 
     if (!expectNS(MSOOXML::Schemas::core_properties))
+    {
         return KoFilter::WrongFormat;
+    }
 
     QXmlStreamNamespaceDeclarations namespaces(namespaceDeclarations());
-    for (int i = 0; i < namespaces.count(); i++) {
+    for (int i = 0; i < namespaces.count(); i++)
+    {
         debugMsooXml << "NS prefix:" << namespaces[i].prefix() << "uri:" << namespaces[i].namespaceUri();
     }
 //! @todo find out whether the namespace returned by namespaceUri()
 //!       is exactly the same ref as the element of namespaceDeclarations()
-    if (!namespaces.contains(QXmlStreamNamespaceDeclaration("cp", MSOOXML::Schemas::core_properties))) {
+    if (!namespaces.contains(QXmlStreamNamespaceDeclaration("cp", MSOOXML::Schemas::core_properties)))
+    {
         raiseError(i18n("Namespace \"%1\" not found", QLatin1String(MSOOXML::Schemas::core_properties)));
         return KoFilter::WrongFormat;
     }
@@ -80,7 +87,7 @@ KoFilter::ConversionStatus MsooXmlDocPropertiesReader::read(MsooXmlReaderContext
     debugMsooXml << qualifiedName();
     TRY_READ(coreProperties)
 
-    debugMsooXml << "===========finished============";
+    debugMsooXml << "===========MsooXmlDocPropertiesReader::read finished============";
     return KoFilter::OK;
 }
 
@@ -90,19 +97,26 @@ KoFilter::ConversionStatus MsooXmlDocPropertiesReader::read_coreProperties()
 {
     READ_PROLOGUE
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             const QString qn = qualifiedName().toString();
             while (!isEndElement() && !isCharacters())
+            {
                 readNext();
+            }
 
             const QMap<QString,QString>::ConstIterator it = elemMap.constFind(qn);
-            if (it == elemMap.constEnd()) {
+            if (it == elemMap.constEnd())
+            {
                 debugMsooXml << "Unknown metadata ignored:" << qn;
                 while (!isEndElement())
+                {
                     readNext();
+                }
                 continue;
             }
             debugMsooXml << "Found:" << it.key() << "Mapped to:" << it.value();
@@ -115,7 +129,9 @@ KoFilter::ConversionStatus MsooXmlDocPropertiesReader::read_coreProperties()
             meta->addTextNode(t.toUtf8());
             meta->endElement();
             while (!isEndElement())
+            {
                 readNext();
+            }
         }
     }
 

@@ -41,9 +41,11 @@ DocxXmlSettingsReaderContext::DocxXmlSettingsReaderContext(QMap<QString, QVarian
 class DocxXmlSettingsReader::Private
 {
 public:
-    Private() {
+    Private()
+    {
     }
-    ~Private() {
+    ~Private()
+    {
     }
 };
 
@@ -69,16 +71,19 @@ KoFilter::ConversionStatus DocxXmlSettingsReader::read(MSOOXML::MsooXmlReaderCon
 
     debugDocx << "=============================";
     readNext();
-    if (!isStartDocument()) {
+    if (!isStartDocument())
+    {
         return KoFilter::WrongFormat;
     }
     readNext();
 
     debugDocx << *this << namespaceUri();
-    if (!expectEl(QList<QByteArray>() << "w:settings")) {
+    if (!expectEl(QList<QByteArray>() << "w:settings"))
+    {
         return KoFilter::WrongFormat;
     }
-    if (!expectNS(MSOOXML::Schemas::wordprocessingml)) {
+    if (!expectNS(MSOOXML::Schemas::wordprocessingml))
+    {
         return KoFilter::WrongFormat;
     }
 
@@ -86,7 +91,8 @@ KoFilter::ConversionStatus DocxXmlSettingsReader::read(MSOOXML::MsooXmlReaderCon
 
     //! @todo find out whether the namespace returned by namespaceUri()
     //!       is exactly the same ref as the element of namespaceDeclarations()
-    if (!namespaces.contains(QXmlStreamNamespaceDeclaration("w", MSOOXML::Schemas::wordprocessingml))) {
+    if (!namespaces.contains(QXmlStreamNamespaceDeclaration("w", MSOOXML::Schemas::wordprocessingml)))
+    {
         raiseError(i18n("Namespace \"%1\" not found", QLatin1String(MSOOXML::Schemas::wordprocessingml)));
         return KoFilter::WrongFormat;
     }
@@ -95,7 +101,8 @@ KoFilter::ConversionStatus DocxXmlSettingsReader::read(MSOOXML::MsooXmlReaderCon
 
     RETURN_IF_ERROR(read_settings())
 
-    if (!expectElEnd(qn)) {
+    if (!expectElEnd(qn))
+    {
         return KoFilter::WrongFormat;
     }
     debugDocx << "===========finished============";
@@ -213,10 +220,12 @@ KoFilter::ConversionStatus DocxXmlSettingsReader::read_settings()
 {
     READ_PROLOGUE
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(defaultTabStop)
             ELSE_TRY_READ_IF(displayBackgroundShape)
             ELSE_TRY_READ_IF(clrSchemeMapping)
@@ -292,40 +301,51 @@ KoFilter::ConversionStatus DocxXmlSettingsReader::read_clrSchemeMapping()
 
     const QXmlStreamAttributes attrs(attributes());
     int index = 0;
-    while (index < attrs.size()) {
+    while (index < attrs.size())
+    {
         QString handledAttr = attrs.at(index).name().toString();
         // There is a mismatch between the settings file and the theme file
         // created with the naming of the theme colors, here we make sure
         // that they match.
-        if (handledAttr == "t1") {
+        if (handledAttr == "t1")
+        {
             handledAttr = "tx1";
         }
-        else if (handledAttr == "t2") {
+        else if (handledAttr == "t2")
+        {
             handledAttr = "tx2";
         }
-        else if (handledAttr == "hyperlink") {
+        else if (handledAttr == "hyperlink")
+        {
             handledAttr = "hlink";
         }
-        else if (handledAttr == "followedHyperlink") {
+        else if (handledAttr == "followedHyperlink")
+        {
             handledAttr = "folHlink";
         }
         QString attrValue = attrs.value(handledAttr).toString();
-        if (attrValue == "light1") {
+        if (attrValue == "light1")
+        {
             attrValue = "lt1";
         }
-        else if (attrValue == "light2") {
+        else if (attrValue == "light2")
+        {
             attrValue = "lt2";
         }
-        else if (attrValue == "dark1") {
+        else if (attrValue == "dark1")
+        {
             attrValue = "dk1";
         }
-        else if (attrValue == "dark2") {
+        else if (attrValue == "dark2")
+        {
             attrValue = "dk2";
         }
-        else if (attrValue == "hyperlink") {
+        else if (attrValue == "hyperlink")
+        {
             attrValue = "hlink";
         }
-        else if (attrValue == "followedHyperlink") {
+        else if (attrValue == "followedHyperlink")
+        {
             attrValue = "folHlink";
         }
         m_context->colorMap[handledAttr] = attrValue;

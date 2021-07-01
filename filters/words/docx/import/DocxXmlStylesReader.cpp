@@ -41,7 +41,7 @@
 //#include <MsooXmlCommonReaderImpl.h> // this adds w:pPr, etc.
 
 DocxXmlStylesReader::DocxXmlStylesReader(KoOdfWriters *writers)
-        : DocxXmlDocumentReader(writers)
+    : DocxXmlDocumentReader(writers)
 {
 }
 
@@ -68,9 +68,10 @@ void DocxXmlStylesReader::createDefaultStyle(KoGenStyle::Type type, const char* 
 KoFilter::ConversionStatus DocxXmlStylesReader::read(MSOOXML::MsooXmlReaderContext* context)
 {
     m_context = static_cast<DocxXmlDocumentReaderContext*>(context);
-    debugDocx << "=============================";
+    debugDocx << "============DocxXmlStylesReader::read=================";
     readNext();
-    if (!isStartDocument()) {
+    if (!isStartDocument())
+    {
         return KoFilter::WrongFormat;
     }
 
@@ -78,10 +79,12 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read(MSOOXML::MsooXmlReaderConte
     readNext();
     debugDocx << *this << namespaceUri();
 
-    if (!expectEl("w:styles")) {
+    if (!expectEl("w:styles"))
+    {
         return KoFilter::WrongFormat;
     }
-    if (!expectNS(MSOOXML::Schemas::wordprocessingml)) {
+    if (!expectNS(MSOOXML::Schemas::wordprocessingml))
+    {
         return KoFilter::WrongFormat;
     }
     /*
@@ -91,12 +94,14 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read(MSOOXML::MsooXmlReaderConte
         }*/
 
     QXmlStreamNamespaceDeclarations namespaces(namespaceDeclarations());
-    for (int i = 0; i < namespaces.count(); i++) {
+    for (int i = 0; i < namespaces.count(); i++)
+    {
         debugDocx << "NS prefix:" << namespaces[i].prefix() << "uri:" << namespaces[i].namespaceUri();
     }
 //! @todo find out whether the namespace returned by namespaceUri()
 //!       is exactly the same ref as the element of namespaceDeclarations()
-    if (!namespaces.contains(QXmlStreamNamespaceDeclaration("w", MSOOXML::Schemas::wordprocessingml))) {
+    if (!namespaces.contains(QXmlStreamNamespaceDeclaration("w", MSOOXML::Schemas::wordprocessingml)))
+    {
         raiseNSNotFoundError(MSOOXML::Schemas::wordprocessingml);
         return KoFilter::WrongFormat;
     }
@@ -113,11 +118,13 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read(MSOOXML::MsooXmlReaderConte
     //createDefaultStyle(KoGenStyle::TableRowStyle, "table-row");
     //createDefaultStyle("numbering");
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         debugDocx << *this;
         BREAK_IF_END_OF(styles)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(docDefaults)
             ELSE_TRY_READ_IF(style)
             SKIP_UNKNOWN
@@ -125,13 +132,14 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read(MSOOXML::MsooXmlReaderConte
         }
     }
 
-    if (!expectElEnd("w:styles")) {
+    if (!expectElEnd("w:styles"))
+    {
         return KoFilter::WrongFormat;
     }
 
     // add default styles:
     for (QMap<QByteArray, KoGenStyle*>::ConstIterator it(m_defaultStyles.constBegin());
-         it != m_defaultStyles.constEnd(); ++it)
+            it != m_defaultStyles.constEnd(); ++it)
     {
         debugDocx << it.key();
         mainStyles->insert(*it.value());
@@ -139,7 +147,7 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read(MSOOXML::MsooXmlReaderConte
     qDeleteAll(m_defaultStyles);
     m_defaultStyles.clear();
 
-    debugDocx << "===========finished============";
+    debugDocx << "===========DocxXmlStylesReader::read finished============";
     return KoFilter::OK;
 }
 
@@ -174,11 +182,13 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_docDefaults()
     m_currentParagraphStyle = KoGenStyle(KoGenStyle::ParagraphStyle, "paragraph");
     m_currentTextStyle = KoGenStyle(KoGenStyle::TextStyle, "text");
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         debugDocx << *this;
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(pPrDefault)
             ELSE_TRY_READ_IF(rPrDefault)
             ELSE_WRONG_FORMAT
@@ -192,22 +202,26 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_docDefaults()
     // set to allow the consumer to automatically choose an appropriate color
     // based on the background color behind the run's content.
     //
-    if (m_currentTextStyle.property("fo:color").isEmpty()) {
+    if (m_currentTextStyle.property("fo:color").isEmpty())
+    {
         m_currentTextStyle.addProperty("style:use-window-font-color", "true");
     }
 
-    if (!m_currentTextStyle.property("fo:font-size").isEmpty()) {
+    if (!m_currentTextStyle.property("fo:font-size").isEmpty())
+    {
         m_context->m_defaultFontSizePt = m_currentTextStyle.property("fo:font-size");
     }
 
     KoGenStyle::copyPropertiesFromStyle(m_currentTextStyle, m_currentParagraphStyle, KoGenStyle::TextType);
 
     if (m_currentParagraphStyle.property("fo:line-height").isEmpty() &&
-        m_currentParagraphStyle.property("style:line-height-at-least").isEmpty()) {
+            m_currentParagraphStyle.property("style:line-height-at-least").isEmpty())
+    {
         m_currentParagraphStyle.addProperty("fo:line-height", "100%");
     }
 
-    if (m_context->import->documentSettings().contains("defaultTabStop")) {
+    if (m_context->import->documentSettings().contains("defaultTabStop"))
+    {
         QString val = m_context->import->documentSetting("defaultTabStop").toString();
         m_currentParagraphStyle.addPropertyPt("style:tab-stop-distance", TWIP_TO_POINT(val.toDouble()));
     }
@@ -235,11 +249,13 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_docDefaults()
 KoFilter::ConversionStatus DocxXmlStylesReader::read_pPrDefault()
 {
     READ_PROLOGUE
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         debugDocx << *this;
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(pPr)
             ELSE_WRONG_FORMAT
         }
@@ -261,11 +277,13 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_pPrDefault()
 KoFilter::ConversionStatus DocxXmlStylesReader::read_rPrDefault()
 {
     READ_PROLOGUE
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         debugDocx << *this;
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(rPr)
             ELSE_WRONG_FORMAT
         }
@@ -278,8 +296,11 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_rPrDefault()
 // CASE #1200
 static QString themeFontName(const QString& asciiTheme)
 {
-    if (asciiTheme.contains(QLatin1String("minor"))) {
-    } else if (asciiTheme.contains(QLatin1String("major"))) {
+    if (asciiTheme.contains(QLatin1String("minor")))
+    {
+    }
+    else if (asciiTheme.contains(QLatin1String("major")))
+    {
     }
     return QString();
 }
@@ -292,11 +313,17 @@ static QString themeFontName(const QString& asciiTheme)
 static QString ST_StyleType_to_ODF(const QString& type)
 {
     if (type == QLatin1String("paragraph"))
+    {
         return type;
+    }
     if (type == QLatin1String("character"))
+    {
         return QLatin1String("text");
+    }
     if (type == QLatin1String("table"))
+    {
         return type;
+    }
     //! @todo ?
 //    if (type == QLatin1String("numbering"))
 //        return QLatin1String("paragraph");
@@ -356,11 +383,13 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
     //! 17.18.83 ST_StyleType (Style Types)
     READ_ATTR(type)
     //! @todo numbering style
-    if (type == QLatin1String("numbering")) {
+    if (type == QLatin1String("numbering"))
+    {
         return KoFilter::OK; // give up
     }
     const QString odfType(ST_StyleType_to_ODF(type));
-    if (odfType.isEmpty()) {
+    if (odfType.isEmpty())
+    {
         return KoFilter::WrongFormat;
     }
 
@@ -378,54 +407,69 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
     // of a style with this property shall be used.  ECMA-376, 17.7.4.17, p.707
     const bool isDefault = readBooleanAttr("w:default");
 
-    if (type == "table") {
+    if (type == "table")
+    {
         m_currentStyle = new MSOOXML::DrawingTableStyle;
-    } else {
+    }
+    else
+    {
         m_currentTextStyle = KoGenStyle(KoGenStyle::TextStyle, "text");
         m_currentParagraphStyle = KoGenStyle(KoGenStyle::ParagraphStyle, "paragraph");
     }
 
     QString nextStyleName;
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             const QXmlStreamAttributes attrs(attributes());
             TRY_READ_IF(name)
-            else if (name() == "rPr") {
-                if (type == "table") {
+            else if (name() == "rPr")
+            {
+                if (type == "table")
+                {
                     m_currentTextStyle = KoGenStyle(KoGenStyle::TextStyle, "text");
                     m_currentTableStyleProperties = m_currentStyle->properties(MSOOXML::DrawingTableStyle::WholeTbl);
-                    if (m_currentTableStyleProperties == 0) {
+                    if (m_currentTableStyleProperties == 0)
+                    {
                         m_currentTableStyleProperties = new MSOOXML::TableStyleProperties;
                     }
                 }
                 TRY_READ(rPr)
-                if (type == "table") {
+                if (type == "table")
+                {
                     m_currentTableStyleProperties->textStyle = m_currentTextStyle;
                     m_currentStyle->addProperties(MSOOXML::DrawingTableStyle::WholeTbl, m_currentTableStyleProperties);
                     m_currentTableStyleProperties = 0;
                 }
             }
-            else if (name() == "pPr") {
-                if (type == "table") {
+            else if (name() == "pPr")
+            {
+                if (type == "table")
+                {
                     m_currentParagraphStyle = KoGenStyle(KoGenStyle::ParagraphStyle, "paragraph");
                     m_currentTableStyleProperties = m_currentStyle->properties(MSOOXML::DrawingTableStyle::WholeTbl);
-                    if (m_currentTableStyleProperties == 0) {
+                    if (m_currentTableStyleProperties == 0)
+                    {
                         m_currentTableStyleProperties = new MSOOXML::TableStyleProperties;
                     }
                 }
                 TRY_READ(pPr)
-                if (type == "table") {
+                if (type == "table")
+                {
                     m_currentTableStyleProperties->paragraphStyle = m_currentParagraphStyle;
                     m_currentStyle->addProperties(MSOOXML::DrawingTableStyle::WholeTbl, m_currentTableStyleProperties);
                     m_currentTableStyleProperties = 0;
                 }
             }
-            else if (name() == "tblPr") {
+            else if (name() == "tblPr")
+            {
                 m_currentTableStyleProperties = m_currentStyle->properties(MSOOXML::DrawingTableStyle::WholeTbl);
-                if (m_currentTableStyleProperties == 0) {
+                if (m_currentTableStyleProperties == 0)
+                {
                     m_currentTableStyleProperties = new MSOOXML::TableStyleProperties;
                 }
                 m_tableMainStyle = KoTblStyle::create();
@@ -434,9 +478,11 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
                 m_currentStyle->addProperties(MSOOXML::DrawingTableStyle::WholeTbl, m_currentTableStyleProperties);
                 m_currentTableStyleProperties = 0;
             }
-            else if (name() == "tcPr") {
+            else if (name() == "tcPr")
+            {
                 m_currentTableStyleProperties = m_currentStyle->properties(MSOOXML::DrawingTableStyle::WholeTbl);
-                if (m_currentTableStyleProperties == 0) {
+                if (m_currentTableStyleProperties == 0)
+                {
                     m_currentTableStyleProperties = new MSOOXML::TableStyleProperties;
                 }
                 TRY_READ(tcPr)
@@ -444,16 +490,20 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
                 m_currentTableStyleProperties = 0;
             }
             ELSE_TRY_READ_IF(tblStylePr)
-            else if (QUALIFIED_NAME_IS(basedOn)) {
+            else if (QUALIFIED_NAME_IS(basedOn))
+            {
                 READ_ATTR(val)
-                if (type == "character") {
+                if (type == "character")
+                {
                     m_currentTextStyle.setParentName(val);
                 }
-                else if (type == "paragraph") {
+                else if (type == "paragraph")
+                {
                     m_currentParagraphStyle.setParentName(val);
                 }
             }
-            else if (QUALIFIED_NAME_IS(next)) {
+            else if (QUALIFIED_NAME_IS(next))
+            {
                 READ_ATTR_INTO(val, nextStyleName)
             }
             SKIP_UNKNOWN
@@ -461,9 +511,11 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
         }
     }
     KoGenStyles::InsertionFlags insertionFlags = KoGenStyles::DontAddNumberToName;
-    if (styleName.isEmpty()) {
+    if (styleName.isEmpty())
+    {
         styleName = m_name;
-        if (styleName.isEmpty()) {
+        if (styleName.isEmpty())
+        {
             // allow for numbering for generated style names
             styleName = odfType;
             insertionFlags = KoGenStyles::NoFlag;
@@ -480,24 +532,29 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
     //
     // ! @todo oo.o converter defines these classes: list, extra, index,
     // ! chapter
-    if (type == "character") {
+    if (type == "character")
+    {
         m_currentTextStyle.addAttribute("style:class", "text");
         styleName = mainStyles->insert(m_currentTextStyle, styleName, insertionFlags);
     }
-    else if (type == "paragraph") {
+    else if (type == "paragraph")
+    {
         m_currentParagraphStyle.addAttribute("style:class", "text");
         KoGenStyle::copyPropertiesFromStyle(m_currentTextStyle, m_currentParagraphStyle, KoGenStyle::TextType);
         styleName = mainStyles->insert(m_currentParagraphStyle, styleName, insertionFlags);
     }
-    else if (type == "table") {
+    else if (type == "table")
+    {
         m_context->m_tableStyles.insert(styleName, m_currentStyle);
     }
 
-    if (!nextStyleName.isEmpty()) {
+    if (!nextStyleName.isEmpty())
+    {
         mainStyles->insertStyleRelation(styleName, nextStyleName, "style:next-style-name");
     }
 
-    if (isDefault) {
+    if (isDefault)
+    {
         m_context->m_namedDefaultStyles.insertMulti(odfType, styleName);
     }
 
@@ -537,10 +594,12 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_tblStylePr()
     m_currentParagraphStyle = KoGenStyle(KoGenStyle::ParagraphAutoStyle, "paragraph");
     m_currentTextStyle = KoGenStyle(KoGenStyle::TextAutoStyle, "text");
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(tcPr)
             ELSE_TRY_READ_IF(rPr)
             ELSE_TRY_READ_IF(pPr)
@@ -554,61 +613,77 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_tblStylePr()
     m_currentTableStyleProperties->textStyle = m_currentTextStyle;
     m_currentTableStyleProperties->paragraphStyle = m_currentParagraphStyle;
 
-    if (type == "firstRow") {
+    if (type == "firstRow")
+    {
         // In docx predefined styles for first row, even though it may define
         // insideV to be 0 and bottom border to have something, it in reality
         // wishes insideV to also contain the bottom data
 //         if (m_currentTableStyleProperties->insideH.innerPen.widthF() == 0) {
 //             m_currentTableStyleProperties->insideH = m_currentTableStyleProperties->bottom;
 //         }
-        if (m_currentTableStyleProperties->target == MSOOXML::TableStyleProperties::Table) {
+        if (m_currentTableStyleProperties->target == MSOOXML::TableStyleProperties::Table)
+        {
             m_currentTableStyleProperties->target = MSOOXML::TableStyleProperties::TableRow;
         }
         m_currentStyle->addProperties(MSOOXML::DrawingTableStyle::FirstRow, m_currentTableStyleProperties);
     }
-    else if (type == "lastRow") {
-        if (m_currentTableStyleProperties->target == MSOOXML::TableStyleProperties::Table) {
+    else if (type == "lastRow")
+    {
+        if (m_currentTableStyleProperties->target == MSOOXML::TableStyleProperties::Table)
+        {
             m_currentTableStyleProperties->target = MSOOXML::TableStyleProperties::TableRow;
         }
         m_currentStyle->addProperties(MSOOXML::DrawingTableStyle::LastRow, m_currentTableStyleProperties);
     }
-    else if (type == "band1Horz") {
+    else if (type == "band1Horz")
+    {
         m_currentStyle->addProperties(MSOOXML::DrawingTableStyle::Band1Horizontal, m_currentTableStyleProperties);
     }
-    else if (type == "band2Horz") {
+    else if (type == "band2Horz")
+    {
         m_currentStyle->addProperties(MSOOXML::DrawingTableStyle::Band2Horizontal, m_currentTableStyleProperties);
     }
-    else if (type == "band1Vert") {
+    else if (type == "band1Vert")
+    {
         m_currentStyle->addProperties(MSOOXML::DrawingTableStyle::Band1Vertical, m_currentTableStyleProperties);
     }
-    else if (type == "band2Vert") {
+    else if (type == "band2Vert")
+    {
         m_currentStyle->addProperties(MSOOXML::DrawingTableStyle::Band2Vertical, m_currentTableStyleProperties);
     }
-    else if (type == "firstCol") {
+    else if (type == "firstCol")
+    {
 //         if (m_currentTableStyleProperties->insideV.innerPen.widthF() == 0) {
 //             m_currentTableStyleProperties->insideV = m_currentTableStyleProperties->right;
 //         }
-        if (m_currentTableStyleProperties->target == MSOOXML::TableStyleProperties::Table) {
+        if (m_currentTableStyleProperties->target == MSOOXML::TableStyleProperties::Table)
+        {
             m_currentTableStyleProperties->target = MSOOXML::TableStyleProperties::TableColumn;
         }
         m_currentStyle->addProperties(MSOOXML::DrawingTableStyle::FirstCol, m_currentTableStyleProperties);
     }
-    else if (type == "lastCol") {
-        if (m_currentTableStyleProperties->target == MSOOXML::TableStyleProperties::Table) {
+    else if (type == "lastCol")
+    {
+        if (m_currentTableStyleProperties->target == MSOOXML::TableStyleProperties::Table)
+        {
             m_currentTableStyleProperties->target = MSOOXML::TableStyleProperties::TableColumn;
         }
         m_currentStyle->addProperties(MSOOXML::DrawingTableStyle::LastCol, m_currentTableStyleProperties);
     }
-    else if (type == "nwCell") {
+    else if (type == "nwCell")
+    {
         m_currentStyle->addProperties(MSOOXML::DrawingTableStyle::NwCell, m_currentTableStyleProperties);
     }
-    else if (type == "neCell") {
+    else if (type == "neCell")
+    {
         m_currentStyle->addProperties(MSOOXML::DrawingTableStyle::NeCell, m_currentTableStyleProperties);
     }
-    else if (type == "swCell") {
+    else if (type == "swCell")
+    {
         m_currentStyle->addProperties(MSOOXML::DrawingTableStyle::SwCell, m_currentTableStyleProperties);
     }
-    else if (type == "seCell") {
+    else if (type == "seCell")
+    {
         m_currentStyle->addProperties(MSOOXML::DrawingTableStyle::SeCell, m_currentTableStyleProperties);
     }
 

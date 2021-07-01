@@ -85,9 +85,10 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read(MSOOXML::MsooXmlReaderCo
         return KoFilter::WrongFormat;
     }
     QXmlStreamNamespaceDeclarations namespaces(namespaceDeclarations());
-    /*    for (int i = 0; i < namespaces.count(); i++) {
-        debugDocx << "NS prefix:" << namespaces[i].prefix() << "uri:" << namespaces[i].namespaceUri();
-    }*/
+    //for (int i = 0; i < namespaces.count(); i++)
+    //{
+    //    debugDocx << "NS prefix:" << namespaces[i].prefix() << "uri:" << namespaces[i].namespaceUri();
+    //}
     //! @todo find out whether the namespace returned by namespaceUri()
     //!       is exactly the same ref as the element of namespaceDeclarations()
 

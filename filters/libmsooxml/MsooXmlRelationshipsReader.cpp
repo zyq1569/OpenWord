@@ -36,25 +36,27 @@ using namespace MSOOXML;
 MsooXmlRelationshipsReaderContext::MsooXmlRelationshipsReaderContext(
     const QString& _path, const QString& _file, QMap<QString, QString>& _rels,
     QMap<QString, QString>& _targetsForTypes)
-        : path(_path), file(_file)
-        , rels(&_rels), targetsForTypes(&_targetsForTypes)
+    : path(_path), file(_file)
+    , rels(&_rels), targetsForTypes(&_targetsForTypes)
 {
 }
 
 class MsooXmlRelationshipsReader::Private
 {
 public:
-    Private() {
+    Private()
+    {
     }
-    ~Private() {
+    ~Private()
+    {
     }
     QString pathAndFile;
 };
 
 MsooXmlRelationshipsReader::MsooXmlRelationshipsReader(KoOdfWriters *writers)
-        : MSOOXML::MsooXmlReader(writers)
-        , m_context(0)
-        , d(new Private)
+    : MSOOXML::MsooXmlReader(writers)
+    , m_context(0)
+    , d(new Private)
 {
     init();
 }
@@ -74,7 +76,9 @@ KoFilter::ConversionStatus MsooXmlRelationshipsReader::read(MSOOXML::MsooXmlRead
     const KoFilter::ConversionStatus result = readInternal();
     m_context = 0;
     if (result == KoFilter::OK)
+    {
         return KoFilter::OK;
+    }
     return result;
 }
 
@@ -85,7 +89,8 @@ KoFilter::ConversionStatus MsooXmlRelationshipsReader::readInternal()
     d->pathAndFile = MsooXmlRelationshipsReader::relKey(m_context->path, m_context->file, QString());
 
     readNext();
-    if (!isStartDocument()) {
+    if (!isStartDocument())
+    {
         return KoFilter::WrongFormat;
     }
 
@@ -93,10 +98,12 @@ KoFilter::ConversionStatus MsooXmlRelationshipsReader::readInternal()
     readNext();
     debugMsooXml << *this << namespaceUri();
 
-    if (!expectEl("Relationships")) {
+    if (!expectEl("Relationships"))
+    {
         return KoFilter::WrongFormat;
     }
-    if (!expectNS(MSOOXML::Schemas::relationships)) {
+    if (!expectNS(MSOOXML::Schemas::relationships))
+    {
         return KoFilter::WrongFormat;
     }
     /*
@@ -106,7 +113,8 @@ KoFilter::ConversionStatus MsooXmlRelationshipsReader::readInternal()
         }*/
 
     QXmlStreamNamespaceDeclarations namespaces(namespaceDeclarations());
-    for (int i = 0; i < namespaces.count(); i++) {
+    for (int i = 0; i < namespaces.count(); i++)
+    {
         debugMsooXml << "NS prefix:" << namespaces[i].prefix() << "uri:" << namespaces[i].namespaceUri();
     }
 
@@ -127,11 +135,13 @@ KoFilter::ConversionStatus MsooXmlRelationshipsReader::readInternal()
 KoFilter::ConversionStatus MsooXmlRelationshipsReader::read_Relationships()
 {
     READ_PROLOGUE
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         debugMsooXml << *this;
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(Relationship)
             ELSE_WRONG_FORMAT
         }
@@ -156,7 +166,8 @@ KoFilter::ConversionStatus MsooXmlRelationshipsReader::read_Relationship()
     READ_ATTR_WITHOUT_NS(Type)
     READ_ATTR_WITHOUT_NS(Target)
     QString fixedPath(m_context->path);
-    while (Target.startsWith(QLatin1String("../"))) {
+    while (Target.startsWith(QLatin1String("../")))
+    {
         //debugMsooXml << "- Target:" << Target << "fixedPath:" << fixedPath;
         Target.remove(0, 3);
         fixedPath.truncate(fixedPath.lastIndexOf('/'));

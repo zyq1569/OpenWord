@@ -48,9 +48,9 @@
 using namespace MSOOXML;
 
 DrawingMLGradientFill::DrawingMLGradientFill(const QVector<qreal> &shadeModifier, const QVector<qreal> &tintModifier, const QVector<qreal> &satModifier,
-    const QVector<int> &alphaModifier, const QVector<int> &gradPositions, const QString &gradAngle)
+        const QVector<int> &alphaModifier, const QVector<int> &gradPositions, const QString &gradAngle)
     : m_shadeModifier(shadeModifier),m_tintModifier(tintModifier), m_satModifier(satModifier),
-     m_alphaModifier(alphaModifier), m_gradPosition(gradPositions), m_gradAngle(gradAngle)
+      m_alphaModifier(alphaModifier), m_gradPosition(gradPositions), m_gradAngle(gradAngle)
 {
 }
 
@@ -65,7 +65,8 @@ void DrawingMLGradientFill::writeStyles(KoGenStyles& styles, KoGenStyle *graphic
     gradientStyle.addAttribute("svg:y2", QString("%1%").arg(50 - 50 * sin(angle)));
 
     int index = 0;
-    while (index < m_alphaModifier.size()) {
+    while (index < m_alphaModifier.size())
+    {
         QColor gradColor = color;
         MSOOXML::Utils::modifyColor(gradColor, m_tintModifier.at(index), m_shadeModifier.at(index), m_satModifier.at(index));
         QString contents = QString("<svg:stop svg:offset=\"%1\" svg:stop-color=\"%2\" svg:stop-opacity=\"1\"/>").arg(m_gradPosition.at(index)/100.0).arg(gradColor.name());
@@ -100,7 +101,8 @@ void DrawingMLBlipFill::writeStyles(KoGenStyles& styles, KoGenStyle *graphicStyl
 
 void DrawingMLSolidFill::writeStyles(KoGenStyles& styles, KoGenStyle *graphicStyle, const QColor &color)
 {
-    if (color.isValid()) {
+    if (color.isValid())
+    {
         QBrush brush(color, Qt::SolidPattern);
         KoOdfGraphicStyles::saveOdfFillStyle(*graphicStyle, styles, brush);
     }
@@ -117,7 +119,8 @@ DrawingMLColorSchemeSystemItem::DrawingMLColorSchemeSystemItem()
 QColor DrawingMLColorSchemeSystemItem::value() const
 {
     // Prefer lastColor
-    if (lastColor.isValid()) {
+    if (lastColor.isValid())
+    {
         return lastColor;
     }
 
@@ -125,7 +128,7 @@ QColor DrawingMLColorSchemeSystemItem::value() const
 
     //! 20.1.10.58 ST_SystemColorVal (System Color Value)
     if ( systemColor == QLatin1String("windowText") ||
-         systemColor == QLatin1String("menuText"))
+            systemColor == QLatin1String("menuText"))
     {
         return QPalette().color(QPalette::Active, QPalette::WindowText);
     }
@@ -135,25 +138,32 @@ QColor DrawingMLColorSchemeSystemItem::value() const
     {
         return QPalette().color(QPalette::Active, QPalette::Window);
     }
-    else if (systemColor == QLatin1String("highlightText")) {
+    else if (systemColor == QLatin1String("highlightText"))
+    {
         return QPalette().color(QPalette::Active, QPalette::HighlightedText);
     }
-    else if (systemColor == QLatin1String("highlight")) {
+    else if (systemColor == QLatin1String("highlight"))
+    {
         return QPalette().color(QPalette::Active, QPalette::Highlight);
     }
-    else if (systemColor == QLatin1String("grayText")) {
+    else if (systemColor == QLatin1String("grayText"))
+    {
         return QPalette().color(QPalette::Disabled, QPalette::WindowText);
     }
-    else if (systemColor == QLatin1String("btnText")) {
+    else if (systemColor == QLatin1String("btnText"))
+    {
         return QPalette().color(QPalette::Active, QPalette::ButtonText);
     }
-    else if (systemColor == QLatin1String("btnFace")) {
+    else if (systemColor == QLatin1String("btnFace"))
+    {
         return QPalette().color(QPalette::Active, QPalette::Button);
     }
-    else if (systemColor == QLatin1String("btnHighlight")) {
+    else if (systemColor == QLatin1String("btnHighlight"))
+    {
         return QPalette().color(QPalette::Active, QPalette::Light);
     }
-    else if (systemColor == QLatin1String("btnShadow")) {
+    else if (systemColor == QLatin1String("btnShadow"))
+    {
         return QPalette().color(QPalette::Active, QPalette::Dark);
     }
 
@@ -192,7 +202,8 @@ DrawingMLColorScheme::~DrawingMLColorScheme()
 DrawingMLColorScheme& DrawingMLColorScheme::operator=(const DrawingMLColorScheme& scheme)
 {
     QHashIterator<QString, DrawingMLColorSchemeItemBase*> i(scheme);
-    while (i.hasNext()) {
+    while (i.hasNext())
+    {
         i.next();
         insert(i.key(), i.value()->clone());
     }
@@ -203,7 +214,8 @@ DrawingMLColorScheme& DrawingMLColorScheme::operator=(const DrawingMLColorScheme
 DrawingMLColorScheme::DrawingMLColorScheme(const DrawingMLColorScheme& scheme) : QHash<QString, DrawingMLColorSchemeItemBase*>()
 {
     QHashIterator<QString, DrawingMLColorSchemeItemBase*> i(scheme);
-    while (i.hasNext()) {
+    while (i.hasNext())
+    {
         i.next();
         insert(i.key(), i.value()->clone());
     }
@@ -238,7 +250,8 @@ DrawingMLFormatScheme::DrawingMLFormatScheme()
 DrawingMLFormatScheme::DrawingMLFormatScheme(const DrawingMLFormatScheme& format)
 {
     QMapIterator<int, DrawingMLFillBase*> i(format.fillStyles);
-    while (i.hasNext()) {
+    while (i.hasNext())
+    {
         i.next();
         fillStyles.insert(i.key(), i.value()->clone());
     }
@@ -248,7 +261,8 @@ DrawingMLFormatScheme::DrawingMLFormatScheme(const DrawingMLFormatScheme& format
 DrawingMLFormatScheme& DrawingMLFormatScheme::operator=(const DrawingMLFormatScheme& format)
 {
     QMapIterator<int, DrawingMLFillBase*> i(format.fillStyles);
-    while (i.hasNext()) {
+    while (i.hasNext())
+    {
         i.next();
         fillStyles.insert(i.key(), i.value()->clone());
     }
@@ -265,17 +279,17 @@ DrawingMLTheme::DrawingMLTheme()
 
 MsooXmlThemesReaderContext::MsooXmlThemesReaderContext(DrawingMLTheme& t, MSOOXML::MsooXmlRelationships* rel,
         MSOOXML::MsooXmlImport* imp, const QString &pathName, const QString &fileName)
-        : MsooXmlReaderContext()
-        , theme(&t), relationships(rel), import(imp), path(pathName), file(fileName)
+    : MsooXmlReaderContext()
+    , theme(&t), relationships(rel), import(imp), path(pathName), file(fileName)
 {
 }
 
 // ---------------------------------------------------
 
 MsooXmlThemesReader::MsooXmlThemesReader(KoOdfWriters *writers)
-        : MsooXmlCommonReader(writers)
-        , m_currentColor_local(0)
-        , m_context(0)
+    : MsooXmlCommonReader(writers)
+    , m_currentColor_local(0)
+    , m_context(0)
 {
     init();
 }
@@ -302,7 +316,9 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read(MsooXmlReaderContext* conte
     const KoFilter::ConversionStatus result = readInternal();
     m_context = 0;
     if (result == KoFilter::OK)
+    {
         return KoFilter::OK;
+    }
     *dynamic_cast<MsooXmlThemesReaderContext*>(context)->theme = DrawingMLTheme(); //clear
     return result;
 }
@@ -311,16 +327,20 @@ KoFilter::ConversionStatus MsooXmlThemesReader::readInternal()
 {
     //debugMsooXml << "=============================";
     readNext();
-    if (!isStartDocument()) {
+    if (!isStartDocument())
+    {
         return KoFilter::WrongFormat;
     }
 
     readNext();
     //debugMsooXml << *this;
-    if (isStartElement()) {
+    if (isStartElement())
+    {
         TRY_READ_IF(theme)
         ELSE_WRONG_FORMAT
-    } else {
+    }
+    else
+    {
         return KoFilter::WrongFormat;
     }
     //debugMsooXml << "===========finished============";
@@ -345,7 +365,8 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_theme()
     READ_PROLOGUE
     //debugMsooXml << namespaceUri();
 
-    if (!expectNS(Schemas::drawingml::main)) {
+    if (!expectNS(Schemas::drawingml::main))
+    {
         return KoFilter::WrongFormat;
     }
 
@@ -355,21 +376,24 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_theme()
 
     QXmlStreamNamespaceDeclarations namespaces(namespaceDeclarations());
     //for (int i = 0; i < namespaces.count(); i++) {
-        //debugMsooXml << "NS prefix:" << namespaces[i].prefix() << "uri:" << namespaces[i].namespaceUri();
+    //debugMsooXml << "NS prefix:" << namespaces[i].prefix() << "uri:" << namespaces[i].namespaceUri();
     //}
 //! @todo find out whether the namespace returned by namespaceUri()
 //!       is exactly the same ref as the element of namespaceDeclarations()
-    if (!namespaces.contains(QXmlStreamNamespaceDeclaration(MSOOXML_CURRENT_NS, Schemas::drawingml::main))) {
+    if (!namespaces.contains(QXmlStreamNamespaceDeclaration(MSOOXML_CURRENT_NS, Schemas::drawingml::main)))
+    {
         raiseError(i18n("Namespace \"%1\" not found", QLatin1String(Schemas::drawingml::main)));
         return KoFilter::WrongFormat;
     }
 //! @todo expect other namespaces too...
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         //debugMsooXml << *this;
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(themeElements)
             ELSE_TRY_READ_IF(custClrLst)
             ELSE_TRY_READ_IF(extLst)
@@ -398,11 +422,13 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_theme()
 KoFilter::ConversionStatus MsooXmlThemesReader::read_themeElements()
 {
     READ_PROLOGUE
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         //debugMsooXml << *this;
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(clrScheme)
             ELSE_TRY_READ_IF(extLst)
             ELSE_TRY_READ_IF(fmtScheme)
@@ -472,13 +498,15 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_clrMap()
 */
 KoFilter::ConversionStatus MsooXmlThemesReader::read_extraClrSchemeLst()
 {
-   READ_PROLOGUE
+    READ_PROLOGUE
 
-   while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         //debugMsooXml << *this;
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(extraClrScheme)
         }
     }
@@ -494,13 +522,15 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_extraClrSchemeLst()
 */
 KoFilter::ConversionStatus MsooXmlThemesReader::read_extraClrScheme()
 {
-   READ_PROLOGUE
+    READ_PROLOGUE
 
-   while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         //debugMsooXml << *this;
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
         }
     }
     READ_EPILOGUE
@@ -538,7 +568,8 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_clrScheme()
 {
     READ_PROLOGUE
 
-    if (!m_clrScheme_initialized) {
+    if (!m_clrScheme_initialized)
+    {
         m_clrScheme_initialized = true;
         INIT_COLOR_ITEM("dk1", 0)
         INIT_COLOR_ITEM("lt1", 1)
@@ -557,24 +588,29 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_clrScheme()
     const QXmlStreamAttributes attrs(attributes());
     READ_ATTR_WITHOUT_NS_INTO(name, m_context->theme->colorScheme.name)
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         //debugMsooXml << *this;
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             ReadMethod readMethod = m_readMethods.value(this->name().toString());
-            if (readMethod) {
+            if (readMethod)
+            {
                 Q_ASSERT(!m_currentColor_local);
                 RETURN_IF_ERROR( (this->*readMethod)() )
                 Q_ASSERT(m_currentColor_local);
-                if (!m_currentColor_local) {
+                if (!m_currentColor_local)
+                {
                     return KoFilter::InternalError;
                 }
                 const QString colorName( this->name().toString() );
                 //debugMsooXml << "inserting color for" << colorName;
                 m_context->theme->colorScheme.insert(colorName, m_currentColor_local);
                 const QString colorIndex(m_colorSchemeIndices.value(colorName));
-                if (!colorIndex.isEmpty()) {
+                if (!colorIndex.isEmpty())
+                {
                     m_context->theme->colorScheme.insert(colorIndex, m_currentColor_local);
                 }
 
@@ -607,7 +643,8 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_color()
 {
     const QString qn(qualifiedName().toString());
 
-    if (!m_color_initialized) {
+    if (!m_color_initialized)
+    {
         m_color_initialized = true;
 //! @todo remove _SKIP
         BIND_READ_SKIP(hslClr)
@@ -622,29 +659,36 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_color()
         BIND_READ(sysClr_local)
     }
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         //debugMsooXml << *this;
         BREAK_IF_END_OF_QSTRING(qn)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             QString name = this->name().toString();
 
             //using local versions at the moment
-            if (name == "srgbClr") {
+            if (name == "srgbClr")
+            {
                 name = "srgbClr_local";
-            } else if (name == "sysClr") {
+            }
+            else if (name == "sysClr")
+            {
                 name = "sysClr_local";
             }
 
             ReadMethod readMethod = m_readMethods.value(name);
-            if (readMethod) {
+            if (readMethod)
+            {
                 RETURN_IF_ERROR( (this->*readMethod)() )
             }
             ELSE_WRONG_FORMAT_DEBUG("!readMethod")
         }
     }
 
-    if (!expectElEnd(qn)) {
+    if (!expectElEnd(qn))
+    {
         return KoFilter::WrongFormat;
     }
     return KoFilter::OK;
@@ -878,10 +922,12 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_sysClr_local()
 KoFilter::ConversionStatus MsooXmlThemesReader::read_fmtScheme()
 {
     READ_PROLOGUE
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(bgFillStyleLst)
             ELSE_TRY_READ_IF(fillStyleLst)
             ELSE_TRY_READ_IF(lnStyleLst)
@@ -913,10 +959,12 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_lnStyleLst()
 
     QList<KoGenStyle> *list = &m_context->theme->formatScheme.lnStyleLst;
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             pushCurrentDrawStyle(new KoGenStyle(KoGenStyle::GraphicAutoStyle, "graphic"));
             TRY_READ_IF(ln)
             list->append(*m_currentDrawStyle);
@@ -931,32 +979,41 @@ KoFilter::ConversionStatus MsooXmlThemesReader::fillStyleReadHelper(int& index)
 {
     QXmlStreamAttributes attrs;
 
-    if (isStartElement()) {
+    if (isStartElement())
+    {
         QString element = qualifiedName().toString();
-        if (element == "a:gradFill") {
+        if (element == "a:gradFill")
+        {
             QVector<qreal> shadeModifiers;
             QVector<qreal> tintModifiers;
             QVector<qreal> satModifiers;
             QVector<int> alphaModifiers;
             QVector<int> gradPositions;
             QString gradAngle = "16200000"; // 270 degrees as the default, that is, from up to down
-            while (!atEnd()) {
+            while (!atEnd())
+            {
                 readNext();
-                if (isEndElement() && qualifiedName() == "a:gradFill") {
+                if (isEndElement() && qualifiedName() == "a:gradFill")
+                {
                     break;
                 }
-                else if (isStartElement() && qualifiedName() == "a:lin") {
+                else if (isStartElement() && qualifiedName() == "a:lin")
+                {
                     attrs = attributes();
                     TRY_READ_ATTR_WITHOUT_NS(ang)
                     gradAngle = ang;
                 }
-                else if (isStartElement() && qualifiedName() == "a:gsLst") {
-                    while (!atEnd()) {
+                else if (isStartElement() && qualifiedName() == "a:gsLst")
+                {
+                    while (!atEnd())
+                    {
                         readNext();
-                        if (isEndElement() && qualifiedName() == "a:gsLst") {
+                        if (isEndElement() && qualifiedName() == "a:gsLst")
+                        {
                             break;
                         }
-                        else if (isStartElement() && qualifiedName() == "a:gs") {
+                        else if (isStartElement() && qualifiedName() == "a:gs")
+                        {
                             attrs = attributes();
                             TRY_READ_ATTR_WITHOUT_NS(pos)
                             int gradPosition = pos.toInt() / 1000;
@@ -964,47 +1021,57 @@ KoFilter::ConversionStatus MsooXmlThemesReader::fillStyleReadHelper(int& index)
                             qreal tintModifier = 0;
                             qreal satModifier = 0;
                             int alphaModifier = 0;
-                            while (!atEnd()) {
+                            while (!atEnd())
+                            {
                                 readNext();
-                                if (isEndElement() && qualifiedName() == "a:gs") {
+                                if (isEndElement() && qualifiedName() == "a:gs")
+                                {
                                     break;
                                 }
-                                else if (isStartElement() && qualifiedName() == "a:schemeClr") {
-                                     while (!atEnd()) {
-                                         readNext();
-                                         if (isEndElement() && qualifiedName() == "a:schemeClr") {
-                                             break;
-                                         }
-                                         else if (isStartElement()) {
-                                             attrs = attributes();
-                                             TRY_READ_ATTR_WITHOUT_NS(val)
-                                             if (qualifiedName() == "a:tint") {
-                                                 tintModifier = val.toInt()/100000.0;
-                                             }
-                                             else if (qualifiedName() == "a:shade") {
-                                                 shadeModifier = val.toInt()/100000.0;
-                                             }
-                                             else if (qualifiedName() == "a:satMod") {
-                                                 satModifier = val.toDouble()/100000.0;
-                                             }
-                                             else if (qualifiedName() == "a:alpha") {
-                                                 alphaModifier = val.toInt()/1000;
-                                             }
-                                         }
-                                     }
+                                else if (isStartElement() && qualifiedName() == "a:schemeClr")
+                                {
+                                    while (!atEnd())
+                                    {
+                                        readNext();
+                                        if (isEndElement() && qualifiedName() == "a:schemeClr")
+                                        {
+                                            break;
+                                        }
+                                        else if (isStartElement())
+                                        {
+                                            attrs = attributes();
+                                            TRY_READ_ATTR_WITHOUT_NS(val)
+                                            if (qualifiedName() == "a:tint")
+                                            {
+                                                tintModifier = val.toInt()/100000.0;
+                                            }
+                                            else if (qualifiedName() == "a:shade")
+                                            {
+                                                shadeModifier = val.toInt()/100000.0;
+                                            }
+                                            else if (qualifiedName() == "a:satMod")
+                                            {
+                                                satModifier = val.toDouble()/100000.0;
+                                            }
+                                            else if (qualifiedName() == "a:alpha")
+                                            {
+                                                alphaModifier = val.toInt()/1000;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             gradPositions.push_back(gradPosition);
                             tintModifiers.push_back(tintModifier);
                             shadeModifiers.push_back(shadeModifier);
                             satModifiers.push_back(satModifier),
-                            alphaModifiers.push_back(alphaModifier);
+                                                   alphaModifiers.push_back(alphaModifier);
                         }
                     }
                 }
             }
             m_context->theme->formatScheme.fillStyles[index] = new DrawingMLGradientFill(shadeModifiers, tintModifiers,
-                satModifiers, alphaModifiers, gradPositions, gradAngle);
+                    satModifiers, alphaModifiers, gradPositions, gradAngle);
         }
         // Commented out for now, until there's a nice implementation for duotone effect
         /*else if (element == "a:blipFill") {
@@ -1026,7 +1093,8 @@ KoFilter::ConversionStatus MsooXmlThemesReader::fillStyleReadHelper(int& index)
                 }
             }
         }*/
-        else { //if (element == "a:solidFill") { //For now, let's have this as default
+        else   //if (element == "a:solidFill") { //For now, let's have this as default
+        {
             m_context->theme->formatScheme.fillStyles[index] = new DrawingMLSolidFill;
             skipCurrentElement();
         } // todo, handle rest
@@ -1045,7 +1113,8 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_fillStyleLst()
 
     int index = 1; // The first style goes to 1
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
         fillStyleReadHelper(index);
@@ -1062,7 +1131,8 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_bgFillStyleLst()
 
     int index = 1001; // The first style goes to 1001
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
         fillStyleReadHelper(index);
@@ -1085,10 +1155,12 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_bgFillStyleLst()
 KoFilter::ConversionStatus MsooXmlThemesReader::read_fontScheme()
 {
     READ_PROLOGUE
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(majorFont)
             ELSE_TRY_READ_IF(minorFont)
             SKIP_UNKNOWN
@@ -1103,21 +1175,26 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_fontScheme()
 KoFilter::ConversionStatus MsooXmlThemesReader::read_majorFont()
 {
     READ_PROLOGUE
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
-            if (qualifiedName() == "a:latin") {
+        if (isStartElement())
+        {
+            if (qualifiedName() == "a:latin")
+            {
                 const QXmlStreamAttributes attrs(attributes());
                 TRY_READ_ATTR_WITHOUT_NS(typeface)
                 m_context->theme->fontScheme.majorFonts.latinTypeface = typeface;
             }
-            else if (qualifiedName() == "a:ea") {
+            else if (qualifiedName() == "a:ea")
+            {
                 const QXmlStreamAttributes attrs(attributes());
                 TRY_READ_ATTR_WITHOUT_NS(typeface)
                 m_context->theme->fontScheme.minorFonts.eaTypeface = typeface;
             }
-            else if (qualifiedName() == "a:cs") {
+            else if (qualifiedName() == "a:cs")
+            {
                 const QXmlStreamAttributes attrs(attributes());
                 TRY_READ_ATTR_WITHOUT_NS(typeface)
                 m_context->theme->fontScheme.minorFonts.csTypeface = typeface;
@@ -1134,21 +1211,26 @@ KoFilter::ConversionStatus MsooXmlThemesReader::read_majorFont()
 KoFilter::ConversionStatus MsooXmlThemesReader::read_minorFont()
 {
     READ_PROLOGUE
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
-            if (qualifiedName() == "a:latin") {
+        if (isStartElement())
+        {
+            if (qualifiedName() == "a:latin")
+            {
                 const QXmlStreamAttributes attrs(attributes());
                 TRY_READ_ATTR_WITHOUT_NS(typeface)
                 m_context->theme->fontScheme.minorFonts.latinTypeface = typeface;
             }
-            else if (qualifiedName() == "a:ea") {
+            else if (qualifiedName() == "a:ea")
+            {
                 const QXmlStreamAttributes attrs(attributes());
                 TRY_READ_ATTR_WITHOUT_NS(typeface)
                 m_context->theme->fontScheme.minorFonts.eaTypeface = typeface;
             }
-            else if (qualifiedName() == "a:cs") {
+            else if (qualifiedName() == "a:cs")
+            {
                 const QXmlStreamAttributes attrs(attributes());
                 TRY_READ_ATTR_WITHOUT_NS(typeface)
                 m_context->theme->fontScheme.minorFonts.csTypeface = typeface;

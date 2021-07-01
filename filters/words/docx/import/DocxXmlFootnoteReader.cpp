@@ -41,9 +41,11 @@
 class DocxXmlFootnoteReader::Private
 {
 public:
-    Private() : counter(0) {
+    Private() : counter(0)
+    {
     }
-    ~Private() {
+    ~Private()
+    {
     }
     QString pathAndFile;
     int counter;
@@ -74,16 +76,19 @@ KoFilter::ConversionStatus DocxXmlFootnoteReader::read(MSOOXML::MsooXmlReaderCon
 
     debugDocx << "=============================";
     readNext();
-    if (!isStartDocument()) {
+    if (!isStartDocument())
+    {
         return KoFilter::WrongFormat;
     }
     readNext();
 
     debugDocx << *this << namespaceUri();
-    if (!expectEl(QList<QByteArray>() << "w:footnotes")) {
+    if (!expectEl(QList<QByteArray>() << "w:footnotes"))
+    {
         return KoFilter::WrongFormat;
     }
-    if (!expectNS(MSOOXML::Schemas::wordprocessingml)) {
+    if (!expectNS(MSOOXML::Schemas::wordprocessingml))
+    {
         return KoFilter::WrongFormat;
     }
 
@@ -91,7 +96,8 @@ KoFilter::ConversionStatus DocxXmlFootnoteReader::read(MSOOXML::MsooXmlReaderCon
 
     //! @todo find out whether the namespace returned by namespaceUri()
     //!       is exactly the same ref as the element of namespaceDeclarations()
-    if (!namespaces.contains(QXmlStreamNamespaceDeclaration("w", MSOOXML::Schemas::wordprocessingml))) {
+    if (!namespaces.contains(QXmlStreamNamespaceDeclaration("w", MSOOXML::Schemas::wordprocessingml)))
+    {
         raiseError(i18n("Namespace \"%1\" not found", QLatin1String(MSOOXML::Schemas::wordprocessingml)));
         return KoFilter::WrongFormat;
     }
@@ -100,7 +106,8 @@ KoFilter::ConversionStatus DocxXmlFootnoteReader::read(MSOOXML::MsooXmlReaderCon
 
     RETURN_IF_ERROR(read_footnotes())
 
-    if (!expectElEnd(qn)) {
+    if (!expectElEnd(qn))
+    {
         return KoFilter::WrongFormat;
     }
     debugDocx << "===========finished============";
@@ -123,10 +130,12 @@ KoFilter::ConversionStatus DocxXmlFootnoteReader::read_footnotes()
 {
     READ_PROLOGUE
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(footnote)
             ELSE_WRONG_FORMAT
         }
@@ -192,10 +201,12 @@ KoFilter::ConversionStatus DocxXmlFootnoteReader::read_footnote()
     KoXmlWriter *oldBody = body;
     body = new KoXmlWriter(&buffer);
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
-        if (isStartElement()) {
+        if (isStartElement())
+        {
             TRY_READ_IF(p)
             ELSE_TRY_READ_IF(bookmarkStart)
             ELSE_TRY_READ_IF(bookmarkEnd)
@@ -212,7 +223,8 @@ KoFilter::ConversionStatus DocxXmlFootnoteReader::read_footnote()
     delete body;
     body = oldBody;
 
-    if (!id.isEmpty()) {
+    if (!id.isEmpty())
+    {
         m_context->m_footnotes[id] = content;
     }
 

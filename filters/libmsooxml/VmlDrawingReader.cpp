@@ -38,7 +38,7 @@
 #include <MsooXmlReader_p.h>
 
 VmlDrawingReaderContext::VmlDrawingReaderContext(MSOOXML::MsooXmlImport& _import, const QString& _path,
-    const QString& _file, MSOOXML::MsooXmlRelationships& _relationships) :
+        const QString& _file, MSOOXML::MsooXmlRelationships& _relationships) :
     MSOOXML::MsooXmlReaderContext(&_relationships), import(&_import), path(_path), file(_file)
 {
 }
@@ -46,9 +46,11 @@ VmlDrawingReaderContext::VmlDrawingReaderContext(MSOOXML::MsooXmlImport& _import
 class Q_DECL_HIDDEN VmlDrawingReader::Private
 {
 public:
-    Private() {
+    Private()
+    {
     }
-    ~Private() {
+    ~Private()
+    {
     }
 };
 
@@ -85,13 +87,15 @@ KoFilter::ConversionStatus VmlDrawingReader::read(MSOOXML::MsooXmlReaderContext*
     m_context = static_cast<VmlDrawingReaderContext*>(context);
 
     readNext();
-    if (!isStartDocument()) {
+    if (!isStartDocument())
+    {
         return KoFilter::WrongFormat;
     }
     readNext();
 
     debugMsooXml << *this << namespaceUri();
-    if (!expectEl(QList<QByteArray>() << "xml")) {
+    if (!expectEl(QList<QByteArray>() << "xml"))
+    {
         return KoFilter::WrongFormat;
     }
 
@@ -99,7 +103,8 @@ KoFilter::ConversionStatus VmlDrawingReader::read(MSOOXML::MsooXmlReaderContext*
 
     RETURN_IF_ERROR(read_xml())
 
-    if (!expectElEnd(qn)) {
+    if (!expectElEnd(qn))
+    {
         return KoFilter::WrongFormat;
     }
     debugMsooXml << "===========finished============";
@@ -112,16 +117,21 @@ KoFilter::ConversionStatus VmlDrawingReader::read_xml()
     unsigned index = 0;
     KoXmlWriter *oldBody = 0;
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
-        if (isEndElement() && qualifiedName() == "xml") {
+        if (isEndElement() && qualifiedName() == "xml")
+        {
             break;
         }
-        if (isStartElement()) {
-            if (name() == "shapetype") {
+        if (isStartElement())
+        {
+            if (name() == "shapetype")
+            {
                 TRY_READ(shapetype)
             }
-            else if (name() == "shape") {
+            else if (name() == "shape")
+            {
                 oldBody = body; // Body protection starts
                 QBuffer frameBuf;
                 KoXmlWriter frameWriter(&frameBuf);
