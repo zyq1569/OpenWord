@@ -477,14 +477,14 @@ void KoTextLayoutArea::drawListItem(QPainter *painter, QTextBlock &block)
 
             QTextLayout layout(result, font, d->documentLayout->paintDevice());
 
-            QList<QTextLayout::FormatRange> layouts;
+            QVector<QTextLayout::FormatRange> layouts;
             QTextLayout::FormatRange format;
             format.start = 0;
             format.length = blockData.counterText().length();
             format.format = blockData.labelFormat();
 
             layouts.append(format);
-            layout.setAdditionalFormats(layouts);
+            layout.setFormats(layouts);
 
             Qt::Alignment alignment = static_cast<Qt::Alignment>(listFormat.intProperty(KoListStyle::Alignment));
 
@@ -737,7 +737,7 @@ static void drawDecorationWords(QPainter *painter, const QTextLine &line, const 
     }
 }
 
-static qreal computeWidth(KoCharacterStyle::LineWeight weight, qreal width, const QFont& font)
+static qreal computeWidth(KoCharacterStyle::LineWeight weight, qreal width, const QFont& font, const QFontMetricsF& metrics)
 {
     switch (weight)
     {
@@ -745,12 +745,12 @@ static qreal computeWidth(KoCharacterStyle::LineWeight weight, qreal width, cons
         case KoCharacterStyle::NormalLineWeight:
         case KoCharacterStyle::MediumLineWeight:
         case KoCharacterStyle::DashLineWeight:
-            return QFontMetricsF(font).lineWidth();
+            return metrics.lineWidth();
         case KoCharacterStyle::BoldLineWeight:
         case KoCharacterStyle::ThickLineWeight:
-            return QFontMetricsF(font).lineWidth() * 1.5;
+            return metrics.lineWidth() * 1.5;
         case KoCharacterStyle::ThinLineWeight:
-            return QFontMetricsF(font).lineWidth() * 0.7;
+            return metrics.lineWidth() * 0.7;
         case KoCharacterStyle::PercentLineWeight:
             return QFontInfo(font).pointSizeF() * width / 100;
         case KoCharacterStyle::LengthLineWeight:
@@ -1004,7 +1004,7 @@ void KoTextLayoutArea::decorateParagraph(QPainter *painter, QTextBlock &block, b
                                 qreal width = computeWidth( // line thickness
                                                   (KoCharacterStyle::LineWeight) underline.intProperty(KoCharacterStyle::UnderlineWeight),
                                                   underline.doubleProperty(KoCharacterStyle::UnderlineWidth),
-                                                  font);
+                                                  font, metrics);
                                 if (valign == QTextCharFormat::AlignSubScript
                                         || valign == QTextCharFormat::AlignSuperScript) // adjust size.
                                 {
@@ -1148,7 +1148,7 @@ void KoTextLayoutArea::drawStrikeOuts(QPainter *painter, const QTextCharFormat &
             width = computeWidth(
                         (KoCharacterStyle::LineWeight) currentCharFormat.intProperty(KoCharacterStyle::StrikeOutWeight),
                         currentCharFormat.doubleProperty(KoCharacterStyle::StrikeOutWidth),
-                        font);
+                        font, metrics);
         }
         if (valign == QTextCharFormat::AlignSubScript
                 || valign == QTextCharFormat::AlignSuperScript) // adjust size.
@@ -1217,7 +1217,7 @@ void KoTextLayoutArea::drawOverlines(QPainter *painter, const QTextCharFormat &c
         qreal width = computeWidth( // line thickness
                           (KoCharacterStyle::LineWeight) currentCharFormat.intProperty(KoCharacterStyle::OverlineWeight),
                           currentCharFormat.doubleProperty(KoCharacterStyle::OverlineWidth),
-                          font);
+                          font, metrics);
         if (valign == QTextCharFormat::AlignSubScript
                 || valign == QTextCharFormat::AlignSuperScript) // adjust size.
         {
@@ -1253,18 +1253,18 @@ void KoTextLayoutArea::drawUnderlines(QPainter *painter, const QTextCharFormat &
         }
         QFontMetricsF metrics(font, d->documentLayout->paintDevice());
 
-        qreal y = line.position().y();
+        qreal y = line.position().y() + std::ceil(metrics.underlinePos()) + 0.5;
         if (valign == QTextCharFormat::AlignSubScript)
         {
-            y += line.height() - metrics.descent() + metrics.underlinePos();
+            y += line.height() - metrics.descent();
         }
         else if (valign == QTextCharFormat::AlignSuperScript)
         {
-            y += metrics.ascent() + metrics.underlinePos();
+            y += metrics.ascent();
         }
         else
         {
-            y += line.ascent() + metrics.underlinePos();
+            y += line.ascent();
         }
 
         QColor color = currentCharFormat.underlineColor();
@@ -1277,7 +1277,7 @@ void KoTextLayoutArea::drawUnderlines(QPainter *painter, const QTextCharFormat &
         qreal width = computeWidth( // line thickness
                           (KoCharacterStyle::LineWeight) currentCharFormat.intProperty(KoCharacterStyle::UnderlineWeight),
                           currentCharFormat.doubleProperty(KoCharacterStyle::UnderlineWidth),
-                          font);
+                          font, metrics);
         if (valign == QTextCharFormat::AlignSubScript
                 || valign == QTextCharFormat::AlignSuperScript) // adjust size.
         {
@@ -1412,7 +1412,7 @@ int KoTextLayoutArea::decorateTabsAndFormatting(QPainter *painter, const QTextFr
                     {
                         tabDecorColor = tab.leaderColor;
                     }
-                    qreal width = computeWidth(tab.leaderWeight, tab.leaderWidth, painter->font());
+                    qreal width = computeWidth(tab.leaderWeight, tab.leaderWidth, painter->font(), QFontMetricsF(painter->font()));
                     if (x1 < x2)
                     {
                         if (tab.leaderText.isEmpty())

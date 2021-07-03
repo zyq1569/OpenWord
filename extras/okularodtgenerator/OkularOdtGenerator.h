@@ -37,18 +37,18 @@ public:
     OkularOdtGenerator( QObject *parent, const QVariantList &args );
     ~OkularOdtGenerator();
 
-    bool loadDocument( const QString &fileName, QVector<Okular::Page*> &pages );
+    bool loadDocument( const QString &fileName, QVector<Okular::Page*> &pages ) override;
 
-    bool canGeneratePixmap() const;
-    void generatePixmap( Okular::PixmapRequest *request );
+    bool canGeneratePixmap() const override;
+    void generatePixmap( Okular::PixmapRequest *request ) override;
 
-    Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
-    const Okular::DocumentSynopsis* generateDocumentSynopsis();
+    Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const override;
+    const Okular::DocumentSynopsis* generateDocumentSynopsis() override;
 
-    bool canGenerateTextPage() const;
+    bool canGenerateTextPage() const override;
 
 protected:
-    bool doCloseDocument();
+    bool doCloseDocument() override;
     Okular::TextPage* textPage( Okular::Page *page );
 
 private:

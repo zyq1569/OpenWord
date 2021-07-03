@@ -47,7 +47,7 @@
 OkularOdtGenerator::OkularOdtGenerator( QObject *parent, const QVariantList &args )
     : Okular::Generator( parent, args )
 {
-    m_doc = 0;
+    m_doc = nullptr;
     setFeature( TextExtraction );
 }
 
@@ -90,7 +90,7 @@ bool OkularOdtGenerator::loadDocument( const QString &fileName, QVector<Okular::
     KoDocumentEntry documentEntry = KoDocumentEntry::queryByMimeType(mimetype);
     KoPart *part = documentEntry.createKoPart(&error);
 
-    if (!error.isEmpty()) {
+    if (!error.isEmpty() || !part) {
         qWarning() << "Error creating document" << mimetype << error;
         return 0;
     }
@@ -106,7 +106,7 @@ bool OkularOdtGenerator::loadDocument( const QString &fileName, QVector<Okular::
     while (!m_doc->layoutFinishedAtleastOnce()) {
         QCoreApplication::processEvents();
 
-        if (!QCoreApplication::hasPendingEvents())
+        if (!QCoreApplication::eventDispatcher()->hasPendingEvents())
             break;
     }
 
@@ -223,9 +223,6 @@ void OkularOdtGenerator::generatePixmap( Okular::PixmapRequest *request )
         KWPageManager *pageManager = m_doc->pageManager();
 
         KWPage page = pageManager->page(request->pageNumber()+1);
-
-        pix = new QPixmap(request->width(), request->height());
-        QPainter painter(pix);
 
         QSize rSize(request->width(), request->height());
 
