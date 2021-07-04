@@ -27,14 +27,8 @@ SDK_LIB_PREFIX      = D:/Dev/CraftRoot-D/lib
 SDK_INSTALL_PREFIX  = D:/CraftRoot/include
 SDK_LIB_PREFIX      = D:/CraftRoot/lib
 
-SDK_INSTALL_PREFIX  = E:/KDE/DEBUG/include
-SDK_LIB_PREFIX      = E:/KDE/DEBUG/lib
-
-SDK_INSTALL_PREFIX  = E:/KDE/RelWithDebInfo/include
-SDK_LIB_PREFIX      = E:/KDE/RelWithDebInfo/lib
-
-SDK_INSTALL_PREFIX  = G:/KDE/RelWithDebInfo/include
-SDK_LIB_PREFIX      = G:/KDE/RelWithDebInfo/lib
+SDK_INSTALL_PREFIX  = D:/Dev/KDE_SDK/MSC/RelWithDebInfo/include
+SDK_LIB_PREFIX      = D:/Dev/KDE_SDK/MSC/RelWithDebInfo/lib
 
 DESTDIR             = $$PWD/MS_bin/bin
 
