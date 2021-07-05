@@ -269,75 +269,75 @@ KoFilter::ConversionStatus DocxImport::parseParts(KoOdfWriters *writers, MSOOXML
 
     reportProgress(30);
 
+//    {
+    // 5. parse footnotes
+    const QString footnotePathAndFile(relationships->targetForType(documentPath, documentFile,
+                                      QLatin1String(MSOOXML::Schemas::officeDocument::relationships) + "/footnotes"));
+    //! @todo use m_contentTypes.values() when multiple paths are expected, e.g. for ContentTypes::wordHeader
+    DocxXmlFootnoteReader footnoteReader(writers);
+    if (!footnotePathAndFile.isEmpty())
     {
-        // 5. parse footnotes
-        const QString footnotePathAndFile(relationships->targetForType(documentPath, documentFile,
-                                          QLatin1String(MSOOXML::Schemas::officeDocument::relationships) + "/footnotes"));
-        //! @todo use m_contentTypes.values() when multiple paths are expected, e.g. for ContentTypes::wordHeader
-        DocxXmlFootnoteReader footnoteReader(writers);
-        if (!footnotePathAndFile.isEmpty())
-        {
-            QString footnotePath, footnoteFile;
-            MSOOXML::Utils::splitPathAndFile(footnotePathAndFile, &footnotePath, &footnoteFile);
-            DocxXmlDocumentReaderContext context(*this, footnotePath, footnoteFile, *relationships, &themes);
-            context.m_tableStyles = mainContext.m_tableStyles;
-            context.m_bulletStyles = mainContext.m_bulletStyles;
-            context.m_namedDefaultStyles = mainContext.m_namedDefaultStyles;
-            context.m_abstractNumIDs = mainContext.m_abstractNumIDs;
+        QString footnotePath, footnoteFile;
+        MSOOXML::Utils::splitPathAndFile(footnotePathAndFile, &footnotePath, &footnoteFile);
+        DocxXmlDocumentReaderContext context(*this, footnotePath, footnoteFile, *relationships, &themes);
+        context.m_tableStyles = mainContext.m_tableStyles;
+        context.m_bulletStyles = mainContext.m_bulletStyles;
+        context.m_namedDefaultStyles = mainContext.m_namedDefaultStyles;
+        context.m_abstractNumIDs = mainContext.m_abstractNumIDs;
 
-            RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(
-                                 footnotePathAndFile, &footnoteReader, writers, errorMessage, &context) )
-            mainContext.m_footnotes = context.m_footnotes;
-        }
-        reportProgress(35);
-
-        // 6. parse comments
-        const QString commentPathAndFile(relationships->targetForType(documentPath, documentFile,
-                                         QLatin1String(MSOOXML::Schemas::officeDocument::relationships) + "/comments"));
-        DocxXmlCommentReader commentReader(writers);
-        if (!commentPathAndFile.isEmpty())
-        {
-            QString commentPath, commentFile;
-            MSOOXML::Utils::splitPathAndFile(commentPathAndFile, &commentPath, &commentFile);
-            DocxXmlDocumentReaderContext context(*this, commentPath, commentFile, *relationships, &themes);
-            context.m_tableStyles = mainContext.m_tableStyles;
-            context.m_bulletStyles = mainContext.m_bulletStyles;
-            //TODO: m_abstractNumIDs and m_namedDefaultStyles might be needed
-
-            RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(
-                                 commentPathAndFile, &commentReader, writers, errorMessage, &context) )
-            mainContext.m_comments = context.m_comments;
-        }
-
-        reportProgress(40);
-
-        // 7. parse endnotes
-        const QString endnotePathAndFile(relationships->targetForType(documentPath, documentFile,
-                                         QLatin1String(MSOOXML::Schemas::officeDocument::relationships) + "/endnotes"));
-        DocxXmlEndnoteReader endnoteReader(writers);
-        if (!endnotePathAndFile.isEmpty())
-        {
-            QString endnotePath, endnoteFile;
-            MSOOXML::Utils::splitPathAndFile(endnotePathAndFile, &endnotePath, &endnoteFile);
-            DocxXmlDocumentReaderContext context(*this, endnotePath, endnoteFile, *relationships, &themes);
-            context.m_tableStyles = mainContext.m_tableStyles;
-            context.m_bulletStyles = mainContext.m_bulletStyles;
-            context.m_namedDefaultStyles = mainContext.m_namedDefaultStyles;
-            context.m_abstractNumIDs = mainContext.m_abstractNumIDs;
-
-            RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(
-                                 endnotePathAndFile, &endnoteReader, writers, errorMessage, &context) )
-            mainContext.m_endnotes = context.m_endnotes;
-        }
-        reportProgress(45);
-
-        // 8. parse document
-        // Some of the templates MIGHT be defined in numberingreader.
-        DocxXmlDocumentReader documentReader(writers);
-        documentReader.m_definedShapeTypes = numberingReader.m_definedShapeTypes;
-        RETURN_IF_ERROR( loadAndParseDocument(
-                             d->mainDocumentContentType(), &documentReader, writers, errorMessage, &mainContext) )
+        RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(
+                             footnotePathAndFile, &footnoteReader, writers, errorMessage, &context) )
+        mainContext.m_footnotes = context.m_footnotes;
     }
+    reportProgress(35);
+
+    // 6. parse comments
+    const QString commentPathAndFile(relationships->targetForType(documentPath, documentFile,
+                                     QLatin1String(MSOOXML::Schemas::officeDocument::relationships) + "/comments"));
+    DocxXmlCommentReader commentReader(writers);
+    if (!commentPathAndFile.isEmpty())
+    {
+        QString commentPath, commentFile;
+        MSOOXML::Utils::splitPathAndFile(commentPathAndFile, &commentPath, &commentFile);
+        DocxXmlDocumentReaderContext context(*this, commentPath, commentFile, *relationships, &themes);
+        context.m_tableStyles = mainContext.m_tableStyles;
+        context.m_bulletStyles = mainContext.m_bulletStyles;
+        //TODO: m_abstractNumIDs and m_namedDefaultStyles might be needed
+
+        RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(
+                             commentPathAndFile, &commentReader, writers, errorMessage, &context) )
+        mainContext.m_comments = context.m_comments;
+    }
+
+    reportProgress(40);
+
+    // 7. parse endnotes
+    const QString endnotePathAndFile(relationships->targetForType(documentPath, documentFile,
+                                     QLatin1String(MSOOXML::Schemas::officeDocument::relationships) + "/endnotes"));
+    DocxXmlEndnoteReader endnoteReader(writers);
+    if (!endnotePathAndFile.isEmpty())
+    {
+        QString endnotePath, endnoteFile;
+        MSOOXML::Utils::splitPathAndFile(endnotePathAndFile, &endnotePath, &endnoteFile);
+        DocxXmlDocumentReaderContext context(*this, endnotePath, endnoteFile, *relationships, &themes);
+        context.m_tableStyles = mainContext.m_tableStyles;
+        context.m_bulletStyles = mainContext.m_bulletStyles;
+        context.m_namedDefaultStyles = mainContext.m_namedDefaultStyles;
+        context.m_abstractNumIDs = mainContext.m_abstractNumIDs;
+
+        RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(
+                             endnotePathAndFile, &endnoteReader, writers, errorMessage, &context) )
+        mainContext.m_endnotes = context.m_endnotes;
+    }
+    reportProgress(45);
+
+    // 8. parse document
+    // Some of the templates MIGHT be defined in numberingreader.
+    DocxXmlDocumentReader documentReader(writers);
+    documentReader.m_definedShapeTypes = numberingReader.m_definedShapeTypes;
+    RETURN_IF_ERROR( loadAndParseDocument(
+                         d->mainDocumentContentType(), &documentReader, writers, errorMessage, &mainContext) )
+//    }
     reportProgress(100);
 
     return KoFilter::OK;
