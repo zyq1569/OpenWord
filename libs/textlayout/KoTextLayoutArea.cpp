@@ -1088,8 +1088,8 @@ bool KoTextLayoutArea::layoutBlock(FrameIterator *cursor)
     {
         // first remove any drop-caps related formatting that's already there in the layout.
         // we'll do it all afresh now.
-        QList<QTextLayout::FormatRange> formatRanges = layout->additionalFormats();
-        for (QList< QTextLayout::FormatRange >::Iterator iter = formatRanges.begin();
+        QVector<QTextLayout::FormatRange> formatRanges = layout->formats();//additionalFormats();
+        for (QVector< QTextLayout::FormatRange >::Iterator iter = formatRanges.begin();
                 iter != formatRanges.end(); )
         {
             if (iter->format.boolProperty(DropCapsAdditionalFormattingId))
@@ -1101,9 +1101,9 @@ bool KoTextLayoutArea::layoutBlock(FrameIterator *cursor)
                 ++iter;
             }
         }
-        if (formatRanges.count() != layout->additionalFormats().count())
+        if (formatRanges.count() != layout->formats().count())//layout->additionalFormats().count())
         {
-            layout->setAdditionalFormats(formatRanges);
+            layout->setFormats(formatRanges);//setAdditionalFormats(formatRanges);
         }
         bool dropCaps = pStyle.dropCaps();
         int dropCapsLength = pStyle.dropCapsLength();
@@ -1212,7 +1212,7 @@ bool KoTextLayoutArea::layoutBlock(FrameIterator *cursor)
                 dropCapsFormatRange.start = 0;
                 dropCapsFormatRange.length = dropCapsLength;
                 formatRanges.append(dropCapsFormatRange);
-                layout->setAdditionalFormats(formatRanges);
+                layout->setFormats(formatRanges);//setAdditionalFormats(formatRanges);
 
                 d->dropCapsNChars = dropCapsLength;
                 dropCapsAffectsNMoreLines = (d->dropCapsNChars > 0) ? dropCapsLines : 0;
@@ -1439,7 +1439,9 @@ bool KoTextLayoutArea::layoutBlock(FrameIterator *cursor)
     option.setTabs(qTabs);
 
     // conversion here is required because Qt thinks in device units and we don't
-    option.setTabStop(tabStopDistance * qt_defaultDpiY() / 72.);
+    //option.setTabStop(tabStopDistance * qt_defaultDpiY() / 72.);
+    option.setTabStopDistance(tabStopDistance * qt_defaultDpiY() / 72.);
+
 
     layout->setTextOption(option);
 
@@ -1527,7 +1529,7 @@ bool KoTextLayoutArea::layoutBlock(FrameIterator *cursor)
             else if (listFormat.intProperty(KoListStyle::LabelFollowedBy) == KoListStyle::Space)
             {
                 QFontMetrics fm(labelFormat.font(), d->documentLayout->paintDevice());
-                d->indent += fm.width(' ');
+                d->indent += fm.horizontalAdvance(' ');//fm.width(' ');
             }
             // default needs to be no space so presentationListTabWorkaround above makes us go here
         }
@@ -1585,7 +1587,6 @@ bool KoTextLayoutArea::layoutBlock(FrameIterator *cursor)
 
         documentLayout()->positionAnchorTextRanges(block.position()+line.textStart(), line.textLength(), block.document());
         qreal bottomOfText = line.y() + line.height();
-
         bool softBreak = false;
         bool moreInMiddle = d->y > maximumAllowedBottom() - 150;
         if (acceptsPageBreak() && !pStyle.nonBreakableLines() && moreInMiddle)
@@ -1641,9 +1642,8 @@ bool KoTextLayoutArea::layoutBlock(FrameIterator *cursor)
                 return false;
             }
         }
-
         findFootNotes(block, line, bottomOfText);
-        if (bottomOfText > maximumAllowedBottom())
+        if (bottomOfText > (maximumAllowedBottom()-10))
         {
             // We can not fit line within our allowed space
             // in case we resume layout on next page the line is reused later
