@@ -1643,7 +1643,8 @@ bool KoTextLayoutArea::layoutBlock(FrameIterator *cursor)
             }
         }
         findFootNotes(block, line, bottomOfText);
-        if (bottomOfText > (maximumAllowedBottom()-10))
+        static int deltH = 10;
+        if (bottomOfText > (maximumAllowedBottom()- deltH ))
         {
             // We can not fit line within our allowed space
             // in case we resume layout on next page the line is reused later
