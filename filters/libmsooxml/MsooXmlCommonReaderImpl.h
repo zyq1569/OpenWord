@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of Office 2007 Filters for Calligra
  *
  * Copyright (C) 2009-2010 Nokia Corporation and/or its subsidiary(-ies).
@@ -69,33 +69,44 @@ void MSOOXML_CURRENT_CLASS::doneInternal()
 //! @todo support all elements
 KoFilter::ConversionStatus MSOOXML_CURRENT_CLASS::read_t()
 {
-    if (m_read_t_args) {
+    if (m_read_t_args)
+    {
         READ_PROLOGUE_IF_NS(a)
-    } else {
+    }
+    else
+    {
         READ_PROLOGUE
     }
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
         //debugMsooXml << *this;
-        if (isCharacters()) {
+        if (isCharacters())
+        {
             body->addTextSpan(text().toString());
 #ifdef PPTXXMLSLIDEREADER_CPP
             d->textBoxHasContent = true;
 #endif
         }
-        if (m_read_t_args) {
+        if (m_read_t_args)
+        {
             BREAK_IF_END_OF_WITH_NS(a, CURRENT_EL)
-        } else {
+        }
+        else
+        {
             BREAK_IF_END_OF(CURRENT_EL)
         }
     }
 //debugMsooXml << "{1}";
 
-    if (m_read_t_args) {
+    if (m_read_t_args)
+    {
         m_read_t_args = false;
         READ_EPILOGUE_IF_NS(a)
-    } else {
+    }
+    else
+    {
         READ_EPILOGUE
     }
 }
@@ -126,20 +137,26 @@ KoFilter::ConversionStatus MSOOXML_CURRENT_CLASS::read_AlternateContent()
 {
     m_choiceAccepted = false;
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
-        if (isEndElement() && name() == "AlternateContent") {
+        if (isEndElement() && name() == "AlternateContent")
+        {
             break;
         }
 
-        if (isStartElement()) {
-            if (name() == "Choice") {
+        if (isStartElement())
+        {
+            if (name() == "Choice")
+            {
                 TRY_READ(Choice)
             }
-            else if (!m_choiceAccepted && qualifiedName() == "mc:Fallback") {
+            else if (!m_choiceAccepted && qualifiedName() == "mc:Fallback")
+            {
                 TRY_READ(Fallback)
             }
-            else {
+            else
+            {
                 skipCurrentElement();
             }
         }
@@ -163,18 +180,22 @@ KoFilter::ConversionStatus MSOOXML_CURRENT_CLASS::read_Choice()
     // Lassi is not sure).  For all other alternatives we
     // don't dare try to interpret it, but instead we use the
     // AlternateContent which is what MSO 2007 would have given us.
-    if (Requires != "v") {
+    if (Requires != "v")
+    {
         skipCurrentElement();
         return KoFilter::OK;
     }
 
     m_choiceAccepted = true;
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
-        if (isEndElement() && name() == "Choice") {
+        if (isEndElement() && name() == "Choice")
+        {
             break;
         }
-        if (isStartElement()) {
+        if (isStartElement())
+        {
 #ifdef PPTXXMLSLIDEREADER_CPP
             TRY_READ_IF_NS(p, oleObj)
 #endif
@@ -189,13 +210,16 @@ KoFilter::ConversionStatus MSOOXML_CURRENT_CLASS::read_Choice()
 KoFilter::ConversionStatus MSOOXML_CURRENT_CLASS::read_Fallback()
 {
 
-    while (!atEnd()) {
+    while (!atEnd())
+    {
         readNext();
-        if (isEndElement() && name() == "Fallback") {
+        if (isEndElement() && name() == "Fallback")
+        {
             break;
         }
 
-        if (isStartElement()) {
+        if (isStartElement())
+        {
 #ifdef PPTXXMLSLIDEREADER_CPP
             TRY_READ_IF_NS(p, sp)
 #endif
@@ -204,7 +228,8 @@ KoFilter::ConversionStatus MSOOXML_CURRENT_CLASS::read_Fallback()
 #endif
 #ifdef XLSXXMLWORKSHEETREADER_CPP
             // FIXME: This Choice/Content/Fallback structure needs a more general treatment.
-            if (name() == "oleObject") {
+            if (name() == "oleObject")
+            {
                 TRY_READ(oleObject)
             }
 #endif

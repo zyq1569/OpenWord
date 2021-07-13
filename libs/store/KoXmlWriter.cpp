@@ -1,4 +1,4 @@
-/* This file is part of the KDE project
+﻿/* This file is part of the KDE project
    Copyright (C) 2004 David Faure <faure@kde.org>
    Copyright (C) 2007 Thomas Zander <zander@kde.org>
 
@@ -32,7 +32,8 @@ class Q_DECL_HIDDEN KoXmlWriter::Private
 {
 public:
     Private(QIODevice* dev_, int indentLevel = 0) : dev(dev_), baseIndentLevel(indentLevel) {}
-    ~Private() {
+    ~Private()
+    {
         delete[] indentBuffer;
         delete[] escapeBuffer;
         //TODO: look at if we must delete "dev". For me we must delete it otherwise we will leak it
@@ -48,7 +49,7 @@ public:
 };
 
 KoXmlWriter::KoXmlWriter(QIODevice* dev, int indentLevel)
-        : d(new Private(dev, indentLevel))
+    : d(new Private(dev, indentLevel))
 {
     init();
 }
@@ -61,7 +62,9 @@ void KoXmlWriter::init()
 
     d->escapeBuffer = new char[s_escapeBufferLen];
     if (!d->dev->isOpen())
+    {
         d->dev->open(QIODevice::WriteOnly);
+    }
 }
 
 KoXmlWriter::~KoXmlWriter()
@@ -75,7 +78,8 @@ void KoXmlWriter::startDocument(const char* rootElemName, const char* publicId, 
     writeCString("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
     // There isn't much point in a doctype if there's no DTD to refer to
     // (I'm told that files that are validated by a RelaxNG schema cannot refer to the schema)
-    if (publicId) {
+    if (publicId)
+    {
         writeCString("<!DOCTYPE ");
         writeCString(rootElemName);
         writeCString(" PUBLIC \"");
@@ -97,14 +101,17 @@ void KoXmlWriter::endDocument()
 // returns the value of indentInside of the parent
 bool KoXmlWriter::prepareForChild()
 {
-    if (!d->tags.isEmpty()) {
+    if (!d->tags.isEmpty())
+    {
         Tag& parent = d->tags.top();
-        if (!parent.hasChildren) {
+        if (!parent.hasChildren)
+        {
             closeStartElement(parent);
             parent.hasChildren = true;
             parent.lastChildIsText = false;
         }
-        if (parent.indentInside) {
+        if (parent.indentInside)
+        {
             writeIndent();
         }
         return parent.indentInside;
@@ -115,9 +122,12 @@ bool KoXmlWriter::prepareForChild()
 void KoXmlWriter::prepareForTextNode()
 {
     if (d->tags.isEmpty())
+    {
         return;
+    }
     Tag& parent = d->tags.top();
-    if (!parent.hasChildren) {
+    if (!parent.hasChildren)
+    {
         closeStartElement(parent);
         parent.hasChildren = true;
         parent.lastChildIsText = true;
@@ -152,7 +162,8 @@ void KoXmlWriter::addCompleteElement(QIODevice* indev)
     // already open but for writing, and we need to rewind.
     const bool openOk = indev->open(QIODevice::ReadOnly);
     Q_ASSERT(openOk);
-    if (!openOk) {
+    if (!openOk)
+    {
         warnStore << "Failed to re-open the device! wasOpen=" << wasOpen;
         return;
     }
@@ -160,13 +171,17 @@ void KoXmlWriter::addCompleteElement(QIODevice* indev)
     static const int MAX_CHUNK_SIZE = 8 * 1024; // 8 KB
     QByteArray buffer;
     buffer.resize(MAX_CHUNK_SIZE);
-    while (!indev->atEnd()) {
+    while (!indev->atEnd())
+    {
         qint64 len = indev->read(buffer.data(), buffer.size());
         if (len <= 0)   // e.g. on error
+        {
             break;
+        }
         d->dev->write(buffer.data(), len);
     }
-    if (!wasOpen) {
+    if (!wasOpen)
+    {
         // Restore initial state
         indev->close();
     }
@@ -176,15 +191,19 @@ void KoXmlWriter::endElement()
 {
     if (d->tags.isEmpty())
         warnStore << "EndElement() was called more times than startElement(). "
-                     "The generated XML will be invalid! "
-                     "Please report this bug (by saving the document to another format...)" << endl;
+                  "The generated XML will be invalid! "
+                  "Please report this bug (by saving the document to another format...)" << endl;
 
     Tag tag = d->tags.pop();
 
-    if (!tag.hasChildren) {
+    if (!tag.hasChildren)
+    {
         writeCString("/>");
-    } else {
-        if (tag.indentInside && !tag.lastChildIsText) {
+    }
+    else
+    {
+        if (tag.indentInside && !tag.lastChildIsText)
+        {
             writeIndent();
         }
         writeCString("</");
@@ -201,7 +220,9 @@ void KoXmlWriter::addTextNode(const QByteArray& cstr)
     char* escaped = escapeForXML(cstr.constData(), cstr.size());
     writeCString(escaped);
     if (escaped != d->escapeBuffer)
+    {
         delete[] escaped;
+    }
 }
 
 void KoXmlWriter::addTextNode(const char* cstr)
@@ -210,7 +231,9 @@ void KoXmlWriter::addTextNode(const char* cstr)
     char* escaped = escapeForXML(cstr, -1);
     writeCString(escaped);
     if (escaped != d->escapeBuffer)
+    {
         delete[] escaped;
+    }
 }
 
 void KoXmlWriter::addProcessingInstruction(const char* cstr)
@@ -230,7 +253,9 @@ void KoXmlWriter::addAttribute(const char* attrName, const QByteArray& value)
     char* escaped = escapeForXML(value.constData(), value.size());
     writeCString(escaped);
     if (escaped != d->escapeBuffer)
+    {
         delete[] escaped;
+    }
     writeChar('"');
 }
 
@@ -242,7 +267,9 @@ void KoXmlWriter::addAttribute(const char* attrName, const char* value)
     char* escaped = escapeForXML(value, -1);
     writeCString(escaped);
     if (escaped != d->escapeBuffer)
+    {
         delete[] escaped;
+    }
     writeChar('"');
 }
 
@@ -300,14 +327,18 @@ char* KoXmlWriter::escapeForXML(const char* source, int length = -1) const
     char* destination = d->escapeBuffer;
     char* output = d->escapeBuffer;
     const char* src = source; // src moves, source remains
-    for (;;) {
-        if (destination >= destBoundary) {
+    for (;;)
+    {
+        if (destination >= destBoundary)
+        {
             // When we come to realize that our escaped string is going to
             // be bigger than the escape buffer (this shouldn't happen very often...),
             // we drop the idea of using it, and we allocate a bigger buffer.
             // Note that this if() can only be hit once per call to the method.
             if (length == -1)
-                length = qstrlen(source);   // expensive...
+            {
+                length = qstrlen(source);    // expensive...
+            }
             uint newLength = length * 6 + 1; // worst case. 6 is due to &quot; and &apos;
             char* buffer = new char[ newLength ];
             destBoundary = buffer + newLength;
@@ -316,46 +347,50 @@ char* KoXmlWriter::escapeForXML(const char* source, int length = -1) const
             output = buffer;
             destination = buffer + amountOfCharsAlreadyCopied;
         }
-        switch (*src) {
-        case 60: // <
-            memcpy(destination, "&lt;", 4);
-            destination += 4;
-            break;
-        case 62: // >
-            memcpy(destination, "&gt;", 4);
-            destination += 4;
-            break;
-        case 34: // "
-            memcpy(destination, "&quot;", 6);
-            destination += 6;
-            break;
+        switch (*src)
+        {
+            case 60: // <
+                memcpy(destination, "&lt;", 4);
+                destination += 4;
+                break;
+            case 62: // >
+                memcpy(destination, "&gt;", 4);
+                destination += 4;
+                break;
+            case 34: // "
+                memcpy(destination, "&quot;", 6);
+                destination += 6;
+                break;
 #if 0 // needed?
-        case 39: // '
-            memcpy(destination, "&apos;", 6);
-            destination += 6;
-            break;
+            case 39: // '
+                memcpy(destination, "&apos;", 6);
+                destination += 6;
+                break;
 #endif
-        case 38: // &
-            memcpy(destination, "&amp;", 5);
-            destination += 5;
-            break;
-        case 0:
-            *destination = '\0';
-            return output;
-        // Control codes accepted in XML 1.0 documents.
-        case 9:
-        case 10:
-        case 13:
-            *destination++ = *src++;
-            continue;
-        default:
-            // Don't add control codes not accepted in XML 1.0 documents.
-            if (*src > 0 && *src < 32) {
-                ++src;
-            } else {
+            case 38: // &
+                memcpy(destination, "&amp;", 5);
+                destination += 5;
+                break;
+            case 0:
+                *destination = '\0';
+                return output;
+            // Control codes accepted in XML 1.0 documents.
+            case 9:
+            case 10:
+            case 13:
                 *destination++ = *src++;
-            }
-            continue;
+                continue;
+            default:
+                // Don't add control codes not accepted in XML 1.0 documents.
+                if (*src > 0 && *src < 32)
+                {
+                    ++src;
+                }
+                else
+                {
+                    *destination++ = *src++;
+                }
+                continue;
         }
         ++src;
     }
@@ -451,77 +486,102 @@ void KoXmlWriter::addTextSpan(const QString& text, const QMap<int, int>& tabCach
     // Accumulate chars either in str or in nrSpaces (for spaces).
     // Flush str when writing a subelement (for spaces or for another reason)
     // Flush nrSpaces when encountering two or more consecutive spaces
-    for (int i = 0; i < len ; ++i) {
+    for (int i = 0; i < len ; ++i)
+    {
         QChar ch = text[i];
         ushort unicode = ch.unicode();
-        if (unicode == ' ') {
+        if (unicode == ' ')
+        {
             if (i == 0)
+            {
                 leadingSpace = true;
+            }
             ++nrSpaces;
-        } else {
-            if (nrSpaces > 0) {
+        }
+        else
+        {
+            if (nrSpaces > 0)
+            {
                 // For the first space we use ' '.
                 // "it is good practice to use (text:s) for the second and all following SPACE
                 // characters in a sequence." (per the ODF spec)
                 // however, per the HTML spec, "authors should not rely on user agents to render
                 // white space immediately after a start tag or immediately before an end tag"
                 // (and both we and OO.o ignore leading spaces in <text:p> or <text:h> elements...)
-                if (!leadingSpace) {
+                if (!leadingSpace)
+                {
                     str += ' ';
                     --nrSpaces;
                 }
-                if (nrSpaces > 0) {   // there are more spaces
+                if (nrSpaces > 0)     // there are more spaces
+                {
                     if (!str.isEmpty())
+                    {
                         addTextNode(str);
+                    }
                     str.clear();
                     startElement("text:s");
                     if (nrSpaces > 1)   // it's 1 by default
+                    {
                         addAttribute("text:c", nrSpaces);
+                    }
                     endElement();
                 }
             }
             nrSpaces = 0;
             leadingSpace = false;
 
-            switch (unicode) {
-            case '\t':
-                if (!str.isEmpty())
-                    addTextNode(str);
-                str.clear();
-                startElement("text:tab");
-                if (tabCache.contains(i))
-                    addAttribute("text:tab-ref", tabCache[i] + 1);
-                endElement();
-                break;
-            // gracefully handle \f form feed in text input.
-            // otherwise the xml will not be valid.
-            // \f can be added e.g. in ascii import filter.
-            case '\f':
-            case '\n':
-            case QChar::LineSeparator:
-                if (!str.isEmpty())
-                    addTextNode(str);
-                str.clear();
-                startElement("text:line-break");
-                endElement();
-                break;
-            default:
-                // don't add stuff that is not allowed in xml. The stuff we need we have already handled above
-                if (ch.unicode() >= 0x20) {
-                    str += text[i];
-                }
-                break;
+            switch (unicode)
+            {
+                case '\t':
+                    if (!str.isEmpty())
+                    {
+                        addTextNode(str);
+                    }
+                    str.clear();
+                    startElement("text:tab");
+                    if (tabCache.contains(i))
+                    {
+                        addAttribute("text:tab-ref", tabCache[i] + 1);
+                    }
+                    endElement();
+                    break;
+                // gracefully handle \f form feed in text input.
+                // otherwise the xml will not be valid.
+                // \f can be added e.g. in ascii import filter.
+                case '\f':
+                case '\n':
+                case QChar::LineSeparator:
+                    if (!str.isEmpty())
+                    {
+                        addTextNode(str);
+                    }
+                    str.clear();
+                    startElement("text:line-break");
+                    endElement();
+                    break;
+                default:
+                    // don't add stuff that is not allowed in xml. The stuff we need we have already handled above
+                    if (ch.unicode() >= 0x20)
+                    {
+                        str += text[i];
+                    }
+                    break;
             }
         }
     }
     // either we still have text in str or we have spaces in nrSpaces
-    if (!str.isEmpty()) {
+    if (!str.isEmpty())
+    {
         addTextNode(str);
     }
-    if (nrSpaces > 0) {   // there are more spaces
+    if (nrSpaces > 0)     // there are more spaces
+    {
         startElement("text:s");
         if (nrSpaces > 1)   // it's 1 by default
+        {
             addAttribute("text:c", nrSpaces);
+        }
         endElement();
     }
 }
@@ -540,7 +600,9 @@ QList<const char*> KoXmlWriter::tagHierarchy() const
 {
     QList<const char*> answer;
     foreach(const Tag & tag, d->tags)
+    {
         answer.append(tag.tagName);
+    }
 
     return answer;
 }
@@ -549,23 +611,36 @@ QString KoXmlWriter::toString() const
 {
     Q_ASSERT(!d->dev->isSequential());
     if (d->dev->isSequential())
+    {
         return QString();
+    }
     bool wasOpen = d->dev->isOpen();
     qint64 oldPos = -1;
-    if (wasOpen) {
+    if (wasOpen)
+    {
         oldPos = d->dev->pos();
         if (oldPos > 0)
+        {
             d->dev->seek(0);
-    } else {
+        }
+    }
+    else
+    {
         const bool openOk = d->dev->open(QIODevice::ReadOnly);
         Q_ASSERT(openOk);
         if (!openOk)
+        {
             return QString();
+        }
     }
     QString s = QString::fromUtf8(d->dev->readAll());
     if (wasOpen)
+    {
         d->dev->seek(oldPos);
+    }
     else
+    {
         d->dev->close();
+    }
     return s;
 }
