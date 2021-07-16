@@ -17,7 +17,7 @@ HEADERS += MsooXmlDebug.h \
             VmlDrawingReader.h \
             PredefinedShapeHelper.h \
             ComplexShapeHandler.h \
-            MsooXmlCommonReaderImpl.h
+#            MsooXmlCommonReaderImpl.h
 
 
 SOURCES +=  MsooXmlDebug.cpp \
