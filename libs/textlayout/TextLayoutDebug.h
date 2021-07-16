@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Copyright (c) 2015 Boudewijn Rempt <boud@valdyas.org>
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -21,6 +21,8 @@
 #include <QDebug>
 #include <QLoggingCategory>
 #include <kotextlayout_export.h>
+
+#include "logging.h"
 
 extern const KOTEXTLAYOUT_EXPORT QLoggingCategory &TEXT_LAYOUT_LOG();
 
