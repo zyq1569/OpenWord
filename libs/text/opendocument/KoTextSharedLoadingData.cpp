@@ -55,10 +55,11 @@ class Q_DECL_HIDDEN KoTextSharedLoadingData::Private
 {
 public:
     Private()
-    : defaultCharacterStyle(0)
-    , defaultParagraphStyle(0)
+        : defaultCharacterStyle(0)
+        , defaultParagraphStyle(0)
     {}
-    ~Private() {
+    ~Private()
+    {
         qDeleteAll(paragraphStylesToDelete);
         qDeleteAll(characterStylesToDelete);
         qDeleteAll(listStylesToDelete);
@@ -111,7 +112,7 @@ public:
 };
 
 KoTextSharedLoadingData::KoTextSharedLoadingData()
-        : d(new Private())
+    : d(new Private())
 {
 }
 
@@ -122,10 +123,14 @@ KoTextSharedLoadingData::~KoTextSharedLoadingData()
 
 void KoTextSharedLoadingData::addDefaultCharacterStyle(KoShapeLoadingContext &context, const KoXmlElement *styleElem, const KoXmlElement *appDefault, KoStyleManager *styleManager)
 {
-    if (styleManager) {
-        if (styleElem) {
+    if (styleManager)
+    {
+        if (styleElem)
+        {
             styleManager->defaultCharacterStyle()->loadOdf(styleElem, context);
-        } else if (appDefault) {
+        }
+        else if (appDefault)
+        {
             styleManager->defaultCharacterStyle()->loadOdf(appDefault, context);
         }
         d->defaultCharacterStyle = styleManager->defaultCharacterStyle();
@@ -134,10 +139,14 @@ void KoTextSharedLoadingData::addDefaultCharacterStyle(KoShapeLoadingContext &co
 
 void KoTextSharedLoadingData::addDefaultParagraphStyle(KoShapeLoadingContext &context, const KoXmlElement *styleElem, const KoXmlElement *appDefault, KoStyleManager *styleManager)
 {
-    if (styleManager) {
-        if (styleElem) {
+    if (styleManager)
+    {
+        if (styleElem)
+        {
             styleManager->defaultParagraphStyle()->loadOdf(styleElem, context);
-        } else if (appDefault) {
+        }
+        else if (appDefault)
+        {
             styleManager->defaultParagraphStyle()->loadOdf(appDefault, context);
         }
         d->defaultParagraphStyle = styleManager->defaultParagraphStyle();
@@ -206,11 +215,14 @@ void KoTextSharedLoadingData::addParagraphStyles(KoShapeLoadingContext &context,
     const QList<QPair<QString, KoParagraphStyle *> > paragraphStyles(loadParagraphStyles(context, styleElements, styleTypes, styleManager));
 
     QList<QPair<QString, KoParagraphStyle *> >::ConstIterator it(paragraphStyles.begin());
-    for (; it != paragraphStyles.end(); ++it) {
-        if (styleTypes & ContentDotXml) {
+    for (; it != paragraphStyles.end(); ++it)
+    {
+        if (styleTypes & ContentDotXml)
+        {
             d->paragraphContentDotXmlStyles.insert(it->first, it->second);
         }
-        if (styleTypes & StylesDotXml) {
+        if (styleTypes & StylesDotXml)
+        {
             d->paragraphStylesDotXmlStyles.insert(it->first, it->second);
         }
     }
@@ -223,7 +235,8 @@ QList<QPair<QString, KoParagraphStyle *> > KoTextSharedLoadingData::loadParagrap
     QHash<KoParagraphStyle*,QString> nextStyles;
     QHash<KoParagraphStyle*,QString> parentStyles;
 
-    foreach(KoXmlElement *styleElem, styleElements) {
+    foreach(KoXmlElement *styleElem, styleElements)
+    {
         Q_ASSERT(styleElem);
         Q_ASSERT(!styleElem->isNull());
 
@@ -232,7 +245,8 @@ QList<QPair<QString, KoParagraphStyle *> > KoTextSharedLoadingData::loadParagrap
         parastyle->loadOdf(styleElem, context);
         QString listStyleName = styleElem->attributeNS(KoXmlNS::style, "list-style-name", QString());
         KoListStyle *list = listStyle(listStyleName, styleTypes & StylesDotXml);
-        if (list) {
+        if (list)
+        {
             KoListStyle *newListStyle = new KoListStyle(parastyle);
             newListStyle->copyProperties(list);
             parastyle->setListStyle(newListStyle);
@@ -241,15 +255,22 @@ QList<QPair<QString, KoParagraphStyle *> > KoTextSharedLoadingData::loadParagrap
         d->namedParagraphStyles.insert(name, parastyle);
 
         if (styleElem->hasAttributeNS(KoXmlNS::style, "next-style-name"))
+        {
             nextStyles.insert(parastyle, styleElem->attributeNS(KoXmlNS::style, "next-style-name"));
+        }
         if (styleElem->hasAttributeNS(KoXmlNS::style, "parent-style-name"))
+        {
             parentStyles.insert(parastyle, styleElem->attributeNS(KoXmlNS::style, "parent-style-name"));
+        }
 
         // TODO check if it a know style set the styleid so that the custom styles are kept during copy and paste
         // in case styles are not added to the style manager they have to be deleted after loading to avoid leaking memeory
-        if (styleManager) {
+        if (styleManager)
+        {
             styleManager->add(parastyle);
-        } else {
+        }
+        else
+        {
             d->paragraphStylesToDelete.append(parastyle);
         }
 
@@ -258,15 +279,21 @@ QList<QPair<QString, KoParagraphStyle *> > KoTextSharedLoadingData::loadParagrap
 
     // second pass; resolve all the 'next-style's and parent-style's.
     // TODO iterate via values
-    foreach (KoParagraphStyle *style, nextStyles.keys()) {
+    foreach (KoParagraphStyle *style, nextStyles.keys())
+    {
         KoParagraphStyle *next = d->namedParagraphStyles.value(nextStyles.value(style));
         if (next && next->styleId() >= 0)
+        {
             style->setNextStyle(next->styleId());
+        }
     }
-    foreach (KoParagraphStyle *style, parentStyles.keys()) {
+    foreach (KoParagraphStyle *style, parentStyles.keys())
+    {
         KoParagraphStyle *parent = d->namedParagraphStyles.value(parentStyles.value(style));
         if (parent)
+        {
             style->setParentStyle(parent);
+        }
     }
 
     return paragraphStyles;
@@ -277,33 +304,45 @@ void KoTextSharedLoadingData::addCharacterStyles(KoShapeLoadingContext &context,
 {
     QVector<OdfCharStyle> characterStyles(loadCharacterStyles(context, styleElements));
 
-    foreach (const OdfCharStyle &odfStyle, characterStyles) {
-        if (styleTypes & ContentDotXml) {
+    foreach (const OdfCharStyle &odfStyle, characterStyles)
+    {
+        if (styleTypes & ContentDotXml)
+        {
             d->characterContentDotXmlStyles.insert(odfStyle.odfName, odfStyle.style);
         }
-        if (styleTypes & StylesDotXml) {
+        if (styleTypes & StylesDotXml)
+        {
             d->characterStylesDotXmlStyles.insert(odfStyle.odfName, odfStyle.style);
         }
 
-        if (styleManager) {
+        if (styleManager)
+        {
             styleManager->add(odfStyle.style);
-        } else {
+        }
+        else
+        {
             d->characterStylesToDelete.append(odfStyle.style);
         }
     }
 
     // now that all name styles have been added we resolve parent relation ships
-    foreach (const OdfCharStyle &odfStyle, characterStyles) {
+    foreach (const OdfCharStyle &odfStyle, characterStyles)
+    {
 
         KoCharacterStyle *parent = 0;
-        if (!odfStyle.parentStyle.isEmpty()) {
+        if (!odfStyle.parentStyle.isEmpty())
+        {
             parent = characterStyle(odfStyle.parentStyle, false);
             if (!parent)
-                parent = characterStyle(odfStyle.parentStyle, true); // try harder
+            {
+                parent = characterStyle(odfStyle.parentStyle, true);    // try harder
+            }
             odfStyle.style->setParentStyle(parent);
         }
-        if (!styleManager) {
-            if (parent) {
+        if (!styleManager)
+        {
+            if (parent)
+            {
                 // an auto style with a parent.
                 // let's set the styleId of that one on the auto-style too.
                 // this will have the effect that whereever the autostyle is applied, it will
@@ -320,7 +359,8 @@ QVector<KoTextSharedLoadingData::OdfCharStyle> KoTextSharedLoadingData::loadChar
     QVector<OdfCharStyle> characterStyles;
     characterStyles.reserve(styleElements.size());
 
-    foreach(KoXmlElement *styleElem, styleElements) {
+    foreach(KoXmlElement *styleElem, styleElements)
+    {
         Q_ASSERT(styleElem);
         Q_ASSERT(!styleElem->isNull());
 
@@ -336,23 +376,29 @@ QVector<KoTextSharedLoadingData::OdfCharStyle> KoTextSharedLoadingData::loadChar
 }
 
 void KoTextSharedLoadingData::addListStyles(KoShapeLoadingContext &context, const QList<KoXmlElement*> &styleElements,
-                                            int styleTypes, KoStyleManager *styleManager)
+        int styleTypes, KoStyleManager *styleManager)
 {
     const QList<QPair<QString, KoListStyle *> > listStyles(loadListStyles(context, styleElements));
 
     QList<QPair<QString, KoListStyle *> >::ConstIterator it(listStyles.begin());
-    for (; it != listStyles.end(); ++it) {
-        if (styleTypes & ContentDotXml) {
+    for (; it != listStyles.end(); ++it)
+    {
+        if (styleTypes & ContentDotXml)
+        {
             d->listContentDotXmlStyles.insert(it->first, it->second);
         }
-        if (styleTypes & StylesDotXml) {
+        if (styleTypes & StylesDotXml)
+        {
             d->listStylesDotXmlStyles.insert(it->first, it->second);
         }
         // TODO check if it a know style set the styleid so that the custom styles are kept during copy and paste
         // in case styles are not added to the style manager they have to be deleted after loading to avoid leaking memory
-        if (styleManager) {
+        if (styleManager)
+        {
             styleManager->add(it->second);
-        } else {
+        }
+        else
+        {
             d->listStylesToDelete.append(it->second);
         }
     }
@@ -362,7 +408,8 @@ QList<QPair<QString, KoListStyle *> > KoTextSharedLoadingData::loadListStyles(Ko
 {
     QList<QPair<QString, KoListStyle *> > listStyles;
 
-    foreach(KoXmlElement *styleElem, styleElements) {
+    foreach(KoXmlElement *styleElem, styleElements)
+    {
         Q_ASSERT(styleElem);
         Q_ASSERT(!styleElem->isNull());
 
@@ -375,23 +422,29 @@ QList<QPair<QString, KoListStyle *> > KoTextSharedLoadingData::loadListStyles(Ko
 }
 
 void KoTextSharedLoadingData::addTableStyles(KoOdfLoadingContext &context, const QList<KoXmlElement*> &styleElements,
-                                            int styleTypes, KoStyleManager *styleManager)
+        int styleTypes, KoStyleManager *styleManager)
 {
     const QList<QPair<QString, KoTableStyle *> > tableStyles(loadTableStyles(context, styleElements));
 
     QList<QPair<QString, KoTableStyle *> >::ConstIterator it(tableStyles.begin());
-    for (; it != tableStyles.end(); ++it) {
-        if (styleTypes & ContentDotXml) {
+    for (; it != tableStyles.end(); ++it)
+    {
+        if (styleTypes & ContentDotXml)
+        {
             d->tableContentDotXmlStyles.insert(it->first, it->second);
         }
-        if (styleTypes & StylesDotXml) {
+        if (styleTypes & StylesDotXml)
+        {
             d->tableStylesDotXmlStyles.insert(it->first, it->second);
         }
         // TODO check if it a know style set the styleid so that the custom styles are kept during copy and paste
         // in case styles are not added to the style manager they have to be deleted after loading to avoid leaking memeory
-        if (styleManager) {
+        if (styleManager)
+        {
             styleManager->add(it->second);
-        } else {
+        }
+        else
+        {
             d->tableStylesToDelete.append(it->second);
         }
     }
@@ -401,7 +454,8 @@ QList<QPair<QString, KoTableStyle *> > KoTextSharedLoadingData::loadTableStyles(
 {
     QList<QPair<QString, KoTableStyle *> > tableStyles;
 
-    foreach(KoXmlElement *styleElem, styleElements) {
+    foreach(KoXmlElement *styleElem, styleElements)
+    {
         Q_ASSERT(styleElem);
         Q_ASSERT(!styleElem->isNull());
 
@@ -415,23 +469,29 @@ QList<QPair<QString, KoTableStyle *> > KoTextSharedLoadingData::loadTableStyles(
 }
 
 void KoTextSharedLoadingData::addTableColumnStyles(KoOdfLoadingContext &context, const QList<KoXmlElement*> &styleElements,
-                                            int styleTypes, KoStyleManager *styleManager)
+        int styleTypes, KoStyleManager *styleManager)
 {
     const QList<QPair<QString, KoTableColumnStyle *> > tableColumnStyles(loadTableColumnStyles(context, styleElements));
 
     QList<QPair<QString, KoTableColumnStyle *> >::ConstIterator it(tableColumnStyles.begin());
-    for (; it != tableColumnStyles.end(); ++it) {
-        if (styleTypes & ContentDotXml) {
+    for (; it != tableColumnStyles.end(); ++it)
+    {
+        if (styleTypes & ContentDotXml)
+        {
             d->tableColumnContentDotXmlStyles.insert(it->first, it->second);
         }
-        if (styleTypes & StylesDotXml) {
+        if (styleTypes & StylesDotXml)
+        {
             d->tableColumnStylesDotXmlStyles.insert(it->first, it->second);
         }
         // TODO check if it a know style set the styleid so that the custom styles are kept during copy and paste
         // in case styles are not added to the style manager they have to be deleted after loading to avoid leaking memeory
-        if (styleManager) {
+        if (styleManager)
+        {
             styleManager->add(it->second);
-        } else {
+        }
+        else
+        {
             d->tableColumnStylesToDelete.append(it->second);
         }
     }
@@ -441,7 +501,8 @@ QList<QPair<QString, KoTableColumnStyle *> > KoTextSharedLoadingData::loadTableC
 {
     QList<QPair<QString, KoTableColumnStyle *> > tableColumnStyles;
 
-    foreach(KoXmlElement *styleElem, styleElements) {
+    foreach(KoXmlElement *styleElem, styleElements)
+    {
         Q_ASSERT(styleElem);
         Q_ASSERT(!styleElem->isNull());
 
@@ -455,23 +516,29 @@ QList<QPair<QString, KoTableColumnStyle *> > KoTextSharedLoadingData::loadTableC
 }
 
 void KoTextSharedLoadingData::addTableRowStyles(KoOdfLoadingContext &context, const QList<KoXmlElement*> &styleElements,
-                                            int styleTypes, KoStyleManager *styleManager)
+        int styleTypes, KoStyleManager *styleManager)
 {
     const QList<QPair<QString, KoTableRowStyle *> > tableRowStyles(loadTableRowStyles(context, styleElements));
 
     QList<QPair<QString, KoTableRowStyle *> >::ConstIterator it(tableRowStyles.begin());
-    for (; it != tableRowStyles.end(); ++it) {
-        if (styleTypes & ContentDotXml) {
+    for (; it != tableRowStyles.end(); ++it)
+    {
+        if (styleTypes & ContentDotXml)
+        {
             d->tableRowContentDotXmlStyles.insert(it->first, it->second);
         }
-        if (styleTypes & StylesDotXml) {
+        if (styleTypes & StylesDotXml)
+        {
             d->tableRowStylesDotXmlStyles.insert(it->first, it->second);
         }
         // TODO check if it a know style set the styleid so that the custom styles are kept during copy and paste
         // in case styles are not added to the style manager they have to be deleted after loading to avoid leaking memeory
-        if (styleManager) {
+        if (styleManager)
+        {
             styleManager->add(it->second);
-        } else {
+        }
+        else
+        {
             d->tableRowStylesToDelete.append(it->second);
         }
     }
@@ -481,7 +548,8 @@ QList<QPair<QString, KoTableRowStyle *> > KoTextSharedLoadingData::loadTableRowS
 {
     QList<QPair<QString, KoTableRowStyle *> > tableRowStyles;
 
-    foreach(KoXmlElement *styleElem, styleElements) {
+    foreach(KoXmlElement *styleElem, styleElements)
+    {
         Q_ASSERT(styleElem);
         Q_ASSERT(!styleElem->isNull());
 
@@ -495,23 +563,29 @@ QList<QPair<QString, KoTableRowStyle *> > KoTextSharedLoadingData::loadTableRowS
 }
 
 void KoTextSharedLoadingData::addTableCellStyles(KoShapeLoadingContext &context, const QList<KoXmlElement*> &styleElements,
-                                            int styleTypes, KoStyleManager *styleManager)
+        int styleTypes, KoStyleManager *styleManager)
 {
     const QList<QPair<QString, KoTableCellStyle *> > tableCellStyles(loadTableCellStyles(context, styleElements));
 
     QList<QPair<QString, KoTableCellStyle *> >::ConstIterator it(tableCellStyles.begin());
-    for (; it != tableCellStyles.end(); ++it) {
-        if (styleTypes & ContentDotXml) {
+    for (; it != tableCellStyles.end(); ++it)
+    {
+        if (styleTypes & ContentDotXml)
+        {
             d->tableCellContentDotXmlStyles.insert(it->first, it->second);
         }
-        if (styleTypes & StylesDotXml) {
+        if (styleTypes & StylesDotXml)
+        {
             d->tableCellStylesDotXmlStyles.insert(it->first, it->second);
         }
         // TODO check if it a know style set the styleid so that the custom styles are kept during copy and paste
         // in case styles are not added to the style manager they have to be deleted after loading to avoid leaking memeory
-        if (styleManager) {
+        if (styleManager)
+        {
             styleManager->add(it->second);
-        } else {
+        }
+        else
+        {
             d->tableCellStylesToDelete.append(it->second);
         }
     }
@@ -521,7 +595,8 @@ QList<QPair<QString, KoTableCellStyle *> > KoTextSharedLoadingData::loadTableCel
 {
     QList<QPair<QString, KoTableCellStyle *> > tableCellStyles;
 
-    foreach(KoXmlElement *styleElem, styleElements) {
+    foreach(KoXmlElement *styleElem, styleElements)
+    {
         Q_ASSERT(styleElem);
         Q_ASSERT(!styleElem->isNull());
 
@@ -535,23 +610,29 @@ QList<QPair<QString, KoTableCellStyle *> > KoTextSharedLoadingData::loadTableCel
 }
 
 void KoTextSharedLoadingData::addSectionStyles(KoOdfLoadingContext &context, const QList<KoXmlElement*> &styleElements,
-                                            int styleTypes, KoStyleManager *styleManager)
+        int styleTypes, KoStyleManager *styleManager)
 {
     const QList<QPair<QString, KoSectionStyle *> > sectionStyles(loadSectionStyles(context, styleElements));
 
     QList<QPair<QString, KoSectionStyle *> >::ConstIterator it(sectionStyles.begin());
-    for (; it != sectionStyles.end(); ++it) {
-        if (styleTypes & ContentDotXml) {
+    for (; it != sectionStyles.end(); ++it)
+    {
+        if (styleTypes & ContentDotXml)
+        {
             d->sectionContentDotXmlStyles.insert(it->first, it->second);
         }
-        if (styleTypes & StylesDotXml) {
+        if (styleTypes & StylesDotXml)
+        {
             d->sectionStylesDotXmlStyles.insert(it->first, it->second);
         }
         // TODO check if it a know style set the styleid so that the custom styles are kept during copy and paste
         // in case styles are not added to the style manager they have to be deleted after loading to avoid leaking memeory
-        if (styleManager) {
+        if (styleManager)
+        {
             styleManager->add(it->second);
-        } else {
+        }
+        else
+        {
             d->sectionStylesToDelete.append(it->second);
         }
     }
@@ -561,7 +642,8 @@ QList<QPair<QString, KoSectionStyle *> > KoTextSharedLoadingData::loadSectionSty
 {
     QList<QPair<QString, KoSectionStyle *> > sectionStyles;
 
-    foreach(KoXmlElement *styleElem, styleElements) {
+    foreach(KoXmlElement *styleElem, styleElements)
+    {
         Q_ASSERT(styleElem);
         Q_ASSERT(!styleElem->isNull());
 
@@ -578,7 +660,8 @@ void KoTextSharedLoadingData::addOutlineStyle(KoShapeLoadingContext &context, Ko
 {
     // outline-styles used e.g. for headers
     KoXmlElement outlineStyleElem = KoXml::namedItemNS(context.odfLoadingContext().stylesReader().officeStyle(), KoXmlNS::text, "outline-style");
-    if (styleManager && outlineStyleElem.isElement()) {
+    if (styleManager && outlineStyleElem.isElement())
+    {
         KoListStyle *outlineStyle = new KoListStyle();
         outlineStyle->loadOdf(context, outlineStyleElem);
         styleManager->setOutlineStyle(outlineStyle); // style manager owns it now and will take care of deleting it.
@@ -654,9 +737,9 @@ QList<KoShape *> KoTextSharedLoadingData::insertedShapes() const
 void KoTextSharedLoadingData::addNotesConfiguration(KoShapeLoadingContext &context, KoStyleManager *styleManager)
 {
     KoOdfNotesConfiguration *footnotesConfiguration = new KoOdfNotesConfiguration(
-         context.odfLoadingContext().stylesReader().globalNotesConfiguration(KoOdfNotesConfiguration::Footnote));
+        context.odfLoadingContext().stylesReader().globalNotesConfiguration(KoOdfNotesConfiguration::Footnote));
     KoOdfNotesConfiguration *endnotesConfiguration = new KoOdfNotesConfiguration(
-         context.odfLoadingContext().stylesReader().globalNotesConfiguration(KoOdfNotesConfiguration::Endnote));
+        context.odfLoadingContext().stylesReader().globalNotesConfiguration(KoOdfNotesConfiguration::Endnote));
 
     footnotesConfiguration->setCitationBodyTextStyle(d->characterStylesDotXmlStyles.value(footnotesConfiguration->citationBodyTextStyleName()));
 
@@ -670,7 +753,8 @@ void KoTextSharedLoadingData::addNotesConfiguration(KoShapeLoadingContext &conte
 
     endnotesConfiguration->setDefaultNoteParagraphStyle(d->paragraphStylesDotXmlStyles.value(endnotesConfiguration->defaultNoteParagraphStyleName()));
 
-    if (styleManager) {
+    if (styleManager)
+    {
         styleManager->setNotesConfiguration(footnotesConfiguration);
         styleManager->setNotesConfiguration(endnotesConfiguration);
     }
@@ -679,7 +763,7 @@ void KoTextSharedLoadingData::addNotesConfiguration(KoShapeLoadingContext &conte
 void KoTextSharedLoadingData::addBibliographyConfiguration(KoShapeLoadingContext &context)
 {
     d->bibliographyConfiguration =
-            context.odfLoadingContext().stylesReader().globalBibliographyConfiguration();
+        context.odfLoadingContext().stylesReader().globalBibliographyConfiguration();
 }
 
 void KoTextSharedLoadingData::addTableTemplate(KoShapeLoadingContext &context, KoStyleManager *styleManager)
@@ -687,13 +771,17 @@ void KoTextSharedLoadingData::addTableTemplate(KoShapeLoadingContext &context, K
     const QList<QPair<QString, KoTextTableTemplate *> > tableTemplates(loadTableTemplates(context));
 
     QList<QPair<QString, KoTextTableTemplate *> >::ConstIterator it(tableTemplates.begin());
-    for (; it != tableTemplates.end(); ++it) {
+    for (; it != tableTemplates.end(); ++it)
+    {
         d->tableTemplates.insert(it->first, it->second);
 
         // in case templates are not added to the style manager they have to be deleted after loading to avoid leaking memeory
-        if (styleManager) {
+        if (styleManager)
+        {
             styleManager->add(it->second);
-        } else {
+        }
+        else
+        {
             d->tableTemplatesToDelete.append(it->second);
         }
     }
@@ -703,7 +791,8 @@ QList<QPair<QString, KoTextTableTemplate *> > KoTextSharedLoadingData::loadTable
 {
     QList<QPair<QString, KoTextTableTemplate *> > tableTemplates;
 
-    foreach(KoXmlElement *styleElem, context.odfLoadingContext().stylesReader().tableTemplates()) {
+    foreach(KoXmlElement *styleElem, context.odfLoadingContext().stylesReader().tableTemplates())
+    {
         Q_ASSERT(styleElem);
         Q_ASSERT(!styleElem->isNull());
 

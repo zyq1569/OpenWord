@@ -43,15 +43,20 @@ KoTextWriter::KoTextWriter(KoShapeSavingContext &context, KoDocumentRdfBase *rdf
 {
     d->rdfData = rdfData;
     KoSharedSavingData *sharedData = context.sharedData(KOTEXT_SHARED_SAVING_ID);
-    if (sharedData) {
+    if (sharedData)
+    {
         d->sharedData = dynamic_cast<KoTextSharedSavingData *>(sharedData);
     }
 
-    if (!d->sharedData) {
+    if (!d->sharedData)
+    {
         d->sharedData = new KoTextSharedSavingData();
-        if (!sharedData) {
+        if (!sharedData)
+        {
             context.addSharedData(KOTEXT_SHARED_SAVING_ID, d->sharedData);
-        } else {
+        }
+        else
+        {
             warnText << "A different type of sharedData was found under the" << KOTEXT_SHARED_SAVING_ID;
             Q_ASSERT(false);
         }
@@ -81,7 +86,9 @@ QString KoTextWriter::saveParagraphStyle(const QTextBlockFormat &blockFormat, co
     KoParagraphStyle *defaultParagraphStyle = styleManager->defaultParagraphStyle();
     KoParagraphStyle *originalParagraphStyle = styleManager->paragraphStyle(blockFormat.intProperty(KoParagraphStyle::StyleId));
     if (!originalParagraphStyle)
+    {
         originalParagraphStyle = defaultParagraphStyle;
+    }
 
     QString generatedName;
     QString displayName = originalParagraphStyle->name();
@@ -89,19 +96,26 @@ QString KoTextWriter::saveParagraphStyle(const QTextBlockFormat &blockFormat, co
 
     // we'll convert the blockFormat to a KoParagraphStyle to check for local changes.
     KoParagraphStyle paragStyle(blockFormat, charFormat);
-    if (paragStyle == (*originalParagraphStyle)) { // This is the real, unmodified character style.
+    if (paragStyle == (*originalParagraphStyle))   // This is the real, unmodified character style.
+    {
         // TODO zachmann: this could use the name of the saved style without saving it again
         // therefore we would need to store that information in the saving context
-        if (originalParagraphStyle != defaultParagraphStyle) {
+        if (originalParagraphStyle != defaultParagraphStyle)
+        {
             KoGenStyle style(KoGenStyle::ParagraphStyle, "paragraph");
             originalParagraphStyle->saveOdf(style, context);
             generatedName = context.mainStyles().insert(style, internalName, KoGenStyles::DontAddNumberToName);
         }
-    } else { // There are manual changes... We'll have to store them then
+    }
+    else     // There are manual changes... We'll have to store them then
+    {
         KoGenStyle style(KoGenStyle::ParagraphAutoStyle, "paragraph", internalName);
         if (context.isSet(KoShapeSavingContext::AutoStyleInStyleXml))
+        {
             style.setAutoStyleInStylesDotXml(true);
-        if (originalParagraphStyle) {
+        }
+        if (originalParagraphStyle)
+        {
             paragStyle.removeDuplicates(*originalParagraphStyle);
             paragStyle.setParentStyle(originalParagraphStyle);
         }
@@ -129,29 +143,37 @@ void KoTextWriter::write(const QTextDocument *document, int from, int to)
     // only parts of the text within a list (see also bug 275990).
     // NOTE this has been fixed for tables now, and it looks like the list code is seriously wrong
     // not just like the table code was, but more fundamentally as lists in qt is an orthogonal concept
-    if (currentList) {
-        if (from == 0 && to < 0) {
+    if (currentList)
+    {
+        if (from == 0 && to < 0)
+        {
             // save everything means also save current table and list
             currentList = 0;
-        } else {
+        }
+        else
+        {
             QTextCursor toCursor(toblock);
             toCursor.setPosition(to, QTextCursor::KeepAnchor);
 
-            if (!fromcursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor)) {
+            if (!fromcursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor))
+            {
                 fromcursor = QTextCursor();
             }
-            if (!toCursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor)) {
+            if (!toCursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor))
+            {
                 toCursor = QTextCursor();
             }
 
             // save the whole list if all list-items are selected
-            if (currentList) {
+            if (currentList)
+            {
                 int fromindex = currentList->itemNumber(fromblock);
                 int toindex = currentList->itemNumber(toblock);
                 if ((fromcursor.isNull() || fromcursor.currentList() != currentList) &&
-                    (toCursor.isNull() || toCursor.currentList() != currentList) &&
-                    fromindex <= 0 && (toindex < 0 || toindex == currentList->count()-1)
-                ) {
+                        (toCursor.isNull() || toCursor.currentList() != currentList) &&
+                        fromindex <= 0 && (toindex < 0 || toindex == currentList->count()-1)
+                   )
+                {
                     currentList = 0;
                 }
             }
