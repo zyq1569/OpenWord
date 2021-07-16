@@ -21,7 +21,7 @@
 #include <QDebug>
 #include <QLoggingCategory>
 #include <kostore_export.h>
-
+#include "logging.h"
 extern const KOSTORE_EXPORT QLoggingCategory &STORE_LOG();
 
 #define debugStore qCDebug(STORE_LOG)

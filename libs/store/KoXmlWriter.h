@@ -1,4 +1,4 @@
-/* This file is part of the KDE project
+﻿/* This file is part of the KDE project
    Copyright (C) 2004 David Faure <faure@kde.org>
    Copyright (C) 2007 Thomas Zander <zander@kde.org>
    Copyright (C) 2011 Lukáš Tvrdý <lukas.tvrdy@ixonos.com>
@@ -72,26 +72,30 @@ public:
      * Overloaded version of addAttribute( const char*, const char* ),
      * which is a bit slower because it needs to convert @p value to utf8 first.
      */
-    inline void addAttribute(const char* attrName, const QString& value) {
+    inline void addAttribute(const char* attrName, const QString& value)
+    {
         addAttribute(attrName, value.toUtf8());
     }
     /**
      * Add an attribute whose value is an integer
      */
-    inline void addAttribute(const char* attrName, int value) {
+    inline void addAttribute(const char* attrName, int value)
+    {
         addAttribute(attrName, QByteArray::number(value));
     }
     /**
      * Add an attribute whose value is an unsigned integer
      */
-    inline void addAttribute(const char* attrName, uint value) {
+    inline void addAttribute(const char* attrName, uint value)
+    {
         addAttribute(attrName, QByteArray::number(value));
     }
     /**
      * Add an attribute whose value is an bool
      * It is written as "true" or "false" based on value
      */
-    inline void addAttribute(const char* attrName, bool value) {
+    inline void addAttribute(const char* attrName, bool value)
+    {
         addAttribute(attrName, value ? "true" : "false");
     }
     /**
@@ -137,7 +141,8 @@ public:
      * Overloaded version of addTextNode( const char* ),
      * which is a bit slower because it needs to convert @p str to utf8 first.
      */
-    inline void addTextNode(const QString& str) {
+    inline void addTextNode(const QString& str)
+    {
         addTextNode(str.toUtf8());
     }
     /// Overloaded version of the one taking a const char* argument
@@ -245,10 +250,11 @@ public:
     QString toString() const;
 
 private:
-    struct Tag {
+    struct Tag
+    {
         Tag(const char* t = 0, bool ind = true)
-                : tagName(t), hasChildren(false), lastChildIsText(false),
-                openingTagClosed(false), indentInside(ind) {}
+            : tagName(t), hasChildren(false), lastChildIsText(false),
+              openingTagClosed(false), indentInside(ind) {}
         Tag(const Tag &original)
         {
             tagName = original.tagName;
@@ -272,14 +278,18 @@ private:
     void writeString(const QString& str);
 
     // TODO check return value!!!
-    inline void writeCString(const char* cstr) {
+    inline void writeCString(const char* cstr)
+    {
         device()->write(cstr, qstrlen(cstr));
     }
-    inline void writeChar(char c) {
+    inline void writeChar(char c)
+    {
         device()->putChar(c);
     }
-    inline void closeStartElement(Tag& tag) {
-        if (!tag.openingTagClosed) {
+    inline void closeStartElement(Tag& tag)
+    {
+        if (!tag.openingTagClosed)
+        {
             tag.openingTagClosed = true;
             writeChar('>');
         }
