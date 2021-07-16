@@ -78,7 +78,7 @@ KWDocument *KWOdfLoader::document() const
 //1.6: KWDocument::loadOasis
 bool KWOdfLoader::load(KoOdfReadStore &odfStore)
 {
-    debugWords << "========================> KWOdfLoader::load START";
+    //debugWords << "========================> KWOdfLoader::load START";
     DEBUG_LOG("========================> KWOdfLoader::load START:");
     QPointer<KoUpdater> updater;
     QPointer<KoUpdater> loadUpdater;
