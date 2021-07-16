@@ -31,7 +31,8 @@ class KoGenStyles;
 /**
  * @brief Convenience structure encapsulating XML writers used when writing ODF document.
  */
-struct KOMSOOXML_EXPORT KoOdfWriters {
+struct KOMSOOXML_EXPORT KoOdfWriters
+{
     /**
     * Creates structure encapsulating XML writers. All members are set initially to 0.
     */

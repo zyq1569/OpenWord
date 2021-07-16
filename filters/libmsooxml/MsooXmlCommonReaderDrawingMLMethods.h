@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of Office 2007 Filters for Calligra
  *
  * Copyright (C) 2009 Nokia Corporation and/or its subsidiary(-ies).
@@ -33,14 +33,16 @@ protected:
 //! When dealing with colors there's no way to know what type of
 //! attribute we are setting. While MSOOXML doesn't need to know the
 //! context in which a color is used, ODF does need to know this.
-enum ColorType {
+enum ColorType
+{
     BackgroundColor,
     OutlineColor,
     TextColor,
     GradientColor
 };
 
-enum blipFillCaller {
+enum blipFillCaller
+{
     blipFill_lockedCanvas = 'a',
     blipFill_spPr = 'a',
     blipFill_pic = 'p', //dml in pptx; for dml in docx use 'pic'
@@ -49,25 +51,29 @@ enum blipFillCaller {
     blipFill_grpSpPr = 'a'
 };
 
-enum cNvPrCaller {
+enum cNvPrCaller
+{
     cNvPr_nvSpPr,
     cNvPr_nvPicPr,
     cNvPr_nvCxnSpPr
 };
 
-enum txBodyCaller {
+enum txBodyCaller
+{
     DrawingML_txBody_tc,
     DrawingML_txBody_txSp,
     DrawingML_txBody_sp
 };
 
-enum spacingType {
+enum spacingType
+{
     spacingMarginTop,
     spacingLines,
     spacingMarginBottom
 };
 
-struct GroupProp {
+struct GroupProp
+{
     qint64 svgXOld;
     qint64 svgYOld;
     qreal svgWidthOld;

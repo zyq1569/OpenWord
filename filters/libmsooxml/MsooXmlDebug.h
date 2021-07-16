@@ -23,6 +23,7 @@
 #include <QLoggingCategory>
 
 #include "komsooxml_export.h"
+#include "logging.h"
 
 extern const KOMSOOXML_EXPORT QLoggingCategory &MSOOXML_LOG();
 

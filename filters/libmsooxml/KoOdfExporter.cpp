@@ -157,7 +157,8 @@ KoFilter::ConversionStatus KoOdfExporter::convert(const QByteArray& from, const 
         return KoFilter::CreationError;
     }
 
-    debugMsooXml << "closed content & body writers.";
+    //debugMsooXml << "closed content & body writers.";
+    DEBUG_LOG( "closed content & body writers.");
 
     //create the manifest file
     KoXmlWriter* realManifestWriter = oasisStore.manifestWriter(to);
@@ -166,8 +167,8 @@ KoFilter::ConversionStatus KoOdfExporter::convert(const QByteArray& from, const 
     realManifestWriter->addManifestEntry("content.xml", "text/xml");
     realManifestWriter->addCompleteElement(&manifestBuf);
 
-    debugMsooXml << "created manifest and styles.xml";
-
+    //debugMsooXml << "created manifest and styles.xml";
+    DEBUG_LOG( "created manifest and styles.xml.");
     // create settings.xml, apparently it is used to note calligra that msoffice files should
     // have different behavior with some things
     if (!outputStore->open("settings.xml"))
