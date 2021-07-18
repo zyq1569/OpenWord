@@ -7151,7 +7151,8 @@ KoFilter::ConversionStatus MSOOXML_CURRENT_CLASS::read_t()
         {
             //debugMsooXml<< "MSOOXML_CURRENT_CLASS::read_t:";
             //DEBUG_LOG("MSOOXML_CURRENT_CLASS::read_t:" + text().toString());
-            body->addTextSpan(text().toString());
+            QString str = text().toString();
+            body->addTextSpan(str/*text().toString()*/);
 #ifdef PPTXXMLSLIDEREADER_CPP
             d->textBoxHasContent = true;
 #endif
