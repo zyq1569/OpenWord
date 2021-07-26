@@ -62,6 +62,7 @@
 
 namespace
 {
+const QString CapNumber[10] = {{"一"},{"二"},{"三"},{"四"},{"五"},{"六"},{"七"},{"八"},{"九"},{"十"}};
 
 class BorderMap : public QMap<QString, KoBorder::BorderStyle>
 {
@@ -197,11 +198,12 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read(MSOOXML::MsooXmlReaderCon
     {
         return KoFilter::WrongFormat;
     }
-    /*
-        const QXmlStreamAttributes attrs( attributes() );
-        for (int i=0; i<attrs.count(); i++) {
-            debugDocx << "1 NS prefix:" << attrs[i].name() << "uri:" << attrs[i].namespaceUri();
-        }*/
+
+    //const QXmlStreamAttributes attrs( attributes() );
+    //for (int i=0; i<attrs.count(); i++)
+    //{
+    //    debugDocx << "1 NS prefix:" << attrs[i].name() << "uri:" << attrs[i].namespaceUri();
+    //}
 
     QXmlStreamNamespaceDeclarations namespaces(namespaceDeclarations());
     for (int i = 0; i < namespaces.count(); i++)
@@ -2428,7 +2430,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
     m_wasCaption = false;
     if (oldWasCaption)
     {
-        debugDocx << "SKIP!";
+        debugDocx << "DocxXmlDocumentReader::read_p() SKIP!";
     }
     else
     {
@@ -2529,6 +2531,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
 
             KoGenStyle::copyPropertiesFromStyle(m_currentBulletProperties.textStyle(), textStyle);
             m_currentBulletProperties.setTextStyle(textStyle);
+            //m_currentBulletProperties.m_type = MSOOXML::Utils::ParagraphBulletProperties::NumberType;
         }
     }
 
@@ -3392,7 +3395,14 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_pPr()
 //! @todo add ELSE_WRONG_FORMAT
         }
     }
-
+    //------ELSE_TRY_READ_IF(sectPr) 字段设置为true---------------------------------------
+    //----add 20210719 【0424】投资建议书—???（7稿）.docx 首页最后一行时间显示问题????!!!
+    if (m_createSectionToNext)
+    {
+        m_createSectionStyle = true;
+        m_createSectionToNext = false;
+    }
+    //-----------------------------------------------------------------------------------
     READ_EPILOGUE
 }
 
