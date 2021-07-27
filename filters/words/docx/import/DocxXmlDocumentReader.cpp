@@ -2531,8 +2531,8 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
 
             KoGenStyle::copyPropertiesFromStyle(m_currentBulletProperties.textStyle(), textStyle);
             m_currentBulletProperties.setTextStyle(textStyle);
-            //m_currentBulletProperties.m_type = MSOOXML::Utils::ParagraphBulletProperties::NumberType;
         }
+        m_currentBulletProperties.m_type = MSOOXML::Utils::ParagraphBulletProperties::NumberType;
     }
 
     //---------------------------------------------
@@ -2610,15 +2610,14 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
             // In ooxml it seems that nothing should be created if sectPr was present
             if (!m_createSectionToNext)
             {
+                int sublist = m_currentNumId.toInt();
                 if (m_listFound)
                 {
-
                     // update the size of a bullet picture
                     if ((m_currentBulletProperties.m_type ==
                             MSOOXML::Utils::ParagraphBulletProperties::PictureType) &&
                             (m_currentBulletProperties.bulletSizePt() == "UNUSED"))
                     {
-
                         int percent = 100;
                         if (m_currentBulletProperties.bulletRelativeSize() != "UNUSED")
                         {
@@ -2719,10 +2718,11 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                         key.append(QString(".lvl%1").arg(m_currentListLevel));
 
                         // Keeping the id readable for debugging purpose
-                        QString xmlId = key;
-                        xmlId.append(QString("_%1").arg(m_numIdXmlId[key].first)).prepend("lst");
-                        xmlId.append(QString("_%1").arg(qrand()));
-                        body->addAttribute("xml:id", xmlId);
+//                        QString xmlId = key;
+//                        xmlId.append(QString("_%1").arg(m_numIdXmlId[key].first)).prepend("lst");
+//                        xmlId.append(QString("_%1").arg(qrand()));
+//                        body->addAttribute("xml:id", xmlId);
+//                         body->addAttribute("xml:id", key);
 
                         if (m_continueListNum.contains(m_currentNumId))
                         {
@@ -2732,20 +2732,39 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                             }
                         }
                         m_numIdXmlId[key].first++;
-                        m_numIdXmlId[key].second = xmlId;
+                        m_numIdXmlId[key].second = key;//xmlId;
                     }
                     body->startElement("text:list-item");
-                    for (int i = 0; i < m_currentListLevel; ++i)
+                    /// openword 是否 m_currentListLevel 为循环层
+                    if (sublist > 1)
                     {
-                        body->startElement("text:list");
-                        body->startElement("text:list-item");
+                        for (int i = 0; i <= m_currentListLevel; ++i)
+                        {
+                            body->startElement("text:list");
+                            body->startElement("text:list-item");
+                        }
                     }
+                    else
+                    {
+                        for (int i = 0; i < m_currentListLevel; ++i)
+                        {
+                            body->startElement("text:list");
+                            body->startElement("text:list-item");
+                        }
+                    }
+                    ///-----------------------------------------------
+                    ///
+                    //for (int i = 0; i < m_currentListLevel; ++i)
+                    //{
+                    //    body->startElement("text:list");
+                    //    body->startElement("text:list-item");
+                    //}
+
                     // restart numbering if applicable
                     if (m_currentBulletProperties.m_type == MSOOXML::Utils::ParagraphBulletProperties::NumberType)
                     {
-                        if (!m_continueListNum.contains(m_currentNumId) ||
-                                (m_continueListNum.contains(m_currentNumId) &&
-                                 !m_continueListNum[m_currentNumId].second))
+                        if (!m_continueListNum.contains(m_currentNumId) || (m_continueListNum.contains(m_currentNumId)
+                                && !m_continueListNum[m_currentNumId].second))
                         {
                             body->addAttribute("text:start-value", m_currentBulletProperties.startValue());
                         }
@@ -2796,11 +2815,31 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
 
                 if (m_listFound)
                 {
-                    for (int i = 0; i <= m_currentListLevel; ++i)
+                    ///-----------------------------------------------
+                    ///
+                    if (sublist > 1)
                     {
-                        body->endElement(); //text:list-item
-                        body->endElement(); //text:list
+                        for (int i = 0; i <= m_currentListLevel+1; ++i)
+                        {
+                            body->endElement(); //text:list-item
+                            body->endElement(); //text:list
+                        }
                     }
+                    else
+                    {
+                        for (int i = 0; i <= m_currentListLevel; ++i)
+                        {
+                            body->endElement(); //text:list-item
+                            body->endElement(); //text:list
+                        }
+                    }
+                    ///-----------------------------------------------
+                    ///
+                    //for (int i = 0; i <= m_currentListLevel+1; ++i)
+                    //{
+                    //    body->endElement(); //text:list-item
+                    //    body->endElement(); //text:list
+                    //}
                 }
                 debugDocx << "/text:p";
             }
