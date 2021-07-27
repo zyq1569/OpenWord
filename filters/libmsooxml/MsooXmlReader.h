@@ -75,13 +75,15 @@ public:
 
     //! Sets filename for the document being read.
     //! Only for error reporting purposes, used in raiseError().
-    void setFileName(const QString &fileName) {
+    void setFileName(const QString &fileName)
+    {
         m_fileName = fileName;
     }
 
     //! @return filename for the document being read.
     //! Only for error reporting purposes, used in raiseError().
-    QString fileName() const  {
+    QString fileName() const
+    {
         return m_fileName;
     }
 
