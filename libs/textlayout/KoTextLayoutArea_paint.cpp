@@ -832,7 +832,7 @@ void KoTextLayoutArea::decorateParagraph(QPainter *painter, QTextBlock &block, b
 //             << "\nGoing to decorate block\n"
 //             << block.text()
 //             << "\n-------------------";
-
+    //DEBUG_LOG("decorateParagraph"+block.text());
     // loop over text fragments in this paragraph and draw the underline and line through.
     for (it = block.begin(); !it.atEnd(); ++it)
     {
