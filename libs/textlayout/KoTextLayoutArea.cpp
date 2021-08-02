@@ -638,6 +638,8 @@ bool KoTextLayoutArea::layout(FrameIterator *cursor)
     while (!cursor->it.atEnd())
     {
         QTextBlock block = cursor->it.currentBlock();
+        QString textsr = block.text();
+        ///DEBUG_LOG(textsr); //openword
         QTextTable *table = qobject_cast<QTextTable*>(cursor->it.currentFrame());
         QTextFrame *subFrame = cursor->it.currentFrame();
         if (table)
