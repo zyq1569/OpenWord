@@ -35,6 +35,21 @@
 #include <QTextBlock>
 #include <QHeaderView>
 
+QString g_NumberH1PreIndex[10] = {"一", "二", "三", "四", "五", "六", "七", "八", "九", "十"};
+QString g_NumberH3PreIndex[10] = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+
+const  int  g_MaxX = 4;
+const  int  g_MaxY = 20;
+
+int g_NumberHRindex[4][20] =
+{
+    {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0 },
+    {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0 },
+    {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0 },
+    {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0 },
+};
+
+
 KWNavigationWidget::KWNavigationWidget(QWidget *parent)
     : QWidget(parent)
     , m_document(0)
@@ -119,6 +134,7 @@ void KWNavigationWidget::updateData()
     QStack< QPair<QStandardItem *, int> > curChain;
     curChain.push(QPair<QStandardItem *, int>(m_model->invisibleRootItem(), 0));
 
+    int lastblockLevel = -1;
     foreach (KWFrameSet *fs, m_document->frameSets())
     {
         KWTextFrameSet *tfs = dynamic_cast<KWTextFrameSet*>(fs);
@@ -130,33 +146,115 @@ void KWNavigationWidget::updateData()
         tfs->wordsDocument();
         QTextDocument *doc = tfs->document();
         QTextBlock block = doc->begin();
+
+        int g_NumberIndex[10]        = {0,0,0,0,0, 0,0,0,0,0};
+
         while (block.isValid())
         {
+            bool bnewLevel = false;
             int blockLevel = block.blockFormat().intProperty(KoParagraphStyle::OutlineLevel);
+            if (blockLevel != 0 && lastblockLevel != blockLevel)
+            {
+                lastblockLevel = blockLevel;
+                bnewLevel = true;
+            }
 
             if (!blockLevel)
             {
                 block = block.next();
                 continue;
             }
-
-            QStandardItem *item = new QStandardItem(block.text());
-            item->setData(block.position(), Qt::UserRole + 1);
-            item->setData(qVariantFromValue((void *)doc), Qt::UserRole + 2);
-            QList< QStandardItem *> buf;
-
-            KoTextLayoutRootArea *a = m_layout->rootAreaForPosition(block.position());
-
-            buf.append(item);
-            buf.append(new QStandardItem(QString::number(a->page()->visiblePageNumber())));
-
-            while (curChain.top().second >= blockLevel)
+            QString title = block.text();
+            if (title != "" && title != "目录")///add:去掉空
             {
-                curChain.pop();
-            }
+                //title = g_NumberPreIndex[g_NumberIndex[blockLevel]++] + "、 " + title;
+                if (blockLevel == 1)
+                {
+                    title = g_NumberH1PreIndex[g_NumberIndex[blockLevel-1]++] +  "、 " + title;
+                }
+                else if (blockLevel == 2 )
+                {
+                    if (bnewLevel)
+                    {
+                        for (int i=0; i<20; i++)
+                        {
+                            if (g_NumberHRindex[0][i] == 0)
+                            {
+                                if(i > 0)
+                                {
+                                    g_NumberHRindex[0][i-1] = -1;
+                                }
+                                title = "("+g_NumberH1PreIndex[g_NumberHRindex[0][i] ++] +  ") " + title;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i=0; i<20; i++)
+                        {
+                            if (g_NumberHRindex[0][i] > 0)
+                            {
+                                if (g_NumberHRindex[0][i] < 8)
+                                {
+                                    title = "("+g_NumberH1PreIndex[g_NumberHRindex[0][i] ++] +  ") " + title;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+                else if (blockLevel == 3 )
+                {
+                    if (bnewLevel)
+                    {
+                        for (int i=0; i<20; i++)
+                        {
+                            if (g_NumberHRindex[1][i] == 0)
+                            {
+                                if(i > 0)
+                                {
+                                    g_NumberHRindex[1][i-1] = -1;
+                                }
+                                title = g_NumberH3PreIndex[g_NumberHRindex[1][i] ++] +  ". " + title;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i=0; i<20; i++)
+                        {
+                            if (g_NumberHRindex[1][i] > 0)
+                            {
+                                if (g_NumberHRindex[1][i] < 8)
+                                {
+                                    title = g_NumberH3PreIndex[g_NumberHRindex[1][i] ++] +  ". " + title;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+                QStandardItem *item = new QStandardItem(title/*block.text()*/);
+                item->setData(block.position(), Qt::UserRole + 1);
+                item->setData(qVariantFromValue((void *)doc), Qt::UserRole + 2);
+                QList< QStandardItem *> buf;
 
-            curChain.top().first->appendRow(buf);
-            curChain.push(QPair<QStandardItem *, int>(item, blockLevel));
+                KoTextLayoutRootArea *a = m_layout->rootAreaForPosition(block.position());
+
+                buf.append(item);
+                //add pagenuber 第几页
+                buf.append(new QStandardItem(QString::number(a->page()->visiblePageNumber())));
+
+                while (curChain.top().second >= blockLevel)
+                {
+                    curChain.pop();
+                }
+
+                curChain.top().first->appendRow(buf);
+                curChain.push(QPair<QStandardItem *, int>(item, blockLevel));
+            }
 
             block = block.next();
         }
