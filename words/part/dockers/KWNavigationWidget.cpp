@@ -119,51 +119,20 @@ QString KWNavigationWidget::updateLevel(QString title, int level)
         }
         if (m_NavInfo.top().second == level)
         {
-           index = m_NavInfo.top().first + 1;
+            index = m_NavInfo.top().first + 1;
         }
     }
     if (level == 1)
     {
-//        int index = 0;
-//        if (m_NavInfo.size() > 0)
-//        {
-//            while (m_NavInfo.top().second > 1)
-//            {
-//                m_NavInfo.pop();
-//            }
-//            index = m_NavInfo.top().first + 1;
-//        }
-
         title = g_NumberH1PreIndex[index] +  "、 " + title;
-        //m_NavInfo.push(QPair<int, int>(index, level));
     }
     else if (level == 2)
     {
-//        int index = 0;
-//        while (m_NavInfo.top().second > 2)
-//        {
-//            m_NavInfo.pop();
-//        }
-//        if (m_NavInfo.top().second == 2)
-//        {
-//           index = m_NavInfo.top().first + 1;
-//        }
         title = "("+g_NumberH1PreIndex[index] +  ") " + title;
-        //m_NavInfo.push(QPair<int, int>(index, level));
     }
     else if (level == 3)
     {
-//        int index = 0;
-//        while (m_NavInfo.top().second > 3)
-//        {
-//            m_NavInfo.pop();
-//        }
-//        if (m_NavInfo.top().second == 3)
-//        {
-//           index = m_NavInfo.top().first + 1;
-//        }
         title = g_NumberH3PreIndex[index] +  ". " + title;
-        //m_NavInfo.push(QPair<int, int>(index, level));
     }
     m_NavInfo.push(QPair<int, int>(index, level));
     return title;
