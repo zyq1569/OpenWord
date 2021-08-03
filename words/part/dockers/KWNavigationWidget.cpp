@@ -107,6 +107,68 @@ void KWNavigationWidget::navigationClicked(QModelIndex idx)
     }
 }
 
+QString KWNavigationWidget::updateLevel(QString title, int level)
+{
+    //m_NavInfo
+    int index = 0;
+    if (m_NavInfo.size() > 0)
+    {
+        while (m_NavInfo.top().second > level)
+        {
+            m_NavInfo.pop();
+        }
+        if (m_NavInfo.top().second == level)
+        {
+           index = m_NavInfo.top().first + 1;
+        }
+    }
+    if (level == 1)
+    {
+//        int index = 0;
+//        if (m_NavInfo.size() > 0)
+//        {
+//            while (m_NavInfo.top().second > 1)
+//            {
+//                m_NavInfo.pop();
+//            }
+//            index = m_NavInfo.top().first + 1;
+//        }
+
+        title = g_NumberH1PreIndex[index] +  "、 " + title;
+        //m_NavInfo.push(QPair<int, int>(index, level));
+    }
+    else if (level == 2)
+    {
+//        int index = 0;
+//        while (m_NavInfo.top().second > 2)
+//        {
+//            m_NavInfo.pop();
+//        }
+//        if (m_NavInfo.top().second == 2)
+//        {
+//           index = m_NavInfo.top().first + 1;
+//        }
+        title = "("+g_NumberH1PreIndex[index] +  ") " + title;
+        //m_NavInfo.push(QPair<int, int>(index, level));
+    }
+    else if (level == 3)
+    {
+//        int index = 0;
+//        while (m_NavInfo.top().second > 3)
+//        {
+//            m_NavInfo.pop();
+//        }
+//        if (m_NavInfo.top().second == 3)
+//        {
+//           index = m_NavInfo.top().first + 1;
+//        }
+        title = g_NumberH3PreIndex[index] +  ". " + title;
+        //m_NavInfo.push(QPair<int, int>(index, level));
+    }
+    m_NavInfo.push(QPair<int, int>(index, level));
+    return title;
+}
+
 void KWNavigationWidget::updateData()
 {
     if (!isVisible())
@@ -134,7 +196,8 @@ void KWNavigationWidget::updateData()
     QStack< QPair<QStandardItem *, int> > curChain;
     curChain.push(QPair<QStandardItem *, int>(m_model->invisibleRootItem(), 0));
 
-    int lastblockLevel = -1;
+    m_NavInfo.clear();
+
     foreach (KWFrameSet *fs, m_document->frameSets())
     {
         KWTextFrameSet *tfs = dynamic_cast<KWTextFrameSet*>(fs);
@@ -147,17 +210,10 @@ void KWNavigationWidget::updateData()
         QTextDocument *doc = tfs->document();
         QTextBlock block = doc->begin();
 
-        int g_NumberIndex[10]        = {0,0,0,0,0, 0,0,0,0,0};
-
         while (block.isValid())
         {
-            bool bnewLevel = false;
+
             int blockLevel = block.blockFormat().intProperty(KoParagraphStyle::OutlineLevel);
-            if (blockLevel != 0 && lastblockLevel != blockLevel)
-            {
-                lastblockLevel = blockLevel;
-                bnewLevel = true;
-            }
 
             if (!blockLevel)
             {
@@ -167,78 +223,78 @@ void KWNavigationWidget::updateData()
             QString title = block.text();
             if (title != "" && title != "目录")///add:去掉空
             {
-                //title = g_NumberPreIndex[g_NumberIndex[blockLevel]++] + "、 " + title;
-                if (blockLevel == 1)
-                {
-                    title = g_NumberH1PreIndex[g_NumberIndex[blockLevel-1]++] +  "、 " + title;
-                }
-                else if (blockLevel == 2 )
-                {
-                    if (bnewLevel)
-                    {
-                        for (int i=0; i<20; i++)
-                        {
-                            if (g_NumberHRindex[0][i] == 0)
-                            {
-                                if(i > 0)
-                                {
-                                    g_NumberHRindex[0][i-1] = -1;
-                                }
-                                title = "("+g_NumberH1PreIndex[g_NumberHRindex[0][i] ++] +  ") " + title;
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        for (int i=0; i<20; i++)
-                        {
-                            if (g_NumberHRindex[0][i] > 0)
-                            {
-                                if (g_NumberHRindex[0][i] < 8)
-                                {
-                                    title = "("+g_NumberH1PreIndex[g_NumberHRindex[0][i] ++] +  ") " + title;
-                                }
-                                break;
-                            }
-                        }
-                    }
-                }
-                else if (blockLevel == 3 )
-                {
-                    if (bnewLevel)
-                    {
-                        for (int i=0; i<20; i++)
-                        {
-                            if (g_NumberHRindex[1][i] == 0)
-                            {
-                                if(i > 0)
-                                {
-                                    g_NumberHRindex[1][i-1] = -1;
-                                }
-                                title = g_NumberH3PreIndex[g_NumberHRindex[1][i] ++] +  ". " + title;
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        for (int i=0; i<20; i++)
-                        {
-                            if (g_NumberHRindex[1][i] > 0)
-                            {
-                                if (g_NumberHRindex[1][i] < 8)
-                                {
-                                    title = g_NumberH3PreIndex[g_NumberHRindex[1][i] ++] +  ". " + title;
-                                }
-                                break;
-                            }
-                        }
-                    }
-                }
+                title = updateLevel(title,blockLevel);
+//                if (blockLevel == 1)
+//                {
+//                    title = g_NumberH1PreIndex[g_NumberIndex[blockLevel-1]++] +  "、 " + title;
+//                }
+//                else if (blockLevel == 2 )
+//                {
+//                    if (bnewLevel)
+//                    {
+//                        for (int i=0; i<20; i++)
+//                        {
+//                            if (g_NumberHRindex[0][i] == 0)
+//                            {
+//                                if(i > 0)
+//                                {
+//                                    g_NumberHRindex[0][i-1] = -1;
+//                                }
+//                                title = "("+g_NumberH1PreIndex[g_NumberHRindex[0][i] ++] +  ") " + title;
+//                                break;
+//                            }
+//                        }
+//                    }
+//                    else
+//                    {
+//                        for (int i=0; i<20; i++)
+//                        {
+//                            if (g_NumberHRindex[0][i] > 0)
+//                            {
+//                                if (g_NumberHRindex[0][i] < 8)
+//                                {
+//                                    title = "("+g_NumberH1PreIndex[g_NumberHRindex[0][i] ++] +  ") " + title;
+//                                }
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//                else if (blockLevel == 3 )
+//                {
+//                    if (bnewLevel)
+//                    {
+//                        for (int i=0; i<20; i++)
+//                        {
+//                            if (g_NumberHRindex[1][i] == 0)
+//                            {
+//                                if(i > 0)
+//                                {
+//                                    g_NumberHRindex[1][i-1] = -1;
+//                                }
+//                                title = g_NumberH3PreIndex[g_NumberHRindex[1][i] ++] +  ". " + title;
+//                                break;
+//                            }
+//                        }
+//                    }
+//                    else
+//                    {
+//                        for (int i=0; i<20; i++)
+//                        {
+//                            if (g_NumberHRindex[1][i] > 0)
+//                            {
+//                                if (g_NumberHRindex[1][i] < 8)
+//                                {
+//                                    title = g_NumberH3PreIndex[g_NumberHRindex[1][i] ++] +  ". " + title;
+//                                }
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
                 QStandardItem *item = new QStandardItem(title/*block.text()*/);
                 item->setData(block.position(), Qt::UserRole + 1);
-                item->setData(qVariantFromValue((void *)doc), Qt::UserRole + 2);
+                item->setData(/*qVariantFromValue*/QVariant::fromValue((void *)doc), Qt::UserRole + 2);
                 QList< QStandardItem *> buf;
 
                 KoTextLayoutRootArea *a = m_layout->rootAreaForPosition(block.position());

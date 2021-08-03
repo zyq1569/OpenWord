@@ -61,6 +61,15 @@ private Q_SLOTS:
 public Q_SLOTS:
     void updateData();
 
+    ///add
+    ///
+public:
+    QString updateLevel(QString title, int level);
+private:
+    QStack< QPair<int, int> > m_NavInfo;
+    ///add
+    ///
+
 private:
     void initUi();
     void initLayout();
