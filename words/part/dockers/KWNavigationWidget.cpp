@@ -35,20 +35,16 @@
 #include <QTextBlock>
 #include <QHeaderView>
 
-QString g_NumberH1PreIndex[10] = {"一", "二", "三", "四", "五", "六", "七", "八", "九", "十"};
-QString g_NumberH3PreIndex[10] = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
-
-const  int  g_MaxX = 4;
-const  int  g_MaxY = 20;
-
-int g_NumberHRindex[4][20] =
+QString g_NumberH1PreIndex[21] =
 {
-    {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0 },
-    {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0 },
-    {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0 },
-    {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0 },
+    "一",     "二",   "三",   "四",   "五",   "六",   "七",   "八",   "九", "十",
+    "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十"
 };
-
+QString g_NumberH3PreIndex[21] =
+{
+    "1",   "2",  "3",  "4",  "5",  "6",  "7",  "8",  "9", "10",
+    "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"
+};
 
 KWNavigationWidget::KWNavigationWidget(QWidget *parent)
     : QWidget(parent)
@@ -122,7 +118,7 @@ QString KWNavigationWidget::updateLevel(QString title, int level)
             index = m_NavInfo.top().first + 1;
         }
     }
-    if (index > 9)//目前只设置了10个长度,需要自己增加
+    if (index > 19)//目前只设置了19个长度,需要自己增加
     {
         return title;
     }
