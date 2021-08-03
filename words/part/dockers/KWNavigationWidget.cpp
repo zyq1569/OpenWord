@@ -122,6 +122,11 @@ QString KWNavigationWidget::updateLevel(QString title, int level)
             index = m_NavInfo.top().first + 1;
         }
     }
+    if (index > 9)//目前只设置了10个长度,需要自己增加
+    {
+        return title;
+    }
+
     if (level == 1)
     {
         title = g_NumberH1PreIndex[index] +  "、 " + title;
@@ -134,6 +139,7 @@ QString KWNavigationWidget::updateLevel(QString title, int level)
     {
         title = g_NumberH3PreIndex[index] +  ". " + title;
     }
+
     m_NavInfo.push(QPair<int, int>(index, level));
     return title;
 }
