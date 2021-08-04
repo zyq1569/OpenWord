@@ -105,7 +105,6 @@ void KWNavigationWidget::navigationClicked(QModelIndex idx)
 
 QString KWNavigationWidget::updateLevel(QString title, int level)
 {
-    //m_NavInfo
     int index = 0;
     if (m_NavInfo.size() > 0)
     {
@@ -118,7 +117,7 @@ QString KWNavigationWidget::updateLevel(QString title, int level)
             index = m_NavInfo.top().first + 1;
         }
     }
-    if (index > 19)//目前只设置了19个长度,需要自己增加
+    if (index > 20)//目前只设置了19个长度,需要自己增加
     {
         return title;
     }
@@ -135,7 +134,6 @@ QString KWNavigationWidget::updateLevel(QString title, int level)
     {
         title = g_NumberH3PreIndex[index] +  ". " + title;
     }
-
     m_NavInfo.push(QPair<int, int>(index, level));
     return title;
 }
