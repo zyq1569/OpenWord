@@ -74,7 +74,9 @@ void KWNavigationWidget::initUi()
     m_treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     m_treeView->setSelectionMode(QAbstractItemView::SingleSelection/*NoSelection*/);///openword 20210804
 
-    connect(m_treeView, SIGNAL(clicked(QModelIndex)), this, SLOT(navigationClicked(QModelIndex)));
+    //connect(m_treeView, SIGNAL(clicked(QModelIndex)), this, SLOT(navigationClicked(QModelIndex)));
+    ///replace by doubleClicked  20210804
+    connect(m_treeView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(navigationClicked(QModelIndex)));
 }
 
 void KWNavigationWidget::initLayout()

@@ -395,17 +395,19 @@ bool KoApplication::start()
 
 #ifndef QT_NO_DBUS
         // all running instances of our application -- bit hackish, but we cannot get at the dbus name here, for some reason
-        ///QDBusReply<QStringList> reply = QDBusConnection::sessionBus().interface()->registeredServiceNames();
-        //foreach (const QString &name, reply.value()) ///openword
-        //{
-        //    if (name.contains(part->componentData().componentName())) {
-        //        // we got another instance of ourselves running, let's get the pid
-        //        QString pid = name.split('-').last();
-        //        if (pid != ourPid) {
-        //            pids << pid;
-        //        }
-        //    }
-        //}
+        QDBusReply<QStringList> reply = QDBusConnection::sessionBus().interface()->registeredServiceNames();
+        foreach (const QString &name, reply.value()) ///openword
+        {
+            if (name.contains(part->componentData().componentName()))
+            {
+                // we got another instance of ourselves running, let's get the pid
+                QString pid = name.split('-').last();
+                if (pid != ourPid)
+                {
+                    pids << pid;
+                }
+            }
+        }
 #endif
 
         // remove the autosave files that are saved for other, open instances of ourselves
