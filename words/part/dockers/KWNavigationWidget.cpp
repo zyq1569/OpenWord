@@ -69,9 +69,10 @@ void KWNavigationWidget::initUi()
 {
     m_treeView = new QTreeView;
     m_treeView->setModel(m_model);
-    m_treeView->setItemsExpandable(false);
+    //m_treeView->setItemsExpandable(false);///del openword 20210804
+    m_treeView->setExpandsOnDoubleClick(false);///add openword 20210804
     m_treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    m_treeView->setSelectionMode(QAbstractItemView::NoSelection);
+    m_treeView->setSelectionMode(QAbstractItemView::SingleSelection/*NoSelection*/);///openword 20210804
 
     connect(m_treeView, SIGNAL(clicked(QModelIndex)), this, SLOT(navigationClicked(QModelIndex)));
 }
@@ -181,9 +182,7 @@ void KWNavigationWidget::updateData()
 
         while (block.isValid())
         {
-
             int blockLevel = block.blockFormat().intProperty(KoParagraphStyle::OutlineLevel);
-
             if (!blockLevel)
             {
                 block = block.next();
@@ -199,7 +198,6 @@ void KWNavigationWidget::updateData()
                 QList< QStandardItem *> buf;
 
                 KoTextLayoutRootArea *a = m_layout->rootAreaForPosition(block.position());
-
                 buf.append(item);
                 //add pagenuber 第几页
                 buf.append(new QStandardItem(QString::number(a->page()->visiblePageNumber())));
@@ -208,7 +206,6 @@ void KWNavigationWidget::updateData()
                 {
                     curChain.pop();
                 }
-
                 curChain.top().first->appendRow(buf);
                 curChain.push(QPair<QStandardItem *, int>(item, blockLevel));
             }
