@@ -42,7 +42,7 @@ public:
 };
 
 KoListStyle::KoListStyle(QObject *parent)
-        : QObject(parent), d(new Private())
+    : QObject(parent), d(new Private())
 {
 }
 
@@ -53,15 +53,23 @@ KoListStyle::~KoListStyle()
 
 bool KoListStyle::operator==(const KoListStyle &other) const
 {
-    foreach(int level, d->levels.keys()) {
+    foreach(int level, d->levels.keys())
+    {
         if (! other.hasLevelProperties(level))
+        {
             return false;
+        }
         if (!(other.levelProperties(level) == d->levels[level]))
+        {
             return false;
+        }
     }
-    foreach(int level, other.d->levels.keys()) {
+    foreach(int level, other.d->levels.keys())
+    {
         if (! hasLevelProperties(level))
+        {
             return false;
+        }
     }
     return true;
 }
@@ -93,7 +101,9 @@ QString KoListStyle::name() const
 void KoListStyle::setName(const QString &name)
 {
     if (d->name == name)
+    {
         return;
+    }
     d->name = name;
     emit nameChanged(d->name);
 }
@@ -106,7 +116,8 @@ int KoListStyle::styleId() const
 void KoListStyle::setStyleId(int id)
 {
     d->styleId = id;
-    foreach(int level, d->levels.keys()) {
+    foreach(int level, d->levels.keys())
+    {
         d->levels[level].setStyleId(id);
     }
 }
@@ -114,10 +125,13 @@ void KoListStyle::setStyleId(int id)
 KoListLevelProperties KoListStyle::levelProperties(int level) const
 {
     if (d->levels.contains(level))
+    {
         return d->levels.value(level);
+    }
 
     level = qMax(1, level);
-    if (d->levels.count()) {
+    if (d->levels.count())
+    {
         KoListLevelProperties llp = d->levels.begin().value();
         llp.setLevel(level);
         return llp;
@@ -125,7 +139,9 @@ KoListLevelProperties KoListStyle::levelProperties(int level) const
     KoListLevelProperties llp;
     llp.setLevel(level);
     if (d->styleId)
+    {
         llp.setStyleId(d->styleId);
+    }
     return llp;
 }
 
@@ -148,7 +164,8 @@ void KoListStyle::refreshLevelProperties(const KoListLevelProperties &properties
 {
     int level = qMax(1, properties.level());
     KoListLevelProperties llp = properties;
-    if (isOulineStyle()) {
+    if (isOulineStyle())
+    {
         llp.setOutlineList(true);
     }
     llp.setLevel(level);
@@ -174,21 +191,26 @@ void KoListStyle::loadOdf(KoShapeLoadingContext& scontext, const KoXmlElement& s
 {
     d->name = style.attributeNS(KoXmlNS::style, "display-name", QString());
     // if no style:display-name is given us the style:name
-    if (d->name.isEmpty()) {
+    if (d->name.isEmpty())
+    {
         d->name = style.attributeNS(KoXmlNS::style, "name", QString());
     }
     d->name = style.attributeNS(KoXmlNS::style, "name", QString());
 
     KoXmlElement styleElem;
-    forEachElement(styleElem, style) {
+    forEachElement(styleElem, style)
+    {
         KoListLevelProperties properties;
         properties.loadOdf(scontext, styleElem);
         if (d->styleId)
+        {
             properties.setStyleId(d->styleId);
+        }
         setLevelProperties(properties);
     }
 
-    if (d->levels.isEmpty()) {
+    if (d->levels.isEmpty())
+    {
         KoListLevelProperties llp;
         llp.setLevel(1);
         llp.setStartValue(1);
@@ -202,14 +224,16 @@ void KoListStyle::loadOdf(KoShapeLoadingContext& scontext, const KoXmlElement& s
 void KoListStyle::saveOdf(KoGenStyle &style, KoShapeSavingContext &context) const
 {
     // style:display-name can be used in list styles but not in outline styles
-    if (!d->name.isEmpty() && !style.isDefaultStyle() && !isOulineStyle()) {
+    if (!d->name.isEmpty() && !style.isDefaultStyle() && !isOulineStyle())
+    {
         style.addAttribute("style:display-name", d->name);
     }
     QBuffer buffer;
     buffer.open(QIODevice::WriteOnly);
     KoXmlWriter elementWriter(&buffer);    // TODO pass indentation level
     QMapIterator<int, KoListLevelProperties> it(d->levels);
-    while (it.hasNext()) {
+    while (it.hasNext())
+    {
         it.next();
         it.value().saveOdf(&elementWriter, context);
     }
@@ -220,8 +244,10 @@ void KoListStyle::saveOdf(KoGenStyle &style, KoShapeSavingContext &context) cons
 bool KoListStyle::isNumberingStyle() const
 {
     QMap<int, KoListLevelProperties>::const_iterator it(d->levels.constBegin());
-    for (; it != d->levels.constEnd(); ++it) {
-        if (isNumberingStyle(it.value().labelType())) {
+    for (; it != d->levels.constEnd(); ++it)
+    {
+        if (isNumberingStyle(it.value().labelType()))
+        {
             return true;
         }
     }
@@ -230,21 +256,24 @@ bool KoListStyle::isNumberingStyle() const
 
 bool KoListStyle::isNumberingStyle(int style)
 {
-    switch (style) {
-    case KoListStyle::None:
-    case KoListStyle::BulletCharLabelType:
-    case KoListStyle::ImageLabelType:
-        return false;
-    default:
-        return true;
+    switch (style)
+    {
+        case KoListStyle::None:
+        case KoListStyle::BulletCharLabelType:
+        case KoListStyle::ImageLabelType:
+            return false;
+        default:
+            return true;
     }
 }
 
 bool KoListStyle::isOulineStyle() const
 {
     QMap<int, KoListLevelProperties>::const_iterator it(d->levels.constBegin());
-    for (; it != d->levels.constEnd(); ++it) {
-        if (it.value().isOutlineList()) {
+    for (; it != d->levels.constEnd(); ++it)
+    {
+        if (it.value().isOutlineList())
+        {
             return true;
         }
     }

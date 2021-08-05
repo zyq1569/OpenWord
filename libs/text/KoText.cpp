@@ -48,12 +48,12 @@ QStringList KoText::underlineStyleList()
 }
 
 KoText::Tab::Tab()
-        : position(0.),
-        type(QTextOption::LeftTab),
-        leaderType(KoCharacterStyle::NoLineType),
-        leaderStyle(KoCharacterStyle::NoLineStyle),
-        leaderWeight(KoCharacterStyle::AutoLineWeight),
-        leaderWidth(0)
+    : position(0.),
+      type(QTextOption::LeftTab),
+      leaderType(KoCharacterStyle::NoLineType),
+      leaderStyle(KoCharacterStyle::NoLineStyle),
+      leaderWeight(KoCharacterStyle::AutoLineWeight),
+      leaderWidth(0)
 {
 }
 
@@ -71,19 +71,33 @@ Qt::Alignment KoText::alignmentFromString(const QString &align)
 {
     Qt::Alignment alignment = Qt::AlignLeft;
     if (align == "left")
+    {
         alignment = Qt::AlignLeft | Qt::AlignAbsolute;
+    }
     else if (align == "right")
+    {
         alignment = Qt::AlignRight | Qt::AlignAbsolute;
+    }
     else if (align == "start")
+    {
         alignment = Qt::AlignLeading;
+    }
     else if (align == "end")
+    {
         alignment = Qt::AlignTrailing;
+    }
     else if (align == "center")
+    {
         alignment = Qt::AlignHCenter;
+    }
     else if (align == "justify")
+    {
         alignment = Qt::AlignJustify;
+    }
     else if (align == "margins") // in tables this is effectively the same as justify
+    {
         alignment = Qt::AlignJustify;
+    }
     return alignment;
 }
 
@@ -93,17 +107,29 @@ QString KoText::alignmentToString(Qt::Alignment alignment)
 
     alignment &= Qt::AlignHorizontal_Mask;
     if (alignment == (Qt::AlignLeft | Qt::AlignAbsolute))
+    {
         align = "left";
+    }
     else if (alignment == (Qt::AlignRight | Qt::AlignAbsolute))
+    {
         align = "right";
+    }
     else if (alignment == Qt::AlignLeading)
+    {
         align = "start";
+    }
     else if (alignment == Qt::AlignTrailing)
+    {
         align = "end";
+    }
     else if (alignment == Qt::AlignHCenter)
+    {
         align = "center";
+    }
     else if (alignment == Qt::AlignJustify)
+    {
         align = "justify";
+    }
     return align;
 }
 
@@ -111,11 +137,17 @@ Qt::Alignment KoText::valignmentFromString(const QString &align)
 {
     Qt::Alignment alignment = Qt::AlignTop;
     if (align == "top")
+    {
         alignment = Qt::AlignTop;
+    }
     else if (align == "middle")
+    {
         alignment = Qt::AlignVCenter;
+    }
     else if (align == "bottom")
+    {
         alignment = Qt::AlignBottom;
+    }
     return alignment;
 }
 
@@ -124,13 +156,21 @@ QString KoText::valignmentToString(Qt::Alignment alignment)
     QString align;
     alignment &= Qt::AlignVertical_Mask;
     if (alignment == (Qt::AlignTop))
+    {
         align = "top";
+    }
     else if (alignment == Qt::AlignVCenter)
+    {
         align = "middle";
+    }
     else if (alignment == Qt::AlignBottom)
+    {
         align = "bottom";
+    }
     else
+    {
         align = "automatic";
+    }
     return align;
 }
 
@@ -138,30 +178,50 @@ KoText::Direction KoText::directionFromString(const QString &writingMode)
 {
     // LTR is lr-tb. RTL is rl-tb
     if (writingMode == "lr" || writingMode == "lr-tb")
+    {
         return KoText::LeftRightTopBottom;
+    }
     if (writingMode == "rl" || writingMode == "rl-tb")
+    {
         return KoText::RightLeftTopBottom;
+    }
     if (writingMode == "tb" || writingMode == "tb-rl")
+    {
         return KoText::TopBottomRightLeft;
+    }
     if (writingMode == "tb-lr")
+    {
         return KoText::TopBottomLeftRight;
+    }
     if (writingMode == "page")
+    {
         return KoText::InheritDirection;
+    }
     return KoText::AutoDirection;
 }
 
 QString KoText::directionToString(KoText::Direction direction)
 {
     if (direction == KoText::LeftRightTopBottom)
+    {
         return "lr";
+    }
     if (direction == KoText::RightLeftTopBottom)
+    {
         return "rl";
+    }
     if (direction == KoText::TopBottomRightLeft)
+    {
         return "tb-rl";
+    }
     if (direction == KoText::TopBottomLeftRight)
+    {
         return "tb-lr";
+    }
     if (direction == KoText::InheritDirection)
+    {
         return "page";
+    }
 
     return "auto";
 }
@@ -169,18 +229,26 @@ QString KoText::directionToString(KoText::Direction direction)
 KoText::KoTextBreakProperty KoText::textBreakFromString(const QString& textBreak)
 {
     if (textBreak == "page")
+    {
         return KoText::PageBreak;
+    }
     if (textBreak == "column")
+    {
         return KoText::ColumnBreak;
+    }
     return KoText::NoBreak;
 }
 
 QString KoText::textBreakToString(KoText::KoTextBreakProperty textBreak)
 {
     if (textBreak == KoText::PageBreak)
+    {
         return "page";
+    }
     if (textBreak == KoText::ColumnBreak)
+    {
         return "column";
+    }
     return "auto";
 }
 
@@ -192,9 +260,13 @@ QTextLength KoText::parseLength(const QString &length)
         bool ok = false;
         qreal realLength = lengthValue.toDouble(&ok);
         if (ok)
+        {
             return QTextLength(QTextLength::PercentageLength, realLength);
+        }
         else
+        {
             return QTextLength(QTextLength::PercentageLength, 0);
+        }
     }
     else
     {
