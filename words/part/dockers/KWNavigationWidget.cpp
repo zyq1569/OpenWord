@@ -191,25 +191,34 @@ void KWNavigationWidget::updateData()
                 continue;
             }
             QString title = block.text();
-            if (title != "" && title != "目录")///add:去掉空
+            static int len = QString("?目录").length();
+            if (title.length())///add:去掉空
             {
-                title = updateLevel(title,blockLevel);
-                QStandardItem *item = new QStandardItem(title/*block.text()*/);
-                item->setData(block.position(), Qt::UserRole + 1);
-                item->setData(/*qVariantFromValue*/QVariant::fromValue((void *)doc), Qt::UserRole + 2);
-                QList< QStandardItem *> buf;
-
-                KoTextLayoutRootArea *a = m_layout->rootAreaForPosition(block.position());
-                buf.append(item);
-                //add pagenuber 第几页
-                buf.append(new QStandardItem(QString::number(a->page()->visiblePageNumber())));
-
-                while (curChain.top().second >= blockLevel)
+                if (title.length() <= len+1 && title.contains("目录"))
                 {
-                    curChain.pop();
+                    // to do????
                 }
-                curChain.top().first->appendRow(buf);
-                curChain.push(QPair<QStandardItem *, int>(item, blockLevel));
+                else
+                {
+                    title = updateLevel(title,blockLevel);
+                    QStandardItem *item = new QStandardItem(title/*block.text()*/);
+                    item->setData(block.position(), Qt::UserRole + 1);
+                    item->setData(/*qVariantFromValue*/QVariant::fromValue((void *)doc), Qt::UserRole + 2);
+                    QList< QStandardItem *> buf;
+
+                    KoTextLayoutRootArea *a = m_layout->rootAreaForPosition(block.position());
+                    buf.append(item);
+                    //add pagenuber 第几页
+                    buf.append(new QStandardItem(QString::number(a->page()->visiblePageNumber())));
+
+                    while (curChain.top().second >= blockLevel)
+                    {
+                        curChain.pop();
+                    }
+                    curChain.top().first->appendRow(buf);
+                    curChain.push(QPair<QStandardItem *, int>(item, blockLevel));
+                }
+
             }
 
             block = block.next();
