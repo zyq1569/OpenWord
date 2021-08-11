@@ -365,12 +365,29 @@ static QString intToScriptList(int n, KoOdfNumberDefinition::FormatSpecification
 //#endif
 }
 
-QString KoOdfNumberDefinition::formattedNumber(int number, KoOdfNumberDefinition *defaultDefinition) const
+QString g_NumberH1PreIndex[51] =
+{
+    "一",     "二",   "三",   "四",   "五",   "六",   "七",   "八",   "九", "十",
+    "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十"
+};
+
+QString KoOdfNumberDefinition::formattedNumber(int number, KoOdfNumberDefinition *defaultDefinition, int level) const
 {
     switch(d->formatSpecification)
     {
         case Numeric:
-            return QString::number(number);
+            if (level > 2)
+            {
+                return QString::number(number);
+            }
+            else
+            {
+                if (number > 19)
+                {
+                    return QString::number(number);
+                }
+                return  g_NumberH1PreIndex[number-1];
+            }
             break;
 
         case AlphabeticLowerCase:

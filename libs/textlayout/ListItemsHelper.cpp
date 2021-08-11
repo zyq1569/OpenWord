@@ -45,9 +45,14 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
     const QTextListFormat format = m_textList->format();
     const KoListStyle::LabelType labelType = static_cast<KoListStyle::LabelType>(format.style());
 
-    const QString prefix = format.stringProperty(KoListStyle::ListItemPrefix);
-    const QString suffix = format.stringProperty(KoListStyle::ListItemSuffix);
+    /*const*/ QString prefix = format.stringProperty(KoListStyle::ListItemPrefix);
+    /*const*/ QString suffix = format.stringProperty(KoListStyle::ListItemSuffix);
     const int level = format.intProperty(KoListStyle::Level);
+    if (level == 2)
+    {
+        prefix = "(";
+        suffix = ") ";
+    }
     int dp = format.intProperty(KoListStyle::DisplayLevel);
     if (dp > level)
     {
@@ -189,7 +194,7 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
                     KoOdfNumberDefinition numberFormat;
                     numberFormat.setFormatSpecification(static_cast<KoOdfNumberDefinition::FormatSpecification>(format.intProperty(KoListStyle::NumberFormat)));
                     numberFormat.setLetterSynchronization(format.boolProperty(KoListStyle::LetterSynchronization));
-                    item += "." + numberFormat.formattedNumber(index); // add missing counters.
+                    item += "." + numberFormat.formattedNumber(index, 0, level); // add missing counters.
                 }
             }
             else     // just copy previous counter as prefix
@@ -204,7 +209,7 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
                     KoOdfNumberDefinition numberFormat;
                     numberFormat.setFormatSpecification(static_cast<KoOdfNumberDefinition::FormatSpecification>(format.intProperty(KoListStyle::NumberFormat)));
                     numberFormat.setLetterSynchronization(format.boolProperty(KoListStyle::LetterSynchronization));
-                    item += "." + numberFormat.formattedNumber(index); // add missing counters.
+                    item += "." + numberFormat.formattedNumber(index,0,  level); // add missing counters.
                 }
                 tmpDisplayLevel = 0;
                 if (isOutline && counterResetRequired)
@@ -219,7 +224,7 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
             KoOdfNumberDefinition numberFormat;
             numberFormat.setFormatSpecification(static_cast<KoOdfNumberDefinition::FormatSpecification>(format.intProperty(KoListStyle::NumberFormat)));
             numberFormat.setLetterSynchronization(format.boolProperty(KoListStyle::LetterSynchronization));
-            item = numberFormat.formattedNumber(index) + "." + item; // add missing counters.
+            item = numberFormat.formattedNumber(index, 0, level) + "." + item; // add missing counters.
         }
     }
     bool calcWidth = true;
@@ -243,7 +248,7 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
 
             KoOdfNumberDefinition numberFormat;
             numberFormat.setFormatSpecification(spec);
-            partialCounterText = numberFormat.formattedNumber(index);
+            partialCounterText = numberFormat.formattedNumber(index, 0, level);
             break;
         }
         case KoListStyle::BulletCharLabelType:

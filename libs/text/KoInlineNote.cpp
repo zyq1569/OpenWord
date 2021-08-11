@@ -93,14 +93,18 @@ void KoInlineNote::setMotherFrame(QTextFrame *motherFrame)
 
     // Now let's make sure it has the right paragraph
     KoOdfNotesConfiguration *notesConfig = 0;
-    if (d->type == KoInlineNote::Footnote) {
+    if (d->type == KoInlineNote::Footnote)
+    {
         notesConfig = KoTextDocument(d->document).styleManager()->notesConfiguration(KoOdfNotesConfiguration::Footnote);
-    } else if (d->type == KoInlineNote::Endnote) {
+    }
+    else if (d->type == KoInlineNote::Endnote)
+    {
         notesConfig = KoTextDocument(d->document).styleManager()->notesConfiguration(KoOdfNotesConfiguration::Endnote);
     }
 
     KoParagraphStyle *style = static_cast<KoParagraphStyle *>(notesConfig->defaultNoteParagraphStyle());
-    if (style) {
+    if (style)
+    {
         QTextBlockFormat bf;
         QTextCharFormat cf;
         style->applyStyle(bf);
@@ -117,11 +121,15 @@ void KoInlineNote::setLabel(const QString &text)
 
 void KoInlineNote::setAutoNumber(int autoNumber)
 {
-    if (d->autoNumbering) {
+    if (d->autoNumbering)
+    {
         KoOdfNotesConfiguration *notesConfig = 0;
-        if (d->type == KoInlineNote::Footnote) {
+        if (d->type == KoInlineNote::Footnote)
+        {
             notesConfig = KoTextDocument(d->document).styleManager()->notesConfiguration(KoOdfNotesConfiguration::Footnote);
-        } else if (d->type == KoInlineNote::Endnote) {
+        }
+        else if (d->type == KoInlineNote::Endnote)
+        {
             notesConfig = KoTextDocument(d->document).styleManager()->notesConfiguration(KoOdfNotesConfiguration::Endnote);
         }
         d->label = notesConfig->numberFormat().formattedNumber(autoNumber + notesConfig->startValue());
@@ -170,11 +178,14 @@ void KoInlineNote::resize(const QTextDocument *document, QTextInlineObject &obje
 {
     Q_UNUSED(document);
     Q_UNUSED(posInDocument);
-    if (d->label.isEmpty()) {
+    if (d->label.isEmpty())
+    {
         object.setWidth(0);
         object.setAscent(0);
         object.setDescent(0);
-    } else {
+    }
+    else
+    {
         Q_ASSERT(format.isCharFormat());
         QFontMetricsF fm(format.font(), pd);
         object.setWidth(fm.width(d->label));
@@ -189,17 +200,23 @@ void KoInlineNote::paint(QPainter &painter, QPaintDevice *pd, const QTextDocumen
     Q_UNUSED(posInDocument);
 
     if (d->label.isEmpty())
+    {
         return;
+    }
 
     QTextCharFormat format = originalFormat;
     KoOdfNotesConfiguration *notesConfig = 0;
-    if (d->type == KoInlineNote::Footnote) {
+    if (d->type == KoInlineNote::Footnote)
+    {
         notesConfig = KoTextDocument(d->document).styleManager()->notesConfiguration(KoOdfNotesConfiguration::Footnote);
-    } else if (d->type == KoInlineNote::Endnote) {
+    }
+    else if (d->type == KoInlineNote::Endnote)
+    {
         notesConfig = KoTextDocument(d->document).styleManager()->notesConfiguration(KoOdfNotesConfiguration::Endnote);
     }
     KoCharacterStyle *style = static_cast<KoCharacterStyle *>(notesConfig->citationBodyTextStyle());
-    if (style) {
+    if (style)
+    {
         style->applyStyle(format);
     }
 
@@ -228,40 +245,53 @@ bool KoInlineNote::loadOdf(const KoXmlElement & element, KoShapeLoadingContext &
     KoTextLoader loader(context);
     QTextCursor cursor(d->textFrame);
 
-    if (element.namespaceURI() == KoXmlNS::text && element.localName() == "note") {
+    if (element.namespaceURI() == KoXmlNS::text && element.localName() == "note")
+    {
 
         QString className = element.attributeNS(KoXmlNS::text, "note-class");
-        if (className == "footnote") {
+        if (className == "footnote")
+        {
             d->type = Footnote;
         }
-        else if (className == "endnote") {
+        else if (className == "endnote")
+        {
             d->type = Endnote;
         }
-        else {
+        else
+        {
             return false;
         }
 
-        for (KoXmlNode node = element.firstChild(); !node.isNull(); node = node.nextSibling()) {
+        for (KoXmlNode node = element.firstChild(); !node.isNull(); node = node.nextSibling())
+        {
             KoXmlElement ts = node.toElement();
             if (ts.namespaceURI() != KoXmlNS::text)
+            {
                 continue;
-            if (ts.localName() == "note-body") {
+            }
+            if (ts.localName() == "note-body")
+            {
                 loader.loadBody(ts, cursor);
-            } else if (ts.localName() == "note-citation") {
+            }
+            else if (ts.localName() == "note-citation")
+            {
                 d->label = ts.attributeNS(KoXmlNS::text, "label");
-                if (d->label.isEmpty()) {
+                if (d->label.isEmpty())
+                {
                     setAutoNumbering(true);
                     d->label = ts.text();
                 }
             }
         }
     }
-    else if (element.namespaceURI() == KoXmlNS::office && element.localName() == "annotation") {
+    else if (element.namespaceURI() == KoXmlNS::office && element.localName() == "annotation")
+    {
         d->author = element.attributeNS(KoXmlNS::text, "dc-creator");
         d->date = QDateTime::fromString(element.attributeNS(KoXmlNS::text, "dc-date"), Qt::ISODate);
         loader.loadBody(element, cursor); // would skip author and date, and do just the <text-p> and <text-list> elements
     }
-    else {
+    else
+    {
         return false;
     }
 
