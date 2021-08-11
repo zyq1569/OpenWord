@@ -45,14 +45,14 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
     const QTextListFormat format = m_textList->format();
     const KoListStyle::LabelType labelType = static_cast<KoListStyle::LabelType>(format.style());
 
-    /*const*/ QString prefix = format.stringProperty(KoListStyle::ListItemPrefix);
-    /*const*/ QString suffix = format.stringProperty(KoListStyle::ListItemSuffix);
+    const QString prefix = format.stringProperty(KoListStyle::ListItemPrefix);
+    const QString suffix = format.stringProperty(KoListStyle::ListItemSuffix);
     const int level = format.intProperty(KoListStyle::Level);
-    if (level == 2)
-    {
-        prefix = "(";
-        suffix = ") ";
-    }
+//    if (level == 2)
+//    {
+//        prefix = "(";
+//        suffix = ") ";
+//    }
     int dp = format.intProperty(KoListStyle::DisplayLevel);
     if (dp > level)
     {

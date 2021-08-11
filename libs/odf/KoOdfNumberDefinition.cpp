@@ -376,18 +376,18 @@ QString KoOdfNumberDefinition::formattedNumber(int number, KoOdfNumberDefinition
     switch(d->formatSpecification)
     {
         case Numeric:
-            if (level > 2)
-            {
+//            if (level > 2)
+//            {
                 return QString::number(number);
-            }
-            else
-            {
-                if (number > 19)
-                {
-                    return QString::number(number);
-                }
-                return  g_NumberH1PreIndex[number-1];
-            }
+//            }
+//            else
+//            {
+//                if (number > 19)
+//                {
+//                    return QString::number(number);
+//                }
+//                return  g_NumberH1PreIndex[number-1];
+//            }
             break;
 
         case AlphabeticLowerCase:
