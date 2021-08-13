@@ -198,23 +198,14 @@ void KoRecentDocumentsPane::selectionChanged(const QModelIndex& index)
         if (!fileItem.isNull())
         {
             // TODO: think about not displaying Modified/Accessed if not available
-//            QString details = QString("<center>%1<br>").arg(fileItem.url().toDisplayString(QUrl::PreferLocalFile)) +
-//                "<table border=\"0\">" +
-//                kundo2_i18nc("File modification date and time. %1 is date time",
-//                      "<tr><td><b>Modified:</b></td><td>%1</td></tr>",
-//                      QString(fileItem.timeString(KFileItem::ModificationTime))) +
-//                kundo2_i18nc("File access date and time. %1 is date time",
-//                      "<tr><td><b>Accessed:</b></td><td>%1</td></tr>",
-//                      QString(fileItem.timeString(KFileItem::AccessTime))) +
-//                "</table></center>";
             QString details = QString("<center>%1<br>").arg(fileItem.url().toDisplayString(QUrl::PreferLocalFile)) +
                               "<table border=\"0\">" +
-                              ("File modification date and time. %1 is date time",
-                               "<tr><td><b>Modified:</b></td><td>%1</td></tr>",
-                               QString(fileItem.timeString(KFileItem::ModificationTime))) +
-                              ("File access date and time. %1 is date time",
-                               "<tr><td><b>Accessed:</b></td><td>%1</td></tr>",
-                               QString(fileItem.timeString(KFileItem::AccessTime))) +
+                              i18nc("File modification date and time. %1 is date time",
+                                    "<tr><td><b>Modified:</b></td><td>%1</td></tr>",
+                                    QString(fileItem.timeString(KFileItem::ModificationTime))) +
+                              i18nc("File access date and time. %1 is date time",
+                                    "<tr><td><b>Accessed:</b></td><td>%1</td></tr>",
+                                    QString(fileItem.timeString(KFileItem::AccessTime))) +
                               "</table></center>";
             m_detailsLabel->setHtml(details);
         }
