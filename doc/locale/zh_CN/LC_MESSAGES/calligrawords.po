@@ -2002,3 +2002,9 @@ msgstr "显示工具栏"
 #, kde-format
 msgid "Blank Documents"
 msgstr "编辑文档"
+
+#: main/KoMainWindow.cpp:857
+#, kde-format
+msgid "Custom Document"
+msgstr "自定义文档"
+
