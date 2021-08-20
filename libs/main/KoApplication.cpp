@@ -149,6 +149,7 @@ KoApplication::KoApplication(const QByteArray &nativeMimeType,
     , d(new KoApplicationPrivate())
 {
 
+    KLocalizedString::setApplicationDomain("calligrawords");
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
     QScopedPointer<KAboutData> aboutData(aboutDataGenerator());
