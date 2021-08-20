@@ -101,7 +101,21 @@ QStringList KoGlobal::_listOfLanguages()
 QString KoGlobal::sysLanguageName()
 {
     //
-    static QString translatorFileName = QLocale::system().name();
+    static bool binit = true;
+    static QString translatorFileName = "en_US";
+    if (binit)
+    {
+        binit = false;
+        QStringList str = KLocalizedString::languages();
+
+        if(str.size() > 0)
+        {
+            if (str[0].contains("ch"))
+            {
+                translatorFileName = "zh_CN";
+            }
+        }
+    }
     return translatorFileName;
 }
 
