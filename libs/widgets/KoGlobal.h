@@ -81,7 +81,7 @@ public:
 
     ~KoGlobal();
 
-    //add QLocale::system().name();
+    //add: get current set Language [ki18n]
     static QString sysLanguageName();
 
 private:

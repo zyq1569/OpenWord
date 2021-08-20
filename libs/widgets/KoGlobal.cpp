@@ -100,7 +100,6 @@ QStringList KoGlobal::_listOfLanguages()
 }
 QString KoGlobal::sysLanguageName()
 {
-    //
     static bool binit = true;
     static QString translatorFileName = "en_US";
     if (binit)
