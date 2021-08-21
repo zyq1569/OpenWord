@@ -2008,3 +2008,8 @@ msgstr "编辑文档"
 msgid "Custom Document"
 msgstr "自定义文档"
 
+#: lib/flake.cpp:231
+#, kde-format
+msgid "Show Grid"
+msgstr "显示网格"
+
