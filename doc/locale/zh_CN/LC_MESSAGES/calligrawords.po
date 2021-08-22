@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-08-08 00:16+0000\n"
-"PO-Revision-Date: 2021-08-13 16:03\n"
+"PO-Revision-Date: 2021-08-22 18:26+0800\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -26,6 +26,7 @@ msgstr ""
 "X-Crowdin-Language: zh-CN\n"
 "X-Crowdin-File: /kf5-trunk/messages/calligra/calligrawords.pot\n"
 "X-Crowdin-File-ID: 5475\n"
+"X-Generator: Poedit 3.0\n"
 
 #. i18n: ectx: Menu (file)
 #: part/calligrawords.rc:4 part/calligrawords_readonly.rc:4
@@ -1198,7 +1199,7 @@ msgstr "Smit Patel"
 msgid "Mojtaba Shahi"
 msgstr "Mojtaba Shahi"
 
-#: part/KWAboutData.h:44
+#: part/KWAboutData.h:44 lib/main/KoMainWindow.cpp:33
 #, kde-format
 msgid "Style Manager"
 msgstr "样式管理器"
@@ -1945,7 +1946,9 @@ msgstr "%1 (未知类型)."
 
 #: main/KoMainWindow.cpp:1083
 #, kde-format
-msgid "<qt>Saving as a %1 may result in some loss of formatting.<p>Do you still want to save in this format?</qt>"
+msgid ""
+"<qt>Saving as a %1 may result in some loss of formatting.<p>Do you still "
+"want to save in this format?</qt>"
 msgstr "<qt>保存为 %1 可能会格式丢失. <p>您仍然打算保存这种格式?."
 
 #: main/KoMainWindow.cpp:857
@@ -1955,7 +1958,9 @@ msgstr "确认保存"
 
 #: main/KoMainWindow.cpp:857
 #, kde-format
-msgid "<qt>Exporting as a %1 may result in some loss of formatting.<p>Do you still want to export to this format?</qt>"
+msgid ""
+"<qt>Exporting as a %1 may result in some loss of formatting.<p>Do you still "
+"want to export to this format?</qt>"
 msgstr "<qt>导出为 %1 可能会格式丢失.<p>您仍然打算导出这种格式?</qt>"
 
 #: main/KoMainWindow.cpp:857
@@ -1975,7 +1980,9 @@ msgstr "未命名"
 
 #: main/KoMainWindow.cpp:857
 #, kde-format
-msgid "<p>The document <b>'%1'</b> has been modified.</p><p>Do you want to save it?</p>"
+msgid ""
+"<p>The document <b>'%1'</b> has been modified.</p><p>Do you want to save it?"
+"</p>"
 msgstr "<p>文档 <b>'%1'</b> 已修改.</p><p>您打算保存?</p>"
 
 #: main/KoMainWindow.cpp:857
@@ -2058,9 +2065,44 @@ msgstr "图像连线"
 msgid "Draw path"
 msgstr "绘制路径"
 
+#: lib/kundo2/kundo2stack.cpp:37
+#, kde-format
+msgid "Undo"
+msgstr "撤销"
+
+#: lib/kundo2/kundo2stack.cpp:37
+#, kde-format
+msgid "Redo"
+msgstr "恢复"
+
+#: lib/kundo2/kundo2stack.cpp:37
+#, kde-format
+msgid "Redo %1"
+msgstr "恢复 %1"
+
+#: lib/text/commands/TextPasteCommand.cpp:37
+#, kde-format
+msgid "Paste As Text"
+msgstr "粘贴文字"
+
+#: lib/textshape/TextTool.cpp:488
+#, kde-format
+msgid "Style Manager..."
+msgstr "样式管理器..."
+
+#: lib/textshape/StyleManagerDialog.cpp:33
+#, kde-format
+msgid "Show Guides"
+msgstr "显示指南"
+
+#: lib/main/KoMainWindow.cpp:33
+#, kde-format
+msgid "Show Docker Titlebars"
+msgstr "显示浮窗标题栏"
 
 #: main/KoOpenPane.cpp:231
 #, kde-format
-msgid "File modification date and time. %1 is date time.<tr><td><b>Modified:</b></td><td>%1</td></tr>"
+msgid ""
+"File modification date and time. %1 is date time.<tr><td><b>Modified:</b></"
+"td><td>%1</td></tr>"
 msgstr "文档修改日期时间.%1 <tr><td><b>修改: </b></td><td>%1</td></tr>"
-
