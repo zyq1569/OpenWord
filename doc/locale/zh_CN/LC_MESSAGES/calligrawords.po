@@ -2013,3 +2013,20 @@ msgstr "自定义文档"
 msgid "Show Grid"
 msgstr "显示网格"
 
+#: main/KoRecentDocumentsPane.cpp:231
+#, kde-format
+msgid "Open Existing Document"
+msgstr "打开文档"
+
+#: main/KoOpenPane.cpp:231
+#, kde-format
+msgid "Open This Document"
+msgstr "打开这个文档"
+
+
+
+#: main/KoOpenPane.cpp:231
+#, kde-format
+msgid "File modification date and time. %1 is date time.<tr><td><b>Modified:</b></td><td>%1</td></tr>"
+msgstr "文档修改日期时间.%1 <tr><td><b>修改: </b></td><td>%1</td></tr>"
+
