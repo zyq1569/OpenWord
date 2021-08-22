@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  */
-
+#include <klocalizedstring.h>
 #include "KoModeBoxDocker_p.h"
 #include "KoModeBox_p.h"
 #include <KoCanvasController.h>
@@ -32,7 +32,7 @@ KoModeBoxDocker::KoModeBoxDocker(KoModeBox *modeBox)
     setWidget(modeBox);
 //    setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
     setFeatures(AllDockWidgetFeatures);
-    setWindowTitle("MainTool");//openword20210531
+    setWindowTitle(i18n("MainTool"));//openword20210531
     setObjectName("ModeBox");
 
     connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), this, SLOT(locationChanged(Qt::DockWidgetArea)));
