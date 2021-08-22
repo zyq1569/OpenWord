@@ -2060,45 +2060,65 @@ msgstr "图形调试"
 msgid "Connect shapes"
 msgstr "图像连线"
 
-#: lib/basicflakes/plugin/KoCreatePathToolFactory.cpp:37
+#: libs/basicflakes/plugin/KoCreatePathToolFactory.cpp:37
 #, kde-format
 msgid "Draw path"
 msgstr "绘制路径"
 
-#: lib/kundo2/kundo2stack.cpp:37
+#: libs/kundo2/kundo2stack.cpp:37
 #, kde-format
 msgid "Undo"
 msgstr "撤销"
 
-#: lib/kundo2/kundo2stack.cpp:37
+#: libs/kundo2/kundo2stack.cpp:37
 #, kde-format
 msgid "Redo"
 msgstr "恢复"
 
-#: lib/kundo2/kundo2stack.cpp:37
+#: libs/kundo2/kundo2stack.cpp:37
 #, kde-format
 msgid "Redo %1"
 msgstr "恢复 %1"
 
-#: lib/text/commands/TextPasteCommand.cpp:37
+#: libs/text/commands/TextPasteCommand.cpp:37
 #, kde-format
 msgid "Paste As Text"
 msgstr "粘贴文字"
 
-#: lib/textshape/TextTool.cpp:488
+#: libs/textshape/TextTool.cpp:488
 #, kde-format
 msgid "Style Manager..."
 msgstr "样式管理器..."
 
-#: lib/textshape/StyleManagerDialog.cpp:33
+#: libs/textshape/StyleManagerDialog.cpp:33
 #, kde-format
 msgid "Show Guides"
 msgstr "显示指南"
 
-#: lib/main/KoMainWindow.cpp:33
+#: libs/main/KoMainWindow.cpp:33
 #, kde-format
 msgid "Show Docker Titlebars"
 msgstr "显示浮窗标题栏"
+
+#: libs/widgets/KoZoomMode.cpp:33
+#, kde-format
+msgid "Fit Page Width"
+msgstr "适合页宽"
+
+#: libs/widgets/KoZoomMode.cpp:33
+#, kde-format
+msgid "Fit Text Width"
+msgstr "适合文字宽"
+
+#: libs/widgets/KoZoomMode.cpp:33
+#, kde-format
+msgid "Fit Page"
+msgstr "适合整页"
+
+#: libs/widgets/KoZoomMode.cpp:33
+#, kde-format
+msgid "Actual Pixels"
+msgstr "真实像素"
 
 #: main/KoOpenPane.cpp:231
 #, kde-format
