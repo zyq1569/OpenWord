@@ -2033,6 +2033,31 @@ msgstr "主要工具"
 msgid "Text editing"
 msgstr "文字编辑"
 
+#: plugins/textshape/ReferencesToolFactory.cpp:32
+#, kde-format
+msgid "References"
+msgstr "参考文献"
+
+#: plugins/textshape/ReviewToolFactory.cpp:37
+#, kde-format
+msgid "Review"
+msgstr "注释"
+
+#: plugins/defaultTools/defaulttool/DefaultToolFactory.cpp:37
+#, kde-format
+msgid "Shape handling"
+msgstr "图形调试"
+
+#: plugins/defaultTools/defaulttool/DefaultToolFactory.cpp:37
+#, kde-format
+msgid "Connect shapes"
+msgstr "图像连线"
+
+#: lib/basicflakes/plugin/KoCreatePathToolFactory.cpp:37
+#, kde-format
+msgid "Draw path"
+msgstr "绘制路径"
+
 
 #: main/KoOpenPane.cpp:231
 #, kde-format
