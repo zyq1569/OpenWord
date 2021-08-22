@@ -2023,6 +2023,15 @@ msgstr "打开文档"
 msgid "Open This Document"
 msgstr "打开这个文档"
 
+#: libs/widgets/KoModeBoxDocker.cpp:35
+#, kde-format
+msgid "MainTool"
+msgstr "主要工具"
+
+#: plugins/textshape/TextToolFactory.cpp:35
+#, kde-format
+msgid "Text editing"
+msgstr "文字编辑"
 
 
 #: main/KoOpenPane.cpp:231
