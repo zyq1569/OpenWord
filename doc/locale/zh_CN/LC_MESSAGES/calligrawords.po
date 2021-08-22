@@ -2120,6 +2120,12 @@ msgstr "适合整页"
 msgid "Actual Pixels"
 msgstr "真实像素"
 
+#: plugins/dockers/shapecollection/ShapeCollectionDocker.cpp:125
+#, kde-format
+msgid "Add Shape"
+msgstr "增加图形"
+
+
 #: main/KoOpenPane.cpp:231
 #, kde-format
 msgid ""
