@@ -42,6 +42,7 @@ AutocorrectPluginFactory::AutocorrectPluginFactory()
 {
     registerPlugin<AutocorrectPlugin>();
 }
+
 AutocorrectPluginFactory::~AutocorrectPluginFactory()
 {
 
@@ -53,6 +54,7 @@ AutocorrectPlugin::AutocorrectPlugin( QObject *parent, const QVariantList& )
 {
     KoTextEditingRegistry::instance()->add( new AutocorrectFactory());
 }
+
 AutocorrectPlugin::~AutocorrectPlugin()
 {
 
