@@ -371,7 +371,7 @@ QString g_NumberH1PreIndex[51] =
     "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十"
 };
 
-QString KoOdfNumberDefinition::formattedNumber(int number, KoOdfNumberDefinition *defaultDefinition, int level) const
+QString KoOdfNumberDefinition::formattedNumber(int number, KoOdfNumberDefinition *defaultDefinition/*, int level*/) const
 {
     switch(d->formatSpecification)
     {

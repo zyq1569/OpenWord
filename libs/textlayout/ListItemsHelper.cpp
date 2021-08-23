@@ -194,7 +194,7 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
                     KoOdfNumberDefinition numberFormat;
                     numberFormat.setFormatSpecification(static_cast<KoOdfNumberDefinition::FormatSpecification>(format.intProperty(KoListStyle::NumberFormat)));
                     numberFormat.setLetterSynchronization(format.boolProperty(KoListStyle::LetterSynchronization));
-                    item += "." + numberFormat.formattedNumber(index, 0, level); // add missing counters.
+                    item += "." + numberFormat.formattedNumber(index); // add missing counters.
                 }
             }
             else     // just copy previous counter as prefix
@@ -209,7 +209,7 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
                     KoOdfNumberDefinition numberFormat;
                     numberFormat.setFormatSpecification(static_cast<KoOdfNumberDefinition::FormatSpecification>(format.intProperty(KoListStyle::NumberFormat)));
                     numberFormat.setLetterSynchronization(format.boolProperty(KoListStyle::LetterSynchronization));
-                    item += "." + numberFormat.formattedNumber(index,0,  level); // add missing counters.
+                    item += "." + numberFormat.formattedNumber(index); // add missing counters.
                 }
                 tmpDisplayLevel = 0;
                 if (isOutline && counterResetRequired)
@@ -224,7 +224,7 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
             KoOdfNumberDefinition numberFormat;
             numberFormat.setFormatSpecification(static_cast<KoOdfNumberDefinition::FormatSpecification>(format.intProperty(KoListStyle::NumberFormat)));
             numberFormat.setLetterSynchronization(format.boolProperty(KoListStyle::LetterSynchronization));
-            item = numberFormat.formattedNumber(index, 0, level) + "." + item; // add missing counters.
+            item = numberFormat.formattedNumber(index) + "." + item; // add missing counters.
         }
     }
     bool calcWidth = true;
@@ -248,7 +248,7 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
 
             KoOdfNumberDefinition numberFormat;
             numberFormat.setFormatSpecification(spec);
-            partialCounterText = numberFormat.formattedNumber(index, 0, level);
+            partialCounterText = numberFormat.formattedNumber(index);
             break;
         }
         case KoListStyle::BulletCharLabelType:
