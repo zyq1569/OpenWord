@@ -2033,7 +2033,7 @@ msgstr "打开这个文档"
 #: libs/widgets/KoModeBoxDocker.cpp:35
 #, kde-format
 msgid "MainTool"
-msgstr "主要工具"
+msgstr "工具"
 
 #: plugins/textshape/TextToolFactory.cpp:35
 #, kde-format
@@ -2053,7 +2053,7 @@ msgstr "注释"
 #: plugins/defaultTools/defaulttool/DefaultToolFactory.cpp:37
 #, kde-format
 msgid "Shape handling"
-msgstr "图形调试"
+msgstr "图形调整"
 
 #: plugins/defaultTools/defaulttool/DefaultToolFactory.cpp:37
 #, kde-format
