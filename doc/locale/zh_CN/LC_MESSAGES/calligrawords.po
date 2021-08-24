@@ -2167,10 +2167,20 @@ msgstr "选择作者简介"
 
 #: main/KoRecentDocumentsPane.cpp:202
 #, kde-format
-msgid "File modification date and time. %1 is date time<tr><td><b>Modified:</b></td><td>%1</td></tr>"
-msgstr "文档修改日期时间.%1 <tr><td><b>修改:</b></td><td>%1</td></tr>"
+msgid "File modification date and time. %1 is date time"
+msgstr "文档修改日期时间.%1 "
+
+#: main/KoRecentDocumentsPane.cpp:202
+#, kde-format
+msgid "<tr><td><b>Modified:</b></td><td>%1</td></tr>"
+msgstr "<tr><td><b>修改:</b></td><td>%1</td></tr>"
 
 #: main/KoRecentDocumentsPane.cpp:207
 #, kde-format
-msgid "File access date and time. %1 is date time<tr><td><b>Accessed:</b></td><td>%1</td></tr>"
-msgstr "文档访问日期时间.%1 <tr><td><b>访问:</b></td><td>%1</td></tr>"
+msgid "File access date and time. %1 is date time"
+msgstr "文档访问日期时间.%1 "
+
+#: main/KoRecentDocumentsPane.cpp:207
+#, kde-format
+msgid "<tr><td><b>Accessed:</b></td><td>%1</td></tr>"
+msgstr "<tr><td><b>访问:</b></td><td>%1</td></tr>"
