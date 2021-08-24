@@ -2155,6 +2155,11 @@ msgstr "作者简介"
 msgid "Default Author Profile"
 msgstr "默认作者简介"
 
+#: libs/main/KoView.cpp:400
+#, kde-format
+msgid "Anonymous"
+msgstr "匿名"
+
 #: libs/main/KoView.cpp:463
 #, kde-format
 msgid "choice for author profile"
