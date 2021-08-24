@@ -108,6 +108,7 @@ INCLUDEPATH        +=  $$SDK_INSTALL_PREFIX \
                        $$SDK_INSTALL_PREFIX/KF5/KNotifications \
                        $$SDK_INSTALL_PREFIX/KF5/KBookmarks \
                        $$SDK_INSTALL_PREFIX/KF5/SonnetUi \
+                       $$SDK_INSTALL_PREFIX/KF5/SonnetCore \
                        $$SDK_INSTALL_PREFIX/KF5/Solid \
                        $$SDK_INSTALL_PREFIX/phonon4qt5 \
                        $$SDK_INSTALL_PREFIX/KChart \
@@ -154,6 +155,7 @@ LIBS             +=  -L$${SDK_LIB_PREFIX} \
                      -lKF5JobWidgets \
                      -lKF5Parts \
                      -lKF5SonnetUi \
+                     -lKF5SonnetCore \
                      -lKF5Crash \
                      -lKF5Solid \
                      -lKF5Completion \
