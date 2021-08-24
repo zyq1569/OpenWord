@@ -2125,6 +2125,41 @@ msgstr "真实像素"
 msgid "Add Shape"
 msgstr "增加图形"
 
+#: plugins/textediting/autocorrection/Autocorrect.cpp:38
+#, kde-format
+msgid "Configure &Autocorrection..."
+msgstr "配置校正(&A)"
+
+#: plugins/textediting/autocorrection/Autocorrect.cpp:42
+#, kde-format
+msgid "Autocorrection"
+msgstr "自动校正"
+
+#: plugins/textediting/spellcheck/SpellCheck.cpp:58
+#, kde-format
+msgid "Configure &Spell Checking..."
+msgstr "配置拼写检查(&S)"
+
+#: plugins/textediting/spellcheck/SpellCheck.cpp:58
+#, kde-format
+msgid "Auto Spell Check"
+msgstr "自动拼写检查"
+
+#: libs/main/KoView.cpp:58
+#, kde-format
+msgid "Active Author Profile"
+msgstr "作者简介"
+
+#: libs/main/KoView.cpp:463
+#, kde-format
+msgid "Default Author Profile"
+msgstr "默认作者简介"
+
+#: libs/main/KoView.cpp:463
+#, kde-format
+msgid "choice for author profile"
+msgstr "选择作者简介"
+
 
 #: main/KoOpenPane.cpp:231
 #, kde-format
