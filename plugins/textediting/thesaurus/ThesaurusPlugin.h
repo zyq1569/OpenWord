@@ -20,10 +20,12 @@
 #ifndef THESAURUSPLUGIN_H
 #define THESAURUSPLUGIN_H
 
+#include <kpluginfactory.h>
 #include <QObject>
 #include <QVariant>
 
-class ThesaurusPlugin : public QObject {
+class ThesaurusPlugin : public QObject
+{
     Q_OBJECT
 
 public:
@@ -31,4 +33,14 @@ public:
     ~ThesaurusPlugin() override {}
 };
 
+
+class ThesaurusPluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_textediting_thesaurus.json")
+public:
+    explicit ThesaurusPluginFactory();
+    ~ThesaurusPluginFactory();
+};
 #endif
