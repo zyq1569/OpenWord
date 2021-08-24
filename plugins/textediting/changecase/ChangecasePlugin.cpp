@@ -24,8 +24,20 @@
 
 #include <KoTextEditingRegistry.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(ChangecasePluginFactory, "calligra_textediting_changecase.json",
-                           registerPlugin<ChangecasePlugin>(); )
+//K_PLUGIN_FACTORY_WITH_JSON(ChangecasePluginFactory, "calligra_textediting_changecase.json",
+//                           registerPlugin<ChangecasePlugin>(); )
+
+
+
+ChangecasePluginFactory::ChangecasePluginFactory()
+{
+    registerPlugin<ChangecasePlugin>();
+}
+ChangecasePluginFactory::~ChangecasePluginFactory()
+{
+
+}
+
 
 ChangecasePlugin::ChangecasePlugin( QObject *parent, const QVariantList& )
     : QObject(parent)
@@ -33,5 +45,5 @@ ChangecasePlugin::ChangecasePlugin( QObject *parent, const QVariantList& )
     KoTextEditingRegistry::instance()->add( new ChangecaseFactory());
 }
 
-#include <ChangecasePlugin.moc>
+//#include <ChangecasePlugin.moc>
 

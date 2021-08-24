@@ -19,16 +19,27 @@
 
 #ifndef CHANGECASEPLUGIN_H
 #define CHANGECASEPLUGIN_H
-
+#include <kpluginfactory.h>
 #include <QObject>
 #include <QVariant>
 
-class ChangecasePlugin : public QObject {
+class ChangecasePlugin : public QObject
+{
     Q_OBJECT
 
 public:
     ChangecasePlugin(QObject * parent,  const QVariantList & );
     ~ChangecasePlugin() override {}
+};
+
+class ChangecasePluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_textediting_changecase.json")
+public:
+    explicit ChangecasePluginFactory();
+    ~ChangecasePluginFactory();
 };
 
 #endif
