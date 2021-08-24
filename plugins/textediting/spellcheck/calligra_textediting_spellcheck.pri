@@ -1,4 +1,10 @@
 
+HEADERS +=      SpellCheckDebug.h \
+                SpellCheckPlugin.h \
+                SpellCheck.h \
+                SpellCheckFactory.h \
+                BgSpellCheck.h \
+                SpellCheckMenu.h
 
 
 SOURCES +=      SpellCheckDebug.cpp \
