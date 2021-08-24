@@ -102,14 +102,20 @@ public:
         StatusBarItem() // for QValueList
             : m_widget(0),
               m_connected(false),
-              m_hidden(false) {}
+              m_hidden(false)
+        {
+
+        }
 
         StatusBarItem(QWidget * widget, int stretch, bool permanent)
             : m_widget(widget),
               m_stretch(stretch),
               m_permanent(permanent),
               m_connected(false),
-              m_hidden(false) {}
+              m_hidden(false)
+        {
+
+        }
 
         bool operator==(const StatusBarItem& rhs)
         {
