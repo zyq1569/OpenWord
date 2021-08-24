@@ -25,8 +25,20 @@
 
 #include <KoTextEditingRegistry.h>
 
-K_PLUGIN_FACTORY_WITH_JSON(SpellCheckPluginFactory, "calligra_textediting_spellcheck.json",
-                           registerPlugin<SpellCheckPlugin>();)
+//K_PLUGIN_FACTORY_WITH_JSON(SpellCheckPluginFactory, "calligra_textediting_spellcheck.json",
+//                           registerPlugin<SpellCheckPlugin>();)
+
+
+
+SpellCheckPluginFactory::SpellCheckPluginFactory()
+{
+    registerPlugin<SpellCheckPlugin>();
+}
+
+SpellCheckPluginFactory::~SpellCheckPluginFactory()
+{
+
+}
 
 SpellCheckPlugin::SpellCheckPlugin(QObject *parent, const QVariantList&)
     : QObject(parent)
@@ -34,5 +46,5 @@ SpellCheckPlugin::SpellCheckPlugin(QObject *parent, const QVariantList&)
     KoTextEditingRegistry::instance()->add(new SpellCheckFactory());
 }
 
-#include <SpellCheckPlugin.moc>
+//#include <SpellCheckPlugin.moc>
 

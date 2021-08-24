@@ -20,6 +20,7 @@
 #ifndef SPELLCHECKPLUGIN_H
 #define SPELLCHECKPLUGIN_H
 
+#include <kpluginfactory.h>
 #include <QObject>
 #include <QVariant>
 
@@ -30,6 +31,17 @@ class SpellCheckPlugin : public QObject
 public:
     SpellCheckPlugin(QObject *parent,  const QVariantList &);
 };
+
+class SpellCheckPluginFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_textediting_spellcheck.json")
+public:
+    explicit SpellCheckPluginFactory();
+    ~SpellCheckPluginFactory();
+};
+
 
 #endif
 
