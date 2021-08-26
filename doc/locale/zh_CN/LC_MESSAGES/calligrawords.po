@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-08-08 00:16+0000\n"
-"PO-Revision-Date: 2021-08-22 18:26+0800\n"
+"PO-Revision-Date: 2021-08-24 17:38+0800\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -686,7 +686,7 @@ msgstr "页 #"
 #: part/dockers/KWNavigationWidget.cpp:95
 #, kde-format
 msgid "Section"
-msgstr "节"
+msgstr "章节"
 
 #: part/dockers/KWRdfDocker.cpp:39
 #, kde-format
