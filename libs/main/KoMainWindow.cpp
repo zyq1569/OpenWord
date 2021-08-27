@@ -259,7 +259,7 @@ public:
 };
 
 KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentData &componentData)
-    :KXmlGuiWindow(), d(new KoMainWindowPrivate(nativeMimeType, componentData, this)), m_sharedHealthApp(SHAREDHEALTH)
+    :KXmlGuiWindow(), d(new KoMainWindowPrivate(nativeMimeType, componentData, this))/*, m_sharedHealthApp(SHAREDHEALTH)*/
 {
     setStandardToolBarMenuEnabled(true);
 
@@ -701,14 +701,10 @@ void KoMainWindow::setRootDocument(KoDocument *doc, KoPart *part, bool deletePre
     setActivePart(d->rootPart, doc ? d->rootViews.first() : 0);
     emit restoringDone();
 
-    ///---------------------------oldRootViews: now view ??? oldRootViews.size() === 1????
-    while(!oldRootViews.isEmpty()) ///openword --- 20210519 error!!!!
+    while(!oldRootViews.isEmpty())
     {
         delete oldRootViews.takeFirst();
     }
-
-    ///-----
-
 
     if (oldRootPart && oldRootPart->viewCount() == 0)
     {

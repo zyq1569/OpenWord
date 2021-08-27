@@ -458,9 +458,9 @@ public Q_SLOTS:
      *
      */
     void HealthFileOpen(QString FileName);
-private:
-    int m_timerID;
-    QSharedMemory m_sharedHealthApp;
+//private:
+//    int m_timerID;
+//    QSharedMemory m_sharedHealthApp;
     ///
     ///
 //public:
