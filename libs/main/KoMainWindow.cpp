@@ -92,8 +92,6 @@
 #include "MainDebug.h"
 #include "KoGlobal.h"
 
-#define SHAREDHEALTH "SharedHealth"
-
 class KoMainWindowPrivate
 {
 public:
