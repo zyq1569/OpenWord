@@ -2184,3 +2184,18 @@ msgstr "文档访问日期时间.%1 "
 #, kde-format
 msgid "<tr><td><b>Accessed:</b></td><td>%1</td></tr>"
 msgstr "<tr><td><b>访问:</b></td><td>%1</td></tr>"
+
+#: libs/text/KoTextEditor.cpp:1599
+#, kde-format
+msgid "Typing"
+msgstr "输入"
+
+#: libs/kundo2/kundo2group.cpp:1599
+#, kde-format
+msgid "Undo %1"
+msgstr "撤销 %1"
+
+#: libs/main/KoUndoStackAction.cpp:1599
+#, kde-format
+msgid "Undo"
+msgstr "撤销"
