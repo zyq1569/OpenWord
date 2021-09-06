@@ -30,13 +30,13 @@
 using namespace MSOOXML;
 
 MsooXmlCommonReader::MsooXmlCommonReader(KoOdfWriters *writers)
-        : MsooXmlReader(writers)
+    : MsooXmlReader(writers)
 {
     init();
 }
 
 MsooXmlCommonReader::MsooXmlCommonReader(QIODevice* io, KoOdfWriters *writers)
-        : MsooXmlReader(io, writers)
+    : MsooXmlReader(io, writers)
 {
     init();
 }
@@ -60,23 +60,30 @@ void MsooXmlCommonReader::init()
 bool MsooXmlCommonReader::isDefaultTocStyle(const QString& name) const
 {
     if (name == QLatin1String("TOCHeading"))
+    {
         return true;
-    if (name.startsWith(QLatin1String("TOC"))) {
+    }
+    if (name.startsWith(QLatin1String("TOC")))
+    {
         const QString num(name.mid(3));
         if (num.length() == 1 && num[0].isDigit() && num[0] != '0')
+        {
             return true;
+        }
     }
     return false;
 }
 
 void MsooXmlCommonReader::setupParagraphStyle()
 {
-    if (m_moveToStylesXml) {
+    if (m_moveToStylesXml)
+    {
         m_currentParagraphStyle.setAutoStyleInStylesDotXml(true);
     }
 
     QString currentParagraphStyleName(mainStyles->insert(m_currentParagraphStyle));
-    if (currentParagraphStyleName.isEmpty()) {
+    if (currentParagraphStyleName.isEmpty())
+    {
         currentParagraphStyleName = QLatin1String("Standard");
     }
     body->addAttribute("text:style-name", currentParagraphStyleName);
@@ -87,7 +94,8 @@ void MsooXmlCommonReader::setupParagraphStyle()
 class MediaTypeMap : public QMap<QByteArray, QByteArray>
 {
 public:
-    MediaTypeMap() {
+    MediaTypeMap()
+    {
         insert("bmp", "image/x-bmp");
         insert("gif", "image/gif");
         insert("jpg", "image/jpeg");
@@ -129,9 +137,12 @@ Q_GLOBAL_STATIC(MediaTypeMap, g_mediaTypes)
 void MsooXmlCommonReader::addManifestEntryForFile(const QString& path)
 {
     if (path.isEmpty())
+    {
         return;
+    }
 
-    if (path.endsWith('/')) { // dir
+    if (path.endsWith('/'))   // dir
+    {
         manifest->addManifestEntry(path, QString());
         return;
     }
@@ -144,7 +155,9 @@ void MsooXmlCommonReader::addManifestEntryForFile(const QString& path)
 void MsooXmlCommonReader::addManifestEntryForPicturesDir()
 {
     if (m_addManifestEntryForPicturesDirExecuted)
+    {
         return;
+    }
     m_addManifestEntryForPicturesDirExecuted = true;
     manifest->addManifestEntry("Pictures/", QString());
 }
