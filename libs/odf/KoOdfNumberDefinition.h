@@ -82,7 +82,8 @@ public:
      * elements, the attribute value also can be empty. In this case, no number
      * is displayed.
      */
-    enum FormatSpecification {
+    enum FormatSpecification
+    {
         Numeric,
         AlphabeticLowerCase,
         AlphabeticUpperCase,
