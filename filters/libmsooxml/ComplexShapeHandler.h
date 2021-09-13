@@ -32,7 +32,8 @@
 // This class is meant to be used as a helper class to understand
 // drawingML elements avLst, gdLst and pathLst and to help
 // create a custom-shape from them
-class KOMSOOXML_EXPORT ComplexShapeHandler {
+class KOMSOOXML_EXPORT ComplexShapeHandler
+{
 
 public:
 

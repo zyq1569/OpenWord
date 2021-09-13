@@ -43,9 +43,9 @@ class KOMSOOXML_EXPORT MsooXmlDrawingTableStyleContext : public MSOOXML::MsooXml
 {
 public:
     MsooXmlDrawingTableStyleContext(MSOOXML::MsooXmlImport* _import, const QString& _path,
-				    const QString& _file, MSOOXML::DrawingMLTheme* _themes,
-				    QMap< QString, MSOOXML::DrawingTableStyle* >* _styleList,
-				    QMap< QString, QString > _colorMap);
+                                    const QString& _file, MSOOXML::DrawingMLTheme* _themes,
+                                    QMap< QString, MSOOXML::DrawingTableStyle* >* _styleList,
+                                    QMap< QString, QString > _colorMap);
     ~MsooXmlDrawingTableStyleContext() override;
 
     QMap<QString, MSOOXML::DrawingTableStyle*>* styleList;

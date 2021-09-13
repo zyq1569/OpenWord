@@ -35,8 +35,8 @@ namespace MSOOXML
 
 namespace Diagram
 {
-    class Context;
-    class DataModel;
+class Context;
+class DataModel;
 }
 
 class KOMSOOXML_EXPORT MsooXmlDiagramReaderContext : public MSOOXML::MsooXmlReaderContext
@@ -68,7 +68,8 @@ protected:
 private:
     MsooXmlDiagramReaderContext *m_context;
 
-    enum Type {
+    enum Type
+    {
         InvalidType,
         DataModelType,
         LayoutDefType,

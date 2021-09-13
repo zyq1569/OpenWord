@@ -55,12 +55,14 @@ public:
     KoFilter::ConversionStatus read(MSOOXML::MsooXmlReaderContext* context = 0) override;
 
     //! @return key for use in MsooXmlRelationships::target()
-    static inline QString relKey(const QString& path, const QString& file, const QString& id) {
+    static inline QString relKey(const QString& path, const QString& file, const QString& id)
+    {
         return path + '\n' + file + '\n' + id;
     }
 
 //! @return key for use in MsooXmlRelationships::targetForType()
-        static inline QString targetKey(const QString& pathAndFile, const QString& relType) {
+    static inline QString targetKey(const QString& pathAndFile, const QString& relType)
+    {
         return pathAndFile + '\n' + relType;
     }
 

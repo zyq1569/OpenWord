@@ -59,7 +59,10 @@ public:
 
     ~MsooXmlImport() override;
 
-    KoStore* outputStore() const { return m_outputStore; }
+    KoStore* outputStore() const
+    {
+        return m_outputStore;
+    }
 
     //! KoFilter::UsageError is returned if this method is called outside
     //! of the importing process, i.e. not from within parseParts().
@@ -106,7 +109,7 @@ public:
 
 protected:
     KoFilter::ConversionStatus createDocument(KoStore *outputStore,
-                                                      KoOdfWriters *writers) override;
+            KoOdfWriters *writers) override;
 
     void writeConfigurationSettings(KoXmlWriter* settings) const override;
 
@@ -141,12 +144,24 @@ protected:
         QString& errorMessage, MsooXmlReaderContext* context = 0);
 
     //! @return all part names.
-    QMultiHash<QByteArray, QByteArray> partNames() const { return m_contentTypes; }
+    QMultiHash<QByteArray, QByteArray> partNames() const
+    {
+        return m_contentTypes;
+    }
     //! @return part names associated with @a contentType
-    QList<QByteArray> partNames(const QByteArray& contentType) const { return m_contentTypes.values(contentType); }
+    QList<QByteArray> partNames(const QByteArray& contentType) const
+    {
+        return m_contentTypes.values(contentType);
+    }
 
-    QMap<QString, QVariant> documentProperties() const { return m_documentProperties; }
-    QVariant documentProperty(const QString& propertyName) const { return m_documentProperties.value(propertyName); }
+    QMap<QString, QVariant> documentProperties() const
+    {
+        return m_documentProperties;
+    }
+    QVariant documentProperty(const QString& propertyName) const
+    {
+        return m_documentProperties.value(propertyName);
+    }
 
 protected:
     KoFilter::ConversionStatus loadAndParse(const QString& filename,

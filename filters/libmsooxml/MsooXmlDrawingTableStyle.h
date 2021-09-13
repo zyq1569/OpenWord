@@ -60,7 +60,8 @@ namespace MSOOXML
 class KOMSOOXML_EXPORT DrawingTableStyle : public TableStyle
 {
 public:
-    enum Type {
+    enum Type
+    {
         NoType,
         FirstRow,
         FirstCol,
@@ -98,7 +99,8 @@ public:
     DrawingTableStyleConverterProperties();
     ~DrawingTableStyleConverterProperties() override;
 
-    enum Role {
+    enum Role
+    {
         FirstRow = 1,
         FirstCol = 2,
         LastCol = 4,

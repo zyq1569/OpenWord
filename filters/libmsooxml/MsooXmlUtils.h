@@ -57,13 +57,16 @@ namespace MSOOXML
 class MsooXmlReader;
 class MsooXmlReaderContext;
 
-namespace Utils {
+namespace Utils
+{
 
-enum autoFitStatus {
+enum autoFitStatus
+{
     autoFitUnUsed, autoFitOn, autoFitOff
 };
 
-enum MSOOXMLFilter {
+enum MSOOXMLFilter
+{
     DocxFilter, PptxFilter, XlsxFilter
 };
 
@@ -174,8 +177,10 @@ class ContainerDeleter
 {
 public:
     ContainerDeleter(T& container) : m_container(&container) {}
-    ~ContainerDeleter() {
-        qDeleteAll(*m_container); m_container->clear();
+    ~ContainerDeleter()
+    {
+        qDeleteAll(*m_container);
+        m_container->clear();
     }
 private:
     T* const m_container;
@@ -191,15 +196,20 @@ public:
     //! Creates a new setter object for variable @a var,
     //! which will be set to value @a val on setter's destruction.
     Setter(T* var, const T& val)
-            : m_var(var), m_value(val) {
+        : m_var(var), m_value(val)
+    {
     }
-    ~Setter() {
+    ~Setter()
+    {
         if (m_var)
+        {
             *m_var = m_value;
+        }
     }
     //! Clears the assignment, so the setter
     //! will not alter the variable on destruction
-    void clear() {
+    void clear()
+    {
         m_var = 0;
     }
 private:
@@ -217,10 +227,13 @@ public:
     //! Creates a new auto-ptr setter object for variable pointer of type T* @a ptr,
     //! which will be set to 0 setter's destruction, unless release() was called.
     explicit AutoPtrSetter(T* ptr)
-            : m_pptr(&ptr) {
+        : m_pptr(&ptr)
+    {
     }
-    ~AutoPtrSetter() {
-        if (m_pptr && *m_pptr) {
+    ~AutoPtrSetter()
+    {
+        if (m_pptr && *m_pptr)
+        {
             delete *m_pptr;
             *m_pptr = 0;
         }
@@ -229,7 +242,8 @@ public:
     //! of the AutoPtrSetter object the pointed object will not be deleted
     //! (so it is the behaviour like std::auto__ptr::release())
     //! but also the pointer of type T* will not be cleared.
-    T* release() {
+    T* release()
+    {
         T* p = m_pptr ? *m_pptr : 0;
         m_pptr = 0;
         return p;
@@ -318,7 +332,9 @@ KOMSOOXML_EXPORT bool ST_Lang_to_languageAndCountry(const QString& value, QStrin
 inline QColor ST_HexColorRGB_to_QColor(const QString& color)
 {
     if (color.length() != 6)
+    {
         return QColor();
+    }
     bool ok;
     const uint rgb = color.toUInt(&ok, 16);
     return ok ? QColor(QRgb(rgb)) : QColor(); // alpha ignored
@@ -340,7 +356,8 @@ KOMSOOXML_EXPORT qreal ST_Percentage_to_double(const QString& val, bool& ok);
 //! Sets @arg ok to true on success.
 KOMSOOXML_EXPORT qreal ST_Percentage_withMsooxmlFix_to_double(const QString& val, bool& ok);
 
-struct KOMSOOXML_EXPORT DoubleModifier {
+struct KOMSOOXML_EXPORT DoubleModifier
+{
     DoubleModifier(qreal v) : value(v), valid(true) {}
     DoubleModifier() : value(0.0), valid(false) {}
     qreal value;
@@ -348,7 +365,7 @@ struct KOMSOOXML_EXPORT DoubleModifier {
 };
 
 KOMSOOXML_EXPORT QColor colorForLuminance(const QColor& color,
-    const DoubleModifier& modulation, const DoubleModifier& offset);
+        const DoubleModifier& modulation, const DoubleModifier& offset);
 
 KOMSOOXML_EXPORT void modifyColor(QColor& color, qreal tint, qreal shade, qreal satMod);
 
@@ -448,7 +465,8 @@ public:
 
     //! @return the original writer set in setWriter(). Does not change the state of the buffer.
     /*! Use this method when you need to access the remembered writer without releasing it. */
-    KoXmlWriter* originalWriter() const {
+    KoXmlWriter* originalWriter() const
+    {
         return m_origWriter;
     }
 
@@ -456,7 +474,8 @@ public:
     void clear();
 
     //! Returns true if the buffer is empty; otherwise returns false.
-    bool isEmpty() const {
+    bool isEmpty() const
+    {
         return m_buffer.buffer().isEmpty();
     }
 
@@ -481,10 +500,13 @@ class AutoRestore
 {
 public:
     explicit AutoRestore(T** originalPtr)
-            : m_originalPtr(originalPtr), m_prevValue(*originalPtr) {
+        : m_originalPtr(originalPtr), m_prevValue(*originalPtr)
+    {
     }
-    ~AutoRestore() {
-        if (m_originalPtr) {
+    ~AutoRestore()
+    {
+        if (m_originalPtr)
+        {
             *m_originalPtr = m_prevValue;
         }
     }

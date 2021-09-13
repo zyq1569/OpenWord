@@ -42,8 +42,8 @@ class KOMSOOXML_EXPORT MsooXmlThemesReaderContext : public MsooXmlReaderContext
 {
 public:
     MsooXmlThemesReaderContext(DrawingMLTheme& t, MSOOXML::MsooXmlRelationships* rel,
-			       MSOOXML::MsooXmlImport* imp,
-			       const QString &pathName, const QString &fileName);
+                               MSOOXML::MsooXmlImport* imp,
+                               const QString &pathName, const QString &fileName);
     DrawingMLTheme * const theme;
     MSOOXML::MsooXmlRelationships *relationships;
     MSOOXML::MsooXmlImport        *import;

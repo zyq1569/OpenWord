@@ -30,24 +30,27 @@
 #include <QFlags>
 #include <QMap>
 
-namespace MSOOXML {
+namespace MSOOXML
+{
 
 /// Reading and storage
 
 struct KOMSOOXML_EXPORT TableStyleProperties
 {
     TableStyleProperties()
-    :    target(Table)
+        :    target(Table)
     {}
 
-    enum TargetLevel {
+    enum TargetLevel
+    {
         Table,
         TableRow,
         TableColumn,
         TableCell
     };
 
-    enum Property {
+    enum Property
+    {
         BottomBorder = 1,
         InsideHBorder = 2,
         InsideVBorder = 4,

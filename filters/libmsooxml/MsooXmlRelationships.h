@@ -55,10 +55,11 @@ private:
     Private* const d;
 };
 
-namespace Relationships {
-    static const char comments[] = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments";
-    static const char commentAuthors[] = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/commentAuthors";
-    static const char tableStyles[] = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tableStyles";
+namespace Relationships
+{
+static const char comments[] = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments";
+static const char commentAuthors[] = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/commentAuthors";
+static const char tableStyles[] = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tableStyles";
 }
 
 }
