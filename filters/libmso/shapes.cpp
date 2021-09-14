@@ -62,7 +62,8 @@ qint16
 ODrawToOdf::normalizeRotation(qreal rotation)
 {
     qint16 angle = ((qint16)rotation) % 360;
-    if (angle < 0) {
+    if (angle < 0)
+    {
         angle = angle + 360;
     }
     return angle;
@@ -74,14 +75,21 @@ ODrawToOdf::normalizeRotation(qreal rotation)
 QRectF
 ODrawToOdf::getRect(const OfficeArtSpContainer &o)
 {
-    if (o.childAnchor) {
+    if (o.childAnchor)
+    {
         const OfficeArtChildAnchor& r = *o.childAnchor;
         return QRect(r.xLeft, r.yTop, r.xRight - r.xLeft, r.yBottom - r.yTop);
-    } else if (o.clientAnchor && client) {
+    }
+    else if (o.clientAnchor && client)
+    {
         return client->getRect(*o.clientAnchor);
-    } else if (o.shapeProp.fHaveAnchor && client) {
+    }
+    else if (o.shapeProp.fHaveAnchor && client)
+    {
         return client->getReserveRect();
-    } else {
+    }
+    else
+    {
         return QRectF();
     }
 }
@@ -94,18 +102,20 @@ ODrawToOdf::processRect(const quint16 shapeType, const qreal rotation, QRectF &r
 
     //TODO: Add other shapes here!
 
-    switch (shapeType) {
-    case msosptNotPrimitive:
-        if ( ((nrotation >= 45) && (nrotation < 135)) ||
-             ((nrotation >= 225) && (nrotation < 315)))
-        {
-            transform_anchor = true;
-        }
-        break;
-    default:
-        break;
+    switch (shapeType)
+    {
+        case msosptNotPrimitive:
+            if ( ((nrotation >= 45) && (nrotation < 135)) ||
+                    ((nrotation >= 225) && (nrotation < 315)))
+            {
+                transform_anchor = true;
+            }
+            break;
+        default:
+            break;
     }
-    if (transform_anchor) {
+    if (transform_anchor)
+    {
         QPointF center = rect.center();
         QTransform transform;
         transform.rotate(90);
@@ -120,23 +130,29 @@ void ODrawToOdf::processRectangle(const OfficeArtSpContainer& o, Writer& out)
     // placeholderAllowed function in the PPT filter.  Trying to save as many
     // shapes into draw:text-box at the moment, becasue vertical alignment in
     // draw:custom-shape does not work properly (bug 288047).
-    if (o.clientData && client->processRectangleAsTextBox(*o.clientData)) {
+    if (o.clientData && client->processRectangleAsTextBox(*o.clientData))
+    {
         processTextBox(o, out);
-    } else {
+    }
+    else
+    {
         const DrawStyle ds(0, 0, &o);
-        if (ds.pib()) {
+        if (ds.pib())
+        {
             // see bug https://bugs.kde.org/show_bug.cgi?id=285577
             processPictureFrame(o, out);
-        } else {
-/*
-            draw_custom_shape rect(&out.xml);
-            processStyleAndText(o, out);
-            draw_enhanced_geometry eg(rect.add_draw_enhanced_geometry());
-            eg.set_svg_viewBox("0 0 21600 21600");
-            eg.set_draw_enhanced_path("M 0 0 L 21600 0 21600 21600 0 21600 0 0 Z N");
-            eg.set_draw_type("rectangle");
-            setShapeMirroring(o, out);
-*/
+        }
+        else
+        {
+            /*
+                        draw_custom_shape rect(&out.xml);
+                        processStyleAndText(o, out);
+                        draw_enhanced_geometry eg(rect.add_draw_enhanced_geometry());
+                        eg.set_svg_viewBox("0 0 21600 21600");
+                        eg.set_draw_enhanced_path("M 0 0 L 21600 0 21600 21600 0 21600 0 0 Z N");
+                        eg.set_draw_type("rectangle");
+                        setShapeMirroring(o, out);
+            */
 
             out.xml.startElement("draw:custom-shape");
             processStyleAndText(o, out);
@@ -153,12 +169,12 @@ void ODrawToOdf::processRectangle(const OfficeArtSpContainer& o, Writer& out)
 
 void ODrawToOdf::processTextBox(const OfficeArtSpContainer& o, Writer& out)
 {
-/*
-    draw_frame frame(&out.xml);
-    processStyle(o, out);
-    draw_text_box text(frame.add_draw_text_box());
-    processText(o, out);
-*/
+    /*
+        draw_frame frame(&out.xml);
+        processStyle(o, out);
+        draw_text_box text(frame.add_draw_text_box());
+        processText(o, out);
+    */
     out.xml.startElement("draw:frame");
     processStyle(o, out);
     out.xml.startElement("draw:text-box");
@@ -176,22 +192,24 @@ void ODrawToOdf::processLine(const OfficeArtSpContainer& o, Writer& out)
     qreal y2 = rect.y() + rect.height();
 
     // shape mirroring
-    if (o.shapeProp.fFlipV) {
+    if (o.shapeProp.fFlipV)
+    {
         qSwap(y1, y2);
     }
-    if (o.shapeProp.fFlipH) {
+    if (o.shapeProp.fFlipH)
+    {
         qSwap(x1, x2);
     }
-/*
-    draw_line line(&out.xml,
-                   client->formatPos(out.hOffset(x1)),
-                   client->formatPos(out.hOffset(x2)),
-                   client->formatPos(out.vOffset(y1)),
-                   client->formatPos(out.vOffset(y2)));
-    addGraphicStyleToDrawElement(out, o);
-    line.set_draw_layer("layout");
-    processText(o, out);
-*/
+    /*
+        draw_line line(&out.xml,
+                       client->formatPos(out.hOffset(x1)),
+                       client->formatPos(out.hOffset(x2)),
+                       client->formatPos(out.vOffset(y1)),
+                       client->formatPos(out.vOffset(y2)));
+        addGraphicStyleToDrawElement(out, o);
+        line.set_draw_layer("layout");
+        processText(o, out);
+    */
 
     out.xml.startElement("draw:line");
     out.xml.addAttribute("svg:y1", client->formatPos(out.vOffset(y1)));
@@ -361,7 +379,8 @@ void ODrawToOdf::drawPathCurvedConnector5(qreal l, qreal t, qreal r, qreal b, Wr
 void ODrawToOdf::processConnector(const OfficeArtSpContainer& o, Writer& out, PathArtist drawPath)
 {
     const OfficeArtDggContainer * drawingGroup = 0;
-    if (client) {
+    if (client)
+    {
         drawingGroup = client->getOfficeArtDggContainer();
     }
 
@@ -382,7 +401,8 @@ void ODrawToOdf::processConnector(const OfficeArtSpContainer& o, Writer& out, Pa
     qreal sx2 = x2;
     qreal sy2 = y2;
 
-    if (rotation != 0.0) {
+    if (rotation != 0.0)
+    {
         QTransform m;
         m.rotate( -rotation );
         shapeRect = m.mapRect(rect.translated(-rect.center())).translated(rect.center());
@@ -400,15 +420,18 @@ void ODrawToOdf::processConnector(const OfficeArtSpContainer& o, Writer& out, Pa
     m.translate( -shapeRect.center().x(), -shapeRect.center().y() );
 
     // Mirroring
-    if (o.shapeProp.fFlipH){
+    if (o.shapeProp.fFlipH)
+    {
         m.scale(-1,1);
     }
 
-    if (o.shapeProp.fFlipV){
+    if (o.shapeProp.fFlipV)
+    {
         m.scale(1,-1);
     }
 
-    if (rotation != 0) {
+    if (rotation != 0)
+    {
         m.rotate(rotation);
     }
 
@@ -432,7 +455,8 @@ void ODrawToOdf::processConnector(const OfficeArtSpContainer& o, Writer& out, Pa
     out.xml.addAttribute("svg:y1", client->formatPos(out.vOffset(y1)));
     out.xml.addAttribute("svg:x2", client->formatPos(out.hOffset(x2)));
     out.xml.addAttribute("svg:y2", client->formatPos(out.vOffset(y2)));
-    if (!path.isEmpty()) {
+    if (!path.isEmpty())
+    {
         out.xml.addAttribute("svg:d", path);
     }
 
@@ -445,7 +469,10 @@ void ODrawToOdf::processPictureFrame(const OfficeArtSpContainer& o, Writer& out)
     DrawStyle ds(0, &o);
 
     // A value of 0x00000000 MUST be ignored.  [MS-ODRAW] — v20101219
-    if (!ds.pib()) return;
+    if (!ds.pib())
+    {
+        return;
+    }
 
 //draw_frame frame(&out.xml);
     out.xml.startElement("draw:frame");
@@ -455,20 +482,22 @@ void ODrawToOdf::processPictureFrame(const OfficeArtSpContainer& o, Writer& out)
     //about a shape.
 
     QString url;
-    if (client) {
+    if (client)
+    {
         url = client->getPicturePath(ds.pib());
     }
     // if the image cannot be found, just place an empty frame
-    if (url.isEmpty()) {
+    if (url.isEmpty())
+    {
         out.xml.endElement(); //draw:frame
         return;
     }
-/*
-    draw_image image(frame.add_draw_image());
-    image.set_xlink_href(QUrl(url));
-    image.set_xlink_type("simple");
-    image.set_xlink_show("embed");
-    image.set_xlink_actuate("onLoad");*/
+    /*
+        draw_image image(frame.add_draw_image());
+        image.set_xlink_href(QUrl(url));
+        image.set_xlink_type("simple");
+        image.set_xlink_show("embed");
+        image.set_xlink_actuate("onLoad");*/
 
     out.xml.startElement("draw:image");
     out.xml.addAttribute("xlink:href", url);
@@ -481,12 +510,12 @@ void ODrawToOdf::processPictureFrame(const OfficeArtSpContainer& o, Writer& out)
 
 void ODrawToOdf::processNotPrimitive(const MSO::OfficeArtSpContainer& o, Writer& out)
 {
-/*
-    draw_custom_shape shape(&out.xml);
-    processStyleAndText(o, out);
-    draw_enhanced_geometry eg(shape.add_draw_enhanced_geometry());
-    setEnhancedGeometry(o, out);
-*/
+    /*
+        draw_custom_shape shape(&out.xml);
+        processStyleAndText(o, out);
+        draw_enhanced_geometry eg(shape.add_draw_enhanced_geometry());
+        setEnhancedGeometry(o, out);
+    */
 
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
@@ -500,7 +529,8 @@ void ODrawToOdf::processNotPrimitive(const MSO::OfficeArtSpContainer& o, Writer&
 
 void ODrawToOdf::processDrawingObject(const OfficeArtSpContainer& o, Writer& out)
 {
-    if (!client) {
+    if (!client)
+    {
         qWarning() << "Warning: There's no Client!";
         return;
     }
@@ -508,499 +538,500 @@ void ODrawToOdf::processDrawingObject(const OfficeArtSpContainer& o, Writer& out
     quint16 shapeType = o.shapeProp.rh.recInstance;
     client->m_currentShapeType = o.shapeProp.rh.recInstance;
 
-    switch (shapeType) {
-    case msosptNotPrimitive:
-        processNotPrimitive(o, out);
-        break;
-    case msosptRectangle:
-        processRectangle(o, out);
-        break;
-    case msosptRoundRectangle:
-        processRoundRectangle(o, out);
-        break;
-    case msosptEllipse:
-        // TODO: Something has to be done here (LukasT).  LukasT:
-        // "Great comment", can you provide more details? :)
-        processEllipse(o, out);
-        break;
-    case msosptDiamond:
-        processDiamond(o, out);
-        break;
-    case msosptIsocelesTriangle:
-        processIsocelesTriangle(o, out);
-        break;
-    case msosptRightTriangle:
-        processRightTriangle(o, out);
-        break;
-    case msosptParallelogram:
-        processParallelogram(o, out);
-        break;
-    case msosptTrapezoid:
-        processTrapezoid(o, out);
-        break;
-    case msosptHexagon:
-        processHexagon(o, out);
-        break;
-    case msosptOctagon:
-        processOctagon(o, out);
-        break;
-    case msosptPlus:
-        processPlus(o, out);
-        break;
-    case msosptStar:
-        processStar(o, out);
-        break;
-    case msosptArrow:
-        processArrow(o, out);
-        break;
-    //
-    // TODO: msosptThickArrow
-    //
-    case msosptHomePlate:
-        processHomePlate(o, out);
-        break;
-    case msosptCube:
-        processCube(o, out);
-        break;
-    //
-    // TODO: msosptBaloon, msosptSeal
-    //
+    switch (shapeType)
+    {
+        case msosptNotPrimitive:
+            processNotPrimitive(o, out);
+            break;
+        case msosptRectangle:
+            processRectangle(o, out);
+            break;
+        case msosptRoundRectangle:
+            processRoundRectangle(o, out);
+            break;
+        case msosptEllipse:
+            // TODO: Something has to be done here (LukasT).  LukasT:
+            // "Great comment", can you provide more details? :)
+            processEllipse(o, out);
+            break;
+        case msosptDiamond:
+            processDiamond(o, out);
+            break;
+        case msosptIsocelesTriangle:
+            processIsocelesTriangle(o, out);
+            break;
+        case msosptRightTriangle:
+            processRightTriangle(o, out);
+            break;
+        case msosptParallelogram:
+            processParallelogram(o, out);
+            break;
+        case msosptTrapezoid:
+            processTrapezoid(o, out);
+            break;
+        case msosptHexagon:
+            processHexagon(o, out);
+            break;
+        case msosptOctagon:
+            processOctagon(o, out);
+            break;
+        case msosptPlus:
+            processPlus(o, out);
+            break;
+        case msosptStar:
+            processStar(o, out);
+            break;
+        case msosptArrow:
+            processArrow(o, out);
+            break;
+        //
+        // TODO: msosptThickArrow
+        //
+        case msosptHomePlate:
+            processHomePlate(o, out);
+            break;
+        case msosptCube:
+            processCube(o, out);
+            break;
+        //
+        // TODO: msosptBaloon, msosptSeal
+        //
 
-    // NOTE: OpenOffice treats msosptNotchedCircularArrow as msosptArc.  The
-    // msosptNotchedCircularArrow value SHOULD NOT be used according to the
-    // MS-ODRAW spec.  However it occurs in many Word8 files.
-    case msosptArc:
-        processNotchedCircularArrow(o, out);
-        break;
-    case msosptLine:
-        processLine(o, out);
-        break;
-    case msosptPlaque:
-        processPlaque(o, out);
-        break;
-    case msosptCan:
-        processCan(o, out);
-        break;
-    case msosptDonut:
-        processDonut(o, out);
-        break;
-    //
-    // TODO: msosptTextSimple, msosptTextOctagon, msosptTextHexagon,
-    // msosptTextCurve, msosptTextWave, msosptTextRing, msosptTextOnCurve,
-    // msosptTextOnRing
-    //
-    case msosptStraightConnector1:
-        processConnector(o, out, &ODrawToOdf::drawStraightConnector1);
-        break;
-    case msosptBentConnector2:
-        processConnector(o, out, &ODrawToOdf::drawPathBentConnector2);
-        break;
-    case msosptBentConnector3:
-        processConnector(o, out, &ODrawToOdf::drawPathBentConnector3);
-        break;
-    case msosptBentConnector4:
-        processConnector(o, out, &ODrawToOdf::drawPathBentConnector4);
-        break;
-    case msosptBentConnector5:
-        processConnector(o, out, &ODrawToOdf::drawPathBentConnector5);
-        break;
-    case msosptCurvedConnector2:
-        processConnector(o, out, &ODrawToOdf::drawPathCurvedConnector2);
-        break;
-    case msosptCurvedConnector3:
-        processConnector(o, out, &ODrawToOdf::drawPathCurvedConnector3);
-        break;
-    case msosptCurvedConnector4:
-        processConnector(o, out, &ODrawToOdf::drawPathCurvedConnector4);
-        break;
-    case msosptCurvedConnector5:
-        processConnector(o, out, &ODrawToOdf::drawPathCurvedConnector5);
-        break;
-    case msosptCallout1:
-        processCallout1(o, out);
-        break;
-    case msosptCallout2:
-        processCallout2(o, out);
-        break;
-    case msosptCallout3:
-        processCallout3(o, out);
-        break;
-    case msosptAccentCallout1:
-        processAccentCallout1(o, out);
-        break;
-    case msosptAccentCallout2:
-        processAccentCallout2(o, out);
-        break;
-    case msosptAccentCallout3:
-        processAccentCallout3(o, out);
-        break;
-    case msosptBorderCallout1:
-        processBorderCallout1(o, out);
-        break;
-    case msosptBorderCallout2:
-        processBorderCallout2(o, out);
-        break;
-    case msosptBorderCallout3:
-        processBorderCallout3(o, out);
-        break;
-    case msosptAccentBorderCallout1:
-        processAccentBorderCallout1(o, out);
-        break;
-    case msosptAccentBorderCallout2:
-        processAccentBorderCallout2(o, out);
-        break;
-    case msosptAccentBorderCallout3:
-        processAccentBorderCallout3(o, out);
-        break;
-    case msosptRibbon:
-        processRibbon(o, out);
-        break;
-    case msosptRibbon2:
-        processRibbon2(o, out);
-        break;
-    case msosptChevron:
-        processChevron(o, out);
-        break;
-    case msosptPentagon:
-        processPentagon(o, out);
-        break;
-    case msosptNoSmoking:
-        processNoSmoking(o, out);
-        break;
-    case msosptSeal8:
-        processSeal8(o, out);
-        break;
-    case msosptSeal16:
-        processSeal16(o, out);
-        break;
-    case msosptSeal32:
-        processSeal32(o, out);
-        break;
-    case msosptWedgeRectCallout:
-        processWedgeRectCallout(o, out);
-        break;
-    case msosptWedgeRRectCallout:
-        processWedgeRRectCallout(o, out);
-        break;
-    case msosptWedgeEllipseCallout:
-        processWedgeEllipseCallout(o, out);
-        break;
-    case msosptWave:
-        processWave(o, out);
-        break;
-    case msosptFoldedCorner:
-        processFoldedCorner(o, out);
-        break;
-    case msosptLeftArrow:
-        processLeftArrow(o, out);
-        break;
-    case msosptDownArrow:
-        processDownArrow(o, out);
-        break;
-    case msosptUpArrow:
-        processUpArrow(o, out);
-        break;
-    case msosptLeftRightArrow:
-        processLeftRightArrow(o, out);
-        break;
-    case msosptUpDownArrow:
-        processUpDownArrow(o, out);
-        break;
-    case msosptIrregularSeal1:
-        processIrregularSeal1(o, out);
-        break;
-    case msosptIrregularSeal2:
-        processIrregularSeal2(o, out);
-        break;
-    case msosptLightningBolt:
-        processLightningBolt(o, out);
-        break;
-    case msosptHeart:
-        processHeart(o, out);
-        break;
-    case msosptPictureFrame:
-        processPictureFrame(o, out);
-        break;
-    case msosptQuadArrow:
-        processQuadArrow(o, out);
-        break;
-    case msosptLeftArrowCallout:
-        processLeftArrowCallout(o, out);
-        break;
-    case msosptRightArrowCallout:
-        processRightArrowCallout(o, out);
-        break;
-    case msosptUpArrowCallout:
-        processUpArrowCallout(o, out);
-        break;
-    case msosptDownArrowCallout:
-        processDownArrowCallout(o, out);
-        break;
-    case msosptLeftRightArrowCallout:
-        processLeftRightArrowCallout(o, out);
-        break;
-    case msosptUpDownArrowCallout:
-        processUpDownArrowCallout(o, out);
-        break;
-    case msosptQuadArrowCallout:
-        processQuadArrowCallout(o, out);
-        break;
-    case msosptBevel:
-        processBevel(o, out);
-        break;
-    case msosptLeftBracket:
-        processLeftBracket(o, out);
-        break;
-    case msosptRightBracket:
-        processRightBracket(o, out);
-        break;
-    case msosptLeftBrace:
-        processLeftBrace(o, out);
-        break;
-    case msosptRightBrace:
-        processRightBrace(o, out);
-        break;
-    case msosptLeftUpArrow:
-        processLeftUpArrow(o, out);
-        break;
-    case msosptBentUpArrow:
-        processBentUpArrow(o, out);
-        break;
-    case msosptBentArrow:
-        processBentArrow(o, out);
-        break;
-    case msosptSeal24:
-        processSeal24(o, out);
-        break;
-    case msosptStripedRightArrow:
-        processStripedRightArrow(o, out);
-        break;
-    case msosptNotchedRightArrow:
-        processNotchedRightArrow(o, out);
-        break;
-    case msosptBlockArc:
-        processBlockArc(o, out);
-        break;
-    case msosptSmileyFace:
-        processSmileyFace(o, out);
-        break;
-    case msosptVerticalScroll:
-        processVerticalScroll(o, out);
-        break;
-    case msosptHorizontalScroll:
-        processHorizontalScroll(o, out);
-        break;
-    case msosptCircularArrow:
-        processCircularArrow(o, out);
-        break;
-    case msosptNotchedCircularArrow:
-        processNotchedCircularArrow(o, out);
-        break;
-    case msosptUturnArrow:
-        processUturnArrow(o, out);
-        break;
-    case msosptCurvedRightArrow:
-        processCurvedRightArrow(o, out);
-        break;
-    case msosptCurvedLeftArrow:
-        processCurvedLeftArrow(o, out);
-        break;
-    case msosptCurvedUpArrow:
-        processCurvedUpArrow(o, out);
-        break;
-    case msosptCurvedDownArrow:
-        processCurvedDownArrow(o, out);
-        break;
-    case msosptCloudCallout:
-        processCloudCallout(o, out);
-        break;
-    case msosptEllipseRibbon:
-        processEllipseRibbon(o, out);
-        break;
-    case msosptEllipseRibbon2:
-        processEllipseRibbon2(o, out);
-        break;
-    case msosptFlowChartProcess:
-        processFlowChartProcess(o, out);
-        break;
-    case msosptFlowChartDecision:
-        processFlowChartDecision(o, out);
-        break;
-    case msosptFlowChartInputOutput:
-        processFlowChartInputOutput(o, out);
-        break;
-    case msosptFlowChartPredefinedProcess:
-        processFlowChartPredefinedProcess(o, out);
-        break;
-    case msosptFlowChartInternalStorage:
-        processFlowChartInternalStorage(o, out);
-        break;
-    case msosptFlowChartDocument:
-        processFlowChartDocument(o, out);
-        break;
-    case msosptFlowChartMultidocument:
-        processFlowChartMultidocument(o, out);
-        break;
-    case msosptFlowChartTerminator:
-        processFlowChartTerminator(o, out);
-        break;
-    case msosptFlowChartPreparation:
-        processFlowChartPreparation(o, out);
-        break;
-    case msosptFlowChartManualInput:
-        processFlowChartManualInput(o, out);
-        break;
-    case msosptFlowChartManualOperation:
-        processFlowChartManualOperation(o, out);
-        break;
-    case msosptFlowChartConnector:
-        processFlowChartConnector(o, out);
-        break;
-    case msosptFlowChartPunchedCard:
-        processFlowChartPunchedCard(o, out);
-        break;
-    case msosptFlowChartPunchedTape:
-        processFlowChartPunchedTape(o, out);
-        break;
-    case msosptFlowChartSummingJunction:
-        processFlowChartSummingJunction(o, out);
-        break;
-    case msosptFlowChartOr:
-        processFlowChartOr(o, out);
-        break;
-    case msosptFlowChartCollate:
-        processFlowChartCollate(o, out);
-        break;
-    case msosptFlowChartSort:
-        processFlowChartSort(o, out);
-        break;
-    case msosptFlowChartExtract:
-        processFlowChartExtract(o, out);
-        break;
-    case msosptFlowChartMerge:
-        processFlowChartMerge(o, out);
-        break;
-    //
-    // TODO: msosptFlowChartOfflineStorage
-    //
-    case msosptFlowChartOnlineStorage:
-        processFlowChartOnlineStorage(o, out);
-        break;
-    case msosptFlowChartMagneticTape:
-        processFlowChartMagneticTape(o, out);
-        break;
-    case msosptFlowChartMagneticDisk:
-        processFlowChartMagneticDisk(o, out);
-        break;
-    case msosptFlowChartMagneticDrum:
-        processFlowChartMagneticDrum(o, out);
-        break;
-    case msosptFlowChartDisplay:
-        processFlowChartDisplay(o, out);
-        break;
-    case msosptFlowChartDelay:
-        processFlowChartDelay(o, out);
-        break;
-    //
-    // TODO: msosptTextPlainText, msosptTextStop, msosptTextTriangle,
-    // msosptTextTriangleInverted, msosptTextChevron,
-    // msosptTextChevronInverted, msosptTextRingInside, msosptTextRingOutside,
-    // msosptTextArchUpCurve, msosptTextArchDownCurve, msosptTextCircleCurve,
-    // msosptTextButtonCurve, msosptTextArchUpPour, msosptTextArchDownPour,
-    // msosptTextCirclePour, msosptTextButtonPour, msosptTextCurveUp,
-    // msosptTextCurveDown, msosptTextCascadeUp, msosptTextCascadeDown,
-    // msosptTextWave1, msosptTextWave2, msosptTextWave3, msosptTextWave4,
-    // msosptTextInflate, msosptTextDeflate, msosptTextInflateBottom,
-    // msosptTextDeflateBottom, msosptTextInflateTop, msosptTextDeflateTop,
-    // msosptTextDeflateInflate, msosptTextDeflateInflateDeflate,
-    // msosptTextFadeRight, msosptTextFadeLeft, msosptTextFadeUp,
-    // msosptTextFadeDown, msosptTextSlantUp, msosptTextSlantDown,
-    // msosptTextCanUp, msosptTextCanDown
-    //
-    case msosptFlowChartAlternateProcess:
-        processFlowChartAlternateProcess(o, out);
-        break;
-    case msosptFlowChartOffpageConnector:
-        processFlowChartOffpageConnector(o, out);
-        break;
-    case msosptCallout90:
-        processCallout90(o, out);
-        break;
-    case msosptAccentCallout90:
-        processAccentCallout90(o, out);
-        break;
-    case msosptBorderCallout90:
-        processBorderCallout90(o, out);
-        break;
-    case msosptAccentBorderCallout90:
-        processAccentBorderCallout90(o, out);
-        break;
-    case msosptLeftRightUpArrow:
-        processLeftRightUpArrow(o, out);
-        break;
-    case msosptSun:
-        processSun(o, out);
-        break;
-    case msosptMoon:
-        processMoon(o, out);
-        break;
-    case msosptBracketPair:
-        processBracketPair(o, out);
-        break;
-    case msosptBracePair:
-        processBracePair(o, out);
-        break;
-    case msosptSeal4:
-        processSeal4(o, out);
-        break;
-    case msosptDoubleWave:
-        processDoubleWave(o, out);
-        break;
-    case msosptActionButtonBlank:
-        processActionButtonBlank(o, out);
-        break;
-    case msosptActionButtonHome:
-        processActionButtonHome(o, out);
-        break;
-    case msosptActionButtonHelp:
-        processActionButtonHelp(o, out);
-        break;
-    case msosptActionButtonInformation:
-        processActionButtonInformation(o, out);
-        break;
-    case msosptActionButtonForwardNext:
-        processActionButtonForwardNext(o, out);
-        break;
-    case msosptActionButtonBackPrevious:
-        processActionButtonBackPrevious(o, out);
-        break;
-    case msosptActionButtonEnd:
-        processActionButtonEnd(o, out);
-        break;
-    case msosptActionButtonBeginning:
-        processActionButtonBeginning(o, out);
-        break;
-    case msosptActionButtonReturn:
-        processActionButtonReturn(o, out);
-        break;
-    case msosptActionButtonDocument:
-        processActionButtonDocument(o, out);
-        break;
-    case msosptActionButtonSound:
-        processActionButtonSound(o, out);
-        break;
-    case msosptActionButtonMovie:
-        processActionButtonMovie(o, out);
-        break;
-    case msosptHostControl:
-        processPictureFrame(o, out);
-        break;
-    case msosptTextBox:
-        processTextBox(o, out);
-        break;
-    default:
-        qDebug() << "Cannot handle shape 0x" << hex << shapeType;
-        break;
+        // NOTE: OpenOffice treats msosptNotchedCircularArrow as msosptArc.  The
+        // msosptNotchedCircularArrow value SHOULD NOT be used according to the
+        // MS-ODRAW spec.  However it occurs in many Word8 files.
+        case msosptArc:
+            processNotchedCircularArrow(o, out);
+            break;
+        case msosptLine:
+            processLine(o, out);
+            break;
+        case msosptPlaque:
+            processPlaque(o, out);
+            break;
+        case msosptCan:
+            processCan(o, out);
+            break;
+        case msosptDonut:
+            processDonut(o, out);
+            break;
+        //
+        // TODO: msosptTextSimple, msosptTextOctagon, msosptTextHexagon,
+        // msosptTextCurve, msosptTextWave, msosptTextRing, msosptTextOnCurve,
+        // msosptTextOnRing
+        //
+        case msosptStraightConnector1:
+            processConnector(o, out, &ODrawToOdf::drawStraightConnector1);
+            break;
+        case msosptBentConnector2:
+            processConnector(o, out, &ODrawToOdf::drawPathBentConnector2);
+            break;
+        case msosptBentConnector3:
+            processConnector(o, out, &ODrawToOdf::drawPathBentConnector3);
+            break;
+        case msosptBentConnector4:
+            processConnector(o, out, &ODrawToOdf::drawPathBentConnector4);
+            break;
+        case msosptBentConnector5:
+            processConnector(o, out, &ODrawToOdf::drawPathBentConnector5);
+            break;
+        case msosptCurvedConnector2:
+            processConnector(o, out, &ODrawToOdf::drawPathCurvedConnector2);
+            break;
+        case msosptCurvedConnector3:
+            processConnector(o, out, &ODrawToOdf::drawPathCurvedConnector3);
+            break;
+        case msosptCurvedConnector4:
+            processConnector(o, out, &ODrawToOdf::drawPathCurvedConnector4);
+            break;
+        case msosptCurvedConnector5:
+            processConnector(o, out, &ODrawToOdf::drawPathCurvedConnector5);
+            break;
+        case msosptCallout1:
+            processCallout1(o, out);
+            break;
+        case msosptCallout2:
+            processCallout2(o, out);
+            break;
+        case msosptCallout3:
+            processCallout3(o, out);
+            break;
+        case msosptAccentCallout1:
+            processAccentCallout1(o, out);
+            break;
+        case msosptAccentCallout2:
+            processAccentCallout2(o, out);
+            break;
+        case msosptAccentCallout3:
+            processAccentCallout3(o, out);
+            break;
+        case msosptBorderCallout1:
+            processBorderCallout1(o, out);
+            break;
+        case msosptBorderCallout2:
+            processBorderCallout2(o, out);
+            break;
+        case msosptBorderCallout3:
+            processBorderCallout3(o, out);
+            break;
+        case msosptAccentBorderCallout1:
+            processAccentBorderCallout1(o, out);
+            break;
+        case msosptAccentBorderCallout2:
+            processAccentBorderCallout2(o, out);
+            break;
+        case msosptAccentBorderCallout3:
+            processAccentBorderCallout3(o, out);
+            break;
+        case msosptRibbon:
+            processRibbon(o, out);
+            break;
+        case msosptRibbon2:
+            processRibbon2(o, out);
+            break;
+        case msosptChevron:
+            processChevron(o, out);
+            break;
+        case msosptPentagon:
+            processPentagon(o, out);
+            break;
+        case msosptNoSmoking:
+            processNoSmoking(o, out);
+            break;
+        case msosptSeal8:
+            processSeal8(o, out);
+            break;
+        case msosptSeal16:
+            processSeal16(o, out);
+            break;
+        case msosptSeal32:
+            processSeal32(o, out);
+            break;
+        case msosptWedgeRectCallout:
+            processWedgeRectCallout(o, out);
+            break;
+        case msosptWedgeRRectCallout:
+            processWedgeRRectCallout(o, out);
+            break;
+        case msosptWedgeEllipseCallout:
+            processWedgeEllipseCallout(o, out);
+            break;
+        case msosptWave:
+            processWave(o, out);
+            break;
+        case msosptFoldedCorner:
+            processFoldedCorner(o, out);
+            break;
+        case msosptLeftArrow:
+            processLeftArrow(o, out);
+            break;
+        case msosptDownArrow:
+            processDownArrow(o, out);
+            break;
+        case msosptUpArrow:
+            processUpArrow(o, out);
+            break;
+        case msosptLeftRightArrow:
+            processLeftRightArrow(o, out);
+            break;
+        case msosptUpDownArrow:
+            processUpDownArrow(o, out);
+            break;
+        case msosptIrregularSeal1:
+            processIrregularSeal1(o, out);
+            break;
+        case msosptIrregularSeal2:
+            processIrregularSeal2(o, out);
+            break;
+        case msosptLightningBolt:
+            processLightningBolt(o, out);
+            break;
+        case msosptHeart:
+            processHeart(o, out);
+            break;
+        case msosptPictureFrame:
+            processPictureFrame(o, out);
+            break;
+        case msosptQuadArrow:
+            processQuadArrow(o, out);
+            break;
+        case msosptLeftArrowCallout:
+            processLeftArrowCallout(o, out);
+            break;
+        case msosptRightArrowCallout:
+            processRightArrowCallout(o, out);
+            break;
+        case msosptUpArrowCallout:
+            processUpArrowCallout(o, out);
+            break;
+        case msosptDownArrowCallout:
+            processDownArrowCallout(o, out);
+            break;
+        case msosptLeftRightArrowCallout:
+            processLeftRightArrowCallout(o, out);
+            break;
+        case msosptUpDownArrowCallout:
+            processUpDownArrowCallout(o, out);
+            break;
+        case msosptQuadArrowCallout:
+            processQuadArrowCallout(o, out);
+            break;
+        case msosptBevel:
+            processBevel(o, out);
+            break;
+        case msosptLeftBracket:
+            processLeftBracket(o, out);
+            break;
+        case msosptRightBracket:
+            processRightBracket(o, out);
+            break;
+        case msosptLeftBrace:
+            processLeftBrace(o, out);
+            break;
+        case msosptRightBrace:
+            processRightBrace(o, out);
+            break;
+        case msosptLeftUpArrow:
+            processLeftUpArrow(o, out);
+            break;
+        case msosptBentUpArrow:
+            processBentUpArrow(o, out);
+            break;
+        case msosptBentArrow:
+            processBentArrow(o, out);
+            break;
+        case msosptSeal24:
+            processSeal24(o, out);
+            break;
+        case msosptStripedRightArrow:
+            processStripedRightArrow(o, out);
+            break;
+        case msosptNotchedRightArrow:
+            processNotchedRightArrow(o, out);
+            break;
+        case msosptBlockArc:
+            processBlockArc(o, out);
+            break;
+        case msosptSmileyFace:
+            processSmileyFace(o, out);
+            break;
+        case msosptVerticalScroll:
+            processVerticalScroll(o, out);
+            break;
+        case msosptHorizontalScroll:
+            processHorizontalScroll(o, out);
+            break;
+        case msosptCircularArrow:
+            processCircularArrow(o, out);
+            break;
+        case msosptNotchedCircularArrow:
+            processNotchedCircularArrow(o, out);
+            break;
+        case msosptUturnArrow:
+            processUturnArrow(o, out);
+            break;
+        case msosptCurvedRightArrow:
+            processCurvedRightArrow(o, out);
+            break;
+        case msosptCurvedLeftArrow:
+            processCurvedLeftArrow(o, out);
+            break;
+        case msosptCurvedUpArrow:
+            processCurvedUpArrow(o, out);
+            break;
+        case msosptCurvedDownArrow:
+            processCurvedDownArrow(o, out);
+            break;
+        case msosptCloudCallout:
+            processCloudCallout(o, out);
+            break;
+        case msosptEllipseRibbon:
+            processEllipseRibbon(o, out);
+            break;
+        case msosptEllipseRibbon2:
+            processEllipseRibbon2(o, out);
+            break;
+        case msosptFlowChartProcess:
+            processFlowChartProcess(o, out);
+            break;
+        case msosptFlowChartDecision:
+            processFlowChartDecision(o, out);
+            break;
+        case msosptFlowChartInputOutput:
+            processFlowChartInputOutput(o, out);
+            break;
+        case msosptFlowChartPredefinedProcess:
+            processFlowChartPredefinedProcess(o, out);
+            break;
+        case msosptFlowChartInternalStorage:
+            processFlowChartInternalStorage(o, out);
+            break;
+        case msosptFlowChartDocument:
+            processFlowChartDocument(o, out);
+            break;
+        case msosptFlowChartMultidocument:
+            processFlowChartMultidocument(o, out);
+            break;
+        case msosptFlowChartTerminator:
+            processFlowChartTerminator(o, out);
+            break;
+        case msosptFlowChartPreparation:
+            processFlowChartPreparation(o, out);
+            break;
+        case msosptFlowChartManualInput:
+            processFlowChartManualInput(o, out);
+            break;
+        case msosptFlowChartManualOperation:
+            processFlowChartManualOperation(o, out);
+            break;
+        case msosptFlowChartConnector:
+            processFlowChartConnector(o, out);
+            break;
+        case msosptFlowChartPunchedCard:
+            processFlowChartPunchedCard(o, out);
+            break;
+        case msosptFlowChartPunchedTape:
+            processFlowChartPunchedTape(o, out);
+            break;
+        case msosptFlowChartSummingJunction:
+            processFlowChartSummingJunction(o, out);
+            break;
+        case msosptFlowChartOr:
+            processFlowChartOr(o, out);
+            break;
+        case msosptFlowChartCollate:
+            processFlowChartCollate(o, out);
+            break;
+        case msosptFlowChartSort:
+            processFlowChartSort(o, out);
+            break;
+        case msosptFlowChartExtract:
+            processFlowChartExtract(o, out);
+            break;
+        case msosptFlowChartMerge:
+            processFlowChartMerge(o, out);
+            break;
+        //
+        // TODO: msosptFlowChartOfflineStorage
+        //
+        case msosptFlowChartOnlineStorage:
+            processFlowChartOnlineStorage(o, out);
+            break;
+        case msosptFlowChartMagneticTape:
+            processFlowChartMagneticTape(o, out);
+            break;
+        case msosptFlowChartMagneticDisk:
+            processFlowChartMagneticDisk(o, out);
+            break;
+        case msosptFlowChartMagneticDrum:
+            processFlowChartMagneticDrum(o, out);
+            break;
+        case msosptFlowChartDisplay:
+            processFlowChartDisplay(o, out);
+            break;
+        case msosptFlowChartDelay:
+            processFlowChartDelay(o, out);
+            break;
+        //
+        // TODO: msosptTextPlainText, msosptTextStop, msosptTextTriangle,
+        // msosptTextTriangleInverted, msosptTextChevron,
+        // msosptTextChevronInverted, msosptTextRingInside, msosptTextRingOutside,
+        // msosptTextArchUpCurve, msosptTextArchDownCurve, msosptTextCircleCurve,
+        // msosptTextButtonCurve, msosptTextArchUpPour, msosptTextArchDownPour,
+        // msosptTextCirclePour, msosptTextButtonPour, msosptTextCurveUp,
+        // msosptTextCurveDown, msosptTextCascadeUp, msosptTextCascadeDown,
+        // msosptTextWave1, msosptTextWave2, msosptTextWave3, msosptTextWave4,
+        // msosptTextInflate, msosptTextDeflate, msosptTextInflateBottom,
+        // msosptTextDeflateBottom, msosptTextInflateTop, msosptTextDeflateTop,
+        // msosptTextDeflateInflate, msosptTextDeflateInflateDeflate,
+        // msosptTextFadeRight, msosptTextFadeLeft, msosptTextFadeUp,
+        // msosptTextFadeDown, msosptTextSlantUp, msosptTextSlantDown,
+        // msosptTextCanUp, msosptTextCanDown
+        //
+        case msosptFlowChartAlternateProcess:
+            processFlowChartAlternateProcess(o, out);
+            break;
+        case msosptFlowChartOffpageConnector:
+            processFlowChartOffpageConnector(o, out);
+            break;
+        case msosptCallout90:
+            processCallout90(o, out);
+            break;
+        case msosptAccentCallout90:
+            processAccentCallout90(o, out);
+            break;
+        case msosptBorderCallout90:
+            processBorderCallout90(o, out);
+            break;
+        case msosptAccentBorderCallout90:
+            processAccentBorderCallout90(o, out);
+            break;
+        case msosptLeftRightUpArrow:
+            processLeftRightUpArrow(o, out);
+            break;
+        case msosptSun:
+            processSun(o, out);
+            break;
+        case msosptMoon:
+            processMoon(o, out);
+            break;
+        case msosptBracketPair:
+            processBracketPair(o, out);
+            break;
+        case msosptBracePair:
+            processBracePair(o, out);
+            break;
+        case msosptSeal4:
+            processSeal4(o, out);
+            break;
+        case msosptDoubleWave:
+            processDoubleWave(o, out);
+            break;
+        case msosptActionButtonBlank:
+            processActionButtonBlank(o, out);
+            break;
+        case msosptActionButtonHome:
+            processActionButtonHome(o, out);
+            break;
+        case msosptActionButtonHelp:
+            processActionButtonHelp(o, out);
+            break;
+        case msosptActionButtonInformation:
+            processActionButtonInformation(o, out);
+            break;
+        case msosptActionButtonForwardNext:
+            processActionButtonForwardNext(o, out);
+            break;
+        case msosptActionButtonBackPrevious:
+            processActionButtonBackPrevious(o, out);
+            break;
+        case msosptActionButtonEnd:
+            processActionButtonEnd(o, out);
+            break;
+        case msosptActionButtonBeginning:
+            processActionButtonBeginning(o, out);
+            break;
+        case msosptActionButtonReturn:
+            processActionButtonReturn(o, out);
+            break;
+        case msosptActionButtonDocument:
+            processActionButtonDocument(o, out);
+            break;
+        case msosptActionButtonSound:
+            processActionButtonSound(o, out);
+            break;
+        case msosptActionButtonMovie:
+            processActionButtonMovie(o, out);
+            break;
+        case msosptHostControl:
+            processPictureFrame(o, out);
+            break;
+        case msosptTextBox:
+            processTextBox(o, out);
+            break;
+        default:
+            qDebug() << "Cannot handle shape 0x" << hex << shapeType;
+            break;
     }
 }
 
@@ -1021,14 +1052,18 @@ void ODrawToOdf::processStyle(const MSO::OfficeArtSpContainer& o,
 void ODrawToOdf::processText(const MSO::OfficeArtSpContainer& o,
                              Writer& out)
 {
-    if (!client) {
+    if (!client)
+    {
         qWarning() << "Warning: There's no Client!";
         return;
     }
 
-    if (o.clientData && client->onlyClientData(*o.clientData)) {
+    if (o.clientData && client->onlyClientData(*o.clientData))
+    {
         client->processClientData(o.clientTextbox.data(), *o.clientData, out);
-    } else if (o.clientTextbox) {
+    }
+    else if (o.clientTextbox)
+    {
         client->processClientTextBox(*o.clientTextbox, o.clientData.data(), out);
     }
 }
@@ -1036,7 +1071,10 @@ void ODrawToOdf::processText(const MSO::OfficeArtSpContainer& o,
 void ODrawToOdf::processModifiers(const MSO::OfficeArtSpContainer &o, Writer &out, const QList<int>& defaults)
 {
     const AdjustValue* val1 = get<AdjustValue>(o);
-    if (!val1 && defaults.isEmpty()) return;
+    if (!val1 && defaults.isEmpty())
+    {
+        return;
+    }
     const Adjust2Value* val2 = get<Adjust2Value>(o);
     const Adjust3Value* val3 = get<Adjust3Value>(o);
     const Adjust4Value* val4 = get<Adjust4Value>(o);
@@ -1046,19 +1084,26 @@ void ODrawToOdf::processModifiers(const MSO::OfficeArtSpContainer &o, Writer &ou
     const Adjust8Value* val8 = get<Adjust8Value>(o);
 
     QString modifiers = QString::number(val1 ? val1->adjustvalue : defaults[0]);
-    if (val2 || defaults.size() > 1) {
+    if (val2 || defaults.size() > 1)
+    {
         modifiers += QString(" %1").arg(val2 ? val2->adjust2value : defaults[1]);
-        if (val3 || defaults.size() > 2) {
+        if (val3 || defaults.size() > 2)
+        {
             modifiers += QString(" %1").arg(val3 ? val3->adjust3value : defaults[2]);
-            if (val4 || defaults.size() > 3) {
+            if (val4 || defaults.size() > 3)
+            {
                 modifiers += QString(" %1").arg(val4 ? val4->adjust4value : defaults[3]);
-                if (val5 || defaults.size() > 4) {
+                if (val5 || defaults.size() > 4)
+                {
                     modifiers += QString(" %1").arg(val5 ? val5->adjust5value : defaults[4]);
-                    if (val6 || defaults.size() > 5) {
+                    if (val6 || defaults.size() > 5)
+                    {
                         modifiers += QString(" %1").arg(val6 ? val6->adjust6value : defaults[5]);
-                        if (val7 || defaults.size() > 6) {
+                        if (val7 || defaults.size() > 6)
+                        {
                             modifiers += QString(" %1").arg(val7 ? val7->adjust7value : defaults[6]);
-                            if (val8 || defaults.size() > 7) {
+                            if (val8 || defaults.size() > 7)
+                            {
                                 modifiers += QString(" %1").arg(val8 ? val8->adjust8value : defaults[7]);
                             }
                         }
@@ -1094,7 +1139,8 @@ void ODrawToOdf::set2dGeometry(const OfficeArtSpContainer& o, Writer& out)
     //draw:style-name
     //draw:text-style-name
     //draw:transform
-    if (rotation) {
+    if (rotation)
+    {
 
         const quint16 shapeType = o.shapeProp.rh.recInstance;
         const quint16 nrotation = normalizeRotation(rotation);
@@ -1112,7 +1158,8 @@ void ODrawToOdf::set2dGeometry(const OfficeArtSpContainer& o, Writer& out)
     }
     //svg:x
     //svg:y
-    else {
+    else
+    {
         out.xml.addAttribute("svg:x", client->formatPos(trect.x()));
         out.xml.addAttribute("svg:y", client->formatPos(trect.y()));
     }
@@ -1142,14 +1189,16 @@ void ODrawToOdf::setEnhancedGeometry(const MSO::OfficeArtSpContainer& o, Writer&
     IMsoArray _v = ds.pVertices_complex();
     IMsoArray segmentInfo = ds.pSegmentInfo_complex();
 
-    if (!_v.data.isEmpty() && !segmentInfo.data.isEmpty()) {
+    if (!_v.data.isEmpty() && !segmentInfo.data.isEmpty())
+    {
 
         QVector<QPoint> verticesPoints;
 
         //_v.data is an array of POINTs, MS-ODRAW, page 89
         QByteArray xArray(sizeof(int), 0), yArray(sizeof(int), 0);
         int step = _v.cbElem;
-        if (step == 0xfff0) {
+        if (step == 0xfff0)
+        {
             step = 4;
         }
 
@@ -1157,7 +1206,8 @@ void ODrawToOdf::setEnhancedGeometry(const MSO::OfficeArtSpContainer& o, Writer&
         int x,y;
 
         //get vertice points
-        for (int i = 0, offset = 0; i < _v.nElems; i++, offset += step) {
+        for (int i = 0, offset = 0; i < _v.nElems; i++, offset += step)
+        {
             // x coordinate of this point
             xArray.replace(0, step/2, _v.data.mid(offset, step/2));
             x = *(int*) xArray.data();
@@ -1169,16 +1219,20 @@ void ODrawToOdf::setEnhancedGeometry(const MSO::OfficeArtSpContainer& o, Writer&
             verticesPoints.append(QPoint(x, y));
 
             // find maximum and minimum coordinates
-            if (maxY < y) {
+            if (maxY < y)
+            {
                 maxY = y;
             }
-            if (minY > y) {
+            if (minY > y)
+            {
                 minY = y ;
             }
-            if (maxX < x) {
+            if (maxX < x)
+            {
                 maxX = x;
             }
-            if (minX > x) {
+            if (minX > x)
+            {
                 minX = x;
             }
         }
@@ -1192,65 +1246,70 @@ void ODrawToOdf::setEnhancedGeometry(const MSO::OfficeArtSpContainer& o, Writer&
         ushort msopathtype;
         bool nOffRange = false;
 
-        for (int i = 0, n = 0; ((i < segmentInfo.nElems) && !nOffRange); i++) {
+        for (int i = 0, n = 0; ((i < segmentInfo.nElems) && !nOffRange); i++)
+        {
 
             msopathtype = (((*(ushort *)(segmentInfo.data.data() + i * 2)) >> 13) & 0x7);
 
-            switch (msopathtype) {
-            case msopathLineTo:
+            switch (msopathtype)
             {
-                if (n >= verticesPoints.size()) {
-                    qDebug() << "EnhancedGeometry: index into verticesPoints out of range!";
-                    nOffRange = true;
+                case msopathLineTo:
+                {
+                    if (n >= verticesPoints.size())
+                    {
+                        qDebug() << "EnhancedGeometry: index into verticesPoints out of range!";
+                        nOffRange = true;
+                        break;
+                    }
+                    enhancedPath = enhancedPath + "L " + QString::number(verticesPoints[n].x()) + ' ' +
+                                   QString::number(verticesPoints[n].y()) + ' ';
+                    n++;
                     break;
                 }
-                enhancedPath = enhancedPath + "L " + QString::number(verticesPoints[n].x()) + ' ' +
-                               QString::number(verticesPoints[n].y()) + ' ';
-                n++;
-                break;
-            }
-            case msopathCurveTo:
-            {
-                if (n + 2 >= verticesPoints.size()) {
-                    qDebug() << "EnhancedGeometry: index into verticesPoints out of range!";
-                    nOffRange = true;
-                    break;
-                }
-                QPoint pt1 = verticesPoints.at(n);
-                QPoint pt2 = verticesPoints.at(n + 1);
-                QPoint pt3 = verticesPoints.at(n + 2);
+                case msopathCurveTo:
+                {
+                    if (n + 2 >= verticesPoints.size())
+                    {
+                        qDebug() << "EnhancedGeometry: index into verticesPoints out of range!";
+                        nOffRange = true;
+                        break;
+                    }
+                    QPoint pt1 = verticesPoints.at(n);
+                    QPoint pt2 = verticesPoints.at(n + 1);
+                    QPoint pt3 = verticesPoints.at(n + 2);
 
-                enhancedPath = enhancedPath + "C " +
-                        QString::number(pt1.x()) + ' ' +
-                        QString::number(pt1.y()) + ' ' +
-                        QString::number(pt2.x()) + ' ' +
-                        QString::number(pt2.y()) + ' ' +
-                        QString::number(pt3.x()) + ' ' +
-                        QString::number(pt3.y()) + ' ';
-                n = n + 3;
-                break;
-            }
-            case msopathMoveTo:
-            {
-                if (n >= verticesPoints.size()) {
-                    qDebug() << "EnhancedGeometry: index into verticesPoints out of range!";
-                    nOffRange = true;
+                    enhancedPath = enhancedPath + "C " +
+                                   QString::number(pt1.x()) + ' ' +
+                                   QString::number(pt1.y()) + ' ' +
+                                   QString::number(pt2.x()) + ' ' +
+                                   QString::number(pt2.y()) + ' ' +
+                                   QString::number(pt3.x()) + ' ' +
+                                   QString::number(pt3.y()) + ' ';
+                    n = n + 3;
                     break;
                 }
-                enhancedPath = enhancedPath + "M " + QString::number(verticesPoints[n].x()) + ' ' +
-                               QString::number(verticesPoints[n].y()) + ' ';
-                n++;
-                break;
-            }
-            case msopathClose:
-                enhancedPath = enhancedPath + "Z ";
-                break;
-            case msopathEnd:
-                enhancedPath = enhancedPath + "N ";
-                break;
-            case msopathEscape:
-            case msopathClientEscape:
-                 break;
+                case msopathMoveTo:
+                {
+                    if (n >= verticesPoints.size())
+                    {
+                        qDebug() << "EnhancedGeometry: index into verticesPoints out of range!";
+                        nOffRange = true;
+                        break;
+                    }
+                    enhancedPath = enhancedPath + "M " + QString::number(verticesPoints[n].x()) + ' ' +
+                                   QString::number(verticesPoints[n].y()) + ' ';
+                    n++;
+                    break;
+                }
+                case msopathClose:
+                    enhancedPath = enhancedPath + "Z ";
+                    break;
+                case msopathEnd:
+                    enhancedPath = enhancedPath + "N ";
+                    break;
+                case msopathEscape:
+                case msopathClientEscape:
+                    break;
             }
         }
         //dr3d:projection
@@ -1284,11 +1343,13 @@ void ODrawToOdf::setEnhancedGeometry(const MSO::OfficeArtSpContainer& o, Writer&
         //draw:glue-points
         //draw:glue-point-type
         //draw:mirror-horizontal
-        if (o.shapeProp.fFlipH) {
+        if (o.shapeProp.fFlipH)
+        {
             out.xml.addAttribute("draw:mirror-horizontal", "true");
         }
         //draw:mirror-vertical
-        if (o.shapeProp.fFlipV) {
+        if (o.shapeProp.fFlipV)
+        {
             out.xml.addAttribute("draw:mirror-vertical", "true");
         }
         //draw:modifiers
@@ -1313,24 +1374,26 @@ QString ODrawToOdf::path2svg(const QPainterPath &path)
     QString d;
 
     int count = path.elementCount();
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++)
+    {
 
         QPainterPath::Element e = path.elementAt(i);
-        switch(e.type) {
-        case QPainterPath::MoveToElement:
-            d.append(QString("M %1 %2").arg(e.x).arg(e.y));
-            break;
-        case QPainterPath::LineToElement:
-            d.append(QString("L %1 %2").arg(e.x).arg(e.y));
-            break;
-        case QPainterPath::CurveToElement:
-            d.append(QString("C %1 %2").arg(e.x).arg(e.y));
-            break;
-        case QPainterPath::CurveToDataElement:
-            d.append(QString(" %1 %2").arg(e.x).arg(e.y));
-            break;
-        default:
-            qWarning() << "This element unhandled: " << e.type;
+        switch(e.type)
+        {
+            case QPainterPath::MoveToElement:
+                d.append(QString("M %1 %2").arg(e.x).arg(e.y));
+                break;
+            case QPainterPath::LineToElement:
+                d.append(QString("L %1 %2").arg(e.x).arg(e.y));
+                break;
+            case QPainterPath::CurveToElement:
+                d.append(QString("C %1 %2").arg(e.x).arg(e.y));
+                break;
+            case QPainterPath::CurveToDataElement:
+                d.append(QString(" %1 %2").arg(e.x).arg(e.y));
+                break;
+            default:
+                qWarning() << "This element unhandled: " << e.type;
         }
     }
     return d;
@@ -1338,10 +1401,12 @@ QString ODrawToOdf::path2svg(const QPainterPath &path)
 
 void ODrawToOdf::setShapeMirroring(const MSO::OfficeArtSpContainer& o, Writer& out)
 {
-    if (o.shapeProp.fFlipV) {
+    if (o.shapeProp.fFlipV)
+    {
         out.xml.addAttribute("draw:mirror-vertical", "true");
     }
-    if (o.shapeProp.fFlipH) {
+    if (o.shapeProp.fFlipH)
+    {
         out.xml.addAttribute("draw:mirror-horizontal", "true");
     }
 }

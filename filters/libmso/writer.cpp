@@ -23,16 +23,16 @@
 
 Writer::Writer(KoXmlWriter& xmlWriter, KoGenStyles& kostyles,
                bool stylesxml_)
-        : xOffset(0),
-        yOffset(0),
-        scaleX(1),
-        scaleY(1),
-        g_rotation(0),
-        g_flipH(0),
-        g_flipV(0),
-        xml(xmlWriter),
-        styles(kostyles),
-        stylesxml(stylesxml_)
+    : xOffset(0),
+      yOffset(0),
+      scaleX(1),
+      scaleY(1),
+      g_rotation(0),
+      g_flipH(0),
+      g_flipV(0),
+      xml(xmlWriter),
+      styles(kostyles),
+      stylesxml(stylesxml_)
 {
 }
 

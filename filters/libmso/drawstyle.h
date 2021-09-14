@@ -43,12 +43,15 @@ public:
     explicit DrawStyle(const MSO::OfficeArtDggContainer* d_ = 0,
                        const MSO::OfficeArtSpContainer* mastersp_ = 0,
                        const MSO::OfficeArtSpContainer* sp_ = 0)
-            : d(d_), mastersp(mastersp_), sp(sp_) {}
+        : d(d_), mastersp(mastersp_), sp(sp_) {}
 
     /**
      * @return the OfficeArtSpContainer record specifying the shape container.
      */
-    const MSO::OfficeArtSpContainer* shapeContainer() const { return sp; };
+    const MSO::OfficeArtSpContainer* shapeContainer() const
+    {
+        return sp;
+    };
 
     /**
      * @return the shape type that MUST be an MSOSPT enumeration value.
@@ -285,9 +288,13 @@ template <typename A, typename B>
 const A*
 get(const B& b)
 {
-    foreach(const MSO::OfficeArtFOPTEChoice& a, b.fopt) {
+    foreach(const MSO::OfficeArtFOPTEChoice& a, b.fopt)
+    {
         const A *ptr = a.anon.get<A>();
-        if (ptr) return ptr;
+        if (ptr)
+        {
+            return ptr;
+        }
     }
     return 0;
 }
@@ -303,11 +310,26 @@ const A*
 get(const MSO::OfficeArtSpContainer& o)
 {
     const A* a = 0;
-    if (o.shapePrimaryOptions) a = get<A>(*o.shapePrimaryOptions);
-    if (!a && o.shapeSecondaryOptions1) a = get<A>(*o.shapeSecondaryOptions1);
-    if (!a && o.shapeSecondaryOptions2) a = get<A>(*o.shapeSecondaryOptions2);
-    if (!a && o.shapeTertiaryOptions1) a = get<A>(*o.shapeTertiaryOptions1);
-    if (!a && o.shapeTertiaryOptions2) a = get<A>(*o.shapeTertiaryOptions2);
+    if (o.shapePrimaryOptions)
+    {
+        a = get<A>(*o.shapePrimaryOptions);
+    }
+    if (!a && o.shapeSecondaryOptions1)
+    {
+        a = get<A>(*o.shapeSecondaryOptions1);
+    }
+    if (!a && o.shapeSecondaryOptions2)
+    {
+        a = get<A>(*o.shapeSecondaryOptions2);
+    }
+    if (!a && o.shapeTertiaryOptions1)
+    {
+        a = get<A>(*o.shapeTertiaryOptions1);
+    }
+    if (!a && o.shapeTertiaryOptions2)
+    {
+        a = get<A>(*o.shapeTertiaryOptions2);
+    }
     return a;
 }
 /**
@@ -322,10 +344,14 @@ const A*
 get(const MSO::OfficeArtDggContainer& o)
 {
     const A* a = 0;
-    if (o.drawingPrimaryOptions) {
+    if (o.drawingPrimaryOptions)
+    {
         a = get<A>(*o.drawingPrimaryOptions);
     }
-    if (!a && o.drawingTertiaryOptions) a = get<A>(*o.drawingTertiaryOptions);
+    if (!a && o.drawingTertiaryOptions)
+    {
+        a = get<A>(*o.drawingTertiaryOptions);
+    }
     return a;
 }
 /**
@@ -360,33 +386,46 @@ getComplexData(const B& b)
     const char* pData = b.complexData.data();
     uint offset = 0;
 
-    foreach(const MSO::OfficeArtFOPTEChoice& _c, b.fopt) {
+    foreach(const MSO::OfficeArtFOPTEChoice& _c, b.fopt)
+    {
         p = (MSO::OfficeArtFOPTE*) _c.anon.data();
-        if (p->opid.fComplex) {
+        if (p->opid.fComplex)
+        {
 
             // there is wrong offset inside PVertices
-            if (_c.anon.is<MSO::PVertices>()) {
-                if (_c.anon.get<A>()) {
-                    if (b.complexData.size() - offset >= 6) {
+            if (_c.anon.is<MSO::PVertices>())
+            {
+                if (_c.anon.get<A>())
+                {
+                    if (b.complexData.size() - offset >= 6)
+                    {
                         a.nElems = *(quint16 *)(pData + offset);
                         a.nElemsAlloc = *(quint16 *)(pData + offset +2);
                         a.cbElem = *(quint16 *)(pData + offset + 4);
                         a.data = b.complexData.mid(offset+6, p->op);
                         break;
                     }
-                } else {
+                }
+                else
+                {
                     offset += p->op +6;
                 }
-            } else {
-                if (_c.anon.get<A>()) {
-                    if (b.complexData.size() - offset >= 6) {
+            }
+            else
+            {
+                if (_c.anon.get<A>())
+                {
+                    if (b.complexData.size() - offset >= 6)
+                    {
                         a.nElems = *(quint16 *)(pData + offset);
                         a.nElemsAlloc = *(quint16 *)(pData + offset +2);
                         a.cbElem = *(quint16 *)(pData + offset + 4);
                         a.data = b.complexData.mid(offset+6, p->op-6);
                         break;
                     }
-                } else {
+                }
+                else
+                {
                     offset += p->op;
                 }
             }
@@ -409,11 +448,26 @@ IMsoArray
 getComplexData(const MSO::OfficeArtSpContainer& o)
 {
     IMsoArray a;
-    if (o.shapePrimaryOptions) a = getComplexData<A>(*o.shapePrimaryOptions);
-    if (!a.data.size() && o.shapeSecondaryOptions1) a = getComplexData<A>(*o.shapeSecondaryOptions1);
-    if (!a.data.size() && o.shapeSecondaryOptions2) a = getComplexData<A>(*o.shapeSecondaryOptions2);
-    if (!a.data.size() && o.shapeTertiaryOptions1) a = getComplexData<A>(*o.shapeTertiaryOptions1);
-    if (!a.data.size() && o.shapeTertiaryOptions2) a = getComplexData<A>(*o.shapeTertiaryOptions2);
+    if (o.shapePrimaryOptions)
+    {
+        a = getComplexData<A>(*o.shapePrimaryOptions);
+    }
+    if (!a.data.size() && o.shapeSecondaryOptions1)
+    {
+        a = getComplexData<A>(*o.shapeSecondaryOptions1);
+    }
+    if (!a.data.size() && o.shapeSecondaryOptions2)
+    {
+        a = getComplexData<A>(*o.shapeSecondaryOptions2);
+    }
+    if (!a.data.size() && o.shapeTertiaryOptions1)
+    {
+        a = getComplexData<A>(*o.shapeTertiaryOptions1);
+    }
+    if (!a.data.size() && o.shapeTertiaryOptions2)
+    {
+        a = getComplexData<A>(*o.shapeTertiaryOptions2);
+    }
     return a;
 }
 
@@ -436,13 +490,18 @@ getComplexName(const B& b)
     uint offset = 0;
     QString a;
 
-    foreach(const MSO::OfficeArtFOPTEChoice& _c, b.fopt) {
+    foreach(const MSO::OfficeArtFOPTEChoice& _c, b.fopt)
+    {
         p = (MSO::OfficeArtFOPTE*) _c.anon.data();
-        if (p->opid.fComplex) {
-            if (_c.anon.get<A>()) {
+        if (p->opid.fComplex)
+        {
+            if (_c.anon.get<A>())
+            {
                 a.append(b.complexData.mid(offset, p->op));
                 break;
-            } else {
+            }
+            else
+            {
                 offset += p->op;
             }
         }
@@ -464,11 +523,26 @@ QString
 getComplexName(const MSO::OfficeArtSpContainer& o)
 {
     QString a;
-    if (o.shapePrimaryOptions) a = getComplexName<A>(*o.shapePrimaryOptions);
-    if (!a.isEmpty() && o.shapeSecondaryOptions1) a = getComplexName<A>(*o.shapeSecondaryOptions1);
-    if (!a.isEmpty() && o.shapeSecondaryOptions2) a = getComplexName<A>(*o.shapeSecondaryOptions2);
-    if (!a.isEmpty() && o.shapeTertiaryOptions1) a = getComplexName<A>(*o.shapeTertiaryOptions1);
-    if (!a.isEmpty() && o.shapeTertiaryOptions2) a = getComplexName<A>(*o.shapeTertiaryOptions2);
+    if (o.shapePrimaryOptions)
+    {
+        a = getComplexName<A>(*o.shapePrimaryOptions);
+    }
+    if (!a.isEmpty() && o.shapeSecondaryOptions1)
+    {
+        a = getComplexName<A>(*o.shapeSecondaryOptions1);
+    }
+    if (!a.isEmpty() && o.shapeSecondaryOptions2)
+    {
+        a = getComplexName<A>(*o.shapeSecondaryOptions2);
+    }
+    if (!a.isEmpty() && o.shapeTertiaryOptions1)
+    {
+        a = getComplexName<A>(*o.shapeTertiaryOptions1);
+    }
+    if (!a.isEmpty() && o.shapeTertiaryOptions2)
+    {
+        a = getComplexName<A>(*o.shapeTertiaryOptions2);
+    }
     return a;
 }
 

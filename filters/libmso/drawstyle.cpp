@@ -91,9 +91,12 @@ const MSO::FixedPoint zero()
 
 quint16 DrawStyle::shapeType() const
 {
-    if (!sp) {
+    if (!sp)
+    {
         return msosptNil;
-    } else {
+    }
+    else
+    {
         return sp->shapeProp.rh.recInstance;
     }
 }
@@ -340,22 +343,29 @@ bool DrawStyle::fLine() const
     const MSO::LineStyleBooleanProperties* p = 0;
     quint16 shapeType = msosptNil;
 
-    if (sp) {
+    if (sp)
+    {
         shapeType = sp->shapeProp.rh.recInstance;
         p = get<MSO::LineStyleBooleanProperties>(*sp);
-        if (p && p->fUsefLine) {
+        if (p && p->fUsefLine)
+        {
             return p->fLine;
         }
     }
-    if (mastersp) {
+    if (mastersp)
+    {
         p = get<MSO::LineStyleBooleanProperties>(*mastersp);
-        if (p && p->fUsefLine) {
+        if (p && p->fUsefLine)
+        {
             return p->fLine;
         }
     }
-    if (shapeType == msosptPictureFrame) {
+    if (shapeType == msosptPictureFrame)
+    {
         return false;
-    } else {
+    }
+    else
+    {
         return true;
     }
 }

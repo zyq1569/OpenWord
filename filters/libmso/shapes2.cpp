@@ -50,7 +50,8 @@ void equation(Writer& out, const char* name, const char* formula)
 }*/
 
 
-void ODrawToOdf::processParallelogram(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processParallelogram(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -86,7 +87,8 @@ void ODrawToOdf::processParallelogram(const MSO::OfficeArtSpContainer& o, Writer
 }
 
 
-void ODrawToOdf::processTrapezoid(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processTrapezoid(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -115,7 +117,8 @@ void ODrawToOdf::processTrapezoid(const MSO::OfficeArtSpContainer& o, Writer& ou
 }
 
 
-void ODrawToOdf::processDiamond(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processDiamond(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -131,7 +134,8 @@ void ODrawToOdf::processDiamond(const MSO::OfficeArtSpContainer& o, Writer& out)
 }
 
 
-void ODrawToOdf::processRoundRectangle(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processRoundRectangle(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -166,7 +170,8 @@ void ODrawToOdf::processRoundRectangle(const MSO::OfficeArtSpContainer& o, Write
 }
 
 
-void ODrawToOdf::processOctagon(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processOctagon(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -199,7 +204,8 @@ void ODrawToOdf::processOctagon(const MSO::OfficeArtSpContainer& o, Writer& out)
 }
 
 
-void ODrawToOdf::processIsocelesTriangle(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processIsocelesTriangle(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -229,7 +235,8 @@ void ODrawToOdf::processIsocelesTriangle(const MSO::OfficeArtSpContainer& o, Wri
 }
 
 
-void ODrawToOdf::processRightTriangle(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processRightTriangle(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -269,7 +276,8 @@ void ODrawToOdf::processEllipse(const MSO::OfficeArtSpContainer& o, Writer& out)
 }
 */
 
-void ODrawToOdf::processHexagon(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processHexagon(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -296,7 +304,8 @@ void ODrawToOdf::processHexagon(const MSO::OfficeArtSpContainer& o, Writer& out)
 }
 
 
-void ODrawToOdf::processPlus(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processPlus(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -325,7 +334,8 @@ void ODrawToOdf::processPlus(const MSO::OfficeArtSpContainer& o, Writer& out) {
 }
 
 
-void ODrawToOdf::processPentagon(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processPentagon(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -341,7 +351,8 @@ void ODrawToOdf::processPentagon(const MSO::OfficeArtSpContainer& o, Writer& out
 }
 
 
-void ODrawToOdf::processCan(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processCan(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -371,7 +382,8 @@ void ODrawToOdf::processCan(const MSO::OfficeArtSpContainer& o, Writer& out) {
 }
 
 
-void ODrawToOdf::processCube(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processCube(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -409,7 +421,8 @@ void ODrawToOdf::processCube(const MSO::OfficeArtSpContainer& o, Writer& out) {
 }
 
 
-void ODrawToOdf::processBevel(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processBevel(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -436,7 +449,8 @@ void ODrawToOdf::processBevel(const MSO::OfficeArtSpContainer& o, Writer& out) {
 }
 
 
-void ODrawToOdf::processFoldedCorner(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFoldedCorner(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -470,7 +484,8 @@ void ODrawToOdf::processFoldedCorner(const MSO::OfficeArtSpContainer& o, Writer&
 }
 
 
-void ODrawToOdf::processSmileyFace(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processSmileyFace(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -495,7 +510,8 @@ void ODrawToOdf::processSmileyFace(const MSO::OfficeArtSpContainer& o, Writer& o
 }
 
 
-void ODrawToOdf::processDonut(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processDonut(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -519,7 +535,8 @@ void ODrawToOdf::processDonut(const MSO::OfficeArtSpContainer& o, Writer& out) {
 }
 
 
-void ODrawToOdf::processNoSmoking(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processNoSmoking(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -558,7 +575,8 @@ void ODrawToOdf::processNoSmoking(const MSO::OfficeArtSpContainer& o, Writer& ou
 }
 
 
-void ODrawToOdf::processBlockArc(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processBlockArc(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -588,7 +606,8 @@ void ODrawToOdf::processBlockArc(const MSO::OfficeArtSpContainer& o, Writer& out
 }
 
 
-void ODrawToOdf::processHeart(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processHeart(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -604,7 +623,8 @@ void ODrawToOdf::processHeart(const MSO::OfficeArtSpContainer& o, Writer& out) {
 }
 
 
-void ODrawToOdf::processLightningBolt(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processLightningBolt(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -620,7 +640,8 @@ void ODrawToOdf::processLightningBolt(const MSO::OfficeArtSpContainer& o, Writer
 }
 
 
-void ODrawToOdf::processSun(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processSun(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -697,7 +718,8 @@ void ODrawToOdf::processSun(const MSO::OfficeArtSpContainer& o, Writer& out) {
 }
 
 
-void ODrawToOdf::processMoon(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processMoon(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -729,7 +751,8 @@ void ODrawToOdf::processMoon(const MSO::OfficeArtSpContainer& o, Writer& out) {
     out.xml.endElement(); // custom shape
 }
 
-void ODrawToOdf::processNotchedCircularArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processNotchedCircularArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -772,7 +795,8 @@ void ODrawToOdf::processNotchedCircularArrow(const MSO::OfficeArtSpContainer& o,
     out.xml.endElement(); // custom shape
 }
 
-void ODrawToOdf::processBracketPair(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processBracketPair(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -812,7 +836,8 @@ void ODrawToOdf::processBracketPair(const MSO::OfficeArtSpContainer& o, Writer& 
 }
 
 
-void ODrawToOdf::processBracePair(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processBracePair(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -851,7 +876,8 @@ void ODrawToOdf::processBracePair(const MSO::OfficeArtSpContainer& o, Writer& ou
 }
 
 
-void ODrawToOdf::processPlaque(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processPlaque(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -892,7 +918,8 @@ void ODrawToOdf::processPlaque(const MSO::OfficeArtSpContainer& o, Writer& out) 
 }
 
 
-void ODrawToOdf::processLeftBracket(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processLeftBracket(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -919,7 +946,8 @@ void ODrawToOdf::processLeftBracket(const MSO::OfficeArtSpContainer& o, Writer& 
 }
 
 
-void ODrawToOdf::processRightBracket(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processRightBracket(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -946,7 +974,8 @@ void ODrawToOdf::processRightBracket(const MSO::OfficeArtSpContainer& o, Writer&
 }
 
 
-void ODrawToOdf::processLeftBrace(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processLeftBrace(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -984,7 +1013,8 @@ void ODrawToOdf::processLeftBrace(const MSO::OfficeArtSpContainer& o, Writer& ou
 }
 
 
-void ODrawToOdf::processRightBrace(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processRightBrace(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1022,7 +1052,8 @@ void ODrawToOdf::processRightBrace(const MSO::OfficeArtSpContainer& o, Writer& o
 }
 
 
-void ODrawToOdf::processArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1053,7 +1084,8 @@ void ODrawToOdf::processArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
 }
 
 
-void ODrawToOdf::processLeftArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processLeftArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1084,7 +1116,8 @@ void ODrawToOdf::processLeftArrow(const MSO::OfficeArtSpContainer& o, Writer& ou
 }
 
 
-void ODrawToOdf::processUpArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processUpArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1115,7 +1148,8 @@ void ODrawToOdf::processUpArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
 }
 
 
-void ODrawToOdf::processDownArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processDownArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1146,7 +1180,8 @@ void ODrawToOdf::processDownArrow(const MSO::OfficeArtSpContainer& o, Writer& ou
 }
 
 
-void ODrawToOdf::processLeftRightArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processLeftRightArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1179,7 +1214,8 @@ void ODrawToOdf::processLeftRightArrow(const MSO::OfficeArtSpContainer& o, Write
 }
 
 
-void ODrawToOdf::processUpDownArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processUpDownArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1212,7 +1248,8 @@ void ODrawToOdf::processUpDownArrow(const MSO::OfficeArtSpContainer& o, Writer& 
 }
 
 
-void ODrawToOdf::processQuadArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processQuadArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1246,7 +1283,8 @@ void ODrawToOdf::processQuadArrow(const MSO::OfficeArtSpContainer& o, Writer& ou
 }
 
 
-void ODrawToOdf::processLeftRightUpArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processLeftRightUpArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1280,7 +1318,8 @@ void ODrawToOdf::processLeftRightUpArrow(const MSO::OfficeArtSpContainer& o, Wri
 }
 
 
-void ODrawToOdf::processBentArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processBentArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1308,7 +1347,8 @@ void ODrawToOdf::processBentArrow(const MSO::OfficeArtSpContainer& o, Writer& ou
 }
 
 
-void ODrawToOdf::processUturnArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processUturnArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1323,7 +1363,8 @@ void ODrawToOdf::processUturnArrow(const MSO::OfficeArtSpContainer& o, Writer& o
 }
 
 
-void ODrawToOdf::processLeftUpArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processLeftUpArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1361,7 +1402,8 @@ void ODrawToOdf::processLeftUpArrow(const MSO::OfficeArtSpContainer& o, Writer& 
 }
 
 
-void ODrawToOdf::processBentUpArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processBentUpArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1400,7 +1442,8 @@ void ODrawToOdf::processBentUpArrow(const MSO::OfficeArtSpContainer& o, Writer& 
 }
 
 
-void ODrawToOdf::processCurvedRightArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processCurvedRightArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1487,7 +1530,8 @@ void ODrawToOdf::processCurvedRightArrow(const MSO::OfficeArtSpContainer& o, Wri
 }
 
 
-void ODrawToOdf::processCurvedLeftArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processCurvedLeftArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1570,7 +1614,8 @@ void ODrawToOdf::processCurvedLeftArrow(const MSO::OfficeArtSpContainer& o, Writ
 }
 
 
-void ODrawToOdf::processCurvedUpArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processCurvedUpArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1653,7 +1698,8 @@ void ODrawToOdf::processCurvedUpArrow(const MSO::OfficeArtSpContainer& o, Writer
 }
 
 
-void ODrawToOdf::processCurvedDownArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processCurvedDownArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1738,7 +1784,8 @@ void ODrawToOdf::processCurvedDownArrow(const MSO::OfficeArtSpContainer& o, Writ
 }
 
 
-void ODrawToOdf::processStripedRightArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processStripedRightArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1767,7 +1814,8 @@ void ODrawToOdf::processStripedRightArrow(const MSO::OfficeArtSpContainer& o, Wr
 }
 
 
-void ODrawToOdf::processNotchedRightArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processNotchedRightArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1796,7 +1844,8 @@ void ODrawToOdf::processNotchedRightArrow(const MSO::OfficeArtSpContainer& o, Wr
 }
 
 
-void ODrawToOdf::processHomePlate(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processHomePlate(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1818,7 +1867,8 @@ void ODrawToOdf::processHomePlate(const MSO::OfficeArtSpContainer& o, Writer& ou
 }
 
 
-void ODrawToOdf::processChevron(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processChevron(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1841,7 +1891,8 @@ void ODrawToOdf::processChevron(const MSO::OfficeArtSpContainer& o, Writer& out)
 }
 
 
-void ODrawToOdf::processRightArrowCallout(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processRightArrowCallout(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1880,7 +1931,8 @@ void ODrawToOdf::processRightArrowCallout(const MSO::OfficeArtSpContainer& o, Wr
 }
 
 
-void ODrawToOdf::processLeftArrowCallout(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processLeftArrowCallout(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1919,7 +1971,8 @@ void ODrawToOdf::processLeftArrowCallout(const MSO::OfficeArtSpContainer& o, Wri
 }
 
 
-void ODrawToOdf::processUpArrowCallout(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processUpArrowCallout(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1958,7 +2011,8 @@ void ODrawToOdf::processUpArrowCallout(const MSO::OfficeArtSpContainer& o, Write
 }
 
 
-void ODrawToOdf::processDownArrowCallout(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processDownArrowCallout(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -1997,7 +2051,8 @@ void ODrawToOdf::processDownArrowCallout(const MSO::OfficeArtSpContainer& o, Wri
 }
 
 
-void ODrawToOdf::processLeftRightArrowCallout(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processLeftRightArrowCallout(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2038,7 +2093,8 @@ void ODrawToOdf::processLeftRightArrowCallout(const MSO::OfficeArtSpContainer& o
 }
 
 
-void ODrawToOdf::processUpDownArrowCallout(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processUpDownArrowCallout(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2079,7 +2135,8 @@ void ODrawToOdf::processUpDownArrowCallout(const MSO::OfficeArtSpContainer& o, W
 }
 
 
-void ODrawToOdf::processQuadArrowCallout(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processQuadArrowCallout(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2120,7 +2177,8 @@ void ODrawToOdf::processQuadArrowCallout(const MSO::OfficeArtSpContainer& o, Wri
 }
 
 
-void ODrawToOdf::processCircularArrow(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processCircularArrow(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2132,8 +2190,8 @@ void ODrawToOdf::processCircularArrow(const MSO::OfficeArtSpContainer& o, Writer
     const Adjust2Value* val2 = get<Adjust2Value>(o);
     const Adjust3Value* val3 = get<Adjust3Value>(o);
     QString modifiers = QString::number(val1 ? val1->adjustvalue >> 16 : 180) +
-            QString(" %1").arg(val2 ? val2->adjust2value >> 16 : 0) +
-            QString(" %1").arg(val3 ? val3->adjust3value : 5500);
+                        QString(" %1").arg(val2 ? val2->adjust2value >> 16 : 0) +
+                        QString(" %1").arg(val3 ? val3->adjust3value : 5500);
     out.xml.addAttribute("draw:modifiers", modifiers);
 
     out.xml.addAttribute("svg:viewBox", "0 0 21600 21600");
@@ -2206,7 +2264,8 @@ void ODrawToOdf::processCircularArrow(const MSO::OfficeArtSpContainer& o, Writer
 }
 
 
-void ODrawToOdf::processFlowChartProcess(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartProcess(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2221,7 +2280,8 @@ void ODrawToOdf::processFlowChartProcess(const MSO::OfficeArtSpContainer& o, Wri
 }
 
 
-void ODrawToOdf::processFlowChartAlternateProcess(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartAlternateProcess(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2245,7 +2305,8 @@ void ODrawToOdf::processFlowChartAlternateProcess(const MSO::OfficeArtSpContaine
 }
 
 
-void ODrawToOdf::processFlowChartDecision(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartDecision(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2261,7 +2322,8 @@ void ODrawToOdf::processFlowChartDecision(const MSO::OfficeArtSpContainer& o, Wr
 }
 
 
-void ODrawToOdf::processFlowChartInputOutput(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartInputOutput(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2277,7 +2339,8 @@ void ODrawToOdf::processFlowChartInputOutput(const MSO::OfficeArtSpContainer& o,
 }
 
 
-void ODrawToOdf::processFlowChartPredefinedProcess(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartPredefinedProcess(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2292,7 +2355,8 @@ void ODrawToOdf::processFlowChartPredefinedProcess(const MSO::OfficeArtSpContain
 }
 
 
-void ODrawToOdf::processFlowChartInternalStorage(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartInternalStorage(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2307,7 +2371,8 @@ void ODrawToOdf::processFlowChartInternalStorage(const MSO::OfficeArtSpContainer
 }
 
 
-void ODrawToOdf::processFlowChartDocument(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartDocument(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2323,7 +2388,8 @@ void ODrawToOdf::processFlowChartDocument(const MSO::OfficeArtSpContainer& o, Wr
 }
 
 
-void ODrawToOdf::processFlowChartMultidocument(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartMultidocument(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2339,7 +2405,8 @@ void ODrawToOdf::processFlowChartMultidocument(const MSO::OfficeArtSpContainer& 
 }
 
 
-void ODrawToOdf::processFlowChartTerminator(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartTerminator(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2355,7 +2422,8 @@ void ODrawToOdf::processFlowChartTerminator(const MSO::OfficeArtSpContainer& o, 
 }
 
 
-void ODrawToOdf::processFlowChartPreparation(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartPreparation(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2371,7 +2439,8 @@ void ODrawToOdf::processFlowChartPreparation(const MSO::OfficeArtSpContainer& o,
 }
 
 
-void ODrawToOdf::processFlowChartManualInput(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartManualInput(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2387,7 +2456,8 @@ void ODrawToOdf::processFlowChartManualInput(const MSO::OfficeArtSpContainer& o,
 }
 
 
-void ODrawToOdf::processFlowChartManualOperation(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartManualOperation(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2403,7 +2473,8 @@ void ODrawToOdf::processFlowChartManualOperation(const MSO::OfficeArtSpContainer
 }
 
 
-void ODrawToOdf::processFlowChartConnector(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartConnector(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2419,7 +2490,8 @@ void ODrawToOdf::processFlowChartConnector(const MSO::OfficeArtSpContainer& o, W
 }
 
 
-void ODrawToOdf::processFlowChartOffpageConnector(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartOffpageConnector(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2435,7 +2507,8 @@ void ODrawToOdf::processFlowChartOffpageConnector(const MSO::OfficeArtSpContaine
 }
 
 
-void ODrawToOdf::processFlowChartPunchedCard(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartPunchedCard(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2451,7 +2524,8 @@ void ODrawToOdf::processFlowChartPunchedCard(const MSO::OfficeArtSpContainer& o,
 }
 
 
-void ODrawToOdf::processFlowChartPunchedTape(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartPunchedTape(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2467,7 +2541,8 @@ void ODrawToOdf::processFlowChartPunchedTape(const MSO::OfficeArtSpContainer& o,
 }
 
 
-void ODrawToOdf::processFlowChartSummingJunction(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartSummingJunction(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2483,7 +2558,8 @@ void ODrawToOdf::processFlowChartSummingJunction(const MSO::OfficeArtSpContainer
 }
 
 
-void ODrawToOdf::processFlowChartOr(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartOr(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2499,7 +2575,8 @@ void ODrawToOdf::processFlowChartOr(const MSO::OfficeArtSpContainer& o, Writer& 
 }
 
 
-void ODrawToOdf::processFlowChartCollate(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartCollate(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2515,7 +2592,8 @@ void ODrawToOdf::processFlowChartCollate(const MSO::OfficeArtSpContainer& o, Wri
 }
 
 
-void ODrawToOdf::processFlowChartSort(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartSort(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2530,7 +2608,8 @@ void ODrawToOdf::processFlowChartSort(const MSO::OfficeArtSpContainer& o, Writer
 }
 
 
-void ODrawToOdf::processFlowChartExtract(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartExtract(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2546,7 +2625,8 @@ void ODrawToOdf::processFlowChartExtract(const MSO::OfficeArtSpContainer& o, Wri
 }
 
 
-void ODrawToOdf::processFlowChartMerge(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartMerge(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2562,7 +2642,8 @@ void ODrawToOdf::processFlowChartMerge(const MSO::OfficeArtSpContainer& o, Write
 }
 
 
-void ODrawToOdf::processFlowChartOnlineStorage(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartOnlineStorage(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2578,7 +2659,8 @@ void ODrawToOdf::processFlowChartOnlineStorage(const MSO::OfficeArtSpContainer& 
 }
 
 
-void ODrawToOdf::processFlowChartDelay(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartDelay(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2594,7 +2676,8 @@ void ODrawToOdf::processFlowChartDelay(const MSO::OfficeArtSpContainer& o, Write
 }
 
 
-void ODrawToOdf::processFlowChartMagneticTape(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartMagneticTape(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2610,7 +2693,8 @@ void ODrawToOdf::processFlowChartMagneticTape(const MSO::OfficeArtSpContainer& o
 }
 
 
-void ODrawToOdf::processFlowChartMagneticDisk(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartMagneticDisk(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2626,7 +2710,8 @@ void ODrawToOdf::processFlowChartMagneticDisk(const MSO::OfficeArtSpContainer& o
 }
 
 
-void ODrawToOdf::processFlowChartMagneticDrum(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartMagneticDrum(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2642,7 +2727,8 @@ void ODrawToOdf::processFlowChartMagneticDrum(const MSO::OfficeArtSpContainer& o
 }
 
 
-void ODrawToOdf::processFlowChartDisplay(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processFlowChartDisplay(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2658,7 +2744,8 @@ void ODrawToOdf::processFlowChartDisplay(const MSO::OfficeArtSpContainer& o, Wri
 }
 
 
-void ODrawToOdf::processIrregularSeal1(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processIrregularSeal1(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2674,7 +2761,8 @@ void ODrawToOdf::processIrregularSeal1(const MSO::OfficeArtSpContainer& o, Write
 }
 
 
-void ODrawToOdf::processIrregularSeal2(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processIrregularSeal2(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2690,7 +2778,8 @@ void ODrawToOdf::processIrregularSeal2(const MSO::OfficeArtSpContainer& o, Write
 }
 
 
-void ODrawToOdf::processSeal4(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processSeal4(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2716,7 +2805,8 @@ void ODrawToOdf::processSeal4(const MSO::OfficeArtSpContainer& o, Writer& out) {
 }
 
 
-void ODrawToOdf::processStar(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processStar(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2731,7 +2821,8 @@ void ODrawToOdf::processStar(const MSO::OfficeArtSpContainer& o, Writer& out) {
 }
 
 
-void ODrawToOdf::processSeal8(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processSeal8(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2853,7 +2944,8 @@ void ODrawToOdf::processSeal8(const MSO::OfficeArtSpContainer& o, Writer& out) {
 }
 
 
-void ODrawToOdf::processSeal16(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processSeal16(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -2943,7 +3035,8 @@ void ODrawToOdf::processSeal16(const MSO::OfficeArtSpContainer& o, Writer& out) 
 }
 
 
-void ODrawToOdf::processSeal24(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processSeal24(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3065,7 +3158,8 @@ void ODrawToOdf::processSeal24(const MSO::OfficeArtSpContainer& o, Writer& out) 
 }
 
 
-void ODrawToOdf::processSeal32(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processSeal32(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3219,7 +3313,8 @@ void ODrawToOdf::processSeal32(const MSO::OfficeArtSpContainer& o, Writer& out) 
 }
 
 
-void ODrawToOdf::processRibbon2(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processRibbon2(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3273,7 +3368,8 @@ void ODrawToOdf::processRibbon2(const MSO::OfficeArtSpContainer& o, Writer& out)
 }
 
 
-void ODrawToOdf::processRibbon(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processRibbon(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3320,7 +3416,8 @@ void ODrawToOdf::processRibbon(const MSO::OfficeArtSpContainer& o, Writer& out) 
 }
 
 
-void ODrawToOdf::processEllipseRibbon2(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processEllipseRibbon2(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3374,7 +3471,8 @@ void ODrawToOdf::processEllipseRibbon2(const MSO::OfficeArtSpContainer& o, Write
 }
 
 
-void ODrawToOdf::processEllipseRibbon(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processEllipseRibbon(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3421,7 +3519,8 @@ void ODrawToOdf::processEllipseRibbon(const MSO::OfficeArtSpContainer& o, Writer
 }
 
 
-void ODrawToOdf::processVerticalScroll(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processVerticalScroll(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3458,7 +3557,8 @@ void ODrawToOdf::processVerticalScroll(const MSO::OfficeArtSpContainer& o, Write
 }
 
 
-void ODrawToOdf::processHorizontalScroll(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processHorizontalScroll(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3495,7 +3595,8 @@ void ODrawToOdf::processHorizontalScroll(const MSO::OfficeArtSpContainer& o, Wri
 }
 
 
-void ODrawToOdf::processWave(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processWave(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3552,7 +3653,8 @@ void ODrawToOdf::processWave(const MSO::OfficeArtSpContainer& o, Writer& out) {
 }
 
 
-void ODrawToOdf::processDoubleWave(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processDoubleWave(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3613,7 +3715,8 @@ void ODrawToOdf::processDoubleWave(const MSO::OfficeArtSpContainer& o, Writer& o
 }
 
 
-void ODrawToOdf::processWedgeRectCallout(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processWedgeRectCallout(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3675,7 +3778,8 @@ void ODrawToOdf::processWedgeRectCallout(const MSO::OfficeArtSpContainer& o, Wri
 }
 
 
-void ODrawToOdf::processWedgeRRectCallout(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processWedgeRRectCallout(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3736,7 +3840,8 @@ void ODrawToOdf::processWedgeRRectCallout(const MSO::OfficeArtSpContainer& o, Wr
 }
 
 
-void ODrawToOdf::processWedgeEllipseCallout(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processWedgeEllipseCallout(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3780,7 +3885,8 @@ void ODrawToOdf::processWedgeEllipseCallout(const MSO::OfficeArtSpContainer& o, 
 }
 
 
-void ODrawToOdf::processCloudCallout(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processCloudCallout(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3820,7 +3926,8 @@ void ODrawToOdf::processCloudCallout(const MSO::OfficeArtSpContainer& o, Writer&
 }
 
 
-void ODrawToOdf::processBorderCallout90(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processBorderCallout90(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3849,7 +3956,8 @@ void ODrawToOdf::processBorderCallout90(const MSO::OfficeArtSpContainer& o, Writ
 }
 
 
-void ODrawToOdf::processBorderCallout1(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processBorderCallout1(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3878,7 +3986,8 @@ void ODrawToOdf::processBorderCallout1(const MSO::OfficeArtSpContainer& o, Write
 }
 
 
-void ODrawToOdf::processBorderCallout2(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processBorderCallout2(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3910,7 +4019,8 @@ void ODrawToOdf::processBorderCallout2(const MSO::OfficeArtSpContainer& o, Write
 }
 
 
-void ODrawToOdf::processBorderCallout3(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processBorderCallout3(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3945,7 +4055,8 @@ void ODrawToOdf::processBorderCallout3(const MSO::OfficeArtSpContainer& o, Write
 }
 
 
-void ODrawToOdf::processAccentCallout90(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processAccentCallout90(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -3974,7 +4085,8 @@ void ODrawToOdf::processAccentCallout90(const MSO::OfficeArtSpContainer& o, Writ
 }
 
 
-void ODrawToOdf::processAccentCallout1(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processAccentCallout1(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4003,7 +4115,8 @@ void ODrawToOdf::processAccentCallout1(const MSO::OfficeArtSpContainer& o, Write
 }
 
 
-void ODrawToOdf::processAccentCallout2(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processAccentCallout2(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4035,7 +4148,8 @@ void ODrawToOdf::processAccentCallout2(const MSO::OfficeArtSpContainer& o, Write
 }
 
 
-void ODrawToOdf::processAccentCallout3(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processAccentCallout3(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4070,7 +4184,8 @@ void ODrawToOdf::processAccentCallout3(const MSO::OfficeArtSpContainer& o, Write
 }
 
 
-void ODrawToOdf::processCallout90(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processCallout90(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4099,7 +4214,8 @@ void ODrawToOdf::processCallout90(const MSO::OfficeArtSpContainer& o, Writer& ou
 }
 
 
-void ODrawToOdf::processCallout1(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processCallout1(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4128,7 +4244,8 @@ void ODrawToOdf::processCallout1(const MSO::OfficeArtSpContainer& o, Writer& out
 }
 
 
-void ODrawToOdf::processCallout2(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processCallout2(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4160,7 +4277,8 @@ void ODrawToOdf::processCallout2(const MSO::OfficeArtSpContainer& o, Writer& out
 }
 
 
-void ODrawToOdf::processCallout3(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processCallout3(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4195,7 +4313,8 @@ void ODrawToOdf::processCallout3(const MSO::OfficeArtSpContainer& o, Writer& out
 }
 
 
-void ODrawToOdf::processAccentBorderCallout90(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processAccentBorderCallout90(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4224,7 +4343,8 @@ void ODrawToOdf::processAccentBorderCallout90(const MSO::OfficeArtSpContainer& o
 }
 
 
-void ODrawToOdf::processAccentBorderCallout1(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processAccentBorderCallout1(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4253,7 +4373,8 @@ void ODrawToOdf::processAccentBorderCallout1(const MSO::OfficeArtSpContainer& o,
 }
 
 
-void ODrawToOdf::processAccentBorderCallout2(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processAccentBorderCallout2(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4285,7 +4406,8 @@ void ODrawToOdf::processAccentBorderCallout2(const MSO::OfficeArtSpContainer& o,
 }
 
 
-void ODrawToOdf::processAccentBorderCallout3(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processAccentBorderCallout3(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4320,7 +4442,8 @@ void ODrawToOdf::processAccentBorderCallout3(const MSO::OfficeArtSpContainer& o,
 }
 
 
-void ODrawToOdf::processActionButtonBlank(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processActionButtonBlank(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4347,7 +4470,8 @@ void ODrawToOdf::processActionButtonBlank(const MSO::OfficeArtSpContainer& o, Wr
 }
 
 
-void ODrawToOdf::processActionButtonHome(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processActionButtonHome(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4408,7 +4532,8 @@ void ODrawToOdf::processActionButtonHome(const MSO::OfficeArtSpContainer& o, Wri
 }
 
 
-void ODrawToOdf::processActionButtonHelp(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processActionButtonHelp(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4495,7 +4620,8 @@ void ODrawToOdf::processActionButtonHelp(const MSO::OfficeArtSpContainer& o, Wri
 }
 
 
-void ODrawToOdf::processActionButtonInformation(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processActionButtonInformation(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4562,7 +4688,8 @@ void ODrawToOdf::processActionButtonInformation(const MSO::OfficeArtSpContainer&
 }
 
 
-void ODrawToOdf::processActionButtonBackPrevious(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processActionButtonBackPrevious(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4603,7 +4730,8 @@ void ODrawToOdf::processActionButtonBackPrevious(const MSO::OfficeArtSpContainer
 }
 
 
-void ODrawToOdf::processActionButtonForwardNext(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processActionButtonForwardNext(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4644,7 +4772,8 @@ void ODrawToOdf::processActionButtonForwardNext(const MSO::OfficeArtSpContainer&
 }
 
 
-void ODrawToOdf::processActionButtonBeginning(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processActionButtonBeginning(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4693,7 +4822,8 @@ void ODrawToOdf::processActionButtonBeginning(const MSO::OfficeArtSpContainer& o
 }
 
 
-void ODrawToOdf::processActionButtonEnd(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processActionButtonEnd(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4742,7 +4872,8 @@ void ODrawToOdf::processActionButtonEnd(const MSO::OfficeArtSpContainer& o, Writ
 }
 
 
-void ODrawToOdf::processActionButtonReturn(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processActionButtonReturn(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4811,7 +4942,8 @@ void ODrawToOdf::processActionButtonReturn(const MSO::OfficeArtSpContainer& o, W
 }
 
 
-void ODrawToOdf::processActionButtonDocument(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processActionButtonDocument(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4856,7 +4988,8 @@ void ODrawToOdf::processActionButtonDocument(const MSO::OfficeArtSpContainer& o,
 }
 
 
-void ODrawToOdf::processActionButtonSound(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processActionButtonSound(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 
@@ -4911,7 +5044,8 @@ void ODrawToOdf::processActionButtonSound(const MSO::OfficeArtSpContainer& o, Wr
 }
 
 
-void ODrawToOdf::processActionButtonMovie(const MSO::OfficeArtSpContainer& o, Writer& out) {
+void ODrawToOdf::processActionButtonMovie(const MSO::OfficeArtSpContainer& o, Writer& out)
+{
     out.xml.startElement("draw:custom-shape");
     processStyleAndText(o, out);
 

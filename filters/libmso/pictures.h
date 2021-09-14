@@ -28,13 +28,15 @@ class KoStore;
 class KoXmlWriter;
 class QImage;
 
-struct PictureReference {
+struct PictureReference
+{
     QString name;
     QString mimetype;
     QByteArray uid;
 };
 
-enum OfficeArtBlipType {
+enum OfficeArtBlipType
+{
     officeArtBlipEMF  = 0xF01A,
     officeArtBlipWMF  = 0xF01B,
     officeArtBlipPICT = 0xF01C,
