@@ -103,7 +103,8 @@ KUndo2Group::~KUndo2Group()
     // Ensure all KUndo2Stacks no longer refer to this group.
     QList<KUndo2QStack *>::iterator it = m_stack_list.begin();
     QList<KUndo2QStack *>::iterator end = m_stack_list.end();
-    while (it != end) {
+    while (it != end)
+    {
         (*it)->m_group = 0;
         ++it;
     }
@@ -121,11 +122,15 @@ KUndo2Group::~KUndo2Group()
 void KUndo2Group::addStack(KUndo2QStack *stack)
 {
     if (m_stack_list.contains(stack))
+    {
         return;
+    }
     m_stack_list.append(stack);
 
     if (KUndo2Group *other = stack->m_group)
+    {
         other->removeStack(stack);
+    }
     stack->m_group = this;
 }
 
@@ -139,9 +144,13 @@ void KUndo2Group::addStack(KUndo2QStack *stack)
 void KUndo2Group::removeStack(KUndo2QStack *stack)
 {
     if (m_stack_list.removeAll(stack) == 0)
+    {
         return;
+    }
     if (stack == m_active)
+    {
         setActiveStack(0);
+    }
     stack->m_group = 0;
 }
 
@@ -173,9 +182,12 @@ QList<KUndo2QStack*> KUndo2Group::stacks() const
 void KUndo2Group::setActiveStack(KUndo2QStack *stack)
 {
     if (m_active == stack)
+    {
         return;
+    }
 
-    if (m_active != 0) {
+    if (m_active != 0)
+    {
         disconnect(m_active, SIGNAL(canUndoChanged(bool)),
                    this, SIGNAL(canUndoChanged(bool)));
         disconnect(m_active, SIGNAL(undoTextChanged(QString)),
@@ -192,14 +204,17 @@ void KUndo2Group::setActiveStack(KUndo2QStack *stack)
 
     m_active = stack;
 
-    if (m_active == 0) {
+    if (m_active == 0)
+    {
         emit canUndoChanged(false);
         emit undoTextChanged(QString());
         emit canRedoChanged(false);
         emit redoTextChanged(QString());
         emit cleanChanged(true);
         emit indexChanged(0);
-    } else {
+    }
+    else
+    {
         connect(m_active, SIGNAL(canUndoChanged(bool)),
                 this, SIGNAL(canUndoChanged(bool)));
         connect(m_active, SIGNAL(undoTextChanged(QString)),
@@ -249,7 +264,9 @@ KUndo2QStack *KUndo2Group::activeStack() const
 void KUndo2Group::undo()
 {
     if (m_active != 0)
+    {
         m_active->undo();
+    }
 }
 
 /*!
@@ -265,7 +282,9 @@ void KUndo2Group::undo()
 void KUndo2Group::redo()
 {
     if (m_active != 0)
+    {
         m_active->redo();
+    }
 }
 
 /*!

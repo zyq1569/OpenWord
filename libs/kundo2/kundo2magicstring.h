@@ -140,9 +140,12 @@ private:
 
 inline QDebug operator<<(QDebug dbg, const KUndo2MagicString &v)
 {
-    if (v.toString() != v.toSecondaryString()) {
+    if (v.toString() != v.toSecondaryString())
+    {
         dbg.nospace() << v.toString() << "(" << v.toSecondaryString() << ")";
-    } else {
+    }
+    else
+    {
         dbg.nospace() << v.toString();
     }
 

@@ -68,7 +68,8 @@ KUndo2Command::KUndo2Command(const KUndo2MagicString &text, KUndo2Command *paren
     m_endOfCommand(QTime::currentTime())
 {
     d = new KUndo2CommandPrivate;
-    if (parent != 0) {
+    if (parent != 0)
+    {
         parent->d->child_list.append(this);
     }
     setText(text);
@@ -90,7 +91,9 @@ KUndo2Command::KUndo2Command(KUndo2Command *parent):
 {
     d = new KUndo2CommandPrivate;
     if (parent != 0)
+    {
         parent->d->child_list.append(this);
+    }
     setTime();
 }
 
@@ -165,7 +168,9 @@ bool KUndo2Command::mergeWith(const KUndo2Command *command)
 void KUndo2Command::redo()
 {
     for (int i = 0; i < d->child_list.size(); ++i)
+    {
         d->child_list.at(i)->redo();
+    }
 }
 
 /*!
@@ -183,7 +188,9 @@ void KUndo2Command::redo()
 void KUndo2Command::undo()
 {
     for (int i = d->child_list.size() - 1; i >= 0; --i)
+    {
         d->child_list.at(i)->undo();
+    }
 }
 
 /*!
@@ -199,9 +206,13 @@ void KUndo2Command::undo()
 QString KUndo2Command::actionText() const
 {
     if(d->actionText!=0)
+    {
         return d->actionText;
+    }
     else
+    {
         return QString();
+    }
 }
 
 /*!
@@ -258,7 +269,9 @@ int KUndo2Command::childCount() const
 const KUndo2Command *KUndo2Command::child(int index) const
 {
     if (index < 0 || index >= d->child_list.count())
+    {
         return 0;
+    }
     return d->child_list.at(index);
 }
 
@@ -278,9 +291,13 @@ void KUndo2Command::setTimedID(int value)
 bool KUndo2Command::timedMergeWith(KUndo2Command *other)
 {
     if(other->timedId() == this->timedId() && other->timedId()!=-1 )
+    {
         m_mergeCommandsVector.append(other);
+    }
     else
+    {
         return false;
+    }
     return true;
 }
 void KUndo2Command::setTime()
@@ -304,10 +321,12 @@ void KUndo2Command::undoMergedCommands()
 {
 
     undo();
-    if (!mergeCommandsVector().isEmpty()) {
+    if (!mergeCommandsVector().isEmpty())
+    {
         QVectorIterator<KUndo2Command*> it(mergeCommandsVector());
         it.toFront();
-        while (it.hasNext()) {
+        while (it.hasNext())
+        {
             KUndo2Command* cmd = it.next();
             cmd->undoMergedCommands();
         }
@@ -316,11 +335,13 @@ void KUndo2Command::undoMergedCommands()
 
 void KUndo2Command::redoMergedCommands()
 {
-    if (!mergeCommandsVector().isEmpty()) {
+    if (!mergeCommandsVector().isEmpty())
+    {
 
         QVectorIterator<KUndo2Command*> it(mergeCommandsVector());
         it.toBack();
-        while (it.hasPrevious()) {
+        while (it.hasPrevious())
+        {
             KUndo2Command* cmd = it.previous();
             cmd->redoMergedCommands();
         }

@@ -80,16 +80,20 @@ KUndo2QStack *KUndo2Model::stack() const
 void KUndo2Model::setStack(KUndo2QStack *stack)
 {
     if (m_stack == stack)
+    {
         return;
+    }
 
-    if (m_stack != 0) {
+    if (m_stack != 0)
+    {
         disconnect(m_stack, SIGNAL(cleanChanged(bool)), this, SLOT(stackChanged()));
         disconnect(m_stack, SIGNAL(indexChanged(int)), this, SLOT(stackChanged()));
         disconnect(m_stack, SIGNAL(destroyed(QObject*)), this, SLOT(stackDestroyed(QObject*)));
         disconnect(m_stack, SIGNAL(indexChanged(int)), this, SLOT(addImage(int)));
     }
     m_stack = stack;
-    if (m_stack != 0) {
+    if (m_stack != 0)
+    {
         connect(m_stack, SIGNAL(cleanChanged(bool)), this, SLOT(stackChanged()));
         connect(m_stack, SIGNAL(indexChanged(int)), this, SLOT(stackChanged()));
         connect(m_stack, SIGNAL(destroyed(QObject*)), this, SLOT(stackDestroyed(QObject*)));
@@ -102,7 +106,9 @@ void KUndo2Model::setStack(KUndo2QStack *stack)
 void KUndo2Model::stackDestroyed(QObject *obj)
 {
     if (obj != m_stack)
+    {
         return;
+    }
     m_stack = 0;
 
     stackChanged();
@@ -118,13 +124,19 @@ void KUndo2Model::stackChanged()
 void KUndo2Model::setStackCurrentIndex(const QModelIndex &index)
 {
     if (m_stack == 0)
+    {
         return;
+    }
 
     if (index == selectedIndex())
+    {
         return;
+    }
 
     if (index.column() != 0)
+    {
         return;
+    }
 
     m_stack->setIndex(index.row());
 }
@@ -137,16 +149,24 @@ QModelIndex KUndo2Model::selectedIndex() const
 QModelIndex KUndo2Model::index(int row, int column, const QModelIndex &parent) const
 {
     if (m_stack == 0)
+    {
         return QModelIndex();
+    }
 
     if (parent.isValid())
+    {
         return QModelIndex();
+    }
 
     if (column != 0)
+    {
         return QModelIndex();
+    }
 
     if (row < 0 || row > m_stack->count())
+    {
         return QModelIndex();
+    }
 
     return createIndex(row, column);
 }
@@ -159,10 +179,14 @@ QModelIndex KUndo2Model::parent(const QModelIndex&) const
 int KUndo2Model::rowCount(const QModelIndex &parent) const
 {
     if (m_stack == 0)
+    {
         return 0;
+    }
 
     if (parent.isValid())
+    {
         return 0;
+    }
 
     return m_stack->count() + 1;
 }
@@ -175,21 +199,34 @@ int KUndo2Model::columnCount(const QModelIndex&) const
 QVariant KUndo2Model::data(const QModelIndex &index, int role) const
 {
     if (m_stack == 0)
+    {
         return QVariant();
+    }
 
     if (index.column() != 0)
+    {
         return QVariant();
+    }
 
     if (index.row() < 0 || index.row() > m_stack->count())
+    {
         return QVariant();
+    }
 
-    if (role == Qt::DisplayRole) {
+    if (role == Qt::DisplayRole)
+    {
         if (index.row() == 0)
+        {
             return m_emty_label;
+        }
         return m_stack->text(index.row() - 1);
-    } else if (role == Qt::DecorationRole) {
+    }
+    else if (role == Qt::DecorationRole)
+    {
         if (index.row() == m_stack->cleanIndex() && !m_clean_icon.isNull())
+        {
             return m_clean_icon;
+        }
     }
 
     return QVariant();
