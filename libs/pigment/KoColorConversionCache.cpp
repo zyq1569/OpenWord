@@ -26,7 +26,8 @@
 
 #include <KoColorSpace.h>
 
-struct KoColorConversionCacheKey {
+struct KoColorConversionCacheKey
+{
 
     KoColorConversionCacheKey(const KoColorSpace* _src,
                               const KoColorSpace* _dst,
@@ -39,10 +40,11 @@ struct KoColorConversionCacheKey {
     {
     }
 
-    bool operator==(const KoColorConversionCacheKey& rhs) const {
+    bool operator==(const KoColorConversionCacheKey& rhs) const
+    {
         return (*src == *(rhs.src)) && (*dst == *(rhs.dst))
-                && (renderingIntent == rhs.renderingIntent)
-                && (conversionFlags == rhs.conversionFlags);
+               && (renderingIntent == rhs.renderingIntent)
+               && (conversionFlags == rhs.conversionFlags);
     }
 
     const KoColorSpace* src;
@@ -56,17 +58,20 @@ uint qHash(const KoColorConversionCacheKey& key)
     return qHash(key.src) + qHash(key.dst) + qHash(key.renderingIntent) + qHash(key.conversionFlags);
 }
 
-struct KoColorConversionCache::CachedTransformation {
+struct KoColorConversionCache::CachedTransformation
+{
 
     CachedTransformation(KoColorConversionTransformation* _transfo)
         : transfo(_transfo), use(0)
     {}
 
-    ~CachedTransformation() {
+    ~CachedTransformation()
+    {
         delete transfo;
     }
 
-    bool available() {
+    bool available()
+    {
         return use == 0;
     }
 
@@ -76,7 +81,8 @@ struct KoColorConversionCache::CachedTransformation {
 
 typedef QPair<KoColorConversionCacheKey, KoCachedColorConversionTransformation> FastPathCacheItem;
 
-struct KoColorConversionCache::Private {
+struct KoColorConversionCache::Private
+{
     QMultiHash< KoColorConversionCacheKey, CachedTransformation*> cache;
     QMutex cacheMutex;
 
@@ -90,24 +96,27 @@ KoColorConversionCache::KoColorConversionCache() : d(new Private)
 
 KoColorConversionCache::~KoColorConversionCache()
 {
-    foreach(CachedTransformation* transfo, d->cache) {
+    foreach(CachedTransformation* transfo, d->cache)
+    {
         delete transfo;
     }
     delete d;
 }
 
 KoCachedColorConversionTransformation KoColorConversionCache::cachedConverter(const KoColorSpace* src,
-                                                                              const KoColorSpace* dst,
-                                                                              KoColorConversionTransformation::Intent _renderingIntent,
-                                                                              KoColorConversionTransformation::ConversionFlags _conversionFlags)
+        const KoColorSpace* dst,
+        KoColorConversionTransformation::Intent _renderingIntent,
+        KoColorConversionTransformation::ConversionFlags _conversionFlags)
 {
     KoColorConversionCacheKey key(src, dst, _renderingIntent, _conversionFlags);
 
     FastPathCacheItem *cacheItem =
         d->fastStorage.localData();
 
-    if (cacheItem) {
-        if (cacheItem->first == key) {
+    if (cacheItem)
+    {
+        if (cacheItem->first == key)
+        {
             return cacheItem->second;
         }
     }
@@ -116,9 +125,12 @@ KoCachedColorConversionTransformation KoColorConversionCache::cachedConverter(co
 
     QMutexLocker lock(&d->cacheMutex);
     QList< CachedTransformation* > cachedTransfos = d->cache.values(key);
-    if (cachedTransfos.size() != 0) {
-        foreach(CachedTransformation* ct, cachedTransfos) {
-            if (ct->available()) {
+    if (cachedTransfos.size() != 0)
+    {
+        foreach(CachedTransformation* ct, cachedTransfos)
+        {
+            if (ct->available())
+            {
                 ct->transfo->setSrcColorSpace(src);
                 ct->transfo->setDstColorSpace(dst);
 
@@ -127,7 +139,8 @@ KoCachedColorConversionTransformation KoColorConversionCache::cachedConverter(co
             }
         }
     }
-    if (!cacheItem) {
+    if (!cacheItem)
+    {
         KoColorConversionTransformation* transfo = src->createColorConverter(dst, _renderingIntent, _conversionFlags);
         CachedTransformation* ct = new CachedTransformation(transfo);
         d->cache.insert(key, ct);
@@ -144,12 +157,16 @@ void KoColorConversionCache::colorSpaceIsDestroyed(const KoColorSpace* cs)
 
     QMutexLocker lock(&d->cacheMutex);
     QMultiHash< KoColorConversionCacheKey, CachedTransformation*>::iterator endIt = d->cache.end();
-    for (QMultiHash< KoColorConversionCacheKey, CachedTransformation*>::iterator it = d->cache.begin(); it != endIt;) {
-        if (it.key().src == cs || it.key().dst == cs) {
+    for (QMultiHash< KoColorConversionCacheKey, CachedTransformation*>::iterator it = d->cache.begin(); it != endIt;)
+    {
+        if (it.key().src == cs || it.key().dst == cs)
+        {
             Q_ASSERT(it.value()->available()); // That's terribely evil, if that assert fails, that means that someone is using a color transformation with a color space which is currently being deleted
             delete it.value();
             it = d->cache.erase(it);
-        } else {
+        }
+        else
+        {
             ++it;
         }
     }
@@ -157,7 +174,8 @@ void KoColorConversionCache::colorSpaceIsDestroyed(const KoColorSpace* cs)
 
 //--------- KoCachedColorConversionTransformation ----------//
 
-struct KoCachedColorConversionTransformation::Private {
+struct KoCachedColorConversionTransformation::Private
+{
     KoColorConversionCache* cache;
     KoColorConversionCache::CachedTransformation* transfo;
 };

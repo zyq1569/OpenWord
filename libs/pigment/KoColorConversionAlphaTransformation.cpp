@@ -31,17 +31,17 @@ class KoColorConversionFromAlphaTransformation : public KoColorConversionTransfo
 {
 public:
     KoColorConversionFromAlphaTransformation(const KoColorSpace* srcCs, const KoColorSpace* dstCs,
-                                             Intent renderingIntent,
-                                             KoColorConversionTransformation::ConversionFlags conversionFlags);
+            Intent renderingIntent,
+            KoColorConversionTransformation::ConversionFlags conversionFlags);
     void transform(const quint8 *src, quint8 *dst, qint32 nPixels) const override;
 };
 
 //------ KoColorConversionFromAlphaTransformation ------//
 
 KoColorConversionFromAlphaTransformation::KoColorConversionFromAlphaTransformation(const KoColorSpace* srcCs,
-                                                                                   const KoColorSpace* dstCs,
-                                                                                   Intent renderingIntent,
-                                                                                   ConversionFlags conversionFlags)
+        const KoColorSpace* dstCs,
+        Intent renderingIntent,
+        ConversionFlags conversionFlags)
     : KoColorConversionTransformation(srcCs, dstCs, renderingIntent, conversionFlags)
 {
 
@@ -56,7 +56,8 @@ void KoColorConversionFromAlphaTransformation::transform(const quint8 *src, quin
     data[2] = UINT16_MAX / 2;   // b
     data[3] = UINT16_MAX;       // A
 
-    while (nPixels > 0) {
+    while (nPixels > 0)
+    {
 
         data[0] = UINT8_TO_UINT16(*src); // L
         dstColorSpace()->fromLabA16((quint8*)data, dst, 1);
@@ -72,14 +73,16 @@ class KoColorConversionGrayAU8FromAlphaTransformation : public KoColorConversion
 {
 public:
     KoColorConversionGrayAU8FromAlphaTransformation(const KoColorSpace* srcCs,
-                                                    const KoColorSpace* dstCs,
-                                                    Intent renderingIntent,
-                                                    KoColorConversionTransformation::ConversionFlags conversionFlags)
+            const KoColorSpace* dstCs,
+            Intent renderingIntent,
+            KoColorConversionTransformation::ConversionFlags conversionFlags)
         : KoColorConversionTransformation(srcCs, dstCs, renderingIntent, conversionFlags)
     {
     }
-    void transform(const quint8 *src, quint8 *dst, qint32 nPixels) const override {
-        while (nPixels > 0) {
+    void transform(const quint8 *src, quint8 *dst, qint32 nPixels) const override
+    {
+        while (nPixels > 0)
+        {
 
             dst[0] = *src;
             dst[1] = 255;
@@ -99,16 +102,19 @@ KoColorConversionFromAlphaTransformationFactory::KoColorConversionFromAlphaTrans
 }
 
 KoColorConversionTransformation* KoColorConversionFromAlphaTransformationFactory::createColorTransformation(const KoColorSpace* srcColorSpace,
-                                                                                                            const KoColorSpace* dstColorSpace,
-                                                                                                            KoColorConversionTransformation::Intent renderingIntent,
-                                                                                                            KoColorConversionTransformation::ConversionFlags conversionFlags) const
+        const KoColorSpace* dstColorSpace,
+        KoColorConversionTransformation::Intent renderingIntent,
+        KoColorConversionTransformation::ConversionFlags conversionFlags) const
 {
     Q_ASSERT(canBeSource(srcColorSpace));
     Q_ASSERT(canBeDestination(dstColorSpace));
 
-    if (dstColorSpace->id() == "GRAYA") {
+    if (dstColorSpace->id() == "GRAYA")
+    {
         return new KoColorConversionGrayAU8FromAlphaTransformation(srcColorSpace, dstColorSpace, renderingIntent, conversionFlags);
-    } else {
+    }
+    else
+    {
         return new KoColorConversionFromAlphaTransformation(srcColorSpace, dstColorSpace, renderingIntent, conversionFlags);
     }
 }
@@ -137,9 +143,9 @@ public:
 
 
 KoColorConversionToAlphaTransformation::KoColorConversionToAlphaTransformation(const KoColorSpace* srcCs,
-                                                                               const KoColorSpace* dstCs,
-                                                                               Intent renderingIntent,
-                                                                               ConversionFlags conversionFlags)
+        const KoColorSpace* dstCs,
+        Intent renderingIntent,
+        ConversionFlags conversionFlags)
     : KoColorConversionTransformation(srcCs, dstCs, renderingIntent, conversionFlags)
 {
 
@@ -150,7 +156,8 @@ void KoColorConversionToAlphaTransformation::transform(const quint8 *src, quint8
     quint16 data[4];
     qint32 size = srcColorSpace()->pixelSize();
 
-    while (nPixels > 0) {
+    while (nPixels > 0)
+    {
 
         srcColorSpace()->toLabA16(src, (quint8*)data, 1);
         *dst = UINT16_TO_UINT8(UINT16_MULT(data[0], data[3])); // L * A
@@ -168,16 +175,17 @@ class KoColorConversionGrayAU8ToAlphaTransformation : public KoColorConversionTr
 {
 public:
     KoColorConversionGrayAU8ToAlphaTransformation(const KoColorSpace* srcCs,
-                                                  const KoColorSpace* dstCs,
-                                                  Intent renderingIntent,
-                                                  ConversionFlags conversionFlags)
+            const KoColorSpace* dstCs,
+            Intent renderingIntent,
+            ConversionFlags conversionFlags)
         : KoColorConversionTransformation(srcCs, dstCs, renderingIntent, conversionFlags)
     {
     }
 
     void transform(const quint8 *src, quint8 *dst, qint32 nPixels) const override
     {
-        while (nPixels > 0) {
+        while (nPixels > 0)
+        {
 
             *dst = UINT8_MULT(src[0], src[1]);
 
@@ -191,21 +199,24 @@ public:
 //------ KoColorConversionToAlphaTransformationFactory ------//
 
 KoColorConversionToAlphaTransformationFactory::KoColorConversionToAlphaTransformationFactory(const QString& _srcModelId, const QString& _srcDepthId, const QString& _srcProfileName)
-        : KoColorConversionTransformationFactory(_srcModelId, _srcDepthId, _srcProfileName, AlphaColorModelID.id(), Integer8BitsColorDepthID.id(), "")
+    : KoColorConversionTransformationFactory(_srcModelId, _srcDepthId, _srcProfileName, AlphaColorModelID.id(), Integer8BitsColorDepthID.id(), "")
 {
 }
 
 KoColorConversionTransformation* KoColorConversionToAlphaTransformationFactory::createColorTransformation(const KoColorSpace* srcColorSpace,
-                                                                                                          const KoColorSpace* dstColorSpace,
-                                                                                                          KoColorConversionTransformation::Intent renderingIntent,
-                                                                                                          KoColorConversionTransformation::ConversionFlags conversionFlags) const
+        const KoColorSpace* dstColorSpace,
+        KoColorConversionTransformation::Intent renderingIntent,
+        KoColorConversionTransformation::ConversionFlags conversionFlags) const
 {
     Q_ASSERT(canBeSource(srcColorSpace));
     Q_ASSERT(canBeDestination(dstColorSpace));
 
-    if (srcColorSpace->id() == "GRAYA") {
+    if (srcColorSpace->id() == "GRAYA")
+    {
         return new KoColorConversionGrayAU8ToAlphaTransformation(srcColorSpace, dstColorSpace, renderingIntent, conversionFlags);
-    } else {
+    }
+    else
+    {
         return new KoColorConversionToAlphaTransformation(srcColorSpace, dstColorSpace, renderingIntent, conversionFlags);
     }
 }

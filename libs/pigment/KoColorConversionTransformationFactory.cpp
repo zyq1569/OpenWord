@@ -26,7 +26,8 @@
 #include "DebugPigment.h"
 #include "KoColorSpaceRegistry.h"
 
-struct Q_DECL_HIDDEN KoColorConversionTransformationFactory::Private {
+struct Q_DECL_HIDDEN KoColorConversionTransformationFactory::Private
+{
     QString srcModelId;
     QString srcDepthId;
     QString dstModelId;
