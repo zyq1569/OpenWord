@@ -32,12 +32,14 @@
 #include <float.h>
 #include <OdfDebug.h>
 
-static const struct {
+static const struct
+{
     KoGenStyle::Type m_type;
     const char * m_elementName;
     const char * m_propertiesElementName;
     bool m_drawElement;
-} styleData[] = {
+} styleData[] =
+{
     { KoGenStyle::TextStyle,            "style:style", "style:text-properties",         false  },
     { KoGenStyle::ParagraphStyle,       "style:style", "style:paragraph-properties",    false  },
     { KoGenStyle::SectionStyle,         "style:style", "style:section-properties",      false  },
@@ -65,12 +67,14 @@ static const struct {
 
 static const unsigned int numStyleData = sizeof(styleData) / sizeof(*styleData);
 
-static const struct {
+static const struct
+{
     KoGenStyle::Type m_type;
     const char * m_elementName;
     const char * m_propertiesElementName;
     bool m_drawElement;
-} autoStyleData[] = {
+} autoStyleData[] =
+{
     { KoGenStyle::TextAutoStyle,         "style:style", "style:text-properties",         false  },
     { KoGenStyle::ParagraphAutoStyle,    "style:style", "style:paragraph-properties",    false  },
     { KoGenStyle::SectionAutoStyle,      "style:style", "style:section-properties",      false  },
@@ -101,8 +105,11 @@ static const unsigned int numAutoStyleData = sizeof(autoStyleData) / sizeof(*aut
 static void insertRawOdfStyles(const QByteArray& xml, QByteArray& styles)
 {
     if (xml.isEmpty())
+    {
         return;
-    if (!styles.isEmpty() && !styles.endsWith('\n') && !xml.startsWith('\n')) {
+    }
+    if (!styles.isEmpty() && !styles.endsWith('\n') && !xml.startsWith('\n'))
+    {
         styles.append('\n');
     }
     styles.append(xml);
@@ -153,7 +160,8 @@ public:
 
     StyleMap::iterator insertStyle(const KoGenStyle &style, const QString &name, InsertionFlags flags);
 
-    struct RelationTarget {
+    struct RelationTarget
+    {
         QString target; // the style we point to
         QString attribute; // the attribute name used for the relation
     };
@@ -173,8 +181,10 @@ QVector<KoGenStyles::NamedStyle> KoGenStyles::Private::styles(bool autoStylesInS
     QVector<KoGenStyles::NamedStyle> lst;
     QVector<KoGenStyles::NamedStyle>::const_iterator it = styleList.constBegin();
     const QVector<KoGenStyles::NamedStyle>::const_iterator end = styleList.constEnd();
-    for (; it != end ; ++it) {
-        if ((*it).style->type() == type && (*it).style->autoStyleInStylesDotXml() == autoStylesInStylesDotXml) {
+    for (; it != end ; ++it)
+    {
+        if ((*it).style->type() == type && (*it).style->autoStyleInStylesDotXml() == autoStylesInStylesDotXml)
+        {
             lst.append(*it);
         }
     }
@@ -182,20 +192,23 @@ QVector<KoGenStyles::NamedStyle> KoGenStyles::Private::styles(bool autoStylesInS
 }
 
 void KoGenStyles::Private::saveOdfAutomaticStyles(KoXmlWriter* xmlWriter, bool autoStylesInStylesDotXml,
-                                                  const QByteArray& rawOdfAutomaticStyles) const
+        const QByteArray& rawOdfAutomaticStyles) const
 {
     xmlWriter->startElement("office:automatic-styles");
 
-    for (uint i = 0; i < numAutoStyleData; ++i) {
+    for (uint i = 0; i < numAutoStyleData; ++i)
+    {
         QVector<KoGenStyles::NamedStyle> stylesList = styles(autoStylesInStylesDotXml, autoStyleData[i].m_type);
         QVector<KoGenStyles::NamedStyle>::const_iterator it = stylesList.constBegin();
-        for (; it != stylesList.constEnd() ; ++it) {
+        for (; it != stylesList.constEnd() ; ++it)
+        {
             (*it).style->writeStyle(xmlWriter, *q, autoStyleData[i].m_elementName, (*it).name,
                                     autoStyleData[i].m_propertiesElementName, true, autoStyleData[i].m_drawElement);
         }
     }
 
-    if (!rawOdfAutomaticStyles.isEmpty()) {
+    if (!rawOdfAutomaticStyles.isEmpty())
+    {
         xmlWriter->addCompleteElement(rawOdfAutomaticStyles.constData());
     }
 
@@ -206,32 +219,40 @@ void KoGenStyles::Private::saveOdfDocumentStyles(KoXmlWriter* xmlWriter) const
 {
     xmlWriter->startElement("office:styles");
 
-    for (uint i = 0; i < numStyleData; ++i) {
+    for (uint i = 0; i < numStyleData; ++i)
+    {
         const QMap<int, KoGenStyle>::const_iterator it(defaultStyles.constFind(styleData[i].m_type));
-        if (it != defaultStyles.constEnd()) {
+        if (it != defaultStyles.constEnd())
+        {
             it.value().writeStyle(xmlWriter, *q, "style:default-style", "",
                                   styleData[i].m_propertiesElementName, true, styleData[i].m_drawElement);
         }
     }
 
-    for (uint i = 0; i < numStyleData; ++i) {
+    for (uint i = 0; i < numStyleData; ++i)
+    {
         QVector<KoGenStyles::NamedStyle> stylesList(styles(false, styleData[i].m_type));
         QVector<KoGenStyles::NamedStyle>::const_iterator it = stylesList.constBegin();
-        for (; it != stylesList.constEnd() ; ++it) {
-            if (relations.contains(it->name)) {
+        for (; it != stylesList.constEnd() ; ++it)
+        {
+            if (relations.contains(it->name))
+            {
                 KoGenStyles::Private::RelationTarget relation = relations.value(it->name);
                 KoGenStyle styleCopy = *(*it).style;
                 styleCopy.addAttribute(relation.attribute, relation.target);
                 styleCopy.writeStyle(xmlWriter, *q, styleData[i].m_elementName, (*it).name,
-                                    styleData[i].m_propertiesElementName, true, styleData[i].m_drawElement);
-            } else {
+                                     styleData[i].m_propertiesElementName, true, styleData[i].m_drawElement);
+            }
+            else
+            {
                 (*it).style->writeStyle(xmlWriter, *q, styleData[i].m_elementName, (*it).name,
-                                    styleData[i].m_propertiesElementName, true, styleData[i].m_drawElement);
+                                        styleData[i].m_propertiesElementName, true, styleData[i].m_drawElement);
             }
         }
     }
 
-    if (!rawOdfDocumentStyles.isEmpty()) {
+    if (!rawOdfDocumentStyles.isEmpty())
+    {
         xmlWriter->addCompleteElement(rawOdfDocumentStyles.constData());
     }
 
@@ -244,11 +265,13 @@ void KoGenStyles::Private::saveOdfMasterStyles(KoXmlWriter* xmlWriter) const
 
     QVector<KoGenStyles::NamedStyle> stylesList = styles(false, KoGenStyle::MasterPageStyle);
     QVector<KoGenStyles::NamedStyle>::const_iterator it = stylesList.constBegin();
-    for (; it != stylesList.constEnd() ; ++it) {
+    for (; it != stylesList.constEnd() ; ++it)
+    {
         (*it).style->writeStyle(xmlWriter, *q, "style:master-page", (*it).name, 0);
     }
 
-    if (!rawOdfMasterStyles.isEmpty()) {
+    if (!rawOdfMasterStyles.isEmpty())
+    {
         xmlWriter->addCompleteElement(rawOdfMasterStyles.constData());
     }
 
@@ -258,16 +281,19 @@ void KoGenStyles::Private::saveOdfMasterStyles(KoXmlWriter* xmlWriter) const
 void KoGenStyles::Private::saveOdfFontFaceDecls(KoXmlWriter* xmlWriter) const
 {
     if (fontFaces.isEmpty())
+    {
         return;
+    }
 
     xmlWriter->startElement("office:font-face-decls");
     for (QMap<QString, KoFontFace>::ConstIterator it(fontFaces.constBegin());
-         it != fontFaces.constEnd(); ++it)
+            it != fontFaces.constEnd(); ++it)
     {
         it.value().saveOdf(xmlWriter);
     }
 
-    if (!rawOdfFontFaceDecls.isEmpty()) {
+    if (!rawOdfFontFaceDecls.isEmpty())
+    {
         xmlWriter->addCompleteElement(rawOdfFontFaceDecls.constData());
     }
 
@@ -280,20 +306,24 @@ QString KoGenStyles::Private::makeUniqueName(const QString& base, const QByteArr
     if ((flags & DontAddNumberToName)
             && !autoStylesInStylesDotXml[family].contains(base)
             && !styleNames[family].contains(base))
+    {
         return base;
+    }
     int num = 1;
     QString name;
-    do {
+    do
+    {
         name = base + QString::number(num++);
-    } while (autoStylesInStylesDotXml[family].contains(name)
-             || styleNames[family].contains(name));
+    }
+    while (autoStylesInStylesDotXml[family].contains(name)
+            || styleNames[family].contains(name));
     return name;
 }
 
 //------------------------
 
 KoGenStyles::KoGenStyles()
-        : d(new Private(this))
+    : d(new Private(this))
 {
 }
 
@@ -305,7 +335,8 @@ KoGenStyles::~KoGenStyles()
 QString KoGenStyles::insert(const KoGenStyle& style, const QString& baseName, InsertionFlags flags)
 {
     // if it is a default style it has to be saved differently
-    if (style.isDefaultStyle()) {
+    if (style.isDefaultStyle())
+    {
         // we can have only one default style per type
         Q_ASSERT(!d->defaultStyles.contains(style.type()));
         // default style is only possible for style:style in office:style types
@@ -327,27 +358,34 @@ QString KoGenStyles::insert(const KoGenStyle& style, const QString& baseName, In
         return QString();
     }
 
-    if (flags & AllowDuplicates) {
+    if (flags & AllowDuplicates)
+    {
         StyleMap::iterator it = d->insertStyle(style, baseName, flags);
         return it.value();
     }
 
     StyleMap::iterator it = d->styleMap.find(style);
-    if (it == d->styleMap.end()) {
+    if (it == d->styleMap.end())
+    {
         // Not found, try if this style is in fact equal to its parent (the find above
         // wouldn't have found it, due to m_parentName being set).
-        if (!style.parentName().isEmpty()) {
+        if (!style.parentName().isEmpty())
+        {
             KoGenStyle testStyle(style);
             const KoGenStyle* parentStyle = this->style(style.parentName(), style.familyName());   // ## linear search
-            if (!parentStyle) {
+            if (!parentStyle)
+            {
                 debugOdf << "baseName=" << baseName << "parent style" << style.parentName()
-                              << "not found in collection";
-            } else {
+                         << "not found in collection";
+            }
+            else
+            {
                 // TODO remove
-                if (testStyle.m_familyName != parentStyle->m_familyName) {
+                if (testStyle.m_familyName != parentStyle->m_familyName)
+                {
                     warnOdf << "baseName=" << baseName << "family=" << testStyle.m_familyName
-                                    << "parent style" << style.parentName() << "has a different family:"
-                                    << parentStyle->m_familyName;
+                            << "parent style" << style.parentName() << "has a different family:"
+                            << parentStyle->m_familyName;
                 }
 
                 testStyle.m_parentName = parentStyle->m_parentName;
@@ -358,10 +396,14 @@ QString KoGenStyles::insert(const KoGenStyle& style, const QString& baseName, In
                 // in the auto style
                 QMap<QString, QString>::const_iterator it = parentStyle->m_attributes.find("style:display-name");
                 if (it != parentStyle->m_attributes.end())
+                {
                     testStyle.addAttribute("style:display-name", *it);
+                }
 
                 if (*parentStyle == testStyle)
+                {
                     return style.parentName();
+                }
             }
         }
 
@@ -371,24 +413,36 @@ QString KoGenStyles::insert(const KoGenStyle& style, const QString& baseName, In
 }
 
 KoGenStyles::StyleMap::iterator KoGenStyles::Private::insertStyle(const KoGenStyle &style,
-                                                                  const QString& baseName, InsertionFlags flags)
+        const QString& baseName, InsertionFlags flags)
 {
     QString styleName(baseName);
-    if (styleName.isEmpty()) {
-        switch (style.type()) {
-        case KoGenStyle::ParagraphAutoStyle: styleName = 'P'; break;
-        case KoGenStyle::ListAutoStyle: styleName = 'L'; break;
-        case KoGenStyle::TextAutoStyle: styleName = 'T'; break;
-        default:
-            styleName = 'A'; // for "auto".
+    if (styleName.isEmpty())
+    {
+        switch (style.type())
+        {
+            case KoGenStyle::ParagraphAutoStyle:
+                styleName = 'P';
+                break;
+            case KoGenStyle::ListAutoStyle:
+                styleName = 'L';
+                break;
+            case KoGenStyle::TextAutoStyle:
+                styleName = 'T';
+                break;
+            default:
+                styleName = 'A'; // for "auto".
         }
         flags &= ~DontAddNumberToName; // i.e. force numbering
     }
     styleName = makeUniqueName(styleName, style.m_familyName, flags);
     if (style.autoStyleInStylesDotXml())
+    {
         autoStylesInStylesDotXml[style.m_familyName].insert(styleName);
+    }
     else
+    {
         styleNames[style.m_familyName].insert(styleName);
+    }
     KoGenStyles::StyleMap::iterator it = styleMap.insert(style, styleName);
     NamedStyle s;
     s.style = &it.key();
@@ -411,8 +465,10 @@ const KoGenStyle* KoGenStyles::style(const QString &name, const QByteArray &fami
 {
     QVector<KoGenStyles::NamedStyle>::const_iterator it = d->styleList.constBegin();
     const QVector<KoGenStyles::NamedStyle>::const_iterator end = d->styleList.constEnd();
-    for (; it != end ; ++it) {
-        if ((*it).name == name && (*it).style->familyName() == family) {
+    for (; it != end ; ++it)
+    {
+        if ((*it).name == name && (*it).style->familyName() == family)
+        {
             return (*it).style;
         }
     }
@@ -435,7 +491,8 @@ void KoGenStyles::markStyleForStylesXml(const QString &name, const QByteArray &f
 void KoGenStyles::insertFontFace(const KoFontFace &face)
 {
     Q_ASSERT(!face.isNull());
-    if (face.isNull()) {
+    if (face.isNull())
+    {
         warnOdf << "This font face is null and will not be added to styles: set at least the name";
         return;
     }
@@ -450,7 +507,9 @@ KoFontFace KoGenStyles::fontFace(const QString& name) const
 bool KoGenStyles::saveOdfStylesDotXml(KoStore* store, KoXmlWriter* manifestWriter) const
 {
     if (!store->open("styles.xml"))
+    {
         return false;
+    }
 
     manifestWriter->addManifestEntry("styles.xml",  "text/xml");
 
@@ -467,50 +526,54 @@ bool KoGenStyles::saveOdfStylesDotXml(KoStore* store, KoXmlWriter* manifestWrite
     delete stylesWriter;
 
     if (!store->close())   // done with styles.xml
+    {
         return false;
+    }
 
     return true;
 }
 
 void KoGenStyles::saveOdfStyles(StylesPlacement placement, KoXmlWriter* xmlWriter) const
 {
-    switch (placement) {
-    case DocumentStyles:
-        d->saveOdfDocumentStyles(xmlWriter);
-        break;
-    case MasterStyles:
-        d->saveOdfMasterStyles(xmlWriter);
-        break;
-    case DocumentAutomaticStyles:
-        d->saveOdfAutomaticStyles(xmlWriter, false, d->rawOdfAutomaticStyles_contentDotXml);
-        break;
-    case StylesXmlAutomaticStyles:
-        d->saveOdfAutomaticStyles(xmlWriter, true, d->rawOdfAutomaticStyles_stylesDotXml);
-        break;
-    case FontFaceDecls:
-        d->saveOdfFontFaceDecls(xmlWriter);
-        break;
+    switch (placement)
+    {
+        case DocumentStyles:
+            d->saveOdfDocumentStyles(xmlWriter);
+            break;
+        case MasterStyles:
+            d->saveOdfMasterStyles(xmlWriter);
+            break;
+        case DocumentAutomaticStyles:
+            d->saveOdfAutomaticStyles(xmlWriter, false, d->rawOdfAutomaticStyles_contentDotXml);
+            break;
+        case StylesXmlAutomaticStyles:
+            d->saveOdfAutomaticStyles(xmlWriter, true, d->rawOdfAutomaticStyles_stylesDotXml);
+            break;
+        case FontFaceDecls:
+            d->saveOdfFontFaceDecls(xmlWriter);
+            break;
     }
 }
 
 void KoGenStyles::insertRawOdfStyles(StylesPlacement placement, const QByteArray& xml)
 {
-    switch (placement) {
-    case DocumentStyles:
-        ::insertRawOdfStyles(xml, d->rawOdfDocumentStyles);
-        break;
-    case MasterStyles:
-        ::insertRawOdfStyles(xml, d->rawOdfMasterStyles);
-        break;
-    case DocumentAutomaticStyles:
-        ::insertRawOdfStyles(xml, d->rawOdfAutomaticStyles_contentDotXml);
-        break;
-    case StylesXmlAutomaticStyles:
-        ::insertRawOdfStyles(xml, d->rawOdfAutomaticStyles_stylesDotXml);
-        break;
-    case FontFaceDecls:
-        ::insertRawOdfStyles(xml, d->rawOdfFontFaceDecls);
-        break;
+    switch (placement)
+    {
+        case DocumentStyles:
+            ::insertRawOdfStyles(xml, d->rawOdfDocumentStyles);
+            break;
+        case MasterStyles:
+            ::insertRawOdfStyles(xml, d->rawOdfMasterStyles);
+            break;
+        case DocumentAutomaticStyles:
+            ::insertRawOdfStyles(xml, d->rawOdfAutomaticStyles_contentDotXml);
+            break;
+        case StylesXmlAutomaticStyles:
+            ::insertRawOdfStyles(xml, d->rawOdfAutomaticStyles_stylesDotXml);
+            break;
+        case FontFaceDecls:
+            ::insertRawOdfStyles(xml, d->rawOdfFontFaceDecls);
+            break;
     }
 }
 
@@ -527,17 +590,22 @@ QDebug operator<<(QDebug dbg, const KoGenStyles& styles)
     dbg.nospace() << "KoGenStyles:";
     QVector<KoGenStyles::NamedStyle>::const_iterator it = styles.d->styleList.constBegin();
     const QVector<KoGenStyles::NamedStyle>::const_iterator end = styles.d->styleList.constEnd();
-    for (; it != end ; ++it) {
+    for (; it != end ; ++it)
+    {
         dbg.nospace() << (*it).name;
     }
-    for (QMap<QByteArray, QSet<QString> >::const_iterator familyIt(styles.d->styleNames.constBegin()); familyIt != styles.d->styleNames.constEnd(); ++familyIt) {
-        for (QSet<QString>::const_iterator it(familyIt.value().constBegin()); it != familyIt.value().constEnd(); ++it) {
+    for (QMap<QByteArray, QSet<QString> >::const_iterator familyIt(styles.d->styleNames.constBegin()); familyIt != styles.d->styleNames.constEnd(); ++familyIt)
+    {
+        for (QSet<QString>::const_iterator it(familyIt.value().constBegin()); it != familyIt.value().constEnd(); ++it)
+        {
             dbg.space() << "style:" << *it;
         }
     }
 #ifndef NDEBUG
-    for (QMap<QByteArray, QSet<QString> >::const_iterator familyIt(styles.d->autoStylesInStylesDotXml.constBegin()); familyIt != styles.d->autoStylesInStylesDotXml.constEnd(); ++familyIt) {
-        for (QSet<QString>::const_iterator it(familyIt.value().constBegin()); it != familyIt.value().constEnd(); ++it) {
+    for (QMap<QByteArray, QSet<QString> >::const_iterator familyIt(styles.d->autoStylesInStylesDotXml.constBegin()); familyIt != styles.d->autoStylesInStylesDotXml.constEnd(); ++familyIt)
+    {
+        for (QSet<QString>::const_iterator it(familyIt.value().constBegin()); it != familyIt.value().constEnd(); ++it)
+        {
             dbg.space() << "auto style for style.xml:" << *it;
         }
     }

@@ -64,7 +64,8 @@ class KOODF_EXPORT KoGenStyles
 {
 public:
     /// Single style with assigned name
-    struct NamedStyle {
+    struct NamedStyle
+    {
         const KoGenStyle* style; ///< @note owned by the collection
         QString name;
     };
@@ -85,7 +86,8 @@ public:
      * already exists. In other words, the collection will now contain two equal KoGenStyle
      * and generate them with different style names.
      */
-    enum InsertionFlag {
+    enum InsertionFlag
+    {
         NoFlag = 0,
         DontAddNumberToName = 1,
         AllowDuplicates = 2
@@ -189,7 +191,8 @@ public:
     /**
      * Placement of styles saved in saveOdfStyles() or inserted in insertRawOdfStyles().
      */
-    enum StylesPlacement {
+    enum StylesPlacement
+    {
         /**
          * Creates document's office:styles tag and saves all document styles there
          * or inserts raw styles into document's office:styles.
