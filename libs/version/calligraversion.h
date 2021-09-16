@@ -190,7 +190,7 @@
  *
  * This macro is used in "About application" dialog for strings such as "© 2012-..., The Author Team".
 */
-#define CALLIGRA_YEAR "2020"
+#define CALLIGRA_YEAR "2021"
 
 /**
  * Namespace for general Calligra functions.

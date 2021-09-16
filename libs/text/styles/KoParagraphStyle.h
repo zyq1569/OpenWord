@@ -54,7 +54,8 @@ class KOTEXT_EXPORT KoParagraphStyle : public KoCharacterStyle
 {
     Q_OBJECT
 public:
-    enum Property {
+    enum Property
+    {
         // Every 10 properties, the decimal number shown indicates the decimal offset over the QTextFormat::UserProperty enum value
         StyleId = QTextFormat::UserProperty + 1,
         // Linespacing properties
@@ -165,12 +166,14 @@ public:
         EndCharStyle           // QSharedPointer<KoCharacterStyle>  used when final line is empty
     };
 
-    enum AutoSpace {
+    enum AutoSpace
+    {
         NoAutoSpace,              ///< space should not be added between portions of Asian, Western and complex texts
         IdeographAlpha            ///< space should be added between portions of Asian, Western and complex texts
     };
 
-    enum VerticalAlign {
+    enum VerticalAlign
+    {
         VAlignAuto,
         VAlignBaseline,
         VAlignBottom,
@@ -639,14 +642,14 @@ public:
      * the character style (where relevant) to the target block formats.
      */
     void applyStyle(QTextBlock &block, bool applyListStyle = true) const;
-/*
-    /// return the character "properties" for this paragraph style, Note it does not inherit
-    KoCharacterStyle *characterStyle();
-    /// return the character "properties" for this paragraph style, Note it does not inherit
-    const KoCharacterStyle *characterStyle() const;
-    /// set the character "properties" for this paragraph style
-    void setCharacterStyle(KoCharacterStyle *style);
-*/
+    /*
+        /// return the character "properties" for this paragraph style, Note it does not inherit
+        KoCharacterStyle *characterStyle();
+        /// return the character "properties" for this paragraph style, Note it does not inherit
+        const KoCharacterStyle *characterStyle() const;
+        /// set the character "properties" for this paragraph style
+        void setCharacterStyle(KoCharacterStyle *style);
+    */
     /**
      * Returns the list style for this paragraph style.
      * @see KoListStyle::isValid()
@@ -679,7 +682,7 @@ public:
      * @param loadParents true = use the stylestack, false = use just the element
      */
     void loadOdf(const KoXmlElement *element, KoShapeLoadingContext &context,
-                bool loadParents = false);
+                 bool loadParents = false);
 
     void saveOdf(KoGenStyle &style, KoShapeSavingContext &context) const;
 
