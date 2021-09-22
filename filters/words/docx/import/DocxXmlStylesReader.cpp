@@ -87,11 +87,12 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read(MSOOXML::MsooXmlReaderConte
     {
         return KoFilter::WrongFormat;
     }
-    /*
-        const QXmlStreamAttributes attrs( attributes() );
-        for (int i=0; i<attrs.count(); i++) {
-            debugDocx << "1 NS prefix:" << attrs[i].name() << "uri:" << attrs[i].namespaceUri();
-        }*/
+
+    //const QXmlStreamAttributes attrs( attributes() );
+    //for (int i=0; i<attrs.count(); i++)
+    //{
+    //    debugDocx << "1 NS prefix:" << attrs[i].name() << "uri:" << attrs[i].namespaceUri();
+    //}
 
     QXmlStreamNamespaceDeclarations namespaces(namespaceDeclarations());
     for (int i = 0; i < namespaces.count(); i++)
@@ -422,6 +423,7 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
     while (!atEnd())
     {
         readNext();
+        //debugDocx << "read_style -- name()"<<name();
         BREAK_IF_END_OF(CURRENT_EL)
         if (isStartElement())
         {
@@ -495,10 +497,12 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
                 READ_ATTR(val)
                 if (type == "character")
                 {
+                    m_currentParagraphStyle.setStylewName(m_name);
                     m_currentTextStyle.setParentName(val);
                 }
                 else if (type == "paragraph")
                 {
+                    m_currentParagraphStyle.setStylewName(m_name);
                     m_currentParagraphStyle.setParentName(val);
                 }
             }
@@ -618,9 +622,10 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_tblStylePr()
         // In docx predefined styles for first row, even though it may define
         // insideV to be 0 and bottom border to have something, it in reality
         // wishes insideV to also contain the bottom data
-//         if (m_currentTableStyleProperties->insideH.innerPen.widthF() == 0) {
-//             m_currentTableStyleProperties->insideH = m_currentTableStyleProperties->bottom;
-//         }
+        //if (m_currentTableStyleProperties->insideH.innerPen.widthF() == 0)
+        //{
+        //    m_currentTableStyleProperties->insideH = m_currentTableStyleProperties->bottom;
+        //}
         if (m_currentTableStyleProperties->target == MSOOXML::TableStyleProperties::Table)
         {
             m_currentTableStyleProperties->target = MSOOXML::TableStyleProperties::TableRow;
@@ -653,9 +658,10 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_tblStylePr()
     }
     else if (type == "firstCol")
     {
-//         if (m_currentTableStyleProperties->insideV.innerPen.widthF() == 0) {
-//             m_currentTableStyleProperties->insideV = m_currentTableStyleProperties->right;
-//         }
+        // if (m_currentTableStyleProperties->insideV.innerPen.widthF() == 0)
+        // {
+        //     m_currentTableStyleProperties->insideV = m_currentTableStyleProperties->right;
+        // }
         if (m_currentTableStyleProperties->target == MSOOXML::TableStyleProperties::Table)
         {
             m_currentTableStyleProperties->target = MSOOXML::TableStyleProperties::TableColumn;
