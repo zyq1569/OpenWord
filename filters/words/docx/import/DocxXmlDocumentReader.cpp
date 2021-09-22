@@ -2547,18 +2547,24 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
 
     // take outline level from style's default-outline-level,
     // there is no text:outline-level equivalent in OOXML
-    QString outlineLevelAttribute;
+    QString outlineLevelAttribute, styleId;//, stylename;
     const KoGenStyle* pstyle = &m_currentParagraphStyle;
     do
     {
         outlineLevelAttribute = pstyle->attribute("style:default-outline-level");
+        //stylename = pstyle->stylewname();
+        //if (stylename.contains("Title"))
+        //{
+        //    outlineLevelAttribute = "";
+        //}
         // use isNull, empty string value is valid here
         if (! outlineLevelAttribute.isNull())
         {
             break;
         }
         // next in hierarchy
-        pstyle = mainStyles->style(pstyle->parentName(), "paragraph");
+        styleId = pstyle->parentName();
+        pstyle = mainStyles->style(styleId/*pstyle->parentName()*/, "paragraph");
     }
     while (pstyle);
 
@@ -3065,6 +3071,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_r()
     {
         readNext();
         debugDocx << *this;
+        //debugDocx << "name()"<<name();
         BREAK_IF_END_OF(CURRENT_EL)
         if (isStartElement())
         {
@@ -4233,7 +4240,15 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_outlineLvl()
             // If empty, this attribute does not inherit a list style value from a parent style.
             const QString odfOutlineLevelValue = (outlineLevelValue == 9) ?
                                                  QString("") : QString::number(outlineLevelValue + 1);
-            m_currentParagraphStyle.addAttribute("style:default-outline-level", odfOutlineLevelValue);
+            QString str = m_currentParagraphStyle.stylewname();
+            if (str.contains("Title"))///openword
+            {
+                m_currentParagraphStyle.addAttribute("style:default-outline-level", "0");
+            }
+            else
+            {
+                m_currentParagraphStyle.addAttribute("style:default-outline-level", odfOutlineLevelValue);
+            }
         }
     }
 
