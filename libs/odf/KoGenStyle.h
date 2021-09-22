@@ -207,6 +207,18 @@ public:
         return m_parentName;
     }
 
+    /// Sets the name of style's stylewname.
+    void setStylewName(const QString &stylewname)
+    {
+         m_stylewname = stylewname;
+    }
+
+    /// Return the name of style's m_stylewname, if set
+    QString stylewname() const
+    {
+        return m_stylewname;
+    }
+
     /**
      *  @brief The types of properties
      *
@@ -575,6 +587,7 @@ private:
     Type m_type;
     QByteArray m_familyName;
     QString m_parentName;
+    QString m_stylewname;
     /// We use QMaps since they provide automatic sorting on the key (important for unicity!)
     typedef QMap<QString, QString> StyleMap;
     StyleMap m_properties[LastPropertyType+1];
