@@ -210,7 +210,7 @@ public:
     /// Sets the name of style's stylewname.
     void setStylewName(const QString &stylewname)
     {
-         m_stylewname = stylewname;
+        m_stylewname = stylewname;
     }
 
     /// Return the name of style's m_stylewname, if set
@@ -578,7 +578,8 @@ private:
 #ifndef NDEBUG
     void printDebug() const;
 #endif
-
+public:
+    QString m_stylewname;// stylewname() error!!! ?? to do vs+qt build
 private:
     // Note that the copy constructor and assignment operator are allowed.
     // Better not use pointers below!
@@ -587,7 +588,6 @@ private:
     Type m_type;
     QByteArray m_familyName;
     QString m_parentName;
-    QString m_stylewname;
     /// We use QMaps since they provide automatic sorting on the key (important for unicity!)
     typedef QMap<QString, QString> StyleMap;
     StyleMap m_properties[LastPropertyType+1];
