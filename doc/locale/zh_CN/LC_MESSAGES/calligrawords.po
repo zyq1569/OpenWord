@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-08-08 00:16+0000\n"
-"PO-Revision-Date: 2021-08-24 17:38+0800\n"
+"PO-Revision-Date: 2021-09-23 16:51+0800\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1409,9 +1409,7 @@ msgstr "无效的 OASIS OpenDocument 文件。office:body 标签内未找到标�
 
 #: part/KWOdfLoader.cpp:97
 #, kde-format
-msgid ""
-"This is not a word processing document, but %1. Please try opening it with "
-"the appropriate application."
+msgid "This is not a word processing document, but %1. Please try opening it with the appropriate application."
 msgstr "这不是一个字处理文档，而是%1。请试着使用相应的应用程序打开它。"
 
 #: part/KWPageManager.cpp:24 part/KWPageManager.cpp:413
@@ -1522,11 +1520,8 @@ msgstr "保存此文档并用作模板"
 
 #: part/KWView.cpp:273
 #, kde-format
-msgid ""
-"You can save this document as a template.<br><br>You can use this new "
-"template as a starting point for another document."
-msgstr ""
-"您可以保存此文档为模板。<br><br>您可以使用此新模板作为另一个文档的起点。"
+msgid "You can save this document as a template.<br><br>You can use this new template as a starting point for another document."
+msgstr "您可以保存此文档为模板。<br><br>您可以使用此新模板作为另一个文档的起点。"
 
 #: part/KWView.cpp:292
 #, kde-format
@@ -1540,13 +1535,8 @@ msgstr "切换非打印字符的显示"
 
 #: part/KWView.cpp:299
 #, kde-format
-msgid ""
-"Toggle the display of non-printing characters.<br/><br/>When this is "
-"enabled, Words shows you tabs, spaces, carriage returns and other non-"
-"printing characters."
-msgstr ""
-"切换非打印字符的显示/隐藏。<br/><br/>当它被启用，Words 向您显示制表符、空格、"
-"换行符、以及其它非打印字符。"
+msgid "Toggle the display of non-printing characters.<br/><br/>When this is enabled, Words shows you tabs, spaces, carriage returns and other non-printing characters."
+msgstr "切换非打印字符的显示/隐藏。<br/><br/>当它被启用，Words 向您显示制表符、空格、换行符、以及其它非打印字符。"
 
 #: part/KWView.cpp:301
 #, kde-format
@@ -1560,9 +1550,7 @@ msgstr "切换字段的背景阴影"
 
 #: part/KWView.cpp:308
 #, kde-format
-msgid ""
-"Toggle the visualization of fields (variables etc.) by drawing their "
-"background in a contrasting color."
+msgid "Toggle the visualization of fields (variables etc.) by drawing their background in a contrasting color."
 msgstr "通过高对比度的颜色绘制字段 (变量等) 的背景来切换可视化效果。"
 
 #: part/KWView.cpp:310
@@ -1577,13 +1565,8 @@ msgstr "打开或关闭框显示"
 
 #: part/KWView.cpp:317
 #, kde-format
-msgid ""
-"Turns the border display on and off.<br/><br/>The borders are never printed. "
-"This option is useful to see how the document will appear on the printed "
-"page."
-msgstr ""
-"关闭和打开边框显示。<br/><br/>边框从不会被打印。这个选项对观察文档如何在打印"
-"页面上显示很有用。"
+msgid "Turns the border display on and off.<br/><br/>The borders are never printed. This option is useful to see how the document will appear on the printed page."
+msgstr "关闭和打开边框显示。<br/><br/>边框从不会被打印。这个选项对观察文档如何在打印页面上显示很有用。"
 
 #: part/KWView.cpp:319
 #, kde-format
@@ -1597,12 +1580,8 @@ msgstr "切换表格边框的显示"
 
 #: part/KWView.cpp:326
 #, kde-format
-msgid ""
-"Toggle the display of table borders.<br/><br/>When this is enabled, Words "
-"shows you any invisible table borders with a thin gray line."
-msgstr ""
-"切换表格边框的显示。<br/><br/>当它被启用，Words 将以灰色细线显示不可见的表格"
-"边框。"
+msgid "Toggle the display of table borders.<br/><br/>When this is enabled, Words shows you any invisible table borders with a thin gray line."
+msgstr "切换表格边框的显示。<br/><br/>当它被启用，Words 将以灰色细线显示不可见的表格边框。"
 
 #: part/KWView.cpp:328
 #, kde-format
@@ -1616,12 +1595,8 @@ msgstr "切换截面边界显示"
 
 #: part/KWView.cpp:335
 #, kde-format
-msgid ""
-"Toggle the display of section bounds.<br/><br/>When this is enabled, any "
-"section bounds will be indicated with a thin gray horizontal brackets."
-msgstr ""
-"切换表格边框的显示。<br/><br/>当它被启用，Words 将以灰色细线显示不可见的表格"
-"边框。"
+msgid "Toggle the display of section bounds.<br/><br/>When this is enabled, any section bounds will be indicated with a thin gray horizontal brackets."
+msgstr "切换表格边框的显示。<br/><br/>当它被启用，Words 将以灰色细线显示不可见的表格边框。"
 
 #: part/KWView.cpp:337
 #, kde-format
@@ -1635,14 +1610,8 @@ msgstr "显示或隐藏标尺"
 
 #: part/KWView.cpp:340
 #, kde-format
-msgid ""
-"The rulers are the white measuring spaces top and left of the document. The "
-"rulers show the position and width of pages and of frames and can be used to "
-"position tabulators among others.<p>Uncheck this to disable the rulers from "
-"being displayed.</p>"
-msgstr ""
-"标尺是在文档顶部和左侧的白色计量空格。标尺显示页面和框架的位置和宽度，可以被"
-"用来定位制表符。<p>取消该项会禁用标尺的显示。</p>"
+msgid "The rulers are the white measuring spaces top and left of the document. The rulers show the position and width of pages and of frames and can be used to position tabulators among others.<p>Uncheck this to disable the rulers from being displayed.</p>"
+msgstr "标尺是在文档顶部和左侧的白色计量空格。标尺显示页面和框架的位置和宽度，可以被用来定位制表符。<p>取消该项会禁用标尺的显示。</p>"
 
 #: part/KWView.cpp:351
 #, kde-format
@@ -1681,9 +1650,7 @@ msgstr "修改并添加语义学样式表"
 
 #: part/KWView.cpp:377
 #, kde-format
-msgid ""
-"Stylesheets are used to format the display of information which is stored in "
-"RDF."
+msgid "Stylesheets are used to format the display of information which is stored in RDF."
 msgstr "用来格式化联系人、事件和位置信息的样式表，以 Rdf 格式存储"
 
 #: part/KWView.cpp:392
@@ -1703,12 +1670,8 @@ msgstr "更改整个页面的属性"
 
 #: part/KWView.cpp:404
 #, kde-format
-msgid ""
-"Change properties of the entire page.<p>Currently you can change paper size, "
-"paper orientation, header and footer sizes, and column settings.</p>"
-msgstr ""
-"更改整个页面的属性。<p>当前您可以更改纸张大小、纸张方向、页眉和页脚大小，以及"
-"分栏设置。</p>"
+msgid "Change properties of the entire page.<p>Currently you can change paper size, paper orientation, header and footer sizes, and column settings.</p>"
+msgstr "更改整个页面的属性。<p>当前您可以更改纸张大小、纸张方向、页眉和页脚大小，以及分栏设置。</p>"
 
 #: part/KWView.cpp:407
 #, kde-format
@@ -1946,9 +1909,7 @@ msgstr "%1 (未知类型)."
 
 #: main/KoMainWindow.cpp:1083
 #, kde-format
-msgid ""
-"<qt>Saving as a %1 may result in some loss of formatting.<p>Do you still "
-"want to save in this format?</qt>"
+msgid "<qt>Saving as a %1 may result in some loss of formatting.<p>Do you still want to save in this format?</qt>"
 msgstr "<qt>保存为 %1 可能会格式丢失. <p>您仍然打算保存这种格式?."
 
 #: main/KoMainWindow.cpp:857
@@ -1958,9 +1919,7 @@ msgstr "确认保存"
 
 #: main/KoMainWindow.cpp:857
 #, kde-format
-msgid ""
-"<qt>Exporting as a %1 may result in some loss of formatting.<p>Do you still "
-"want to export to this format?</qt>"
+msgid "<qt>Exporting as a %1 may result in some loss of formatting.<p>Do you still want to export to this format?</qt>"
 msgstr "<qt>导出为 %1 可能会格式丢失.<p>您仍然打算导出这种格式?</qt>"
 
 #: main/KoMainWindow.cpp:857
@@ -1980,9 +1939,7 @@ msgstr "未命名"
 
 #: main/KoMainWindow.cpp:857
 #, kde-format
-msgid ""
-"<p>The document <b>'%1'</b> has been modified.</p><p>Do you want to save it?"
-"</p>"
+msgid "<p>The document <b>'%1'</b> has been modified.</p><p>Do you want to save it?</p>"
 msgstr "<p>文档 <b>'%1'</b> 已修改.</p><p>您打算保存?</p>"
 
 #: main/KoMainWindow.cpp:857
@@ -2068,7 +2025,7 @@ msgstr "绘制路径"
 #: libs/kundo2/kundo2stack.cpp:37
 #, kde-format
 msgid "Undo"
-msgstr "撤销"
+msgstr "撤消"
 
 #: libs/kundo2/kundo2stack.cpp:37
 #, kde-format
@@ -2095,7 +2052,12 @@ msgstr "样式管理器..."
 msgid "Show Guides"
 msgstr "显示指南"
 
-#: libs/main/KoMainWindow.cpp:33
+#: libs/main/KoMainWindow.cpp:389
+#, kde-format
+msgid "@action:inmenu"
+msgstr ""
+
+#: libs/main/KoMainWindow.cpp:389
 #, kde-format
 msgid "Show Docker Titlebars"
 msgstr "显示浮窗标题栏"
@@ -2193,9 +2155,19 @@ msgstr "输入"
 #: libs/kundo2/kundo2group.cpp:1599
 #, kde-format
 msgid "Undo %1"
-msgstr "撤销 %1"
+msgstr "撤消 %1"
 
-#: libs/main/KoUndoStackAction.cpp:1599
+#: plugins/stencilsdocker/StencilBoxDocker.cpp:72
 #, kde-format
-msgid "Undo"
-msgstr "撤销"
+msgid "Stencil Box"
+msgstr "模板箱"
+
+#: plugins/dockers/snapguidedocker/SnapGuideDocker.cpp:52
+#, kde-format
+msgid "Snap Settings"
+msgstr "快照设置"
+
+#: plugins/dockers/shapeproperties/ShapePropertiesDocker.cpp:52
+#, kde-format
+msgid "Shape Properties"
+msgstr "形状属性"
