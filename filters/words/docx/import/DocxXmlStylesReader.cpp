@@ -497,7 +497,7 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
                 READ_ATTR(val)
                 if (type == "character")
                 {
-                    m_currentParagraphStyle.setStylewName(m_name);
+                    m_currentTextStyle.setStylewName(m_name);
                     m_currentTextStyle.setParentName(val);
                 }
                 else if (type == "paragraph")
