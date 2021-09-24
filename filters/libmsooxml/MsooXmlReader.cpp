@@ -139,7 +139,8 @@ void MsooXmlReader::init()
 }
 
 /*
-static const char * tokenNames[] = {
+static const char * tokenNames[] =
+{
     "NoToken", "Invalid", "StartDocument", "EndDocument",
     "StartElement", "EndElement", "Characters", "Comment",
     "DTD", "EntityReference", "ProcessingInstruction", "??"
@@ -285,7 +286,7 @@ bool MsooXmlReader::expectEl(const QList<QByteArray>& qualifiedElementNames)
 bool MsooXmlReader::expectElEnd(const QString& qualifiedElementName)
 {
     //debugMsooXml << qualifiedElementName << "found:" << qualifiedName();
-//    debugMsooXml << kBacktrace();
+    //debugMsooXml << kBacktrace();
     if (!isEndElement() || qualifiedName() != qualifiedElementName)
     {
         raiseError(i18n("Expected closing of element \"%1\"", qualifiedElementName));
