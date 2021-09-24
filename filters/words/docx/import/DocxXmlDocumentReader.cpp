@@ -4238,18 +4238,19 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_outlineLvl()
             // ODF §19.470 style:default-outline-level says:
             // The style:default-outline-level attribute value can be empty.
             // If empty, this attribute does not inherit a list style value from a parent style.
-            const QString odfOutlineLevelValue = (outlineLevelValue == 9) ?
-                                                 QString("") : QString::number(outlineLevelValue + 1);
+            //const QString odfOutlineLevelValue = (outlineLevelValue == 9) ?
+            //                                     QString("") : QString::number(outlineLevelValue + 1);
             //QString str = m_currentParagraphStyle.stylewname();
             // stylewname() error!!! ?? to do vs2019+qt build
-            QString str = m_currentParagraphStyle.m_stylewname;
-            if (str.contains("Title"))///openword
+            //QString str = m_currentParagraphStyle.m_stylewname;
+            if (m_currentParagraphStyle.m_stylewname.contains("Title") || outlineLevelValue == 9)///openword
             {
-                m_currentParagraphStyle.addAttribute("style:default-outline-level", "0");
+                m_currentParagraphStyle.addAttribute("style:default-outline-level", "");
             }
             else
             {
-                m_currentParagraphStyle.addAttribute("style:default-outline-level", odfOutlineLevelValue);
+                //const QString odfOutlineLevelValue = QString::number(outlineLevelValue + 1);
+                m_currentParagraphStyle.addAttribute("style:default-outline-level", QString::number(outlineLevelValue + 1));
             }
         }
     }
