@@ -578,8 +578,12 @@ private:
 #ifndef NDEBUG
     void printDebug() const;
 #endif
+
+/// to do ?stylewname() error {build/vs2019+qt}
 public:
     QString m_stylewname;// stylewname() error!!! ?? to do vs+qt build
+//---------------------------------------------------------------------
+
 private:
     // Note that the copy constructor and assignment operator are allowed.
     // Better not use pointers below!
