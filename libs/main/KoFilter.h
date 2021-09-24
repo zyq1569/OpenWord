@@ -65,15 +65,17 @@ public:
      * Feel free to add some more error conditions @em before the last item
      * if it's needed.
      */
-    enum ConversionStatus { OK, StupidError, UsageError, CreationError, FileNotFound,
-                            StorageCreationError, BadMimeType, BadConversionGraph,
-                            EmbeddedDocError, WrongFormat, NotImplemented,
-                            ParsingError, InternalError, UnexpectedEOF,
-                            UnexpectedOpcode, UserCancelled, OutOfMemory,
-                            PasswordProtected, InvalidFormat, FilterEntryNull,
-                            NoDocumentCreated, DownloadFailed, FilterCreationError,
-                            JustInCaseSomeBrokenCompilerUsesLessThanAByte = 255
-                          };
+    enum ConversionStatus
+    {
+        OK, StupidError, UsageError, CreationError, FileNotFound,
+        StorageCreationError, BadMimeType, BadConversionGraph,
+        EmbeddedDocError, WrongFormat, NotImplemented,
+        ParsingError, InternalError, UnexpectedEOF,
+        UnexpectedOpcode, UserCancelled, OutOfMemory,
+        PasswordProtected, InvalidFormat, FilterEntryNull,
+        NoDocumentCreated, DownloadFailed, FilterCreationError,
+        JustInCaseSomeBrokenCompilerUsesLessThanAByte = 255
+    };
 
     ~KoFilter() override;
 

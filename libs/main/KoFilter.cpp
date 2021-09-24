@@ -42,15 +42,21 @@ KoFilter::KoFilter(QObject *parent)
 
 KoFilter::~KoFilter()
 {
-    if (d->updater) d->updater->setProgress(100);
+    if (d->updater)
+    {
+        d->updater->setProgress(100);
+    }
     delete d;
 }
 
 void KoFilter::setUpdater(const QPointer<KoUpdater>& updater)
 {
-    if (d->updater && !updater) {
+    if (d->updater && !updater)
+    {
         disconnect(this, SLOT(slotProgress(int)));
-    } else if (!d->updater && updater) {
+    }
+    else if (!d->updater && updater)
+    {
         connect(this, SIGNAL(sigProgress(int)), SLOT(slotProgress(int)));
     }
     d->updater = updater;
@@ -58,7 +64,8 @@ void KoFilter::setUpdater(const QPointer<KoUpdater>& updater)
 
 void KoFilter::slotProgress(int value)
 {
-    if (d->updater) {
+    if (d->updater)
+    {
         d->updater->setValue(value);
     }
 }
