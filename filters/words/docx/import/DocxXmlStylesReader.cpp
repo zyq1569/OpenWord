@@ -427,6 +427,7 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
         BREAK_IF_END_OF(CURRENT_EL)
         if (isStartElement())
         {
+            ///QStringRef str = qualifiedName();//读取<w:开始的内容如 <w:name/<w:basedOn/<w:next ...
             const QXmlStreamAttributes attrs(attributes());
             TRY_READ_IF(name)
             else if (name() == "rPr")
@@ -499,6 +500,7 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
                 {
                     m_currentTextStyle.setStylewName(m_name);
                     m_currentTextStyle.setParentName(val);
+
                 }
                 else if (type == "paragraph")
                 {
@@ -713,7 +715,9 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_name()
     READ_PROLOGUE
     const QXmlStreamAttributes attrs(attributes());
     READ_ATTR_INTO(val, m_name)
-    m_name.replace(QLatin1Char(' '), QLatin1Char('_'));
+    //debugDocx << "read_name m_name:" << m_name;
+    //openword 20210924目前没有使用??????如何转为ODT格式中
+    //m_name.replace(QLatin1Char(' '), QLatin1Char('_'));
     readNext();
     READ_EPILOGUE
 }
