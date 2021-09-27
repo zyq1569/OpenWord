@@ -374,7 +374,9 @@ void KoTextLoader::loadBody(const KoXmlElement &bodyElem, QTextCursor &cursor, L
 #ifdef KOOPENDOCUMENTLOADER_DEBUG
     debugText << "text-style:" << KoTextDebug::textAttributes(cursor.blockCharFormat());
 #endif
-    bool usedParagraph = false; // set to true if we found a tag that used the paragraph, indicating that the next round needs to start a new one.
+    // set to true if we found a tag that used the paragraph,
+    // indicating that the next round needs to start a new one.
+    bool usedParagraph = false;
 
     if (bodyElem.namespaceURI() == KoXmlNS::table && bodyElem.localName() == "table")
     {
@@ -623,6 +625,11 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
         {
             level = 1;
         }
+        //当前:临时测试方式:libreoffice 使用Title 而MSoffice使用P1 Calligra使用旧版本P2和T4
+//        if (styleName.contains("Title") || styleName.contains("P1"))////?????? how to do???
+//        {
+//            level = 0;
+//        }
         QTextBlockFormat blockFormat;
         blockFormat.setProperty(KoParagraphStyle::OutlineLevel, level);
         cursor.mergeBlockFormat(blockFormat);
@@ -824,10 +831,15 @@ void KoTextLoader::loadList(const KoXmlElement &element, QTextCursor &cursor)
 
 #ifdef KOOPENDOCUMENTLOADER_DEBUG
     if (d->currentListStyle)
+    {
+        KoListLevelProperties props = d->currentListStyle->levelProperties(level);
         debugText << "styleName =" << styleName << "listStyle =" << d->currentListStyle->name()
                   << "level =" << level << "hasLevelProperties =" << d->currentListStyle->hasLevelProperties(level)
-                  //<<" style="<<props.style()<<" prefix="<<props.listItemPrefix()<<" suffix="<<props.listItemSuffix()
+                  <<" style="<<props.styleId()/*props.style()*/
+                  <<" prefix="<<props.listItemPrefix()
+                  <<" suffix="<<props.listItemSuffix()
                   ;
+    }
     else
     {
         debugText << "styleName =" << styleName << " currentListStyle = 0";
