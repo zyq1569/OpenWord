@@ -56,7 +56,8 @@ class KoXmlDocumentData;
 /**
  * The office-text-content-prelude type.
  */
-enum KoXmlNamedItemType {
+enum KoXmlNamedItemType
+{
     KoXmlTextContentPrelude ///< office-text-content-prelude
     //KoXmlTextContentMain, ///< office-text-content-main
     //KoXmlTextContentEpilogue ///< office-text-content-epilogue
@@ -81,7 +82,8 @@ class KOSTORE_EXPORT KoXmlNode
 {
 public:
 
-    enum NodeType {
+    enum NodeType
+    {
         NullNode = 0,
         ElementNode,
         TextNode,
@@ -308,11 +310,11 @@ public:
     // no namespace processing
     bool setContent(const QString& text,
                     QString *errorMsg = 0, int *errorLine = 0, int *errorColumn = 0);
-     /**
-     * Change the way an XMLDocument will be read:
-     * if stripSpaces = true then a will only have one child
-     * if stripSpaces = false then a will have 3 children.
-     */
+    /**
+    * Change the way an XMLDocument will be read:
+    * if stripSpaces = true then a will only have one child
+    * if stripSpaces = false then a will have 3 children.
+    */
     void setWhitespaceStripping(bool stripSpaces);
 
 private:
@@ -375,8 +377,8 @@ KOSTORE_EXPORT KoXmlElement namedItemNS(const KoXmlNode& node,
  * the office-text-content-prelude condition as @a KoXmlNamedItemType .
  */
 KOSTORE_EXPORT KoXmlElement namedItemNS(const KoXmlNode& node,
-                                      const QString& nsURI, const QString& localName,
-                                      KoXmlNamedItemType type);
+                                        const QString& nsURI, const QString& localName,
+                                        KoXmlNamedItemType type);
 
 /**
  * Explicitly load child nodes of specified node, up to given depth.
@@ -408,7 +410,7 @@ KOSTORE_EXPORT QStringList attributeNames(const KoXmlNode& node);
  * NOTE:
  * - If ownerDoc is not empty, this may fail, @see QDomDocument
  * - @p node must not be a KoXmlDocument, use asQDomDocument()
- * 
+ *
  * @see asQDomDocument, asQDomElement
  */
 KOSTORE_EXPORT void asQDomNode(QDomDocument& ownerDoc, const KoXmlNode& node);
@@ -417,7 +419,7 @@ KOSTORE_EXPORT void asQDomNode(QDomDocument& ownerDoc, const KoXmlNode& node);
  * Convert KoXmlNode classes to the corresponding QDom classes, which has
  * @p ownerDoc as the owner document (QDomDocument instance).
  * The converted @p element (and its children) is added to ownerDoc.
- * 
+ *
  * NOTE: If ownerDoc is not empty, this may fail, @see QDomDocument
  *
  */
