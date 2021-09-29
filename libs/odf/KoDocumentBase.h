@@ -46,10 +46,11 @@ class KOODF_EXPORT KoDocumentBase
 public:
 
     // context passed on saving to saveOdf
-    struct SavingContext {
+    struct SavingContext
+    {
         SavingContext(KoOdfWriteStore &odfStore, KoEmbeddedDocumentSaver &embeddedSaver)
-                : odfStore(odfStore)
-                , embeddedSaver(embeddedSaver) {}
+            : odfStore(odfStore)
+            , embeddedSaver(embeddedSaver) {}
 
         KoOdfWriteStore &odfStore;
         KoEmbeddedDocumentSaver &embeddedSaver;

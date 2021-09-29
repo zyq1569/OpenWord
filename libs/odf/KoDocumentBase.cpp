@@ -28,10 +28,11 @@
 
 #include <QtGlobal>
 
-class Q_DECL_HIDDEN KoDocumentBase::Private {
+class Q_DECL_HIDDEN KoDocumentBase::Private
+{
 public:
     Private()
-    : storeInternal(false)
+        : storeInternal(false)
     {}
 
     bool storeInternal; // Store this doc internally even if url is external
