@@ -27,7 +27,8 @@
 
 enum control_word_types { Symbol, Flag, Value, Toggle, Destination };
 
-struct control_word_known {
+struct control_word_known
+{
     const char 			*controlword;
     enum control_word_types 	wordtype;
 };
@@ -1858,75 +1859,83 @@ const static struct control_word_known known_control_words[] =
 namespace RtfReader
 {
 
-    ControlWord::ControlWord( const QString &name ) :
-	m_name( name )
-    {}
+ControlWord::ControlWord( const QString &name ) :
+    m_name( name )
+{}
 
-    /**
-	FIXME: This should be table / hash driven
-      */
-    bool ControlWord::isSupportedDestination() const
+/**
+FIXME: This should be table / hash driven
+  */
+bool ControlWord::isSupportedDestination() const
+{
+    if (( m_name == "pict" ) ||
+            ( m_name == "fonttbl" ) ||
+            ( m_name == "stylesheet" ) ||
+            ( m_name == "colortbl" ) ||
+            ( m_name == "info" ) ||
+            ( m_name == "title" ) ||
+            ( m_name == "generator" ) ||
+            ( m_name == "company" ) ||
+            ( m_name == "creatim" ) ||
+            ( m_name == "printim" ) ||
+            ( m_name == "revtim" ) ||
+            ( m_name == "operator" ) ||
+            ( m_name == "comment" ) ||
+            ( m_name == "subject" ) ||
+            ( m_name == "manager" ) ||
+            ( m_name == "category" ) ||
+            ( m_name == "doccomm" ) ||
+            ( m_name == "keywords" ) ||
+            ( m_name == "hlinkbase" ) ||
+            ( m_name == "userprops" ) ||
+            ( m_name == "author" ) ||
+            // destinations from here on are marked supported so content like images inside them are handled,
+            // but they don't have their own destination class to parse destination specific control words
+            ( m_name == "pgdsc" ) ||
+            ( m_name == "pgdsctbl" ) ||
+            ( m_name == "shppict" ) ||
+            ( m_name == "shp" ) ||
+            ( m_name == "shpinst" ) ||
+            ( m_name == "pntxta" ) ||
+            ( m_name == "pntxtb" ) ||
+            ( m_name == "mmathPr" ))
     {
-	if (( m_name == "pict" ) ||
-	    ( m_name == "fonttbl" ) ||
-	    ( m_name == "stylesheet" ) ||
-	    ( m_name == "colortbl" ) ||
-	    ( m_name == "info" ) ||
-	    ( m_name == "title" ) ||
-	    ( m_name == "generator" ) ||
-	    ( m_name == "company" ) ||
-	    ( m_name == "creatim" ) ||
-	    ( m_name == "printim" ) ||
-	    ( m_name == "revtim" ) ||
-	    ( m_name == "operator" ) ||
-	    ( m_name == "comment" ) ||
-	    ( m_name == "subject" ) ||
-	    ( m_name == "manager" ) ||
-	    ( m_name == "category" ) ||
-	    ( m_name == "doccomm" ) ||
-	    ( m_name == "keywords" ) ||
-	    ( m_name == "hlinkbase" ) ||
-	    ( m_name == "userprops" ) ||
-	    ( m_name == "author" ) ||
-	    // destinations from here on are marked supported so content like images inside them are handled,
-	    // but they don't have their own destination class to parse destination specific control words
-	    ( m_name == "pgdsc" ) ||
-	    ( m_name == "pgdsctbl" ) ||
-	    ( m_name == "shppict" ) ||
-	    ( m_name == "shp" ) ||
-	    ( m_name == "shpinst" ) ||
-	    ( m_name == "pntxta" ) ||
-	    ( m_name == "pntxtb" ) ||
-	    ( m_name == "mmathPr" )) {
-	    return true;
-	}
+        return true;
+    }
     return false;
-    }
+}
 
-    bool ControlWord::isDestination( const QString &controlword )
+bool ControlWord::isDestination( const QString &controlword )
+{
+    for ( int i = 0; known_control_words[i].controlword != 0; ++i )
     {
-	for ( int i = 0; known_control_words[i].controlword != 0; ++i ) {
-	    if ( controlword == QString( known_control_words[i].controlword ) ) {
-		if ( known_control_words[i].wordtype == Destination ) {
-		    return true;
-		} else {
-		    return false;
-		}
-	    }
-	}
-	/* this isn't even a control word we recognise */
-	return false;
+        if ( controlword == QString( known_control_words[i].controlword ) )
+        {
+            if ( known_control_words[i].wordtype == Destination )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
+    /* this isn't even a control word we recognise */
+    return false;
+}
 
-    bool ControlWord::isKnown() const
+bool ControlWord::isKnown() const
+{
+    for ( int i = 0; known_control_words[i].controlword != 0; ++i )
     {
-	for ( int i = 0; known_control_words[i].controlword != 0; ++i ) {
-	    if ( m_name == QString( known_control_words[i].controlword ) ) {
-		return true;
-	    }
-	}
-	return false;
+        if ( m_name == QString( known_control_words[i].controlword ) )
+        {
+            return true;
+        }
     }
+    return false;
+}
 }
 
 
