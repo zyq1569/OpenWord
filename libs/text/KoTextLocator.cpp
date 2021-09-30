@@ -40,41 +40,52 @@ class Q_DECL_HIDDEN KoTextLocator::Private
 {
 public:
     Private(KoTextLocator *q) : q(q), document(0), dirty(false), cursorPosition(0), chapterPosition(-1), pageNumber(0) { }
-    void update() {
+    void update()
+    {
         if (dirty == false)
+        {
             return;
+        }
         dirty = false;
         chapterPosition = -1;
 
         int pageTmp = pageNumber, chapterTmp = chapterPosition;
         if (document == 0)
+        {
             return;
+        }
 
         QTextBlock block = document->findBlock(cursorPosition);
-        while (block.isValid()) {
+        while (block.isValid())
+        {
             QTextList *list = block.textList();
-            if (list) {
+            if (list)
+            {
                 QTextListFormat lf = list->format();
                 int level = lf.intProperty(KoListStyle::Level);
-                if (level == 1) {
+                if (level == 1)
+                {
                     chapterPosition = block.position();
                     break;
                 }
             }
             block = block.previous();
         }
-/*
-        KoShape *shape = shapeForPosition(document, cursorPosition);
-        if (shape == 0)
-            pageNumber = -1;
-        else {
-            KoTextShapeData *data = static_cast<KoTextShapeData*>(shape->userData());
-            KoTextPage* page = data->page();
-            pageNumber = page->pageNumber();
-        }
-*/        if (pageTmp != pageNumber || chapterTmp != chapterPosition) {
+        /*
+                KoShape *shape = shapeForPosition(document, cursorPosition);
+                if (shape == 0)
+                    pageNumber = -1;
+                else {
+                    KoTextShapeData *data = static_cast<KoTextShapeData*>(shape->userData());
+                    KoTextPage* page = data->page();
+                    pageNumber = page->pageNumber();
+                }
+        */        if (pageTmp != pageNumber || chapterTmp != chapterPosition)
+        {
             foreach(KoTextReference* reference, listeners)
+            {
                 reference->variableMoved(0, 0);
+            }
         }
     }
 
@@ -90,8 +101,8 @@ public:
 
 
 KoTextLocator::KoTextLocator()
-        : KoInlineObject(false),
-        d(new Private(this))
+    : KoInlineObject(false),
+      d(new Private(this))
 {
 }
 
@@ -103,7 +114,8 @@ KoTextLocator::~KoTextLocator()
 void KoTextLocator::updatePosition(const QTextDocument *document, int posInDocument, const QTextCharFormat &format)
 {
     Q_UNUSED(format);
-    if (d->document != document || d->cursorPosition != posInDocument) {
+    if (d->document != document || d->cursorPosition != posInDocument)
+    {
         d->dirty = true;
         d->document = document;
         d->cursorPosition = posInDocument;
@@ -122,7 +134,7 @@ void KoTextLocator::resize(const QTextDocument *document, QTextInlineObject &obj
     object.setDescent(0);
 }
 
-void KoTextLocator::paint(QPainter &, QPaintDevice *, const QTextDocument *, const QRectF &, const QTextInlineObject &, int , const QTextCharFormat &)
+void KoTextLocator::paint(QPainter &, QPaintDevice *, const QTextDocument *, const QRectF &, const QTextInlineObject &, int, const QTextCharFormat &)
 {
     // nothing to paint.
 }
@@ -131,7 +143,9 @@ QString KoTextLocator::chapter() const
 {
     d->update();
     if (d->chapterPosition < 0)
+    {
         return QString();
+    }
     QTextBlock block = d->document->findBlock(d->chapterPosition);
     return block.text().remove(QChar::ObjectReplacementCharacter);
 }
@@ -150,7 +164,9 @@ int KoTextLocator::indexPosition() const
 QString KoTextLocator::word() const
 {
     if (d->document == 0) // layout never started
+    {
         return QString();
+    }
     QTextCursor cursor(const_cast<QTextDocument*>(d->document));
     cursor.setPosition(d->cursorPosition);
     cursor.movePosition(QTextCursor::NextWord);
