@@ -79,7 +79,7 @@ KWDocument *KWOdfLoader::document() const
 bool KWOdfLoader::load(KoOdfReadStore &odfStore)
 {
     //debugWords << "========================> KWOdfLoader::load START";
-    DEBUG_LOG("========================> KWOdfLoader::load START:");
+    DEBUG_LOG("========================> KWOdfLoader::load START:");//+document()->localFilePath());
     QPointer<KoUpdater> updater;
     QPointer<KoUpdater> loadUpdater;
     if (m_document->progressUpdater())

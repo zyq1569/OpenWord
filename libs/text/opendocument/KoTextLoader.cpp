@@ -489,7 +489,8 @@ void KoTextLoader::loadBody(const KoXmlElement &bodyElem, QTextCursor &cursor, L
     KoTextRangeManager *textRangeManager = KoTextDocument(cursor.block().document()).textRangeManager();
     Q_UNUSED(textRangeManager);
     //debugText << "text ranges::";
-    //foreach(KoTextRange *range, textRangeManager->textRanges()) {
+    //foreach(KoTextRange *range, textRangeManager->textRanges())
+    //{
     //debugText << range->id();
     //}
 
@@ -626,10 +627,17 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
             level = 1;
         }
         //当前:临时测试方式:libreoffice 使用Title 而MSoffice使用P1 Calligra使用旧版本P2和T4
-//        if (styleName.contains("Title") || styleName.contains("P1"))////?????? how to do???
-//        {
-//            level = 0;
-//        }
+        if (0 == styleName.compare(/*QString::fromLocal8Bit*/QLatin1String("Title")))
+        {
+            level = 0;
+        }
+        //MS保存在content.xml 中<style:style style:name="P1" style:parent-style-name="标题"
+        //style:master-page-name="MP0" style:family="paragraph">
+        if (d->context.odfLoadingContext().generator().startsWith(QLatin1String("MicrosoftOffice"))&&
+               (0 == styleName.compare(/*QString::fromLocal8Bit*/QLatin1String("P1"))))
+        {
+            level = 0;
+        }
         QTextBlockFormat blockFormat;
         blockFormat.setProperty(KoParagraphStyle::OutlineLevel, level);
         cursor.mergeBlockFormat(blockFormat);
