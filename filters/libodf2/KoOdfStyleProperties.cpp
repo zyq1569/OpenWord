@@ -113,7 +113,8 @@ bool KoOdfStyleProperties::readAttributes(KoXmlStreamReader &reader)
 
 bool KoOdfStyleProperties::saveAttributes(KoXmlWriter *writer)
 {
-    foreach (const QString &property, d->attributes.keys()) {
+    foreach (const QString &property, d->attributes.keys())
+    {
         writer->addAttribute(property.toLatin1(), d->attributes[property]);
     }
 
@@ -127,14 +128,16 @@ bool KoOdfStyleProperties::saveAttributes(KoXmlWriter *writer)
 void copyAttributes(KoXmlStreamReader &reader, AttributeSet &attributes)
 {
     KoXmlStreamAttributes attrs = reader.attributes();
-    foreach (const KoXmlStreamAttribute &attr, attrs) {
+    foreach (const KoXmlStreamAttribute &attr, attrs)
+    {
         attributes.insert(attr.qualifiedName().toString(), attr.value().toString());
     }
 }
 
 void saveAttributes(AttributeSet &attributes, KoXmlWriter *writer)
 {
-    foreach (const QString &property, attributes.keys()) {
+    foreach (const QString &property, attributes.keys())
+    {
         writer->addAttribute(property.toLatin1(), attributes[property]);
     }
 }

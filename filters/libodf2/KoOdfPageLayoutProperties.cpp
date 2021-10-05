@@ -71,7 +71,8 @@ void KoOdfPageLayoutProperties::clear()
 bool KoOdfPageLayoutProperties::readOdf(KoXmlStreamReader &reader)
 {
     bool retval = readAttributes(reader);
-    if (!retval) {
+    if (!retval)
+    {
         return false;
     }
 
@@ -79,16 +80,20 @@ bool KoOdfPageLayoutProperties::readOdf(KoXmlStreamReader &reader)
     //  - style:background-image
     //  - style:columns
     //  - text:footnote-sep
-    while (reader.readNextStartElement()) {
+    while (reader.readNextStartElement())
+    {
         QString child = reader.qualifiedName().toString();
 
-        if (child == "style:background-image") {
+        if (child == "style:background-image")
+        {
             // FIXME: NYI
         }
-        else if (child == "style:columns") {
+        else if (child == "style:columns")
+        {
             // FIXME: NYI
         }
-        else if (child == "text:footnote-sep") {
+        else if (child == "text:footnote-sep")
+        {
             // FIXME: NYI
         }
 

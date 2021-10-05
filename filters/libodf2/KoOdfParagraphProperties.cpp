@@ -53,7 +53,8 @@ KoOdfParagraphProperties::Private::Private()
 
 KoOdfParagraphProperties::Private::~Private()
 {
-    if (dropCap) {
+    if (dropCap)
+    {
         delete dropCap;
         dropCap = 0;
     }
@@ -81,7 +82,8 @@ void KoOdfParagraphProperties::clear()
     KoOdfStyleProperties::clear();
 
     // FIXME: background image
-    if (d->dropCap) {
+    if (d->dropCap)
+    {
         delete d->dropCap;
         d->dropCap = 0;
     }
@@ -92,7 +94,8 @@ void KoOdfParagraphProperties::clear()
 bool KoOdfParagraphProperties::readOdf(KoXmlStreamReader &reader)
 {
     bool retval = readAttributes(reader);
-    if (!retval) {
+    if (!retval)
+    {
         return false;
     }
 
@@ -100,24 +103,32 @@ bool KoOdfParagraphProperties::readOdf(KoXmlStreamReader &reader)
     //  - style:background-image
     //  - style:drop-cap
     //  - style:tab-stops
-    while (reader.readNextStartElement()) {
+    while (reader.readNextStartElement())
+    {
         QString child = reader.qualifiedName().toString();
 
-        if (child == "style:background-image") {
+        if (child == "style:background-image")
+        {
             // FIXME: NYI
         }
-        else if (child == "style:drop-cap") {
-            if (d->dropCap) {
+        else if (child == "style:drop-cap")
+        {
+            if (d->dropCap)
+            {
                 d->dropCap->attributes.clear();
             }
-            else {
+            else
+            {
                 d->dropCap = new KoOdfStyleDropCap();
             }
             copyAttributes(reader, d->dropCap->attributes);
         }
-        else if (child == "style:tab-stops") {
-            while (reader.readNextStartElement()) {
-                if (reader.qualifiedName() == "style:tab-stop") {
+        else if (child == "style:tab-stops")
+        {
+            while (reader.readNextStartElement())
+            {
+                if (reader.qualifiedName() == "style:tab-stop")
+                {
                     KoOdfStyleTabStop  *tabStop = new KoOdfStyleTabStop;
 
                     copyAttributes(reader, tabStop->attributes);
@@ -142,14 +153,17 @@ bool KoOdfParagraphProperties::saveOdf(const QString &propertySet, KoXmlWriter *
 
     // Save child elements of style:paragraph-properties
     // FIXME NYI: background image
-    if (d->dropCap) {
+    if (d->dropCap)
+    {
         writer->startElement("style:drop-cap");
         ::saveAttributes(d->dropCap->attributes, writer);
         writer->endElement(); // style:drop-cap
     }
-    if (!d->tabStops.isEmpty()) {
+    if (!d->tabStops.isEmpty())
+    {
         writer->startElement("style:tab-stops");
-        foreach (KoOdfStyleTabStop *tabStop, d->tabStops) {
+        foreach (KoOdfStyleTabStop *tabStop, d->tabStops)
+        {
             writer->startElement("style:tab-stop");
             ::saveAttributes(tabStop->attributes, writer);
             writer->endElement(); // style:tab-stop

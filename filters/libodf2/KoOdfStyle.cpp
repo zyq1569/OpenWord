@@ -111,16 +111,22 @@ QString KoOdfStyle::property(const QString &propertySet, const QString &property
 {
     KoOdfStyleProperties *props = d->properties.value(propertySet, 0);
     if (props)
+    {
         return props->attribute(property);
+    }
     else
+    {
         return QString();
+    }
 }
 
 void KoOdfStyle::setProperty(const QString &propertySet, const QString &property, const QString &value)
 {
     KoOdfStyleProperties *props = d->properties.value(propertySet);
     if (!props)
+    {
         props = new KoOdfStyleProperties();
+    }
     props->setAttribute(property, value);
 }
 
@@ -138,22 +144,30 @@ bool KoOdfStyle::readOdf(KoXmlStreamReader &reader)
     debugOdf2 << "Style:" << name() << family() << parent() << displayName();
 
     // Load child elements: property sets and other children.
-    while (reader.readNextStartElement()) {
+    while (reader.readNextStartElement())
+    {
 
         // So far we only have support for text-, paragraph- and graphic-properties
         const QString propertiesType = reader.qualifiedName().toString();
         // Create a new propertyset variable depending on the type of properties.
         KoOdfStyleProperties *properties = 0;
-        if (propertiesType == "style:text-properties") {
+        if (propertiesType == "style:text-properties")
+        {
             properties = new KoOdfTextProperties();
-        } else if (propertiesType == "style:paragraph-properties") {
+        }
+        else if (propertiesType == "style:paragraph-properties")
+        {
             properties = new KoOdfParagraphProperties();
-        } else if (propertiesType == "style:graphic-properties") {
+        }
+        else if (propertiesType == "style:graphic-properties")
+        {
             properties = new KoOdfGraphicProperties();
         }
 
-        if (properties) {
-            if (!properties->readOdf(reader)) {
+        if (properties)
+        {
+            if (!properties->readOdf(reader))
+            {
                 delete properties;
                 return false;
             }
@@ -166,25 +180,30 @@ bool KoOdfStyle::readOdf(KoXmlStreamReader &reader)
 
 bool KoOdfStyle::saveOdf(KoXmlWriter *writer)
 {
-    if (isDefaultStyle()) {
+    if (isDefaultStyle())
+    {
         writer->startElement("style:default-style");
     }
-    else {
+    else
+    {
         writer->startElement("style:style");
         writer->addAttribute("style:name", name());
     }
 
     // Write style attributes
     writer->addAttribute("style:family", family());
-    if (!d->parent.isEmpty()) {
+    if (!d->parent.isEmpty())
+    {
         writer->addAttribute("style:parent-style-name", d->parent);
     }
-    if (!displayName().isEmpty()) {
+    if (!displayName().isEmpty())
+    {
         writer->addAttribute("style:display-name", displayName());
     }
 
     // Write properties
-    foreach(const QString &propertySet, d->properties.keys()) {
+    foreach(const QString &propertySet, d->properties.keys())
+    {
         d->properties.value(propertySet)->saveOdf(propertySet, writer);
     }
 

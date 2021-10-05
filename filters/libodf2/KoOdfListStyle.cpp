@@ -127,23 +127,30 @@ QString KoOdfListStyle::property(QString &propertySet, QString &property) const
 {
     KoOdfStyleProperties *props = d->properties.value(propertySet, 0);
     if (props)
+    {
         return props->attribute(property);
+    }
     else
+    {
         return QString();
+    }
 }
 
 void KoOdfListStyle::setProperty(QString &propertySet, QString &property, QString &value)
 {
     KoOdfStyleProperties *props = d->properties.value(propertySet);
     if (!props)
+    {
         props = new KoOdfStyleProperties();
+    }
     props->setAttribute(property, value);
 }
 
 bool KoOdfListStyle::readProperties(KoXmlStreamReader &reader)
 {
     // Load child elements: property sets and other children.
-    while (reader.readNextStartElement()) {
+    while (reader.readNextStartElement())
+    {
 
         // So far we only have support for text-properties and list-level-properties.
         QString propertiesType = reader.qualifiedName().toString();
@@ -151,19 +158,24 @@ bool KoOdfListStyle::readProperties(KoXmlStreamReader &reader)
 
         // Create a new propertyset variable depending on the type of properties.
         KoOdfStyleProperties *properties;
-        if (propertiesType == "style:text-properties") {
+        if (propertiesType == "style:text-properties")
+        {
             properties = new KoOdfTextProperties();
         }
-        else if (propertiesType == "style:list-level-properties") {
+        else if (propertiesType == "style:list-level-properties")
+        {
             properties = new KoOdfListLevelProperties();
-        } else {
+        }
+        else
+        {
             // FIXME: support office:binary-data
             // debugOdf2 << "Unsupported property type: " << propertiesType;
             reader.skipCurrentElement();
             continue;
         }
 
-        if (!properties->readOdf(reader)) {
+        if (!properties->readOdf(reader))
+        {
             return false;
         }
         d->properties[propertiesType] = properties;
@@ -186,7 +198,8 @@ bool KoOdfListStyle::readOdf(KoXmlStreamReader &reader)
     debugOdf2 << "Style:" << name() << displayName();
 
     // Load child elements: list-level-style-bullet, text:list-level-style-number, text:list-level-style-image
-    while (reader.readNextStartElement()) {
+    while (reader.readNextStartElement())
+    {
 
         // So far we only have support for text-, paragraph- and graphic-properties
         // And list-level-style-bullet, list-level-style-image, list-level-style-number for List-style.
@@ -197,7 +210,8 @@ bool KoOdfListStyle::readOdf(KoXmlStreamReader &reader)
                 || listLevelType == "text:list-level-style-image")
         {
             debugOdf2 << "List Level style type" << listLevelType;
-            if (!readProperties(reader)) {
+            if (!readProperties(reader))
+            {
                 return false;
             }
         }
@@ -208,16 +222,18 @@ bool KoOdfListStyle::readOdf(KoXmlStreamReader &reader)
 
 bool KoOdfListStyle::saveOdf(KoXmlWriter *writer)
 {
-     writer->startElement("text:list-style");
+    writer->startElement("text:list-style");
     // Write style attributes
-    if (!d->displayName.isEmpty()) {
+    if (!d->displayName.isEmpty())
+    {
         writer->addAttribute("style:display-name", d->displayName);
     }
 
     // Write child element
     writer->startElement(listLevelStyleType().toUtf8());
     // Write properties
-    foreach(const QString &propertySet, d->properties.keys()) {
+    foreach(const QString &propertySet, d->properties.keys())
+    {
         d->properties.value(propertySet)->saveOdf(propertySet, writer);
     }
     writer->endElement();

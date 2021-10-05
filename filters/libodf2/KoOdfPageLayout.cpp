@@ -94,7 +94,8 @@ void KoOdfPageLayout::setPageUsage(const QString &pageUsage)
 
 KoOdfPageLayoutProperties *KoOdfPageLayout::pageLayoutProperties() const
 {
-    if (!d->pageLayoutProperties) {
+    if (!d->pageLayoutProperties)
+    {
         d->pageLayoutProperties = new KoOdfPageLayoutProperties();
     }
 
@@ -103,7 +104,8 @@ KoOdfPageLayoutProperties *KoOdfPageLayout::pageLayoutProperties() const
 
 KoOdfHeaderFooterProperties *KoOdfPageLayout::headerProperties() const
 {
-    if (!d->headerProperties) {
+    if (!d->headerProperties)
+    {
         d->headerProperties = new KoOdfHeaderFooterProperties();
     }
 
@@ -112,7 +114,8 @@ KoOdfHeaderFooterProperties *KoOdfPageLayout::headerProperties() const
 
 KoOdfHeaderFooterProperties *KoOdfPageLayout::footerProperties() const
 {
-    if (!d->footerProperties) {
+    if (!d->footerProperties)
+    {
         d->footerProperties = new KoOdfHeaderFooterProperties();
     }
 
@@ -133,15 +136,18 @@ bool KoOdfPageLayout::readOdf(KoXmlStreamReader &reader)
     debugOdf2 << "PageLayout:" << name() << displayName() << pageUsage();
 
     // Load child elements: property sets and other children.
-    while (reader.readNextStartElement()) {
+    while (reader.readNextStartElement())
+    {
 
         // Create a new propertyset variable depending on the type of properties.
         const QString propertiesType = reader.qualifiedName().toString();
 
         KoOdfStyleProperties *properties = 0;
-        if (propertiesType == "style:page-layout-properties") {
+        if (propertiesType == "style:page-layout-properties")
+        {
             properties = new KoOdfPageLayoutProperties();
-            if (!properties->readOdf(reader)) {
+            if (!properties->readOdf(reader))
+            {
                 delete properties;
                 retval = false;
                 break;
@@ -149,17 +155,20 @@ bool KoOdfPageLayout::readOdf(KoXmlStreamReader &reader)
             d->pageLayoutProperties = dynamic_cast<KoOdfPageLayoutProperties*>(properties);
         }
 
-        else if (propertiesType == "style:header-style") {
+        else if (propertiesType == "style:header-style")
+        {
             // The header/footer properties are contained inside a
             // style element so we need to read past that.
             reader.readNextStartElement();
-            if (reader.qualifiedName() != "style:header-footer-properties") {
+            if (reader.qualifiedName() != "style:header-footer-properties")
+            {
                 reader.skipCurrentElement();
                 return false;
             }
             properties = new KoOdfHeaderFooterProperties();
 
-            if (!properties->readOdf(reader)) {
+            if (!properties->readOdf(reader))
+            {
                 delete properties;
                 retval = false;
                 break;
@@ -170,17 +179,20 @@ bool KoOdfPageLayout::readOdf(KoXmlStreamReader &reader)
             reader.skipCurrentElement();
         }
 
-        else if (propertiesType == "style:footer-style") {
+        else if (propertiesType == "style:footer-style")
+        {
             // The header/footer properties are contained inside a
             // style element so we need to read past that.
             reader.readNextStartElement();
-            if (reader.qualifiedName() != "style:header-footer-properties") {
+            if (reader.qualifiedName() != "style:header-footer-properties")
+            {
                 reader.skipCurrentElement();
                 return false;
             }
             properties = new KoOdfHeaderFooterProperties();
 
-            if (!properties->readOdf(reader)) {
+            if (!properties->readOdf(reader))
+            {
                 delete properties;
                 return false;
             }
@@ -199,10 +211,12 @@ bool KoOdfPageLayout::readOdf(KoXmlStreamReader &reader)
 
 bool KoOdfPageLayout::saveOdf(KoXmlWriter *writer)
 {
-    if (isDefaultStyle()) {
+    if (isDefaultStyle())
+    {
         writer->startElement("style:default-page-layout");
     }
-    else {
+    else
+    {
         writer->startElement("style:page-layout");
         writer->addAttribute("style:name", name());
     }
@@ -211,15 +225,18 @@ bool KoOdfPageLayout::saveOdf(KoXmlWriter *writer)
     writer->addAttribute("style:page-usage", pageUsage());
 
     // Write properties
-    if (d->pageLayoutProperties) {
+    if (d->pageLayoutProperties)
+    {
         d->pageLayoutProperties->saveOdf("", writer);
     }
-    if (d->headerProperties) {
+    if (d->headerProperties)
+    {
         writer->startElement("style:header-style");
         d->headerProperties->saveOdf("", writer);
         writer->endElement();  // style:header-style
     }
-    if (d->footerProperties) {
+    if (d->footerProperties)
+    {
         writer->startElement("style:footer-style");
         d->footerProperties->saveOdf("", writer);
         writer->endElement();  // style:footer-style
