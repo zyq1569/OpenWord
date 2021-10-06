@@ -114,13 +114,15 @@ void KoXmlStreamReader::Private::checkSoundness()
 
     // Initialize by setting all expected prefixes and all extra ones.
     prefixes.clear();
-    foreach(const QString &nsUri, expectedNamespaces.keys()) {
+    foreach(const QString &nsUri, expectedNamespaces.keys())
+    {
         QString prefix = expectedNamespaces.value(nsUri);
 
         prefixes.insert(nsUri, prefix);
         usedPrefixes.insert(prefix);
     }
-    foreach(const QString &nsUri, extraNamespaces.keys()) {
+    foreach(const QString &nsUri, extraNamespaces.keys())
+    {
         QString prefix = extraNamespaces.value(nsUri);
 
         prefixes.insert(nsUri, prefix);
@@ -138,20 +140,24 @@ void KoXmlStreamReader::Private::checkSoundness()
     // strange beast).
     //
     QXmlStreamNamespaceDeclarations  nsDeclarations = q->QXmlStreamReader::namespaceDeclarations();
-    foreach(const QXmlStreamNamespaceDeclaration &decl, nsDeclarations) {
+    foreach(const QXmlStreamNamespaceDeclaration &decl, nsDeclarations)
+    {
 
         QString nsUri(decl.namespaceUri().toString());
         QString prefix(decl.prefix().toString());
 
-        if (prefixes.contains(nsUri)) {
-            if (prefix == prefixes.value(nsUri)) {
+        if (prefixes.contains(nsUri))
+        {
+            if (prefix == prefixes.value(nsUri))
+            {
 
                 // 1. nsUri = expected nsUri AND prefix = expected prefix:
                 //
                 // Soundness is not disturbed. Let's continue with the next declaration.
                 continue;
             }
-            else {
+            else
+            {
                 // 2. nsUri = expected nsUri AND prefix != expected prefix:
                 //
                 // Document is not sound but we don't need to do
@@ -162,13 +168,15 @@ void KoXmlStreamReader::Private::checkSoundness()
                 continue;
             }
         }
-        else {
+        else
+        {
             // 3. nsUri is not among the expected nsUri's
             //
             // Let's check if the prefix is unique or if it already
             // exists among the expected ones.  If it is unique the
             // soundness is not affected, otherwise it is unsound.
-            if (usedPrefixes.contains(prefix)) {
+            if (usedPrefixes.contains(prefix))
+            {
 
                 // Yes, the prefix is used for another namespace among
                 // the expected ones.  Let's store this namespace for
@@ -177,7 +185,8 @@ void KoXmlStreamReader::Private::checkSoundness()
                 isSound = false;
                 namespacesToFix.append(nsUri);
             }
-            else {
+            else
+            {
                 prefixes.insert(nsUri, prefix);
                 usedPrefixes.insert(prefix);
             }
@@ -191,12 +200,15 @@ void KoXmlStreamReader::Private::checkSoundness()
     // much matter what we come up with here since these will have to
     // be accessed through namespaceUri() anyway.
     int number = 1;
-    foreach (const QString &ns, namespacesToFix) {
+    foreach (const QString &ns, namespacesToFix)
+    {
         bool ok = false;
         QString pfx;
-        while (!ok) {
+        while (!ok)
+        {
             pfx = QString("pfx%1").arg(number++);
-            if (!usedPrefixes.contains(pfx)) {
+            if (!usedPrefixes.contains(pfx))
+            {
                 ok = true;
             }
         }
@@ -211,11 +223,13 @@ void KoXmlStreamReader::Private::checkSoundness()
 
 QStringRef KoXmlStreamReader::Private::buildNewPrefix()
 {
-    if (!isChecked) {
+    if (!isChecked)
+    {
         checkSoundness();       // Sets isChecked and isSound;
     }
 
-    if (isSound) {
+    if (isSound)
+    {
         return q->prefix();
     }
 
@@ -230,7 +244,8 @@ QStringRef KoXmlStreamReader::Private::buildNewPrefix()
     // accessed in a QSet<QString> and return a QStringRef that
     // references the copy in the set.  Ugly but effective.
 #if 1
-    if (!prefixCache.contains(newPrefix)) {
+    if (!prefixCache.contains(newPrefix))
+    {
         // FIXME: Is there a way to do this at the same time as the
         // check without creating a double copy if it was already inserted?
         prefixCache.insert(newPrefix);
@@ -250,18 +265,20 @@ QStringRef KoXmlStreamReader::Private::buildNewPrefix()
 
 QStringRef KoXmlStreamReader::Private::buildQName()
 {
-    if (!isChecked) {
+    if (!isChecked)
+    {
         checkSoundness();       // Sets isChecked and isSound;
     }
 
-    if (isSound) {
+    if (isSound)
+    {
         return q->qualifiedName();
     }
 
     // FIXME: Handle undeclared prefixes.  (Is that even legal?)
     //QString nsUri = q->QXmlStreamReader::namespaceUri().toString();
     QString qualifiedName = prefixes.value(q->QXmlStreamReader::namespaceUri().toString())
-        + ':' + q->QXmlStreamReader::name().toString();
+                            + ':' + q->QXmlStreamReader::name().toString();
 
     // The following code is because qualifiedName() returns a
     // QStringRef, not a QString.  So we need to make sure that the
@@ -270,7 +287,8 @@ QStringRef KoXmlStreamReader::Private::buildQName()
     // that are accessed in a QSet<QString> and return a QStringRef
     // that references the copy in the set.  Ugly but effective.
 #if 1
-    if (!qualifiedNamesCache.contains(qualifiedName)) {
+    if (!qualifiedNamesCache.contains(qualifiedName))
+    {
         // FIXME: Is there a way to do this at the same time as the
         // check without creating a double copy if it was already inserted?
         qualifiedNamesCache.insert(qualifiedName);
@@ -463,7 +481,7 @@ KoXmlStreamAttribute::KoXmlStreamAttribute()
 }
 
 KoXmlStreamAttribute::KoXmlStreamAttribute(const QXmlStreamAttribute *attr,
-                                           const KoXmlStreamReader *reader)
+        const KoXmlStreamReader *reader)
     : d(new KoXmlStreamAttribute::Private(attr, reader))
 {
     //debugOdf2 << "normal constructor called";
@@ -499,11 +517,13 @@ QStringRef KoXmlStreamAttribute::namespaceUri() const
 
 QStringRef KoXmlStreamAttribute::prefix() const
 {
-    if (d->reader->isSound()) {
+    if (d->reader->isSound())
+    {
         return d->qAttr->prefix();
     }
 
-    if (d->prefixLen == -1) {
+    if (d->prefixLen == -1)
+    {
         d->generateQName();
     }
 
@@ -513,11 +533,13 @@ QStringRef KoXmlStreamAttribute::prefix() const
 
 QStringRef KoXmlStreamAttribute::qualifiedName() const
 {
-    if (d->reader->isSound()) {
+    if (d->reader->isSound())
+    {
         return d->qAttr->qualifiedName();
     }
 
-    if (d->prefixLen == -1) {
+    if (d->prefixLen == -1)
+    {
         d->generateQName();
     }
 
@@ -584,10 +606,11 @@ KoXmlStreamAttributes::Private::~Private()
 
 
 KoXmlStreamAttributes::KoXmlStreamAttributes(const KoXmlStreamReader *r,
-                                             const QXmlStreamAttributes &qAttrs)
+        const QXmlStreamAttributes &qAttrs)
     : d(new KoXmlStreamAttributes::Private(r, qAttrs))
 {
-    for (int i = 0; i < qAttrs.size(); ++i) {
+    for (int i = 0; i < qAttrs.size(); ++i)
+    {
         d->koAttrs[i] = KoXmlStreamAttribute(&qAttrs[i], d->reader);
     }
 }
@@ -644,9 +667,11 @@ KoXmlStreamAttributes::const_iterator KoXmlStreamAttributes::end() const
 // reimplemented from QXmlStreamAttributes
 bool KoXmlStreamAttributes::hasAttribute(const QString &qualifiedName) const
 {
-    for (int i = 0; i < size(); ++i) {
+    for (int i = 0; i < size(); ++i)
+    {
         // This compares with the expected name always.
-        if (qualifiedName == this->at(i).qualifiedName()) {
+        if (qualifiedName == this->at(i).qualifiedName())
+        {
             return true;
         }
     }
@@ -661,8 +686,10 @@ bool KoXmlStreamAttributes::hasAttribute(const QLatin1String &qualifiedName) con
     const QString qName(qualifiedName);
     return hasAttribute(qName);
 #else
-    for (int i = 0; i < size(); ++i) {
-        if (qualifiedName == this->at(i).qualifiedName()) {
+    for (int i = 0; i < size(); ++i)
+    {
+        if (qualifiedName == this->at(i).qualifiedName())
+        {
             return true;
         }
     }
@@ -674,8 +701,10 @@ bool KoXmlStreamAttributes::hasAttribute(const QLatin1String &qualifiedName) con
 
 QStringRef KoXmlStreamAttributes::value(const QString &qualifiedName) const
 {
-    for (int i = 0; i < size(); ++i) {
-        if (qualifiedName == this->at(i).qualifiedName()) {
+    for (int i = 0; i < size(); ++i)
+    {
+        if (qualifiedName == this->at(i).qualifiedName())
+        {
             return this->at(i).value();
         }
     }
