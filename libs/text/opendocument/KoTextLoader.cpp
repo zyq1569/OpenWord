@@ -638,9 +638,12 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
         {
             level = 0;
         }
-        QTextBlockFormat blockFormat;
-        blockFormat.setProperty(KoParagraphStyle::OutlineLevel, level);
-        cursor.mergeBlockFormat(blockFormat);
+        else /// openword ??? 20211007如何设置MS-Word对格式的设置
+        {
+            QTextBlockFormat blockFormat;
+            blockFormat.setProperty(KoParagraphStyle::OutlineLevel, level);
+            cursor.mergeBlockFormat(blockFormat);
+        }
     }
 
     if (element.hasAttributeNS(KoXmlNS::text, "is-list-header"))
