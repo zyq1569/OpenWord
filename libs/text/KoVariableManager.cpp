@@ -30,7 +30,7 @@ class KoVariableManagerPrivate
 {
 public:
     KoVariableManagerPrivate()
-            : lastId(KoInlineObject::VariableManagerStart) { }
+        : lastId(KoInlineObject::VariableManagerStart) { }
     KoInlineTextObjectManager *inlineObjectManager;
     QHash<QString, int> variableMapping;
     QHash<int, QString> userTypes;
@@ -40,7 +40,7 @@ public:
 };
 
 KoVariableManager::KoVariableManager(KoInlineTextObjectManager *inlineObjectManager)
-        : d(new KoVariableManagerPrivate)
+    : d(new KoVariableManagerPrivate)
 {
     d->inlineObjectManager = inlineObjectManager;
 }
@@ -54,20 +54,27 @@ void KoVariableManager::setValue(const QString &name, const QString &value, cons
 {
     int key;
     // we store the mapping from name to key
-    if (d->variableMapping.contains(name)) {
+    if (d->variableMapping.contains(name))
+    {
         key = d->variableMapping.value(name);
-    } else {
+    }
+    else
+    {
         key = d->lastId++;
         d->variableMapping.insert(name, key);
-        if (type.isEmpty()) {
+        if (type.isEmpty())
+        {
             Q_ASSERT(!d->variableNames.contains(name));
             d->variableNames.append(name);
-        } else {
+        }
+        else
+        {
             Q_ASSERT(!d->userVariableNames.contains(name));
             d->userVariableNames.append(name);
         }
     }
-    if (!type.isEmpty()) {
+    if (!type.isEmpty())
+    {
         d->userTypes.insert(key, type);
     }
     // the variable manager stores the actual value of the variable.
@@ -78,7 +85,8 @@ void KoVariableManager::setValue(const QString &name, const QString &value, cons
 QString KoVariableManager::value(const QString &name) const
 {
     int key = d->variableMapping.value(name);
-    if (key == 0) {
+    if (key == 0)
+    {
         return QString();
     }
     return d->inlineObjectManager->stringProperty(static_cast<KoInlineObject::Property>(key));
@@ -87,11 +95,13 @@ QString KoVariableManager::value(const QString &name) const
 QString KoVariableManager::userType(const QString &name) const
 {
     int key = d->variableMapping.value(name);
-    if (key == 0) {
+    if (key == 0)
+    {
         return QString();
     }
     QHash<int, QString>::const_iterator it = d->userTypes.constFind(key);
-    if (it == d->userTypes.constEnd()) {
+    if (it == d->userTypes.constEnd())
+    {
         return QString();
     }
     return it.value();
@@ -100,7 +110,8 @@ QString KoVariableManager::userType(const QString &name) const
 void KoVariableManager::remove(const QString &name)
 {
     int key = d->variableMapping.value(name);
-    if (key == 0) {
+    if (key == 0)
+    {
         return;
     }
     d->variableMapping.remove(name);
@@ -113,7 +124,8 @@ void KoVariableManager::remove(const QString &name)
 KoVariable *KoVariableManager::createVariable(const QString &name) const
 {
     int key = d->variableMapping.value(name);
-    if (key == 0) {
+    if (key == 0)
+    {
         return 0;
     }
     return new KoNamedVariable(static_cast<KoInlineObject::Property>(key), name);
@@ -135,37 +147,65 @@ void KoVariableManager::loadOdf(const KoXmlElement &bodyElement)
 {
     KoXmlElement element = KoXml::namedItemNS(bodyElement, KoXmlNS::text, "user-field-decls", KoXmlTextContentPrelude);
     if (element.isNull())
+    {
         return;
+    }
     KoXmlElement e;
-    forEachElement(e, element) {
+    forEachElement(e, element)
+    {
         if (e.namespaceURI() != KoXmlNS::text || e.localName() != "user-field-decl")
+        {
             continue;
+        }
         const QString name = e.attributeNS(KoXmlNS::text, "name");
         QString type = e.attributeNS(KoXmlNS::office, "value-type");
         QString value;
-        if (type == "string") {
+        if (type == "string")
+        {
             if (e.hasAttributeNS(KoXmlNS::office, "string-value"))
+            {
                 value = e.attributeNS(KoXmlNS::office, "string-value");
+            }
             else // if the string-value is not present then the content defines the value
+            {
                 value = e.toText().data();
-        } else if (type == "boolean") {
+            }
+        }
+        else if (type == "boolean")
+        {
             value = e.attributeNS(KoXmlNS::office, "boolean-value");
-        } else if (type == "currency") {
+        }
+        else if (type == "currency")
+        {
             value = e.attributeNS(KoXmlNS::office, "currency");
-        } else if (type == "date") {
+        }
+        else if (type == "date")
+        {
             value = e.attributeNS(KoXmlNS::office, "date-value");
-        } else if (type == "float") {
+        }
+        else if (type == "float")
+        {
             value = e.attributeNS(KoXmlNS::office, "value");
-        } else if (type == "percentage") {
+        }
+        else if (type == "percentage")
+        {
             value = e.attributeNS(KoXmlNS::office, "value");
-        } else if (type == "time") {
+        }
+        else if (type == "time")
+        {
             value = e.attributeNS(KoXmlNS::office, "time-value");
-        } else if (type == "void") {
+        }
+        else if (type == "void")
+        {
             value = e.attributeNS(KoXmlNS::office, "value");
-        } else if (e.hasAttributeNS(KoXmlNS::text, "formula")) {
+        }
+        else if (e.hasAttributeNS(KoXmlNS::text, "formula"))
+        {
             type = "formula";
             value = e.attributeNS(KoXmlNS::text, "formula");
-        } else {
+        }
+        else
+        {
             warnText << "Unknown user-field-decl value-type=" << type;
             continue;
         }
@@ -175,35 +215,57 @@ void KoVariableManager::loadOdf(const KoXmlElement &bodyElement)
 
 void KoVariableManager::saveOdf(KoXmlWriter *bodyWriter)
 {
-    if (userVariables().isEmpty()) {
+    if (userVariables().isEmpty())
+    {
         return;
     }
     bodyWriter->startElement("text:user-field-decls");
-    foreach (const QString &name, userVariables()) {
+    foreach (const QString &name, userVariables())
+    {
         bodyWriter->startElement("text:user-field-decl");
         bodyWriter->addAttribute("text:name", name);
         QByteArray tag;
         QString type = userType(name);
-        if (type == "formula") {
+        if (type == "formula")
+        {
             tag = "text:formula";
-        } else {
-            if (type == "string") {
+        }
+        else
+        {
+            if (type == "string")
+            {
                 tag = "office:string-value";
-            } else if (type == "boolean") {
+            }
+            else if (type == "boolean")
+            {
                 tag = "office:boolean-value";
-            } else if (type == "currency") {
+            }
+            else if (type == "currency")
+            {
                 tag = "office:boolean-value";
-            } else if (type == "date") {
+            }
+            else if (type == "date")
+            {
                 tag = "office:date-value";
-            } else if (type == "float") {
+            }
+            else if (type == "float")
+            {
                 tag = "office:value";
-            } else if (type == "percentage") {
+            }
+            else if (type == "percentage")
+            {
                 tag = "office:value";
-            } else if (type == "time") {
+            }
+            else if (type == "time")
+            {
                 tag = "office:time-value";
-            } else if (type == "void") {
+            }
+            else if (type == "void")
+            {
                 tag = "office:value";
-            } else {
+            }
+            else
+            {
                 tag = "office:string-value";
                 type = "string";
             }
