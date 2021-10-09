@@ -617,7 +617,7 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
     cursor.setCharFormat(cf);   // restore the cursor char format
     static bool bMicrosoftOffice = false;
     static int initMS = 0;
-    if (!bMicrosoftOffice && 0 == initMS)
+    if (0 == initMS)
     {
         initMS = 1;
         if (d->context.odfLoadingContext().generator().startsWith(QLatin1String("MicrosoftOffice")))
