@@ -615,6 +615,16 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
     bool stripLeadingSpace = true;
     loadSpan(element, cursor, &stripLeadingSpace);
     cursor.setCharFormat(cf);   // restore the cursor char format
+    static bool bMicrosoftOffice = false;
+    static int initMS = 0;
+    if (!bMicrosoftOffice && 0 == initMS)
+    {
+        initMS = 1;
+        if (d->context.odfLoadingContext().generator().startsWith(QLatin1String("MicrosoftOffice")))
+        {
+            bMicrosoftOffice = true;
+        }
+    }
 
     if ((block.blockFormat().hasProperty(KoParagraphStyle::OutlineLevel)) && (level == -1))
     {
@@ -633,10 +643,28 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
         }
         //MS保存在content.xml 中<style:style style:name="P1" style:parent-style-name="标题"
         //style:master-page-name="MP0" style:family="paragraph">
-        if (d->context.odfLoadingContext().generator().startsWith(QLatin1String("MicrosoftOffice"))&&
-               (0 == styleName.compare(/*QString::fromLocal8Bit*/QLatin1String("P1"))))
+        /*d->context.odfLoadingContext().generator().startsWith(QLatin1String("MicrosoftOffice"))*/
+        bool unmumbered = false;
+
+        if (bMicrosoftOffice) //(0 == styleName.compare(/*QString::fromLocal8Bit*/QLatin1String("P1")) || 0 == styleName.compare(QString::fromLocal8Bit("标题"))))
+        {
+            static QString stitle = "标题";
+            if (0 == styleName.compare(QLatin1String("P1")))
+            {
+                unmumbered = true;
+            }
+            if (styleName.startsWith(stitle))
+            {
+                unmumbered = true;
+            }
+        }
+
+        if (unmumbered)
         {
             level = 0;
+            QTextBlockFormat blockFormat;
+            blockFormat.setProperty(KoParagraphStyle::UnnumberedListItem, true);
+            cursor.mergeBlockFormat(blockFormat);
         }
         else /// openword ??? 20211007如何设置MS-Word对格式的设置
         {
