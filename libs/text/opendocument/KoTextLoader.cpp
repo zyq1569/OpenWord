@@ -646,7 +646,7 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
         /*d->context.odfLoadingContext().generator().startsWith(QLatin1String("MicrosoftOffice"))*/
         bool unmumbered = false;
 
-        if (bMicrosoftOffice) //(0 == styleName.compare(/*QString::fromLocal8Bit*/QLatin1String("P1")) || 0 == styleName.compare(QString::fromLocal8Bit("标题"))))
+        if (bMicrosoftOffice)
         {
             static QString stitle = "标题";
             if (0 == styleName.compare(QLatin1String("P1")))
