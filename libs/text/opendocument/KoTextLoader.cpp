@@ -645,15 +645,14 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
         //style:master-page-name="MP0" style:family="paragraph">
         /*d->context.odfLoadingContext().generator().startsWith(QLatin1String("MicrosoftOffice"))*/
         bool unmumbered = false;
-
         if (bMicrosoftOffice)
         {
-            static QString stitle = "标题";
+            static const QString stitle = "标题";
             if (0 == styleName.compare(QLatin1String("P1")))
             {
                 unmumbered = true;
             }
-            if (styleName.startsWith(stitle))
+            else if (styleName.startsWith(&stitle))
             {
                 unmumbered = true;
             }
