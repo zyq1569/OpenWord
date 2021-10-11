@@ -192,9 +192,10 @@ void KWNavigationWidget::updateData()
             }
             QString title = block.text();
             static int len = QString("?目录").length();
+            static QString spestr = "目录";
             if (title.length())///add:去掉空
             {
-                if (title.length() <= len+1 && title.contains("目录"))
+                if (title.length() <= len+1 && title.contains(spestr/*QLatin1String("目录")*/) && blockLevel == 1)
                 {
                     // to do????
                 }
