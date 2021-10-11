@@ -2552,11 +2552,6 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
     do
     {
         outlineLevelAttribute = pstyle->attribute("style:default-outline-level");
-        //stylename = pstyle->stylewname();
-        //if (stylename.contains("Title"))
-        //{
-        //    outlineLevelAttribute = "";
-        //}
         // use isNull, empty string value is valid here
         if (! outlineLevelAttribute.isNull())
         {
