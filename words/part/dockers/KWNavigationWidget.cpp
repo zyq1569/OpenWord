@@ -195,6 +195,8 @@ void KWNavigationWidget::updateData()
             static QString spestr = "目录";
             if (title.length())///add:去掉空
             {
+                //20211012 openword 临时办法解决docx中文档索引中的 "目录" 问题，当前无法确定
+                //KoParagraphStyle::OutlineLevel 哪儿设置改变成值 1了???
                 if (title.length() <= len+1 && title.contains(spestr/*QLatin1String("目录")*/) && blockLevel == 1)
                 {
                     // to do????
