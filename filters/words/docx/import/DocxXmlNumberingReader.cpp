@@ -421,6 +421,11 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read_numFmt()
             m_currentBulletProperties.setNumFormat("1");
             m_currentBulletProperties.setSuffix(".");
         }
+        else if (val == "none") //add openword
+        {
+            // <w:numFmt w:val="none"/> --->?"decimal" openword 20211012
+            //m_currentBulletProperties.setNumFormat("1");
+        }
     }
 
     readNext();
