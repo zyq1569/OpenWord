@@ -2759,30 +2759,12 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                     }
                     body->startElement("text:list-item");
                     /// openword 是否 m_currentListLevel 为循环层
-//                    if (sublist > 2)
-//                    {
-//                        for (int i = 0; i <= m_currentListLevel + 1; ++i)
-//                        {
-//                            body->startElement("text:list");
-//                            body->startElement("text:list-item");
-//                        }
-//                    }
-//                    else if (sublist > 1)
-//                    {
-//                        for (int i = 0; i <= m_currentListLevel; ++i)
-//                        {
-//                            body->startElement("text:list");
-//                            body->startElement("text:list-item");
-//                        }
-//                    }
-//                    else
-//                    {
+
                     for (uint i = 0; i < outlineLevel; ++i)
                     {
                         body->startElement("text:list");
                         body->startElement("text:list-item");
                     }
-//                    }
                     ///-----------------------------------------------
                     ///
                     //for (int i = 0; i < m_currentListLevel; ++i)
@@ -2848,30 +2830,11 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                 {
                     ///-----------------------------------------------
                     ///
-//                    if (sublist > 2)
-//                    {
-//                        for (int i = 0; i <= m_currentListLevel + 2; ++i)
-//                        {
-//                            body->endElement(); //text:list-item
-//                            body->endElement(); //text:list
-//                        }
-//                    }
-//                    else if (sublist > 1)
-//                    {
-//                        for (int i = 0; i <= m_currentListLevel+1; ++i)
-//                        {
-//                            body->endElement(); //text:list-item
-//                            body->endElement(); //text:list
-//                        }
-//                    }
-//                    else
-//                    {
                     for (uint i = 0; i <= outlineLevel; ++i)
                     {
                         body->endElement(); //text:list-item
                         body->endElement(); //text:list
                     }
-//                    }
                     ///-----------------------------------------------
                     ///
                     //for (int i = 0; i <= m_currentListLevel+1; ++i)
