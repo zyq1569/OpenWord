@@ -68,7 +68,8 @@ public:
     typedef quintptr ListIdType;
 
     /// This is used to specify what type of list label to use
-    enum LabelType {
+    enum LabelType
+    {
         /// List style with no numbering
         None = 1,
         /// an unicode char for the bullet
@@ -79,7 +80,8 @@ public:
     };
 
     /// further properties
-    enum Property {
+    enum Property
+    {
         // Housekeeping
         Level = QTextFormat::UserProperty + 1000,          ///< list nesting level, is 1 or higher, or zero when implied
         ListId,         ///< A group of lists together are called 1 (user intended) list in ODF. Store the listId here

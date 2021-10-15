@@ -40,7 +40,8 @@ class KOTEXT_EXPORT KoList : public QObject
 {
     Q_OBJECT
 public:
-    enum Type {
+    enum Type
+    {
         TextList,
         NumberedParagraph
     };
@@ -119,8 +120,10 @@ public:
 
     static void invalidateList(const QTextBlock &block)
     {
-        for (int i = 0; i < block.textList()->count(); i++) {
-            if (block.textList()->item(i) != block) {
+        for (int i = 0; i < block.textList()->count(); i++)
+        {
+            if (block.textList()->item(i) != block)
+            {
                 invalidate(block.textList()->item(i));
                 break;
             }
