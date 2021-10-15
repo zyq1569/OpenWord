@@ -236,6 +236,10 @@ void KoOdfLoadingContext::parseGenerator() const
                 {
                     d->generatorType = MicrosoftOffice;
                 }
+                else if (d->generator.startsWith(QLatin1String("WPS Office")))
+                {
+                    d->generatorType = WPSOffice;
+                }
             }
         }
     }

@@ -38,7 +38,7 @@ class KoStyleStack;
 class KOODF_EXPORT KoOdfLoadingContext
 {
 public:
-    enum GeneratorType { Unknown, Calligra, OpenOffice, MicrosoftOffice };
+    enum GeneratorType { Unknown, Calligra, OpenOffice, MicrosoftOffice, WPSOffice };
     /**
      * Stores reference to the KoOdfStylesReader and stored passed by
      * KoDocument. Make sure that the KoOdfStylesReader instance outlives
