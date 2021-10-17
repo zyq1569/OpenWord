@@ -2508,10 +2508,11 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                 m_currentBulletList = m_context->m_bulletStyles[numId];
                 m_currentNumId = numId;
             }
-          if (!m_currentListLevel)
-          {
-              m_currentListLevel = pstyle->attribute("style:default-ilvl").toUInt();
-          }
+            //if (!m_currentListLevel)
+            {
+                //m_currentListLevel = pstyle->attribute("style:default-ilvl").toUInt();
+                m_currentListLevel = styleID.right(1).toInt();
+            }
         }
     }
 
@@ -2585,6 +2586,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
         pstyle = mainStyles->style(styleId/*pstyle->parentName()*/, "paragraph");
     }
     while (pstyle);
+
 
     const uint outlineLevel = outlineLevelAttribute.toUInt();
 
@@ -2758,8 +2760,8 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                         m_numIdXmlId[key].second = key;//xmlId;
                     }
                     body->startElement("text:list-item");
-                    /// openword 是否 m_currentListLevel 为循环层
 
+                    /// openword
                     for (uint i = 0; i < outlineLevel; ++i)
                     {
                         body->startElement("text:list");
@@ -3712,7 +3714,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_ilvl()
         if (ok)
         {
             m_currentListLevel = listValue;
-            m_currentParagraphStyle.addAttribute("style:default-ilvl", m_currentListLevel);
+            //m_currentParagraphStyle.addAttribute("style:default-ilvl", m_currentListLevel);
         }
     }
 
