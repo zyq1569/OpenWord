@@ -39,9 +39,12 @@ public:
         layoutedMarkupRanges[KoTextBlockData::Grammar] = false;
     }
 
-    ~Private() override {
+    ~Private() override
+    {
         if (border && !border->deref())
+        {
             delete border;
+        }
         delete paintStrategy;
     }
     qreal counterWidth;
@@ -62,7 +65,7 @@ public:
 
 KoTextBlockData::KoTextBlockData(QTextBlock &block)
     : d(block.userData() ? dynamic_cast<KoTextBlockData::Private *>(block.userData())
-                         : new Private())
+        : new Private())
 {
     block.setUserData(d);
 }
@@ -88,7 +91,8 @@ void KoTextBlockData::appendMarkup(MarkupType type, int firstChar, int lastChar)
     range.lastChar = lastChar;
     range.firstRebased = 0;
     range.lastRebased = 0;
-    if (!d->markupRangesMap[type].isEmpty()) {
+    if (!d->markupRangesMap[type].isEmpty())
+    {
         // The document may have been changed (and thus markup has moved) while
         // the plugin has done its job in the background
         range.firstChar += d->markupRangesMap[type].last().firstRebased;
@@ -107,12 +111,17 @@ void KoTextBlockData::clearMarkups(MarkupType type)
 
 KoTextBlockData::MarkupRange KoTextBlockData::findMarkup(MarkupType type, int positionWithin) const
 {
-    foreach (const MarkupRange &range, d->markupRangesMap[type]) {
-        if (positionWithin <= range.lastChar + range.lastRebased) {
+    foreach (const MarkupRange &range, d->markupRangesMap[type])
+    {
+        if (positionWithin <= range.lastChar + range.lastRebased)
+        {
             // possible hit
-            if (positionWithin >= range.firstChar + range.firstRebased) {
+            if (positionWithin >= range.firstChar + range.firstRebased)
+            {
                 return range;
-            } else {
+            }
+            else
+            {
                 return MarkupRange(); // we have passed it without finding
             }
         }
@@ -124,13 +133,16 @@ void KoTextBlockData::rebaseMarkups(MarkupType type, int fromPosition, int delta
 {
     QVector<MarkupRange>::Iterator markIt = markupsBegin(type);
     QVector<MarkupRange>::Iterator markEnd = markupsEnd(type);
-    while (markIt != markEnd) {
-        if (fromPosition <= markIt->lastChar) {
+    while (markIt != markEnd)
+    {
+        if (fromPosition <= markIt->lastChar)
+        {
             // we need to modify the end of this
             markIt->lastChar += delta;
             markIt->lastRebased += delta;
         }
-        if (fromPosition < markIt->firstChar) {
+        if (fromPosition < markIt->firstChar)
+        {
             // we need to modify the end of this
             markIt->firstChar += delta;
             markIt->firstRebased += delta;
@@ -172,10 +184,14 @@ qreal KoTextBlockData::counterWidth() const
 void KoTextBlockData::setBorder(KoTextBlockBorderData *border)
 {
     if (d->border && !d->border->deref())
+    {
         delete d->border;
+    }
     d->border = border;
     if (d->border)
+    {
         d->border->ref();
+    }
 }
 
 void KoTextBlockData::setCounterWidth(qreal width)

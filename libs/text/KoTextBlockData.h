@@ -46,7 +46,8 @@ public:
      * positions in the tabs list.  We can then calculate the tab to have started the position
      * minus the length and use that to paint special tab attributes.
      */
-    struct TabLineData {
+    struct TabLineData
+    {
         /// the tab positions as set on the QTextOption.setTabArray()
         QList<qreal> tabs;
         /// the length of each tab so we know which area to paint when we want to decorate it.
@@ -57,7 +58,8 @@ public:
      * Datastructure to define a range of characters assigned a temporary meaning.
      * Common use cases are spellchecking and grammar.
      */
-    struct MarkupRange {
+    struct MarkupRange
+    {
         int firstChar;
         int lastChar;
         qreal startX;
@@ -69,7 +71,8 @@ public:
     /**
      * The different types of markups.
      */
-    enum MarkupType {
+    enum MarkupType
+    {
         Misspell,
         Grammar
     };
