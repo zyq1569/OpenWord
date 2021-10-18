@@ -423,8 +423,7 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read_numFmt()
         }
         else if (val == "chineseCounting")
         {
-            m_currentBulletProperties.setNumFormat("I");
-            //m_currentBulletProperties.setNumFormat("一");
+            m_currentBulletProperties.setNumFormat("一");
         }
         else if (val == "none") //add openword
         {
