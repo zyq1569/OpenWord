@@ -2498,21 +2498,21 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
     {
         const KoGenStyle* pstyle = &m_currentParagraphStyle;
         QString styleID = pstyle->parentName();
-        if (styleID.startsWith("Head"))
+        if (styleID.toLower().startsWith("head"))
         {
             pstyle = mainStyles->style(styleID, "paragraph");
             QString numId = pstyle->attribute("style:default-numId");
-            if (numId != "0")
-            {
-                m_listFound = true;
-                m_currentBulletList = m_context->m_bulletStyles[numId];
-                m_currentNumId = numId;
-            }
+            //if (numId != "")
+            //{
+            m_listFound = true;
+            m_currentBulletList = m_context->m_bulletStyles[numId];
+            m_currentNumId = numId;
+            //}
             //if (!m_currentListLevel)
-            {
-                //m_currentListLevel = pstyle->attribute("style:default-ilvl").toUInt();
-                m_currentListLevel = styleID.right(1).toInt();
-            }
+            //{
+            //m_currentListLevel = pstyle->attribute("style:default-ilvl").toUInt();
+            m_currentListLevel = styleID.right(1).toInt();
+            //}
         }
     }
 
@@ -2635,7 +2635,6 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
             // In ooxml it seems that nothing should be created if sectPr was present
             if (!m_createSectionToNext)
             {
-                //int sublist = m_currentNumId.toInt();
                 if (m_listFound)
                 {
                     // update the size of a bullet picture
@@ -2729,7 +2728,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                     QString listStyleName = mainStyles->insert(m_currentListStyle, QString());
                     Q_ASSERT(!listStyleName.isEmpty());
                     //TODO: continue an opened list based on this information
-//                     m_usedListStyles.insertMulti(m_currentNumId, listStyleName);
+                    //m_usedListStyles.insertMulti(m_currentNumId, listStyleName);
 
                     // Start a new list
                     body->startElement("text:list");
@@ -2743,11 +2742,11 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                         key.append(QString(".lvl%1").arg(m_currentListLevel));
 
                         // Keeping the id readable for debugging purpose
-//                      QString xmlId = key;
-//                      xmlId.append(QString("_%1").arg(m_numIdXmlId[key].first)).prepend("lst");
-//                      xmlId.append(QString("_%1").arg(qrand()));
-//                      body->addAttribute("xml:id", xmlId);
-//                      body->addAttribute("xml:id", key);
+                        // QString xmlId = key;
+                        // xmlId.append(QString("_%1").arg(m_numIdXmlId[key].first)).prepend("lst");
+                        // xmlId.append(QString("_%1").arg(qrand()));
+                        // body->addAttribute("xml:id", xmlId);
+                        // body->addAttribute("xml:id", key);
 
                         if (m_continueListNum.contains(m_currentNumId))
                         {
@@ -2762,18 +2761,18 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                     body->startElement("text:list-item");
 
                     /// openword
-                    for (uint i = 0; i < outlineLevel; ++i)
+                    //if (0)
+                    //    for (uint i = 0; i < outlineLevel; ++i)
+                    //    {
+                    //        body->startElement("text:list");
+                    //        body->startElement("text:list-item");
+                    //    }
+                    //else
+                    for (int i = 0; i < m_currentListLevel; ++i)
                     {
                         body->startElement("text:list");
                         body->startElement("text:list-item");
                     }
-                    ///-----------------------------------------------
-                    ///
-                    //for (int i = 0; i < m_currentListLevel; ++i)
-                    //{
-                    //    body->startElement("text:list");
-                    //    body->startElement("text:list-item");
-                    //}
 
                     // restart numbering if applicable
                     if (m_currentBulletProperties.m_type == MSOOXML::Utils::ParagraphBulletProperties::NumberType)
@@ -2832,18 +2831,18 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                 {
                     ///-----------------------------------------------
                     ///
-                    for (uint i = 0; i <= outlineLevel; ++i)
+                    //if (0)
+                    //    for (uint i = 0; i <= outlineLevel; ++i)
+                    //    {
+                    //        body->endElement(); //text:list-item
+                    //        body->endElement(); //text:list
+                    //    }
+                    //else
+                    for (int i = 0; i <= m_currentListLevel; ++i)
                     {
                         body->endElement(); //text:list-item
                         body->endElement(); //text:list
                     }
-                    ///-----------------------------------------------
-                    ///
-                    //for (int i = 0; i <= m_currentListLevel+1; ++i)
-                    //{
-                    //    body->endElement(); //text:list-item
-                    //    body->endElement(); //text:list
-                    //}
                 }
                 //debugDocx << "/text:p";
             }
