@@ -2760,14 +2760,6 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                     }
                     body->startElement("text:list-item");
 
-                    /// openword
-                    //if (0)
-                    //    for (uint i = 0; i < outlineLevel; ++i)
-                    //    {
-                    //        body->startElement("text:list");
-                    //        body->startElement("text:list-item");
-                    //    }
-                    //else
                     for (int i = 0; i < m_currentListLevel; ++i)
                     {
                         body->startElement("text:list");
@@ -2829,15 +2821,6 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
 
                 if (m_listFound)
                 {
-                    ///-----------------------------------------------
-                    ///
-                    //if (0)
-                    //    for (uint i = 0; i <= outlineLevel; ++i)
-                    //    {
-                    //        body->endElement(); //text:list-item
-                    //        body->endElement(); //text:list
-                    //    }
-                    //else
                     for (int i = 0; i <= m_currentListLevel; ++i)
                     {
                         body->endElement(); //text:list-item
