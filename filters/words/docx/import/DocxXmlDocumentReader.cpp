@@ -2498,7 +2498,8 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
     {
         const KoGenStyle* pstyle = &m_currentParagraphStyle;
         QString styleID = pstyle->parentName();
-        if (styleID.toLower().startsWith("head"))
+        //if (styleID.toLower().startsWith("head"))
+        if (styleID.startsWith("Head"))
         {
             pstyle = mainStyles->style(styleID, "paragraph");
             QString numId = pstyle->attribute("style:default-numId");
@@ -2571,7 +2572,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
 
     // take outline level from style's default-outline-level,
     // there is no text:outline-level equivalent in OOXML
-    QString outlineLevelAttribute, styleId;//, stylename;
+    QString outlineLevelAttribute;
     const KoGenStyle* pstyle = &m_currentParagraphStyle;
     do
     {
@@ -2582,8 +2583,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
             break;
         }
         // next in hierarchy
-        styleId = pstyle->parentName();
-        pstyle = mainStyles->style(styleId/*pstyle->parentName()*/, "paragraph");
+        pstyle = mainStyles->style(pstyle->parentName(), "paragraph");
     }
     while (pstyle);
 
@@ -2784,6 +2784,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                 {
                     body->addAttribute("text:outline-level", outlineLevel);
                 }
+
                 if (m_currentStyleName.isEmpty())
                 {
                     QString currentParagraphStyleName;
