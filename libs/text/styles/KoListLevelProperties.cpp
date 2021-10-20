@@ -541,8 +541,7 @@ void KoListLevelProperties::loadOdf(KoShapeLoadingContext& scontext, const KoXml
     const int level = qMax(1, style.attributeNS(KoXmlNS::text, "level", QString()).toInt());
     // The text:display-levels attribute specifies the number of
     // levels whose numbers are displayed at the current level.
-    const QString displayLevel = style.attributeNS(KoXmlNS::text,
-                                 "display-levels", QString());
+    const QString displayLevel = style.attributeNS(KoXmlNS::text,"display-levels", QString());
 
     const QString styleName = style.attributeNS(KoXmlNS::text, "style-name", QString());
     KoCharacterStyle *cs = 0;

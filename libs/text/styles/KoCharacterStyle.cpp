@@ -562,7 +562,7 @@ void KoCharacterStyle::applyStyle(QTextCharFormat &format, bool emitSignal) cons
 
     foreach (int property, clearProperty)
     {
-        debugText << "clearProperty" << property;
+        //debugText << "clearProperty" << property;
         format.clearProperty(property);
     }
     if (emitSignal)
