@@ -2537,12 +2537,12 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
             {
                 textStyle.removeProperty("style:font-name");
                 textStyle.removeProperty("style:font-name-complex");
-            }
+            //}
             //MSWord: A label does NOT inherit Underline from text-properties
             //of the paragraph style.  A bullet/picture does not inherit
             //{Italics, Bold}.
-            if (m_currentBulletProperties.m_type != MSOOXML::Utils::ParagraphBulletProperties::NumberType)
-            {
+            //if (m_currentBulletProperties.m_type != MSOOXML::Utils::ParagraphBulletProperties::NumberType)
+            //{
                 textStyle.removeProperty("fo:font-style");
                 textStyle.removeProperty("fo:font-weight");
             }
