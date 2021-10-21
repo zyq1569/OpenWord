@@ -489,6 +489,11 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read_lvlText()
             }
             else
             {
+                QString vl = val.left(1);
+                if (vl != '%')
+                {
+                    m_currentBulletProperties.setPrefix(vl);
+                }
                 m_currentBulletProperties.setSuffix(val.right(1));
             }
         }
