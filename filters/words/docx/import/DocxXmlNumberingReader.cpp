@@ -150,6 +150,7 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read_abstractNum()
                 TRY_READ(lvl)
                 m_currentBulletList.append(m_currentBulletProperties);
             }
+            ELSE_TRY_READ_IF(multiLevelType)
             SKIP_UNKNOWN
         }
     }
@@ -489,6 +490,9 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read_lvlText()
             }
             else
             {
+                //<w:lvlText w:val="（%1）"/>
+                //<w:lvlText w:val="%1、"/>
+                //<w:lvlText w:val="%1."/>
                 QString vl = val.left(1);
                 if (vl != '%')
                 {
@@ -904,3 +908,45 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read_ind_numbering()
 //     READ_EPILOGUE
 // }
 
+
+//#define READ_PROLOGUE \
+//    READ_PROLOGUE2(CURRENT_EL)
+//#define READ_PROLOGUE2(method) \
+//    if (!expectEl(QUALIFIED_NAME(CURRENT_EL))) { \
+//        return KoFilter::WrongFormat; \
+//    } \
+//    PUSH_NAME_INTERNAL \
+//# define PUSH_NAME_INTERNAL \
+//    /*debugMsooXml << CALL_STACK_TOP_NAME << "==>" << QUALIFIED_NAME(CURRENT_EL); */\
+//    m_callsNamesDebug.push(STRINGIFY(CURRENT_EL));
+
+#undef CURRENT_EL
+#define CURRENT_EL multiLevelType
+//Specifies the type of numbering defined--single level, multi-level,
+//etc.: <w:multiLevelType w:val="multilevel"/>.
+// This is only used by the word processing application
+// to determine user interface behaviors and does not limit the list in any way.
+// So, for example, a list marked as singleLevel
+// will not be prevented from using levels 2 through 9.
+//It has just one attribute val with the following possible values:
+
+//singleLevel      - specifies a format with only on level
+//multiLevel       - specifies a list of multiple levels, each of the same kind (bullets or level text)
+//hybridMultiLevel - specifies a list of multiple levels, each of a potentially different kind (bullets or level text)
+//Reference:         ECMA-376, 3rd Edition (June, 2011), Fundamentals and Markup Language Reference § 17.9.13.
+
+KoFilter::ConversionStatus DocxXmlNumberingReader::read_multiLevelType()
+{
+    READ_PROLOGUE
+
+    const QXmlStreamAttributes attrs(attributes());
+
+    TRY_READ_ATTR(val)
+    if (!val.isEmpty())
+    {
+        m_currentBulletProperties.setMultiLevelType(val);
+    }
+
+    readNext();
+    READ_EPILOGUE
+}

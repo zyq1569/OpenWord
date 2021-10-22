@@ -59,6 +59,7 @@ protected:
 /*     KoFilter::ConversionStatus read_rPr_numbering(); */
 /*     KoFilter::ConversionStatus read_rFonts_numbering(); */
 /*     KoFilter::ConversionStatus read_color_numbering(); */
+    KoFilter::ConversionStatus read_multiLevelType(); //add openword
 
     bool m_bulletStyle;
 
