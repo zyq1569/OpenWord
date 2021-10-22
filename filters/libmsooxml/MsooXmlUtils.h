@@ -114,6 +114,10 @@ public:
 
     void setStartOverride(const bool startOverride);
 
+    void setMultiLevelType(const QString&multiLevelType);
+
+    QString multiLevelType() const;
+
     QString startValue() const;
 
     QString bulletRelativeSize() const;
@@ -162,6 +166,7 @@ private:
 
     KoGenStyle m_textStyle;
 
+    QString m_multiLevelType; //add openword 20211022
     // MSWord specific: Restart the numbering when this list style is
     // used for the 1st time.  Otherwise don't restart in case any of the
     // styles inheriting from the same abstract numbering definition was

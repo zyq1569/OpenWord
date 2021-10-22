@@ -1881,3 +1881,12 @@ QString Utils::ParagraphBulletProperties::convertToListProperties(KoGenStyles& m
     return QString::fromUtf8(buf.buffer(), buf.buffer().size());
 }
 
+void Utils::ParagraphBulletProperties::setMultiLevelType(const QString&multiLevelType)
+{
+    m_multiLevelType = multiLevelType;
+}
+
+QString Utils::ParagraphBulletProperties::multiLevelType() const
+{
+    return m_multiLevelType;
+}
