@@ -718,6 +718,12 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_name()
     //debugDocx << "read_name m_name:" << m_name;
     //openword 20210924目前没有使用??????如何转为ODT格式中
     //m_name.replace(QLatin1Char(' '), QLatin1Char('_'));
+    if (m_name.startsWith(QLatin1String("heading")))
+    {
+        m_name = m_name.replace("heading","Head");
+    }
+    m_currentParagraphStyle.addAttribute("text:style-name", m_name);
+    m_currentStyleName = m_name;
     readNext();
     READ_EPILOGUE
 }
