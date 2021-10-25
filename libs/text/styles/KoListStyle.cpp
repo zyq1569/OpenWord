@@ -195,7 +195,7 @@ void KoListStyle::loadOdf(KoShapeLoadingContext& scontext, const KoXmlElement& s
     {
         d->name = style.attributeNS(KoXmlNS::style, "name", QString());
     }
-    d->name = style.attributeNS(KoXmlNS::style, "name", QString());
+    //d->name = style.attributeNS(KoXmlNS::style, "name", QString());
 
     KoXmlElement styleElem;
     forEachElement(styleElem, style)
