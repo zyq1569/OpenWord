@@ -102,6 +102,7 @@ public:
         Gurumukhi,
         Gujarati,
         Bengali,
+        ChineseCounting,
         Empty
     };
 
