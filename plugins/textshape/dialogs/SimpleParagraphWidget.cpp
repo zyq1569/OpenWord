@@ -66,25 +66,28 @@
 #include <QDebug>
 
 SimpleParagraphWidget::SimpleParagraphWidget(TextTool *tool, QWidget *parent)
-        : QWidget(parent)
-        , m_styleManager(0)
-        , m_blockSignals(false)
-        , m_tool(tool)
-        , m_directionButtonState(Auto)
-        , m_thumbnailer(new KoStyleThumbnailer())
-        , m_stylesModel(new StylesModel(0, StylesModel::ParagraphStyle))
-        , m_sortedStylesModel(new DockerStylesComboModel())
-        , m_stylesDelegate(0)
+    : QWidget(parent)
+    , m_styleManager(0)
+    , m_blockSignals(false)
+    , m_tool(tool)
+    , m_directionButtonState(Auto)
+    , m_thumbnailer(new KoStyleThumbnailer())
+    , m_stylesModel(new StylesModel(0, StylesModel::ParagraphStyle))
+    , m_sortedStylesModel(new DockerStylesComboModel())
+    , m_stylesDelegate(0)
 {
     widget.setupUi(this);
     widget.alignCenter->setDefaultAction(tool->action("format_aligncenter"));
     widget.alignBlock->setDefaultAction(tool->action("format_alignblock"));
     // RTL layout will reverse the button order, but the align left/right then get mixed up.
     // this makes sure that whatever happens the 'align left' is to the left of the 'align right'
-    if (QApplication::isRightToLeft()) {
+    if (QApplication::isRightToLeft())
+    {
         widget.alignLeft->setDefaultAction(tool->action("format_alignright"));
         widget.alignRight->setDefaultAction(tool->action("format_alignleft"));
-    } else {
+    }
+    else
+    {
         widget.alignLeft->setDefaultAction(tool->action("format_alignleft"));
         widget.alignRight->setDefaultAction(tool->action("format_alignright"));
     }
@@ -133,7 +136,8 @@ SimpleParagraphWidget::~SimpleParagraphWidget()
     KoShapeSavingContext savingContext(writer, genStyles, mainStyles);
 
     writer.startElement("templates:templates");
-    foreach (const KoListLevelProperties &llp, m_levelLibrary) {
+    foreach (const KoListLevelProperties &llp, m_levelLibrary)
+    {
         llp.saveOdf(&writer, savingContext);
     }
     writer.endElement(); // list-level-properties
@@ -165,8 +169,11 @@ QPixmap SimpleParagraphWidget::generateListLevelPixmap(const KoListLevelProperti
     QPainter p(&pm);
     p.translate(0, -1.5);
     p.setRenderHint(QPainter::Antialiasing);
-    if(llp.labelType() == KoListStyle::None) {
-    } else if (KoListStyle::isNumberingStyle(llp.labelType())) {
+    if(llp.labelType() == KoListStyle::None)
+    {
+    }
+    else if (KoListStyle::isNumberingStyle(llp.labelType()))
+    {
         KoListStyle listStyle;
 
         listStyle.setLevelProperties(llp);
@@ -188,7 +195,9 @@ QPixmap SimpleParagraphWidget::generateListLevelPixmap(const KoListLevelProperti
         cursor.insertText("\n----");
         cursorBlock = cursor.block();
         KoTextBlockData data3(cursorBlock);
-    } else {
+    }
+    else
+    {
         KoListStyle listStyle;
         listStyle.setLevelProperties(llp);
         cursor.select(QTextCursor::Document);
@@ -204,7 +213,9 @@ QPixmap SimpleParagraphWidget::generateListLevelPixmap(const KoListLevelProperti
 
     KoTextDocumentLayout *lay = dynamic_cast<KoTextDocumentLayout*>(textShape.textShapeData()->document()->documentLayout());
     if(lay)
+    {
         lay->layout();
+    }
 
     KoShapePaintingContext paintContext; //FIXME
     textShape.paintComponent(p, zoomHandler, paintContext);
@@ -219,19 +230,23 @@ void SimpleParagraphWidget::fillListButtons()
     QString formats = appAuthorGroup.readEntry("listLevelFormats", QString());
     formats.replace("\n", "");
 
-    if (false/*!formats.isEmpty()*/) {
+    if (false/*!formats.isEmpty()*/)
+    {
 
         KoXmlDocument document;
         document.setContent(formats);
         KoXmlElement styleElem;
-        forEachElement(styleElem, document.documentElement()) {
+        forEachElement(styleElem, document.documentElement())
+        {
             KoListLevelProperties llp;
-    //        properties.loadOdf(scontext, styleElem);
+            //properties.loadOdf(scontext, styleElem);
             m_levelLibrary.append(llp);
         }
-    //    KoOdfLoadingContext odfContext;
-    //    KoShapeLoadingContext loadingContext(odfContext);
-    } else {
+        //KoOdfLoadingContext odfContext;
+        //KoShapeLoadingContext loadingContext(odfContext);
+    }
+    else
+    {
         KoListStyle listStyle;
         KoListLevelProperties llp = listStyle.levelProperties(1);
         llp.setMargin(36.0);
@@ -298,6 +313,11 @@ void SimpleParagraphWidget::fillListButtons()
         llp.setLabelType(KoListStyle::NumberLabelType);
         llp.setNumberFormat(KoOdfNumberDefinition::RomanUpperCase);
         llp.setListItemSuffix("");
+
+        llp.setLabelType(KoListStyle::NumberLabelType);
+        llp.setNumberFormat(KoOdfNumberDefinition::ChineseCounting);
+        llp.setListItemSuffix("一");
+
         m_levelLibrary.append(llp);
     }
 
@@ -308,7 +328,8 @@ void SimpleParagraphWidget::fillListButtons()
 
     m_libraryChooserAction = widget.bulletListButton->addItemChooser(5, i18n("Library of Level Formats"));
     id=1000;
-    foreach(const KoListLevelProperties &llp, m_levelLibrary) {
+    foreach(const KoListLevelProperties &llp, m_levelLibrary)
+    {
         widget.bulletListButton->addItem(m_libraryChooserAction, generateListLevelPixmap(llp), id);
         QAction *a = widget.bulletListButton->addItemMenuItem(m_libraryChooserAction, id, i18n("Delete"));
         a->setData(id);
@@ -325,7 +346,8 @@ void SimpleParagraphWidget::fillListButtons()
     action->setToolTip(i18n("Define new bullet or numbering format"));
     widget.bulletListButton->addAction(action);
     connect(action, SIGNAL(triggered(bool)), this, SLOT(defineLevelFormat()));
-/*    action = new QAction(i18n("Continue Previous List"),this);
+    /*
+    action = new QAction(i18n("Continue Previous List"),this);
     action->setToolTip(i18n("Continue the list from a previous list"));
     widget.bulletListButton->addAction(action);
     action = new QAction(i18n("Set Numbering Value..."),this);
@@ -352,8 +374,10 @@ void SimpleParagraphWidget::defineLevelFormat()
     llp.setLabelFollowedBy(KoListStyle::ListTab);
     llw->setDisplay(llp);
 
-    if (dia.exec()) {
-        for(int i = 0; i < m_levelLibrary.size(); ++i) {
+    if (dia.exec())
+    {
+        for(int i = 0; i < m_levelLibrary.size(); ++i)
+        {
             KoListLevelProperties llp = m_levelLibrary.at(i);
             llp.setLevel(1);
             widget.bulletListButton->addItem(m_libraryChooserAction, generateListLevelPixmap(m_levelLibrary.at(i)), i+1000);
@@ -376,17 +400,21 @@ void SimpleParagraphWidget::defineLevelFormat()
 
 void SimpleParagraphWidget::setCurrentBlock(const QTextBlock &block)
 {
-    if (block == m_currentBlock) {
+    if (block == m_currentBlock)
+    {
         return;
     }
 
     m_currentBlock = block;
     m_blockSignals = true;
-    struct Finally {
-        Finally(SimpleParagraphWidget *p) {
+    struct Finally
+    {
+        Finally(SimpleParagraphWidget *p)
+        {
             parent = p;
         }
-        ~Finally() {
+        ~Finally()
+        {
             parent->m_blockSignals = false;
         }
         SimpleParagraphWidget *parent;
@@ -399,49 +427,60 @@ void SimpleParagraphWidget::setCurrentBlock(const QTextBlock &block)
 void SimpleParagraphWidget::setCurrentFormat(const QTextBlockFormat &format)
 {
     if (!m_styleManager || format == m_currentBlockFormat)
+    {
         return;
+    }
     m_currentBlockFormat = format;
 
     int id = m_currentBlockFormat.intProperty(KoParagraphStyle::StyleId);
     KoParagraphStyle *style(m_styleManager->paragraphStyle(id));
-    if (style) {
+    if (style)
+    {
         bool unchanged = true;
 
-        foreach(int property, m_currentBlockFormat.properties().keys()) {
-            switch (property) {
-            case QTextFormat::ObjectIndex:
-            case KoParagraphStyle::ListStyleId:
-            case KoParagraphStyle::OutlineLevel:
-            case KoParagraphStyle::ListStartValue:
-            case KoParagraphStyle::IsListHeader:
-            case KoParagraphStyle::UnnumberedListItem:
-                continue;
-            // These can be both content and style properties so let's ignore
-            case KoParagraphStyle::BreakBefore:
-            case KoParagraphStyle::MasterPageName:
-                continue;
+        foreach(int property, m_currentBlockFormat.properties().keys())
+        {
+            switch (property)
+            {
+                case QTextFormat::ObjectIndex:
+                case KoParagraphStyle::ListStyleId:
+                case KoParagraphStyle::OutlineLevel:
+                case KoParagraphStyle::ListStartValue:
+                case KoParagraphStyle::IsListHeader:
+                case KoParagraphStyle::UnnumberedListItem:
+                    continue;
+                // These can be both content and style properties so let's ignore
+                case KoParagraphStyle::BreakBefore:
+                case KoParagraphStyle::MasterPageName:
+                    continue;
 
-            default:
-                break;
+                default:
+                    break;
             }
-            if (property == QTextBlockFormat::BlockAlignment) { //the default alignment can be retrieved in the defaultTextOption. However, calligra sets the Qt::AlignAbsolute flag, so we need to or this flag with the default alignment before comparing.
+            if (property == QTextBlockFormat::BlockAlignment)   //the default alignment can be retrieved in the defaultTextOption. However, calligra sets the Qt::AlignAbsolute flag, so we need to or this flag with the default alignment before comparing.
+            {
                 if ((m_currentBlockFormat.property(property) != style->value(property))
                         && !(style->value(property).isNull()
-                             && ((m_currentBlockFormat.intProperty(property)) == int(m_currentBlock.document()->defaultTextOption().alignment()| Qt::AlignAbsolute)))) {
+                             && ((m_currentBlockFormat.intProperty(property)) == int(m_currentBlock.document()->defaultTextOption().alignment()| Qt::AlignAbsolute))))
+                {
                     unchanged = false;
                     break;
                 }
-                else {
+                else
+                {
                     continue;
                 }
             }
-            if (property == KoParagraphStyle::TextProgressionDirection) {
-                if (style->value(property).isNull() && m_currentBlockFormat.intProperty(property) == KoText::LeftRightTopBottom) {
+            if (property == KoParagraphStyle::TextProgressionDirection)
+            {
+                if (style->value(property).isNull() && m_currentBlockFormat.intProperty(property) == KoText::LeftRightTopBottom)
+                {
                     //LTR seems to be Qt default when unset
                     continue;
                 }
             }
-            if ((m_currentBlockFormat.property(property) != style->value(property)) && !(style->value(property).isNull() && !m_currentBlockFormat.property(property).toBool())) {
+            if ((m_currentBlockFormat.property(property) != style->value(property)) && !(style->value(property).isNull() && !m_currentBlockFormat.property(property).toBool()))
+            {
                 //the last check seems to work. might be cause of a bug. The problem is when comparing an unset property in the style with a set to {0, false, ...) property in the format (eg. set then unset bold)
                 unchanged = false;
                 break;
@@ -461,10 +500,12 @@ void SimpleParagraphWidget::setCurrentFormat(const QTextBlockFormat &format)
 void SimpleParagraphWidget::setStyleManager(KoStyleManager *sm)
 {
     Q_ASSERT(sm);
-    if (!sm || m_styleManager == sm) {
+    if (!sm || m_styleManager == sm)
+    {
         return;
     }
-    if (m_styleManager) {
+    if (m_styleManager)
+    {
         disconnect(m_styleManager, SIGNAL(styleApplied(const KoParagraphStyle*)), this, SLOT(slotParagraphStyleApplied(const KoParagraphStyle*)));
     }
     m_styleManager = sm;
@@ -484,22 +525,30 @@ void SimpleParagraphWidget::setInitialUsedStyles(QVector<int> list)
 void SimpleParagraphWidget::listStyleChanged(int id)
 {
     emit doneWithFocus();
-    if (m_blockSignals) return;
+    if (m_blockSignals)
+    {
+        return;
+    }
     KoListLevelProperties llp;
 
-    if (id >= 1000) {
+    if (id >= 1000)
+    {
         llp = m_levelLibrary.at(id-1000);
-    } else {
+    }
+    else
+    {
         llp = m_recentListFormats.at(id-1);
         m_recentListFormats.removeAt(id-1);
     }
 
     llp.setLevel(1);
     m_recentListFormats.prepend(llp);
-    if (m_recentListFormats.size() > 5) {
+    if (m_recentListFormats.size() > 5)
+    {
         m_recentListFormats.removeLast();
     }
-    for(int i = 0; i < m_recentListFormats.size(); ++i) {
+    for(int i = 0; i < m_recentListFormats.size(); ++i)
+    {
         widget.bulletListButton->addItem(m_recentChooserAction, generateListLevelPixmap(m_recentListFormats.at(i)), i+1); // +1 as items are 1 based
     }
     KoTextEditor::ChangeListFlags flags(KoTextEditor::AutoListStyle | KoTextEditor::DontUnsetIfSame);
@@ -512,18 +561,21 @@ void SimpleParagraphWidget::deleteLevelFormat()
     m_levelLibrary.takeAt(id-1000);
     widget.bulletListButton->removeLastItem(m_libraryChooserAction);
 
-    for(int i = 0; i < m_levelLibrary.size(); ++i) {
+    for(int i = 0; i < m_levelLibrary.size(); ++i)
+    {
         KoListLevelProperties llp = m_levelLibrary.at(i);
         llp.setLevel(1);
-        if(llp.labelType() != KoListStyle::None) {
+        if(llp.labelType() != KoListStyle::None)
+        {
             widget.bulletListButton->addItem(m_libraryChooserAction, generateListLevelPixmap(m_levelLibrary.at(i)), i+1000);
-/*            QAction *a = widget.bulletListButton->addItemMenuItem(m_libraryChooserAction, id, i18n("Delete"));
-            a->setData(id);
-            connect(a, SIGNAL(triggered(bool)), this, SLOT(deleteLevelFormat()));
-            a = widget.bulletListButton->addItemMenuItem(m_libraryChooserAction, id, i18n("Edit..."));
-            a->setData(id);
-            connect(a, SIGNAL(triggered(bool)), this, SLOT(editLevelFormat()));
-*/        }
+            /*            QAction *a = widget.bulletListButton->addItemMenuItem(m_libraryChooserAction, id, i18n("Delete"));
+                        a->setData(id);
+                        connect(a, SIGNAL(triggered(bool)), this, SLOT(deleteLevelFormat()));
+                        a = widget.bulletListButton->addItemMenuItem(m_libraryChooserAction, id, i18n("Edit..."));
+                        a->setData(id);
+                        connect(a, SIGNAL(triggered(bool)), this, SLOT(editLevelFormat()));
+            */
+        }
     }
 }
 
@@ -541,7 +593,8 @@ void SimpleParagraphWidget::editLevelFormat()
 
     llw->setDisplay(m_levelLibrary.at(id-1000));
 
-    if (dia.exec()) {
+    if (dia.exec())
+    {
         llw->save(m_levelLibrary[id-1000]);
         widget.bulletListButton->addItem(m_libraryChooserAction, generateListLevelPixmap(m_levelLibrary.at(id-1000)), id);
     }
@@ -551,7 +604,8 @@ void SimpleParagraphWidget::editLevelFormat()
 void SimpleParagraphWidget::styleSelected(int index)
 {
     KoParagraphStyle *paragStyle = m_styleManager->paragraphStyle(m_sortedStylesModel->index(index, 0, QModelIndex()).internalId());
-    if (paragStyle) {
+    if (paragStyle)
+    {
         emit paragraphStyleSelected(paragStyle);
     }
     emit doneWithFocus();
@@ -559,11 +613,13 @@ void SimpleParagraphWidget::styleSelected(int index)
 
 void SimpleParagraphWidget::styleSelected(const QModelIndex &index)
 {
-    if (!index.isValid()) {
+    if (!index.isValid())
+    {
         return;
     }
     KoParagraphStyle *paragStyle = m_styleManager->paragraphStyle(index.internalId());
-    if (paragStyle) {
+    if (paragStyle)
+    {
         emit paragraphStyleSelected(paragStyle);
     }
     emit doneWithFocus();
