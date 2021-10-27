@@ -99,13 +99,13 @@ void MsooXmlImport::writeConfigurationSettings(KoXmlWriter* settings) const
 
 KoFilter::ConversionStatus MsooXmlImport::createDocument(KoStore *outputStore,  KoOdfWriters *writers)
 {
-    debugMsooXml << "######################## start ####################";
+    //debugMsooXml << "######################## start ####################";
     KoFilter::ConversionStatus status = OK;
 //! @todo show this message in error details in the GUI:
     QString errorMessage;
 
     KZip* zip = new KZip(m_chain->inputFile());
-    debugMsooXml << "Store created";
+    //debugMsooXml << "Store created";
 
     QTemporaryFile* tempFile = 0;
 
@@ -186,7 +186,7 @@ KoFilter::ConversionStatus MsooXmlImport::createDocument(KoStore *outputStore,  
 //! @todo transmit the error to the GUI...
         debugMsooXml << errorMessage;
     }
-    debugMsooXml << "######################## done ####################";
+    //debugMsooXml << "######################## done ####################";
     delete tempFile;
     delete zip;
     return status;
