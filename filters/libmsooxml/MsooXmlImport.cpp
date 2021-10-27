@@ -97,8 +97,7 @@ void MsooXmlImport::writeConfigurationSettings(KoXmlWriter* settings) const
     settings->endElement();
 }
 
-KoFilter::ConversionStatus MsooXmlImport::createDocument(KoStore *outputStore,
-        KoOdfWriters *writers)
+KoFilter::ConversionStatus MsooXmlImport::createDocument(KoStore *outputStore,  KoOdfWriters *writers)
 {
     debugMsooXml << "######################## start ####################";
     KoFilter::ConversionStatus status = OK;
