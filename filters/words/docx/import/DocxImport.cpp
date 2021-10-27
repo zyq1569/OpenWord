@@ -153,8 +153,7 @@ bool DocxImport::acceptsDestinationMimeType(const QByteArray& mime) const
     return mime == "application/vnd.oasis.opendocument.text";
 }
 
-KoFilter::ConversionStatus DocxImport::parseParts(KoOdfWriters *writers, MSOOXML::MsooXmlRelationships *relationships,
-        QString& errorMessage)
+KoFilter::ConversionStatus DocxImport::parseParts(KoOdfWriters *writers, MSOOXML::MsooXmlRelationships *relationships, QString& errorMessage)
 {
     writers->body->addAttribute("text:use-soft-page-breaks", "true");
 
