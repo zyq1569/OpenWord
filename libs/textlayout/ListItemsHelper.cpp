@@ -41,20 +41,17 @@ ListItemsHelper::ListItemsHelper(QTextList *textList, const QFont &font)
 
 void ListItemsHelper::recalculateBlock(QTextBlock &block)
 {
+    QString str = block.text();
     //warnTextLayout;
     const QTextListFormat format = m_textList->format();
     const KoListStyle::LabelType labelType = static_cast<KoListStyle::LabelType>(format.style());
 
     const QString prefix = format.stringProperty(KoListStyle::ListItemPrefix);
     const QString suffix = format.stringProperty(KoListStyle::ListItemSuffix);
-    const int level = format.intProperty(KoListStyle::Level);
-//    if (level == 2)
-//    {
-//        prefix = "(";
-//        suffix = ") ";
-//    }
+    const int      level = format.intProperty(KoListStyle::Level);
+
     int dp = format.intProperty(KoListStyle::DisplayLevel);
-    if (dp > level)
+    if (dp > level)///??? dp值的输入?????20211019
     {
         dp = level;
     }
@@ -89,8 +86,16 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
     if (!fixed)
     {
         //if this is the first item then find if the list has to be continued from any other list
-        KoList *listContinued = 0;
-        if (m_textList->itemNumber(block) == 0 && KoTextDocument(m_textList->document()).list(m_textList) && (listContinued = KoTextDocument(m_textList->document()).list(m_textList)->listContinuedFrom()))
+        KoList *listContinued = 0 ;
+        KoList *listItem = KoTextDocument(m_textList->document()).list(m_textList);
+        int itemNumber = m_textList->itemNumber(block);
+        if (listItem)
+        {
+            listContinued = listItem->listContinuedFrom();
+        }
+        //if (/*m_textList->itemNumber(block) == */0 == itemNumber && KoTextDocument(m_textList->document()).list(m_textList) &&
+        //        (listContinued = KoTextDocument(m_textList->document()).list(m_textList)->listContinuedFrom()))
+        if (0 == itemNumber && listItem && listContinued)
         {
             //find the previous list of the same level
             QTextList *previousTextList = listContinued->textLists().at(level - 1).data();
@@ -103,7 +108,7 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
                 }
             }
         }
-        else if (m_textList->itemNumber(block) > 0)
+        else if (itemNumber > 0)//else if (/*m_textList->itemNumber(block)*/itemNumber > 0)
         {
             QTextBlock textBlock = m_textList->item(m_textList->itemNumber(block) - 1);
             if (textBlock.isValid())
