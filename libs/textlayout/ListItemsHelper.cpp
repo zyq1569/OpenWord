@@ -41,7 +41,6 @@ ListItemsHelper::ListItemsHelper(QTextList *textList, const QFont &font)
 
 void ListItemsHelper::recalculateBlock(QTextBlock &block)
 {
-    QString str = block.text();
     //warnTextLayout;
     const QTextListFormat format = m_textList->format();
     const KoListStyle::LabelType labelType = static_cast<KoListStyle::LabelType>(format.style());
@@ -93,8 +92,6 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
         {
             listContinued = listItem->listContinuedFrom();
         }
-        //if (/*m_textList->itemNumber(block) == */0 == itemNumber && KoTextDocument(m_textList->document()).list(m_textList) &&
-        //        (listContinued = KoTextDocument(m_textList->document()).list(m_textList)->listContinuedFrom()))
         if (0 == itemNumber && listItem && listContinued)
         {
             //find the previous list of the same level
@@ -108,7 +105,7 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
                 }
             }
         }
-        else if (itemNumber > 0)//else if (/*m_textList->itemNumber(block)*/itemNumber > 0)
+        else if (itemNumber > 0)
         {
             QTextBlock textBlock = m_textList->item(m_textList->itemNumber(block) - 1);
             if (textBlock.isValid())
