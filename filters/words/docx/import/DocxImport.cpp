@@ -189,8 +189,7 @@ KoFilter::ConversionStatus DocxImport::parseParts(KoOdfWriters *writers, MSOOXML
 
     // 2. parse theme for the document if a theme exists
     MSOOXML::DrawingMLTheme themes;
-    const QString docThemePathAndFile(relationships->targetForType(
-                                          documentPath, documentFile,
+    const QString docThemePathAndFile(relationships->targetForType( documentPath, documentFile,
                                           QLatin1String(MSOOXML::Schemas::officeDocument::relationships) + "/theme"));
     if (!docThemePathAndFile.isEmpty())
     {
@@ -239,8 +238,7 @@ KoFilter::ConversionStatus DocxImport::parseParts(KoOdfWriters *writers, MSOOXML
             MSOOXML::Utils::splitPathAndFile(stylesPathAndFile, &stylesPath, &stylesFile);
             DocxXmlDocumentReaderContext context(*this, stylesPath, stylesFile, *relationships, &themes);
 
-            RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(
-                                 stylesPathAndFile, &stylesReader, writers, errorMessage, &context) )
+            RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(stylesPathAndFile, &stylesReader, writers, errorMessage, &context))
 
             mainContext.m_tableStyles = context.m_tableStyles;
             mainContext.m_namedDefaultStyles = context.m_namedDefaultStyles;
@@ -260,8 +258,7 @@ KoFilter::ConversionStatus DocxImport::parseParts(KoOdfWriters *writers, MSOOXML
 
     if (!numberingPathAndFile.isEmpty())
     {
-        RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(
-                             numberingPathAndFile, &numberingReader, writers, errorMessage, &numberingContext) )
+        RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(numberingPathAndFile, &numberingReader, writers, errorMessage, &numberingContext))
     }
     mainContext.m_bulletStyles = numberingContext.m_bulletStyles;
     mainContext.m_abstractNumIDs = numberingContext.m_abstractNumIDs;
@@ -284,8 +281,7 @@ KoFilter::ConversionStatus DocxImport::parseParts(KoOdfWriters *writers, MSOOXML
         context.m_namedDefaultStyles = mainContext.m_namedDefaultStyles;
         context.m_abstractNumIDs = mainContext.m_abstractNumIDs;
 
-        RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(
-                             footnotePathAndFile, &footnoteReader, writers, errorMessage, &context) )
+        RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(footnotePathAndFile, &footnoteReader, writers, errorMessage, &context) )
         mainContext.m_footnotes = context.m_footnotes;
     }
     reportProgress(35);
@@ -303,8 +299,7 @@ KoFilter::ConversionStatus DocxImport::parseParts(KoOdfWriters *writers, MSOOXML
         context.m_bulletStyles = mainContext.m_bulletStyles;
         //TODO: m_abstractNumIDs and m_namedDefaultStyles might be needed
 
-        RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(
-                             commentPathAndFile, &commentReader, writers, errorMessage, &context) )
+        RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(commentPathAndFile, &commentReader, writers, errorMessage, &context))
         mainContext.m_comments = context.m_comments;
     }
 
@@ -324,8 +319,7 @@ KoFilter::ConversionStatus DocxImport::parseParts(KoOdfWriters *writers, MSOOXML
         context.m_namedDefaultStyles = mainContext.m_namedDefaultStyles;
         context.m_abstractNumIDs = mainContext.m_abstractNumIDs;
 
-        RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(
-                             endnotePathAndFile, &endnoteReader, writers, errorMessage, &context) )
+        RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(endnotePathAndFile, &endnoteReader, writers, errorMessage, &context))
         mainContext.m_endnotes = context.m_endnotes;
     }
     reportProgress(45);
@@ -334,8 +328,7 @@ KoFilter::ConversionStatus DocxImport::parseParts(KoOdfWriters *writers, MSOOXML
     // Some of the templates MIGHT be defined in numberingreader.
     DocxXmlDocumentReader documentReader(writers);
     documentReader.m_definedShapeTypes = numberingReader.m_definedShapeTypes;
-    RETURN_IF_ERROR( loadAndParseDocument(
-                         d->mainDocumentContentType(), &documentReader, writers, errorMessage, &mainContext) )
+    RETURN_IF_ERROR(loadAndParseDocument(d->mainDocumentContentType(), &documentReader, writers, errorMessage, &mainContext))
 //    }
     reportProgress(100);
 
