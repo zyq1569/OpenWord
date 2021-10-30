@@ -207,16 +207,16 @@ public:
         return m_parentName;
     }
 
-    /// Sets the name of style's stylewname.
-    void setStylewName(const QString &stylewname)
+    /// Sets the name of style's parent-style-Name.
+    void setParentStyleName(const QString &parentstylename)
     {
-        m_stylewname = stylewname;
+        m_parentstyleName = parentstylename;
     }
 
-    /// Return the name of style's m_stylewname, if set
-    QString stylewname() const
+    /// Return the name of style's parent-style-Name, if set
+    QString parentStyleName() const
     {
-        return m_stylewname;
+        return m_parentstyleName;
     }
 
     /**
@@ -581,7 +581,7 @@ private:
 
 /// to do ?stylewname() error {build/vs2019+qt}
 public:
-    QString m_stylewname;// stylewname() error!!! ?? to do vs+qt build
+    QString m_parentstyleName;// parent-style-name error!!! ?? to do vs+qt build
 //---------------------------------------------------------------------
 
 private:
