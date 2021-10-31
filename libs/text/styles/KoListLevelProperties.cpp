@@ -571,7 +571,8 @@ void KoListLevelProperties::loadOdf(KoShapeLoadingContext& scontext, const KoXml
         }
     }
 
-    if (style.localName() == "list-level-style-bullet")     // list with bullets
+    const QString localname = style.localName();
+    if (/*style.localName() == */"list-level-style-bullet" == localname)     // list with bullets
     {
         // special case bullets:
         //debugText << QChar(0x2202) << QChar(0x25CF) << QChar(0xF0B7) << QChar(0xE00C)
@@ -595,10 +596,10 @@ void KoListLevelProperties::loadOdf(KoShapeLoadingContext& scontext, const KoXml
         }
 
     }
-    else if (style.localName() == "list-level-style-number" || style.localName() == "outline-level-style")     // it's a numbered list
+    else if (/*style.localName() ==*/ "list-level-style-number"== localname || /*style.localName() ==*/ "outline-level-style" == localname)     // it's a numbered list
     {
 
-        if (style.localName() == "outline-level-style")
+        if (/*style.localName() ==*/ "outline-level-style" == localname)
         {
             setOutlineList(true);
         }
@@ -629,7 +630,7 @@ void KoListLevelProperties::loadOdf(KoShapeLoadingContext& scontext, const KoXml
         const QString startValue = style.attributeNS(KoXmlNS::text, "start-value", QString("1"));
         setStartValue(startValue.toInt());
     }
-    else if (style.localName() == "list-level-style-image")     // list with image
+    else if (/*style.localName() ==*/ "list-level-style-image" == localname)     // list with image
     {
         setLabelType(KoListStyle::ImageLabelType);
         KoImageCollection *imageCollection = scontext.imageCollection();
@@ -953,12 +954,12 @@ void KoListLevelProperties::saveOdf(KoXmlWriter *writer, KoShapeSavingContext &c
         liststyle.writeStyleProperties(writer, KoGenStyle::TextType);
     }
 
-//   debugText << "Key KoListStyle::ListItemPrefix :" << d->stylesPrivate.value(KoListStyle::ListItemPrefix);
-//   debugText << "Key KoListStyle::ListItemSuffix :" << d->stylesPrivate.value(KoListStyle::ListItemSuffix);
-//   debugText << "Key KoListStyle::CharacterStyleId :" << d->stylesPrivate.value(KoListStyle::CharacterStyleId);
-//   debugText << "Key KoListStyle::RelativeBulletSize :" << d->stylesPrivate.value(KoListStyle::RelativeBulletSize);
-//   debugText << "Key KoListStyle::Alignment :" << d->stylesPrivate.value(KoListStyle::Alignment);
-//   debugText << "Key KoListStyle::LetterSynchronization :" << d->stylesPrivate.value(KoListStyle::LetterSynchronization);
+    //debugText << "Key KoListStyle::ListItemPrefix :" << d->stylesPrivate.value(KoListStyle::ListItemPrefix);
+    //debugText << "Key KoListStyle::ListItemSuffix :" << d->stylesPrivate.value(KoListStyle::ListItemSuffix);
+    //debugText << "Key KoListStyle::CharacterStyleId :" << d->stylesPrivate.value(KoListStyle::CharacterStyleId);
+    //debugText << "Key KoListStyle::RelativeBulletSize :" << d->stylesPrivate.value(KoListStyle::RelativeBulletSize);
+    //debugText << "Key KoListStyle::Alignment :" << d->stylesPrivate.value(KoListStyle::Alignment);
+    //debugText << "Key KoListStyle::LetterSynchronization :" << d->stylesPrivate.value(KoListStyle::LetterSynchronization);
 
     writer->endElement();
 }
