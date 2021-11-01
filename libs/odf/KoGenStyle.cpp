@@ -243,8 +243,9 @@ void KoGenStyle::writeStyle(KoXmlWriter* writer, const KoGenStyles& styles, cons
         Q_ASSERT(m_parentName.isEmpty());
     }
     if (!m_familyName.isEmpty())
-        const_cast<KoGenStyle *>(this)->
-        addAttribute("style:family", QString::fromLatin1(m_familyName));
+    {
+        const_cast<KoGenStyle *>(this)-> addAttribute("style:family", QString::fromLatin1(m_familyName));
+    }
     else
     {
         if (qstrcmp(elementName, "style:style") == 0)
@@ -513,6 +514,10 @@ bool KoGenStyle::operator<(const KoGenStyle &other) const
     {
         return m_parentName < other.m_parentName;
     }
+    if (m_parentstyleName != other.m_parentstyleName)
+    {
+        return m_parentstyleName < other.m_parentstyleName;
+    }
     if (m_familyName != other.m_familyName)
     {
         return m_familyName < other.m_familyName;
@@ -580,6 +585,10 @@ bool KoGenStyle::operator==(const KoGenStyle &other) const
         return false;
     }
     if (m_parentName != other.m_parentName)
+    {
+        return false;
+    }
+    if (m_parentstyleName != other.m_parentstyleName)
     {
         return false;
     }
