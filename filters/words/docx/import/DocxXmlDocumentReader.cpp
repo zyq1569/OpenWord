@@ -1065,6 +1065,10 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_numFmt()
         {
             body->addAttribute("style:num-format", "");
         }
+        else if (val == "chineseCounting")
+        {
+            body->addAttribute("style:num-format", "一");
+        }
         else
         {
             body->addAttribute("style:num-format", "1");
@@ -2497,23 +2501,21 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
     if (!m_listFound)
     {
         const KoGenStyle* pstyle = &m_currentParagraphStyle;
-        QString styleID = pstyle->parentName();
-        //if (styleID.toLower().startsWith("head"))
-        if (styleID.startsWith("Head"))
+        if (pstyle)
         {
-            pstyle = mainStyles->style(styleID, "paragraph");
-            QString numId = pstyle->attribute("style:default-numId");
-            //if (numId != "")
-            //{
-            m_listFound = true;
-            m_currentBulletList = m_context->m_bulletStyles[numId];
-            m_currentNumId = numId;
-            //}
-            //if (!m_currentListLevel)
-            //{
-            //m_currentListLevel = pstyle->attribute("style:default-ilvl").toUInt();
-            m_currentListLevel = styleID.right(1).toInt();
-            //}
+            QString styleID = pstyle->parentName();
+            if (styleID.toLower().startsWith("head"))
+                //if (styleID.startsWith("Head"))
+            {
+                pstyle = mainStyles->style(styleID, "paragraph");
+                QString numId = pstyle->attribute("style:default-numId");
+                if (numId != "")
+                {
+                    m_listFound = true;
+                    m_currentBulletList = m_context->m_bulletStyles[numId];
+                    m_currentNumId = numId;
+                }
+            }
         }
     }
 
@@ -2569,24 +2571,35 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
             m_currentParagraphStyle.setParentName(m_context->m_namedDefaultStyles.value("paragraph"));
         }
     }
+    else
+    {
+        debugDocx << "m_currentParagraphStyle stylename:"<<m_currentPageStyle.m_parentstyleName;
+    }
 
     // take outline level from style's default-outline-level,
     // there is no text:outline-level equivalent in OOXML
     QString outlineLevelAttribute;
     const KoGenStyle* pstyle = &m_currentParagraphStyle;
-    do
+    //do
+    //{
+    //    outlineLevelAttribute = pstyle->attribute("style:default-outline-level");
+    //    // use isNull, empty string value is valid here
+    //    if (! outlineLevelAttribute.isNull())
+    //    {
+    //        m_currentParagraphStyle.setParentStyleName(pstyle->parentStyleName());
+    //        break;
+    //    }
+    //    // next in hierarchy
+    //    pstyle = mainStyles->style(pstyle->parentName(), "paragraph");
+    //}
+    //while (pstyle);
+    QString parentNameId = m_currentParagraphStyle.parentName();
+    const KoGenStyle* pstyleFind = mainStyles->style(parentNameId, "paragraph");
+    if (pstyleFind)
     {
-        outlineLevelAttribute = pstyle->attribute("style:default-outline-level");
-        // use isNull, empty string value is valid here
-        if (! outlineLevelAttribute.isNull())
-        {
-            break;
-        }
-        // next in hierarchy
-        pstyle = mainStyles->style(pstyle->parentName(), "paragraph");
+        outlineLevelAttribute = pstyleFind->attribute("style:default-outline-level");
+        m_currentParagraphStyle.setParentStyleName(pstyle->parentStyleName());
     }
-    while (pstyle);
-
 
     const uint outlineLevel = outlineLevelAttribute.toUInt();
 
@@ -2779,10 +2792,19 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                     m_currentParagraphStyle.addAttribute("style:list-style-name", listStyleName);
                 }
 
-                body->startElement((outlineLevel > 0) ? "text:h" : "text:p", false);
-                if (outlineLevel > 0)
+                //body->startElement((outlineLevel > 0) ? "text:h" : "text:p", false);
+                //if (outlineLevel > 0)
+                //{
+                //    body->addAttribute("text:outline-level", outlineLevel);
+                //}
+                if (outlineLevel)
                 {
+                    body->startElement("text:h", false);
                     body->addAttribute("text:outline-level", outlineLevel);
+                }
+                else
+                {
+                    body->startElement("text:p", false);
                 }
 
                 if (m_currentStyleName.isEmpty())
@@ -3697,7 +3719,6 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_ilvl()
         if (ok)
         {
             m_currentListLevel = listValue;
-            //m_currentParagraphStyle.addAttribute("style:default-ilvl", m_currentListLevel);
         }
     }
 
@@ -3741,6 +3762,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_numId()
     {
         if (val == "0")
         {
+            //numId 起始于1. 目前测试文档情况
             m_listFound = false; // spec says that this means deleted list
         }
         else
@@ -4213,7 +4235,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_outlineLvl()
             //QString str = m_currentParagraphStyle.stylewname();
             // stylewname() error!!! ?? to do vs2019+qt build
             //QString str = m_currentParagraphStyle.m_stylewname;
-            if (m_currentParagraphStyle.m_stylewname.contains("Title") || outlineLevelValue == 9)///openword
+            if (m_currentParagraphStyle.m_parentstyleName.contains("Title") || outlineLevelValue == 9)///openword
             {
                 m_currentParagraphStyle.addAttribute("style:default-outline-level", "");
             }
