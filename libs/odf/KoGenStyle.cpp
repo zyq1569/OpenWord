@@ -227,8 +227,7 @@ void KoGenStyle::writeStyle(KoXmlWriter* writer, const KoGenStyles& styles, cons
             {
                 // get family from parent style, just in case
                 // Note: this is saving code, don't convert to attributeNS!
-                const_cast<KoGenStyle *>(this)->
-                m_familyName = parentStyle->attribute("style:family").toLatin1();
+                const_cast<KoGenStyle *>(this)->m_familyName = parentStyle->attribute("style:family").toLatin1();
                 //debugOdf <<"Got familyname" << m_familyName <<" from parent";
             }
             if (parentStyle && !parentStyle->isDefaultStyle())
@@ -244,7 +243,7 @@ void KoGenStyle::writeStyle(KoXmlWriter* writer, const KoGenStyles& styles, cons
     }
     if (!m_familyName.isEmpty())
     {
-        const_cast<KoGenStyle *>(this)-> addAttribute("style:family", QString::fromLatin1(m_familyName));
+        const_cast<KoGenStyle *>(this)->addAttribute("style:family", QString::fromLatin1(m_familyName));
     }
     else
     {
@@ -272,8 +271,8 @@ void KoGenStyle::writeStyle(KoXmlWriter* writer, const KoGenStyles& styles, cons
     for (; it != m_attributes.constEnd(); ++it)
     {
         bool writeit = true;
-        if (parentStyle && it.key() != "style:family"  // always write the family out
-                && parentStyle->attribute(it.key()) == it.value())
+        // always write the family out
+        if (parentStyle && it.key() != "style:family" && parentStyle->attribute(it.key()) == it.value())
         {
             writeit = false;
         }
@@ -289,9 +288,8 @@ void KoGenStyle::writeStyle(KoXmlWriter* writer, const KoGenStyles& styles, cons
     {
         defaultPropertyType = propertyTypeByElementName(propertiesElementName);
     }
-    if (!m_properties[i].isEmpty() ||
-            !m_childProperties[defaultPropertyType].isEmpty() ||
-            !m_properties[defaultPropertyType].isEmpty())
+    if (!m_properties[i].isEmpty() || !m_childProperties[defaultPropertyType].isEmpty()
+            || !m_properties[defaultPropertyType].isEmpty())
     {
         if (createPropertiesTag)
         {
