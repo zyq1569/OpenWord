@@ -2763,7 +2763,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                         // xmlId.append(QString("_%1").arg(qrand()));
                         // body->addAttribute("xml:id", xmlId);
                         // body->addAttribute("xml:id", key);
-
+                        // The text:continue-list attribute specifies the xml:id value of a list that is to be continued.
                         if (m_continueListNum.contains(m_currentNumId))
                         {
                             if (m_continueListNum[m_currentNumId].second)
