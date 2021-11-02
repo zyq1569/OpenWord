@@ -2497,15 +2497,11 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
 //! @todo add ELSE_WRONG_FORMAT
         }
     }
-    //---------------------------------------------
+    //-----------------add openword-------------------
     if (!m_listFound)
     {
         const KoGenStyle* pstyle = &m_currentParagraphStyle;
-        //if (pstyle)
-        //{
         QString styleID = pstyle->parentName();
-        //if (styleID.toLower().startsWith("head"))
-        //    //if (styleID.startsWith("Head"))
         pstyle = mainStyles->style(styleID, "paragraph");
         if (pstyle)
         {
@@ -2515,11 +2511,17 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                 m_listFound = true;
                 m_currentBulletList = m_context->m_bulletStyles[numId];
                 m_currentNumId = numId;
+
+                //bool ok = false;
+                //QString val = pstyle->attribute("style:default-ilvl");
+                //uint listValue = val.toUInt(&ok);
+                //if (ok)
+                //{
+                //    m_currentListLevel = listValue;
+                //}
             }
         }
-        //}
     }
-
     //---------------------------------------------
 
     //---------------------------------------------
@@ -2593,7 +2595,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
     //    // next in hierarchy
     //    pstyle = mainStyles->style(pstyle->parentName(), "paragraph");
     //}
-    //while (pstyle);
+    //while (pstyle);//old code calligra//
     QString parentNameId = m_currentParagraphStyle.parentName();
     const KoGenStyle* pstyleFind = mainStyles->style(parentNameId, "paragraph");
     if (pstyleFind)
@@ -3720,6 +3722,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_ilvl()
         if (ok)
         {
             m_currentListLevel = listValue;
+            m_currentParagraphStyle.addAttribute("style:default-ilvl",val);//
         }
     }
 
