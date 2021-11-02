@@ -2501,22 +2501,23 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
     if (!m_listFound)
     {
         const KoGenStyle* pstyle = &m_currentParagraphStyle;
+        //if (pstyle)
+        //{
+        QString styleID = pstyle->parentName();
+        //if (styleID.toLower().startsWith("head"))
+        //    //if (styleID.startsWith("Head"))
+        pstyle = mainStyles->style(styleID, "paragraph");
         if (pstyle)
         {
-            QString styleID = pstyle->parentName();
-            if (styleID.toLower().startsWith("head"))
-                //if (styleID.startsWith("Head"))
+            QString numId = pstyle->attribute("style:default-numId");
+            if (numId != "")
             {
-                pstyle = mainStyles->style(styleID, "paragraph");
-                QString numId = pstyle->attribute("style:default-numId");
-                if (numId != "")
-                {
-                    m_listFound = true;
-                    m_currentBulletList = m_context->m_bulletStyles[numId];
-                    m_currentNumId = numId;
-                }
+                m_listFound = true;
+                m_currentBulletList = m_context->m_bulletStyles[numId];
+                m_currentNumId = numId;
             }
         }
+        //}
     }
 
     //---------------------------------------------
