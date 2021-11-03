@@ -203,8 +203,7 @@ KoFilter::ConversionStatus DocxImport::parseParts(KoOdfWriters *writers, MSOOXML
         MSOOXML::MsooXmlThemesReaderContext themecontext(themes, relationships, (MSOOXML::MsooXmlImport*)this,
                 docThemePath, docThemeFile);
 
-        KoFilter::ConversionStatus status
-            = loadAndParseDocument(&themesReader, docThemePathAndFile, errorMessage, &themecontext);
+        KoFilter::ConversionStatus status = loadAndParseDocument(&themesReader, docThemePathAndFile, errorMessage, &themecontext);
 
         debugDocx << "Reading ThemePathAndFile:" << docThemePathAndFile << "status=" << status;
     }
@@ -260,7 +259,7 @@ KoFilter::ConversionStatus DocxImport::parseParts(KoOdfWriters *writers, MSOOXML
     {
         RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(numberingPathAndFile, &numberingReader, writers, errorMessage, &numberingContext))
     }
-    mainContext.m_bulletStyles = numberingContext.m_bulletStyles;
+    mainContext.m_bulletStyles   = numberingContext.m_bulletStyles;
     mainContext.m_abstractNumIDs = numberingContext.m_abstractNumIDs;
 
     reportProgress(30);
@@ -314,10 +313,10 @@ KoFilter::ConversionStatus DocxImport::parseParts(KoOdfWriters *writers, MSOOXML
         QString endnotePath, endnoteFile;
         MSOOXML::Utils::splitPathAndFile(endnotePathAndFile, &endnotePath, &endnoteFile);
         DocxXmlDocumentReaderContext context(*this, endnotePath, endnoteFile, *relationships, &themes);
-        context.m_tableStyles = mainContext.m_tableStyles;
-        context.m_bulletStyles = mainContext.m_bulletStyles;
+        context.m_tableStyles        = mainContext.m_tableStyles;
+        context.m_bulletStyles       = mainContext.m_bulletStyles;
         context.m_namedDefaultStyles = mainContext.m_namedDefaultStyles;
-        context.m_abstractNumIDs = mainContext.m_abstractNumIDs;
+        context.m_abstractNumIDs     = mainContext.m_abstractNumIDs;
 
         RETURN_IF_ERROR( loadAndParseDocumentFromFileIfExists(endnotePathAndFile, &endnoteReader, writers, errorMessage, &context))
         mainContext.m_endnotes = context.m_endnotes;
