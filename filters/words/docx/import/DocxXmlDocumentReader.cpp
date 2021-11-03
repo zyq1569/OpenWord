@@ -2654,9 +2654,8 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                 if (m_listFound)
                 {
                     // update the size of a bullet picture
-                    if ((m_currentBulletProperties.m_type ==
-                            MSOOXML::Utils::ParagraphBulletProperties::PictureType) &&
-                            (m_currentBulletProperties.bulletSizePt() == "UNUSED"))
+                    if ((m_currentBulletProperties.m_type ==  MSOOXML::Utils::ParagraphBulletProperties::PictureType)
+                            && (m_currentBulletProperties.bulletSizePt() == "UNUSED"))
                     {
                         int percent = 100;
                         if (m_currentBulletProperties.bulletRelativeSize() != "UNUSED")
@@ -2758,11 +2757,13 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                         key.append(QString(".lvl%1").arg(m_currentListLevel));
 
                         // Keeping the id readable for debugging purpose
-                        // QString xmlId = key;
-                        // xmlId.append(QString("_%1").arg(m_numIdXmlId[key].first)).prepend("lst");
-                        // xmlId.append(QString("_%1").arg(qrand()));
-                        // body->addAttribute("xml:id", xmlId);
-                        // body->addAttribute("xml:id", key);
+                        QString xmlId = key;
+                        int ival = m_numIdXmlId[key].first;
+                        //xmlId.append(QString("_%1").arg(m_numIdXmlId[key].first)).prepend("lst");
+                        //xmlId.append(QString("_%1").arg(qrand()));
+                        xmlId.append(QString("_%1").arg(ival/*m_numIdXmlId[key].first*/)).prepend("list");
+                        body->addAttribute("xml:id", xmlId);
+                        //body->addAttribute("xml:id", key);
                         // The text:continue-list attribute specifies the xml:id value of a list that is to be continued.
                         if (m_continueListNum.contains(m_currentNumId))
                         {
@@ -3773,7 +3774,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_numId()
         {
             m_currentBulletList = m_context->m_bulletStyles[val];
             m_currentNumId = val;
-            // add "style:default-numId". 加载document.xml可以读取 //可能该值存放在styles.xml中
+            // add "style:default-numId". 加载document.xml可以读取 //也可能该值存放在styles.xml中
             m_currentParagraphStyle.addAttribute("style:default-numId",val);//
 
         }
