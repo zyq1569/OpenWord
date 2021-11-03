@@ -95,10 +95,10 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read(MSOOXML::MsooXmlReaderConte
     //}
 
     QXmlStreamNamespaceDeclarations namespaces(namespaceDeclarations());
-    for (int i = 0; i < namespaces.count(); i++)
-    {
-        debugDocx << "NS prefix:" << namespaces[i].prefix() << "uri:" << namespaces[i].namespaceUri();
-    }
+    //for (int i = 0; i < namespaces.count(); i++)
+    //{
+    //    debugDocx << "NS prefix:" << namespaces[i].prefix() << "uri:" << namespaces[i].namespaceUri();
+    //}
 //! @todo find out whether the namespace returned by namespaceUri()
 //!       is exactly the same ref as the element of namespaceDeclarations()
     if (!namespaces.contains(QXmlStreamNamespaceDeclaration("w", MSOOXML::Schemas::wordprocessingml)))
@@ -142,7 +142,7 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read(MSOOXML::MsooXmlReaderConte
     for (QMap<QByteArray, KoGenStyle*>::ConstIterator it(m_defaultStyles.constBegin());
             it != m_defaultStyles.constEnd(); ++it)
     {
-        debugDocx << it.key();
+        //debugDocx << it.key();
         mainStyles->insert(*it.value());
     }
     qDeleteAll(m_defaultStyles);
@@ -394,10 +394,10 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
         return KoFilter::WrongFormat;
     }
 
-    QString styleName;
-    READ_ATTR_INTO(styleId, styleName)
+    QString styleNameId;
+    READ_ATTR_INTO(styleId, styleNameId)
 
-    debugDocx << "Reading style of family:" << odfType << "[" << styleName << "]";
+    //debugDocx << "Reading style of family:" << odfType << "[" << styleNameId << "]";
 
     // Specifies that this style is the default for this style type.  This
     // property is used in conjunction with the type attribute to determine the
@@ -414,11 +414,11 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
     }
     else
     {
-        m_currentTextStyle = KoGenStyle(KoGenStyle::TextStyle, "text");
+        m_currentTextStyle      = KoGenStyle(KoGenStyle::TextStyle, "text");
         m_currentParagraphStyle = KoGenStyle(KoGenStyle::ParagraphStyle, "paragraph");
     }
 
-    QString nextStyleName;
+    QString nextStyleName, basedOnVal;
 
     while (!atEnd())
     {
@@ -429,12 +429,24 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
         {
             ///QStringRef str = qualifiedName();//读取<w:开始的内容如 <w:name/<w:basedOn/<w:next ...
             const QXmlStreamAttributes attrs(attributes());
-            TRY_READ_IF(name)
+            //TRY_READ_IF(name)
+            if (name() == "name")
+            {
+                TRY_READ(name)
+                if (type == "character")
+                {
+                    m_currentTextStyle.setParentStyleName(m_name);
+                }
+                else if (type == "paragraph")
+                {
+                    m_currentParagraphStyle.setParentStyleName(m_name);
+                }
+            }
             else if (name() == "rPr")
             {
                 if (type == "table")
                 {
-                    m_currentTextStyle = KoGenStyle(KoGenStyle::TextStyle, "text");
+                    m_currentTextStyle            = KoGenStyle(KoGenStyle::TextStyle, "text");
                     m_currentTableStyleProperties = m_currentStyle->properties(MSOOXML::DrawingTableStyle::WholeTbl);
                     if (m_currentTableStyleProperties == 0)
                     {
@@ -453,7 +465,7 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
             {
                 if (type == "table")
                 {
-                    m_currentParagraphStyle = KoGenStyle(KoGenStyle::ParagraphStyle, "paragraph");
+                    m_currentParagraphStyle       = KoGenStyle(KoGenStyle::ParagraphStyle, "paragraph");
                     m_currentTableStyleProperties = m_currentStyle->properties(MSOOXML::DrawingTableStyle::WholeTbl);
                     if (m_currentTableStyleProperties == 0)
                     {
@@ -498,32 +510,34 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
                 READ_ATTR(val)
                 if (type == "character")
                 {
-                    m_currentTextStyle.setStylewName(m_name);
+                    //m_currentTextStyle.setParentStyleName(m_name);
                     m_currentTextStyle.setParentName(val);
-
+                    basedOnVal = val;
                 }
                 else if (type == "paragraph")
                 {
-                    m_currentParagraphStyle.setStylewName(m_name);
+                    //m_currentParagraphStyle.setParentStyleName(m_name);
                     m_currentParagraphStyle.setParentName(val);
+                    basedOnVal = val;
                 }
             }
             else if (QUALIFIED_NAME_IS(next))
             {
                 READ_ATTR_INTO(val, nextStyleName)
+                debugDocx << "nextStyleName:"<<nextStyleName;
             }
             SKIP_UNKNOWN
             //! @todo add ELSE_WRONG_FORMAT
         }
     }
     KoGenStyles::InsertionFlags insertionFlags = KoGenStyles::DontAddNumberToName;
-    if (styleName.isEmpty())
+    if (styleNameId.isEmpty())
     {
-        styleName = m_name;
-        if (styleName.isEmpty())
+        styleNameId = m_name;
+        if (styleNameId.isEmpty())
         {
             // allow for numbering for generated style names
-            styleName = odfType;
+            styleNameId = odfType;
             insertionFlags = KoGenStyles::NoFlag;
         }
     }
@@ -540,28 +554,30 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
     // ! chapter
     if (type == "character")
     {
+        //m_currentTextStyle.setParentStyleName(m_name);
         m_currentTextStyle.addAttribute("style:class", "text");
-        styleName = mainStyles->insert(m_currentTextStyle, styleName, insertionFlags);
+        styleNameId = mainStyles->insert(m_currentTextStyle, styleNameId, insertionFlags);
     }
     else if (type == "paragraph")
     {
+        //m_currentParagraphStyle.setParentStyleName(m_name);
         m_currentParagraphStyle.addAttribute("style:class", "text");
         KoGenStyle::copyPropertiesFromStyle(m_currentTextStyle, m_currentParagraphStyle, KoGenStyle::TextType);
-        styleName = mainStyles->insert(m_currentParagraphStyle, styleName, insertionFlags);
+        styleNameId = mainStyles->insert(m_currentParagraphStyle, styleNameId, insertionFlags);
     }
     else if (type == "table")
     {
-        m_context->m_tableStyles.insert(styleName, m_currentStyle);
+        m_context->m_tableStyles.insert(styleNameId, m_currentStyle);
     }
 
     if (!nextStyleName.isEmpty())
     {
-        mainStyles->insertStyleRelation(styleName, nextStyleName, "style:next-style-name");
+        mainStyles->insertStyleRelation(styleNameId, nextStyleName, "style:next-style-name");
     }
 
     if (isDefault)
     {
-        m_context->m_namedDefaultStyles.insertMulti(odfType, styleName);
+        m_context->m_namedDefaultStyles.insertMulti(odfType, styleNameId);
     }
 
     m_currentParagraphStyle = KoGenStyle();
@@ -718,12 +734,11 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_name()
     //debugDocx << "read_name m_name:" << m_name;
     //openword 20210924目前没有使用??????如何转为ODT格式中
     //m_name.replace(QLatin1Char(' '), QLatin1Char('_'));
-    if (m_name.startsWith(QLatin1String("heading")))
-    {
-        m_name = m_name.replace("heading","Head");
-    }
-    m_currentParagraphStyle.addAttribute("text:style-name", m_name);
-    m_currentStyleName = m_name;
+    //if (m_name.startsWith(QLatin1String("heading")))
+    //{
+    //    m_name = m_name.replace("heading","Head");
+    //}
+    //m_currentStyleName = m_name;
     readNext();
     READ_EPILOGUE
 }
