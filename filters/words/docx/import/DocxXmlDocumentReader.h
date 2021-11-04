@@ -374,7 +374,7 @@ private:
     bool m_listFound; // was there numPr element in ppr
     bool m_insideParagraph;
 
-    QString m_currentNumId;
+    QString m_currentNumId;//abstractNumId in [numbering.xml]
 
     //! Map of list styles encountered so far, reuse already created list style.
     QMap<QString, QString> m_usedListStyles;
