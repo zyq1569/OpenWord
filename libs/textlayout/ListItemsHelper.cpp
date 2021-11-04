@@ -41,6 +41,7 @@ ListItemsHelper::ListItemsHelper(QTextList *textList, const QFont &font)
 
 void ListItemsHelper::recalculateBlock(QTextBlock &block)
 {
+    //QString str = block.text();
     //warnTextLayout;
     const QTextListFormat format = m_textList->format();
     const KoListStyle::LabelType labelType = static_cast<KoListStyle::LabelType>(format.style());
@@ -149,9 +150,13 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
                 continue;
             }
             QTextListFormat lf = b.textList()->format();
-            if (lf.property(KoListStyle::StyleId) != format.property(KoListStyle::StyleId))
+            QVariant ifid = lf.property(KoListStyle::StyleId),formid = format.property(KoListStyle::StyleId);
+            if ( ifid != formid)
             {
-                continue;    // uninteresting for us
+                if (0)
+                {
+                    continue;    // uninteresting for us
+                }
             }
             if (isOutline != bool(b.blockFormat().intProperty(KoParagraphStyle::OutlineLevel)))
             {
