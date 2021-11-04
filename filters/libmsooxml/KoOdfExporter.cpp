@@ -79,17 +79,19 @@ KoFilter::ConversionStatus KoOdfExporter::convert(const QByteArray& from, const 
     }
 
     //create output files
-    KoStore *outputStore = KoStore::createStore(m_chain->outputFile(), KoStore::Write, to, KoStore::Zip);
+    QString tmpfile = m_chain->outputFile();
+    //DEBUG_LOG("m_chain->outputFile():"+tmpfile);
+    KoStore *outputStore = KoStore::createStore(tmpfile/*m_chain->outputFile()*/, KoStore::Write, to, KoStore::Zip);
     if (!outputStore || outputStore->bad())
     {
         warnMsooXml << "Unable to open output file!";
         delete outputStore;
         return KoFilter::FileNotFound;
     }
-    debugMsooXml << "created outputStore.";
+    //debugMsooXml << "created outputStore.";
     KoOdfWriteStore oasisStore(outputStore);
 
-    debugMsooXml << "created oasisStore.";
+    //debugMsooXml << "created oasisStore.";
 
     // KoGenStyles for writing styles while we're parsing
     KoGenStyles mainStyles;
