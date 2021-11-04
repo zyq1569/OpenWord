@@ -68,7 +68,7 @@ QStringList KoOdfNumberDefinition::userFormatDescriptions()
     QStringList list;
     list << "1, 2, 3, ..."
          << "a, b, c, ..."
-         << "A, B, C, ..."
+         << "A, B, C, ..."// << "一, 二, 三, ..."
          << "i, ii, iii, ..."
          << "I, II, III, ..." << "أ, ب, ت, ..."
          << "ก, ข, ค, ..."
@@ -110,6 +110,10 @@ void KoOdfNumberDefinition::loadOdf(const KoXmlElement &element)
     else if (format[0] == 'I')
     {
         d->formatSpecification = RomanUpperCase;
+    }
+    else if (format[0] == QString::fromUtf8("一"))
+    {
+        d->formatSpecification = ChineseCounting;
     }
     else if (format == QString::fromUtf8("أ, ب, ت, ..."))
     {
@@ -199,6 +203,9 @@ void KoOdfNumberDefinition::saveOdf(KoXmlWriter *writer) const
             break;
         case RomanUpperCase:
             format = "I";
+            break;
+       case ChineseCounting:
+            format = "一";
             break;
         case ArabicAlphabet:
             format = "أ, ب, ت, ...";
@@ -368,7 +375,7 @@ static QString intToScriptList(int n, KoOdfNumberDefinition::FormatSpecification
 QString g_NumberH1PreIndex[51] =
 {
     "一",     "二",   "三",   "四",   "五",   "六",   "七",   "八",   "九", "十",
-    "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十"
+    "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十","二十一"
 };
 
 QString KoOdfNumberDefinition::formattedNumber(int number, KoOdfNumberDefinition *defaultDefinition/*, int level*/) const
@@ -399,7 +406,8 @@ QString KoOdfNumberDefinition::formattedNumber(int number, KoOdfNumberDefinition
             return intToRoman(number);
         case RomanUpperCase:
             return intToRoman(number).toUpper();
-
+        case ChineseCounting:
+            return  g_NumberH1PreIndex[number-1];
         case Thai:
             return intToScript(number, 0xe50);
         case Tibetan:
