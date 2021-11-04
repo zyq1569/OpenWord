@@ -1009,7 +1009,7 @@ void KoTextLoader::loadListItem(const KoXmlElement &e, QTextCursor &cursor, int 
             d->currentLists[level - 1]->add(c.block(), level);
         }
     }
-    debugText << "text-style:" << KoTextDebug::textAttributes(cursor.blockCharFormat());
+    //debugText << "text-style:" << KoTextDebug::textAttributes(cursor.blockCharFormat());
 }
 
 void KoTextLoader::loadSection(const KoXmlElement &sectionElem, QTextCursor &cursor)
