@@ -154,7 +154,7 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read_abstractNum()
             SKIP_UNKNOWN
         }
     }
-
+    // add (abstractNumId, m_currentBulletList)
     m_abstractListStyles[abstractNumId] = m_currentBulletList;
 
     READ_EPILOGUE
@@ -425,6 +425,7 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read_numFmt()
         else if (val == "chineseCounting")
         {
             m_currentBulletProperties.setNumFormat("一");
+            m_currentBulletProperties.setNumFormat("1");
         }
         else if (val == "none") //add openword
         {
@@ -493,6 +494,8 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read_lvlText()
                 //<w:lvlText w:val="（%1）"/>
                 //<w:lvlText w:val="%1、"/>
                 //<w:lvlText w:val="%1."/>
+                //<w:lvlText w:val="%1.%2.%3."/>
+                // to do fine-tune
                 QString vl = val.left(1);
                 if (vl != '%')
                 {
@@ -551,6 +554,8 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read_num()
         }
     }
 
+    // add (numId, m_currentBulletList) -> m_bulletStyles
+    //m_context->m_bulletStyles.insert(numId,m_currentBulletList);
     m_context->m_bulletStyles[numId] = m_currentBulletList;
 
     READ_EPILOGUE
