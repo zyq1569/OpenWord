@@ -2602,6 +2602,10 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
     {
         outlineLevelAttribute = pstyleFind->attribute("style:default-outline-level");
         m_currentParagraphStyle.setParentStyleName(pstyle->parentStyleName());
+        if (m_currentNumId.isEmpty())
+        {
+            m_currentNumId = pstyleFind->attribute("style:default-numId");
+        }
     }
 
     const uint outlineLevel = outlineLevelAttribute.toUInt();
@@ -2754,14 +2758,14 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                     {
 
                         QString key = m_currentNumId;
-                        key.append(QString(".lvl%1").arg(m_currentListLevel));
+                        key.append(QString(".lvl%1.").arg(m_currentListLevel));
 
                         // Keeping the id readable for debugging purpose
                         QString xmlId = key;
-                        int ival = m_numIdXmlId[key].first;
+                        int ival = m_numIdXmlId[key].first;// init m_numIdXmlId[key].first(no value)
                         //xmlId.append(QString("_%1").arg(m_numIdXmlId[key].first)).prepend("lst");
                         //xmlId.append(QString("_%1").arg(qrand()));
-                        xmlId.append(QString("_%1").arg(ival/*m_numIdXmlId[key].first*/)).prepend("list");
+                        xmlId.append(QString("%1").arg(ival/*m_numIdXmlId[key].first*/)).prepend("list.");
                         body->addAttribute("xml:id", xmlId);
                         //body->addAttribute("xml:id", key);
                         // The text:continue-list attribute specifies the xml:id value of a list that is to be continued.
@@ -2773,7 +2777,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                             }
                         }
                         m_numIdXmlId[key].first++;
-                        m_numIdXmlId[key].second = key;//xmlId;
+                        m_numIdXmlId[key].second = xmlId;//key;//xmlId;
                     }
                     body->startElement("text:list-item");
 
