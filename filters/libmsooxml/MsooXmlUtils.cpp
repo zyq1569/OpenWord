@@ -1630,6 +1630,11 @@ QString Utils::ParagraphBulletProperties::convertToListProperties(KoGenStyles& m
         {
             out.addAttribute("style:num-suffix", m_suffix);
         }
+        if (m_multiLevelType != UNUSED)
+        {
+            //openwrod to do m_multiLevelType---> 0 1 2
+            out.addAttribute("style:display-levels",m_multiLevelType);
+        }
         out.addAttribute("text:start-value", m_startValue);
     }
     else if (m_type == ParagraphBulletProperties::PictureType)
