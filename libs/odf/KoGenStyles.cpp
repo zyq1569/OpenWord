@@ -381,14 +381,15 @@ QString KoGenStyles::insert(const KoGenStyle& style, const QString& baseName, In
             else
             {
                 // TODO remove
-                if (testStyle.m_familyName != parentStyle->m_familyName)
-                {
-                    warnOdf << "baseName=" << baseName << "family=" << testStyle.m_familyName
-                            << "parent style" << style.parentName() << "has a different family:"
-                            << parentStyle->m_familyName;
-                }
+                //if (testStyle.m_familyName != parentStyle->m_familyName)
+                //{
+                //    warnOdf << "baseName=" << baseName << "family=" << testStyle.m_familyName
+                //            << "parent style" << style.parentName() << "has a different family:"
+                //            << parentStyle->m_familyName;
+                //}
 
                 testStyle.m_parentName = parentStyle->m_parentName;
+                testStyle.m_parentstyleName = parentStyle->m_parentstyleName;
                 // Exclude the type from the comparison. It's ok for an auto style
                 // to have a user style as parent; they can still be identical
                 testStyle.m_type = parentStyle->m_type;
