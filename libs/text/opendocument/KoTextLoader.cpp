@@ -594,9 +594,9 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
     int level = qMax(-1, element.attributeNS(KoXmlNS::text, "outline-level", "-1").toInt());
     // This will fallback to the default-outline-level applied by KoParagraphStyle
 
-    QString styleName = element.attributeNS(KoXmlNS::text, "style-name", QString());
-
-    QTextBlock block = cursor.block();
+    QString styleName         = element.attributeNS(KoXmlNS::text, "style-name", QString());
+    QString display_levels    = element.attributeNS(KoXmlNS::text,"display-levels", QString());
+    QTextBlock block          = cursor.block();
     // Set the paragraph-style on the block
     KoParagraphStyle *paragraphStyle = d->textSharedData->paragraphStyle(styleName, d->stylesDotXml);
     if (!paragraphStyle)
@@ -687,7 +687,7 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
     KoListStyle *outlineStyle = d->styleManager->outlineStyle();
     if (!outlineStyle)
     {
-        outlineStyle = d->styleManager->defaultOutlineStyle()->clone();
+        outlineStyle = d->styleManager->defaultOutlineStyle(display_levels.toInt())->clone();
         d->styleManager->setOutlineStyle(outlineStyle);
     }
 
@@ -867,15 +867,22 @@ void KoTextLoader::loadList(const KoXmlElement &element, QTextCursor &cursor)
         d->setCurrentList(d->currentLists[d->currentListLevel - 2], level);
     }
 
+    if (0)
+    {
+        #define KOOPENDOCUMENTLOADER_DEBUG
+    }
+
 #ifdef KOOPENDOCUMENTLOADER_DEBUG
     if (d->currentListStyle)
     {
         KoListLevelProperties props = d->currentListStyle->levelProperties(level);
+        QString prefix = props.listItemPrefix();
+        QString Suffix = props.listItemSuffix();
         debugText << "styleName =" << styleName << "listStyle =" << d->currentListStyle->name()
                   << "level =" << level << "hasLevelProperties =" << d->currentListStyle->hasLevelProperties(level)
                   <<" style="<<props.styleId()/*props.style()*/
-                  <<" prefix="<<props.listItemPrefix()
-                  <<" suffix="<<props.listItemSuffix()
+                  <<" prefix="<</*props.listItemPrefix()*/prefix
+                  <<" suffix="<</*props.listItemSuffix()*/Suffix
                   ;
     }
     else
