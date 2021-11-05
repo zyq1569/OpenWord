@@ -1146,23 +1146,40 @@ KoListStyle *KoStyleManager::defaultListStyle() const
     return d->defaultListStyle;
 }
 
-KoListStyle *KoStyleManager::defaultOutlineStyle() const
+KoListStyle *KoStyleManager::defaultOutlineStyle(int display_levels) const
 {
     if (!d->defaultOutlineStyle)
     {
         d->defaultOutlineStyle = d->defaultListStyle->clone();
 
         QList<int> levels = d->defaultOutlineStyle->listLevels();
-        foreach (int level, levels)
+        if (display_levels)
         {
-            KoListLevelProperties llp = d->defaultOutlineStyle->levelProperties(level);
-            llp.setOutlineList(true);
-            llp.setDisplayLevel(level);
-            llp.setTabStopPosition(0);
-            llp.setMargin(0);
-            llp.setTextIndent(0);
-            d->defaultOutlineStyle->setLevelProperties(llp);
+            foreach (int level, levels)
+            {
+                KoListLevelProperties llp = d->defaultOutlineStyle->levelProperties(level);
+                llp.setOutlineList(true);
+                llp.setDisplayLevel(display_levels);
+                llp.setTabStopPosition(0);
+                llp.setMargin(0);
+                llp.setTextIndent(0);
+                d->defaultOutlineStyle->setLevelProperties(llp);
+            }
         }
+        else
+        {
+            foreach (int level, levels)
+            {
+                KoListLevelProperties llp = d->defaultOutlineStyle->levelProperties(level);
+                llp.setOutlineList(true);
+                llp.setDisplayLevel(level);
+                llp.setTabStopPosition(0);
+                llp.setMargin(0);
+                llp.setTextIndent(0);
+                d->defaultOutlineStyle->setLevelProperties(llp);
+            }
+        }
+
         d->defaultOutlineStyle->setStyleId(d->s_stylesNumber);
         ++d->s_stylesNumber;
     }
