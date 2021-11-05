@@ -2576,7 +2576,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
     }
     else
     {
-        debugDocx << "m_currentParagraphStyle stylename:"<<m_currentPageStyle.m_parentstyleName;
+        debugDocx << "m_currentParagraphStyle stylename:"<<m_currentPageStyle.parentStyleName();
     }
 
     // take outline level from style's default-outline-level,
@@ -2809,6 +2809,11 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                 {
                     body->startElement("text:h", false);
                     body->addAttribute("text:outline-level", outlineLevel);
+                    // openword to do? how to do?? why?
+                    if (m_currentBulletProperties.multiLevelType() == "singleLevel")
+                    {
+                        body->addAttribute("text:display-levels", 1);
+                    }
                 }
                 else
                 {
@@ -4244,7 +4249,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_outlineLvl()
             //QString str = m_currentParagraphStyle.stylewname();
             // stylewname() error!!! ?? to do vs2019+qt build
             //QString str = m_currentParagraphStyle.m_stylewname;
-            if (m_currentParagraphStyle.m_parentstyleName.contains("Title") || outlineLevelValue == 9)///openword
+            if (m_currentParagraphStyle.parentStyleName().contains("Title") || outlineLevelValue == 9)///openword
             {
                 m_currentParagraphStyle.addAttribute("style:default-outline-level", "");
             }
