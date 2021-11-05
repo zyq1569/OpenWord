@@ -618,14 +618,16 @@ void KoListLevelProperties::loadOdf(KoShapeLoadingContext& scontext, const KoXml
             setLabelType(KoListStyle::NumberLabelType);
         }
 
-        if (!numberDefinition.prefix().isNull())
+        QString prefix = numberDefinition.prefix();
+        QString suffix = numberDefinition.suffix();
+        if (!/*numberDefinition.prefix()*/prefix.isNull())
         {
-            setListItemPrefix(numberDefinition.prefix());
+            setListItemPrefix(prefix/*numberDefinition.prefix()*/);
         }
 
-        if (!numberDefinition.suffix().isNull())
+        if (!/*numberDefinition.suffix()*/suffix.isNull())
         {
-            setListItemSuffix(numberDefinition.suffix());
+            setListItemSuffix(suffix/*numberDefinition.suffix()*/);
         }
         const QString startValue = style.attributeNS(KoXmlNS::text, "start-value", QString("1"));
         setStartValue(startValue.toInt());
