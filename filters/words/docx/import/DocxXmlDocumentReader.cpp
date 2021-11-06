@@ -2809,7 +2809,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                 {
                     body->startElement("text:h", false);
                     body->addAttribute("text:outline-level", outlineLevel);
-                    // openword to do? how to do?? why?
+                    // openword to do? how to do?? why?是否保存位置在DocxXmlNumberingReader中
                     if (m_currentBulletProperties.multiLevelType() == "singleLevel")
                     {
                         body->addAttribute("text:display-levels", 1);
