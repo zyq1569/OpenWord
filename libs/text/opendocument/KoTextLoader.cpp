@@ -743,8 +743,7 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
             || d->rdfIdList.contains(id.toString()))
     {
         QTextBlock block = cursor.block();
-        KoTextInlineRdf* inlineRdf =
-            new KoTextInlineRdf((QTextDocument*)block.document(), block);
+        KoTextInlineRdf* inlineRdf =  new KoTextInlineRdf((QTextDocument*)block.document(), block);
         if (inlineRdf->loadOdf(element))
         {
             KoTextInlineRdf::attach(inlineRdf, cursor);
