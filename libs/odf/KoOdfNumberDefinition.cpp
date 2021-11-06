@@ -254,20 +254,18 @@ void KoOdfNumberDefinition::saveOdf(KoXmlWriter *writer) const
 
 static QString intToRoman(int n)
 {
-    static const QString RNUnits[] = {"", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix"};
-    static const QString RNTens[] = {"", "x", "xx", "xxx", "xl", "l", "lx", "lxx", "lxxx", "xc"};
-    static const QString RNHundreds[] = {"", "c", "cc", "ccc", "cd", "d", "dc", "dcc", "dccc", "cm"};
-    static const QString RNThousands[] = {"", "m", "mm", "mmm", "mmmm", "mmmmm", "mmmmmm", "mmmmmmm", "mmmmmmmm", "mmmmmmmmm"};
+    static const QString RNUnits[]      = {"", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix"};
+    static const QString RNTens[]       = {"", "x", "xx", "xxx", "xl", "l", "lx", "lxx", "lxxx", "xc"};
+    static const QString RNHundreds[]   = {"", "c", "cc", "ccc", "cd", "d", "dc", "dcc", "dccc", "cm"};
+    static const QString RNThousands[]  = {"", "m", "mm", "mmm", "mmmm", "mmmmm", "mmmmmm", "mmmmmmm", "mmmmmmmm", "mmmmmmmmm"};
 
     if (n <= 0)
     {
         return QString::number(n);
     }
 
-    return RNThousands[(n / 1000)] +
-           RNHundreds[(n / 100) % 10 ] +
-           RNTens[(n / 10) % 10 ] +
-           RNUnits[(n) % 10 ];
+    return RNThousands[(n / 1000)] +   RNHundreds[(n / 100) % 10 ] +
+           RNTens[(n / 10) % 10 ]  +   RNUnits[(n) % 10 ];
 }
 
 static QString intToAlpha(int n, bool letterSynchronization)
