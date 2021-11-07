@@ -27,7 +27,7 @@ class Q_DECL_HIDDEN KoOdfNumberDefinition::Private
 {
 public:
     QString prefix;
-    QString suffix;
+    QString suffix;// need to add :m_multiLevelType
     KoOdfNumberDefinition::FormatSpecification formatSpecification;
     bool letterSynchronization;
 };
@@ -171,6 +171,7 @@ void KoOdfNumberDefinition::loadOdf(const KoXmlElement &element)
     //The style:num-prefix and style:num-suffix attributes specify what to display before and after the number.
     d->prefix = element.attributeNS(KoXmlNS::style, "num-prefix", d->prefix);
     d->suffix = element.attributeNS(KoXmlNS::style, "num-suffix", d->suffix);
+    //d->isplay-levels = element.attributeNS(KoXmlNS::style, "display-levels", d->isplay-levels);// body->addAttribute("text:display-levels", 1);
 
     d->letterSynchronization = (element.attributeNS(KoXmlNS::style, "num-letter-sync", d->letterSynchronization ? "true" : "false") == "true");
 }
