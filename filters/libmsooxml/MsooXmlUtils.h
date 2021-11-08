@@ -114,7 +114,7 @@ public:
 
     void setStartOverride(const bool startOverride);
 
-    void setMultiLevelType(const QString&multiLevelType);
+    void setMultiLevelType(const QString& multiLevelType);
 
     QString multiLevelType() const;
 

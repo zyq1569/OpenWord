@@ -1483,6 +1483,16 @@ QString Utils::ParagraphBulletProperties::startValue() const
     return m_startValue;
 }
 
+void Utils::ParagraphBulletProperties::setMultiLevelType(const QString&multiLevelType)
+{
+    m_multiLevelType = multiLevelType;
+}
+
+QString Utils::ParagraphBulletProperties::multiLevelType() const
+{
+    return m_multiLevelType;
+}
+
 QString Utils::ParagraphBulletProperties::bulletColor() const
 {
     return m_bulletColor;
@@ -1886,12 +1896,4 @@ QString Utils::ParagraphBulletProperties::convertToListProperties(KoGenStyles& m
     return QString::fromUtf8(buf.buffer(), buf.buffer().size());
 }
 
-void Utils::ParagraphBulletProperties::setMultiLevelType(const QString&multiLevelType)
-{
-    m_multiLevelType = multiLevelType;
-}
 
-QString Utils::ParagraphBulletProperties::multiLevelType() const
-{
-    return m_multiLevelType;
-}
