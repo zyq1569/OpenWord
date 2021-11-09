@@ -1483,7 +1483,7 @@ QString Utils::ParagraphBulletProperties::startValue() const
     return m_startValue;
 }
 
-void Utils::ParagraphBulletProperties::setMultiLevelType(const QString&multiLevelType)
+void Utils::ParagraphBulletProperties::setMultiLevelType(const QString &multiLevelType)
 {
     m_multiLevelType = multiLevelType;
 }
