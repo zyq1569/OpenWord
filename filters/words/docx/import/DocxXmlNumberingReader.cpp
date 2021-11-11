@@ -425,7 +425,7 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read_numFmt()
         else if (val == "chineseCounting")
         {
             m_currentBulletProperties.setNumFormat("一");
-            m_currentBulletProperties.setNumFormat("1");
+            //m_currentBulletProperties.setNumFormat("1");
         }
         else if (val == "none") //add openword
         {
