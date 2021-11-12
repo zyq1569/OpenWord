@@ -88,6 +88,9 @@
 #include <klocalizedstring.h>
 #include "TextDebug.h"
 
+///
+#include "logging.h"
+///
 #include <QList>
 #include <QVector>
 #include <QMap>
@@ -358,14 +361,12 @@ void KoTextLoader::loadBody(const KoXmlElement &bodyElem, QTextCursor &cursor, L
     }
 
     KoOdfLineNumberingConfiguration *lineNumberingConfiguration =
-        new KoOdfLineNumberingConfiguration(d->context.odfLoadingContext()
-                                            .stylesReader()
+        new KoOdfLineNumberingConfiguration(d->context.odfLoadingContext().stylesReader()
                                             .lineNumberingConfiguration());
     KoTextDocument(document).setLineNumberingConfiguration(lineNumberingConfiguration);
 
     KoOdfBibliographyConfiguration *bibConfiguration =
-        new KoOdfBibliographyConfiguration(d->context.odfLoadingContext()
-                                           .stylesReader()
+        new KoOdfBibliographyConfiguration(d->context.odfLoadingContext().stylesReader()
                                            .globalBibliographyConfiguration());
     KoTextDocument(document).styleManager()->setBibliographyConfiguration(bibConfiguration);
 
@@ -449,8 +450,7 @@ void KoTextLoader::loadBody(const KoXmlElement &bodyElem, QTextCursor &cursor, L
                         }
                     }
                 }
-                else if (tag.namespaceURI() == KoXmlNS::draw
-                         || tag.namespaceURI() == KoXmlNS::dr3d)
+                else if (tag.namespaceURI() == KoXmlNS::draw || tag.namespaceURI() == KoXmlNS::dr3d)
                 {
                     loadShape(tag, cursor);
                 }
@@ -504,8 +504,7 @@ void KoTextLoader::loadBody(const KoXmlElement &bodyElem, QTextCursor &cursor, L
 void KoTextLoader::loadParagraph(const KoXmlElement &element, QTextCursor &cursor)
 {
     // TODO use the default style name a default value?
-    const QString styleName = element.attributeNS(KoXmlNS::text, "style-name",
-                              QString());
+    const QString styleName = element.attributeNS(KoXmlNS::text, "style-name", QString());
 
     KoParagraphStyle *paragraphStyle = d->textSharedData->paragraphStyle(styleName, d->stylesDotXml);
 
@@ -594,8 +593,9 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
     int level = qMax(-1, element.attributeNS(KoXmlNS::text, "outline-level", "-1").toInt());
     // This will fallback to the default-outline-level applied by KoParagraphStyle
 
-    QString styleName         = element.attributeNS(KoXmlNS::text, "style-name", QString());
-    QString display_levels    = element.attributeNS(KoXmlNS::text,"display-levels", QString());
+    QString styleName         = element.attributeNS(KoXmlNS::text, "style-name",     QString());
+    QString display_levels    = element.attributeNS(KoXmlNS::text, "display-levels", QString());
+
     QTextBlock block          = cursor.block();
     // Set the paragraph-style on the block
     KoParagraphStyle *paragraphStyle = d->textSharedData->paragraphStyle(styleName, d->stylesDotXml);
@@ -866,9 +866,9 @@ void KoTextLoader::loadList(const KoXmlElement &element, QTextCursor &cursor)
         d->setCurrentList(d->currentLists[d->currentListLevel - 2], level);
     }
 
-    if (0)
+    if (1)
     {
-        #define KOOPENDOCUMENTLOADER_DEBUG
+#define KOOPENDOCUMENTLOADER_DEBUG
     }
 
 #ifdef KOOPENDOCUMENTLOADER_DEBUG
@@ -877,18 +877,35 @@ void KoTextLoader::loadList(const KoXmlElement &element, QTextCursor &cursor)
         KoListLevelProperties props = d->currentListStyle->levelProperties(level);
         QString prefix = props.listItemPrefix();
         QString Suffix = props.listItemSuffix();
-        debugText << "styleName =" << styleName << "listStyle =" << d->currentListStyle->name()
-                  << "level =" << level << "hasLevelProperties =" << d->currentListStyle->hasLevelProperties(level)
-                  <<" style="<<props.styleId()/*props.style()*/
-                  <<" prefix="<</*props.listItemPrefix()*/prefix
-                  <<" suffix="<</*props.listItemSuffix()*/Suffix
-                  ;
+        //debugText << "styleName =" << styleName << "listStyle =" << d->currentListStyle->name()
+        //          << "level =" << level << "hasLevelProperties =" << d->currentListStyle->hasLevelProperties(level)
+        //          <<" style="<<props.styleId()/*props.style()*/
+        //          <<" prefix="<</*props.listItemPrefix()*/prefix
+        //          <<" suffix="<</*props.listItemSuffix()*/Suffix
+        //          ;// old
+
+        DEBUG_LOG("styleName =" + styleName +  "listStyle =" + d->currentListStyle->name() );
+        DEBUG_LOG("level =" + QString::number(level) + "hasLevelProperties =" + d->currentListStyle->hasLevelProperties(level));
+        DEBUG_LOG("style="  + QString::number(props.styleId()) + " prefix=" + prefix + " suffix=" + Suffix );
+
+        //QTextBlockFormat blockFormat;
+        //if (!prefix.isEmpty() || !Suffix.isEmpty())
+        //{
+        //    blockFormat.setProperty(KoListStyle::ListItemPrefix, prefix);
+        //    blockFormat.setProperty(KoListStyle::ListItemSuffix, Suffix);
+        //    cursor.mergeBlockFormat(blockFormat);
+        //}
+
     }
     else
     {
-        debugText << "styleName =" << styleName << " currentListStyle = 0";
+        //debugText << "styleName =" << styleName << " currentListStyle = 0";
+        DEBUG_LOG("styleName =" + styleName +  " currentListStyle = 0" );
     }
 #endif
+
+
+
 
     KoXmlElement e;
     QList<KoXmlElement> childElementsList;
@@ -1097,13 +1114,13 @@ void KoTextLoader::loadCite(const KoXmlElement &noteElem, QTextCursor &cursor)
     }
 }
 
-void KoTextLoader::loadText(const QString &fulltext, QTextCursor &cursor,
-                            bool *stripLeadingSpace, bool isLastNode)
+void KoTextLoader::loadText(const QString &fulltext, QTextCursor &cursor, bool *stripLeadingSpace, bool isLastNode)
 {
     QString text = normalizeWhitespace(fulltext, *stripLeadingSpace);
-#ifdef KOOPENDOCUMENTLOADER_DEBUG
-    debugText << "  <text> text=" << text << text.length() << *stripLeadingSpace;
-#endif
+//#ifdef KOOPENDOCUMENTLOADER_DEBUG
+    //debugText << "  <text> text=" << text << text.length() << *stripLeadingSpace;
+    DEBUG_LOG("  <text> text=" + text + QString::number(text.length()) + " bool:" + QString::number(*stripLeadingSpace));
+//#endif
 
     if (!text.isEmpty())
     {
@@ -1113,8 +1130,7 @@ void KoTextLoader::loadText(const QString &fulltext, QTextCursor &cursor,
 
         cursor.insertText(text);
 
-        if (d->loadSpanLevel == 1 && isLastNode
-                && cursor.position() > d->loadSpanInitialPos)
+        if (d->loadSpanLevel == 1 && isLastNode && cursor.position() > d->loadSpanInitialPos)
         {
             QTextCursor tempCursor(cursor);
             tempCursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, 1); // select last char loaded
@@ -1131,6 +1147,7 @@ void KoTextLoader::loadSpan(const KoXmlElement &element, QTextCursor &cursor, bo
 #ifdef KOOPENDOCUMENTLOADER_DEBUG
     debugText << "text-style:" << KoTextDebug::textAttributes(cursor.blockCharFormat());
 #endif
+    DEBUG_LOG("text-style:" + KoTextDebug::textAttributes(cursor.blockCharFormat()));
     Q_ASSERT(stripLeadingSpace);
     if (d->loadSpanLevel++ == 0)
     {
@@ -1161,8 +1178,7 @@ void KoTextLoader::loadSpan(const KoXmlElement &element, QTextCursor &cursor, bo
         if (node.isText())
         {
             bool isLastNode = node.nextSibling().isNull();
-            loadText(node.toText().data(), cursor, stripLeadingSpace,
-                     isLastNode);
+            loadText(node.toText().data(), cursor, stripLeadingSpace,  isLastNode);
         }
         else if (isTextNS && localName == "span")     // text:span
         {
