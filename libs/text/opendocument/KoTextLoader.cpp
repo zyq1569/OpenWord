@@ -887,15 +887,6 @@ void KoTextLoader::loadList(const KoXmlElement &element, QTextCursor &cursor)
         DEBUG_LOG("styleName =" + styleName +  "listStyle =" + d->currentListStyle->name() );
         DEBUG_LOG("level =" + QString::number(level) + "hasLevelProperties =" + d->currentListStyle->hasLevelProperties(level));
         DEBUG_LOG("style="  + QString::number(props.styleId()) + " prefix=" + prefix + " suffix=" + Suffix );
-
-        //QTextBlockFormat blockFormat;
-        //if (!prefix.isEmpty() || !Suffix.isEmpty())
-        //{
-        //    blockFormat.setProperty(KoListStyle::ListItemPrefix, prefix);
-        //    blockFormat.setProperty(KoListStyle::ListItemSuffix, Suffix);
-        //    cursor.mergeBlockFormat(blockFormat);
-        //}
-
     }
     else
     {
@@ -903,9 +894,6 @@ void KoTextLoader::loadList(const KoXmlElement &element, QTextCursor &cursor)
         DEBUG_LOG("styleName =" + styleName +  " currentListStyle = 0" );
     }
 #endif
-
-
-
 
     KoXmlElement e;
     QList<KoXmlElement> childElementsList;
