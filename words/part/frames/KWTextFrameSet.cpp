@@ -29,6 +29,10 @@
 #include "KWDocument.h"
 #include "KWCopyShape.h"
 
+///
+#include "logging.h"
+///
+
 #include <KoTextShapeData.h>
 #include <KoStyleManager.h>
 #include <KoParagraphStyle.h>
@@ -64,7 +68,8 @@ KWTextFrameSet::KWTextFrameSet(KWDocument *wordsDocument, Words::TextFrameSetTyp
     setName(Words::frameSetTypeName(m_textFrameSetType));
     setupDocument();
 
-    debugWords << "frameSet=" << this << "frameSetType=" << Words::frameSetTypeName(textFrameSetType());
+    //debugWords << "frameSet=" << this << "frameSetType=" << Words::frameSetTypeName(textFrameSetType());
+    DEBUG_LOG("frameSet= /this/ frameSetType=" + Words::frameSetTypeName(textFrameSetType()));
 }
 
 KWTextFrameSet::~KWTextFrameSet()
@@ -204,7 +209,9 @@ void KWTextFrameSet::setupDocument()
 
 void KWTextFrameSet::setPageStyle(const KWPageStyle &style)
 {
-    debugWords << "frameSet=" << this << "frameSetType=" << Words::frameSetTypeName(textFrameSetType()) << "pageStyleName=" << style.name() << "pageStyleIsValid=" << style.isValid();
+    //debugWords << "frameSet=" << this << "frameSetType=" << Words::frameSetTypeName(textFrameSetType()) << "pageStyleName=" << style.name() << "pageStyleIsValid=" << style.isValid();
+    DEBUG_LOG("frameSet= // frameSetType=" + Words::frameSetTypeName(textFrameSetType()) +  "pageStyleName=" + style.name());
+    DEBUG_LOG("pageStyleIsValid==  bool =" + QString::number(style.isValid()));
     m_pageStyle = style;
     // TODO: check if this is really needed here, when KWFrameLayout::layoutFramesOnPage() also
     // ensures the background is set. Especially as the separator data is only set there to the text background shape
