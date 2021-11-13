@@ -272,8 +272,7 @@ QString KoTextLoader::normalizeWhitespace(const QString &in, bool leadingSpace)
 
 /////////////KoTextLoader
 
-KoTextLoader::KoTextLoader(KoShapeLoadingContext &context, KoShape *shape)
-    : QObject()
+KoTextLoader::KoTextLoader(KoShapeLoadingContext &context, KoShape *shape) : QObject()
     , d(new Private(context, shape))
 {
     KoSharedLoadingData *sharedData = context.sharedData(KOTEXT_SHARED_LOADING_ID);
@@ -372,9 +371,15 @@ void KoTextLoader::loadBody(const KoXmlElement &bodyElem, QTextCursor &cursor, L
 
     d->styleManager = KoTextDocument(document).styleManager();
 
-#ifdef KOOPENDOCUMENTLOADER_DEBUG
-    debugText << "text-style:" << KoTextDebug::textAttributes(cursor.blockCharFormat());
-#endif
+//    if (1)
+//    {
+//#define KOOPENDOCUMENTLOADER_DEBUG
+//    }
+
+//#ifdef KOOPENDOCUMENTLOADER_DEBUG
+//    debugText << "text-style:" << KoTextDebug::textAttributes(cursor.blockCharFormat());
+//#endif
+    DEBUG_LOG( "text-style:" + KoTextDebug::textAttributes(cursor.blockCharFormat()));
     // set to true if we found a tag that used the paragraph,
     // indicating that the next round needs to start a new one.
     bool usedParagraph = false;
@@ -446,7 +451,8 @@ void KoTextLoader::loadBody(const KoXmlElement &bodyElem, QTextCursor &cursor, L
                         else
                         {
                             usedParagraph = false;
-                            warnText << "unhandled text:" << localName;
+                            //warnText << "unhandled text:" << localName;
+                            WARN_LOG("unhandled text::" + localName);
                         }
                     }
                 }
@@ -464,7 +470,8 @@ void KoTextLoader::loadBody(const KoXmlElement &bodyElem, QTextCursor &cursor, L
                     }
                     else
                     {
-                        warnText << "KoTextLoader::loadBody unhandled table::" << localName;
+                        //warnText << "KoTextLoader::loadBody unhandled table::" << localName;
+                        WARN_LOG("KoTextLoader::loadBody unhandled table::" + localName);
                     }
                 }
                 processBody();
@@ -1132,9 +1139,9 @@ void KoTextLoader::loadText(const QString &fulltext, QTextCursor &cursor, bool *
 
 void KoTextLoader::loadSpan(const KoXmlElement &element, QTextCursor &cursor, bool *stripLeadingSpace)
 {
-#ifdef KOOPENDOCUMENTLOADER_DEBUG
-    debugText << "text-style:" << KoTextDebug::textAttributes(cursor.blockCharFormat());
-#endif
+//#ifdef KOOPENDOCUMENTLOADER_DEBUG
+//    debugText << "text-style:" << KoTextDebug::textAttributes(cursor.blockCharFormat());
+//#endif
     DEBUG_LOG("text-style:" + KoTextDebug::textAttributes(cursor.blockCharFormat()));
     Q_ASSERT(stripLeadingSpace);
     if (d->loadSpanLevel++ == 0)
@@ -1308,7 +1315,8 @@ void KoTextLoader::loadSpan(const KoXmlElement &element, QTextCursor &cursor, bo
 
             if (localName == "bookmark-end")
             {
-                KoBookmark *bookmark = textRangeManager->bookmarkManager()->bookmark(KoBookmark::createUniqueBookmarkName(textRangeManager->bookmarkManager(), ts.attribute("name"), true));
+                KoBookmark *bookmark = textRangeManager->bookmarkManager()->bookmark(
+                                           KoBookmark::createUniqueBookmarkName(textRangeManager->bookmarkManager(), ts.attribute("name"), true));
                 if (bookmark)
                 {
                     bookmark->setRangeEnd(cursor.position());
