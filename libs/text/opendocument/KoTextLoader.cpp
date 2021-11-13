@@ -555,8 +555,7 @@ void KoTextLoader::loadParagraph(const KoXmlElement &element, QTextCursor &curso
     // attach Rdf to cursor.block()
     // remember inline Rdf metadata -- if the xml-id is actually
     // about rdf.
-    if (element.hasAttributeNS(KoXmlNS::xhtml, "property")
-            || d->rdfIdList.contains(id.toString()))
+    if (element.hasAttributeNS(KoXmlNS::xhtml, "property") || d->rdfIdList.contains(id.toString()))
     {
         QTextBlock block = cursor.block();
         KoTextInlineRdf* inlineRdf =
