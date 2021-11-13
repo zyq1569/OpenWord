@@ -84,7 +84,7 @@ bool KWOdfLoader::load(KoOdfReadStore &odfStore)
     QPointer<KoUpdater> loadUpdater;
     if (m_document->progressUpdater())
     {
-        updater = m_document->progressUpdater()->startSubtask(1, "KWOdfLoader::load");
+        updater     = m_document->progressUpdater()->startSubtask(1, "KWOdfLoader::load");
         loadUpdater = m_document->progressUpdater()->startSubtask(5, "KWOdfLoader::loadOdf");
         updater->setProgress(0);
         loadUpdater->setProgress(0);
@@ -95,12 +95,12 @@ bool KWOdfLoader::load(KoOdfReadStore &odfStore)
     KoXmlElement realBody(KoXml::namedItemNS(content, KoXmlNS::office, "body"));
     if (realBody.isNull())
     {
-        errorWords << "No office:body found!" << endl;
+        //errorWords << "No office:body found!" << endl;
         ERROR_LOG(" KWOdfLoader::load : No office:body found!");
         m_document->setErrorMessage(i18n("Invalid OASIS OpenDocument file. No office:body tag found."));
         return false;
     }
-    ///openword  load  {	<office:body> / <office:text> ..... } from content.xml!!
+    ///openword  load  {    <office:body> / <office:text> ..... } from content.xml!!
     KoXmlElement body = KoXml::namedItemNS(realBody, KoXmlNS::office, "text");
     if (body.isNull())
     {
@@ -115,7 +115,8 @@ bool KWOdfLoader::load(KoOdfReadStore &odfStore)
         }
         else
         {
-            m_document->setErrorMessage(i18n("This is not a word processing document, but %1. Please try opening it with the appropriate application.", KoDocument::tagNameToDocumentType(localName)));
+            m_document->setErrorMessage(i18n("This is not a word processing document, but %1. Please try opening it with the appropriate application.",
+                                             KoDocument::tagNameToDocumentType(localName)));
         }
         return false;
     }
@@ -319,7 +320,8 @@ void KWOdfLoader::loadSettings(const KoXmlDocument &settingsDoc, QTextDocument *
         return;
     }
 
-    debugWords << "KWOdfLoader::loadSettings";
+    //debugWords << "KWOdfLoader::loadSettings";
+    DEBUG_LOG("KWOdfLoader::loadSettings");
     KoOasisSettings settings(settingsDoc);
     KoOasisSettings::Items viewSettings = settings.itemSet("ooo:view-settings");
     if (!viewSettings.isNull())
@@ -331,7 +333,8 @@ void KWOdfLoader::loadSettings(const KoXmlDocument &settingsDoc, QTextDocument *
     if (!configurationSettings.isNull())
     {
         const QString ignorelist = configurationSettings.parseConfigItemString("SpellCheckerIgnoreList");
-        debugWords << "Ignorelist:" << ignorelist;
+        //debugWords << "Ignorelist:" << ignorelist;
+        DEBUG_LOG("Ignorelist:" + ignorelist);
 
         KoTextDocument(textDoc).setRelativeTabs(configurationSettings.parseConfigItemBool("TabsRelativeToIndent", true));
 
@@ -342,9 +345,10 @@ void KWOdfLoader::loadSettings(const KoXmlDocument &settingsDoc, QTextDocument *
 
 void KWOdfLoader::loadMasterPageStyles(KoShapeLoadingContext &context)
 {
-    debugWords << " !!!!!!!!!!!!!! loadMasterPageStyles called !!!!!!!!!!!!!!";
-    debugWords << "Number of items :" << context.odfLoadingContext().stylesReader().masterPages().size();
-
+    //debugWords << " !!!!!!!!!!!!!! loadMasterPageStyles called !!!!!!!!!!!!!!";
+    //debugWords << "Number of items :" << context.odfLoadingContext().stylesReader().masterPages().size();
+    DEBUG_LOG(" !!!!!!!!!!!!!! loadMasterPageStyles called !!!!!!!!!!!!!!");
+    DEBUG_LOG("Number of items :" + QString::number(context.odfLoadingContext().stylesReader().masterPages().size()));
     //TODO probably we should introduce more logic to handle the "standard" even
     //in faulty documents. See also bugreport #129585 as example.
     const KoOdfStylesReader &styles = context.odfLoadingContext().stylesReader();
@@ -387,7 +391,8 @@ void KWOdfLoader::loadHeaderFooterFrame(KoShapeLoadingContext &context, const KW
     fs->setPageStyle(pageStyle);
     m_document->addFrameSet(fs);
 
-    debugWords << "KWOdfLoader::loadHeaderFooterFrame localName=" << elem.localName() << " type=" << fs->name();
+    //debugWords << "KWOdfLoader::loadHeaderFooterFrame localName=" << elem.localName() << " type=" << fs->name();
+    DEBUG_LOG("KWOdfLoader::loadHeaderFooterFrame localName=" +  elem.localName() + " type=" + fs->name());
 
     // use auto-styles from styles.xml, not those from content.xml
     context.odfLoadingContext().setUseStylesAutoStyles(true);
