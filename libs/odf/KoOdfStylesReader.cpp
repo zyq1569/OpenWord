@@ -26,6 +26,9 @@
 #include "KoOdfLineNumberingConfiguration.h"
 #include "KoOdfBibliographyConfiguration.h"
 
+///
+#include "logging.h"
+///
 #include <OdfDebug.h>
 
 class Q_DECL_HIDDEN KoOdfStylesReader::Private
@@ -280,7 +283,8 @@ void KoOdfStylesReader::insertStyle(const KoXmlElement& e, TypeAndLocation typeA
             QHash<QString, KoXmlElement*>& dict = d->contentAutoStyles[ family ];
             if (dict.contains(name))
             {
-                debugOdf << "Auto-style: '" << name << "' already exists";
+                //debugOdf << "Auto-style: '" << name << "' already exists";
+                DEBUG_LOG("Auto-style: '" + name +  "' already exists");
                 delete dict.take(name);
             }
             dict.insert(name, new KoXmlElement(e));
@@ -291,7 +295,8 @@ void KoOdfStylesReader::insertStyle(const KoXmlElement& e, TypeAndLocation typeA
             QHash<QString, KoXmlElement*>& dict = d->stylesAutoStyles[ family ];
             if (dict.contains(name))
             {
-                debugOdf << "Auto-style: '" << name << "' already exists";
+                //debugOdf << "Auto-style: '" << name << "' already exists";
+                DEBUG_LOG("Auto-style: '" + name +  "' already exists");
                 delete dict.take(name);
             }
             dict.insert(name, new KoXmlElement(e));
@@ -302,7 +307,8 @@ void KoOdfStylesReader::insertStyle(const KoXmlElement& e, TypeAndLocation typeA
             QHash<QString, KoXmlElement*>& dict = d->customStyles[ family ];
             if (dict.contains(name))
             {
-                debugOdf << "Style: '" << name << "' already exists";
+                //debugOdf << "Style: '" << name << "' already exists";
+                DEBUG_LOG("Auto-style: '" + name +  "' already exists");
                 delete dict.take(name);
             }
             dict.insert(name, new KoXmlElement(e));
@@ -315,7 +321,8 @@ void KoOdfStylesReader::insertStyle(const KoXmlElement& e, TypeAndLocation typeA
     {
         if (d->styles.contains(name))
         {
-            debugOdf << "Style: '" << name << "' already exists";
+            //debugOdf << "Style: '" << name << "' already exists";
+            DEBUG_LOG("Auto-style: '" + name +  "' already exists");
             delete d->styles.take(name);
         }
         d->styles.insert(name, new KoXmlElement(e));
@@ -324,7 +331,8 @@ void KoOdfStylesReader::insertStyle(const KoXmlElement& e, TypeAndLocation typeA
     {
         if (d->presentationPageLayouts.contains(name))
         {
-            debugOdf << "Presentation page layout: '" << name << "' already exists";
+            //debugOdf << "Presentation page layout: '" << name << "' already exists";
+            DEBUG_LOG("Presentation page layout: '" + name +  "' already exists");
             delete d->presentationPageLayouts.take(name);
         }
         d->presentationPageLayouts.insert(name, new KoXmlElement(e));
@@ -444,8 +452,9 @@ const KoXmlElement* KoOdfStylesReader::findStyleCustomStyle(const QString& style
         const QString styleFamily = style->attributeNS(KoXmlNS::style, "family", QString());
         if (styleFamily != family)
         {
-            warnOdf << "KoOdfStylesReader: was looking for style " << styleName
-                    << " in family " << family << " but got " << styleFamily << endl;
+            //warnOdf << "KoOdfStylesReader: was looking for style " << styleName
+            //        << " in family " << family << " but got " << styleFamily << endl;
+            WARN_LOG("KoOdfStylesReader: was looking for style: " + styleName +  " in family " + family + " but got " + styleFamily );
         }
     }
     return style;
@@ -459,8 +468,9 @@ const KoXmlElement* KoOdfStylesReader::findAutoStyleStyle(const QString& styleNa
         const QString styleFamily = style->attributeNS(KoXmlNS::style, "family", QString());
         if (styleFamily != family)
         {
-            warnOdf << "KoOdfStylesReader: was looking for style " << styleName
-                    << " in family " << family << " but got " << styleFamily << endl;
+            //warnOdf << "KoOdfStylesReader: was looking for style " << styleName
+            //        << " in family " << family << " but got " << styleFamily << endl;
+            WARN_LOG("KoOdfStylesReader: was looking for style: " + styleName +  " in family " + family + " but got " + styleFamily );
         }
     }
     return style;
@@ -474,8 +484,9 @@ const KoXmlElement* KoOdfStylesReader::findContentAutoStyle(const QString& style
         const QString styleFamily = style->attributeNS(KoXmlNS::style, "family", QString());
         if (styleFamily != family)
         {
-            warnOdf << "KoOdfStylesReader: was looking for style " << styleName
-                    << " in family " << family << " but got " << styleFamily << endl;
+            //warnOdf << "KoOdfStylesReader: was looking for style " << styleName
+            //        << " in family " << family << " but got " << styleFamily << endl;
+            WARN_LOG("KoOdfStylesReader: was looking for style: " + styleName +  " in family " + family + " but got " + styleFamily );
         }
     }
     return style;
