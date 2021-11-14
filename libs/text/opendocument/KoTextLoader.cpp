@@ -1152,9 +1152,9 @@ void KoTextLoader::loadSpan(const KoXmlElement &element, QTextCursor &cursor, bo
     {
         KoXmlElement ts = node.toElement();
         const QString localName(ts.localName());
-        const bool isTextNS = ts.namespaceURI() == KoXmlNS::text;
-        const bool isDrawNS = ts.namespaceURI() == KoXmlNS::draw;
-        const bool isDr3dNS = ts.namespaceURI() == KoXmlNS::dr3d;
+        const bool isTextNS   = ts.namespaceURI() == KoXmlNS::text;
+        const bool isDrawNS   = ts.namespaceURI() == KoXmlNS::draw;
+        const bool isDr3dNS   = ts.namespaceURI() == KoXmlNS::dr3d;
         const bool isOfficeNS = ts.namespaceURI() == KoXmlNS::office;
 
         //if (isOfficeNS)
@@ -1215,11 +1215,11 @@ void KoTextLoader::loadSpan(const KoXmlElement &element, QTextCursor &cursor, bo
         {
             loadNote(ts, cursor);
         }
-        else if (isTextNS && localName == "bibliography-mark")     // text:bibliography-mark
+        else if (isTextNS && localName   == "bibliography-mark")     // text:bibliography-mark
         {
             loadCite(ts,cursor);
         }
-        else if (isTextNS && localName == "tab")     // text:tab
+        else if (isTextNS && localName   == "tab")     // text:tab
         {
             cursor.insertText("\t");
             *stripLeadingSpace = false;
