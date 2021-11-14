@@ -41,7 +41,10 @@ ListItemsHelper::ListItemsHelper(QTextList *textList, const QFont &font)
 
 void ListItemsHelper::recalculateBlock(QTextBlock &block)
 {
-    //QString str = block.text();
+#ifdef QT_DEBUG
+    DEBUG_LOG("recalculateBlock:" + block.text());
+#endif
+
     //warnTextLayout;
     const QTextListFormat format = m_textList->format();
     const KoListStyle::LabelType labelType = static_cast<KoListStyle::LabelType>(format.style());
@@ -51,7 +54,7 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
     const int      level = format.intProperty(KoListStyle::Level);
 
     int dp = format.intProperty(KoListStyle::DisplayLevel);
-    if (dp > level)///??? dp值的输入?????20211019
+    if (dp > level)
     {
         dp = level;
     }
