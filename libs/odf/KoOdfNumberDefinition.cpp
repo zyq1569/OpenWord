@@ -114,6 +114,10 @@ void KoOdfNumberDefinition::loadOdf(const KoXmlElement &element)
     else if (format[0] == QString::fromUtf8("一"))
     {
         d->formatSpecification = ChineseCounting;
+        if (format.length() > 1)
+        {
+            d->suffix = format[1];
+        }
     }
     else if (format == QString::fromUtf8("أ, ب, ت, ..."))
     {
