@@ -33,6 +33,9 @@
 
 #include "TextDebug.h"
 
+///
+#include "logging.h"
+///
 #include <KoXmlNS.h>
 #include <KoOdfLoadingContext.h>
 #include <KoShapeLoadingContext.h>
@@ -629,6 +632,7 @@ void KoListLevelProperties::loadOdf(KoShapeLoadingContext& scontext, const KoXml
         {
             setListItemSuffix(suffix/*numberDefinition.suffix()*/);
         }
+        DEBUG_LOG("prefix|suffix:" + prefix + "|"+ suffix + "style.localName:"+ style.localName() + " level=" + QString::number(level));
         const QString startValue = style.attributeNS(KoXmlNS::text, "start-value", QString("1"));
         setStartValue(startValue.toInt());
     }
@@ -662,6 +666,7 @@ void KoListLevelProperties::loadOdf(KoShapeLoadingContext& scontext, const KoXml
     else   // if not defined, we can do nothing
     {
 //         debugText << "stylename else:" << style.localName() << "level=" << level << "displayLevel=" << displayLevel;
+        DEBUG_LOG("stylename else:" + style.localName() + "level=" + QString::number(level) +"isplayLevel=" + displayLevel);
         setLabelType(KoListStyle::NumberLabelType);
         setListItemSuffix(".");
     }
