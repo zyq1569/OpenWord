@@ -660,19 +660,17 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
             }
         }
 
+        QTextBlockFormat blockFormat;
         if (unmumbered)
         {
             level = 0;
-            QTextBlockFormat blockFormat;
             blockFormat.setProperty(KoParagraphStyle::UnnumberedListItem, true);
-            cursor.mergeBlockFormat(blockFormat);
         }
         else /// openword ??? 20211007如何设置MS-Word对格式的设置
         {
-            QTextBlockFormat blockFormat;
             blockFormat.setProperty(KoParagraphStyle::OutlineLevel, level);
-            cursor.mergeBlockFormat(blockFormat);
         }
+        cursor.mergeBlockFormat(blockFormat);
     }
 
     if (element.hasAttributeNS(KoXmlNS::text, "is-list-header"))
