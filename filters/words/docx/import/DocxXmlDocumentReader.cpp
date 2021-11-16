@@ -3731,8 +3731,9 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_ilvl()
         uint listValue = val.toUInt(&ok);
         if (ok)
         {
+            //This numbering level is specified on either the
+            //abstract numbering definition's lvl element
             m_currentListLevel = listValue;
-            m_currentParagraphStyle.addAttribute("style:default-ilvl",val);//
         }
     }
 
