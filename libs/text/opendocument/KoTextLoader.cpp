@@ -654,11 +654,7 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
         if (bMicrosoftOffice)
         {
             static const QString stitle = "标题";
-            if (0 == styleName.compare(QLatin1String("P1")))
-            {
-                unmumbered = true;
-            }
-            else if (styleName.startsWith(&stitle))
+            if (0 == styleName.compare(QLatin1String("P1")) || styleName.startsWith(&stitle))
             {
                 unmumbered = true;
             }
