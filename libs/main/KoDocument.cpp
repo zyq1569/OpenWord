@@ -1327,7 +1327,8 @@ bool KoDocument::importDocument(const QUrl &_url)
 
 bool KoDocument::openUrl(const QUrl &_url)
 {
-    debugMain << Q_FUNC_INFO << "url=" << _url.url();
+    //debugMain << Q_FUNC_INFO << "url=" << _url.url();
+    DEBUG_LOG( "url=" +  _url.url());
     d->lastErrorMessage.clear();
 
     // Reimplemented, to add a check for autosave files and to improve error reporting
@@ -1608,9 +1609,11 @@ bool KoDocument::openFile()
     {
         typeName = _native_format; // Hmm, what if it's from another app? ### Check mimetype
         d->specialOutputFlag = SaveAsDirectoryStore;
-        debugMain << "loading" << u.fileName() << ", using directory store for" << localFilePath() << "; typeName=" << typeName;
+        //debugMain << "loading" << u.fileName() << ", using directory store for" << localFilePath() << "; typeName=" << typeName;
+        DEBUG_LOG( "loading:" + u.fileName() + ", using directory store for" + localFilePath() + "; typeName=" + typeName);
     }
-    debugMain << localFilePath() << "type:" << typeName;
+    //debugMain << localFilePath() << "|type:" << typeName;
+    DEBUG_LOG( localFilePath() + "type:" + typeName);
 
     QString importedFile = localFilePath();
 
