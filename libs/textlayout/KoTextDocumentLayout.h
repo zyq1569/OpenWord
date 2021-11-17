@@ -61,7 +61,8 @@ class KOTEXTLAYOUT_EXPORT KoTextDocumentLayout : public QAbstractTextDocumentLay
     Q_OBJECT
 public:
     /// This struct is a helper for painting of kotext texts.
-    struct PaintContext {
+    struct PaintContext
+    {
         PaintContext()
             : viewConverter(0)
             , imageCollection(0)
