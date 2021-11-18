@@ -28,14 +28,15 @@
 
 KWFrameSet::KWFrameSet(Words::FrameSetType type)
     : QObject(),
-    m_type(type)
+      m_type(type)
 {
     debugWords << "type=" << m_type;
 }
 
 KWFrameSet::~KWFrameSet()
 {
-    while (!shapes().isEmpty()) { // deleting a shape can result in multiple KWFrame's and shapes being deleted (e.g. copy-shapes)
+    while (!shapes().isEmpty())   // deleting a shape can result in multiple KWFrame's and shapes being deleted (e.g. copy-shapes)
+    {
         KoShape *s = shapes().last();
 
         // we are going to delete the shape which under normal circumstances also removes it
@@ -53,8 +54,10 @@ void KWFrameSet::addShape(KoShape *shape)
     setupShape(shape);
 
     KWCopyShape* copyShape = dynamic_cast<KWCopyShape*>(shape);
-    if (copyShape) {
-        if (copyShape->original()) {
+    if (copyShape)
+    {
+        if (copyShape->original())
+        {
             addCopy(copyShape);
         }
     }
@@ -64,15 +67,21 @@ void KWFrameSet::addShape(KoShape *shape)
 void KWFrameSet::removeShape(KoShape *shape)
 {
     KWCopyShape* copyShape = dynamic_cast<KWCopyShape*>(shape);
-    if (copyShape) {
+    if (copyShape)
+    {
         removeCopy(copyShape);
-    } else {
+    }
+    else
+    {
         // Loop over all frames to see if there is a copy shape that references the removed
         // shape; if it does, then delete the copy too.
-        for(int i = shapes().count() - 1; i >= 0; --i) {
+        for(int i = shapes().count() - 1; i >= 0; --i)
+        {
             KoShape *s = shapes()[i];
-            if (KWCopyShape *cs = dynamic_cast<KWCopyShape*>(s)) {
-                if (cs->original() == shape) {
+            if (KWCopyShape *cs = dynamic_cast<KWCopyShape*>(s))
+            {
+                if (cs->original() == shape)
+                {
                     cleanupShape(cs);
                     removeShape(cs);
                     delete cs;
@@ -81,7 +90,8 @@ void KWFrameSet::removeShape(KoShape *shape)
         }
     }
 
-    if (m_shapes.removeAll(shape)) {
+    if (m_shapes.removeAll(shape))
+    {
         emit shapeRemoved(shape);
     }
 }
@@ -94,7 +104,9 @@ QList<KWCopyShape *> KWFrameSet::copyShapes() const
 void KWFrameSet::addCopy(KWCopyShape *copyShape)
 {
     if (!m_copyShapes.contains(copyShape))
+    {
         m_copyShapes.append(copyShape);
+    }
 }
 
 void KWFrameSet::removeCopy(KWCopyShape *copyShape)
