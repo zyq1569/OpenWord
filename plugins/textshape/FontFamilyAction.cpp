@@ -34,6 +34,9 @@
 
 #include "TextShapeDebug.h"
 
+///
+#include "logging.h"
+///
 #include <QToolBar>
 
 #include <QIcon>
@@ -118,7 +121,7 @@ QString KoFontFamilyAction::font() const
 
 QWidget* KoFontFamilyAction::createWidget(QWidget* parent)
 {
-    debugTextShape << "KoFontFamilyAction::createWidget()";
+    //debugTextShape << "KoFontFamilyAction::createWidget()";
 // silence unclear warning from original kfontaction.acpp
 // #ifdef __GNUC__
 // #warning FIXME: items need to be converted
@@ -129,11 +132,12 @@ QWidget* KoFontFamilyAction::createWidget(QWidget* parent)
     KoFontComboBox *cb = new KoFontComboBox( parent );
     //cb->setFontList(items());
 
-    debugTextShape << "\tset=" << font();
+    //debugTextShape << "\tset=" << font();
+    DEBUG_LOG( "\tset=" + font());
     // Do this before connecting the signal so that nothing will fire.
     cb->setCurrentFont( QFont( font().toLower() ) );
-    debugTextShape << "\tspit back=" << cb->currentFont().family();
-
+    //debugTextShape << "\tspit back=" << cb->currentFont().family();
+    DEBUG_LOG("\tspit back=" + cb->currentFont().family() );
     connect( cb, SIGNAL(currentFontChanged(QFont)), SLOT(_ko_slotFontChanged(QFont)) );
     cb->setMinimumWidth( cb->sizeHint().width() );
     return cb;
@@ -144,8 +148,8 @@ QWidget* KoFontFamilyAction::createWidget(QWidget* parent)
  */
 void KoFontFamilyAction::setFont( const QString &family )
 {
-    debugTextShape << "KoFontFamilyAction::setFont(" << family << ")";
-
+    //debugTextShape << "KoFontFamilyAction::setFont(" << family << ")";
+    DEBUG_LOG( "KoFontFamilyAction::setFont(" + family +  ")");
     // Suppress triggered(QString) signal and prevent recursive call to ourself.
     d->settingFont++;
 
@@ -160,7 +164,8 @@ void KoFontFamilyAction::setFont( const QString &family )
         }
 
         cb->setCurrentFont(QFont(family.toLower()));
-        debugTextShape << "\t\tw spit back=" << cb->currentFont().family();
+        //debugTextShape << "\t\tw spit back=" << cb->currentFont().family();
+        DEBUG_LOG( "\t\tw spit back=" + cb->currentFont().family());
     }
 
     d->settingFont--;
@@ -192,7 +197,8 @@ void KoFontFamilyAction::setFont( const QString &family )
 
     // TODO: Inconsistent state if KFontComboBox::setCurrentFont() succeeded
     //       but setCurrentAction() did not and vice-versa.
-    debugTextShape << "Font not found " << family.toLower();
+    //debugTextShape << "Font not found " << family.toLower();
+    DEBUG_LOG( "Font not found " + family.toLower());
 }
 
 // have to include this because of Q_PRIVATE_SLOT
