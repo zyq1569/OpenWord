@@ -1152,11 +1152,12 @@ void KoTextLoader::loadSpan(const KoXmlElement &element, QTextCursor &cursor, bo
         const bool isOfficeNS = ts.namespaceURI() == KoXmlNS::office;
 
         //if (isOfficeNS)
-        debugText << "office:"<<isOfficeNS << localName;
-
-#ifdef KOOPENDOCUMENTLOADER_DEBUG
-        debugText << "load" << localName << *stripLeadingSpace << node.toText().data();
-#endif
+        //debugText << "office:"<<isOfficeNS << localName;
+        DEBUG_LOG( "office: bool(" + QString::number( isOfficeNS ) + ")"  +  localName);
+//#ifdef KOOPENDOCUMENTLOADER_DEBUG
+        //debugText << "load" << localName << *stripLeadingSpace << node.toText().data();
+        DEBUG_LOG("load" + localName + "|bool(" +  QString::number( *stripLeadingSpace ) + ")" +  node.toText().data());
+//#endif
 
         if (!(isTextNS && localName == "span"))
         {
@@ -1170,9 +1171,10 @@ void KoTextLoader::loadSpan(const KoXmlElement &element, QTextCursor &cursor, bo
         }
         else if (isTextNS && localName == "span")     // text:span
         {
-#ifdef KOOPENDOCUMENTLOADER_DEBUG
-            debugText << "  <span> localName=" << localName;
-#endif
+//#ifdef KOOPENDOCUMENTLOADER_DEBUG
+            //debugText << "  <span> localName=" << localName;
+            DEBUG_LOG("  <span> localName=" + localName);
+//#endif
             QString styleName = ts.attributeNS(KoXmlNS::text, "style-name", QString());
 
             QTextCharFormat cf = cursor.charFormat(); // store the current cursor char format
@@ -1189,7 +1191,8 @@ void KoTextLoader::loadSpan(const KoXmlElement &element, QTextCursor &cursor, bo
             }
             else if (!styleName.isEmpty())
             {
-                warnText << "character style " << styleName << " not found";
+                //warnText << "character style " << styleName << " not found";
+                WARN_LOG("character style "  + styleName +  " not found");
             }
 
             loadSpan(ts, cursor, stripLeadingSpace);   // recurse
