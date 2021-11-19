@@ -54,45 +54,49 @@ StencilShapeFactory(const QString& id,
     setFamily("stencil");
 }
 
-StencilShapeFactory::
-~StencilShapeFactory()
+StencilShapeFactory::~StencilShapeFactory()
 {
     delete m_properties;
 }
 
-KoShape* StencilShapeFactory::
-createFromOdf(KoStore* store, KoDocumentResourceManager* documentRes) const
+KoShape* StencilShapeFactory::createFromOdf(KoStore* store, KoDocumentResourceManager* documentRes) const
 {
     KoOdfReadStore odfStore(store);
     QString errorMessage;
-    if (! odfStore.loadAndParse(errorMessage)) {
+    if (! odfStore.loadAndParse(errorMessage))
+    {
         errorStencilBox << "loading and parsing failed:" << errorMessage << endl;
         return 0;
     }
 
     KoXmlElement content = odfStore.contentDoc().documentElement();
     KoXmlElement realBody(KoXml::namedItemNS(content, KoXmlNS::office, "body"));
-    if (realBody.isNull()) {
+    if (realBody.isNull())
+    {
         errorStencilBox << "No body tag found!" << endl;
         return 0;
     }
 
     KoXmlElement body = KoXml::namedItemNS(realBody, KoXmlNS::office, "drawing");
-    if (body.isNull()) {
+    if (body.isNull())
+    {
         errorStencilBox << "No office:drawing tag found!" << endl;
         return 0;
     }
 
     KoXmlElement page = KoXml::namedItemNS(body, KoXmlNS::draw, "page");
-    if (page.isNull()) {
+    if (page.isNull())
+    {
         errorStencilBox << "No page found!" << endl;
         return 0;
     }
 
     KoXmlElement shapeElement = KoXml::namedItemNS(page, KoXmlNS::draw, "g");
-    if (shapeElement.isNull()) {
+    if (shapeElement.isNull())
+    {
         shapeElement = KoXml::namedItemNS(page, KoXmlNS::draw, "custom-shape");
-        if (shapeElement.isNull()) {
+        if (shapeElement.isNull())
+        {
             errorStencilBox << "draw:g or draw:custom-shape element not found!" << endl;
             return 0;
         }
@@ -102,7 +106,8 @@ createFromOdf(KoStore* store, KoDocumentResourceManager* documentRes) const
     KoShapeLoadingContext context(loadingContext, documentRes);
 
     KoShapeRegistry* registry = KoShapeRegistry::instance();
-    foreach (const QString & id, registry->keys()) {
+    foreach (const QString & id, registry->keys())
+    {
         KoShapeFactoryBase* shapeFactory = registry->value(id);
         shapeFactory->newDocumentResourceManager(documentRes);
     }
@@ -110,10 +115,10 @@ createFromOdf(KoStore* store, KoDocumentResourceManager* documentRes) const
     return KoShapeRegistry::instance()->createShapeFromOdf(shapeElement, context);
 }
 
-KoShape* StencilShapeFactory::
-createFromSvg(QIODevice* in, KoDocumentResourceManager* documentRes) const
+KoShape* StencilShapeFactory::createFromSvg(QIODevice* in, KoDocumentResourceManager* documentRes) const
 {
-    if (!in->open(QIODevice::ReadOnly)) {
+    if (!in->open(QIODevice::ReadOnly))
+    {
         debugStencilBox << "svg file open error";
         return 0;
     }
@@ -124,10 +129,11 @@ createFromSvg(QIODevice* in, KoDocumentResourceManager* documentRes) const
     const bool parsed = inputDoc.setContent(in, &errormessage, &line, &col);
     in->close();
 
-    if (!parsed) {
+    if (!parsed)
+    {
         debugStencilBox << "Error while parsing file: "
-        << "at line " << line << " column: " << col
-        << " message: " << errormessage << endl;
+                        << "at line " << line << " column: " << col
+                        << " message: " << errormessage << endl;
         return 0;
     }
 
@@ -135,9 +141,13 @@ createFromSvg(QIODevice* in, KoDocumentResourceManager* documentRes) const
     parser.setXmlBaseDir(id());
     QList<KoShape*> shapes = parser.parseSvg(inputDoc.documentElement());
     if (shapes.isEmpty())
+    {
         return 0;
+    }
     if (shapes.count() == 1)
+    {
         return shapes.first();
+    }
 
     KoShapeGroup *svgGroup = new KoShapeGroup;
     KoShapeGroupCommand cmd(svgGroup, shapes);
@@ -146,42 +156,51 @@ createFromSvg(QIODevice* in, KoDocumentResourceManager* documentRes) const
     return svgGroup;
 }
 
-KoShape* StencilShapeFactory::
-createDefaultShape(KoDocumentResourceManager* documentResources) const
+KoShape* StencilShapeFactory::createDefaultShape(KoDocumentResourceManager* documentResources) const
 {
     KoShape* shape = 0;
     KoStore* store = 0;
     QIODevice* in = 0;
     QString ext = id().mid(id().lastIndexOf('.')).toLower();
-    if (ext == ".odg") {
+    if (ext == ".odg")
+    {
         store = KoStore::createStore(id(), KoStore::Read);
-        if (!store->bad()) {
+        if (!store->bad())
+        {
             shape = createFromOdf(store, documentResources);
         }
         delete store;
-    } else if (ext == ".svg") {
+    }
+    else if (ext == ".svg")
+    {
         in = new KCompressionDevice(id(), KCompressionDevice::None);
         shape = createFromSvg(in, documentResources);
         delete in;
-    } else if (ext == ".svgz") {
+    }
+    else if (ext == ".svgz")
+    {
         in = new KCompressionDevice(id(), KCompressionDevice::GZip);
         shape = createFromSvg(in, documentResources);
         delete in;
-    } else {
+    }
+    else
+    {
         debugStencilBox << "stencil format" << ext << "unsupported";
     }
 
-    if (shape) {
+    if (shape)
+    {
         if (m_properties->intProperty("keepAspectRatio") == 1)
+        {
             shape->setKeepAspectRatio(true);
+        }
     }
 
     return shape;
 }
 
 // StencilShapeFactory shouldn't participate element support detection
-bool StencilShapeFactory::
-supports(const KoXmlElement& e, KoShapeLoadingContext& context) const
+bool StencilShapeFactory::supports(const KoXmlElement& e, KoShapeLoadingContext& context) const
 {
     Q_UNUSED(e);
     Q_UNUSED(context);
