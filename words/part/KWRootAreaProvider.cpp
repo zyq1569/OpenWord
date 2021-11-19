@@ -28,6 +28,9 @@
 #include "frames/KWTextFrameSet.h"
 #include "frames/KWFrameLayout.h"
 
+///
+#include "logging.h"
+///
 #include <KoTextLayoutRootArea.h>
 #include <KoShape.h>
 #include <KoShapeContainer.h>
@@ -232,7 +235,8 @@ KoTextLayoutRootArea* KWRootAreaProvider::provideNext(KoTextDocumentLayout *docu
         m_pages.append(rootAreaPage);
     }
 
-    debugWords << "pageNumber=" << pageNumber <<  "frameSet=" << Words::frameSetTypeName(frameSet()->textFrameSetType());
+    //debugWords << "pageNumber=" << pageNumber <<  "frameSet=" << Words::frameSetTypeName(frameSet()->textFrameSetType());
+    DEBUG_LOG("pageNumber=" + QString::number( pageNumber ) +  "frameSet=" + Words::frameSetTypeName(frameSet()->textFrameSetType()));
     if (frameSet()->textFrameSetType() == Words::MainTextFrameSet)
     {
         handleDependentProviders(pageNumber);
