@@ -866,12 +866,7 @@ void KoTextLoader::loadList(const KoXmlElement &element, QTextCursor &cursor)
         d->setCurrentList(d->currentLists[d->currentListLevel - 2], level);
     }
 
-    if (1)
-    {
-#define KOOPENDOCUMENTLOADER_DEBUG
-    }
-
-#ifdef KOOPENDOCUMENTLOADER_DEBUG
+//#ifdef KOOPENDOCUMENTLOADER_DEBUG
     if (d->currentListStyle)
     {
         KoListLevelProperties props = d->currentListStyle->levelProperties(level);
@@ -893,7 +888,7 @@ void KoTextLoader::loadList(const KoXmlElement &element, QTextCursor &cursor)
         //debugText << "styleName =" << styleName << " currentListStyle = 0";
         DEBUG_LOG("styleName =" + styleName +  " currentListStyle = 0" );
     }
-#endif
+//#endif
 
     KoXmlElement e;
     QList<KoXmlElement> childElementsList;
