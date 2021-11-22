@@ -893,8 +893,8 @@ void KoTextLoader::loadList(const KoXmlElement &element, QTextCursor &cursor)
     KoXmlElement e;
     QList<KoXmlElement> childElementsList;
 
-    KoXmlDocument doc;
-    QXmlStreamReader reader;
+    //KoXmlDocument doc;
+    //QXmlStreamReader reader;
 
     for (KoXmlNode _node = element.firstChild(); !_node.isNull(); _node = _node.nextSibling())
     {
