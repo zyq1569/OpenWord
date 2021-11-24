@@ -680,6 +680,7 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
         cursor.mergeBlockFormat(blockFormat);
     }
 
+    ///openword 20211124----> KoStyleManager::KoStyleManager 目前临时修改outlineStyle默认值,to do.... 如果当前有值即修正
     //we are defining our default behaviour here
     //Case 1: If text:outline-style is specified then we use the outline style to determine the numbering style
     //Case 2: If text:outline-style is not specified then if the <text:h> element is inside a <text:list> then it is numbered
@@ -724,6 +725,23 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
             outlineStyle->setLevelProperties(llp);
         }
     }
+
+    ///
+    /// \brief to do...修改默认值为当前读取的值
+    ///
+    if (d->currentListStyle)
+    {
+        QTextListFormat format = block.textList()->format();
+        KoListLevelProperties props = d->currentListStyle->levelProperties(level);
+        QString prefix = props.listItemPrefix();
+        QString suffix = props.listItemSuffix();
+        //KoListLevelProperties llp;
+        //llp.setLevel(level);
+        //outlineStyle->setLevelProperties(llp);
+    }
+    ///
+    /// \brief list
+    ///
 
     KoList *list = KoTextDocument(block.document()).headingList();
     if (!list)
@@ -871,7 +889,9 @@ void KoTextLoader::loadList(const KoXmlElement &element, QTextCursor &cursor)
     {
         KoListLevelProperties props = d->currentListStyle->levelProperties(level);
         QString prefix = props.listItemPrefix();
-        QString Suffix = props.listItemSuffix();
+        QString suffix = props.listItemSuffix();
+        QString numberFormat = QString::number( props.numberFormat() );
+        //numberFormat =
         //debugText << "styleName =" << styleName << "listStyle =" << d->currentListStyle->name()
         //          << "level =" << level << "hasLevelProperties =" << d->currentListStyle->hasLevelProperties(level)
         //          <<" style="<<props.styleId()/*props.style()*/
@@ -881,7 +901,8 @@ void KoTextLoader::loadList(const KoXmlElement &element, QTextCursor &cursor)
 
         DEBUG_LOG("styleName =" + styleName +  "listStyle =" + d->currentListStyle->name() );
         DEBUG_LOG("level =" + QString::number(level) + "hasLevelProperties =" + d->currentListStyle->hasLevelProperties(level));
-        DEBUG_LOG("style="  + QString::number(props.styleId()) + " prefix=" + prefix + " suffix=" + Suffix );
+        DEBUG_LOG("style="  + QString::number(props.styleId()) + " prefix=" + prefix + " suffix=" + suffix + " numberFormat:"+numberFormat);
+        DEBUG_LOG("element:"+element.text());
     }
     else
     {
