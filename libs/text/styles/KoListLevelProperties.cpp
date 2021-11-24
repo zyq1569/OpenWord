@@ -632,7 +632,8 @@ void KoListLevelProperties::loadOdf(KoShapeLoadingContext& scontext, const KoXml
         {
             setListItemSuffix(suffix/*numberDefinition.suffix()*/);
         }
-        DEBUG_LOG("prefix|suffix:" + prefix + "|"+ suffix + "style.localName:"+ style.localName() + " level=" + QString::number(level));
+        DEBUG_LOG("prefix|suffix:" + prefix + "|"+ suffix + "style.localName:"+ style.localName() +
+                  " level=" + QString::number(level) + " formatSpecification:" + QString::number(numberDefinition.formatSpecification()));
         const QString startValue = style.attributeNS(KoXmlNS::text, "start-value", QString("1"));
         setStartValue(startValue.toInt());
     }
