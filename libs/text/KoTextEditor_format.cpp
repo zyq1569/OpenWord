@@ -48,7 +48,8 @@ void KoTextEditor::Private::clearCharFormatProperty(int property)
     {
     public:
         PropertyWiper(int propertyId) : propertyId(propertyId) {}
-        void visit(QTextCharFormat &format) const override {
+        void visit(QTextCharFormat &format) const override
+        {
             format.clearProperty(propertyId);
         }
 
@@ -60,7 +61,8 @@ void KoTextEditor::Private::clearCharFormatProperty(int property)
 
 void KoTextEditor::bold(bool bold)
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
@@ -73,7 +75,8 @@ void KoTextEditor::bold(bool bold)
 
 void KoTextEditor::italic(bool italic)
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
@@ -86,16 +89,20 @@ void KoTextEditor::italic(bool italic)
 
 void KoTextEditor::underline(bool underline)
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
     d->updateState(KoTextEditor::Private::Format, kundo2_i18n("Underline"));
     QTextCharFormat format;
-    if (underline) {
+    if (underline)
+    {
         format.setProperty(KoCharacterStyle::UnderlineType, KoCharacterStyle::SingleLine);
         format.setProperty(KoCharacterStyle::UnderlineStyle, KoCharacterStyle::SolidLine);
-    } else {
+    }
+    else
+    {
         format.setProperty(KoCharacterStyle::UnderlineType, KoCharacterStyle::NoLineType);
         format.setProperty(KoCharacterStyle::UnderlineStyle, KoCharacterStyle::NoLineStyle);
     }
@@ -105,16 +112,20 @@ void KoTextEditor::underline(bool underline)
 
 void KoTextEditor::strikeOut(bool strikeout)
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
     d->updateState(KoTextEditor::Private::Format, kundo2_i18n("Strike Out"));
     QTextCharFormat format;
-    if (strikeout) {
+    if (strikeout)
+    {
         format.setProperty(KoCharacterStyle::StrikeOutType, KoCharacterStyle::SingleLine);
         format.setProperty(KoCharacterStyle::StrikeOutStyle, KoCharacterStyle::SolidLine);
-    } else {
+    }
+    else
+    {
         format.setProperty(KoCharacterStyle::StrikeOutType, KoCharacterStyle::NoLineType);
         format.setProperty(KoCharacterStyle::StrikeOutStyle, KoCharacterStyle::NoLineStyle);
     }
@@ -124,7 +135,8 @@ void KoTextEditor::strikeOut(bool strikeout)
 
 void KoTextEditor::setHorizontalTextAlignment(Qt::Alignment align)
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
@@ -132,7 +144,8 @@ void KoTextEditor::setHorizontalTextAlignment(Qt::Alignment align)
     {
     public:
         Aligner(Qt::Alignment align) : alignment(align) {}
-        void visit(QTextBlock &block) const override {
+        void visit(QTextBlock &block) const override
+        {
             QTextBlockFormat format = block.blockFormat();
             format.setAlignment(alignment);
             QTextCursor cursor(block);
@@ -150,15 +163,20 @@ void KoTextEditor::setHorizontalTextAlignment(Qt::Alignment align)
 
 void KoTextEditor::setVerticalTextAlignment(Qt::Alignment align)
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
     QTextCharFormat::VerticalAlignment charAlign = QTextCharFormat::AlignNormal;
     if (align == Qt::AlignTop)
+    {
         charAlign = QTextCharFormat::AlignSuperScript;
+    }
     else if (align == Qt::AlignBottom)
+    {
         charAlign = QTextCharFormat::AlignSubScript;
+    }
 
     d->updateState(KoTextEditor::Private::Format, kundo2_i18n("Set Vertical Alignment"));
     QTextCharFormat format;
@@ -169,21 +187,25 @@ void KoTextEditor::setVerticalTextAlignment(Qt::Alignment align)
 
 void KoTextEditor::decreaseIndent()
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
     class Indenter : public BlockFormatVisitor
     {
     public:
-        void visit(QTextBlock &block) const override {
+        void visit(QTextBlock &block) const override
+        {
             QTextBlockFormat format = block.blockFormat();
             // TODO make the 10 configurable.
             format.setLeftMargin(qMax(qreal(0.0), format.leftMargin() - 10));
 
-            if (block.textList()) {
+            if (block.textList())
+            {
                 const QTextListFormat listFormat = block.textList()->format();
-                if (format.leftMargin() < listFormat.doubleProperty(KoListStyle::Margin)) {
+                if (format.leftMargin() < listFormat.doubleProperty(KoListStyle::Margin))
+                {
                     format.setLeftMargin(listFormat.doubleProperty(KoListStyle::Margin));
                 }
             }
@@ -202,24 +224,32 @@ void KoTextEditor::decreaseIndent()
 
 void KoTextEditor::increaseIndent()
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
     class Indenter : public BlockFormatVisitor
     {
     public:
-        void visit(QTextBlock &block) const override {
+        void visit(QTextBlock &block) const override
+        {
             QTextBlockFormat format = block.blockFormat();
             // TODO make the 10 configurable.
 
-            if (!block.textList()) {
+            if (!block.textList())
+            {
                 format.setLeftMargin(format.leftMargin() + 10);
-            } else {
+            }
+            else
+            {
                 const QTextListFormat listFormat = block.textList()->format();
-                if (format.leftMargin() == 0) {
+                if (format.leftMargin() == 0)
+                {
                     format.setLeftMargin(listFormat.doubleProperty(KoListStyle::Margin) + 10);
-                } else {
+                }
+                else
+                {
                     format.setLeftMargin(format.leftMargin() + 10);
                 }
             }
@@ -240,15 +270,19 @@ class FontResizer : public CharFormatVisitor
 {
 public:
     enum Type { Grow, Shrink };
-    FontResizer(Type type_) : type(type_) {
+    FontResizer(Type type_) : type(type_)
+    {
         QFontDatabase fontDB;
         defaultSizes = fontDB.standardSizes();
     }
-    void visit(QTextCharFormat &format) const override {
+    void visit(QTextCharFormat &format) const override
+    {
         const qreal current = format.fontPointSize();
         int prev = 1;
-        foreach(int pt, defaultSizes) {
-            if ((type == Grow && pt > current) || (type == Shrink && pt >= current)) {
+        foreach(int pt, defaultSizes)
+        {
+            if ((type == Grow && pt > current) || (type == Shrink && pt >= current))
+            {
                 format.setFontPointSize(type == Grow ? pt : prev);
                 return;
             }
@@ -262,7 +296,8 @@ public:
 
 void KoTextEditor::decreaseFontSize()
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
@@ -275,7 +310,8 @@ void KoTextEditor::decreaseFontSize()
 
 void KoTextEditor::increaseFontSize()
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
@@ -288,7 +324,8 @@ void KoTextEditor::increaseFontSize()
 
 void KoTextEditor::setFontFamily(const QString &font)
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
@@ -301,7 +338,8 @@ void KoTextEditor::setFontFamily(const QString &font)
 
 void KoTextEditor::setFontSize(qreal size)
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
@@ -314,7 +352,8 @@ void KoTextEditor::setFontSize(qreal size)
 
 void KoTextEditor::setTextBackgroundColor(const QColor &color)
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
@@ -327,7 +366,8 @@ void KoTextEditor::setTextBackgroundColor(const QColor &color)
 
 void KoTextEditor::setTextColor(const QColor &color)
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
@@ -356,7 +396,8 @@ public:
         KoTextVisitor::visitBlock(block, caret);
 
         QList<QTextCharFormat>::Iterator it = m_formats.begin();
-        foreach(QTextCursor cursor, m_cursors) {
+        foreach(QTextCursor cursor, m_cursors)
+        {
             QTextFormat prevFormat(cursor.charFormat());
             cursor.setCharFormat(*it);
             editor()->registerTrackedChange(cursor, KoGenChange::FormatChange, kundo2_i18n("Set Character Style"), *it, prevFormat, false);
@@ -370,16 +411,19 @@ public:
 
         QVariant v;
         v = fragmentSelection.charFormat().property(KoCharacterStyle::InlineInstanceId);
-        if (!v.isNull()) {
+        if (!v.isNull())
+        {
             format.setProperty(KoCharacterStyle::InlineInstanceId, v);
         }
 
         v = fragmentSelection.charFormat().property(KoCharacterStyle::ChangeTrackerId);
-        if (!v.isNull()) {
+        if (!v.isNull())
+        {
             format.setProperty(KoCharacterStyle::ChangeTrackerId, v);
         }
 
-        if (fragmentSelection.charFormat().isAnchor()) {
+        if (fragmentSelection.charFormat().isAnchor())
+        {
             format.setAnchor(true);
             format.setProperty(KoCharacterStyle::AnchorType, fragmentSelection.charFormat().intProperty(KoCharacterStyle::AnchorType));
             format.setAnchorHref(fragmentSelection.charFormat().anchorHref());
@@ -407,18 +451,21 @@ void KoTextEditor::setStyle(KoCharacterStyle *style)
 
     recursivelyVisitSelection(d->document->rootFrame()->begin(), visitor);
 
-    if (!isEditProtected() && caretAnchor == caretPosition) { //if there is no selection, it can happen that the caret does not get the proper style applied (beginning of a block). We need to force it.
-         //applying a style is absolute, so first initialise the caret with the frame's style, then apply the paragraph's. Finally apply the character style
+    if (!isEditProtected() && caretAnchor == caretPosition)   //if there is no selection, it can happen that the caret does not get the proper style applied (beginning of a block). We need to force it.
+    {
+        //applying a style is absolute, so first initialise the caret with the frame's style, then apply the paragraph's. Finally apply the character style
         QTextCharFormat charFormat = KoTextDocument(d->document).frameCharFormat();
         KoStyleManager *styleManager = KoTextDocument(d->document).styleManager();
         KoParagraphStyle *paragraphStyle = styleManager->paragraphStyle(d->caret.charFormat().intProperty(KoParagraphStyle::StyleId));
-        if (paragraphStyle) {
+        if (paragraphStyle)
+        {
             paragraphStyle->KoCharacterStyle::applyStyle(charFormat);
         }
         d->caret.setCharFormat(charFormat);
         style->applyStyle(&(d->caret));
     }
-    else { //if the caret has a selection, the visitor has already applied the style, reset the caret's position so it picks the proper style.
+    else   //if the caret has a selection, the visitor has already applied the style, reset the caret's position so it picks the proper style.
+    {
         d->caret.setPosition(caretAnchor);
         d->caret.setPosition(caretPosition, QTextCursor::KeepAnchor);
     }
@@ -441,11 +488,14 @@ public:
 
     void visitBlock(QTextBlock &block, const QTextCursor &) override
     {
-        if (m_styleManager) {
+        if (m_styleManager)
+        {
             QTextBlockFormat bf = block.blockFormat();
             KoParagraphStyle *old = m_styleManager->paragraphStyle(bf.intProperty(KoParagraphStyle::StyleId));
             if (old)
+            {
                 old->unapplyStyle(block);
+            }
         }
         // The above should unapply the style and it's lists part, but we want to clear everything
         // except section info.
@@ -474,13 +524,15 @@ void KoTextEditor::setStyle(KoParagraphStyle *style)
 
     recursivelyVisitSelection(d->document->rootFrame()->begin(), visitor);
 
-    if (!isEditProtected() && caretAnchor == caretPosition) { //if there is no selection, it can happen that the caret does not get the proper style applied (beginning of a block). We need to force it.
+    if (!isEditProtected() && caretAnchor == caretPosition)   //if there is no selection, it can happen that the caret does not get the proper style applied (beginning of a block). We need to force it.
+    {
         //applying a style is absolute, so first initialise the caret with the frame's style, then apply the paragraph style
         QTextCharFormat charFormat = KoTextDocument(d->document).frameCharFormat();
         d->caret.setCharFormat(charFormat);
         style->KoCharacterStyle::applyStyle(&(d->caret));
     }
-    else {
+    else
+    {
         d->caret.setPosition(caretAnchor);
         d->caret.setPosition(caretPosition, QTextCursor::KeepAnchor);
     }
@@ -504,7 +556,8 @@ public:
         KoTextVisitor::visitBlock(block, caret);
 
         QList<QTextCharFormat>::Iterator it = m_formats.begin();
-        foreach(QTextCursor cursor, m_cursors) {
+        foreach(QTextCursor cursor, m_cursors)
+        {
             QTextFormat prevFormat(cursor.charFormat());
             cursor.setCharFormat(*it);
             ++it;
@@ -535,10 +588,12 @@ void KoTextEditor::mergeAutoStyle(const QTextCharFormat &deltaCharFormat)
 
     recursivelyVisitSelection(d->document->rootFrame()->begin(), visitor);
 
-    if (!isEditProtected() && caretAnchor == caretPosition) { //if there is no selection, it can happen that the caret does not get the proper style applied (beginning of a block). We need to force it.
+    if (!isEditProtected() && caretAnchor == caretPosition)   //if there is no selection, it can happen that the caret does not get the proper style applied (beginning of a block). We need to force it.
+    {
         d->caret.mergeCharFormat(deltaCharFormat);
     }
-    else {
+    else
+    {
         d->caret.setPosition(caretAnchor);
         d->caret.setPosition(caretPosition, QTextCursor::KeepAnchor);
     }
@@ -549,8 +604,8 @@ void KoTextEditor::mergeAutoStyle(const QTextCharFormat &deltaCharFormat)
 
 
 void KoTextEditor::applyDirectFormatting(const QTextCharFormat &deltaCharFormat,
-                                  const QTextBlockFormat &deltaBlockFormat,
-                                  const KoListLevelProperties &llp)
+        const QTextBlockFormat &deltaBlockFormat,
+        const KoListLevelProperties &llp)
 {
     addCommand(new ParagraphFormattingCommand(this, deltaCharFormat, deltaBlockFormat, llp));
     emit textFormatChanged();
@@ -563,7 +618,7 @@ QTextCharFormat KoTextEditor::blockCharFormat() const
 
 QTextBlockFormat KoTextEditor::blockFormat() const
 {
-     return d->caret.blockFormat();
+    return d->caret.blockFormat();
 }
 
 QTextCharFormat KoTextEditor::charFormat() const
@@ -574,7 +629,8 @@ QTextCharFormat KoTextEditor::charFormat() const
 
 void KoTextEditor::mergeBlockFormat(const QTextBlockFormat &modifier)
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
     d->caret.mergeBlockFormat(modifier);
@@ -584,7 +640,8 @@ void KoTextEditor::mergeBlockFormat(const QTextBlockFormat &modifier)
 
 void KoTextEditor::setBlockFormat(const QTextBlockFormat &format)
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
@@ -595,7 +652,8 @@ void KoTextEditor::setBlockFormat(const QTextBlockFormat &format)
 
 void KoTextEditor::setCharFormat(const QTextCharFormat &format)
 {
-    if (isEditProtected()) {
+    if (isEditProtected())
+    {
         return;
     }
 
