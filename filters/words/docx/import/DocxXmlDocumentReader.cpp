@@ -2574,10 +2574,10 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
             m_currentParagraphStyle.setParentName(m_context->m_namedDefaultStyles.value("paragraph"));
         }
     }
-    else
-    {
-        debugDocx << "m_currentParagraphStyle stylename:"<<m_currentPageStyle.parentStyleName();
-    }
+    //else
+    //{
+        //debugDocx << "m_currentParagraphStyle stylename:"<<m_currentPageStyle.parentStyleName();
+    //}
 
     // take outline level from style's default-outline-level,
     // there is no text:outline-level equivalent in OOXML
@@ -2601,7 +2601,12 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
     if (pstyleFind)
     {
         outlineLevelAttribute = pstyleFind->attribute("style:default-outline-level");
+#ifdef MSVC
+        m_currentParagraphStyle.m_parentstyleName = pstyle->m_parentstyleName;
+#else
         m_currentParagraphStyle.setParentStyleName(pstyle->parentStyleName());
+#endif
+
         if (m_currentNumId.isEmpty())
         {
             m_currentNumId = pstyleFind->attribute("style:default-numId");
@@ -2810,7 +2815,11 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                     body->startElement("text:h", false);
                     body->addAttribute("text:outline-level", outlineLevel);
                     // openword to do? how to do?? why?是否保存位置在DocxXmlNumberingReader中
+#ifdef MSVC
+                    if (m_currentBulletProperties.m_multiLevelType == "singleLevel")
+#else
                     if (m_currentBulletProperties.multiLevelType() == "singleLevel")
+#endif
                     {
                         body->addAttribute("text:display-levels", 1);
                     }
@@ -4250,7 +4259,11 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_outlineLvl()
             //QString str = m_currentParagraphStyle.stylewname();
             // stylewname() error!!! ?? to do vs2019+qt build
             //QString str = m_currentParagraphStyle.m_stylewname;
+#ifdef MSVC
+            if (m_currentParagraphStyle.m_parentstyleName.contains("Title") || outlineLevelValue == 9)///openword
+#else
             if (m_currentParagraphStyle.parentStyleName().contains("Title") || outlineLevelValue == 9)///openword
+#endif
             {
                 m_currentParagraphStyle.addAttribute("style:default-outline-level", "");
             }
