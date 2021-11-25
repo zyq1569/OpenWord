@@ -731,16 +731,11 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
     ///
     if (d->currentListStyle)
     {
-        //KoListLevelProperties props = d->currentListStyle->levelProperties(level);
+        KoListLevelProperties props = d->currentListStyle->levelProperties(level);
         //QString prefix = props.listItemPrefix();
         //QString suffix = props.listItemSuffix();
-        //KoListLevelProperties llp;
-        //llp.setLevel(level);
-        //outlineStyle->setLevelProperties(llp);
+        outlineStyle->setLevelProperties(props);
     }
-    ///
-    /// \brief list
-    ///
 
     KoList *list = KoTextDocument(block.document()).headingList();
     if (!list)
