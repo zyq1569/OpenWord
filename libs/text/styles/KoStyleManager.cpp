@@ -123,17 +123,17 @@ KoStyleManager::KoStyleManager(QObject *parent)
         llp.setLevel(level);
         llp.setStartValue(1);
         llp.setLabelType(KoListStyle::NumberLabelType);
-        if (level < 3)// temp:临时增加的默认值,待完善中
-        {
-            llp.setNumberFormat(KoOdfNumberDefinition::ChineseCounting);
-            llp.setListItemPrefix("（");
-            llp.setListItemSuffix("）");
-        }
-        else
-        {
-            llp.setNumberFormat(KoOdfNumberDefinition::Numeric);
-            llp.setListItemSuffix(".");
-        }
+//        if (level < 3)// temp:临时增加的默认值,待完善中
+//        {
+//            llp.setNumberFormat(KoOdfNumberDefinition::ChineseCounting);
+//            llp.setListItemPrefix("（");
+//            llp.setListItemSuffix("）");
+//        }
+//        else
+//        {
+        llp.setNumberFormat(KoOdfNumberDefinition::Numeric);
+        llp.setListItemSuffix(".");
+//        }
         llp.setAlignmentMode(true);
         llp.setLabelFollowedBy(KoListStyle::ListTab);
         llp.setTabStopPosition(margin*(level+2));
