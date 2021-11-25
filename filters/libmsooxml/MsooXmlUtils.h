@@ -147,6 +147,14 @@ public:
     enum ParagraphBulletType {BulletType, NumberType, PictureType, DefaultType};
     ParagraphBulletType m_type;
 
+#ifdef MSVC
+    /// VC++ build error!?????? why? to do ...
+public:
+#else
+private:
+#endif
+    QString m_multiLevelType; //add openword 20211022
+
 private:
 
     QString m_startValue;
@@ -165,8 +173,6 @@ private:
     QString m_bulletSize;
 
     KoGenStyle m_textStyle;
-
-    QString m_multiLevelType; //add openword 20211022
     // MSWord specific: Restart the numbering when this list style is
     // used for the 1st time.  Otherwise don't restart in case any of the
     // styles inheriting from the same abstract numbering definition was
