@@ -580,8 +580,12 @@ private:
 #endif
 
 /// to do ?stylewname() error {build/vs2019+qt}
-//public:
-//    QString m_parentstyleName;// parent-style-name error!!! ?? to do vs+qt build
+#ifdef MSVC
+public:
+#else
+private:
+#endif
+    QString m_parentstyleName;// parent-style-name error!!! ?? to do vs+qt build
 //---------------------------------------------------------------------
 
 private:
@@ -591,7 +595,7 @@ private:
     PropertyType m_propertyType;
     Type m_type;
     QByteArray m_familyName;
-    QString m_parentName, m_parentstyleName;
+    QString m_parentName;
     /// We use QMaps since they provide automatic sorting on the key (important for unicity!)
     typedef QMap<QString, QString> StyleMap;
     StyleMap m_properties[LastPropertyType+1];
