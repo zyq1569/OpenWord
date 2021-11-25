@@ -23,7 +23,9 @@ void setLogDefault(QString appName)
     defaultConf.setGlobally( el::ConfigurationType::Format, "%datetime{%Y-%M-%d %H:%m:%s} %level %msg");
     defaultConf.setGlobally(el::ConfigurationType::Filename, getLogFilePath(appName).toStdString());
     el::Loggers::reconfigureLogger("default", defaultConf);
+#ifndef MSVC
     INFO_LOG("setLogDefault()---INFO!");
+#endif
 }
 
 void beginLogging(QString appName)
