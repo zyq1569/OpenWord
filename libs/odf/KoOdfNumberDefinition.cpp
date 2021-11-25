@@ -68,7 +68,7 @@ QStringList KoOdfNumberDefinition::userFormatDescriptions()
     QStringList list;
     list << "1, 2, 3, ..."
          << "a, b, c, ..."
-         << "A, B, C, ..."// << "一, 二, 三, ..."
+         << "A, B, C, ..."
          << "i, ii, iii, ..."
          << "I, II, III, ..." << "أ, ب, ت, ..."
          << "ก, ข, ค, ..."
@@ -208,7 +208,7 @@ void KoOdfNumberDefinition::saveOdf(KoXmlWriter *writer) const
         case RomanUpperCase:
             format = "I";
             break;
-       case ChineseCounting:
+        case ChineseCounting:
             format = "一";
             break;
         case ArabicAlphabet:
@@ -378,27 +378,16 @@ QString g_NumberH1PreIndex[51] =
 {
     "一",     "二",   "三",   "四",   "五",   "六",   "七",   "八",   "九", "十",
     "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十","二十一"
+    "二十二", "二十三", "二十四", "二十五", "二十六", "二十七", "二十八", "二十九", "三十","三十一"
 };
 
-QString KoOdfNumberDefinition::formattedNumber(int number, KoOdfNumberDefinition *defaultDefinition/*, int level*/) const
+QString KoOdfNumberDefinition::formattedNumber(int number, KoOdfNumberDefinition *defaultDefinition) const
 {
     switch(d->formatSpecification)
     {
         case Numeric:
-//            if (level > 2)
-//            {
-                return QString::number(number);
-//            }
-//            else
-//            {
-//                if (number > 19)
-//                {
-//                    return QString::number(number);
-//                }
-//                return  g_NumberH1PreIndex[number-1];
-//            }
+            return QString::number(number);
             break;
-
         case AlphabeticLowerCase:
             return intToAlpha(number, d->letterSynchronization);
         case AlphabeticUpperCase:
