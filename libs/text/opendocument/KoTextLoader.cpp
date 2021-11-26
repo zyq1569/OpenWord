@@ -726,9 +726,7 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
         }
     }
 
-    ///
-    /// \brief to do...修改默认值为当前读取的值
-    ///
+    /// \brief to do...修改默认值为当前读取的值  20211126
     if (d->currentListStyle)
     {
         KoListLevelProperties props = d->currentListStyle->levelProperties(level);
