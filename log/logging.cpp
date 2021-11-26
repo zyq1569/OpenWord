@@ -9,23 +9,28 @@ INITIALIZE_EASYLOGGINGPP
 namespace LOG
 {
 
+const char* getPID(const el::LogMessage*)
+{
+    static QString pid = QString::number(getpid());
+    return  pid.toLatin1();
+}
+
 void setLogDefault(QString appName)
 {
     el::Configurations defaultConf;
     defaultConf.setToDefault();
+    el::Helpers::installCustomFormatSpecifier(el::CustomFormatSpecifier("%pid", getPID));
     // Values are always std::string
     //defaultConf.set(el::Level::Info, el::ConfigurationType::Format, "%datetime{%Y-%M-%d %H:%m:%s} %level %msg");
-    defaultConf.set(el::Level::Warning, el::ConfigurationType::Format, "%datetime{%y/%M/%d %H:%m:%s:%g} %thread %levshort %msg");
+    defaultConf.set(el::Level::Warning, el::ConfigurationType::Format, "%datetime{%y/%M/%d %H:%m:%s:%g} %pid %thread %levshort %msg");
     ///(ConfigurationType::MaxLogFileSize, "2097152"); // 2MB
     // default logger uses default configurations
     el::Loggers::reconfigureLogger("default", defaultConf);
     //LOG(INFO) << "Log using default file";
     // To set GLOBAL configurations you may use
-    defaultConf.setGlobally( el::ConfigurationType::Format, "%datetime{%y/%M/%d %H:%m:%s:%g} %thread %levshort %msg");
+    defaultConf.setGlobally( el::ConfigurationType::Format, "%datetime{%y/%M/%d %H:%m:%s:%g} %pid %thread %levshort %msg");
     defaultConf.setGlobally(el::ConfigurationType::Filename, getLogFilePath(appName).toStdString());
     el::Loggers::reconfigureLogger("default", defaultConf);
-    QString pid = QString::number(getpid());
-    el::Helpers::setThreadName(pid.toStdString());
 
 #ifndef MSVC
     INFO_LOG("setLogDefault()---INFO!");
