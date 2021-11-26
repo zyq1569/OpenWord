@@ -15,14 +15,17 @@ void setLogDefault(QString appName)
     defaultConf.setToDefault();
     // Values are always std::string
     //defaultConf.set(el::Level::Info, el::ConfigurationType::Format, "%datetime{%Y-%M-%d %H:%m:%s} %level %msg");
-    defaultConf.set(el::Level::Warning, el::ConfigurationType::Format, "%datetime{%Y-%M-%d %H:%m:%s} %level %msg");
+    defaultConf.set(el::Level::Warning, el::ConfigurationType::Format, "%datetime{%y/%M/%d %H:%m:%s:%g} %thread %levshort %msg");
     // default logger uses default configurations
     el::Loggers::reconfigureLogger("default", defaultConf);
     //LOG(INFO) << "Log using default file";
     // To set GLOBAL configurations you may use
-    defaultConf.setGlobally( el::ConfigurationType::Format, "%datetime{%Y-%M-%d %H:%m:%s} %level %msg");
+    defaultConf.setGlobally( el::ConfigurationType::Format, "%datetime{%y/%M/%d %H:%m:%s:%g} %thread %levshort %msg");
     defaultConf.setGlobally(el::ConfigurationType::Filename, getLogFilePath(appName).toStdString());
     el::Loggers::reconfigureLogger("default", defaultConf);
+    //QString pid = QString::number(getpid());
+    //el::Helpers::setThreadName(pid.toStdString());
+
 #ifndef MSVC
     INFO_LOG("setLogDefault()---INFO!");
 #endif
