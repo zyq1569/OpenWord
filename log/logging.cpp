@@ -23,12 +23,12 @@ void setLogDefault(QString appName)
     // Values are always std::string
     //defaultConf.set(el::Level::Info, el::ConfigurationType::Format, "%datetime{%Y-%M-%d %H:%m:%s} %level %msg");
     defaultConf.set(el::Level::Warning, el::ConfigurationType::Format, "%datetime{%y/%M/%d %H:%m:%s:%g} %pid %thread %levshort %msg");
-    ///(ConfigurationType::MaxLogFileSize, "2097152"); // 2MB
+    //defaultConf.set(el::ConfigurationType::MaxLogFileSize, "2097152"); // 2MB
     // default logger uses default configurations
     el::Loggers::reconfigureLogger("default", defaultConf);
     //LOG(INFO) << "Log using default file";
     // To set GLOBAL configurations you may use
-    defaultConf.setGlobally( el::ConfigurationType::Format, "%datetime{%y/%M/%d %H:%m:%s:%g} %pid %thread %levshort %msg");
+    defaultConf.setGlobally(el::ConfigurationType::Format, "%datetime{%y/%M/%d %H:%m:%s:%g} %pid %thread %levshort %msg");
     defaultConf.setGlobally(el::ConfigurationType::Filename, getLogFilePath(appName).toStdString());
     el::Loggers::reconfigureLogger("default", defaultConf);
 
@@ -67,7 +67,7 @@ void beginLogging(QString appName)
 
 }
 
-void  InitLog()
+void InitLog()
 {
     static int init = 0 ;
     if ( init > 0 )
