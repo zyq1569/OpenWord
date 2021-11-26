@@ -732,8 +732,6 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
     if (d->currentListStyle)
     {
         KoListLevelProperties props = d->currentListStyle->levelProperties(level);
-        //QString prefix = props.listItemPrefix();
-        //QString suffix = props.listItemSuffix();
         outlineStyle->setLevelProperties(props);
     }
 
