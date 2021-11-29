@@ -12,7 +12,8 @@ namespace LOG
 const char* getPID(const el::LogMessage*)
 {
     static QString pid = QString::number(getpid());
-    return  pid.toLatin1();
+    static std::string stdpid = pid.toStdString();
+    return  stdpid.c_str();
 }
 
 void setLogDefault(QString appName)
@@ -24,7 +25,7 @@ void setLogDefault(QString appName)
     //defaultConf.set(el::Level::Info, el::ConfigurationType::Format, "%datetime{%Y-%M-%d %H:%m:%s} %level %msg");
     defaultConf.set(el::Level::Warning, el::ConfigurationType::Format, "%datetime{%y/%M/%d %H:%m:%s:%g} %pid %thread %levshort %msg");
     //defaultConf.set(el::ConfigurationType::MaxLogFileSize, "2097152"); // 2MB
-    //el::Configuration confMaxLogFileSizeInfo(el::Level::Info, el::ConfigurationType::MaxLogFileSize, "2097152");
+    el::Configuration confMaxLogFileSizeInfo(el::Level::Info, el::ConfigurationType::MaxLogFileSize, "2097152");
     //default logger uses default configurations
     el::Loggers::reconfigureLogger("default", defaultConf);
     //LOG(INFO) << "Log using default file";
