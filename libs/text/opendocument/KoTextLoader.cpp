@@ -1141,7 +1141,7 @@ void KoTextLoader::loadSpan(const KoXmlElement &element, QTextCursor &cursor, bo
 //#ifdef KOOPENDOCUMENTLOADER_DEBUG
 //    debugText << "text-style:" << KoTextDebug::textAttributes(cursor.blockCharFormat());
 //#endif
-    DEBUG_LOG("text-style:" + KoTextDebug::textAttributes(cursor.blockCharFormat()));
+    //DEBUG_LOG("text-style:" + KoTextDebug::textAttributes(cursor.blockCharFormat()));
     Q_ASSERT(stripLeadingSpace);
     if (d->loadSpanLevel++ == 0)
     {
