@@ -556,7 +556,8 @@ void KWRootAreaProvider::doPostLayout(KoTextLayoutRootArea *rootArea, bool isNew
     Q_ASSERT(data);
     bool isHeaderFooter = Words::isHeaderFooter(frameSet());
 
-    debugWords << "pageNumber=" << page.pageNumber() << "frameSetType=" << Words::frameSetTypeName(frameSet()->textFrameSetType()) << "isNewRootArea=" << isNewRootArea << "rootArea=" << rootArea << "isDirty=" << rootArea->isDirty();
+    DEBUG_LOG( "pageNumber=" + QString::number(page.pageNumber()) + "frameSetType=" + Words::frameSetTypeName(frameSet()->textFrameSetType()));
+    debugWords << /*"pageNumber=" << page.pageNumber() << "frameSetType=" << Words::frameSetTypeName(frameSet()->textFrameSetType()) <<*/ "isNewRootArea=" << isNewRootArea << "rootArea=" << rootArea << "isDirty=" << rootArea->isDirty();
 
     QRectF updateRect = shape->outlineRect();
 
