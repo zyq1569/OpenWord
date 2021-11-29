@@ -41,9 +41,9 @@ ListItemsHelper::ListItemsHelper(QTextList *textList, const QFont &font)
 
 void ListItemsHelper::recalculateBlock(QTextBlock &block)
 {
-#ifdef QT_DEBUG
-    DEBUG_LOG("recalculateBlock:" + block.text());
-#endif
+//#ifdef QT_DEBUG
+//    DEBUG_LOG("recalculateBlock:" + block.text());
+//#endif
 
     //warnTextLayout;
     const QTextListFormat format = m_textList->format();
