@@ -379,7 +379,7 @@ void KoTextLoader::loadBody(const KoXmlElement &bodyElem, QTextCursor &cursor, L
 //#ifdef KOOPENDOCUMENTLOADER_DEBUG
 //    debugText << "text-style:" << KoTextDebug::textAttributes(cursor.blockCharFormat());
 //#endif
-    DEBUG_LOG( "text-style:" + KoTextDebug::textAttributes(cursor.blockCharFormat()));
+    //DEBUG_LOG( "text-style:" + KoTextDebug::textAttributes(cursor.blockCharFormat()));
     // set to true if we found a tag that used the paragraph,
     // indicating that the next round needs to start a new one.
     bool usedParagraph = false;
@@ -1159,10 +1159,10 @@ void KoTextLoader::loadSpan(const KoXmlElement &element, QTextCursor &cursor, bo
 
         //if (isOfficeNS)
         //debugText << "office:"<<isOfficeNS << localName;
-        DEBUG_LOG( "office: bool(" + QString::number( isOfficeNS ) + ")"  +  localName);
+        //DEBUG_LOG( "office: bool(" + QString::number( isOfficeNS ) + ")"  +  localName);
 //#ifdef KOOPENDOCUMENTLOADER_DEBUG
         //debugText << "load" << localName << *stripLeadingSpace << node.toText().data();
-        DEBUG_LOG("load" + localName + "|bool(" +  QString::number( *stripLeadingSpace ) + ")" +  node.toText().data());
+        //DEBUG_LOG("load" + localName + "|bool(" +  QString::number( *stripLeadingSpace ) + ")" +  node.toText().data());
 //#endif
 
         if (!(isTextNS && localName == "span"))
