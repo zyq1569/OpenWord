@@ -757,7 +757,7 @@ void KoMainWindow::setReadWrite(bool readwrite)
 
 void KoMainWindow::addRecentURL(const QUrl &url)
 {
-    debugMain << "KoMainWindow::addRecentURL url=" << url.toDisplayString();
+    //debugMain << "KoMainWindow::addRecentURL url=" << url.toDisplayString();
     // Add entry to recent documents list
     // (call coming from KoDocument because it must work with cmd line, template dlg, file/open, etc.)
     if (!url.isEmpty())
