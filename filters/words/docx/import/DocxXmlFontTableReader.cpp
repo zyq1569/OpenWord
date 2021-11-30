@@ -132,7 +132,7 @@ KoFilter::ConversionStatus DocxXmlFontTableReader::read_fonts()
     while (!atEnd())
     {
         readNext();
-        debugDocx << *this;
+        //debugDocx << *this;
         BREAK_IF_END_OF(CURRENT_EL)
         if (isStartElement())
         {
@@ -143,7 +143,7 @@ KoFilter::ConversionStatus DocxXmlFontTableReader::read_fonts()
                 {
                     return KoFilter::WrongFormat;
                 }
-                debugDocx << "added font face:" << m_currentFontFace.name();
+                //debugDocx << "added font face:" << m_currentFontFace.name();
                 m_context->styles->insertFontFace(m_currentFontFace);
                 m_currentFontFace = KoFontFace();
             }
@@ -194,7 +194,7 @@ KoFilter::ConversionStatus DocxXmlFontTableReader::read_font()
     while (!atEnd())
     {
         readNext();
-        debugDocx << *this;
+        //debugDocx << *this;
         BREAK_IF_END_OF(CURRENT_EL)
         if (isStartElement())
         {

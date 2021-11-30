@@ -122,7 +122,7 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read(MSOOXML::MsooXmlReaderConte
     while (!atEnd())
     {
         readNext();
-        debugDocx << *this;
+        //debugDocx << *this;
         BREAK_IF_END_OF(styles)
         if (isStartElement())
         {
@@ -186,7 +186,7 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_docDefaults()
     while (!atEnd())
     {
         readNext();
-        debugDocx << *this;
+        //debugDocx << *this;
         BREAK_IF_END_OF(CURRENT_EL)
         if (isStartElement())
         {
@@ -253,7 +253,7 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_pPrDefault()
     while (!atEnd())
     {
         readNext();
-        debugDocx << *this;
+        //debugDocx << *this;
         BREAK_IF_END_OF(CURRENT_EL)
         if (isStartElement())
         {
@@ -281,7 +281,7 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_rPrDefault()
     while (!atEnd())
     {
         readNext();
-        debugDocx << *this;
+        //debugDocx << *this;
         BREAK_IF_END_OF(CURRENT_EL)
         if (isStartElement())
         {

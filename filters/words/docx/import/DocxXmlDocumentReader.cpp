@@ -205,10 +205,10 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read(MSOOXML::MsooXmlReaderCon
     //}
 
     QXmlStreamNamespaceDeclarations namespaces(namespaceDeclarations());
-    for (int i = 0; i < namespaces.count(); i++)
-    {
-        debugDocx << "NS prefix:" << namespaces[i].prefix() << "uri:" << namespaces[i].namespaceUri();
-    }
+//    for (int i = 0; i < namespaces.count(); i++)
+//    {
+//        debugDocx << "NS prefix:" << namespaces[i].prefix() << "uri:" << namespaces[i].namespaceUri();
+//    }
 //! @todo find out whether the namespace returned by namespaceUri()
 //!       is exactly the same ref as the element of namespaceDeclarations()
     if (!namespaces.contains(QXmlStreamNamespaceDeclaration("w", MSOOXML::Schemas::wordprocessingml)))
@@ -221,7 +221,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read(MSOOXML::MsooXmlReaderCon
     while (!atEnd())
     {
         readNext();
-        debugDocx << *this;
+        //debugDocx << *this;
         BREAK_IF_END_OF(document)
         if (isStartElement())
         {
@@ -297,7 +297,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_body()
     while (!atEnd())
     {
         readNext();
-        debugDocx << *this;
+        //debugDocx << *this;
         BREAK_IF_END_OF(CURRENT_EL)
         if (isStartElement())
         {
@@ -3330,7 +3330,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_rPr()
     while (!atEnd())
     {
         readNext();
-        debugDocx << *this;
+        //debugDocx << *this;
         BREAK_IF_END_OF(CURRENT_EL)
         if (isStartElement())
         {
@@ -3440,7 +3440,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_pPr()
     while (!atEnd())
     {
         readNext();
-        debugDocx << *this;
+        //debugDocx << *this;
         BREAK_IF_END_OF(CURRENT_EL)
         if (isStartElement())
         {
@@ -3705,7 +3705,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_numPr()
     while (!atEnd())
     {
         readNext();
-        debugDocx << *this;
+        //debugDocx << *this;
         BREAK_IF_END_OF(CURRENT_EL);
         if (isStartElement())
         {
@@ -5406,7 +5406,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_tabs()
     elementWriter.endElement(); // style-tab-stops
 
     QString tabStops = QString::fromUtf8(tabs.buffer(), tabs.buffer().size());
-    debugDocx << tabStops;
+    //debugDocx << tabStops;
     m_currentParagraphStyle.addChildElement("style:tab-stops", tabStops);
 
     READ_EPILOGUE
@@ -5960,7 +5960,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_lang()
             warnDocx << "invalid value of \"eastAsia\" attribute:" << eastAsia << " - skipping";
         }
     }
-    debugDocx << "bidi:" << bidi << "val:" << val << "eastAsia:" << eastAsia;
+    //debugDocx << "bidi:" << bidi << "val:" << val << "eastAsia:" << eastAsia;
 
     readNext();
     READ_EPILOGUE
@@ -8279,7 +8279,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_t_m()
     {
         readNext();
         BREAK_IF_END_OF(CURRENT_EL)
-        debugDocx << *this;
+        //debugDocx << *this;
         if (isCharacters())
         {
             body->addTextSpan(text().toString());

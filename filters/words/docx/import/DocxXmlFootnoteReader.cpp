@@ -82,7 +82,7 @@ KoFilter::ConversionStatus DocxXmlFootnoteReader::read(MSOOXML::MsooXmlReaderCon
     }
     readNext();
 
-    debugDocx << *this << namespaceUri();
+    //debugDocx << *this << namespaceUri();
     if (!expectEl(QList<QByteArray>() << "w:footnotes"))
     {
         return KoFilter::WrongFormat;

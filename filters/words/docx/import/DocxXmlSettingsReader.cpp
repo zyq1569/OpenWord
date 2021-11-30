@@ -77,7 +77,7 @@ KoFilter::ConversionStatus DocxXmlSettingsReader::read(MSOOXML::MsooXmlReaderCon
     }
     readNext();
 
-    debugDocx << *this << namespaceUri();
+    //debugDocx << *this << namespaceUri();
     if (!expectEl(QList<QByteArray>() << "w:settings"))
     {
         return KoFilter::WrongFormat;

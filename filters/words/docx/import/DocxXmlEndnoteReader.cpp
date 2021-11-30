@@ -82,7 +82,7 @@ KoFilter::ConversionStatus DocxXmlEndnoteReader::read(MSOOXML::MsooXmlReaderCont
     }
     readNext();
 
-    debugDocx << *this << namespaceUri();
+    //debugDocx << *this << namespaceUri();
     if (!expectEl(QList<QByteArray>() << "w:endnotes"))
     {
         return KoFilter::WrongFormat;

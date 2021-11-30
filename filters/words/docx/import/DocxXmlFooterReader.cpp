@@ -87,7 +87,7 @@ KoFilter::ConversionStatus DocxXmlFooterReader::read(MSOOXML::MsooXmlReaderConte
     }
     readNext();
 
-    debugDocx << *this << namespaceUri();
+    //debugDocx << *this << namespaceUri();
     if (!expectEl(QList<QByteArray>() << "w:ftr"))
     {
         return KoFilter::WrongFormat;

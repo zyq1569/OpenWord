@@ -87,7 +87,7 @@ KoFilter::ConversionStatus DocxXmlHeaderReader::read(MSOOXML::MsooXmlReaderConte
     }
     readNext();
 
-    debugDocx << *this << namespaceUri();
+    //debugDocx << *this << namespaceUri();
     if (!expectEl(QList<QByteArray>() << "w:hdr"))
     {
         return KoFilter::WrongFormat;

@@ -75,7 +75,7 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read(MSOOXML::MsooXmlReaderCo
         return KoFilter::WrongFormat;
     }
     readNext();
-    debugDocx << *this << namespaceUri();
+    //debugDocx << *this << namespaceUri();
     if (!expectEl(QList<QByteArray>() << "w:numbering"))
     {
         return KoFilter::WrongFormat;
