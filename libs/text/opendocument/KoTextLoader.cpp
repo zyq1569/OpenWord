@@ -1113,7 +1113,7 @@ void KoTextLoader::loadText(const QString &fulltext, QTextCursor &cursor, bool *
     QString text = normalizeWhitespace(fulltext, *stripLeadingSpace);
 //#ifdef KOOPENDOCUMENTLOADER_DEBUG
     //debugText << "  <text> text=" << text << text.length() << *stripLeadingSpace;
-    DEBUG_LOG("  <text> text=" + text + QString::number(text.length()) + " bool:" + QString::number(*stripLeadingSpace));
+    //DEBUG_LOG("  <text> text=" + text + QString::number(text.length()) + " bool:" + QString::number(*stripLeadingSpace));
 //#endif
 
     if (!text.isEmpty())
