@@ -889,16 +889,16 @@ void KoTextLoader::loadList(const KoXmlElement &element, QTextCursor &cursor)
         //          <<" suffix="<</*props.listItemSuffix()*/Suffix
         //          ;// old
 
-        DEBUG_LOG("styleName =" + styleName +  "listStyle =" + d->currentListStyle->name() );
-        DEBUG_LOG("level =" + QString::number(level) + "hasLevelProperties =" + d->currentListStyle->hasLevelProperties(level));
-        DEBUG_LOG("style="  + QString::number(props.styleId()) + " prefix=" + prefix + " suffix=" + suffix + " numberFormat:"+numberFormat);
-        DEBUG_LOG("element:"+element.text());
+        //DEBUG_LOG("styleName =" + styleName +  "listStyle =" + d->currentListStyle->name() );
+        //DEBUG_LOG("level =" + QString::number(level) + "hasLevelProperties =" + d->currentListStyle->hasLevelProperties(level));
+        //DEBUG_LOG("style="  + QString::number(props.styleId()) + " prefix=" + prefix + " suffix=" + suffix + " numberFormat:"+numberFormat);
+        //DEBUG_LOG("element:"+element.text());
     }
-    else
-    {
-        //debugText << "styleName =" << styleName << " currentListStyle = 0";
-        DEBUG_LOG("styleName =" + styleName +  " currentListStyle = 0" );
-    }
+    //else
+    //{
+    //    //debugText << "styleName =" << styleName << " currentListStyle = 0";
+    //    DEBUG_LOG("styleName =" + styleName +  " currentListStyle = 0" );
+    //}
 //#endif
 
     KoXmlElement e;
@@ -1179,7 +1179,7 @@ void KoTextLoader::loadSpan(const KoXmlElement &element, QTextCursor &cursor, bo
         {
 //#ifdef KOOPENDOCUMENTLOADER_DEBUG
             //debugText << "  <span> localName=" << localName;
-            DEBUG_LOG("  <span> localName=" + localName);
+            //DEBUG_LOG("  <span> localName=" + localName);
 //#endif
             QString styleName = ts.attributeNS(KoXmlNS::text, "style-name", QString());
 
@@ -1360,7 +1360,7 @@ void KoTextLoader::loadSpan(const KoXmlElement &element, QTextCursor &cursor, bo
         // text:annotation and text:annotation-end
         else if (isOfficeNS && (localName == "annotation" || localName == "annotation-end"))
         {
-            debugText << "------> annotation found" << localName;
+            //debugText << "------> annotation found" << localName;
 
             KoTextRangeManager *textRangeManager = KoTextDocument(cursor.block().document()).textRangeManager();
 
