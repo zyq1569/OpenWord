@@ -865,7 +865,7 @@ void KoMainWindow::updateCaption()
 
 void KoMainWindow::updateCaption(const QString & caption, bool mod)
 {
-    debugMain << "KoMainWindow::updateCaption(" << caption << "," << mod << ")";
+    //debugMain << "KoMainWindow::updateCaption(" << caption << "," << mod << ")";
     DEBUG_LOG("KoMainWindow::updateCaption :"+caption);
 #ifdef CALLIGRA_ALPHA
     setCaption(QString("ALPHA %1: %2").arg(CALLIGRA_ALPHA).arg(caption), mod);
