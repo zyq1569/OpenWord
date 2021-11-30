@@ -68,7 +68,7 @@ void DocxXmlStylesReader::createDefaultStyle(KoGenStyle::Type type, const char* 
 KoFilter::ConversionStatus DocxXmlStylesReader::read(MSOOXML::MsooXmlReaderContext* context)
 {
     m_context = static_cast<DocxXmlDocumentReaderContext*>(context);
-    debugDocx << "============DocxXmlStylesReader::read=================";
+    //debugDocx << "============DocxXmlStylesReader::read=================";
     readNext();
     if (!isStartDocument())
     {
@@ -77,7 +77,7 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read(MSOOXML::MsooXmlReaderConte
 
     //w:document
     readNext();
-    debugDocx << *this << namespaceUri();
+    //debugDocx << *this << namespaceUri();
 
     if (!expectEl("w:styles"))
     {
@@ -148,7 +148,7 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read(MSOOXML::MsooXmlReaderConte
     qDeleteAll(m_defaultStyles);
     m_defaultStyles.clear();
 
-    debugDocx << "===========DocxXmlStylesReader::read finished============";
+    //debugDocx << "===========DocxXmlStylesReader::read finished============";
     return KoFilter::OK;
 }
 

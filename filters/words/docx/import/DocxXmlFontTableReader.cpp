@@ -61,7 +61,7 @@ DocxXmlFontTableReader::~DocxXmlFontTableReader()
 KoFilter::ConversionStatus DocxXmlFontTableReader::read(MSOOXML::MsooXmlReaderContext* context)
 {
     m_context = dynamic_cast<DocxXmlFontTableReaderContext*>(context);
-    debugDocx << "=============================";
+    //debugDocx << "=============================";
     readNext();
     if (!isStartDocument())
     {
@@ -70,7 +70,7 @@ KoFilter::ConversionStatus DocxXmlFontTableReader::read(MSOOXML::MsooXmlReaderCo
 
     //w:document
     readNext();
-    debugDocx << namespaceUri();
+    //debugDocx << namespaceUri();
 
     if (!expectEl("w:fonts"))
     {
@@ -87,10 +87,10 @@ KoFilter::ConversionStatus DocxXmlFontTableReader::read(MSOOXML::MsooXmlReaderCo
         }*/
 
     QXmlStreamNamespaceDeclarations namespaces(namespaceDeclarations());
-    for (int i = 0; i < namespaces.count(); i++)
-    {
-        debugDocx << "NS prefix:" << namespaces[i].prefix() << "uri:" << namespaces[i].namespaceUri();
-    }
+    //for (int i = 0; i < namespaces.count(); i++)
+    //{
+    //    debugDocx << "NS prefix:" << namespaces[i].prefix() << "uri:" << namespaces[i].namespaceUri();
+    //}
 //! @todo find out whether the namespace returned by namespaceUri()
 //!       is exactly the same ref as the element of namespaceDeclarations()
     if (!namespaces.contains(QXmlStreamNamespaceDeclaration("w", MSOOXML::Schemas::wordprocessingml)))
@@ -107,7 +107,7 @@ KoFilter::ConversionStatus DocxXmlFontTableReader::read(MSOOXML::MsooXmlReaderCo
         return KoFilter::WrongFormat;
     }
 
-    debugDocx << "===========finished============";
+    //debugDocx << "===========finished============";
     return KoFilter::OK;
 }
 

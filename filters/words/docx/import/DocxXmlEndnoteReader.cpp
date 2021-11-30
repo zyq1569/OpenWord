@@ -74,7 +74,7 @@ KoFilter::ConversionStatus DocxXmlEndnoteReader::read(MSOOXML::MsooXmlReaderCont
 {
     m_context = static_cast<DocxXmlDocumentReaderContext*>(context);
 
-    debugDocx << "=============================";
+    //debugDocx << "=============================";
     readNext();
     if (!isStartDocument())
     {
@@ -110,7 +110,7 @@ KoFilter::ConversionStatus DocxXmlEndnoteReader::read(MSOOXML::MsooXmlReaderCont
     {
         return KoFilter::WrongFormat;
     }
-    debugDocx << "===========finished============";
+    //debugDocx << "===========finished============";
 
     return KoFilter::OK;
 }

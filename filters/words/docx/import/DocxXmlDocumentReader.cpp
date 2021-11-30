@@ -187,7 +187,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read(MSOOXML::MsooXmlReaderCon
 
     //w:document
     readNext();
-    debugDocx << *this << namespaceUri();
+    //debugDocx << *this << namespaceUri();
 
     if (!expectEl("w:document"))
     {
@@ -2475,7 +2475,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
     while (!atEnd())
     {
         readNext();
-        debugDocx << *this;
+        //debugDocx << *this;
         BREAK_IF_END_OF(CURRENT_EL)
         if (isStartElement())
         {

@@ -79,7 +79,7 @@ KoFilter::ConversionStatus DocxXmlFooterReader::read(MSOOXML::MsooXmlReaderConte
 {
     m_context = static_cast<DocxXmlDocumentReaderContext*>(context);
 
-    debugDocx << "=============================";
+    //debugDocx << "=============================";
     readNext();
     if (!isStartDocument())
     {
@@ -115,7 +115,7 @@ KoFilter::ConversionStatus DocxXmlFooterReader::read(MSOOXML::MsooXmlReaderConte
     {
         return KoFilter::WrongFormat;
     }
-    debugDocx << "===========finished============";
+    //debugDocx << "===========finished============";
 
     return KoFilter::OK;
 }

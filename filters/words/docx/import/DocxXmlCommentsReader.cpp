@@ -73,7 +73,7 @@ KoFilter::ConversionStatus DocxXmlCommentReader::read(MSOOXML::MsooXmlReaderCont
 {
     m_context = static_cast<DocxXmlDocumentReaderContext*>(context);
 
-    debugDocx << "=============================";
+    //debugDocx << "=============================";
     readNext();
     if (!isStartDocument())
     {
@@ -81,7 +81,7 @@ KoFilter::ConversionStatus DocxXmlCommentReader::read(MSOOXML::MsooXmlReaderCont
     }
     readNext();
 
-    debugDocx << *this << namespaceUri();
+    //debugDocx << *this << namespaceUri();
     if (!expectEl(QList<QByteArray>() << "w:comments"))
     {
         return KoFilter::WrongFormat;
@@ -109,7 +109,7 @@ KoFilter::ConversionStatus DocxXmlCommentReader::read(MSOOXML::MsooXmlReaderCont
     {
         return KoFilter::WrongFormat;
     }
-    debugDocx << "===========finished============";
+    //debugDocx << "===========finished============";
 
     return KoFilter::OK;
 }
