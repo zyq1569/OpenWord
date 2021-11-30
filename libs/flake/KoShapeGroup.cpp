@@ -126,7 +126,7 @@ QSizeF KoShapeGroup::size() const
         }
         d->size = bound.size();
         d->sizeCached = true;
-        debugFlake << "recalculated size" << d->size;
+        //debugFlake << "recalculated size" << d->size;
     }
 
     return d->size;
