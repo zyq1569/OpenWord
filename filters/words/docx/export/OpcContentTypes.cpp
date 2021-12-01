@@ -275,14 +275,6 @@ KoFilter::ConversionStatus DocPropsFiles::writeToStore(KoStore *docPropsFiles)
         writer.addTextNode("modified:pc name ");
         writer.endElement();
 
-        writer.startElement("DocSecurity",false);
-        writer.addTextNode("0");//Characters :
-        writer.endElement();
-
-        writer.startElement("cp:revision",false);
-        writer.addTextNode("2");
-        writer.endElement();
-
         writer.startElement("dcterms:created xsi:type=\"dcterms:W3CDTF\"",false);
         writer.addTextNode("2021-09-07T01:12:00Z");// create time
         writer.endElement();
