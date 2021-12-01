@@ -97,13 +97,25 @@ KoFilter::ConversionStatus DocxFile::writeDocx(const QString &fileName,
 
     // Finally, write the [Content_Types}.xml file.
     OpcContentTypes  contentTypes;
+    contentTypes.addDefault("png",  "image/png");
     contentTypes.addDefault("rels", "application/vnd.openxmlformats-package.relationships+xml");
-    contentTypes.addDefault("xml", "application/xml");
+    contentTypes.addDefault("xml",  "application/xml");
     foreach (const FileInfo *file, files())
     {
         contentTypes.addFile(file->fileName, file->mimetype);
     }
     contentTypes.writeToStore(docxStore);
+
+    /// add openword
+    DocPropsFiles  appDocPropsFiles("docProps/app.xml");
+    appDocPropsFiles.writeToStore(docxStore);
+
+    DocPropsFiles coreDocPropsFiles("docProps/core.xml");
+    coreDocPropsFiles.writeToStore(docxStore);
+
+    //custom.xml
+    DocPropsFiles customDocPropsFiles("docProps/custom.xml");
+    customDocPropsFiles.writeToStore(docxStore);
 
     delete docxStore;
     return status;
@@ -140,18 +152,25 @@ KoFilter::ConversionStatus DocxFile::writeTopLevelRels(KoStore *docxStore)
     writer.endElement();  // Relationship
 
     // Doc props core
-    //writer.startElement("Relationship");
-    //writer.addAttribute("Id", "rId2");
-    //writer.addAttribute("Type", "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties");
-    //writer.addAttribute("Target", "docProps/core.xml");
-    //writer.endElement();  // Relationship
+    writer.startElement("Relationship");
+    writer.addAttribute("Id", "rId2");
+    writer.addAttribute("Type", "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties");
+    writer.addAttribute("Target", "docProps/core.xml");
+    writer.endElement();  // Relationship
 
     // Doc props app
-    //writer.startElement("Relationship");
-    //writer.addAttribute("Id", "rId3");
-    //writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties");
-    //writer.addAttribute("Target", "docProps/app.xml");
-    //writer.endElement();  // Relationship
+    writer.startElement("Relationship");
+    writer.addAttribute("Id", "rId3");
+    writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties");
+    writer.addAttribute("Target", "docProps/app.xml");
+    writer.endElement();  // Relationship
+
+    // Doc props custom
+    writer.startElement("Relationship");
+    writer.addAttribute("Id", "rId4");
+    writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/custom-properties");
+    writer.addAttribute("Target", "docProps/custom.xml");
+    writer.endElement();  // Relationship
 
     writer.endElement();  // Relationships
     writer.endDocument();
@@ -172,7 +191,7 @@ KoFilter::ConversionStatus DocxFile::writeDocumentRels(KoStore *docxStore)
     KoStoreDevice metaDevice(docxStore);
     KoXmlWriter writer(&metaDevice);
 
-    writer.startDocument(0, 0, 0);
+    writer.startDocument(0, 0, 0, true);
     writer.startElement("Relationships");
     writer.addAttribute("xmlns", "http://schemas.openxmlformats.org/package/2006/relationships");
 
@@ -192,27 +211,27 @@ KoFilter::ConversionStatus DocxFile::writeDocumentRels(KoStore *docxStore)
         writer.addAttribute("Target", "comments.xml");
         writer.endElement();
     }
-#if 0
+//#if 1
     writer.startElement("Relationship");
     writer.addAttribute("Id", "rId3");
     writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/webSettings");
     writer.addAttribute("Target", "webSettings.xml");
     writer.endElement();
-#endif
-#if 0
+//#endif
+//#if 0
     writer.startElement("Relationship");
     writer.addAttribute("Id", "rId4");
     writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable");
     writer.addAttribute("Target", "fontTable.xml");
     writer.endElement();
-#endif
-#if 0
+//#endif
+//#if 0
     writer.startElement("Relationship");
     writer.addAttribute("Id", "rId5");
     writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme");
     writer.addAttribute("Target", "theme/theme1.xml");
     writer.endElement();
-#endif
+//#endif
 
     writer.endElement();        // Relationships
     writer.endDocument();
