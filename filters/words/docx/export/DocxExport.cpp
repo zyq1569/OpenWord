@@ -152,6 +152,19 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
                             "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
                             docxBackendContext.documentContent());
 
+    //add openword
+    docxFile.addContentFile("", "/docProps/app.xml",
+                            "application/vnd.openxmlformats-officedocument.extended-properties+xml",
+                            docxBackendContext.documentContent());
+
+    docxFile.addContentFile("", "/docProps/core.xml",
+                            "application/vnd.openxmlformats-package.core-properties+xml",
+                            docxBackendContext.documentContent());
+
+    docxFile.addContentFile("", "/docProps/custom.xml",
+                            "application/vnd.openxmlformats-officedocument.custom-properties+xml",
+                            docxBackendContext.documentContent());
+
     // Write the output file.
     return docxFile.writeDocx(m_chain->outputFile(), to, docxBackendContext, commentsExist);
 }
