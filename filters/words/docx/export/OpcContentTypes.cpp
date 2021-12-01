@@ -69,7 +69,7 @@ KoFilter::ConversionStatus OpcContentTypes::writeToStore(KoStore *opcStore)
     KoStoreDevice metaDevice(opcStore);
     KoXmlWriter writer(&metaDevice);
 
-    writer.startDocument(0, 0, 0);
+    writer.startDocument(0, 0, 0, true);
     writer.startElement("Types");
     writer.addAttribute("xmlns", "http://schemas.openxmlformats.org/package/2006/content-types");
 
@@ -161,7 +161,7 @@ KoFilter::ConversionStatus DocPropsFiles::writeToStore(KoStore *docPropsFiles)
     KoStoreDevice metaDevice(docPropsFiles);
     KoXmlWriter writer(&metaDevice);
 
-    writer.startDocument(0, 0, 0);
+    writer.startDocument(0, 0, 0, true);
     char *startElement;
     if (m_filename.contains("app.xml"))
     {
@@ -240,9 +240,8 @@ KoFilter::ConversionStatus DocPropsFiles::writeToStore(KoStore *docPropsFiles)
         writer.startElement("AppVersion",false);
         writer.addTextNode("3.2.1.0");//Characters :
         writer.endElement();
-
     }
-    else if (m_filename.compare("core.xml"))
+    else if (m_filename.contains("core.xml"))
     {
 
         startElement = "cp:coreProperties";
@@ -282,7 +281,24 @@ KoFilter::ConversionStatus DocPropsFiles::writeToStore(KoStore *docPropsFiles)
         writer.startElement("dcterms:modified xsi:type=\"dcterms:W3CDTF\"",false);
         writer.addTextNode("2021-09-07T02:11:00Z");
         writer.endElement();
+    }
+    else if (m_filename.contains("custom.xml"))
+    {
+        startElement = "Properties";
+        writer.startElement(startElement);
+        writer.addAttribute("xmlns", "http://schemas.openxmlformats.org/officeDocument/2006/custom-properties");
+        writer.addAttribute("xmlns:vt", "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes");
 
+        writer.startElement("property",false);
+        writer.addAttribute("fmtid", "{D5CDD505-2E9C-101B-9397-08002B2CF9AE}");
+        writer.addAttribute("pid", "2");
+        writer.addAttribute("name", "KSOProductBuildVer");
+
+        writer.startElement("vt:lpwstr",false);
+        writer.addTextNode("2052-11.1.0.8500");
+        writer.endElement();
+
+        writer.endElement();
     }
 
     writer.endElement();
