@@ -113,3 +113,189 @@ KoFilter::ConversionStatus OpcContentTypes::writeToStore(KoStore *opcStore)
     opcStore->close();
     return KoFilter::OK;
 }
+
+
+///
+///
+///
+// ================================================================
+//                         class DocPropsFiles
+
+DocPropsFiles::DocPropsFiles(QString filename)
+{
+    m_filename = filename;
+}
+
+DocPropsFiles::~DocPropsFiles()
+{
+}
+
+void DocPropsFiles::setFilename( QString filename)
+{
+    if (filename.length() > 0)
+    {
+        m_filename = filename;
+    }
+}
+
+void DocPropsFiles::addDefault(const QString &extension, const QString &contentType)
+{
+    defaults[extension] = contentType;
+}
+
+void DocPropsFiles::addFile(const QString &partName, const QString &contentType)
+{
+    parts[partName] = contentType;
+}
+
+
+KoFilter::ConversionStatus DocPropsFiles::writeToStore(KoStore *docPropsFiles)
+{
+    // We can hardcode this one.
+    if (!docPropsFiles->open(m_filename))
+    {
+        debugDocx << "Can not to open " + m_filename;
+        return KoFilter::CreationError;
+    }
+
+    KoStoreDevice metaDevice(docPropsFiles);
+    KoXmlWriter writer(&metaDevice);
+
+    writer.startDocument(0, 0, 0);
+    char *startElement;
+    if (m_filename.contains("app.xml"))
+    {
+        startElement = "Properties";
+        writer.startElement(startElement);
+        writer.addAttribute("xmlns",    "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties");
+        writer.addAttribute("xmlns:vt", "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes");
+
+        ///eg
+        //<text:page-count>3</text:page-count>
+        //startElement("text:page-count", false);
+        //addTextNode(value());
+        //endElement();
+        writer.startElement("Template",false);
+        writer.addTextNode("Normal");
+        writer.endElement();
+
+        writer.startElement("TotalTime",false);
+        writer.addTextNode("0");
+        writer.endElement();
+
+        writer.startElement("Pages",false);
+        writer.addTextNode("1");//Pages :
+        writer.endElement();
+
+        writer.startElement("Words",false);
+        writer.addTextNode("1");//Words :
+        writer.endElement();
+
+        writer.startElement("Characters",false);
+        writer.addTextNode("1");//Characters :
+        writer.endElement();
+
+
+        writer.startElement("Application",false);
+        writer.addTextNode("Office Openword ");//Characters :
+        writer.endElement();
+
+        writer.startElement("DocSecurity",false);
+        writer.addTextNode("0");//Characters :
+        writer.endElement();
+
+        writer.startElement("Lines",false);
+        writer.addTextNode("1");
+        writer.endElement();
+
+        writer.startElement("Paragraphs",false);
+        writer.addTextNode("1");
+        writer.endElement();
+
+        writer.startElement("ScaleCrop",false);
+        writer.addTextNode("false");//Pages :
+        writer.endElement();
+
+        writer.startElement("Company",false);
+        writer.addTextNode("Open");//Words :
+        writer.endElement();
+
+        writer.startElement("LinksUpToDate",false);
+        writer.addTextNode("false");//Characters :
+        writer.endElement();
+
+
+        writer.startElement("CharactersWithSpaces",false);
+        writer.addTextNode("1");//Characters :
+        writer.endElement();
+
+        writer.startElement("SharedDoc",false);
+        writer.addTextNode("false");//Characters :
+        writer.endElement();
+
+        writer.startElement("HyperlinksChanged",false);
+        writer.addTextNode("false");//Characters :
+        writer.endElement();
+
+        writer.startElement("AppVersion",false);
+        writer.addTextNode("3.2.1.0");//Characters :
+        writer.endElement();
+
+    }
+    else if (m_filename.compare("core.xml"))
+    {
+
+        startElement = "cp:coreProperties";
+
+        writer.startElement(startElement);
+        writer.addAttribute("xmlns:cp", "http://schemas.openxmlformats.org/package/2006/metadata/core-properties");
+        writer.addAttribute("xmlns:dc", "http://purl.org/dc/elements/1.1/");
+        writer.addAttribute("xmlns:dcterms", "hthttp://purl.org/dc/terms/");
+        writer.addAttribute("xmlns:dcmitype", "http://purl.org/dc/dcmitype/");
+        writer.addAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+
+        writer.startElement("dc:title");
+        writer.endElement();
+
+        writer.startElement("dc:subject");
+        writer.endElement();
+
+        writer.startElement("dc:creator",false);
+        writer.addTextNode("created:pc name");
+        writer.endElement();
+
+        writer.startElement("cp:keywords");
+        writer.endElement();
+
+        writer.startElement("dc:description");
+        writer.endElement();
+
+
+        writer.startElement("cp:lastModifiedBy",false);
+        writer.addTextNode("modified:pc name ");
+        writer.endElement();
+
+        writer.startElement("DocSecurity",false);
+        writer.addTextNode("0");//Characters :
+        writer.endElement();
+
+        writer.startElement("cp:revision",false);
+        writer.addTextNode("2");
+        writer.endElement();
+
+        writer.startElement("dcterms:created xsi:type=\"dcterms:W3CDTF\"",false);
+        writer.addTextNode("2021-09-07T01:12:00Z");// create time
+        writer.endElement();
+
+        writer.startElement("dcterms:modified xsi:type=\"dcterms:W3CDTF\"",false);
+        writer.addTextNode("2021-09-07T02:11:00Z");
+        writer.endElement();
+
+    }
+
+    writer.endElement();
+    writer.endDocument();//startElement
+
+    docPropsFiles->close();
+    return KoFilter::OK;
+}

@@ -57,4 +57,31 @@ private:
     QHash<QString, QString>  parts;  // Partname, ContentType
 };
 
+/// add openword 20211201
+class DocPropsFiles
+{
+public:
+    DocPropsFiles( QString filename = "docProps/app.xml");
+    ~DocPropsFiles();
+
+    // FIXME: So far we only design this for writing.  In the general
+    //        case we should also support lookup and reading.
+
+    void addDefault(const QString &extension, const QString &contentType);
+    void addFile(const QString &partName, const QString &contentType);
+
+    KoFilter::ConversionStatus writeToStore(KoStore *docPropsFiles);
+
+    // set filename
+    void setFilename( QString filename);
+private:
+    // Privat functions
+    QString m_filename;
+
+private:
+    // data
+    QHash<QString, QString>  defaults;  // Extension, ContentType
+    QHash<QString, QString>  parts;  // Partname, ContentType
+};
+
 #endif // OPCCONTENTTYPES_H
