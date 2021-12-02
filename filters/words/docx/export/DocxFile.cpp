@@ -97,6 +97,7 @@ KoFilter::ConversionStatus DocxFile::writeDocx(const QString &fileName,
 
     // Finally, write the [Content_Types}.xml file.
     OpcContentTypes  contentTypes;
+    contentTypes.addDefault("wmf",  "image/x-wmf");
     contentTypes.addDefault("png",  "image/png");
     contentTypes.addDefault("rels", "application/vnd.openxmlformats-package.relationships+xml");
     contentTypes.addDefault("xml",  "application/xml");

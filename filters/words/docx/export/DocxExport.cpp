@@ -161,9 +161,29 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
                             "application/vnd.openxmlformats-package.core-properties+xml",
                             docxBackendContext.documentContent());
 
-    docxFile.addContentFile("", "/docProps/custom.xml",
-                            "application/vnd.openxmlformats-officedocument.custom-properties+xml",
+    docxFile.addContentFile("", "/word/numbering.xml",
+                            "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml",
                             docxBackendContext.documentContent());
+
+    docxFile.addContentFile("", "/word/settings.xml",
+                            "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml",
+                            docxBackendContext.documentContent());
+
+    docxFile.addContentFile("", "/word/fontTable.xml",
+                            "application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml",
+                            docxBackendContext.documentContent());
+
+    docxFile.addContentFile("", "/word/webSettings.xml",
+                            "application/vnd.openxmlformats-officedocument.wordprocessingml.webSettings+xml",
+                            docxBackendContext.documentContent());
+
+    docxFile.addContentFile("", "/word/theme/theme1.xml",
+                            "application/vnd.openxmlformats-officedocument.theme+xml",
+                            docxBackendContext.documentContent());
+
+    //docxFile.addContentFile("", "/docProps/custom.xml",
+    //                        "application/vnd.openxmlformats-officedocument.custom-properties+xml",
+    //                        docxBackendContext.documentContent());
 
     // Write the output file.
     return docxFile.writeDocx(m_chain->outputFile(), to, docxBackendContext, commentsExist);
