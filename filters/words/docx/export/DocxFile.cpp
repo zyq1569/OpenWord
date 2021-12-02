@@ -113,9 +113,9 @@ KoFilter::ConversionStatus DocxFile::writeDocx(const QString &fileName,
     DocPropsFiles coreDocPropsFiles("docProps/core.xml");
     coreDocPropsFiles.writeToStore(docxStore);
 
-    //custom.xml
-    DocPropsFiles customDocPropsFiles("docProps/custom.xml");
-    customDocPropsFiles.writeToStore(docxStore);
+    //custom.xml  ???to do ..具体含义待确定
+    //DocPropsFiles customDocPropsFiles("docProps/custom.xml");
+    //customDocPropsFiles.writeToStore(docxStore);
 
     delete docxStore;
     return status;
@@ -168,9 +168,16 @@ KoFilter::ConversionStatus DocxFile::writeTopLevelRels(KoStore *docxStore)
     // Doc props custom
     writer.startElement("Relationship");
     writer.addAttribute("Id", "rId4");
-    writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/custom-properties");
-    writer.addAttribute("Target", "docProps/custom.xml");
+    writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/styles");
+    writer.addAttribute("Target", "word/styles.xml");
     writer.endElement();  // Relationship
+
+    // Doc props custom
+    //writer.startElement("Relationship");
+    //writer.addAttribute("Id", "rId4");
+    //writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/custom-properties");
+    //writer.addAttribute("Target", "docProps/custom.xml");
+    //writer.endElement();  // Relationship
 
     writer.endElement();  // Relationships
     writer.endDocument();
