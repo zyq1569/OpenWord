@@ -197,41 +197,66 @@ KoFilter::ConversionStatus DocxFile::writeDocumentRels(KoStore *docxStore)
 
     writer.startElement("Relationship");
     writer.addAttribute("Id", "rId1");
+    writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering");
+    writer.addAttribute("Target", "numbering.xml");
+    writer.endElement();
+
+    writer.startElement("Relationship");
+    writer.addAttribute("Id", "rId2");
     writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles");
     writer.addAttribute("Target", "styles.xml");
     writer.endElement();
+
+    writer.startElement("Relationship");
+    writer.addAttribute("Id", "rId3");
+    writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings");
+    writer.addAttribute("Target", "settings.xml");
+    writer.endElement();
+
+    writer.startElement("Relationship");
+    writer.addAttribute("Id", "rId4");
+    writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/webSettings");
+    writer.addAttribute("Target", "webSettings.xml");
+    writer.endElement();
+
+    writer.startElement("Relationship");
+    writer.addAttribute("Id", "rId5");
+    writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable");
+    writer.addAttribute("Target", "fontTable.xml");
+    writer.endElement();
+
+    writer.startElement("Relationship");
+    writer.addAttribute("Id", "rId6");
+    writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme1");
+    writer.addAttribute("Target", "theme/theme1.xml");
+    writer.endElement();
+
 
     // FIXME: Enable these when we find that we need them
     // or rather go through a list of these and add all from the list
     if (m_commentsExist)
     {
         writer.startElement("Relationship");
-        writer.addAttribute("Id", "rId2");
+        writer.addAttribute("Id", "rId7");
         writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments");
         writer.addAttribute("Target", "comments.xml");
         writer.endElement();
     }
-//#if 1
-    writer.startElement("Relationship");
-    writer.addAttribute("Id", "rId3");
-    writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/webSettings");
-    writer.addAttribute("Target", "webSettings.xml");
-    writer.endElement();
-//#endif
-//#if 0
-    writer.startElement("Relationship");
-    writer.addAttribute("Id", "rId4");
-    writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable");
-    writer.addAttribute("Target", "fontTable.xml");
-    writer.endElement();
-//#endif
-//#if 0
-    writer.startElement("Relationship");
-    writer.addAttribute("Id", "rId5");
-    writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme");
-    writer.addAttribute("Target", "theme/theme1.xml");
-    writer.endElement();
-//#endif
+
+    if (0 /*image*/)
+    {
+        writer.startElement("Relationship");
+        writer.addAttribute("Id", "rId7");
+        writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image1");
+        writer.addAttribute("Target", "media/image1.xml");
+        writer.endElement();
+
+        //writer.startElement("Relationship");
+        //writer.addAttribute("Id", "rId7");
+        //writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image1");
+        //writer.addAttribute("Target", "media/image2.xml");
+        //writer.endElement();
+    }
 
     writer.endElement();        // Relationships
     writer.endDocument();
