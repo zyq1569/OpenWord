@@ -90,7 +90,8 @@ OdfTextReader *OdfReader::textReader() const
 void OdfReader::setTextReader(OdfTextReader *textReader)
 {
     m_textReader = textReader;
-    if (textReader) {
+    if (textReader)
+    {
         textReader->setParent(this);
     }
 }
@@ -103,7 +104,8 @@ OdfDrawReader *OdfReader::drawReader() const
 void OdfReader::setDrawReader(OdfDrawReader *drawReader)
 {
     m_drawReader = drawReader;
-    if (drawReader) {
+    if (drawReader)
+    {
         drawReader->setParent(this);
     }
 }
@@ -111,7 +113,8 @@ void OdfReader::setDrawReader(OdfDrawReader *drawReader)
 bool OdfReader::analyzeContent(OdfReaderContext *context)
 {
     // Extract styles, manifest, settings, etc
-    if (context->analyzeOdfFile() != KoFilter::OK) {
+    if (context->analyzeOdfFile() != KoFilter::OK)
+    {
         return false;
     }
     debugOdfReader << "analyze ok";
@@ -125,7 +128,8 @@ bool OdfReader::readContent(OdfReaderBackend *backend, OdfReaderContext *context
     m_backend = backend;
     m_context = context;
 
-    if (m_textReader) {
+    if (m_textReader)
+    {
         m_textReader->setContext(context);
     }
 
@@ -134,7 +138,8 @@ bool OdfReader::readContent(OdfReaderBackend *backend, OdfReaderContext *context
 
     KoStore *odfStore = m_context->odfStore();
 
-    if (!odfStore->open("content.xml")) {
+    if (!odfStore->open("content.xml"))
+    {
         errorOdfReader << "Unable to open input file content.xml" << endl;
         return false;
     }
@@ -145,15 +150,18 @@ bool OdfReader::readContent(OdfReaderBackend *backend, OdfReaderContext *context
 
     reader.setDevice(odfStore->device());
     bool  foundContent = false;
-    while (!reader.atEnd()) {
+    while (!reader.atEnd())
+    {
         reader.readNext();
 
-        if (reader.isStartElement() && reader.qualifiedName() == "office:document-content") {
+        if (reader.isStartElement() && reader.qualifiedName() == "office:document-content")
+        {
             foundContent = true;
             break;
         }
     }
-    if (!foundContent) {
+    if (!foundContent)
+    {
         errorOdfReader << "Couldn't find the content in content.xml" << endl;
     }
 
@@ -164,26 +172,32 @@ bool OdfReader::readContent(OdfReaderBackend *backend, OdfReaderContext *context
     //   [done] <office:body> 3.3
     //          <office:font-face-decls> 3.14
     //          <office:scripts> 3.12.
-    while (reader.readNextStartElement()) {
+    while (reader.readNextStartElement())
+    {
         QString tagName = reader.qualifiedName().toString();
-        
-        if (tagName == "office:automatic-styles") {
+
+        if (tagName == "office:automatic-styles")
+        {
             // We already have the styles in the context.  No need to read them again.
             reader.skipCurrentElement();
         }
-        else if (tagName == "office:body") {
+        else if (tagName == "office:body")
+        {
             // This is the big one.
             readElementOfficeBody(reader);
         }
-        else if (tagName == "office:font-face-decls") {
+        else if (tagName == "office:font-face-decls")
+        {
             // FIXME: Not yet implemented
             reader.skipCurrentElement();
         }
-        else if (tagName == "office:scripts") {
+        else if (tagName == "office:scripts")
+        {
             // FIXME: Not yet implemented
             reader.skipCurrentElement();
         }
-        else {
+        else
+        {
             reader.skipCurrentElement();
         }
     }
@@ -199,8 +213,8 @@ bool OdfReader::readContent(OdfReaderBackend *backend, OdfReaderContext *context
 // This is a template function for the reader library.
 // Copy this one and change the name and fill in the code.
 void OdfReader::readElementNamespaceTagname(KoXmlStreamReader &reader)
-{ 
-   DEBUGSTART();
+{
+    DEBUGSTART();
 
     // <namespace:tagname> has the following children in ODF 1.2:
     //   FILL IN THE CHILDREN LIKE THIS EXAMPLE (taken from office:document-content):
@@ -208,20 +222,24 @@ void OdfReader::readElementNamespaceTagname(KoXmlStreamReader &reader)
     //          <office:body> 3.3
     //          <office:font-face-decls> 3.14
     //          <office:scripts> 3.12.
-    while (reader.readNextStartElement()) {
+    while (reader.readNextStartElement())
+    {
         QString tagName = reader.qualifiedName().toString();
-        
-        if (tagName == "office:automatic-styles") {
+
+        if (tagName == "office:automatic-styles")
+        {
             // FIXME: NYI
             reader.skipCurrentElement();
         }
-        else if (tagName == "office:body") {
+        else if (tagName == "office:body")
+        {
             readElementOfficeBody(reader);
         }
         ...  MORE else if () HERE
-        else {
-            reader.skipCurrentElement();
-        }
+            else
+            {
+                reader.skipCurrentElement();
+            }
     }
 
     m_backend->elementNamespaceTagname(reader, m_context);
@@ -245,19 +263,24 @@ void OdfReader::readElementOfficeBody(KoXmlStreamReader &reader)
     //   [done] <office:text> 3.4
     //
     // Of those only <office:text> is present in a text document (odf).
-    while (reader.readNextStartElement()) {
+    while (reader.readNextStartElement())
+    {
         QString tagName = reader.qualifiedName().toString();
-        
-        if (tagName == "office:text") {
+
+        if (tagName == "office:text")
+        {
             readElementOfficeText(reader);
         }
-        else if (tagName == "office:spreadsheet") {
+        else if (tagName == "office:spreadsheet")
+        {
             readElementOfficeSpreadsheet(reader);
         }
-        else if (tagName == "office:presentation") {
+        else if (tagName == "office:presentation")
+        {
             readElementOfficePresentation(reader);
         }
-        else {
+        else
+        {
             reader.skipCurrentElement();
         }
     }
@@ -279,7 +302,7 @@ void OdfReader::readElementOfficeText(KoXmlStreamReader &reader)
     DEBUGSTART();
 
     errorOdfReader << "Unimplemented function";
-    reader.skipCurrentElement();  
+    reader.skipCurrentElement();
 
     DEBUGEND();
 }
@@ -289,7 +312,7 @@ void OdfReader::readElementOfficeSpreadsheet(KoXmlStreamReader &reader)
     DEBUGSTART();
 
     errorOdfReader << "Unimplemented function";
-    reader.skipCurrentElement();  
+    reader.skipCurrentElement();
 
     DEBUGEND();
 }
@@ -299,7 +322,7 @@ void OdfReader::readElementOfficePresentation(KoXmlStreamReader &reader)
     DEBUGSTART();
 
     errorOdfReader << "Unimplemented function";
-    reader.skipCurrentElement();  
+    reader.skipCurrentElement();
 
     DEBUGEND();
 }
@@ -317,15 +340,18 @@ void OdfReader::readUnknownElement(KoXmlStreamReader &reader)
     // FIXME: We need to handle this.
     reader.skipCurrentElement();
 #else
-    if (m_context->isInsideParagraph()) {
+    if (m_context->isInsideParagraph())
+    {
         // readParagraphContents expect to have the reader point to the
         // contents of the paragraph so we have to read past the text:p
         // start tag here.
         reader.readNext();
         readParagraphContents(reader);
     }
-    else {
-        while (reader.readNextStartElement()) {
+    else
+    {
+        while (reader.readNextStartElement())
+        {
             readTextLevelElement(reader);
         }
     }
