@@ -59,6 +59,7 @@ QByteArray DocxStyleWriter::documentContent() const
 void DocxStyleWriter::read()
 {
     KoOdfStyleManager *manager = m_readerContext->styleManager();
+    m_documentWriter->startDocument(0,0,0,true);
     m_documentWriter->startElement("w:styles");
     m_documentWriter->addAttribute("xmlns:r", "http://schemas.openxmlformats.org/officeDocument/2006/relationships");
     m_documentWriter->addAttribute("xmlns:w", "http://schemas.openxmlformats.org/wordprocessingml/2006/main");
