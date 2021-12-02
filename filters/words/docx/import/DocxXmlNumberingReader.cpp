@@ -422,7 +422,7 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read_numFmt()
             m_currentBulletProperties.setNumFormat("1");
             m_currentBulletProperties.setSuffix(".");
         }
-        else if (val == "chineseCounting")
+        else if (val == "chineseCounting" || val == "chineseCountingThousand")
         {
             m_currentBulletProperties.setNumFormat("一");
             //m_currentBulletProperties.setNumFormat("1");
