@@ -88,7 +88,8 @@ OdfReaderContext::~OdfReaderContext()
 
 KoFilter::ConversionStatus OdfReaderContext::analyzeOdfFile()
 {
-    if (!d->odfStore) {
+    if (!d->odfStore)
+    {
         return KoFilter::FileNotFound;
     }
 
@@ -100,13 +101,15 @@ KoFilter::ConversionStatus OdfReaderContext::analyzeOdfFile()
 
     // Parse meta.xml into m_metadata
     status = odfParser.parseMetadata(*d->odfStore, &d->metadata);
-    if (status != KoFilter::OK) {
+    if (status != KoFilter::OK)
+    {
         return status;
     }
 
     // Parse manifest
     status = odfParser.parseManifest(*d->odfStore, &d->manifest);
-    if (status != KoFilter::OK) {
+    if (status != KoFilter::OK)
+    {
         return status;
     }
 
