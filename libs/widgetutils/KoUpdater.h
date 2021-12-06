@@ -45,7 +45,8 @@ class KoUpdaterPrivate;
  *
  * @see KoProgressUpdater::startSubtask()
  */
-class KOWIDGETUTILS_EXPORT KoUpdater : public QObject, public KoProgressProxy {
+class KOWIDGETUTILS_EXPORT KoUpdater : public QObject, public KoProgressProxy
+{
 
     Q_OBJECT
 
