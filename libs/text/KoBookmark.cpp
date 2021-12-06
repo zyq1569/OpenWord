@@ -75,26 +75,32 @@ bool KoBookmark::loadOdf(const KoXmlElement &element, KoShapeLoadingContext &con
     QString bookmarkName = element.attribute("name");
     const QString localName(element.localName());
 
-    if (manager()) {
+    if (manager())
+    {
         // For cut and paste, make sure that the name is unique.
         d->name = createUniqueBookmarkName(manager()->bookmarkManager(), bookmarkName, false);
 
-        if (localName == "bookmark" || localName == "bookmark-start") {
+        if (localName == "bookmark" || localName == "bookmark-start")
+        {
             setPositionOnlyMode(localName == "bookmark");
 
             // Add inline Rdf to the bookmark.
-            if (element.hasAttributeNS(KoXmlNS::xhtml, "property") || element.hasAttribute("id")) {
+            if (element.hasAttributeNS(KoXmlNS::xhtml, "property") || element.hasAttribute("id"))
+            {
                 KoTextInlineRdf* inlineRdf = new KoTextInlineRdf(const_cast<QTextDocument*>(d->document), this);
-                if (inlineRdf->loadOdf(element)) {
+                if (inlineRdf->loadOdf(element))
+                {
                     setInlineRdf(inlineRdf);
                 }
-                else {
+                else
+                {
                     delete inlineRdf;
                     inlineRdf = 0;
                 }
             }
         }
-        else {
+        else
+        {
             // NOTE: "bookmark-end" is handled in KoTextLoader
             // if we ever come here then something pretty weird is going on...
             return false;
@@ -108,23 +114,31 @@ void KoBookmark::saveOdf(KoShapeSavingContext &context, int position, TagType ta
 {
     KoXmlWriter *writer = &context.xmlWriter();
 
-    if (!hasRange()) {
-        if (tagType == StartTag) {
+    if (!hasRange())
+    {
+        if (tagType == StartTag)
+        {
             writer->startElement("text:bookmark", false);
             writer->addAttribute("text:name", d->name.toUtf8());
-            if (inlineRdf()) {
+            if (inlineRdf())
+            {
                 inlineRdf()->saveOdf(context, writer);
             }
             writer->endElement();
         }
-    } else if ((tagType == StartTag) && (position == rangeStart())) {
+    }
+    else if ((tagType == StartTag) && (position == rangeStart()))
+    {
         writer->startElement("text:bookmark-start", false);
         writer->addAttribute("text:name", d->name.toUtf8());
-        if (inlineRdf()) {
+        if (inlineRdf())
+        {
             inlineRdf()->saveOdf(context, writer);
         }
         writer->endElement();
-    } else if ((tagType == EndTag) && (position == rangeEnd())) {
+    }
+    else if ((tagType == EndTag) && (position == rangeEnd()))
+    {
         writer->startElement("text:bookmark-end", false);
         writer->addAttribute("text:name", d->name.toUtf8());
         writer->endElement();
@@ -137,16 +151,25 @@ QString KoBookmark::createUniqueBookmarkName(const KoBookmarkManager* bmm, const
     QString ret = bookmarkName;
     int uniqID = 0;
 
-    while (true) {
-        if (bmm->bookmark(ret)) {
+    while (true)
+    {
+        if (bmm->bookmark(ret))
+        {
             ret = QString("%1_%2").arg(bookmarkName).arg(++uniqID);
-        } else {
-            if (isEndMarker) {
+        }
+        else
+        {
+            if (isEndMarker)
+            {
                 --uniqID;
                 if (!uniqID)
+                {
                     ret = bookmarkName;
+                }
                 else
+                {
                     ret = QString("%1_%2").arg(bookmarkName).arg(uniqID);
+                }
             }
             break;
         }

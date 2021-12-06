@@ -32,15 +32,16 @@
 #include <QLabel>
 
 InsertTextReferenceAction::InsertTextReferenceAction(KoCanvasBase *canvas, const KoInlineTextObjectManager *manager)
-        : InsertInlineObjectActionBase(canvas, i18n("Text Reference")),
-        m_manager(manager)
+    : InsertInlineObjectActionBase(canvas, i18n("Text Reference")),
+      m_manager(manager)
 {
 }
 
 KoInlineObject *InsertTextReferenceAction::createInlineObject()
 {
     const QList<KoTextLocator*> textLocators = m_manager->textLocators();
-    if (textLocators.isEmpty()) {
+    if (textLocators.isEmpty())
+    {
         KMessageBox::information(m_canvas->canvasWidget(), i18n("Please create an index to reference first."));
         return 0;
     }
@@ -54,7 +55,9 @@ KoInlineObject *InsertTextReferenceAction::createInlineObject()
     lay->addWidget(label);
     QStringList selectionList;
     foreach(KoTextLocator* locator, textLocators)
+    {
         selectionList << locator->word() + '(' + QString::number(locator->pageNumber()) + ')';
+    }
     QListWidget *list = new QListWidget(widget);
     lay->addWidget(list);
     list->addItems(selectionList);
@@ -64,7 +67,8 @@ KoInlineObject *InsertTextReferenceAction::createInlineObject()
     dialog.addPage(widget, QString());
 
     KoVariable *variable = 0;
-    if (dialog.exec() == KPageDialog::Accepted && list->currentRow() >= 0) {
+    if (dialog.exec() == KPageDialog::Accepted && list->currentRow() >= 0)
+    {
         KoTextLocator *locator = textLocators[list->currentRow()];
         Q_ASSERT(locator);
         variable = new KoTextReference(locator->id());

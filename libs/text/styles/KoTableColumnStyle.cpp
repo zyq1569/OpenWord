@@ -43,10 +43,12 @@ class Q_DECL_HIDDEN KoTableColumnStyle::Private : public QSharedData
 public:
     Private() : QSharedData(), parentStyle(0) {}
 
-    ~Private() {
+    ~Private()
+    {
     }
 
-    void setProperty(int key, const QVariant &value) {
+    void setProperty(int key, const QVariant &value)
+    {
         stylesPrivate.add(key, value);
     }
 
@@ -57,13 +59,13 @@ public:
 
 
 KoTableColumnStyle::KoTableColumnStyle()
-        :  d(new Private())
+    :  d(new Private())
 {
     Q_ASSERT (d);
 }
 
 KoTableColumnStyle::KoTableColumnStyle(const KoTableColumnStyle &rhs)
-        : d(rhs.d)
+    : d(rhs.d)
 {
 }
 
@@ -98,9 +100,11 @@ void KoTableColumnStyle::setParentStyle(KoTableColumnStyle *parent)
 
 void KoTableColumnStyle::setProperty(int key, const QVariant &value)
 {
-    if (d->parentStyle) {
+    if (d->parentStyle)
+    {
         QVariant var = d->parentStyle->value(key);
-        if (!var.isNull() && var == value) { // same as parent, so its actually a reset.
+        if (!var.isNull() && var == value)   // same as parent, so its actually a reset.
+        {
             d->stylesPrivate.remove(key);
             return;
         }
@@ -117,7 +121,9 @@ QVariant KoTableColumnStyle::value(int key) const
 {
     QVariant var = d->stylesPrivate.value(key);
     if (var.isNull() && d->parentStyle)
+    {
         var = d->parentStyle->value(key);
+    }
     return var;
 }
 
@@ -130,7 +136,9 @@ qreal KoTableColumnStyle::propertyDouble(int key) const
 {
     QVariant variant = value(key);
     if (variant.isNull())
+    {
         return 0.0;
+    }
     return variant.toDouble();
 }
 
@@ -138,7 +146,9 @@ int KoTableColumnStyle::propertyInt(int key) const
 {
     QVariant variant = value(key);
     if (variant.isNull())
+    {
         return 0;
+    }
     return variant.toInt();
 }
 
@@ -146,14 +156,17 @@ bool KoTableColumnStyle::propertyBoolean(int key) const
 {
     QVariant variant = value(key);
     if (variant.isNull())
+    {
         return false;
+    }
     return variant.toBool();
 }
 
 QColor KoTableColumnStyle::propertyColor(int key) const
 {
     QVariant variant = value(key);
-    if (variant.isNull()) {
+    if (variant.isNull())
+    {
         QColor color;
         return color;
     }
@@ -213,7 +226,9 @@ QString KoTableColumnStyle::name() const
 void KoTableColumnStyle::setName(const QString &name)
 {
     if (name == d->name)
+    {
         return;
+    }
     d->name = name;
 }
 
@@ -250,13 +265,18 @@ void KoTableColumnStyle::setOptimalColumnWidth(bool state)
 void KoTableColumnStyle::loadOdf(const KoXmlElement *element, KoOdfLoadingContext &context)
 {
     if (element->hasAttributeNS(KoXmlNS::style, "display-name"))
+    {
         d->name = element->attributeNS(KoXmlNS::style, "display-name", QString());
+    }
 
     if (d->name.isEmpty()) // if no style:display-name is given us the style:name
+    {
         d->name = element->attributeNS(KoXmlNS::style, "name", QString());
+    }
 
     QString masterPage = element->attributeNS(KoXmlNS::style, "master-page-name", QString());
-    if (! masterPage.isEmpty()) {
+    if (! masterPage.isEmpty())
+    {
         setMasterPageName(masterPage);
     }
     context.styleStack().save();
@@ -272,23 +292,28 @@ void KoTableColumnStyle::loadOdf(const KoXmlElement *element, KoOdfLoadingContex
 void KoTableColumnStyle::loadOdfProperties(KoStyleStack &styleStack)
 {
     // Column width.
-    if (styleStack.hasProperty(KoXmlNS::style, "column-width")) {
+    if (styleStack.hasProperty(KoXmlNS::style, "column-width"))
+    {
         setColumnWidth(KoUnit::parseValue(styleStack.property(KoXmlNS::style, "column-width")));
     }
     // Relative column width.
-    if (styleStack.hasProperty(KoXmlNS::style, "rel-column-width")) {
+    if (styleStack.hasProperty(KoXmlNS::style, "rel-column-width"))
+    {
         setRelativeColumnWidth(styleStack.property(KoXmlNS::style, "rel-column-width").remove('*').toDouble());
     }
     // Optimal column width
-    if (styleStack.hasProperty(KoXmlNS::style, "use-optimal-column-width")) {
+    if (styleStack.hasProperty(KoXmlNS::style, "use-optimal-column-width"))
+    {
         setOptimalColumnWidth(styleStack.property(KoXmlNS::style, "use-optimal-column-width") == "true");
     }
 
     // The fo:break-before and fo:break-after attributes insert a page or column break before or after a column.
-    if (styleStack.hasProperty(KoXmlNS::fo, "break-before")) {
+    if (styleStack.hasProperty(KoXmlNS::fo, "break-before"))
+    {
         setBreakBefore(KoText::textBreakFromString(styleStack.property(KoXmlNS::fo, "break-before")));
     }
-    if (styleStack.hasProperty(KoXmlNS::fo, "break-after")) {
+    if (styleStack.hasProperty(KoXmlNS::fo, "break-after"))
+    {
         setBreakAfter(KoText::textBreakFromString(styleStack.property(KoXmlNS::fo, "break-after")));
     }
 }
@@ -311,16 +336,26 @@ void KoTableColumnStyle::removeDuplicates(const KoTableColumnStyle &other)
 void KoTableColumnStyle::saveOdf(KoGenStyle &style) const
 {
     QList<int> keys = d->stylesPrivate.keys();
-    foreach(int key, keys) {
-        if (key == KoTableColumnStyle::BreakBefore) {
+    foreach(int key, keys)
+    {
+        if (key == KoTableColumnStyle::BreakBefore)
+        {
             style.addProperty("fo:break-before", KoText::textBreakToString(breakBefore()), KoGenStyle::TableColumnType);
-        } else if (key == KoTableColumnStyle::BreakAfter) {
+        }
+        else if (key == KoTableColumnStyle::BreakAfter)
+        {
             style.addProperty("fo:break-after", KoText::textBreakToString(breakAfter()), KoGenStyle::TableColumnType);
-        } else if (key == KoTableColumnStyle::OptimalColumnWidth) {
+        }
+        else if (key == KoTableColumnStyle::OptimalColumnWidth)
+        {
             style.addProperty("style:use-optimal-column-width", optimalColumnWidth(), KoGenStyle::TableColumnType);
-        } else if (key == KoTableColumnStyle::ColumnWidth) {
+        }
+        else if (key == KoTableColumnStyle::ColumnWidth)
+        {
             style.addPropertyPt("style:column-width", columnWidth(), KoGenStyle::TableColumnType);
-        } else if (key == KoTableColumnStyle::RelativeColumnWidth) {
+        }
+        else if (key == KoTableColumnStyle::RelativeColumnWidth)
+        {
             style.addProperty("style:rel-column-width", QString("%1*").arg(relativeColumnWidth()), KoGenStyle::TableColumnType);
         }
     }

@@ -24,7 +24,7 @@
 
 
 InsertTextLocator::InsertTextLocator(KoCanvasBase *canvas)
-        : InsertInlineObjectActionBase(canvas, i18n("Index Reference"))
+    : InsertInlineObjectActionBase(canvas, i18n("Index Reference"))
 {
 }
 
@@ -32,7 +32,8 @@ KoInlineObject *InsertTextLocator::createInlineObject()
 {
     Q_ASSERT(m_canvas);
     KoTextEditor *editor = KoTextEditor::getTextEditorFromCanvas(m_canvas);
-    if (editor) {
+    if (editor)
+    {
         KoInlineObject *obj = editor->insertIndexMarker();
         Q_UNUSED(obj); // intentionally unused: if we return it, it gets inserted again
     }

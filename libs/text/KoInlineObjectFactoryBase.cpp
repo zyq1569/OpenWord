@@ -26,12 +26,16 @@ class InlineObjectFactoryPrivate
 {
 public:
     InlineObjectFactoryPrivate(const QString &identifier)
-            : id(identifier) {
+        : id(identifier)
+    {
     }
 
-    ~InlineObjectFactoryPrivate() {
+    ~InlineObjectFactoryPrivate()
+    {
         foreach(const KoInlineObjectTemplate &t, templates)
+        {
             delete t.properties;
+        }
         templates.clear();
     }
 
@@ -44,7 +48,7 @@ public:
 };
 
 KoInlineObjectFactoryBase::KoInlineObjectFactoryBase(const QString &id, ObjectType type)
-        : d(new InlineObjectFactoryPrivate(id))
+    : d(new InlineObjectFactoryPrivate(id))
 {
     d->type = type;
 }

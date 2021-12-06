@@ -35,7 +35,7 @@ public:
 };
 
 KoAnnotationManager::KoAnnotationManager()
-        : d(new KoAnnotationManagerPrivate)
+    : d(new KoAnnotationManagerPrivate)
 {
 }
 
@@ -61,8 +61,10 @@ void KoAnnotationManager::rename(const QString &oldName, const QString &newName)
 {
     QHash<QString, KoAnnotation*>::iterator i = d->annotationHash.begin();
 
-    while (i != d->annotationHash.end()) {
-        if (i.key() == oldName) {
+    while (i != d->annotationHash.end())
+    {
+        if (i.key() == oldName)
+        {
             KoAnnotation *annotation = d->annotationHash.take(i.key());
             annotation->setName(newName);
             d->annotationHash.insert(newName, annotation);

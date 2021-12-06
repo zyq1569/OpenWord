@@ -33,11 +33,11 @@
 #include <QLayout>
 
 InsertVariableAction::InsertVariableAction(KoCanvasBase *base, KoInlineObjectFactoryBase *factory, const KoInlineObjectTemplate &templ)
-        : InsertInlineObjectActionBase(base, templ.name)
-        , m_factory(factory)
-        , m_templateId(templ.id)
-        , m_properties(templ.properties)
-        , m_templateName(templ.name)
+    : InsertInlineObjectActionBase(base, templ.name)
+    , m_factory(factory)
+    , m_templateId(templ.id)
+    , m_properties(templ.properties)
+    , m_templateName(templ.name)
 {
 }
 
@@ -50,14 +50,17 @@ KoInlineObject *InsertVariableAction::createInlineObject()
     Q_ASSERT(objManager);
     variable->setManager(objManager);
     QWidget *widget = variable->createOptionsWidget();
-    if (widget) {
-        if (widget->layout()) {
+    if (widget)
+    {
+        if (widget->layout())
+        {
             widget->layout()->setMargin(0);
         }
         KPageDialog *dialog = new KPageDialog(m_canvas->canvasWidget());
         dialog->setWindowTitle(i18n("%1 Options", m_templateName));
         dialog->addPage(widget, QString());
-        if (dialog->exec() != KPageDialog::Accepted) {
+        if (dialog->exec() != KPageDialog::Accepted)
+        {
             delete variable;
             variable = 0;
         }

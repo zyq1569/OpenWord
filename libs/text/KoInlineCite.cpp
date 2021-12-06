@@ -104,71 +104,136 @@ void KoInlineCite::setType(Type t)
 
 QString KoInlineCite::dataField(const QString &fieldName) const
 {
-    if ( fieldName == "address" ) {
+    if ( fieldName == "address" )
+    {
         return d->address;
-    } else if ( fieldName == "annote" ) {
+    }
+    else if ( fieldName == "annote" )
+    {
         return d->annote;
-    } else if ( fieldName == "author" ) {
+    }
+    else if ( fieldName == "author" )
+    {
         return d->author;
-    } else if ( fieldName == "bibliography-type" ) {
+    }
+    else if ( fieldName == "bibliography-type" )
+    {
         return d->bibliographyType;
-    } else if ( fieldName == "booktitle" ) {
+    }
+    else if ( fieldName == "booktitle" )
+    {
         return d->booktitle;
-    } else if ( fieldName == "chapter" ) {
+    }
+    else if ( fieldName == "chapter" )
+    {
         return d->chapter;
-    } else if ( fieldName == "custom1" ) {
+    }
+    else if ( fieldName == "custom1" )
+    {
         return d->custom1;
-    } else if ( fieldName == "custom2" ) {
+    }
+    else if ( fieldName == "custom2" )
+    {
         return d->custom2;
-    } else if ( fieldName == "custom3" ) {
+    }
+    else if ( fieldName == "custom3" )
+    {
         return d->custom3;
-    } else if ( fieldName == "custom4" ) {
+    }
+    else if ( fieldName == "custom4" )
+    {
         return d->custom4;
-    } else if ( fieldName == "custom5" ) {
+    }
+    else if ( fieldName == "custom5" )
+    {
         return d->custom5;
-    } else if ( fieldName == "edition" ) {
+    }
+    else if ( fieldName == "edition" )
+    {
         return d->edition;
-    } else if ( fieldName == "editor" ) {
+    }
+    else if ( fieldName == "editor" )
+    {
         return d->editor;
-    } else if ( fieldName == "howpublished" ) {
+    }
+    else if ( fieldName == "howpublished" )
+    {
         return d->publicationType;
-    } else if ( fieldName == "identifier" ) {
+    }
+    else if ( fieldName == "identifier" )
+    {
         return d->identifier;
-    } else if ( fieldName == "institution" ) {
+    }
+    else if ( fieldName == "institution" )
+    {
         return d->institution;
-    } else if ( fieldName == "isbn" ) {
+    }
+    else if ( fieldName == "isbn" )
+    {
         return d->isbn;
-    } else if ( fieldName == "issn" ) {
+    }
+    else if ( fieldName == "issn" )
+    {
         return d->issn;
-    } else if ( fieldName == "journal" ) {
+    }
+    else if ( fieldName == "journal" )
+    {
         return d->journal;
-    } else if ( fieldName == "month" ) {
+    }
+    else if ( fieldName == "month" )
+    {
         return d->month;
-    } else if ( fieldName == "note" ) {
+    }
+    else if ( fieldName == "note" )
+    {
         return d->note;
-    } else if ( fieldName == "number" ) {
+    }
+    else if ( fieldName == "number" )
+    {
         return d->number;
-    } else if ( fieldName == "organisations" ) {
+    }
+    else if ( fieldName == "organisations" )
+    {
         return d->organisation;
-    } else if ( fieldName == "pages" ) {
+    }
+    else if ( fieldName == "pages" )
+    {
         return d->pages;
-    } else if ( fieldName == "publisher" ) {
+    }
+    else if ( fieldName == "publisher" )
+    {
         return d->publisher;
-    } else if ( fieldName == "report-type" ) {
+    }
+    else if ( fieldName == "report-type" )
+    {
         return d->reportType;
-    } else if ( fieldName == "school" ) {
+    }
+    else if ( fieldName == "school" )
+    {
         return d->school;
-    } else if ( fieldName == "series" ) {
+    }
+    else if ( fieldName == "series" )
+    {
         return d->series;
-    } else if ( fieldName == "title" ) {
+    }
+    else if ( fieldName == "title" )
+    {
         return d->title;
-    } else if ( fieldName == "url" ) {
+    }
+    else if ( fieldName == "url" )
+    {
         return d->url;
-    } else if ( fieldName == "volume" ) {
+    }
+    else if ( fieldName == "volume" )
+    {
         return d->volume;
-    } else if ( fieldName == "year" ) {
+    }
+    else if ( fieldName == "year" )
+    {
         return d->year;
-    } else {
+    }
+    else
+    {
         return QString();
     }
 }
@@ -506,16 +571,16 @@ int KoInlineCite::posInDocument() const
 bool KoInlineCite::operator!= ( const KoInlineCite &cite ) const
 {
     return !(d->address == cite.address() && d->annote == cite.annotation() && d->author == cite.author() &&
-            d->bibliographyType == cite.bibliographyType() && d->booktitle == cite.bookTitle() &&
-            d->chapter == cite.chapter() && d->custom1 == cite.custom1() && d->custom2 == cite.custom2() &&
-            d->custom3 == cite.custom3() && d->custom4 == cite.custom4() && d->custom5 == cite.custom5() &&
-            d->edition == cite.edition() && d->editor == cite.editor() && d->identifier == cite.identifier() &&
-            d->institution == cite.institution() && d->isbn == cite.isbn() && d->issn == cite.issn() &&
-            d->journal == cite.journal() && d->month == cite.month() && d->note == cite.note() &&
-            d->number == cite.number() && d->organisation == cite.organisations() && d->pages == cite.pages() &&
-            d->publicationType == cite.publicationType() && d->publisher == cite.publisher() &&
-            d->reportType == cite.reportType() && d->school == cite.school() && d->series == cite.series() &&
-            d->title == cite.title() && d->url == cite.url() && d->volume == cite.volume() && d->year == cite.year());
+             d->bibliographyType == cite.bibliographyType() && d->booktitle == cite.bookTitle() &&
+             d->chapter == cite.chapter() && d->custom1 == cite.custom1() && d->custom2 == cite.custom2() &&
+             d->custom3 == cite.custom3() && d->custom4 == cite.custom4() && d->custom5 == cite.custom5() &&
+             d->edition == cite.edition() && d->editor == cite.editor() && d->identifier == cite.identifier() &&
+             d->institution == cite.institution() && d->isbn == cite.isbn() && d->issn == cite.issn() &&
+             d->journal == cite.journal() && d->month == cite.month() && d->note == cite.note() &&
+             d->number == cite.number() && d->organisation == cite.organisations() && d->pages == cite.pages() &&
+             d->publicationType == cite.publicationType() && d->publisher == cite.publisher() &&
+             d->reportType == cite.reportType() && d->school == cite.school() && d->series == cite.series() &&
+             d->title == cite.title() && d->url == cite.url() && d->volume == cite.volume() && d->year == cite.year());
 }
 
 KoInlineCite &KoInlineCite::operator =(const  KoInlineCite &cite)
@@ -568,18 +633,23 @@ void KoInlineCite::resize(const QTextDocument *document, QTextInlineObject &obje
     Q_UNUSED(document);
     Q_UNUSED(posInDocument);
     if (d->identifier.isEmpty())
+    {
         return;
+    }
 
     KoOdfBibliographyConfiguration *bibConfiguration = KoTextDocument(document).styleManager()->bibliographyConfiguration();
 
-    if (!bibConfiguration->numberedEntries()) {
+    if (!bibConfiguration->numberedEntries())
+    {
         d->label = QString("%1%2%3").arg(bibConfiguration->prefix(),
                                          d->identifier,
                                          bibConfiguration->suffix());
-    } else {
+    }
+    else
+    {
         d->label = QString("%1%2%3").arg(bibConfiguration->prefix(),
-                         QString::number(manager()->citationsSortedByPosition(true).indexOf(this) + 1),
-                         bibConfiguration->suffix());
+                                         QString::number(manager()->citationsSortedByPosition(true).indexOf(this) + 1),
+                                         bibConfiguration->suffix());
     }
 
     Q_ASSERT(format.isCharFormat());
@@ -596,18 +666,23 @@ void KoInlineCite::paint(QPainter &painter, QPaintDevice *pd, const QTextDocumen
     Q_UNUSED(posInDocument);
 
     if (d->identifier.isEmpty())
+    {
         return;
+    }
 
     KoOdfBibliographyConfiguration *bibConfiguration = KoTextDocument(document).styleManager()->bibliographyConfiguration();
 
-    if (!bibConfiguration->numberedEntries()) {
+    if (!bibConfiguration->numberedEntries())
+    {
         d->label = QString("%1%2%3").arg(bibConfiguration->prefix(),
                                          d->identifier,
                                          bibConfiguration->suffix());
-    } else {
+    }
+    else
+    {
         d->label = QString("%1%2%3").arg(bibConfiguration->prefix(),
-                         QString::number(manager()->citationsSortedByPosition(true, document->firstBlock()).indexOf(this) + 1),
-                         bibConfiguration->suffix());
+                                         QString::number(manager()->citationsSortedByPosition(true, document->firstBlock()).indexOf(this) + 1),
+                                         bibConfiguration->suffix());
     }
 
     QFont font(format.font(), pd);
@@ -635,7 +710,8 @@ bool KoInlineCite::loadOdf(const KoXmlElement &element, KoShapeLoadingContext &c
 {
     Q_UNUSED(context);
     //KoTextLoader loader(context);
-    if (element.namespaceURI() == KoXmlNS::text && element.localName() == "bibliography-mark") {
+    if (element.namespaceURI() == KoXmlNS::text && element.localName() == "bibliography-mark")
+    {
         d->identifier = element.attributeNS(KoXmlNS::text, "identifier");
         d->bibliographyType = element.attributeNS(KoXmlNS::text, "bibliography-type");
         d->address = element.attributeNS(KoXmlNS::text, "address");
@@ -670,11 +746,13 @@ bool KoInlineCite::loadOdf(const KoXmlElement &element, KoShapeLoadingContext &c
         d->custom5 = element.attributeNS(KoXmlNS::text, "custom5");
 
         //Now checking for cloned citation (with same identifier)
-        if (manager()->citations(true).keys().count(d->identifier) > 1) {
+        if (manager()->citations(true).keys().count(d->identifier) > 1)
+        {
             this->setType(KoInlineCite::ClonedCitation);
         }
     }
-    else {
+    else
+    {
         return false;
     }
     return true;
@@ -686,67 +764,129 @@ void KoInlineCite::saveOdf(KoShapeSavingContext &context)
     writer->startElement("text:bibliography-mark", false);
 
     if (!d->identifier.isEmpty())
-        writer->addAttribute("text:identifier", d->identifier);     //can't be "" //to be changed later
+    {
+        writer->addAttribute("text:identifier", d->identifier);    //can't be "" //to be changed later
+    }
     if (!d->bibliographyType.isEmpty())
+    {
         writer->addAttribute("text:bibliography-type", d->bibliographyType);
+    }
     if (!d->address.isEmpty())
+    {
         writer->addAttribute("text:address",d->identifier);
+    }
     if (!d->annote.isEmpty())
+    {
         writer->addAttribute("text:annote",d->annote);
+    }
     if (!d->author.isEmpty())
+    {
         writer->addAttribute("text:author",d->author);
+    }
     if (!d->booktitle.isEmpty())
+    {
         writer->addAttribute("text:booktitle",d->booktitle);
+    }
     if (!d->chapter.isEmpty())
+    {
         writer->addAttribute("text:chapter",d->chapter);
+    }
     if (!d->edition.isEmpty())
+    {
         writer->addAttribute("text:edition",d->edition);
+    }
     if (!d->editor.isEmpty())
+    {
         writer->addAttribute("text:editor",d->editor);
+    }
     if (!d->publicationType.isEmpty())
+    {
         writer->addAttribute("text:howpublished",d->publicationType);
+    }
     if (!d->institution.isEmpty())
+    {
         writer->addAttribute("text:institution",d->institution);
+    }
     if (!d->journal.isEmpty())
+    {
         writer->addAttribute("text:journal",d->journal);
+    }
     if (!d->month.isEmpty())
+    {
         writer->addAttribute("text:month",d->month);
+    }
     if (!d->note.isEmpty())
+    {
         writer->addAttribute("text:note",d->note);
+    }
     if (!d->number.isEmpty())
+    {
         writer->addAttribute("text:number",d->number);
+    }
     if (!d->pages.isEmpty())
+    {
         writer->addAttribute("text:pages",d->pages);
+    }
     if (!d->publisher.isEmpty())
+    {
         writer->addAttribute("text:publisher",d->publisher);
+    }
     if (!d->school.isEmpty())
+    {
         writer->addAttribute("text:school",d->school);
+    }
     if (!d->series.isEmpty())
+    {
         writer->addAttribute("text:series",d->series);
+    }
     if (!d->title.isEmpty())
+    {
         writer->addAttribute("text:title",d->title);
+    }
     if (!d->reportType.isEmpty())
+    {
         writer->addAttribute("text:report-type",d->reportType);
+    }
     if (!d->volume.isEmpty())
+    {
         writer->addAttribute("text:volume",d->volume);
+    }
     if (!d->year.isEmpty())
+    {
         writer->addAttribute("text:year",d->year);
+    }
     if (!d->url.isEmpty())
+    {
         writer->addAttribute("text:url",d->url);
+    }
     if (!d->isbn.isEmpty())
+    {
         writer->addAttribute("text:isbn",d->isbn);
+    }
     if (!d->issn.isEmpty())
+    {
         writer->addAttribute("text:issn",d->issn);
+    }
     if (!d->custom1.isEmpty())
+    {
         writer->addAttribute("text:custom1",d->custom1);
+    }
     if (!d->custom2.isEmpty())
+    {
         writer->addAttribute("text:custom2",d->custom2);
+    }
     if (!d->custom3.isEmpty())
+    {
         writer->addAttribute("text:custom3",d->custom3);
+    }
     if (!d->custom4.isEmpty())
+    {
         writer->addAttribute("text:custom4",d->custom4);
+    }
     if (!d->custom5.isEmpty())
+    {
         writer->addAttribute("text:custom5",d->custom5);
+    }
 
     writer->addTextNode(QString("[%1]").arg(d->identifier));
     writer->endElement();

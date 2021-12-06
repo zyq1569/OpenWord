@@ -37,7 +37,7 @@ KoInlineObjectPrivate::~KoInlineObjectPrivate()
 }
 
 KoInlineObject::KoInlineObject(bool propertyChangeListener)
-        : d_ptr(new KoInlineObjectPrivate)
+    : d_ptr(new KoInlineObjectPrivate)
 {
     Q_D(KoInlineObject);
     d->propertyChangeListener = propertyChangeListener;
@@ -52,7 +52,8 @@ KoInlineObject::KoInlineObject(KoInlineObjectPrivate &priv, bool propertyChangeL
 
 KoInlineObject::~KoInlineObject()
 {
-    if (d_ptr->manager) {
+    if (d_ptr->manager)
+    {
         d_ptr->manager->removeInlineObject(this);
     }
     delete d_ptr;
@@ -98,7 +99,7 @@ bool KoInlineObject::propertyChangeListener() const
 QDebug operator<<(QDebug dbg, const KoInlineObject *o)
 {
     return o ? o->d_func()->printDebug(dbg) : dbg << "KoInlineObject 0";
-;
+    ;
 }
 
 void KoInlineObject::setInlineRdf(KoTextInlineRdf* rdf)

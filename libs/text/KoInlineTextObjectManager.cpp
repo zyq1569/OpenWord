@@ -1,23 +1,23 @@
- /* This file is part of the KDE project
- * Copyright (C) 2006-2009 Thomas Zander <zander@kde.org>
- * Copyright (C) 2008 Thorsten Zachmann <zachmann@kde.org>
- * Copyright (c) 2011 Boudewijn Rempt <boud@kogmbh.com>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
- *
- * You should have received a copy of the GNU Library General Public License
- * along with this library; see the file COPYING.LIB.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
- */
+/* This file is part of the KDE project
+* Copyright (C) 2006-2009 Thomas Zander <zander@kde.org>
+* Copyright (C) 2008 Thorsten Zachmann <zachmann@kde.org>
+* Copyright (c) 2011 Boudewijn Rempt <boud@kogmbh.com>
+*
+* This library is free software; you can redistribute it and/or
+* modify it under the terms of the GNU Library General Public
+* License as published by the Free Software Foundation; either
+* version 2 of the License, or (at your option) any later version.
+*
+* This library is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* Library General Public License for more details.
+*
+* You should have received a copy of the GNU Library General Public License
+* along with this library; see the file COPYING.LIB.  If not, write to
+* the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+* Boston, MA 02110-1301, USA.
+*/
 #include "KoInlineTextObjectManager.h"
 
 #include "InsertNamedVariableAction_p.h"
@@ -31,9 +31,9 @@
 #include <QTextCursor>
 
 KoInlineTextObjectManager::KoInlineTextObjectManager(QObject *parent)
-        : QObject(parent),
-        m_lastObjectId(0),
-        m_variableManager(this)
+    : QObject(parent),
+      m_lastObjectId(0),
+      m_variableManager(this)
 {
 }
 
@@ -45,7 +45,9 @@ KoInlineObject *KoInlineTextObjectManager::inlineTextObject(const QTextCharForma
 {
     int id = format.intProperty(InlineInstanceId);
     if (id <= 0)
+    {
         return 0;
+    }
     return m_objects.value(id, 0);
 }
 
@@ -81,11 +83,14 @@ void KoInlineTextObjectManager::insertInlineObject(QTextCursor& cursor, KoInline
 void KoInlineTextObjectManager::insertObject(KoInlineObject *object)
 {
     m_objects.insert(object->id(), object);
-    if (object->propertyChangeListener()) {
+    if (object->propertyChangeListener())
+    {
         m_listeners.append(object);
         QHash<int, QVariant>::ConstIterator i;
         for (i = m_properties.constBegin(); i != m_properties.constEnd(); ++i)
+        {
             object->propertyChanged((KoInlineObject::Property)(i.key()), i.value());
+        }
     }
 
     // reset to use old format so that the InlineInstanceId is no longer set.
@@ -93,17 +98,20 @@ void KoInlineTextObjectManager::insertObject(KoInlineObject *object)
 
 void KoInlineTextObjectManager::addInlineObject(KoInlineObject* object)
 {
-    if (!object) {
+    if (!object)
+    {
         return;
     }
 
     int id = object->id();
-    if (id == -1) {
+    if (id == -1)
+    {
         object->setId(++m_lastObjectId);
         object->setManager(this);
         object->setup();
     }
-    else {
+    else
+    {
         m_deletedObjects.remove(id);
     }
     insertObject(object);
@@ -111,7 +119,8 @@ void KoInlineTextObjectManager::addInlineObject(KoInlineObject* object)
 
 void KoInlineTextObjectManager::removeInlineObject(KoInlineObject *object)
 {
-    if (!object) {
+    if (!object)
+    {
         return;
     }
 
@@ -123,14 +132,19 @@ void KoInlineTextObjectManager::removeInlineObject(KoInlineObject *object)
 
 void KoInlineTextObjectManager::setProperty(KoInlineObject::Property key, const QVariant &value)
 {
-    if (m_properties.contains(key)) {
+    if (m_properties.contains(key))
+    {
         if (value == m_properties.value(key))
+        {
             return;
+        }
         m_properties.remove(key);
     }
     m_properties.insert(key, value);
     foreach (KoInlineObject *obj, m_listeners)
+    {
         obj->propertyChanged(key, value);
+    }
 }
 
 QVariant KoInlineTextObjectManager::property(KoInlineObject::Property key) const
@@ -141,21 +155,27 @@ QVariant KoInlineTextObjectManager::property(KoInlineObject::Property key) const
 int KoInlineTextObjectManager::intProperty(KoInlineObject::Property key) const
 {
     if (!m_properties.contains(key))
+    {
         return 0;
+    }
     return m_properties.value(key).toInt();
 }
 
 bool KoInlineTextObjectManager::boolProperty(KoInlineObject::Property key) const
 {
     if (!m_properties.contains(key))
+    {
         return false;
+    }
     return m_properties.value(key).toBool();
 }
 
 QString KoInlineTextObjectManager::stringProperty(KoInlineObject::Property key) const
 {
     if (!m_properties.contains(key))
+    {
         return QString();
+    }
     return qvariant_cast<QString>(m_properties.value(key));
 }
 
@@ -178,7 +198,8 @@ QList<QAction*> KoInlineTextObjectManager::createInsertVariableActions(KoCanvasB
 {
     QList<QAction *> answer = KoInlineObjectRegistry::instance()->createInsertVariableActions(host);
     int i = 0;
-    foreach(const QString & name, m_variableManager.variables()) {
+    foreach(const QString & name, m_variableManager.variables())
+    {
         answer.insert(i++, new InsertNamedVariableAction(host, this, name));
     }
 
@@ -190,10 +211,13 @@ QList<QAction*> KoInlineTextObjectManager::createInsertVariableActions(KoCanvasB
 QList<KoTextLocator*> KoInlineTextObjectManager::textLocators() const
 {
     QList<KoTextLocator*> answers;
-    foreach(KoInlineObject *object, m_objects) {
+    foreach(KoInlineObject *object, m_objects)
+    {
         KoTextLocator *tl = dynamic_cast<KoTextLocator*>(object);
         if (tl)
+        {
             answers.append(tl);
+        }
     }
     return answers;
 }
@@ -201,9 +225,11 @@ QList<KoTextLocator*> KoInlineTextObjectManager::textLocators() const
 QList<KoInlineNote*> KoInlineTextObjectManager::endNotes() const
 {
     QList<KoInlineNote*> answers;
-    foreach(KoInlineObject* object, m_objects) {
+    foreach(KoInlineObject* object, m_objects)
+    {
         KoInlineNote* note = dynamic_cast<KoInlineNote*>(object);
-        if (note && note->type() == KoInlineNote::Endnote) {
+        if (note && note->type() == KoInlineNote::Endnote)
+        {
             answers.append(note);
         }
     }
@@ -213,10 +239,12 @@ QList<KoInlineNote*> KoInlineTextObjectManager::endNotes() const
 QMap<QString, KoInlineCite*> KoInlineTextObjectManager::citations(bool duplicatesEnabled) const
 {
     QMap<QString, KoInlineCite*> answers;
-    foreach(KoInlineObject* object, m_objects) {
+    foreach(KoInlineObject* object, m_objects)
+    {
         KoInlineCite* cite = dynamic_cast<KoInlineCite*>(object);
         if (cite && (cite->type() == KoInlineCite::Citation ||
-                     (duplicatesEnabled && cite->type() == KoInlineCite::ClonedCitation))) {
+                     (duplicatesEnabled && cite->type() == KoInlineCite::ClonedCitation)))
+        {
             answers.insert(cite->identifier(), cite);
         }
     }
@@ -227,11 +255,13 @@ QList<KoInlineCite*> KoInlineTextObjectManager::citationsSortedByPosition(bool d
 {
     QList<KoInlineCite*> answers;
 
-    while (block.isValid()) {
+    while (block.isValid())
+    {
         QString text = block.text();
         int pos = text.indexOf(QChar::ObjectReplacementCharacter);
 
-        while (pos >= 0 && pos <= block.length() ) {
+        while (pos >= 0 && pos <= block.length() )
+        {
             QTextCursor cursor(block);
             cursor.setPosition(block.position() + pos);
             cursor.setPosition(cursor.position() + 1, QTextCursor::KeepAnchor);
@@ -239,7 +269,8 @@ QList<KoInlineCite*> KoInlineTextObjectManager::citationsSortedByPosition(bool d
             KoInlineCite *cite = dynamic_cast<KoInlineCite*>(this->inlineTextObject(cursor));
 
             if (cite && (cite->type() == KoInlineCite::Citation ||
-                         (duplicatesEnabled && cite->type() == KoInlineCite::ClonedCitation))) {
+                         (duplicatesEnabled && cite->type() == KoInlineCite::ClonedCitation)))
+            {
                 answers.append(cite);
             }
             pos = text.indexOf(QChar::ObjectReplacementCharacter, pos + 1);
@@ -253,41 +284,77 @@ QList<KoInlineCite*> KoInlineTextObjectManager::citationsSortedByPosition(bool d
 void KoInlineTextObjectManager::documentInformationUpdated(const QString &info, const QString &data)
 {
     if (info == "title")
+    {
         setProperty(KoInlineObject::Title, data);
+    }
     else if (info == "description")
+    {
         setProperty(KoInlineObject::Description, data);
+    }
     else if (info == "comments")
+    {
         setProperty(KoInlineObject::Comments, data);
+    }
     else if (info == "subject")
+    {
         setProperty(KoInlineObject::Subject, data);
+    }
     else if (info == "keyword")
+    {
         setProperty(KoInlineObject::Keywords, data);
+    }
     else if (info == "creator")
+    {
         setProperty(KoInlineObject::AuthorName, data);
+    }
     else if (info == "initial")
+    {
         setProperty(KoInlineObject::AuthorInitials, data);
+    }
     else if (info == "title")
+    {
         setProperty(KoInlineObject::SenderTitle, data);
+    }
     else if (info == "email")
+    {
         setProperty(KoInlineObject::SenderEmail, data);
+    }
     else if (info == "telephone")
+    {
         setProperty(KoInlineObject::SenderPhonePrivate, data);
+    }
     else if (info == "telephone-work")
+    {
         setProperty(KoInlineObject::SenderPhoneWork, data);
+    }
     else if (info == "fax")
+    {
         setProperty(KoInlineObject::SenderFax, data);
+    }
     else if (info == "country")
+    {
         setProperty(KoInlineObject::SenderCountry, data);
+    }
     else if (info == "postal-code")
+    {
         setProperty(KoInlineObject::SenderPostalCode, data);
+    }
     else if (info == "city")
+    {
         setProperty(KoInlineObject::SenderCity, data);
+    }
     else if (info == "street")
+    {
         setProperty(KoInlineObject::SenderStreet, data);
+    }
     else if (info == "position")
+    {
         setProperty(KoInlineObject::SenderPosition, data);
+    }
     else if (info == "company")
+    {
         setProperty(KoInlineObject::SenderCompany, data);
+    }
 }
 
 QList<KoInlineObject*> KoInlineTextObjectManager::inlineTextObjects() const

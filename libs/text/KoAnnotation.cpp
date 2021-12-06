@@ -88,14 +88,16 @@ bool KoAnnotation::loadOdf(const KoXmlElement &element, KoShapeLoadingContext &c
 {
     Q_UNUSED(context);
 
-    if (element.localName() != "annotation") {
+    if (element.localName() != "annotation")
+    {
         return false;
     }
 
     //debugText << "****** Start Load odf ******";
     QString annotationName = element.attribute("name");
 
-    if (manager()) {
+    if (manager())
+    {
         // For cut and paste, make sure that the name is unique.
         d->name = createUniqueAnnotationName(manager()->annotationManager(), annotationName, false);
 
@@ -104,12 +106,15 @@ bool KoAnnotation::loadOdf(const KoXmlElement &element, KoShapeLoadingContext &c
         setPositionOnlyMode(true);
 
         // Add inline Rdf to the annotation.
-        if (element.hasAttributeNS(KoXmlNS::xhtml, "property") || element.hasAttribute("id")) {
+        if (element.hasAttributeNS(KoXmlNS::xhtml, "property") || element.hasAttribute("id"))
+        {
             KoTextInlineRdf* inlineRdf = new KoTextInlineRdf(const_cast<QTextDocument*>(d->document), this);
-            if (inlineRdf->loadOdf(element)) {
+            if (inlineRdf->loadOdf(element))
+            {
                 setInlineRdf(inlineRdf);
             }
-            else {
+            else
+            {
                 delete inlineRdf;
                 inlineRdf = 0;
             }
@@ -126,12 +131,15 @@ void KoAnnotation::saveOdf(KoShapeSavingContext &context, int position, TagType 
 {
     KoXmlWriter *writer = &context.xmlWriter();
 
-    if (!hasRange()) {
+    if (!hasRange())
+    {
 
-        if (tagType == StartTag) {
+        if (tagType == StartTag)
+        {
             writer->startElement("office:annotation", false);
             writer->addAttribute("text:name", d->name.toUtf8());
-            if (inlineRdf()) {
+            if (inlineRdf())
+            {
                 inlineRdf()->saveOdf(context, writer);
             }
 
@@ -140,41 +148,55 @@ void KoAnnotation::saveOdf(KoShapeSavingContext &context, int position, TagType 
             writer->endElement(); //office:annotation
         }
 
-    } else if ((tagType == StartTag) && (position == rangeStart())) {
+    }
+    else if ((tagType == StartTag) && (position == rangeStart()))
+    {
         writer->startElement("office:annotation", false);
         writer->addAttribute("text:name", d->name.toUtf8());
-        if (inlineRdf()) {
+        if (inlineRdf())
+        {
             inlineRdf()->saveOdf(context, writer);
         }
 
         d->shape->saveOdf(context);
 
         writer->endElement(); //office:annotation
-    } else if ((tagType == EndTag) && (position == rangeEnd())) {
+    }
+    else if ((tagType == EndTag) && (position == rangeEnd()))
+    {
         writer->startElement("office:annotation-end", false);
         writer->addAttribute("text:name", d->name.toUtf8());
         writer->endElement();
     }
-        // else nothing
+    // else nothing
 
 }
 
 QString KoAnnotation::createUniqueAnnotationName(const KoAnnotationManager* kam,
-                                                 const QString &annotationName, bool isEndMarker)
+        const QString &annotationName, bool isEndMarker)
 {
     QString ret = annotationName;
     int uniqID = 0;
 
-    while (true) {
-        if (kam->annotation(ret)) {
+    while (true)
+    {
+        if (kam->annotation(ret))
+        {
             ret = QString("%1_%2").arg(annotationName).arg(++uniqID);
-        } else {
-            if (isEndMarker) {
+        }
+        else
+        {
+            if (isEndMarker)
+            {
                 --uniqID;
                 if (!uniqID)
+                {
                     ret = annotationName;
+                }
                 else
+                {
                     ret = QString("%1_%2").arg(annotationName).arg(uniqID);
+                }
             }
             break;
         }

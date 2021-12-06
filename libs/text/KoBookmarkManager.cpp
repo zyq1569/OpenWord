@@ -34,7 +34,7 @@ public:
 };
 
 KoBookmarkManager::KoBookmarkManager()
-        : d(new KoBookmarkManagerPrivate)
+    : d(new KoBookmarkManagerPrivate)
 {
 }
 
@@ -60,8 +60,10 @@ void KoBookmarkManager::rename(const QString &oldName, const QString &newName)
 {
     QHash<QString, KoBookmark*>::iterator i = d->bookmarkHash.begin();
 
-    while (i != d->bookmarkHash.end()) {
-        if (i.key() == oldName) {
+    while (i != d->bookmarkHash.end())
+    {
+        if (i.key() == oldName)
+        {
             KoBookmark *bookmark = d->bookmarkHash.take(i.key());
             bookmark->setName(newName);
             d->bookmarkHash.insert(newName, bookmark);

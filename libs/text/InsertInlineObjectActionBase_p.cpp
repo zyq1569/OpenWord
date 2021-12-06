@@ -27,8 +27,8 @@
 #include "TextDebug.h"
 
 InsertInlineObjectActionBase::InsertInlineObjectActionBase(KoCanvasBase *canvas, const QString &name)
-        : QAction(name, canvas->canvasWidget()),
-        m_canvas(canvas)
+    : QAction(name, canvas->canvasWidget()),
+      m_canvas(canvas)
 {
     connect(this, SIGNAL(triggered(bool)), this, SLOT(activated()));
 }
@@ -41,9 +41,11 @@ void InsertInlineObjectActionBase::activated()
 {
     Q_ASSERT(m_canvas);
     KoTextEditor *editor = KoTextEditor::getTextEditorFromCanvas(m_canvas);
-    if (editor) {
+    if (editor)
+    {
         KoInlineObject *obj = createInlineObject();
-        if (obj) {
+        if (obj)
+        {
             editor->insertInlineObject(obj);
         }
     }
