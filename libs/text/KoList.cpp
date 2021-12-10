@@ -27,7 +27,7 @@
 #include "styles/KoStyleManager.h"
 
 #include "TextDebug.h"
-
+//#include "logging.h"
 #include <QTextCursor>
 
 KoList::KoList(const QTextDocument *document, KoListStyle *style, KoList::Type type)
@@ -217,7 +217,13 @@ void KoList::setStyle(KoListStyle *style)
         {
             continue;
         }
-        KoListLevelProperties properties = d->style->levelProperties(i+1);
+        //KoListLevelProperties properties = d->style->levelProperties(i+1); //replace//openword
+        ////---------------------------------------
+        /// d->style->levelProperties(i+1) why??? 没看懂如何判断KoListStyle::Level,故替换为下面代码
+        int lev = textList->format().intProperty(KoListStyle::Level);
+        KoListLevelProperties properties = d->style->levelProperties(lev);
+        //DEBUG_LOG("----setStyle:" + properties.listItemPrefix() + "|" + properties.listItemSuffix() + "|level:" + QString::number( properties.level() ) );
+        ////----------------------------------------
         if (properties.listId())
         {
             d->textListIds[i] = properties.listId();
