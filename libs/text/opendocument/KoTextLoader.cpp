@@ -773,7 +773,7 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
         {
             KoListLevelProperties llp = d->currentListStyle->levelProperties(level);
             outlineStyle->setLevelProperties(llp);
-            //DEBUG_LOG("----loadHeading:" + props.listItemPrefix() + "|" + props.listItemSuffix() + "|level:" + QString::number( props.level() ) );
+            //DEBUG_LOG("----loadHeading:" + llp.listItemPrefix() + "|" + llp.listItemSuffix() + "|level:" + QString::number( llp.level() ) );
         }
     }
     KoList *list = KoTextDocument(block.document()).headingList();
