@@ -190,6 +190,47 @@ public:
     KoList *list(const QTextDocument *document, KoListStyle *listStyle, bool mergeSimilarStyledList);
 };
 
+//void TestBlock(QTextCursor &cursor)
+//{
+//    QString text = cursor.block().text();
+//    QTextDocument *doc = cursor.document();
+//    int lines = doc->lineCount();
+//    int i = 0;
+//    lines = doc->pageCount();
+//    QTextFrame *rootframe = doc->rootFrame();
+//    QTextFrame::iterator it;
+//    for (it = rootframe->begin(); !(it.atEnd()); ++it)
+//    {
+//        i++;
+//        QTextFrame *childframe = it.currentFrame();
+//        QTextBlock childblock = it.currentBlock();
+//        if (childframe)
+//        {
+//        }
+//        else if (childblock.isValid())
+//        {
+//            QTextList *list = childblock.textList();
+//            if (list)
+//            {
+//                QString text = childblock.text();
+//                QTextListFormat format = list->format();
+//                QString prefix = format.stringProperty(KoListStyle::ListItemPrefix);
+//                QString suffix = format.stringProperty(KoListStyle::ListItemSuffix);
+//                int      level = format.intProperty(KoListStyle::Level);
+//                QString  StyleId    = QString::number( format.intProperty(KoListStyle::StyleId));
+//                //if (level == 1)
+//                //{
+//                //    format.setProperty(KoListStyle::ListItemPrefix,"");
+//                //    format.setProperty(KoListStyle::ListItemSuffix,"、");
+//                //    list->setFormat(format);
+//                //}
+//                DEBUG_LOG("text:" + text + "lines:" +  QString::number(lines) + " i:" + QString::number(i)+" StyleId:" + StyleId);
+//                DEBUG_LOG("prefix:" + prefix + " suffix:" + suffix + " level:" + QString::number(level));
+//            }
+//        }
+//    }
+//}
+
 KoList *KoTextLoader::Private::list(const QTextDocument *document, KoListStyle *listStyle, bool mergeSimilarStyledList)
 {
     //TODO: Remove mergeSimilarStyledList parameter by finding a way to put the numbered-paragraphs of same level
@@ -371,14 +412,14 @@ void KoTextLoader::loadBody(const KoXmlElement &bodyElem, QTextCursor &cursor, L
 
     d->styleManager = KoTextDocument(document).styleManager();
 
-//    if (1)
-//    {
-//#define KOOPENDOCUMENTLOADER_DEBUG
-//    }
+    //    if (1)
+    //    {
+    //#define KOOPENDOCUMENTLOADER_DEBUG
+    //    }
 
-//#ifdef KOOPENDOCUMENTLOADER_DEBUG
-//    debugText << "text-style:" << KoTextDebug::textAttributes(cursor.blockCharFormat());
-//#endif
+    //#ifdef KOOPENDOCUMENTLOADER_DEBUG
+    //    debugText << "text-style:" << KoTextDebug::textAttributes(cursor.blockCharFormat());
+    //#endif
     //DEBUG_LOG( "text-style:" + KoTextDebug::textAttributes(cursor.blockCharFormat()));
     // set to true if we found a tag that used the paragraph,
     // indicating that the next round needs to start a new one.
@@ -386,7 +427,6 @@ void KoTextLoader::loadBody(const KoXmlElement &bodyElem, QTextCursor &cursor, L
 
     if (bodyElem.namespaceURI() == KoXmlNS::table && bodyElem.localName() == "table")
     {
-
         loadTable(bodyElem, cursor);
     }
     else
@@ -692,6 +732,16 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
         d->styleManager->setOutlineStyle(outlineStyle);
     }
 
+    /// \brief to do...修改默认值为当前读取的值  20211126
+    if (d->currentListStyle)
+    {
+        if (d->currentListStyle->hasLevelProperties(level))
+        {
+            KoListLevelProperties llp = d->currentListStyle->levelProperties(level);
+            llp.setLevel(level);
+            outlineStyle->setLevelProperties(llp);
+        }
+    }
     //if outline style is not specified and this is not inside a list then we do not number it
     if (outlineStyle->styleId() == d->styleManager->defaultOutlineStyle()->styleId())
     {
@@ -701,29 +751,29 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
             blockFormat.setProperty(KoParagraphStyle::UnnumberedListItem, true);
             cursor.mergeBlockFormat(blockFormat);
         }
-        else     //inside a list then take the numbering from the list style
-        {
-            int level = d->currentListLevel - 1;
-            KoListLevelProperties llp;
-            if (!d->currentListStyle->hasLevelProperties(level))
-            {
-                // Look if one of the lower levels are defined to we can copy over that level.
-                for(int i = level - 1; i >= 0; --i)
-                {
-                    if(d->currentLists[level - 1]->style()->hasLevelProperties(i))
-                    {
-                        llp = d->currentLists[level - 1]->style()->levelProperties(i);
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                llp = d->currentListStyle->levelProperties(level);
-            }
-            llp.setLevel(level);
-            outlineStyle->setLevelProperties(llp);
-        }
+        //else     //inside a list then take the numbering from the list style
+        //{
+        ////int level = d->currentListLevel - 1;
+        //KoListLevelProperties llp;
+        //if (!d->currentListStyle->hasLevelProperties(level))
+        //{
+        //// Look if one of the lower levels are defined to we can copy over that level.
+        //for(int i = level - 1; i >= 0; --i)
+        //{
+        //    if(d->currentLists[level - 1]->style()->hasLevelProperties(i))
+        //    {
+        //        llp = d->currentLists[level - 1]->style()->levelProperties(i);
+        //        break;
+        //    }
+        //}
+        //}
+        //else
+        //{
+        //    llp = d->currentListStyle->levelProperties(level);
+        //}
+        //llp.setLevel(level);
+        //outlineStyle->setLevelProperties(llp);
+        //}
     }
 
     KoList *list = KoTextDocument(block.document()).headingList();
@@ -733,12 +783,12 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
         KoTextDocument(block.document()).setHeadingList(list);
     }
     /// \brief to do...修改默认值为当前读取的值  20211126
-    if (d->currentListStyle)
-    {
-        KoListLevelProperties props = d->currentListStyle->levelProperties(level);
-        outlineStyle->setLevelProperties(props);
-        //DEBUG_LOG("----loadHeading:" + props.listItemPrefix() + "|" + props.listItemSuffix() + "|level:" + QString::number( props.level() ) );
-    }
+    //if (d->currentListStyle)
+    //{
+    //    KoListLevelProperties props = d->currentListStyle->levelProperties(level);
+    //    outlineStyle->setLevelProperties(props);
+    //    //DEBUG_LOG("----loadHeading:" + props.listItemPrefix() + "|" + props.listItemSuffix() + "|level:" + QString::number( props.level() ) );
+    //}
     list->setStyle(outlineStyle);
     list->add(block, level);
 
@@ -1005,28 +1055,7 @@ void KoTextLoader::loadListItem(const KoXmlElement &e, QTextCursor &cursor, int 
 
         // mark intermediate paragraphs as unnumbered items
         QTextCursor c(current);
-        ///20211206 add openword: to do:待调整优化,目前还不知为何被修改了样式
-        QTextList *textList = c.block().textList();
-        if (textList)
-        {
-            QTextListFormat format = textList->format();
-            QString prefix = format.stringProperty(KoListStyle::ListItemPrefix);
-            QString suffix = format.stringProperty(KoListStyle::ListItemSuffix);
-            int      level = format.intProperty(KoListStyle::Level);
-            blockFormat.setProperty(KoListStyle::ListItemPrefix, prefix);
-            blockFormat.setProperty(KoListStyle::ListItemSuffix, suffix);
-            blockFormat.setProperty(KoListStyle::Level, level);
-        }
-        ///-------------------------------------------------------------------------
         c.mergeBlockFormat(blockFormat);
-        //if (textList)
-        //{
-        //    QString prefix, suffix;
-        //    QTextListFormat format = textList->format();
-        //    format.setProperty(KoListStyle::ListItemPrefix, prefix);
-        //    format.setProperty(KoListStyle::ListItemSuffix, suffix);
-        //    textList->setFormat(format);
-        //}
         while (c.block() != cursor.block())
         {
             c.movePosition(QTextCursor::NextBlock);
