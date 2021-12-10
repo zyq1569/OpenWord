@@ -732,16 +732,6 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
         d->styleManager->setOutlineStyle(outlineStyle);
     }
 
-    /// \brief to do...修改默认值为当前读取的值  20211126
-    if (d->currentListStyle)
-    {
-        if (d->currentListStyle->hasLevelProperties(level))
-        {
-            KoListLevelProperties llp = d->currentListStyle->levelProperties(level);
-            llp.setLevel(level);
-            outlineStyle->setLevelProperties(llp);
-        }
-    }
     //if outline style is not specified and this is not inside a list then we do not number it
     if (outlineStyle->styleId() == d->styleManager->defaultOutlineStyle()->styleId())
     {
@@ -783,12 +773,15 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
         KoTextDocument(block.document()).setHeadingList(list);
     }
     /// \brief to do...修改默认值为当前读取的值  20211126
-    //if (d->currentListStyle)
-    //{
-    //    KoListLevelProperties props = d->currentListStyle->levelProperties(level);
-    //    outlineStyle->setLevelProperties(props);
-    //    //DEBUG_LOG("----loadHeading:" + props.listItemPrefix() + "|" + props.listItemSuffix() + "|level:" + QString::number( props.level() ) );
-    //}
+    if (d->currentListStyle)
+    {
+        if (d->currentListStyle->hasLevelProperties(level))
+        {
+            KoListLevelProperties llp = d->currentListStyle->levelProperties(level);
+            outlineStyle->setLevelProperties(llp);
+            //DEBUG_LOG("----loadHeading:" + props.listItemPrefix() + "|" + props.listItemSuffix() + "|level:" + QString::number( props.level() ) );
+        }
+    }
     list->setStyle(outlineStyle);
     list->add(block, level);
 
