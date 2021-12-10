@@ -640,7 +640,7 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
     // This will fallback to the default-outline-level applied by KoParagraphStyle
 
     QString styleName         = element.attributeNS(KoXmlNS::text, "style-name",     QString());
-    QString display_levels    = element.attributeNS(KoXmlNS::text, "display-levels", QString());
+    QString display_levels    = element.attributeNS(KoXmlNS::text, "display-levels", "1"/*QString()*/);
 
     QTextBlock block          = cursor.block();
     // Set the paragraph-style on the block
@@ -741,36 +741,30 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
             blockFormat.setProperty(KoParagraphStyle::UnnumberedListItem, true);
             cursor.mergeBlockFormat(blockFormat);
         }
-        //else     //inside a list then take the numbering from the list style
-        //{
-        ////int level = d->currentListLevel - 1;
-        //KoListLevelProperties llp;
-        //if (!d->currentListStyle->hasLevelProperties(level))
-        //{
-        //// Look if one of the lower levels are defined to we can copy over that level.
-        //for(int i = level - 1; i >= 0; --i)
-        //{
-        //    if(d->currentLists[level - 1]->style()->hasLevelProperties(i))
-        //    {
-        //        llp = d->currentLists[level - 1]->style()->levelProperties(i);
-        //        break;
-        //    }
-        //}
-        //}
-        //else
-        //{
-        //    llp = d->currentListStyle->levelProperties(level);
-        //}
-        //llp.setLevel(level);
-        //outlineStyle->setLevelProperties(llp);
-        //}
-    }
-
-    KoList *list = KoTextDocument(block.document()).headingList();
-    if (!list)
-    {
-        list = d->list(block.document(), outlineStyle, false);
-        KoTextDocument(block.document()).setHeadingList(list);
+        else     //inside a list then take the numbering from the list style
+        {
+            ////why ----------?????????20211210-------------------------------------------
+            int listlevel = d->currentListLevel - 1;
+            KoListLevelProperties llp;
+            if (!d->currentListStyle->hasLevelProperties(listlevel))
+            {
+                // Look if one of the lower levels are defined to we can copy over that level.
+                for(int i = listlevel - 1; i >= 0; --i)
+                {
+                    if(d->currentLists[listlevel - 1]->style()->hasLevelProperties(i))
+                    {
+                        llp = d->currentLists[listlevel - 1]->style()->levelProperties(i);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                llp = d->currentListStyle->levelProperties(level);
+            }
+            llp.setLevel(level);
+            outlineStyle->setLevelProperties(llp);
+        }
     }
     /// \brief to do...修改默认值为当前读取的值  20211126
     if (d->currentListStyle)
@@ -781,6 +775,12 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
             outlineStyle->setLevelProperties(llp);
             //DEBUG_LOG("----loadHeading:" + props.listItemPrefix() + "|" + props.listItemSuffix() + "|level:" + QString::number( props.level() ) );
         }
+    }
+    KoList *list = KoTextDocument(block.document()).headingList();
+    if (!list)
+    {
+        list = d->list(block.document(), outlineStyle, false);
+        KoTextDocument(block.document()).setHeadingList(list);
     }
     list->setStyle(outlineStyle);
     list->add(block, level);
