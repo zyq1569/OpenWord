@@ -441,6 +441,17 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
                 {
                     m_currentParagraphStyle.setParentStyleName(m_name);
                 }
+                else if (type == "table")
+                {
+                    //if (m_currentTableStyleProperties)
+                    //{
+                    //    m_currentTableStyleProperties->textStyle.setParentStyleName(m_name);
+                    //}
+                }
+                else
+                {
+                    m_currentListStyle.setParentStyleName(m_name);
+                }
             }
             else if (name() == "rPr")
             {
@@ -520,6 +531,7 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
                     m_currentParagraphStyle.setParentName(val);
                     basedOnVal = val;
                 }
+                m_basedOn = basedOnVal;
             }
             else if (QUALIFIED_NAME_IS(next))
             {
@@ -734,11 +746,42 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_name()
     //debugDocx << "read_name m_name:" << m_name;
     //openword 20210924目前没有使用??????如何转为ODT格式中
     //m_name.replace(QLatin1Char(' '), QLatin1Char('_'));
-    //if (m_name.startsWith(QLatin1String("heading")))
-    //{
-    //    m_name = m_name.replace("heading","Head");
-    //}
+    if (m_name.startsWith(QLatin1String("Title")))
+    {
+        m_name = m_name.replace("heading","Document_20Title");
+    }
+    else if (m_name.startsWith(QLatin1String("heading 1")))
+    {
+        m_name = m_name.replace("heading 1","Head_201");
+    }
+    else if (m_name.startsWith(QLatin1String("heading 2")))
+    {
+        m_name = m_name.replace("heading 2","Head_202");
+    }
+    else if (m_name.startsWith(QLatin1String("Normal")))
+    {
+        m_name = m_name.replace("Normal","Standard");
+    }
     //m_currentStyleName = m_name;
     readNext();
     READ_EPILOGUE
 }
+
+//#undef CURRENT_EL
+//#define CURRENT_EL basedOn
+////! 17.7.4.9 name (Primary Style Name)
+///*
+// Parent elements:
+// - style (§17.7.4.17)
+
+// Child elements:
+// - none
+//*/
+//KoFilter::ConversionStatus DocxXmlStylesReader::read_basedOn()
+//{
+//    READ_PROLOGUE
+//    const QXmlStreamAttributes attrs(attributes());
+//    READ_ATTR_INTO(val, m_basedOn)
+//    readNext();
+//    READ_EPILOGUE
+//}

@@ -60,6 +60,11 @@ protected:
 
     MSOOXML::DrawingTableStyle* m_currentStyle;
 
+///add openword
+protected:
+    //KoFilter::ConversionStatus read_basedOn();
+    QString m_basedOn; //!add openword
+
 private:
     void init();
 //#include <MsooXmlCommonReaderMethods.h>
