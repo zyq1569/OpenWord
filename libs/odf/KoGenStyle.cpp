@@ -232,7 +232,7 @@ void KoGenStyle::writeStyle(KoXmlWriter* writer, const KoGenStyles& styles, cons
             }
             if (parentStyle && !parentStyle->isDefaultStyle())
             {
-                writer->addAttribute("style:parent-style-name", m_parentName);
+                writer->addAttribute("style:parent-style-name", /*m_parentstyleName*/m_parentName);
             }
         }
     }

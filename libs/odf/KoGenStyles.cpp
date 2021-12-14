@@ -31,6 +31,7 @@
 #include "KoFontFace.h"
 #include <float.h>
 #include <OdfDebug.h>
+//#include "logging.h"
 
 static const struct
 {
@@ -387,7 +388,8 @@ QString KoGenStyles::insert(const KoGenStyle& style, const QString& baseName, In
                 //            << "parent style" << style.parentName() << "has a different family:"
                 //            << parentStyle->m_familyName;
                 //}
-
+                //DEBUG_LOG("parentStyle->m_parentName=" + parentStyle->m_parentName + "parentStyle->m_parentstyleName: " + parentStyle->m_parentstyleName);
+                //DEBUG_LOG("style.m_parentName=" + style.m_parentName + "style.m_parentstyleName: " + style.m_parentstyleName);
                 testStyle.m_parentName = parentStyle->m_parentName;
                 testStyle.m_parentstyleName = parentStyle->m_parentstyleName;
                 // Exclude the type from the comparison. It's ok for an auto style
