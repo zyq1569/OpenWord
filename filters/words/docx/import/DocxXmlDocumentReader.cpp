@@ -2836,7 +2836,11 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                     const KoGenStyle* parentStyle = mainStyles->style(m_currentParagraphStyle.parentName(), m_currentParagraphStyle.familyName());
                     if (parentStyle)
                     {
+#ifdef MSVC
+                        m_currentParagraphStyle.m_parentstyleName = parentStyle->m_parentstyleName;
+#else
                         m_currentParagraphStyle.setParentStyleName(parentStyle->parentStyleName());
+#endif
                     }
                     currentParagraphStyleName = (mainStyles->insert(m_currentParagraphStyle));
                     if (sectionAdded)
@@ -3166,7 +3170,11 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_r()
         const KoGenStyle* parentStyle = mainStyles->style(m_currentTextStyle.parentName(), m_currentTextStyle.familyName());
         if (parentStyle)
         {
+#ifdef MSVC
+            m_currentTextStyle.m_parentstyleName = parentStyle->m_parentstyleName;
+#else
             m_currentTextStyle.setParentStyleName(parentStyle->parentStyleName());
+#endif
         }
         currentTextStyleName = mainStyles->insert(m_currentTextStyle);
     }
