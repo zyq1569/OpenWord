@@ -2576,7 +2576,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
     }
     //else
     //{
-        //debugDocx << "m_currentParagraphStyle stylename:"<<m_currentPageStyle.parentStyleName();
+    //debugDocx << "m_currentParagraphStyle stylename:"<<m_currentPageStyle.parentStyleName();
     //}
 
     // take outline level from style's default-outline-level,
@@ -2605,6 +2605,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
         m_currentParagraphStyle.m_parentstyleName = pstyle->m_parentstyleName;
 #else
         m_currentParagraphStyle.setParentStyleName(pstyle->parentStyleName());
+        QString stylename    = m_currentParagraphStyle.parentStyleName();
 #endif
 
         if (m_currentNumId.isEmpty())
@@ -2832,6 +2833,11 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                 if (m_currentStyleName.isEmpty())
                 {
                     QString currentParagraphStyleName;
+                    const KoGenStyle* parentStyle = mainStyles->style(m_currentParagraphStyle.parentName(), m_currentParagraphStyle.familyName());
+                    if (parentStyle)
+                    {
+                        m_currentParagraphStyle.setParentStyleName(parentStyle->parentStyleName());
+                    }
                     currentParagraphStyleName = (mainStyles->insert(m_currentParagraphStyle));
                     if (sectionAdded)
                     {
@@ -3157,6 +3163,11 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_r()
     QString currentTextStyleName;
     if (!m_currentTextStyle.isEmpty() || !m_currentTextStyle.parentName().isEmpty())
     {
+        const KoGenStyle* parentStyle = mainStyles->style(m_currentTextStyle.parentName(), m_currentTextStyle.familyName());
+        if (parentStyle)
+        {
+            m_currentTextStyle.setParentStyleName(parentStyle->parentStyleName());
+        }
         currentTextStyleName = mainStyles->insert(m_currentTextStyle);
     }
     if (m_complexCharStatus == ExecuteInstrNow || m_complexCharType == InternalHyperlinkComplexFieldCharType)
@@ -4265,12 +4276,17 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_outlineLvl()
             if (m_currentParagraphStyle.parentStyleName().contains("Title") || outlineLevelValue == 9)///openword
 #endif
             {
-                m_currentParagraphStyle.addAttribute("style:default-outline-level", "");
+                //m_currentParagraphStyle.addAttribute("style:default-outline-level", "");
+                if (outlineLevelValue != 9)
+                {
+                    m_currentParagraphStyle.addAttribute("style:display-name", "Document Title");
+                }
             }
             else
             {
                 //const QString odfOutlineLevelValue = QString::number(outlineLevelValue + 1);
                 m_currentParagraphStyle.addAttribute("style:default-outline-level", QString::number(outlineLevelValue + 1));
+                m_currentParagraphStyle.addAttribute("style:display-name", "Head " + QString::number(outlineLevelValue + 1));
             }
         }
     }
