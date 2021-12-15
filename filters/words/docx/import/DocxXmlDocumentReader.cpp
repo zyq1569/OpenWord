@@ -4287,14 +4287,14 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_outlineLvl()
                 //m_currentParagraphStyle.addAttribute("style:default-outline-level", "");
                 if (outlineLevelValue != 9)
                 {
-                    m_currentParagraphStyle.addAttribute("style:display-name", "Document Title");
+                    m_currentParagraphStyle.addAttribute("style:display-name", "Document Title");//replace @ void KoGenStyle::writeStyle(
                 }
             }
             else
             {
                 //const QString odfOutlineLevelValue = QString::number(outlineLevelValue + 1);
                 m_currentParagraphStyle.addAttribute("style:default-outline-level", QString::number(outlineLevelValue + 1));
-                m_currentParagraphStyle.addAttribute("style:display-name", "Head " + QString::number(outlineLevelValue + 1));
+                m_currentParagraphStyle.addAttribute("style:display-name", "Head " + QString::number(outlineLevelValue + 1));//replace @ void KoGenStyle::writeStyle(
             }
         }
     }

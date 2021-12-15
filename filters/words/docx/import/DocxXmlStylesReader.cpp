@@ -768,22 +768,18 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_name()
     //debugDocx << "read_name m_name:" << m_name;
     //openword 20210924目前没有使用??????如何转为ODT格式中
     //m_name.replace(QLatin1Char(' '), QLatin1Char('_'));
-    //if (m_name.startsWith(QLatin1String("Title")))
-    //{
-    //    m_name = m_name.replace("heading","Document_20Title");
-    //}
-    //else if (m_name.startsWith(QLatin1String("heading 1")))
-    //{
-    //    m_name = m_name.replace("heading 1","Head_201");
-    //}
-    //else if (m_name.startsWith(QLatin1String("heading 2")))
-    //{
-    //    m_name = m_name.replace("heading 2","Head_202");
-    //}
-    //else if (m_name.startsWith(QLatin1String("Normal")))
-    //{
-    //    m_name = m_name.replace("Normal","Standard");
-    //}
+    if (m_name.startsWith(QLatin1String("Title")))
+    {
+        m_name = "Document Title";
+    }
+    else if (m_name.startsWith(QLatin1String("heading")))
+    {
+        m_name = m_name.replace("heading","Head");
+    }
+    else if (m_name.startsWith(QLatin1String("Normal")))
+    {
+        m_name = "Standard";
+    }
     //m_currentStyleName = m_name;
     readNext();
     READ_EPILOGUE
