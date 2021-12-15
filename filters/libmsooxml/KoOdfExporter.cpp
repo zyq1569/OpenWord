@@ -166,8 +166,9 @@ KoFilter::ConversionStatus KoOdfExporter::convert(const QByteArray& from, const 
 
     //create the manifest file
     KoXmlWriter* realManifestWriter = oasisStore.manifestWriter(to);
-    //create the styles.xml file
+    //-----------create the styles.xml file------------------------
     mainStyles.saveOdfStylesDotXml(outputStore, realManifestWriter);
+    //--------------------------------------------------------------
     realManifestWriter->addManifestEntry("content.xml", "text/xml");
     realManifestWriter->addCompleteElement(&manifestBuf);
 

@@ -69,7 +69,7 @@ KoFilter::ConversionStatus OpcContentTypes::writeToStore(KoStore *opcStore)
     KoStoreDevice metaDevice(opcStore);
     KoXmlWriter writer(&metaDevice);
 
-    writer.startDocument(0, 0, 0, true);
+    writer.startDocument(0, 0, 0/*, true*/);
     writer.startElement("Types");
     writer.addAttribute("xmlns", "http://schemas.openxmlformats.org/package/2006/content-types");
 
@@ -161,7 +161,7 @@ KoFilter::ConversionStatus DocPropsFiles::writeToStore(KoStore *docPropsFiles)
     KoStoreDevice metaDevice(docPropsFiles);
     KoXmlWriter writer(&metaDevice);
 
-    writer.startDocument(0, 0, 0, true);
+    writer.startDocument(0, 0, 0/*, true*/);
     char *startElement;
     if (m_filename.contains("app.xml"))
     {

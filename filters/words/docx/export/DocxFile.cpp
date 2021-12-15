@@ -199,7 +199,7 @@ KoFilter::ConversionStatus DocxFile::writeDocumentRels(KoStore *docxStore)
     KoStoreDevice metaDevice(docxStore);
     KoXmlWriter writer(&metaDevice);
 
-    writer.startDocument(0, 0, 0, true);
+    writer.startDocument(0, 0, 0/*, true*/);
     writer.startElement("Relationships");
     writer.addAttribute("xmlns", "http://schemas.openxmlformats.org/package/2006/relationships");
 
