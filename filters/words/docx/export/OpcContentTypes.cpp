@@ -162,11 +162,10 @@ KoFilter::ConversionStatus DocPropsFiles::writeToStore(KoStore *docPropsFiles)
     KoXmlWriter writer(&metaDevice);
 
     writer.startDocument(0, 0, 0/*, true*/);
-    char *startElement;
+
     if (m_filename.contains("app.xml"))
     {
-        startElement = "Properties";
-        writer.startElement(startElement);
+        writer.startElement("Properties");
         writer.addAttribute("xmlns",    "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties");
         writer.addAttribute("xmlns:vt", "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes");
 
@@ -243,10 +242,7 @@ KoFilter::ConversionStatus DocPropsFiles::writeToStore(KoStore *docPropsFiles)
     }
     else if (m_filename.contains("core.xml"))
     {
-
-        startElement = "cp:coreProperties";
-
-        writer.startElement(startElement);
+        writer.startElement("cp:coreProperties");
         writer.addAttribute("xmlns:cp", "http://schemas.openxmlformats.org/package/2006/metadata/core-properties");
         writer.addAttribute("xmlns:dc", "http://purl.org/dc/elements/1.1/");
         writer.addAttribute("xmlns:dcterms", "hthttp://purl.org/dc/terms/");
@@ -284,8 +280,7 @@ KoFilter::ConversionStatus DocPropsFiles::writeToStore(KoStore *docPropsFiles)
     }
     else if (m_filename.contains("custom.xml"))
     {
-        startElement = "Properties";
-        writer.startElement(startElement);
+        writer.startElement("Properties");
         writer.addAttribute("xmlns", "http://schemas.openxmlformats.org/officeDocument/2006/custom-properties");
         writer.addAttribute("xmlns:vt", "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes");
 
