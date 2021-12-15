@@ -241,6 +241,11 @@ void KoGenStyle::writeStyle(KoXmlWriter* writer, const KoGenStyles& styles, cons
         Q_ASSERT(qstrcmp(elementName, "style:default-style") == 0);
         Q_ASSERT(m_parentName.isEmpty());
     }
+
+    if (!m_parentstyleName.isEmpty())//add openword 20211215
+    {
+        const_cast<KoGenStyle *>(this)->addAttribute("style:display-name", m_parentstyleName);
+    }
     if (!m_familyName.isEmpty())
     {
         const_cast<KoGenStyle *>(this)->addAttribute("style:family", QString::fromLatin1(m_familyName));
