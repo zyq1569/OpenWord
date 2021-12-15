@@ -67,7 +67,8 @@ public:
 
     bool operator==(const KoFontFace &other) const;
 
-    enum Pitch {
+    enum Pitch
+    {
         FixedPitch,
         VariablePitch
     };
