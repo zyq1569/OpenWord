@@ -53,7 +53,7 @@ public:
      * @param publicId the public identifier, e.g. "-//OpenOffice.org//DTD OfficeDocument 1.0//EN"
      * @param systemId the system identifier, e.g. "office.dtd" or a full URL to it.
      */
-    void startDocument(const char* rootElemName, const char* publicId = 0, const char* systemId = 0, bool standalone = false);
+    void startDocument(const char* rootElemName, const char* publicId = 0, const char* systemId = 0/*, bool standalone = false*/);
 
     /// Call this to terminate an XML document.
     void endDocument();

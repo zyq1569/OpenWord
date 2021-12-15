@@ -72,18 +72,18 @@ KoXmlWriter::~KoXmlWriter()
     delete d;
 }
 
-void KoXmlWriter::startDocument(const char* rootElemName, const char* publicId, const char* systemId, bool standalone)
+void KoXmlWriter::startDocument(const char* rootElemName, const char* publicId, const char* systemId/*, bool standalone*/)
 {
     Q_ASSERT(d->tags.isEmpty());
     ///----> <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-    if (standalone)
-    {
-        writeCString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
-    }
-    else
-    {
-        writeCString("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-    }
+    //if (standalone)
+    //{
+    writeCString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
+    //}
+    //else
+    //{
+    //    writeCString("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+    //}
     // There isn't much point in a doctype if there's no DTD to refer to
     // (I'm told that files that are validated by a RelaxNG schema cannot refer to the schema)
     if (publicId)
