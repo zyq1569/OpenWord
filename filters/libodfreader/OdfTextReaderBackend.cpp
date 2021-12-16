@@ -35,13 +35,13 @@
 
 class Q_DECL_HIDDEN OdfTextReaderBackend::Private
 {
- public:
+public:
     Private();
     ~Private();
 
     bool dummy;                 // We don't have any actual content in
-                                // this class yet but it's still
-                                // needed for forward binary compatibility.
+    // this class yet but it's still
+    // needed for forward binary compatibility.
 };
 
 OdfTextReaderBackend::Private::Private()
