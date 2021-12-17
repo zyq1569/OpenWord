@@ -2824,6 +2824,14 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                     {
                         body->addAttribute("text:display-levels", 1);
                     }
+#ifdef MSVC
+                    else if (m_currentBulletProperties.m_multiLevelType == "multilevel")
+#else
+                    else if (m_currentBulletProperties.multiLevelType() ==  "multilevel")
+#endif
+                    {
+                        body->addAttribute("text:display-levels", outlineLevel);
+                    }
                 }
                 else
                 {
