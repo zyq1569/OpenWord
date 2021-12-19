@@ -3821,7 +3821,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_numId()
             m_currentBulletList = m_context->m_bulletStyles[val];
             m_currentNumId = val;
             // add "style:default-numId". 加载document.xml可以读取 //也可能该值存放在styles.xml中
-            // m_currentParagraphStyle.addAttribute("style:default-numId",val);//
+            m_currentParagraphStyle.addAttribute("style:default-numId",val);//
 
         }
     }
