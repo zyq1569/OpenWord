@@ -2830,6 +2830,8 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                     else if (m_currentBulletProperties.multiLevelType() ==  "multilevel")
 #endif
                     {
+                        ///设置段落前序号显示几个级别(eg.方式1.{ 一、1.   2.  3.  二、1.   2.  3.  }  方式2. {1、  1.1.  1.2.  1.3  1.4   2、  2.1  2.2  2.3  })
+                        /// 方式1 始终只显示一个级别， 方式而 显示两个级别
                         body->addAttribute("text:display-levels", outlineLevel);
                     }
                 }
