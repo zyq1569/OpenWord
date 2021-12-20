@@ -772,6 +772,7 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
         if (d->currentListStyle->hasLevelProperties(level))
         {
             KoListLevelProperties llp = d->currentListStyle->levelProperties(level);
+            llp.setDisplayLevel(display_levels.toUInt());
             outlineStyle->setLevelProperties(llp);
             //DEBUG_LOG("----loadHeading:" + llp.listItemPrefix() + "|" + llp.listItemSuffix() + "|level:" + QString::number( llp.level() ) );
         }
