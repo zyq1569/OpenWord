@@ -763,6 +763,7 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
                 llp = d->currentListStyle->levelProperties(level);
             }
             llp.setLevel(level);
+            llp.setDisplayLevel(display_levels.toUInt());
             outlineStyle->setLevelProperties(llp);
         }
     }
