@@ -31,16 +31,20 @@ public:
     ~KoDirectoryStore() override;
 protected:
     void init();
-    bool openWrite(const QString &name) override {
+    bool openWrite(const QString &name) override
+    {
         return openReadOrWrite(name, QIODevice::WriteOnly);
     }
-    bool openRead(const QString &name) override {
+    bool openRead(const QString &name) override
+    {
         return openReadOrWrite(name, QIODevice::ReadOnly);
     }
-    bool closeRead() override {
+    bool closeRead() override
+    {
         return true;
     }
-    bool closeWrite() override {
+    bool closeWrite() override
+    {
         return true;
     }
     bool enterRelativeDirectory(const QString &dirName) override;

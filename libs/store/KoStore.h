@@ -320,7 +320,8 @@ protected:
      * Finalize store - called by finalize.
      * @return true on success
      */
-    virtual bool doFinalize() {
+    virtual bool doFinalize()
+    {
         return true;
     }
 

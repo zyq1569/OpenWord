@@ -47,16 +47,20 @@ void KoDirectoryStore::init()
     Q_D(KoStore);
 
     if (!m_basePath.endsWith('/'))
+    {
         m_basePath += '/';
+    }
     m_currentPath = m_basePath;
 
     QDir dir(m_basePath);
-    if (dir.exists()) {
+    if (dir.exists())
+    {
         d->good = true;
         return;
     }
     // Dir doesn't exist. If reading -> error. If writing -> create.
-    if (d->mode == Write && dir.mkpath(m_basePath)) {
+    if (d->mode == Write && dir.mkpath(m_basePath))
+    {
         debugStore << "KoDirectoryStore::init Directory created:" << m_basePath;
         d->good = true;
     }
@@ -67,23 +71,29 @@ bool KoDirectoryStore::openReadOrWrite(const QString& name, QIODevice::OpenModeF
     Q_D(KoStore);
     //debugStore <<"KoDirectoryStore::openReadOrWrite m_currentPath=" << m_currentPath <<" name=" << name;
     int pos = name.lastIndexOf('/');
-    if (pos != -1) { // there are subdirs in the name -> maybe need to create them, when writing
+    if (pos != -1)   // there are subdirs in the name -> maybe need to create them, when writing
+    {
         pushDirectory(); // remember where we were
         enterAbsoluteDirectory(QString());
         //debugStore <<"KoDirectoryStore::openReadOrWrite entering" << name.left(pos);
         bool ret = enterDirectory(name.left(pos));
         popDirectory();
         if (!ret)
+        {
             return false;
+        }
     }
     d->stream = new QFile(m_basePath + name);
-    if (!d->stream->open(iomode)) {
+    if (!d->stream->open(iomode))
+    {
         delete d->stream;
         d->stream = 0;
         return false;
     }
     if (iomode == QIODevice::ReadOnly)
+    {
         d->size = d->stream->size();
+    }
     return true;
 }
 
@@ -92,13 +102,18 @@ bool KoDirectoryStore::enterRelativeDirectory(const QString& dirName)
     QDir origDir(m_currentPath);
     m_currentPath += dirName;
     if (!m_currentPath.endsWith('/'))
+    {
         m_currentPath += '/';
+    }
     //debugStore <<"KoDirectoryStore::enterRelativeDirectory m_currentPath now" << m_currentPath;
     QDir newDir(m_currentPath);
     if (newDir.exists())
+    {
         return true;
+    }
     // Dir doesn't exist. If reading -> error. If writing -> create.
-    if (mode() == Write && origDir.mkdir(dirName)) {
+    if (mode() == Write && origDir.mkdir(dirName))
+    {
         debugStore << "Created" << dirName << " under" << origDir.absolutePath();
         return true;
     }
