@@ -43,6 +43,7 @@ INCLUDEPATH +=  ../../../../filters/words/docx/export \
                 ../../../../filters/libodf2 \
                 ../../../../filters/libodf2/chart \
                 ../../../../filters/libodfreader \
+                 ../../../../filters/libmsooxml \
                 ../../../../filters/libodf2
 
 LIBS     +=     -L$${LIBDIR} \

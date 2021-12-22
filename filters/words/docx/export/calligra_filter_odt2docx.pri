@@ -6,6 +6,7 @@ HEADERS +=  DocxExportDebug.h \
             OdfReaderDocxContext.h \
             OdtReaderDocxBackend.h \
             OdfTextReaderDocxBackend.h \
+            odfdrawreaderdocxbackend.h \
             FileCollector.h \
             DocxFile.h \
             UnitConversions.h \
@@ -19,6 +20,7 @@ SOURCES +=  DocxExportDebug.cpp \
             DocxStyleHelper.cpp \
             OdfReaderDocxContext.cpp \
             OdtReaderDocxBackend.cpp \
+            odfdrawreaderdocxbackend.cpp \
             OdfTextReaderDocxBackend.cpp \
             FileCollector.cpp \
             DocxFile.cpp \
