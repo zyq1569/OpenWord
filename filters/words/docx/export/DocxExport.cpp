@@ -42,7 +42,13 @@
 #include "DocxStyleWriter.h"
 #include "OdfReaderDocxContext.h"
 #include "OdtReaderDocxBackend.h"
+///
+#include "odfdrawreaderdocxbackend.h"
+#include "OdfReaderContext.h"
+///
 #include "OdfTextReaderDocxBackend.h"
+#include "OdfDrawReader.h"
+
 #include "DocxExportDebug.h"
 
 ///openword
@@ -103,11 +109,19 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
     OdtReaderDocxBackend      docxBackend;
     OdfTextReaderDocxBackend  docxTextBackend;
 
+    /// OdfDrawReader
+    OdfDrawReader            odfDrawReader;
+    OdfDrawReaderDocxBackend  OdfDrawDocxbackend;
+
     // The readers
     OdtReader                 odtReader;
     OdfTextReader             odfTextReader;
+
     odfTextReader.setBackend(&docxTextBackend);
     odtReader.setTextReader(&odfTextReader);
+
+    odfDrawReader.setBackend(&OdfDrawDocxbackend);
+    odtReader.setDrawReader(&odfDrawReader);
 
     if (!odtReader.analyzeContent(&docxBackendContext))
     {
@@ -185,6 +199,8 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
     //                        "application/vnd.openxmlformats-officedocument.custom-properties+xml",
     //                        docxBackendContext.documentContent());
 
+    //OdfDrawDocxbackend.addImageInfo("Pictures/image1.png","word/media/image1.png");
+    docxFile.setOdfDrawReaderBackend(&OdfDrawDocxbackend);
     // Write the output file.
-    return docxFile.writeDocx(m_chain->outputFile(), to, docxBackendContext, commentsExist);
+    return docxFile.writeDocx(m_chain->inputFile(), m_chain->outputFile(), to, docxBackendContext, commentsExist);
 }
