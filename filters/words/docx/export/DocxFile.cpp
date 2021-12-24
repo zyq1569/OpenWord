@@ -28,6 +28,10 @@
 #include <QByteArray>
 #include <QList>
 
+///
+#include <kzip.h>
+
+
 // Calligra
 #include <KoXmlWriter.h>
 #include <KoStore.h>
@@ -38,12 +42,20 @@
 #include "OdfReaderDocxContext.h"
 #include "DocxExportDebug.h"
 
-
+///
+#include "odfdrawreaderdocxbackend.h"
+///
+///
+#include "MsooXmlUtils.h"
+///
+///
+using namespace MSOOXML;
 // ================================================================
 //                         class DocxFile
 
 DocxFile::DocxFile()
 {
+    drawReaderBackend = NULL;
 }
 
 DocxFile::~DocxFile()
@@ -51,7 +63,7 @@ DocxFile::~DocxFile()
 }
 
 // todo: commentsexist should be probably replaced with qlist qpair later
-KoFilter::ConversionStatus DocxFile::writeDocx(const QString &fileName,
+KoFilter::ConversionStatus DocxFile::writeDocx(const QString &inputFile, const QString &outputFile,
         const QByteArray &appIdentification,
         const OdfReaderDocxContext &context,
         bool  commentsExist)
@@ -61,7 +73,7 @@ KoFilter::ConversionStatus DocxFile::writeDocx(const QString &fileName,
     m_commentsExist = commentsExist;
     // Create the store and check if everything went well.
     // FIXME: Should docxStore be deleted from a finalizer?
-    KoStore *docxStore = KoStore::createStore(fileName, KoStore::Write,
+    KoStore *docxStore = KoStore::createStore(outputFile, KoStore::Write,
                          appIdentification, KoStore::Auto, false);
     if (!docxStore || docxStore->bad())
     {
@@ -114,16 +126,74 @@ KoFilter::ConversionStatus DocxFile::writeDocx(const QString &fileName,
     DocPropsFiles coreDocPropsFiles("docProps/core.xml");
     coreDocPropsFiles.writeToStore(docxStore);
 
+    ///-------------copy image files------------------------------------------------------------
+    KZip* kzip = NULL;
+    if (drawReaderBackend)
+    {
+        if (drawReaderBackend->getImageInfo().size() > 0)
+        {
+            kzip = new KZip(inputFile);
+            if (!kzip)
+            {
+                warnDocx << "Failed to new  KZip for:" << inputFile;
+                return KoFilter::UsageError;
+            }
+            bool flag = kzip->open(QIODevice::ReadOnly);
+            if (!flag)
+            {
+                warnDocx << "Failed to open  File:" << inputFile;
+                return KoFilter::UsageError;
+            }
+            QHash<QString, QString>::const_iterator image = drawReaderBackend->getImageInfo().constBegin();
+            while (image != drawReaderBackend->getImageInfo().constEnd())
+            {
+                QString errorMessage;
+                bool oleFile = false;
+                KoFilter::ConversionStatus status =  copyFile( kzip, errorMessage, image.key(), docxStore, image.value(), oleFile);
+                if(status != KoFilter::OK)
+                {
+                    warnDocx << "Failed to copy image Files:" << errorMessage;
+                }
+                ++image;
+            }
+        }
+    }
+    ///
+
     //custom.xml  ???to do ..具体含义待确定
     //DocPropsFiles customDocPropsFiles("docProps/custom.xml");
     //customDocPropsFiles.writeToStore(docxStore);
 
+    if (kzip)
+    {
+        kzip->close();
+        delete  kzip;
+    }
     delete docxStore;
     return status;
 }
 
+void DocxFile::setOdfDrawReaderBackend(OdfDrawReaderBackend *odfRrawReaderBackend)
+{
+    drawReaderBackend = odfRrawReaderBackend;
+}
 
 
+KoFilter::ConversionStatus DocxFile::copyFile(const KZip* zip, QString& errorMessage, const QString& sourceName,
+        KoStore *outputStore, const QString& destinationName, bool oleType)
+{
+    if (outputStore->hasFile(destinationName))
+    {
+        return KoFilter::OK;
+    }
+    const KoFilter::ConversionStatus status = Utils::copyFile( zip, errorMessage, sourceName, outputStore, destinationName, oleType);
+    //! @todo transmit the error to the GUI...
+    if(status != KoFilter::OK)
+    {
+        warnDocx << "Failed to copyFile:" << errorMessage;
+    }
+    return  status;
+}
 
 // ----------------------------------------------------------------
 //                         Private functions
@@ -199,7 +269,7 @@ KoFilter::ConversionStatus DocxFile::writeDocumentRels(KoStore *docxStore)
     KoStoreDevice metaDevice(docxStore);
     KoXmlWriter writer(&metaDevice);
 
-    writer.startDocument(0, 0, 0/*, true*/);
+    writer.startDocument(0, 0, 0);
     writer.startElement("Relationships");
     writer.addAttribute("xmlns", "http://schemas.openxmlformats.org/package/2006/relationships");
 
@@ -251,19 +321,21 @@ KoFilter::ConversionStatus DocxFile::writeDocumentRels(KoStore *docxStore)
         writer.endElement();
     }
 
-    if (0 /*image*/)
+    if (drawReaderBackend)
     {
-        writer.startElement("Relationship");
-        writer.addAttribute("Id", "rId7");
-        writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image1");
-        writer.addAttribute("Target", "media/image1.xml");
-        writer.endElement();
-
-        //writer.startElement("Relationship");
-        //writer.addAttribute("Id", "rId7");
-        //writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image1");
-        //writer.addAttribute("Target", "media/image2.xml");
-        //writer.endElement();
+        int size = drawReaderBackend->getImageInfo().size();
+        QString rid;
+        for ( int i = 0; i<size; i++)
+        {
+            rid  = "rId"+QString::number(7+i);
+            writer.startElement("Relationship");
+            writer.addAttribute("Id", rid.toStdString().c_str());
+            writer.addAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image");
+            rid  = "media/image" + QString::number(1+i);
+            rid += ".png";
+            writer.addAttribute("Target", rid/*"media/image1.png"*/);
+            writer.endElement();
+        }
     }
 
     writer.endElement();        // Relationships
