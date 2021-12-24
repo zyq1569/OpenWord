@@ -108,6 +108,9 @@ class KOODFREADER_EXPORT OdfDrawReader
     DECLARE_READER_FUNCTION(DrawObject);
     DECLARE_READER_FUNCTION(DrawObjectOle);
 
+    // Frames:Image
+    DECLARE_READER_FUNCTION(DrawImage);
+
     // ----------------------------------------------------------------
     // Other functions
 
@@ -120,6 +123,7 @@ class KOODFREADER_EXPORT OdfDrawReader
 
     OdfDrawReaderBackend  *m_backend;
     OdfReaderContext      *m_context;
+
 };
 
 #endif // ODFDRAWREADER_H

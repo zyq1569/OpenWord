@@ -450,7 +450,8 @@ void OdfDrawReader::readElementDrawFrame(KoXmlStreamReader &reader)
         if (tagName == "draw:image")
         {
             // FIXME: NYI
-            reader.skipCurrentElement();
+            //reader.skipCurrentElement();
+            readElementDrawImage(reader);
         }
         else if (tagName == "draw:object")
         {
@@ -480,6 +481,13 @@ void OdfDrawReader::readElementDrawFrame(KoXmlStreamReader &reader)
     }
 
     m_backend->elementDrawFrame(reader, m_context);
+    DEBUGEND();
+}
+
+void OdfDrawReader::readElementDrawImage(KoXmlStreamReader &reader)
+{
+    DEBUGSTART();
+
     DEBUGEND();
 }
 
