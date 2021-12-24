@@ -39,6 +39,8 @@ class KoStore;
 class OdtTraverserDocxContext;
 class OdfReaderDocxContext;
 
+class OdfDrawReaderBackend;
+class KZip;
 
 class DocxFile : public FileCollector
 {
@@ -59,10 +61,16 @@ public:
      * addContentFile(), call this function once and it will write the
      * docx to the disk. This function is overloaded.
      */
-    KoFilter::ConversionStatus  writeDocx(const QString &fileName,
+    KoFilter::ConversionStatus  writeDocx(const QString &inputFile, const QString &outputFile,
                                           const QByteArray &appIdentification,
                                           const OdfReaderDocxContext &context,
                                           bool  commentsExist);
+
+public:
+    void setOdfDrawReaderBackend(OdfDrawReaderBackend *odfRrawReaderBackend);
+    KoFilter::ConversionStatus copyFile(const KZip* zip, QString& errorMessage,
+                                              const QString& sourceName, KoStore *outputStore,
+                                              const QString& destinationName, bool oleType=false);
 
 private:
     // Private functions
@@ -72,6 +80,8 @@ private:
 private:
     // data
     bool m_commentsExist;
+private:
+    OdfDrawReaderBackend *drawReaderBackend;
 };
 
 #endif // DOCXFILE_H
