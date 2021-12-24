@@ -94,6 +94,14 @@ class KOODFREADER_EXPORT OdfDrawReaderBackend
     DECLARE_BACKEND_FUNCTION(DrawObject);
     DECLARE_BACKEND_FUNCTION(DrawObjectOle);
 
+    // Image
+    DECLARE_BACKEND_FUNCTION(DrawFrameImage);
+
+    ///openword 20211223 add:
+public:
+    void  addImageInfo(QString imageSource, QString imageDestination);
+    QHash<QString,QString> getImageInfo();
+
  private:
     class Private;
     Private * const d;
