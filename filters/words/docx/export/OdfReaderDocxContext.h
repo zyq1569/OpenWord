@@ -62,6 +62,8 @@ private:
     // Exception: see getter above.
     friend class OdtReaderDocxBackend;
     friend class OdfTextReaderDocxBackend;
+    //openword add:20211220
+    friend class OdfDrawReaderDocxBackend;
 
     DocxFile    *m_docxFile;        //!< Collect embedded files here
     QByteArray   m_documentContent; //!< m_documentWriter writes here;
