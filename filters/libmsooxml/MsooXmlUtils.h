@@ -307,7 +307,8 @@ KOMSOOXML_EXPORT KoFilter::ConversionStatus loadAndParseDocument(MsooXmlReader* 
  under @a destinationName name. If @a size is not 0, *size is set to size of the image
  @return KoFilter::OK on success.
  On failure @a errorMessage is set. */
-KoFilter::ConversionStatus copyFile(const KZip* zip, QString& errorMessage,
+///openword add KOMSOOXML_EXPORT:for  DocxFile  【copy image files】
+KOMSOOXML_EXPORT KoFilter::ConversionStatus copyFile(const KZip* zip, QString& errorMessage,
                                     const QString& sourceName, KoStore *outputStore,
                                     const QString& destinationName, bool oleType=false);
 
