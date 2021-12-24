@@ -75,6 +75,7 @@ OdfReader::OdfReader()
     , m_textReader(0)
     , m_drawReader(0)
 {
+
 }
 
 OdfReader::~OdfReader()
@@ -131,6 +132,10 @@ bool OdfReader::readContent(OdfReaderBackend *backend, OdfReaderContext *context
     if (m_textReader)
     {
         m_textReader->setContext(context);
+    }
+    if (m_drawReader)
+    {
+        m_drawReader->setContext(context);
     }
 
     // ----------------------------------------------------------------
