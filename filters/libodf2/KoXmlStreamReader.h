@@ -105,6 +105,10 @@ public:
     void setDevice(QIODevice *device);
     KoXmlStreamAttributes attributes() const;
 
+    //20211222 openword temp add:
+    void setcurrentTextStylename(QString name);
+    QString getcurrentTextStylename();
+
 private:
     // No copying
     KoXmlStreamReader(const KoXmlStreamReader &other);
