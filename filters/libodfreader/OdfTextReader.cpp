@@ -265,6 +265,11 @@ void OdfTextReader::readElementTextH(KoXmlStreamReader &reader)
 void OdfTextReader::readElementTextP(KoXmlStreamReader &reader)
 {
     DEBUGSTART();
+    QString text_style_name = reader.attributes().value("text:style-name").toString();
+    if (text_style_name.length() > 0)
+    {
+        reader.setcurrentTextStylename(text_style_name);
+    }
     m_backend->elementTextP(reader, m_context);
 
     // The function readParagraphContents() expects to have the reader
