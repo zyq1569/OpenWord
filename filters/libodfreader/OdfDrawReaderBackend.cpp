@@ -42,6 +42,10 @@ class OdfDrawReaderBackend::Private
     bool dummy;                 // We don't have any actual content in
                                 // this class yet but it's still
                                 // needed for forward binary compatibility.
+
+    //openword add :imagelist
+    ///目前没有细考虑 最容易理解方式逻辑
+    QHash<QString, QString> medias; //imageSource,imageDestination
 };
 
 OdfDrawReaderBackend::Private::Private()
@@ -50,6 +54,7 @@ OdfDrawReaderBackend::Private::Private()
 
 OdfDrawReaderBackend::Private::~Private()
 {
+    medias.clear();
 }
 
 
@@ -60,6 +65,7 @@ OdfDrawReaderBackend::Private::~Private()
 OdfDrawReaderBackend::OdfDrawReaderBackend()
     : d(new OdfDrawReaderBackend::Private)
 {
+
 }
 
 OdfDrawReaderBackend::~OdfDrawReaderBackend()
@@ -67,6 +73,15 @@ OdfDrawReaderBackend::~OdfDrawReaderBackend()
     delete d;
 }
 
+void  OdfDrawReaderBackend::addImageInfo(QString imageSource, QString imageDestination)
+{
+    d->medias.insert(imageSource,imageDestination);
+}
+
+QHash<QString,QString> OdfDrawReaderBackend::getImageInfo()
+{
+    return d->medias;
+}
 
 // ----------------------------------------------------------------
 //                         Dr3d functions
@@ -106,3 +121,8 @@ IMPLEMENT_BACKEND_FUNCTION(OdfDrawReader, DrawMeasure);         // ODF 1.2  10.3
 IMPLEMENT_BACKEND_FUNCTION(OdfDrawReader, DrawFrame)
 IMPLEMENT_BACKEND_FUNCTION(OdfDrawReader, DrawObject)
 IMPLEMENT_BACKEND_FUNCTION(OdfDrawReader, DrawObjectOle)
+
+
+// ----------------------------------------------------------------
+//                             FrameImage)
+IMPLEMENT_BACKEND_FUNCTION(OdfDrawReader, DrawFrameImage)
