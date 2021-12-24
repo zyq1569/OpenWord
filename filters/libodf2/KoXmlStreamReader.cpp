@@ -73,6 +73,9 @@ public:
     // cache of all constructed qualified names that we ever generate.
     QSet<QString>  prefixCache;
     QSet<QString>  qualifiedNamesCache;
+
+    ///openword add temp:
+    QString currentTextStylename;
 };
 
 
@@ -408,6 +411,15 @@ KoXmlStreamAttributes KoXmlStreamReader::attributes() const
     return retval;
 }
 
+
+void KoXmlStreamReader::setcurrentTextStylename(QString name)
+{
+    d->currentTextStylename = name;
+}
+QString KoXmlStreamReader::getcurrentTextStylename()
+{
+    return  d->currentTextStylename;
+}
 
 // ----------------------------------------------------------------
 //                         private functions
