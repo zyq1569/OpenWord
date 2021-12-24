@@ -59,6 +59,7 @@ LIBS     +=     -L$${LIBDIR} \
                 -lpigmentcms \
                 -lkowidgetutils \
                 -lkundo2 \
+                -lkomsooxml \
                 -lkoversion
 
 include(../../../../calligra.pri)
