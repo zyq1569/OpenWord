@@ -96,6 +96,7 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
             QString xlink_href      = attributes.value("xlink:href").toString();
             QString destinationName = xlink_href.mid(xlink_href.lastIndexOf('/') + 1);
             destinationName         = "word/media/" + destinationName;
+            //eg: addImageInfo("Pictures/image1.png","word/media/image1.png")
             addImageInfo(xlink_href, destinationName);
         }
 
@@ -152,7 +153,7 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
         //end  wp:cNvGraphicFramePr
 
         //start wp:graphic
-        writer->startElement("wp:graphic");
+        writer->startElement("a:graphic");
         writer->addAttribute("xmlns:a", "http://schemas.openxmlformats.org/drawingml/2006/main");
 
         //start wp:graphicData
@@ -196,12 +197,12 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
         writer->endElement();
         writer->startElement("a:ext");
         writer->addAttribute("cx","4299209");
-        writer->addAttribute("cy","1913129");;
+        writer->addAttribute("cy","1913129");
         writer->endElement();
         writer->endElement();
         //a:xfrm
         //a:prstGeom
-        writer->startElement("a:prstGeom");
+        writer->startElement("a:prstGeom"); writer->addAttribute("prst","rect");
         writer->startElement("a:avLst");
         writer->endElement();
         writer->endElement();
@@ -234,7 +235,7 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
 
         writer->endElement();//("w:p");
     }
-    elementDrawFrameImage(reader, context);
+    //elementDrawFrameImage(reader, context);
 }
 
 void OdfDrawReaderDocxBackend::elementDrawFrameImage(KoXmlStreamReader &reader, OdfReaderContext *context)
