@@ -199,7 +199,6 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
     //                        "application/vnd.openxmlformats-officedocument.custom-properties+xml",
     //                        docxBackendContext.documentContent());
 
-    //OdfDrawDocxbackend.addImageInfo("Pictures/image1.png","word/media/image1.png");
     docxFile.setOdfDrawReaderBackend(&OdfDrawDocxbackend);
     // Write the output file.
     return docxFile.writeDocx(m_chain->inputFile(), m_chain->outputFile(), to, docxBackendContext, commentsExist);
