@@ -173,7 +173,16 @@ void OdfTextReaderDocxBackend::elementTextP(KoXmlStreamReader &reader, OdfReader
             if (!m_currentParagraphParent.isEmpty())
             {
                 writer->startElement("w:pStyle");
-                writer->addAttribute("w:val", m_currentParagraphParent);
+                if (m_currentParagraphParent.contains("_20"))
+                {
+                    QString stylenamenew = m_currentParagraphParent;
+                    stylenamenew.replace(QLatin1String("_20"), QLatin1String(""));
+                    writer->addAttribute("w:val", stylenamenew);
+                }
+                else
+                {
+                    writer->addAttribute("w:val", m_currentParagraphParent);
+                }
                 writer->endElement(); // w:pStyle
             }
             DocxStyleHelper::handleParagraphStyles(parProperties, writer);
