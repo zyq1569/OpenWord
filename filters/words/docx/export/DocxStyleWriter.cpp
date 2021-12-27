@@ -161,7 +161,7 @@ void DocxStyleWriter::read()
         {
             m_documentWriter->startElement("w:style");
             m_documentWriter->addAttribute("w:type", "character");
-            //openword : addd 20211227
+            //openword : addd 20211227s
             if (style->name().contains("_20"))
             {
                 QString stylenamenew = style->name();
