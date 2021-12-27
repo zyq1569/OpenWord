@@ -112,7 +112,18 @@ void DocxStyleWriter::read()
         {
             m_documentWriter->startElement("w:style");
             m_documentWriter->addAttribute("w:type", "paragraph");
-            m_documentWriter->addAttribute("w:styleId", style->name());
+            //openword : addd 20211227
+            if (style->name().contains("_20"))
+            {
+                QString stylenamenew = style->name();
+                stylenamenew.replace(QLatin1String("_20"), QLatin1String(""));
+                m_documentWriter->addAttribute("w:styleId", stylenamenew);
+            }
+            else
+            {
+                m_documentWriter->addAttribute("w:styleId", style->name());
+            }
+
             m_documentWriter->startElement("w:name");
             QString displayName = style->displayName();
             if (displayName.isEmpty())
@@ -150,7 +161,17 @@ void DocxStyleWriter::read()
         {
             m_documentWriter->startElement("w:style");
             m_documentWriter->addAttribute("w:type", "character");
-            m_documentWriter->addAttribute("w:styleId", style->name());
+            //openword : addd 20211227
+            if (style->name().contains("_20"))
+            {
+                QString stylenamenew = style->name();
+                stylenamenew.replace(QLatin1String("_20"), QLatin1String(""));
+                m_documentWriter->addAttribute("w:styleId", stylenamenew);
+            }
+            else
+            {
+                m_documentWriter->addAttribute("w:styleId", style->name());
+            }
             m_documentWriter->startElement("w:name");
             QString displayName = style->displayName();
             if (displayName.isEmpty())
