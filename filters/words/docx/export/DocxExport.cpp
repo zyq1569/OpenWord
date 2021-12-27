@@ -167,33 +167,33 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
                             docxBackendContext.documentContent());
 
     //add openword
-    docxFile.addContentFile("", "/docProps/app.xml",
-                            "application/vnd.openxmlformats-officedocument.extended-properties+xml",
-                            docxBackendContext.documentContent());
+//    docxFile.addContentFile("", "/docProps/app.xml",
+//                            "application/vnd.openxmlformats-officedocument.extended-properties+xml",
+//                            docxBackendContext.documentContent());
 
-    docxFile.addContentFile("", "/docProps/core.xml",
-                            "application/vnd.openxmlformats-package.core-properties+xml",
-                            docxBackendContext.documentContent());
+//    docxFile.addContentFile("", "/docProps/core.xml",
+//                            "application/vnd.openxmlformats-package.core-properties+xml",
+//                            docxBackendContext.documentContent());
 
-    docxFile.addContentFile("", "/word/numbering.xml",
-                            "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml",
-                            docxBackendContext.documentContent());
+//    docxFile.addContentFile("", "/word/numbering.xml",
+//                            "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml",
+//                            docxBackendContext.documentContent());
 
-    docxFile.addContentFile("", "/word/settings.xml",
-                            "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml",
-                            docxBackendContext.documentContent());
+//    docxFile.addContentFile("", "/word/settings.xml",
+//                            "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml",
+//                            docxBackendContext.documentContent());
 
-    docxFile.addContentFile("", "/word/fontTable.xml",
-                            "application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml",
-                            docxBackendContext.documentContent());
+//    docxFile.addContentFile("", "/word/fontTable.xml",
+//                            "application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml",
+//                            docxBackendContext.documentContent());
 
-    docxFile.addContentFile("", "/word/webSettings.xml",
-                            "application/vnd.openxmlformats-officedocument.wordprocessingml.webSettings+xml",
-                            docxBackendContext.documentContent());
+//    docxFile.addContentFile("", "/word/webSettings.xml",
+//                            "application/vnd.openxmlformats-officedocument.wordprocessingml.webSettings+xml",
+//                            docxBackendContext.documentContent());
 
-    docxFile.addContentFile("", "/word/theme/theme1.xml",
-                            "application/vnd.openxmlformats-officedocument.theme+xml",
-                            docxBackendContext.documentContent());
+//    docxFile.addContentFile("", "/word/theme/theme1.xml",
+//                            "application/vnd.openxmlformats-officedocument.theme+xml",
+//                            docxBackendContext.documentContent());
 
     //docxFile.addContentFile("", "/docProps/custom.xml",
     //                        "application/vnd.openxmlformats-officedocument.custom-properties+xml",
