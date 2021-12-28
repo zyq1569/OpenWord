@@ -57,6 +57,30 @@ public:
 
     void characterData(KoXmlStreamReader &reader, OdfReaderContext *context) override;
 
+    ///openword add:
+    //DECLARE_BACKEND_FUNCTION(TableTableColumnGroup);
+    //DECLARE_BACKEND_FUNCTION(TableTableColumn);
+    //DECLARE_BACKEND_FUNCTION(TableTableColumns);
+    //DECLARE_BACKEND_FUNCTION(TableTableHeaderColumns);
+    //DECLARE_BACKEND_FUNCTION(TableTableHeaderRows);
+    //DECLARE_BACKEND_FUNCTION(TableTableRowGroup);
+    //DECLARE_BACKEND_FUNCTION(TableTableRow);
+    //DECLARE_BACKEND_FUNCTION(TableTableRows);
+    //DECLARE_BACKEND_FUNCTION(TableTableCell);
+    //DECLARE_BACKEND_FUNCTION(TableCoveredTableCell);
+    //void elementTableTableColumnGroup(KoXmlStreamReader &reader, OdfReaderContext *context) override;
+    void elementTableTableColumn(KoXmlStreamReader &reader, OdfReaderContext *context) override;
+    void elementTableTableColumns(KoXmlStreamReader &reader, OdfReaderContext *context) override;
+    //void elementTableTableHeaderColumns(KoXmlStreamReader &reader, OdfReaderContext *context) override;
+    //void elementTableTableHeaderRows(KoXmlStreamReader &reader, OdfReaderContext *context) override;
+    //void elementTableTableRowGroup(KoXmlStreamReader &reader, OdfReaderContext *context) override;
+    void elementTableTableRow(KoXmlStreamReader &reader, OdfReaderContext *context) override;
+    //void elementTableTableRows(KoXmlStreamReader &reader, OdfReaderContext *context) override;
+    void elementTableTableCell(KoXmlStreamReader &reader, OdfReaderContext *context) override;
+    //void elementTableCoveredTableCell(KoXmlStreamReader &reader, OdfReaderContext *context) override;
+
+    void elementTableTable(KoXmlStreamReader &reader, OdfReaderContext *context) override;
+
 private:
     void startRun(const KoXmlStreamReader &reader, OdfReaderDocxContext *context);
     void endRun(OdfReaderDocxContext *context);
@@ -69,6 +93,7 @@ private:
     bool m_insideComment;
     bool m_insideDcCreator;
     bool m_insideDcDate;
+    bool m_insidetable;
     KoOdfStyleProperties *m_currentParagraphTextProperties;
     QString m_currentParagraphParent;
 };
