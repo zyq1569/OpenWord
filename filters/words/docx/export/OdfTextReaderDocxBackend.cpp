@@ -621,9 +621,9 @@ void OdfTextReaderDocxBackend::startRun(const KoXmlStreamReader &reader, OdfRead
         writer->addAttribute("w:id", m_commentIndex);
         writer->endElement(); // w:commentRangeStart
     }
+    writer->startElement("w:r");
     if (!m_insidetable)
     {
-        writer->startElement("w:r");
         writer->startElement("w:rPr");
     }
     KoXmlStreamAttributes attributes = reader.attributes();
@@ -669,10 +669,8 @@ void OdfTextReaderDocxBackend::endRun(OdfReaderDocxContext *docxContext)
     {
         writer = docxContext->m_commentsWriter;
     }
-    if (!m_insidetable)
-    {
-        writer->endElement(); // w:r
-    }
+
+    writer->endElement(); // w:r
     if (m_writeComment && !m_insideComment && !m_insidetable)
     {
         writer->startElement("w:commentRangeEnd");
