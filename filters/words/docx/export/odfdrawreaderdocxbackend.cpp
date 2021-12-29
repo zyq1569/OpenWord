@@ -59,10 +59,10 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
         KoXmlStreamAttributes attributes = reader.attributes();
 
         writer->startElement("w:p");
-        writer->addAttribute("w14:paraId", "5ec3232323");
-        writer->addAttribute("w14:textId", "77777777");
-        writer->addAttribute("w14:rsidR", "000B243E");
-        writer->addAttribute("w:rsidRDefault", "00A21553");
+        //writer->addAttribute("w14:paraId", "5ec3232323");
+        //writer->addAttribute("w14:textId", "77777777");
+        //writer->addAttribute("w14:rsidR", "000B243E");
+        //writer->addAttribute("w:rsidRDefault", "00A21553");
 
         writer->startElement("w:pPr");  //<w:pStyle w:val="Standard"/>   //writer->addAttribute("w:pStyle","Standard");
         QString textStyleName = reader.getcurrentTextStylename();
