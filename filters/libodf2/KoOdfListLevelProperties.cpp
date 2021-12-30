@@ -39,7 +39,7 @@ class Q_DECL_HIDDEN KoOdfListLevelProperties::Private
 {
 public:
     Private()
-        :hasLabelAlignment(false){};
+        :hasLabelAlignment(false) {};
     ~Private() {};
 
     bool hasLabelAlignment;
@@ -75,23 +75,27 @@ bool KoOdfListLevelProperties::readOdf(KoXmlStreamReader &reader)
     bool retval = readAttributes(reader);
 
     KoXmlStreamAttributes attrs = reader.attributes();
-    foreach (const KoXmlStreamAttribute &attr, attrs) {
+    foreach (const KoXmlStreamAttribute &attr, attrs)
+    {
         d->propertiesAttributes.insert(attr.qualifiedName().toString(), attr.value().toString());
     }
     debugOdf2 << "level properties attributes:" << d->propertiesAttributes;
 
-    while (reader.readNextStartElement()) {
+    while (reader.readNextStartElement())
+    {
         QString child = reader.qualifiedName().toString();
 
         // style:list-level-label-alignment just is uesd in this place.
         // Save the list-level-label-alignment and list-level-properties in separate Attributeset for saveOdf.
-        if (child == "style:list-level-label-alignment") {
+        if (child == "style:list-level-label-alignment")
+        {
             d->hasLabelAlignment = true;
             // FIXME: Should create a class for  this element or not.
             retval = readAttributes(reader);
 
             KoXmlStreamAttributes attrs = reader.attributes();
-            foreach (const KoXmlStreamAttribute &attr, attrs) {
+            foreach (const KoXmlStreamAttribute &attr, attrs)
+            {
                 d->labelAlignmentAttributes.insert(attr.qualifiedName().toString(), attr.value().toString());
             }
             debugOdf2 << "Label alignment attributes:" << d->labelAlignmentAttributes;
@@ -107,7 +111,8 @@ bool KoOdfListLevelProperties::saveOdf(const QString &propertySet, KoXmlWriter *
 
     writer->startElement("style:list-level-properties");
     ::saveAttributes(d->propertiesAttributes, writer);
-    if (d->hasLabelAlignment) {
+    if (d->hasLabelAlignment)
+    {
         writer->startElement("style:list-level-label-alignment");
         ::saveAttributes(d->labelAlignmentAttributes, writer);
         writer->endElement();
