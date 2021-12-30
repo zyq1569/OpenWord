@@ -12,7 +12,8 @@ HEADERS +=  DocxExportDebug.h \
             UnitConversions.h \
             OpcContentTypes.h \
             OpcRelSet.h \
-            OpcRelSetManager.h
+            OpcRelSetManager.h \
+            DocxNumbering.h
 
 SOURCES +=  DocxExportDebug.cpp \
             DocxExport.cpp \
@@ -27,4 +28,5 @@ SOURCES +=  DocxExportDebug.cpp \
             UnitConversions.cpp \
             OpcContentTypes.cpp \
             OpcRelSet.cpp \
-            OpcRelSetManager.cpp
+            OpcRelSetManager.cpp \
+            DocxNumbering.cpp

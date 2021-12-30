@@ -59,10 +59,23 @@ QByteArray DocxStyleWriter::documentContent() const
 void DocxStyleWriter::read()
 {
     KoOdfStyleManager *manager = m_readerContext->styleManager();
-    m_documentWriter->startDocument(0,0,0/*,true*/);
+    m_documentWriter->startDocument(0,0,0);
     m_documentWriter->startElement("w:styles");
-    m_documentWriter->addAttribute("xmlns:r", "http://schemas.openxmlformats.org/officeDocument/2006/relationships");
-    m_documentWriter->addAttribute("xmlns:w", "http://schemas.openxmlformats.org/wordprocessingml/2006/main");
+    //m_documentWriter->addAttribute("xmlns:r", "http://schemas.openxmlformats.org/officeDocument/2006/relationships");
+    //m_documentWriter->addAttribute("xmlns:w", "http://schemas.openxmlformats.org/wordprocessingml/2006/main");
+    ///----------------MSword2016----------------------------------------------
+    m_documentWriter->addAttribute("xmlns:mc","http://schemas.openxmlformats.org/markup-compatibility/2006");
+    m_documentWriter->addAttribute("xmlns:r","http://schemas.openxmlformats.org/officeDocument/2006/relationships");
+    m_documentWriter->addAttribute("xmlns:w","http://schemas.openxmlformats.org/wordprocessingml/2006/main");
+    m_documentWriter->addAttribute("xmlns:w14","http://schemas.microsoft.com/office/word/2010/wordml");
+    m_documentWriter->addAttribute("xmlns:w15","http://schemas.microsoft.com/office/word/2012/wordml");
+    m_documentWriter->addAttribute("xmlns:w16cex","http://schemas.microsoft.com/office/word/2018/wordml/cex");
+    m_documentWriter->addAttribute("xmlns:w16cid","http://schemas.microsoft.com/office/word/2016/wordml/cid");
+    m_documentWriter->addAttribute("xmlns:w16","http://schemas.microsoft.com/office/word/2018/wordml");
+    m_documentWriter->addAttribute("xmlns:w16sdtdh","http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash");
+    m_documentWriter->addAttribute("xmlns:w16se","http://schemas.microsoft.com/office/word/2015/wordml/symex");
+    m_documentWriter->addAttribute("mc:Ignorable","w14 w15 w16se w16cid w16 w16cex w16sdtdh");
+    ///-------------------------------------------------------------------------
 
     QList<KoOdfStyle*> defaultStyles = manager->defaultStyles();
     m_documentWriter->startElement("w:docDefaults");
