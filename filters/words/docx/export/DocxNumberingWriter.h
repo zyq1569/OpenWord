@@ -21,7 +21,7 @@ public:
 
 private:
     OdfReaderContext *m_readerContext;
-    QByteArray   m_documentContent; // m_documentWriter writes here;
+    QByteArray   m_numberingContent; // m_documentWriter writes here;
     KoXmlWriter *m_documentWriter;  // XML writer for the document contents
     QBuffer      m_documentIO;      // IODevice for the XMl writer
 };
