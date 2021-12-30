@@ -45,6 +45,7 @@
 ///
 #include "odfdrawreaderdocxbackend.h"
 #include "OdfReaderContext.h"
+#include "DocxNumberingWriter.h"
 ///
 #include "OdfTextReaderDocxBackend.h"
 #include "OdfDrawReader.h"
@@ -131,6 +132,12 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
     DocxStyleWriter           styleWriter(&docxBackendContext);
     styleWriter.read();
 
+    //openword add:numbering.xml
+    DocxNumberingWriter       docxNumberingWriter(&docxBackendContext);
+    docxNumberingWriter.read();
+
+    /// app.xml .... to do, for here?
+
     // Add the styles to the docx file.
     docxFile.addContentFile("", "/word/styles.xml",
                             "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml",
@@ -175,9 +182,9 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
 //                            "application/vnd.openxmlformats-package.core-properties+xml",
 //                            docxBackendContext.documentContent());
 
-//    docxFile.addContentFile("", "/word/numbering.xml",
-//                            "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml",
-//                            docxBackendContext.documentContent());
+    docxFile.addContentFile("", "/word/numbering.xml",
+                            "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml",
+                            docxNumberingWriter.documentContent());
 
 //    docxFile.addContentFile("", "/word/settings.xml",
 //                            "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml",
