@@ -151,6 +151,35 @@ void DocxStyleWriter::read()
                 m_documentWriter->endElement(); // w:basedOn
             }
             m_documentWriter->startElement("w:pPr");
+            ///openword add :20211230
+            /// eg:/// w:styleId="Head2">
+            //<w:numPr>
+            //    <w:ilvl w:val="1"/>
+            //    <w:numId w:val="1"/>
+            //</w:numPr>
+            //<w:outlineLvl w:val="1"/>
+            //if ()
+            if (displayName.contains("Head"))
+            {
+                QString outlineLvl = displayName.right(1);
+                if (!outlineLvl.isEmpty())
+                {
+                    int docxOutlineLvl = outlineLvl.toInt();
+                    m_documentWriter->startElement("w:numPr");
+
+                    m_documentWriter->startElement("w:ilvl");
+                    m_documentWriter->addAttribute("w:val", docxOutlineLvl-1);
+                    m_documentWriter->endElement();
+
+                    m_documentWriter->startElement("w:numId");
+                    m_documentWriter->addAttribute("w:val", 1);
+                    m_documentWriter->endElement();// w:numId
+
+                    m_documentWriter->endElement();//"w:numPr"
+                }
+            }
+            ///
+            ///
             KoOdfStyleProperties *paragraphProperties = style->properties("style:paragraph-properties");
             DocxStyleHelper::handleParagraphStyles(paragraphProperties, m_documentWriter);
             m_documentWriter->endElement(); // w:pPr
