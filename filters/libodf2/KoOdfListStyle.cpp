@@ -205,11 +205,40 @@ bool KoOdfListStyle::readOdf(KoXmlStreamReader &reader)
         // And list-level-style-bullet, list-level-style-image, list-level-style-number for List-style.
         QString listLevelType = reader.qualifiedName().toString();
         setListLevelStyleType(listLevelType);
+        if ( listLevelType == "text:outline-level-style")
+        {
+            ///<text:list-level-style-number text:start-value="1" text:display-levels="1" style:num-prefix="" style:num-suffix="." style:num-format="1" text:level="1">
+            attrs = reader.attributes();
+            QString property[6] = {"text:start-value","text:display-levels","style:num-prefix","style:num-suffix","style:num-format","text:level"};
+            for (int i=0; i< 6; i++)
+            {
+                QString vl = attrs.value(property[i]).toString();
+                if (!vl.isEmpty())
+                {
+                    setProperty(listLevelType, property[i], vl);
+                }
+            }
+        }
         if (listLevelType == "text:list-level-style-bullet"
                 || listLevelType == "text:list-level-style-number"
                 || listLevelType == "text:list-level-style-image")
         {
             debugOdf2 << "List Level style type" << listLevelType;
+            ///openword add:
+            if (listLevelType == "text:list-level-style-number")
+            {
+                ///<text:list-level-style-number text:start-value="1" text:display-levels="1" style:num-prefix="" style:num-suffix="." style:num-format="1" text:level="1">
+                attrs = reader.attributes();
+                QString property[6] = {"text:start-value","text:display-levels","style:num-prefix","style:num-suffix","style:num-format","text:level"};
+                for (int i=0; i< 6; i++)
+                {
+                    QString vl = attrs.value(property[i]).toString();
+                    if (!vl.isEmpty())
+                    {
+                        setProperty(listLevelType, property[i], vl);
+                    }
+                }
+            }
             if (!readProperties(reader))
             {
                 return false;
