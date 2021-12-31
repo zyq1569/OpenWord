@@ -200,7 +200,8 @@ void KoOdfStyleManager::collectStyleSet(KoXmlStreamReader &reader, bool fromStyl
 
         // For now: handle style:style and style:default-style and text:list-style
         // and only the text, paragraph and graphic families.
-        if (tagName != "style:style" && tagName != "style:default-style" && tagName != "text:list-style")
+        // 20211231 openword add: "text:outline-style/text:outline-level-style" | "text:outline-level-style" 考虑可以放入KoOdfListStyle
+        if (tagName != "style:style" && tagName != "style:default-style" && tagName != "text:list-style" && tagName !=  "text:outline-style")
         {
             reader.skipCurrentElement();
             continue;
@@ -247,7 +248,7 @@ void KoOdfStyleManager::collectStyleSet(KoXmlStreamReader &reader, bool fromStyl
                 }
             }
         }
-        else if (tagName == "text:list-style")
+        else if (tagName == "text:list-style" || tagName ==  "text:outline-style")// 20211231 openword add: "text:outline-level-style"
         {
             KoOdfListStyle *listStyle = new KoOdfListStyle;
             listStyle->readOdf(reader);
