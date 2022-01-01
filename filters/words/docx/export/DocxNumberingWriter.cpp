@@ -88,20 +88,14 @@ void DocxNumberingWriter::read()
     m_documentWriter->startElement("w:tmpl");m_documentWriter->addAttribute("w:val","multilevel");m_documentWriter->endElement();//w:multiLevelType
 
 
-
     m_documentWriter->endElement();///w:abstractNum
 
 
-//    QList<KoOdfStyle*> styles = manager->styles();
-//    foreach (KoOdfStyle* style, styles)
-//    {
-//        KoOdfStyleProperties *koOdfStyleProperties = style->properties("text:outline-style");
-//        if (koOdfStyleProperties)
-//        {
-//            QString vl = koOdfStyleProperties->attribute("style:name");
+    QList<KoOdfStyle*> styles = manager->styles();
+    foreach (KoOdfStyle* style, styles)
+    {
 
-//        }
-//    }
+    }
 
 
 
