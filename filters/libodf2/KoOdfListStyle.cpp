@@ -50,6 +50,24 @@ public:
     bool    inUse;
     //
     QHash<QString, KoOdfStyleProperties*> properties;  // e.g. "text-properties",
+
+    //open word : save AttributeSet list-level-style-number/bullet/image
+
+    //<text:list-level-style-number text:start-value="1" text:display-levels="1" style:num-prefix="" style:num-suffix=")" style:num-format="a" text:level="1">
+    //text:list-level-style-bullet text:bullet-char="●" text:level="1">
+    AttributeSet tagAttributes;
+
+    //save eg:text:outline-level-style
+    //<text:outline-level-style text:start-value="1" text:display-levels="1" style:num-prefix="" style:num-suffix="." style:num-format="1" text:level="1">
+    //    <style:list-level-properties text:list-level-position-and-space-mode="label-width-and-position" fo:text-align="start"/>
+    //</text:outline-level-style>
+    //<text:outline-level-style text:start-value="1" text:display-levels="2" style:num-prefix="" style:num-suffix="." style:num-format="1" text:level="2">
+    //    <style:list-level-properties text:list-level-position-and-space-mode="label-width-and-position" fo:text-align="start"/>
+    //</text:outline-level-style>
+    //<text:outline-level-style text:start-value="1" text:display-levels="3" style:num-prefix="" style:num-suffix="." style:num-format="1" text:level="3">
+    //    <style:list-level-properties text:list-level-position-and-space-mode="label-width-and-position" fo:text-align="start"/>
+    //</text:outline-level-style>
+    QHash<int, AttributeSet> outline_level_style;
 };
 
 KoOdfListStyle::Private::Private()
@@ -151,7 +169,6 @@ bool KoOdfListStyle::readProperties(KoXmlStreamReader &reader)
     // Load child elements: property sets and other children.
     while (reader.readNextStartElement())
     {
-
         // So far we only have support for text-properties and list-level-properties.
         QString propertiesType = reader.qualifiedName().toString();
         debugOdf2 << "properties type: " << propertiesType;
@@ -195,54 +212,69 @@ bool KoOdfListStyle::readOdf(KoXmlStreamReader &reader)
     dummy = attrs.value("style:display-name").toString();
     setDisplayName(dummy);
 
-    debugOdf2 << "Style:" << name() << displayName();
+    debugOdf2 << "KoOdfListStyle::readOdf --Style:" << name() << displayName();
 
+    QString listLevelType = reader.qualifiedName().toString();
+    if (listLevelType == "text:outline-style" )
+    {
+        while (reader.readNextStartElement())
+        {
+            // So far we only have support for text-, paragraph- and graphic-properties
+            // And ltext:outline-level-styl.
+            QString listLevelType = reader.qualifiedName().toString();
+            if (listLevelType == "text:outline-level-style")
+            {
+                KoXmlStreamAttributes attrs = reader.attributes();
+                AttributeSet outAttributeSet;
+                foreach (const KoXmlStreamAttribute &attr, attrs)
+                {
+                    outAttributeSet.insert(attr.qualifiedName().toString(), attr.value().toString());
+                }
+                if (reader.readNextStartElement())
+                {
+                    listLevelType = reader.qualifiedName().toString();
+                    if (listLevelType == "style:list-level-properties")
+                    {
+                        attrs = reader.attributes();
+                        foreach (const KoXmlStreamAttribute &attr, attrs)
+                        {
+                            outAttributeSet.insert(attr.qualifiedName().toString(), attr.value().toString());
+                        }
+                    }
+                }
+                int index = d->outline_level_style.size();
+                d->outline_level_style.insert(index,outAttributeSet);
+            }
+            reader.readNext();//point end -Element:style:list-level-properties
+            reader.readNext();//point end -Element:text:outline-level-style
+        }
+        return true;
+    }
     // Load child elements: list-level-style-bullet, text:list-level-style-number, text:list-level-style-image
     while (reader.readNextStartElement())
     {
-
+        QString tagName = reader.qualifiedName().toString();
         // So far we only have support for text-, paragraph- and graphic-properties
         // And list-level-style-bullet, list-level-style-image, list-level-style-number for List-style.
-        QString listLevelType = reader.qualifiedName().toString();
+        /*QString*/ listLevelType = reader.qualifiedName().toString();
         setListLevelStyleType(listLevelType);
-        if ( listLevelType == "text:outline-level-style")
-        {
-            ///<text:list-level-style-number text:start-value="1" text:display-levels="1" style:num-prefix="" style:num-suffix="." style:num-format="1" text:level="1">
-            attrs = reader.attributes();
-            QString property[6] = {"text:start-value","text:display-levels","style:num-prefix","style:num-suffix","style:num-format","text:level"};
-            for (int i=0; i< 6; i++)
-            {
-                QString vl = attrs.value(property[i]).toString();
-                if (!vl.isEmpty())
-                {
-                    setProperty(listLevelType, property[i], vl);
-                }
-            }
-        }
         if (listLevelType == "text:list-level-style-bullet"
                 || listLevelType == "text:list-level-style-number"
                 || listLevelType == "text:list-level-style-image")
         {
-            debugOdf2 << "List Level style type" << listLevelType;
-            ///openword add:
-            if (listLevelType == "text:list-level-style-number")
+
+            //save eg.
+            //<text:list-level-style-number text:start-value="1" text:display-levels="1" style:num-prefix="" style:num-suffix=")" style:num-format="a" text:level="1">
+            KoXmlStreamAttributes attrs = reader.attributes();
+            foreach (const KoXmlStreamAttribute &attr, attrs)
             {
-                ///<text:list-level-style-number text:start-value="1" text:display-levels="1" style:num-prefix="" style:num-suffix="." style:num-format="1" text:level="1">
-                attrs = reader.attributes();
-                QString property[6] = {"text:start-value","text:display-levels","style:num-prefix","style:num-suffix","style:num-format","text:level"};
-                for (int i=0; i< 6; i++)
-                {
-                    QString vl = attrs.value(property[i]).toString();
-                    if (!vl.isEmpty())
-                    {
-                        setProperty(listLevelType, property[i], vl);
-                    }
-                }
+                d->tagAttributes.insert(attr.qualifiedName().toString(), attr.value().toString());
             }
             if (!readProperties(reader))
             {
                 return false;
             }
+            return true;//20211231 openword add:是否源码错误还是修改问题,待进一步理解
         }
     }
 
