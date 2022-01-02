@@ -86,6 +86,11 @@ void KoOdfStyleManager::setListStyle(const QString &name, KoOdfListStyle *style)
     d->listStyles.insert(name, style);
 }
 
+//openword add: get KoOdfListStyle
+QList<QString>  KoOdfStyleManager::getKoOdfListStyleKey() const
+{
+     return d->listStyles.keys();
+}
 
 KoOdfStyle *KoOdfStyleManager::defaultStyle(const QString &family) const
 {

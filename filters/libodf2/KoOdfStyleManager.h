@@ -56,6 +56,8 @@ class KOODF2_EXPORT KoOdfStyleManager
     QList<KoOdfStyle*> styles() const;
     QList<KoOdfStyle*> defaultStyles() const;
 
+    //openword add: get KoOdfListStyle
+    QList<QString> getKoOdfListStyleKey() const;
  private:
     // FIXME: Move to private class.
     void collectStyleSet(KoXmlStreamReader &reader, bool fromStylesXml);
