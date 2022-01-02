@@ -302,3 +302,9 @@ bool KoOdfListStyle::saveOdf(KoXmlWriter *writer)
     writer->endElement();
     return true;
 }
+
+//openword add:
+QHash<int, AttributeSet> KoOdfListStyle::getOutLineAttributeSet() const
+{
+    return d->outline_level_style;
+}

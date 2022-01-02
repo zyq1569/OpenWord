@@ -62,6 +62,10 @@ public:
     bool readOdf(KoXmlStreamReader &reader);
     bool saveOdf(KoXmlWriter *writer);
 
+public:
+    //openword add:
+    typedef  QHash<QString, QString>  AttributeSet;  // name, value
+    QHash<int, AttributeSet> getOutLineAttributeSet() const;
 private:
     class Private;
     Private * const d;
