@@ -66,7 +66,7 @@ public:
      * @param indentInside if set to false, there will be no indentation inside
      * this tag. This is useful for elements where whitespace matters.
      */
-    void startElement(const char* tagName, bool indentInside = true);
+    void startElement(const char* tagName, bool indentInside = false);
 
     /**
      * Overloaded version of addAttribute( const char*, const char* ),
