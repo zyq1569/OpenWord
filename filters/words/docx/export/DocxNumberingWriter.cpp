@@ -206,7 +206,7 @@ void DocxNumberingWriter::read()
     m_documentWriter->startElement("w:num");
     m_documentWriter->addAttribute("w:numId","1");
     m_documentWriter->startElement("w:abstractNumId");
-    m_documentWriter->addAttribute("w:val","1");
+    m_documentWriter->addAttribute("w:val","0");
     m_documentWriter->endElement();
     m_documentWriter->endElement();
 
