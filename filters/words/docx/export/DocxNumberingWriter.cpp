@@ -11,6 +11,10 @@
 #include <KoOdfStyleManager.h>
 #include <KoOdfStyle.h>
 #include <KoOdfStyleProperties.h>
+#include <KoOdfListStyle.h>
+
+//3th
+#include "logging.h"
 
 // This filter
 #include "DocxStyleHelper.h"
@@ -83,18 +87,29 @@ void DocxNumberingWriter::read()
     m_documentWriter->addAttribute("w:abstractNumId",i);
     m_documentWriter->addAttribute("w15:restartNumberingAfterBreak",i);
     i++;
-    m_documentWriter->startElement("w:nsid");m_documentWriter->addAttribute("w:val",i+1000);m_documentWriter->endElement();//w:nsid
-    m_documentWriter->startElement("w:multiLevelType");m_documentWriter->addAttribute("w:val","multilevel");m_documentWriter->endElement();//w:multiLevelType
-    m_documentWriter->startElement("w:tmpl");m_documentWriter->addAttribute("w:val","multilevel");m_documentWriter->endElement();//w:multiLevelType
+    m_documentWriter->startElement("w:nsid");
+    m_documentWriter->addAttribute("w:val",i+1000);
+    m_documentWriter->endElement();//w:nsid
+    m_documentWriter->startElement("w:multiLevelType");
+    m_documentWriter->addAttribute("w:val","multilevel");
+    m_documentWriter->endElement();//w:multiLevelType
+    m_documentWriter->startElement("w:tmpl");
+    m_documentWriter->addAttribute("w:val","multilevel");
+    m_documentWriter->endElement();//w:multiLevelType
 
 
     m_documentWriter->endElement();///w:abstractNum
 
 
-    QList<KoOdfStyle*> styles = manager->styles();
-    foreach (KoOdfStyle* style, styles)
+    QList<QString> key = manager->getKoOdfListStyleKey();
+    for (int i=0; i<key.size(); i++)
     {
-
+        if ("O" == key[i])
+        {
+            KoOdfListStyle* styles = manager->listStyle(key[i]);
+            QString listLevelStyleType = styles->listLevelStyleType();
+            DEBUG_LOG(listLevelStyleType);
+        }
     }
 
 
