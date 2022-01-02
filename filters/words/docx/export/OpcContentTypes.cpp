@@ -105,15 +105,6 @@ KoFilter::ConversionStatus OpcContentTypes::writeToStore(KoStore *opcStore)
         writer.addAttribute("ContentType", parts.value(part));
         writer.endElement(); // Override
     }
-    //    docxFile.addContentFile("", "/word/numbering.xml",
-    //                            "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml",
-    //                            docxBackendContext.documentContent());
-    // openword add:
-    writer.startElement("Override");
-    writer.addAttribute("PartName", "/word/numbering.xml");
-    writer.addAttribute("ContentType", "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml");
-    writer.endElement(); // Default
-
 
     writer.endElement();  // Types
     writer.endDocument();
