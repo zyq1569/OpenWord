@@ -131,8 +131,8 @@ void DocxNumberingWriter::read()
         {
             int index=0;
             m_documentWriter->startElement("w:abstractNum");
-            m_documentWriter->addAttribute("w:abstractNumId",i);
-            m_documentWriter->addAttribute("w15:restartNumberingAfterBreak",i);
+            m_documentWriter->addAttribute("w:abstractNumId",index);
+            m_documentWriter->addAttribute("w15:restartNumberingAfterBreak",index);
             index++;
             m_documentWriter->startElement("w:nsid");
             m_documentWriter->addAttribute("w:val",index+1000);
@@ -160,7 +160,8 @@ void DocxNumberingWriter::read()
             }
 
 
-            for (int id = 0; i<size; i++)
+            QString lvlText;
+            for (int id = 0; id<size; id++)
             {
                 AttributeSet atts = outlineNumber.value(id);
 
@@ -175,7 +176,14 @@ void DocxNumberingWriter::read()
                 m_documentWriter->endElement();
 
                 m_documentWriter->startElement("w:lvlText");
-                QString lvlText = atts.value("style:num-prefix")+"%"+QString::number(id+1);
+                if (display_lev > 1)
+                {
+                    lvlText += atts.value("style:num-prefix")+"%"+QString::number(id+1);
+                }
+                else
+                {
+                    lvlText = atts.value("style:num-prefix")+"%"+QString::number(id+1);
+                }
                 lvlText += atts.value("style:num-suffix");
                 m_documentWriter->addAttribute("w:val",lvlText);
                 m_documentWriter->endElement();
@@ -186,11 +194,21 @@ void DocxNumberingWriter::read()
 
                 m_documentWriter->endElement();//w:lvl
             }
-                        m_documentWriter->endElement();///w:abstractNum
+            m_documentWriter->endElement();///w:abstractNum
         }
 
     }
 
+//<w:num w:numId="1">
+//    <w:abstractNumId w:val="2"/>
+//</w:num>
+
+    m_documentWriter->startElement("w:num");
+    m_documentWriter->addAttribute("w:numId","1");
+    m_documentWriter->startElement("w:abstractNumId");
+    m_documentWriter->addAttribute("w:val","1");
+    m_documentWriter->endElement();
+    m_documentWriter->endElement();
 
 
     m_documentWriter->endElement(); // w:numbering
