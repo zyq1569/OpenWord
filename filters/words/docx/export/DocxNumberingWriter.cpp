@@ -39,6 +39,48 @@ QByteArray DocxNumberingWriter::documentContent() const
     return m_numberingContent;
 }
 
+///
+///  DocxNumberingWriter::read
+//<w:abstractNum w:abstractNumId="2" w15:restartNumberingAfterBreak="0">
+//<w:nsid w:val="2185199F"/>
+//<w:multiLevelType w:val="multilevel"/>
+//<w:tmpl w:val="5DBC47C6"/>
+//<w:styleLink w:val="O"/>
+//<w:lvl w:ilvl="0">
+//    <w:start w:val="1"/>
+//    <w:numFmt w:val="decimal"/>
+//    <w:pStyle w:val="Head1"/>
+//    <w:lvlText w:val="%1."/>
+//    <w:lvlJc w:val="left"/>
+//</w:lvl>
+//<w:lvl w:ilvl="1">
+//    <w:start w:val="1"/>
+//    <w:numFmt w:val="decimal"/>
+//    <w:pStyle w:val="Head2"/>
+//    <w:lvlText w:val="%1.%2."/>
+//    <w:lvlJc w:val="left"/>
+//</w:lvl>
+//<w:lvl w:ilvl="2">
+//    <w:start w:val="1"/>
+//    <w:numFmt w:val="decimal"/>
+//    <w:pStyle w:val="Head3"/>
+//    <w:lvlText w:val="%1.%2.%3."/>
+//    <w:lvlJc w:val="left"/>
+//</w:lvl>
+//<w:lvl w:ilvl="3">
+//    <w:start w:val="1"/>
+//    <w:numFmt w:val="none"/>
+//    <w:lvlText w:val=""/>
+//    <w:lvlJc w:val="left"/>
+//</w:lvl>
+//<w:lvl w:ilvl="4">
+//    <w:start w:val="1"/>
+//    <w:numFmt w:val="none"/>
+//    <w:lvlText w:val=""/>
+//    <w:lvlJc w:val="left"/>
+//</w:lvl>
+//</w:abstractNum>
+///
 void DocxNumberingWriter::read()
 {
     KoOdfStyleManager *manager = m_readerContext->styleManager();
@@ -82,34 +124,71 @@ void DocxNumberingWriter::read()
 
     //QList<KoOdfStyle*> defaultStyles = manager->defaultStyles();
 
-    int i=0;
-    m_documentWriter->startElement("w:abstractNum");
-    m_documentWriter->addAttribute("w:abstractNumId",i);
-    m_documentWriter->addAttribute("w15:restartNumberingAfterBreak",i);
-    i++;
-    m_documentWriter->startElement("w:nsid");
-    m_documentWriter->addAttribute("w:val",i+1000);
-    m_documentWriter->endElement();//w:nsid
-    m_documentWriter->startElement("w:multiLevelType");
-    m_documentWriter->addAttribute("w:val","multilevel");
-    m_documentWriter->endElement();//w:multiLevelType
-    m_documentWriter->startElement("w:tmpl");
-    m_documentWriter->addAttribute("w:val","multilevel");
-    m_documentWriter->endElement();//w:multiLevelType
-
-
-    m_documentWriter->endElement();///w:abstractNum
-
-
     QList<QString> key = manager->getKoOdfListStyleKey();
     for (int i=0; i<key.size(); i++)
     {
         if ("O" == key[i])
         {
+            int index=0;
+            m_documentWriter->startElement("w:abstractNum");
+            m_documentWriter->addAttribute("w:abstractNumId",i);
+            m_documentWriter->addAttribute("w15:restartNumberingAfterBreak",i);
+            index++;
+            m_documentWriter->startElement("w:nsid");
+            m_documentWriter->addAttribute("w:val",index+1000);
+            m_documentWriter->endElement();//w:nsid
+
             KoOdfListStyle* styles = manager->listStyle(key[i]);
             QString listLevelStyleType = styles->listLevelStyleType();
-            DEBUG_LOG(listLevelStyleType);
+            DEBUG_LOG("void DocxNumberingWriter::read()" + listLevelStyleType);
+
+            QHash<int, AttributeSet> outlineNumber = styles->getOutLineAttributeSet();
+            int size = outlineNumber.size();
+            AttributeSet multi = outlineNumber.value(size - 1);
+            int display_lev =multi.value("text:display-levels").toInt();
+            if (display_lev > 1)
+            {
+                m_documentWriter->startElement("w:multiLevelType");
+                m_documentWriter->addAttribute("w:val","multilevel");
+                m_documentWriter->endElement();//w:multiLevelType
+            }
+            else
+            {
+                m_documentWriter->startElement("w:multiLevelType");
+                m_documentWriter->addAttribute("w:val","singleLevel");
+                m_documentWriter->endElement();//w:multiLevelType
+            }
+
+
+            for (int id = 0; i<size; i++)
+            {
+                AttributeSet atts = outlineNumber.value(id);
+
+                m_documentWriter->startElement("w:lvl");
+                m_documentWriter->addAttribute("w:ilvl",id);
+
+                m_documentWriter->startElement("w:start");
+                m_documentWriter->addAttribute("w:val",atts.value("text:start-value"));
+                m_documentWriter->endElement();
+                m_documentWriter->startElement("w:numFmt");
+                m_documentWriter->addAttribute("w:val",atts.value("style:num-format"));
+                m_documentWriter->endElement();
+
+                m_documentWriter->startElement("w:lvlText");
+                QString lvlText = atts.value("style:num-prefix")+"%"+QString::number(id+1);
+                lvlText += atts.value("style:num-suffix");
+                m_documentWriter->addAttribute("w:val",lvlText);
+                m_documentWriter->endElement();
+
+                m_documentWriter->startElement("w:lvlJc");
+                m_documentWriter->addAttribute("w:val","left");
+                m_documentWriter->endElement();
+
+                m_documentWriter->endElement();//w:lvl
+            }
+                        m_documentWriter->endElement();///w:abstractNum
         }
+
     }
 
 
