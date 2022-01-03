@@ -128,6 +128,7 @@ void DocxNumberingWriter::read()
     for (int i=0; i<key.size(); i++)
     {
         QString listKey = key[i];
+        DEBUG_LOG("manager->getKoOdfListStyleKey key:" + listKey);
         if ("O" == listKey)
         {
             int index=0;
@@ -141,7 +142,7 @@ void DocxNumberingWriter::read()
 
             KoOdfListStyle* styles = manager->listStyle(key[i]);
             QString listLevelStyleType = styles->listLevelStyleType();
-            DEBUG_LOG("void DocxNumberingWriter::read()" + listLevelStyleType);
+            DEBUG_LOG("manager->getKoOdfListStyleKey outline listLevelStyleType" + listLevelStyleType);
 
             QHash<int, AttributeSet> outlineNumber = styles->getOutLineAttributeSet();
             int size = outlineNumber.size();
