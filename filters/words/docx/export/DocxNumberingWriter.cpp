@@ -127,7 +127,8 @@ void DocxNumberingWriter::read()
     QList<QString> key = manager->getKoOdfListStyleKey();
     for (int i=0; i<key.size(); i++)
     {
-        if ("O" == key[i])
+        QString listKey = key[i];
+        if ("O" == listKey)
         {
             int index=0;
             m_documentWriter->startElement("w:abstractNum");
@@ -195,6 +196,8 @@ void DocxNumberingWriter::read()
                 m_documentWriter->endElement();//w:lvl
             }
             m_documentWriter->endElement();///w:abstractNum
+
+            return;
         }
 
     }
