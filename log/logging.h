@@ -86,6 +86,19 @@ void LOG_EXPORT traceLog(const QString &msg, const QString &file, int line, cons
 #define DEBUG_LOG(msg) LOG::debugLog(msg,__FILE__,__LINE__,LOG_FUNC)
 #endif
 
+#ifdef QT_NO_DEBUG
+#define LOG_DEBUG(msg) while (false)
+#else
+#define LOG_DEBUG(msg) LOG::debugLog(msg,__FILE__,__LINE__,LOG_FUNC)
+#endif
+
+#define LOG_INFO(msg)                 LOG::infoLog(msg,__FILE__,__LINE__,LOG_FUNC)
+#define LOG_WARN(msg)                 LOG::warnLog(msg,__FILE__,__LINE__,LOG_FUNC)
+#define LOG_ERROR(msg)                LOG::errorLog(msg,__FILE__,__LINE__,LOG_FUNC)
+#define LOG_FATAL(msg)                LOG::fatalLog(msg,__FILE__,__LINE__,LOG_FUNC)
+#define LOG_VERBOSE(vLevel, msg)      LOG::verboseLog(vLevel, msg,__FILE__,__LINE__,LOG_FUNC)
+#define LOG_TRACE(msg)                LOG::traceLog(msg,__FILE__,__LINE__,LOG_FUNC)
+
 #define INFO_LOG(msg)                 LOG::infoLog(msg,__FILE__,__LINE__,LOG_FUNC)
 #define WARN_LOG(msg)                 LOG::warnLog(msg,__FILE__,__LINE__,LOG_FUNC)
 #define ERROR_LOG(msg)                LOG::errorLog(msg,__FILE__,__LINE__,LOG_FUNC)
