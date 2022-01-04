@@ -140,8 +140,19 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
     DocxWebSettings    docxWebSettings(&docxBackendContext);
     docxWebSettings.read();
 
+
+    //footnotes.xml
+    DocxFootnotes       docxFootnotes(&docxBackendContext);
+    docxFootnotes.read();
+
+    //endnotes.xml
+    DocxFootnotes       docxEndnotes(&docxBackendContext);
+    docxEndnotes.read();
+
+
+
     //openword add:fontTable.xml
-    DocxfontTable    docxFontTable(&docxBackendContext);
+    DocxFontTable    docxFontTable(&docxBackendContext);
     docxFontTable.read();
 
     /// app.xml .... to do, for here?
@@ -182,21 +193,9 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
                             docxBackendContext.documentContent());
 
     //add openword
-//    docxFile.addContentFile("", "/docProps/app.xml",
-//                            "application/vnd.openxmlformats-officedocument.extended-properties+xml",
-//                            docxBackendContext.documentContent());
-
-//    docxFile.addContentFile("", "/docProps/core.xml",
-//                            "application/vnd.openxmlformats-package.core-properties+xml",
-//                            docxBackendContext.documentContent());
-
     docxFile.addContentFile("", "/word/numbering.xml",
                             "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml",
                             docxNumberingWriter.documentContent());
-
-//    docxFile.addContentFile("", "/word/settings.xml",
-//                            "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml",
-//                            docxBackendContext.documentContent());
 
     docxFile.addContentFile("", "/word/fontTable.xml",
                             "application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml",
@@ -206,13 +205,32 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
                             "application/vnd.openxmlformats-officedocument.wordprocessingml.webSettings+xml",
                             docxWebSettings.documentContent());
 
-//    docxFile.addContentFile("", "/word/theme/theme1.xml",
-//                            "application/vnd.openxmlformats-officedocument.theme+xml",
-//                            docxBackendContext.documentContent());
+    docxFile.addContentFile("", "/word/footnotes.xml",
+                            "application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml",
+                            docxFootnotes.documentContent());
+
+    docxFile.addContentFile("", "/word/endnotes.xml",
+                            "application/vnd.openxmlformats-officedocument.wordprocessingml.endnotes+xml",
+                            docxEndnotes.documentContent());
+
+    //    docxFile.addContentFile("", "/docProps/app.xml",
+    //                            "application/vnd.openxmlformats-officedocument.extended-properties+xml",
+    //                            docxBackendContext.documentContent());
+
+    //    docxFile.addContentFile("", "/docProps/core.xml",
+    //                            "application/vnd.openxmlformats-package.core-properties+xml",
+    //                            docxBackendContext.documentContent());
+    //docxFile.addContentFile("", "/word/theme/theme1.xml",
+    //                        "application/vnd.openxmlformats-officedocument.theme+xml",
+    //                        docxBackendContext.documentContent());
 
     //docxFile.addContentFile("", "/docProps/custom.xml",
     //                        "application/vnd.openxmlformats-officedocument.custom-properties+xml",
     //                        docxBackendContext.documentContent());
+
+    //    docxFile.addContentFile("", "/word/settings.xml",
+    //                            "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml",
+    //                            docxBackendContext.documentContent());
 
     docxFile.setOdfDrawReaderBackend(&OdfDrawDocxbackend);
     // Write the output file.
