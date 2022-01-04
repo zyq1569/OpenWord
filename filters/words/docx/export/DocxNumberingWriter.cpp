@@ -124,12 +124,13 @@ void DocxNumberingWriter::read()
 
     //QList<KoOdfStyle*> defaultStyles = manager->defaultStyles();
 
+    int index=0;
     bool outline = false;
     QList<QString> key = manager->getKoOdfListStyleKey();
     for (int i=0; i<key.size(); i++)
     {
         QString listKey = key[i];
-        LOG_INFO("manager->getKoOdfListStyleKey key:" + listKey);
+        DEBUG_LOG("manager->getKoOdfListStyleKey key:" + listKey);
         //listLevelType == "text:outline-style"
         KoOdfListStyle* styles = manager->listStyle(listKey);
         if (styles)
@@ -142,7 +143,6 @@ void DocxNumberingWriter::read()
         /// "O" == listKey考虑到名称判断的准确性
         if (outline)//in void KoStyleManager::saveOdf(KoShapeSavingContext &context) set:
         {
-            int index=0;
             m_documentWriter->startElement("w:abstractNum");
             m_documentWriter->addAttribute("w:abstractNumId",index);
             m_documentWriter->addAttribute("w15:restartNumberingAfterBreak",index);
@@ -208,8 +208,7 @@ void DocxNumberingWriter::read()
                 m_documentWriter->endElement();//w:lvl
             }
             m_documentWriter->endElement();///w:abstractNum
-
-            return;
+            break;
         }
 
     }
