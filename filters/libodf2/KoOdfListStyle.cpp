@@ -217,11 +217,12 @@ bool KoOdfListStyle::readOdf(KoXmlStreamReader &reader)
     QString listLevelType = reader.qualifiedName().toString();
     if (listLevelType == "text:outline-style" )
     {
+        setListLevelStyleType(listLevelType);
         while (reader.readNextStartElement())
         {
             // So far we only have support for text-, paragraph- and graphic-properties
             // And ltext:outline-level-styl.
-            QString listLevelType = reader.qualifiedName().toString();
+            listLevelType = reader.qualifiedName().toString();
             if (listLevelType == "text:outline-level-style")
             {
                 KoXmlStreamAttributes attrs = reader.attributes();
