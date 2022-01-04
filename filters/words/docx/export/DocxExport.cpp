@@ -136,6 +136,14 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
     DocxNumberingWriter       docxNumberingWriter(&docxBackendContext);
     docxNumberingWriter.read();
 
+    //openword add:webSettings.xml
+    DocxWebSettings    docxWebSettings(&docxBackendContext);
+    docxWebSettings.read();
+
+    //openword add:fontTable.xml
+    DocxfontTable    docxFontTable(&docxBackendContext);
+    docxFontTable.read();
+
     /// app.xml .... to do, for here?
 
     // Add the styles to the docx file.
@@ -190,13 +198,13 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
 //                            "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml",
 //                            docxBackendContext.documentContent());
 
-//    docxFile.addContentFile("", "/word/fontTable.xml",
-//                            "application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml",
-//                            docxBackendContext.documentContent());
+    docxFile.addContentFile("", "/word/fontTable.xml",
+                            "application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml",
+                            docxFontTable.documentContent());
 
-//    docxFile.addContentFile("", "/word/webSettings.xml",
-//                            "application/vnd.openxmlformats-officedocument.wordprocessingml.webSettings+xml",
-//                            docxBackendContext.documentContent());
+    docxFile.addContentFile("", "/word/webSettings.xml",
+                            "application/vnd.openxmlformats-officedocument.wordprocessingml.webSettings+xml",
+                            docxWebSettings.documentContent());
 
 //    docxFile.addContentFile("", "/word/theme/theme1.xml",
 //                            "application/vnd.openxmlformats-officedocument.theme+xml",
