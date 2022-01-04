@@ -161,7 +161,7 @@ void OdfTextReaderDocxBackend::elementTextP(KoXmlStreamReader &reader, OdfReader
         }
         // FIXME: Add paragraph attributes here
         writer->startElement("w:pPr");
-        if (m_currentOutlineLevel >= 0)
+        if (m_currentOutlineLevel >= 1)
         {
             writer->startElement("w:outlineLvl");
             writer->addAttribute("w:val", m_currentOutlineLevel);
