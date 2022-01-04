@@ -107,8 +107,8 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
         ///start------------- "w:rPr"---------
         writer->startElement("w:rPr");
 
-        writer->startElement("w:noProof");
-        writer->endElement();
+        //writer->startElement("w:noProof");
+        //writer->endElement();// no must!!!
 
         writer->endElement();
         ///end ---------------"w:rPr"--------
