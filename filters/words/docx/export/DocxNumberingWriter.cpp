@@ -227,3 +227,171 @@ void DocxNumberingWriter::read()
 
     m_documentWriter->endElement(); // w:numbering
 }
+
+///////////////////////////////////////
+//////////-------webSettings.xml-------------////////////////////
+///////////////////////////////////////
+DocxWebSettings::DocxWebSettings(OdfReaderContext *context)
+    : m_readerContext(context)
+    , m_numberingContent()
+    , m_documentIO(&m_numberingContent)
+{
+    m_documentWriter = new KoXmlWriter(&m_documentIO);
+}
+
+
+DocxWebSettings::~DocxWebSettings()
+{
+    delete m_documentWriter;
+}
+
+QByteArray DocxWebSettings::documentContent() const
+{
+    return m_numberingContent;
+}
+
+void DocxWebSettings::read()
+{
+    m_documentWriter->startDocument(0,0,0);
+    m_documentWriter->startElement("w:webSettings");
+    ///----------------MSword2016----------------------------------------------
+    m_documentWriter->addAttribute("xmlns:mc","http://schemas.openxmlformats.org/markup-compatibility/2006");
+    m_documentWriter->addAttribute("xmlns:r","http://schemas.openxmlformats.org/officeDocument/2006/relationships");
+    m_documentWriter->addAttribute("xmlns:w","http://schemas.openxmlformats.org/wordprocessingml/2006/main" );
+    m_documentWriter->addAttribute("xmlns:w14","http://schemas.microsoft.com/office/word/2010/wordml" );
+    m_documentWriter->addAttribute("xmlns:w15","http://schemas.microsoft.com/office/word/2012/wordml");
+    m_documentWriter->addAttribute("xmlns:w16cex","http://schemas.microsoft.com/office/word/2018/wordml/cex");
+    m_documentWriter->addAttribute("xmlns:w16cid","http://schemas.microsoft.com/office/word/2016/wordml/cid");
+    m_documentWriter->addAttribute("xmlns:w16","http://schemas.microsoft.com/office/word/2018/wordml");
+    m_documentWriter->addAttribute("xmlns:w16sdtdh","http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash");
+    m_documentWriter->addAttribute("xmlns:w16se","http://schemas.microsoft.com/office/word/2015/wordml/symex");
+    m_documentWriter->addAttribute("mc:Ignorable","w14 w15 w16se w16cid w16 w16cex w16sdtdh");
+    /////////////////////////////////////////////////////////////////////////////
+    m_documentWriter->endElement();
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+DocxfontTable::DocxfontTable(OdfReaderContext *context)
+    : m_readerContext(context)
+    , m_numberingContent()
+    , m_documentIO(&m_numberingContent)
+{
+    m_documentWriter = new KoXmlWriter(&m_documentIO);
+}
+
+
+DocxfontTable::~DocxfontTable()
+{
+    delete m_documentWriter;
+}
+
+QByteArray DocxfontTable::documentContent() const
+{
+    return m_numberingContent;
+}
+
+///
+/// \brief DocxfontTable::read
+///
+//<w:font w:name="Times New Roman">
+//    <w:panose1 w:val="02020603050405020304"/>
+//    <w:charset w:val="86"/>
+//    <w:family w:val="auto"/>
+//    <w:pitch w:val="default"/>
+//    <w:sig w:usb0="E0002EFF" w:usb1="C000785B" w:usb2="00000009" w:usb3="00000000" w:csb0="400001FF" w:csb1="FFFF0000"/>
+//</w:font>
+//<w:font w:name="宋体">
+//    <w:panose1 w:val="02010600030101010101"/>
+//    <w:charset w:val="88"/>
+//    <w:family w:val="auto"/>
+//    <w:pitch w:val="default"/>
+//    <w:sig w:usb0="00000003" w:usb1="288F0000" w:usb2="00000006" w:usb3="00000000" w:csb0="00040001" w:csb1="00000000"/>
+//</w:font>
+//   <w:font w:name="黑体">
+//       <w:panose1 w:val="02010609060101010101"/>
+//       <w:charset w:val="86"/>
+//       <w:family w:val="auto"/>
+//       <w:pitch w:val="default"/>
+//       <w:sig w:usb0="800002BF" w:usb1="38CF7CFA" w:usb2="00000016" w:usb3="00000000" w:csb0="00040001" w:csb1="00000000"/>
+//</w:font>
+//<w:font w:name="微软雅黑">
+//   <w:panose1 w:val="020B0503020204020204"/>
+//   <w:charset w:val="86"/>
+//   <w:family w:val="swiss"/>
+//   <w:pitch w:val="default"/>
+//   <w:sig w:usb0="80000287" w:usb1="2ACF3C50" w:usb2="00000016" w:usb3="00000000" w:csb0="0004001F" w:csb1="00000000"/>
+//</w:font>
+//<w:font w:name="楷体_GB2312">
+//   <w:altName w:val="楷体"/>
+//   <w:panose1 w:val="00000000000000000000"/>
+//   <w:charset w:val="86"/>
+//   <w:family w:val="modern"/>
+
+//<w:font w:name="MS Sans Serif">
+//   <w:altName w:val="微软雅黑"/>
+//   <w:panose1 w:val="020B0500000000000000"/>
+//   <w:charset w:val="00"/>
+//   <w:family w:val="auto"/>
+//   <w:pitch w:val="default"/>
+//   <w:sig w:usb0="00000000" w:usb1="00000000" w:usb2="00000010" w:usb3="00000000" w:csb0="00040001" w:csb1="00000000"/>
+//</w:font>
+//<w:font w:name="仿宋">
+//   <w:panose1 w:val="02010609060101010101"/>
+//   <w:charset w:val="86"/>
+//   <w:family w:val="modern"/>
+//   <w:pitch w:val="default"/>
+//   <w:sig w:usb0="800002BF" w:usb1="38CF7CFA" w:usb2="00000016" w:usb3="00000000" w:csb0="00040001" w:csb1="00000000"/>
+//</w:font>
+//<w:font w:name="Times New Roman">
+//   <w:panose1 w:val="02020603050405020304"/>
+//   <w:charset w:val="00"/>
+//   <w:family w:val="roman"/>
+//   <w:pitch w:val="variable"/>
+//   <w:sig w:usb0="E0002EFF" w:usb1="C000785B" w:usb2="00000009" w:usb3="00000000" w:csb0="000001FF" w:csb1="00000000"/>
+//</w:font>
+void DocxfontTable::read()
+{
+    m_documentWriter->startDocument(0,0,0);
+    m_documentWriter->startElement("w:fonts");
+    ///----------------MSword2016----------------------------------------------
+    m_documentWriter->addAttribute("xmlns:mc=","http://schemas.openxmlformats.org/markup-compatibility/2006");
+    m_documentWriter->addAttribute("xmlns:r=","http://schemas.openxmlformats.org/officeDocument/2006/relationships");
+    m_documentWriter->addAttribute("xmlns:w=","http://schemas.openxmlformats.org/wordprocessingml/2006/main");
+    m_documentWriter->addAttribute("xmlns:w14=","http://schemas.microsoft.com/office/word/2010/wordml");
+    m_documentWriter->addAttribute("mc:Ignorable","w14");
+    /////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////font:"Times New Roman"///////////////////////////////////////
+    m_documentWriter->startElement("w:font"); m_documentWriter->addAttribute("w:name","Times New Roman");
+
+    m_documentWriter->startElement("w:panose1");
+    m_documentWriter->addAttribute("w:val","02020603050405020304");
+    m_documentWriter->endElement();
+
+    m_documentWriter->startElement("w:charset");
+    m_documentWriter->addAttribute("w:val","00");
+    m_documentWriter->endElement();
+
+    m_documentWriter->startElement("w:family");
+    m_documentWriter->addAttribute("w:val","roman");
+    m_documentWriter->endElement();
+
+    m_documentWriter->startElement("w:pitch");
+    m_documentWriter->addAttribute("w:val","variable");
+    m_documentWriter->endElement();
+
+    m_documentWriter->startElement("w:sig");
+    m_documentWriter->addAttribute("w:usb0","E0002EFF");m_documentWriter->addAttribute("w:usb1","C000785B");
+    m_documentWriter->addAttribute("w:usb3","00000000");m_documentWriter->addAttribute("w:csb0","000001FF");
+    m_documentWriter->addAttribute("w:csb1","00000000");
+    m_documentWriter->endElement();
+
+    m_documentWriter->endElement();//w:font
+    ///////////////////////////////////////////////////////////////
+
+
+    m_documentWriter->endElement();//"w:fonts"
+}
+

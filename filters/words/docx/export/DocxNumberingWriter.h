@@ -26,4 +26,47 @@ private:
     QBuffer      m_documentIO;      // IODevice for the XMl writer
 };
 
+////////////////////////////////////////////////////////////////////////////////////
+/// \brief The DocxWebSettings class
+///
+class DocxWebSettings
+{
+public:
+    DocxWebSettings(OdfReaderContext *context);
+    virtual ~DocxWebSettings();
+
+    void read();
+
+    QByteArray documentContent() const;
+
+private:
+    OdfReaderContext *m_readerContext;
+    QByteArray   m_numberingContent; // m_documentWriter writes here;
+    KoXmlWriter *m_documentWriter;  // XML writer for the document contents
+    QBuffer      m_documentIO;      // IODevice for the XMl writer
+};
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+///\brief The DocxfontTable class
+///
+///
+
+class DocxfontTable
+{
+public:
+    DocxfontTable(OdfReaderContext *context);
+    virtual ~DocxfontTable();
+
+    void read();
+
+    QByteArray documentContent() const;
+
+private:
+    OdfReaderContext *m_readerContext;
+    QByteArray   m_numberingContent; // m_documentWriter writes here;
+    KoXmlWriter *m_documentWriter;  // XML writer for the document contents
+    QBuffer      m_documentIO;      // IODevice for the XMl writer
+};
+
 #endif // DOCXNUMBERING_H
