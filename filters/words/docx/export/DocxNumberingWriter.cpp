@@ -129,7 +129,7 @@ void DocxNumberingWriter::read()
     {
         QString listKey = key[i];
         DEBUG_LOG("manager->getKoOdfListStyleKey key:" + listKey);
-        if ("O" == listKey)
+        if ("O" == listKey)//in void KoStyleManager::saveOdf(KoShapeSavingContext &context) set:
         {
             int index=0;
             m_documentWriter->startElement("w:abstractNum");
