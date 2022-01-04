@@ -160,13 +160,14 @@ void DocxStyleHelper::handleTextStyles(KoOdfStyleProperties *properties, KoXmlWr
         }
         writer->endElement(); // w:vertAlign
     }
-    QString textColor = properties->attribute("fo:color");
-    if (!textColor.isEmpty())
-    {
-        writer->startElement("w:color");
-        writer->addAttribute("w:val", textColor.mid(1));
-        writer->endElement(); // w:color
-    }
+    ///opneword del:20220104
+    //QString textColor = properties->attribute("fo:color");
+    //if (!textColor.isEmpty())
+    //{
+    //    writer->startElement("w:color");
+    //    writer->addAttribute("w:val", textColor.mid(1));
+    //    writer->endElement(); // w:color
+    //}
 
     QString underlineStyle = properties->attribute("style:text-underline-style");
     if (!underlineStyle.isEmpty())
