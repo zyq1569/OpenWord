@@ -134,31 +134,31 @@ void OdtReaderDocxBackend::elementOfficeBody(KoXmlStreamReader &reader, OdfReade
         //    <w:pgMar w:top="840" w:right="1140" w:bottom="840" w:left="1140" w:header="720" w:footer="720" w:gutter="0"/>
         //    <w:cols w:space="720"/>
         //</w:sectPr>
-        writer->startElement("w:sectPr");writer->addAttribute("w:rsidR","000B243E");
+        //writer->startElement("w:sectPr");//writer->addAttribute("w:rsidR","000B243E");
 
-        writer->startElement("w:footnotePr");
-        writer->startElement("w:numStart");writer->addAttribute("w:val","2");writer->endElement();//"w:numStart"
-        writer->endElement();//"w:footnotePr"
+        //writer->startElement("w:footnotePr");
+        //writer->startElement("w:numStart");writer->addAttribute("w:val","2");writer->endElement();//"w:numStart"
+        //writer->endElement();//"w:footnotePr"
 
-        writer->startElement("w:endnotePr");
-        writer->startElement("w:numStart");writer->addAttribute("w:val","2");writer->endElement();//"w:numStart"
-        writer->endElement();//"w:endnotePr "
+        //writer->startElement("w:endnotePr");
+        //writer->startElement("w:numStart");writer->addAttribute("w:val","2");writer->endElement();//"w:numStart"
+        //writer->endElement();//"w:endnotePr "
 
-        writer->startElement("w:pgSz");
-        writer->addAttribute("w:w","11906");writer->addAttribute("w:h","16838");
-        writer->endElement();//"w:pgSz"
+        //writer->startElement("w:pgSz");
+        //writer->addAttribute("w:w","11906");writer->addAttribute("w:h","16838");
+        //writer->endElement();//"w:pgSz"
 
-        writer->startElement("w:pgMar");
-        writer->addAttribute("w:top","840");writer->addAttribute("w:right","1140");
-        writer->addAttribute("w:left","1140");writer->addAttribute("w:header","720");
-        writer->addAttribute("w:footer","720");writer->addAttribute("w:footer","720");writer->addAttribute("w:gutter","0");writer->endElement();
-        writer->endElement();//"w:pgMar"
+        //writer->startElement("w:pgMar");
+        //writer->addAttribute("w:top","840");writer->addAttribute("w:right","1140");
+        //writer->addAttribute("w:left","1140");writer->addAttribute("w:header","720");
+        //writer->addAttribute("w:footer","720");writer->addAttribute("w:footer","720");writer->addAttribute("w:gutter","0");
+        //writer->endElement();//"w:pgMar"
 
-        writer->startElement("w:cols");
-        writer->addAttribute("w:space","720");
-        writer->endElement();//"w:cols"
+        //writer->startElement("w:cols");
+        //writer->addAttribute("w:space","720");
+        //writer->endElement();//"w:cols"
 
-        writer->endElement();//"w:sectPr"
+        //writer->endElement();//"w:sectPr"
         ///
         writer->endElement(); // w:body
         writer->endElement(); // w:document
