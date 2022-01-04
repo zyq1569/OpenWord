@@ -52,11 +52,31 @@ private:
 ///
 ///
 
-class DocxfontTable
+class DocxFontTable
 {
 public:
-    DocxfontTable(OdfReaderContext *context);
-    virtual ~DocxfontTable();
+    DocxFontTable(OdfReaderContext *context);
+    virtual ~DocxFontTable();
+
+    void read();
+
+    QByteArray documentContent() const;
+
+private:
+    OdfReaderContext *m_readerContext;
+    QByteArray   m_numberingContent; // m_documentWriter writes here;
+    KoXmlWriter *m_documentWriter;  // XML writer for the document contents
+    QBuffer      m_documentIO;      // IODevice for the XMl writer
+};
+
+
+
+
+class DocxFootnotes
+{
+public:
+    DocxFootnotes(OdfReaderContext *context);
+    virtual ~DocxFootnotes();
 
     void read();
 
