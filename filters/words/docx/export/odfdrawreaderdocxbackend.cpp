@@ -58,32 +58,32 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
     {
         KoXmlStreamAttributes attributes = reader.attributes();
 
-        writer->startElement("w:p");
+        //writer->startElement("w:p");
         //writer->addAttribute("w14:paraId", "5ec3232323");
         //writer->addAttribute("w14:textId", "77777777");
         //writer->addAttribute("w14:rsidR", "000B243E");
         //writer->addAttribute("w:rsidRDefault", "00A21553");
 
-        writer->startElement("w:pPr");  //<w:pStyle w:val="Standard"/>   //writer->addAttribute("w:pStyle","Standard");
-        QString textStyleName = reader.getcurrentTextStylename();
-        QString drawStyleName = attributes.value("draw:style-name").toString();
-        if (!textStyleName.isEmpty())
-        {
-            KoOdfStyle *style = docxContext->styleManager()->style(textStyleName, "paragraph");
-            //KoOdfStyleProperties *parProperties = style->properties("style:paragraph-properties");
-            m_currentParagraphTextProperties = style->properties("style:text-properties");
-            m_currentParagraphParent = style->parent();
+        //writer->startElement("w:pPr");  //<w:pStyle w:val="Standard"/>   //writer->addAttribute("w:pStyle","Standard");
+        //QString textStyleName = reader.getcurrentTextStylename();
+        //QString drawStyleName = attributes.value("draw:style-name").toString();
+        //if (!textStyleName.isEmpty())
+        //{
+        //    KoOdfStyle *style = docxContext->styleManager()->style(textStyleName, "paragraph");
+        //    //KoOdfStyleProperties *parProperties = style->properties("style:paragraph-properties");
+        //    m_currentParagraphTextProperties = style->properties("style:text-properties");
+        //    m_currentParagraphParent = style->parent();
 
-            KoOdfStyle *drawStyle = docxContext->styleManager()->style(drawStyleName, "graphic");
-            KoOdfStyleProperties *drawStylePro =  drawStyle->properties("style:graphic-properties");
-            QString style_wrap_contour_mode = drawStylePro->attribute("style:wrap-contour-mode");
-            if (!m_currentParagraphParent.isEmpty())
-            {
-                writer->startElement("w:pStyle");
-                writer->addAttribute("w:val", m_currentParagraphParent);
-                writer->endElement(); // w:pStyle
-            }
-        }
+        //    KoOdfStyle *drawStyle = docxContext->styleManager()->style(drawStyleName, "graphic");
+        //    KoOdfStyleProperties *drawStylePro =  drawStyle->properties("style:graphic-properties");
+        //    QString style_wrap_contour_mode = drawStylePro->attribute("style:wrap-contour-mode");
+        //    if (!m_currentParagraphParent.isEmpty())
+        //    {
+        //        writer->startElement("w:pStyle");
+        //        writer->addAttribute("w:val", m_currentParagraphParent);
+        //        writer->endElement(); // w:pStyle
+        //    }
+        //}
         reader.readNext();
         attributes = reader.attributes();
         ///<draw:image xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" xlink:href="Pictures/image1.png"/>
@@ -100,7 +100,7 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
             addImageInfo(xlink_href, destinationName);
         }
 
-        writer->endElement();//"w:pPr"
+        //writer->endElement();//"w:pPr"
 
         writer->startElement("w:r");
 
@@ -233,7 +233,6 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
         writer->endElement();
         //end  w:r
 
-        writer->endElement();//("w:p");
     }
     //elementDrawFrameImage(reader, context);
 }
