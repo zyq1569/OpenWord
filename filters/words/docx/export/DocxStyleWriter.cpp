@@ -235,4 +235,5 @@ void DocxStyleWriter::read()
     }
 
     m_documentWriter->endElement(); // w:styles
+    m_documentWriter->endDocument();
 }
