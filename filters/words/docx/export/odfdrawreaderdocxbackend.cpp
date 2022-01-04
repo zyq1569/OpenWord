@@ -88,6 +88,7 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
         attributes = reader.attributes();
         ///<draw:image xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" xlink:href="Pictures/image1.png"/>
         QString tagName = reader.qualifiedName().toString();
+        QString imageName,imageIndex;
         if (tagName == "draw:image")
         {
             QString xlink_type      = attributes.value("xlink:type").toString();
@@ -95,6 +96,8 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
             QString xlink_actuate   = attributes.value("xlink:actuate").toString();
             QString xlink_href      = attributes.value("xlink:href").toString();
             QString destinationName = xlink_href.mid(xlink_href.lastIndexOf('/') + 1);
+            imageName = destinationName;
+            imageIndex= xlink_href.right(1);
             destinationName         = "word/media/" + destinationName;
             //eg: addImageInfo("Pictures/image1.png","word/media/image1.png")
             addImageInfo(xlink_href, destinationName);
@@ -142,8 +145,8 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
 
         //start wp:docPr
         writer->startElement("wp:docPr");
-        writer->addAttribute("id", "1");
-        writer->addAttribute("name", "图片 1");
+        writer->addAttribute("id",imageIndex);
+        writer->addAttribute("name", imageName);
         writer->endElement();
         //end  wp:docPr
 
