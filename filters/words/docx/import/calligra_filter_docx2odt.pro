@@ -65,5 +65,6 @@ LIBS        +=    -L$${LIBDIR} \
 include(../../../../calligra.pri)
 include(calligra_filter_docx2odt.pri)
 
+#设置调试信息文件输出到dll文件同位置
 DESTDIR             =  $$DLLDESTDIR/calligra/formatfilters
 DLLDESTDIR          =  $$DLLDESTDIR/calligra/formatfilters
