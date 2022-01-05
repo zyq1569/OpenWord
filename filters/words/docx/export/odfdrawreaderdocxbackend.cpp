@@ -52,14 +52,23 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
         return;
     }
 
+    QString tagName = reader.qualifiedName().toString();
     KoXmlWriter *writer = docxContext->m_documentWriter;
-    if (reader.isStartElement())
+    while (tagName == "draw:frame")///--while
     {
+        /// 1. draw:frame
+        ///
+        //{
+        //draw:frame--------->to do...
+        //}
+        ///
+        ///
+        /// 2.
         KoXmlStreamAttributes attributes = reader.attributes();
         reader.readNext();
         attributes = reader.attributes();
         ///<draw:image xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" xlink:href="Pictures/image1.png"/>
-        QString tagName = reader.qualifiedName().toString();
+        /*QString*/ tagName = reader.qualifiedName().toString();
         if (tagName == "draw:image")
         {
             QString xlink_type      = attributes.value("xlink:type").toString();
@@ -89,27 +98,33 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
             writer->startElement("w:drawing");
             //start wp:inline
             writer->startElement("wp:inline");
-            writer->addAttribute("distT", "0");            writer->addAttribute("distB", "0");
-            writer->addAttribute("distL", "0");            writer->addAttribute("distR", "0");
+            writer->addAttribute("distT", "0");
+            writer->addAttribute("distB", "0");
+            writer->addAttribute("distL", "0");
+            writer->addAttribute("distR", "0");
             writer->addAttribute("wp14:anchorId", "150CC466");
             writer->addAttribute("wp14:editId", "25D73062");
 
             //start wp:extent
             writer->startElement("wp:extent");
-            writer->addAttribute("cx", "4299209");  writer->addAttribute("cy", "1913129");
+            writer->addAttribute("cx", "4299209");
+            writer->addAttribute("cy", "1913129");
             writer->endElement();
             //end wp:extent
 
             //start wp:effectExtent
             writer->startElement("wp:effectExtent");
-            writer->addAttribute("l", "0");       writer->addAttribute("t", "0");
-            writer->addAttribute("r", "6091");    writer->addAttribute("b", "0");
+            writer->addAttribute("l", "0");
+            writer->addAttribute("t", "0");
+            writer->addAttribute("r", "6091");
+            writer->addAttribute("b", "0");
             writer->endElement();
             //end wp:effectExtent
 
             //start wp:docPr
             writer->startElement("wp:docPr");
-            writer->addAttribute("id",imageIndex); writer->addAttribute("name", imageName);
+            writer->addAttribute("id",imageIndex);
+            writer->addAttribute("name", imageName);
             writer->endElement();
             //end  wp:docPr
 
@@ -131,8 +146,11 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
             writer->addAttribute("xmlns:pic", "http://schemas.openxmlformats.org/drawingml/2006/picture");
 
             //start pic:nvPicPr
-            writer->startElement("pic:nvPicPr");   writer->startElement("pic:cNvPr "); writer->addAttribute("descr",destinationName);
-            writer->addAttribute("id",imageIndex); writer->addAttribute("name",imageName);
+            writer->startElement("pic:nvPicPr");
+            writer->startElement("pic:cNvPr ");
+            writer->addAttribute("descr",destinationName.right(destinationName.length()-5));
+            writer->addAttribute("id",imageIndex);
+            writer->addAttribute("name",imageName);
             writer->endElement();
             writer->startElement("pic:cNvPicPr ");
             writer->endElement();
@@ -156,10 +174,12 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
             //a:xfrm
             writer->startElement("a:xfrm");
             writer->startElement("a:off");
-            writer->addAttribute("x","0");            writer->addAttribute("y","0");
+            writer->addAttribute("x","0");
+            writer->addAttribute("y","0");
             writer->endElement();
             writer->startElement("a:ext");
-            writer->addAttribute("cx","4299209");            writer->addAttribute("cy","1913129");
+            writer->addAttribute("cx","4299209");
+            writer->addAttribute("cy","1913129");
             writer->endElement();
             writer->endElement();
             //a:xfrm
@@ -195,6 +215,16 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
 
             writer->endElement();
             //end  w:r
+        }
+        reader.readNext();
+        if (!reader.readNextStartElement())
+        {
+            return;
+        }
+        tagName = reader.qualifiedName().toString();
+        if (tagName != "draw:frame")
+        {
+            return;
         }
     }
     //elementDrawFrameImage(reader, context);
