@@ -237,4 +237,6 @@ void OdfDrawReaderDocxBackend::elementDrawFrameImage(KoXmlStreamReader &reader, 
         //end  w:drawing
 
     }
+    reader.readNext();//read next element!
+
 }
