@@ -487,7 +487,7 @@ void OdfDrawReader::readElementDrawFrame(KoXmlStreamReader &reader)
 void OdfDrawReader::readElementDrawImage(KoXmlStreamReader &reader)
 {
     DEBUGSTART();
-
+    m_backend->elementDrawFrameImage(reader, m_context);
     DEBUGEND();
 }
 
