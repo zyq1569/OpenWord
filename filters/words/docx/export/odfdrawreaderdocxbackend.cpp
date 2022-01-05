@@ -54,12 +54,6 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
 
     KoXmlWriter *writer = docxContext->m_documentWriter;
 
-    //QString tagName = reader.qualifiedName().toString();
-    //if (tagName != "draw:frame")
-    //{
-    //    return;
-    //}
-    //KoXmlStreamAttributes attributes = reader.attributes();
     /// 1. draw:frame
     ///
     //{
@@ -73,16 +67,14 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
     {
         writer->endElement();
     }
-    ///
-    ///
-    /// 2. "draw:image"
-    ///elementDrawFrameImage
-
 }
 
 void OdfDrawReaderDocxBackend::elementDrawFrameImage(KoXmlStreamReader &reader, OdfReaderContext *context)
 {
     DEBUG_BACKEND();
+    /// 2. "draw:image"
+    ///elementDrawFrameImage
+    ///
     OdfReaderDocxContext *docxContext = dynamic_cast<OdfReaderDocxContext*>(context);
     if (!docxContext)
     {
@@ -237,6 +229,6 @@ void OdfDrawReaderDocxBackend::elementDrawFrameImage(KoXmlStreamReader &reader, 
         //end  w:drawing
 
     }
-    reader.readNext();//read next element!
+    reader.readNext();//read next element! to do better!! ??????
 
 }
