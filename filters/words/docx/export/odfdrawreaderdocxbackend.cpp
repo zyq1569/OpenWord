@@ -41,7 +41,7 @@ OdfDrawReaderDocxBackend::~OdfDrawReaderDocxBackend()
 {
 
 }
-
+//ref:http://officeopenxml.com/WPnumbering-imagesAsSymbol.php
 void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfReaderContext *context)
 {
     DEBUG_BACKEND();
@@ -131,8 +131,8 @@ void OdfDrawReaderDocxBackend::elementDrawFrame(KoXmlStreamReader &reader, OdfRe
             writer->addAttribute("xmlns:pic", "http://schemas.openxmlformats.org/drawingml/2006/picture");
 
             //start pic:nvPicPr
-            writer->startElement("pic:nvPicPr");            writer->startElement("pic:cNvPr ");
-            writer->addAttribute("id","0");            writer->addAttribute("name","");
+            writer->startElement("pic:nvPicPr");   writer->startElement("pic:cNvPr "); writer->addAttribute("descr",destinationName);
+            writer->addAttribute("id",imageIndex); writer->addAttribute("name",imageName);
             writer->endElement();
             writer->startElement("pic:cNvPicPr ");
             writer->endElement();

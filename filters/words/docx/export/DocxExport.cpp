@@ -150,7 +150,6 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
     docxEndnotes.read();
 
 
-
     //openword add:fontTable.xml
     DocxFontTable    docxFontTable(&docxBackendContext);
     docxFontTable.read();
