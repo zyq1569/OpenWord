@@ -163,7 +163,7 @@ void DocPropsFiles::addFile(const QString &partName, const QString &contentType)
     parts[partName] = contentType;
 }
 
-
+///20220106 目前临时定义了ms_word2016 接受的参数
 KoFilter::ConversionStatus DocPropsFiles::writeToStore(KoStore *docPropsFiles)
 {
     // We can hardcode this one.
