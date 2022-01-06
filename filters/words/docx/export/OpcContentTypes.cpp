@@ -82,6 +82,22 @@ KoFilter::ConversionStatus OpcContentTypes::writeToStore(KoStore *opcStore)
         writer.endElement(); // Default
     }
 
+    /////
+    /// temp to do :add
+    //<Override PartName="/word/theme/theme1.xml" ContentType="application/vnd.openxmlformats-officedocument.theme+xml"/>
+    //<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>
+    //<Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>
+    writer.startElement("Override");
+    writer.addAttribute("PartName", "/docProps/core.xml");
+    writer.addAttribute("ContentType", "application/vnd.openxmlformats-package.core-properties+xml");
+    writer.endElement(); // Override
+
+    writer.startElement("Override");
+    writer.addAttribute("PartName", "/docProps/app.xml");
+    writer.addAttribute("ContentType", "application/vnd.openxmlformats-officedocument.extended-properties+xml");
+    writer.endElement(); // Override
+    ///
+    ///
     // Write overrides.  Only write those which don't fit the defaults.
     foreach (const QString &part, parts.keys())
     {
