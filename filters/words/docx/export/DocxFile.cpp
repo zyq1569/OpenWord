@@ -120,11 +120,11 @@ KoFilter::ConversionStatus DocxFile::writeDocx(const QString &inputFile, const Q
     contentTypes.writeToStore(docxStore);
 
     /// add openword
-//    DocPropsFiles  appDocPropsFiles("docProps/app.xml");
-//    appDocPropsFiles.writeToStore(docxStore);
+    DocPropsFiles  appDocPropsFiles("docProps/app.xml");
+    appDocPropsFiles.writeToStore(docxStore);
 
-//    DocPropsFiles coreDocPropsFiles("docProps/core.xml");
-//    coreDocPropsFiles.writeToStore(docxStore);
+    DocPropsFiles coreDocPropsFiles("docProps/core.xml");
+    coreDocPropsFiles.writeToStore(docxStore);
 
     ///-------------copy image files------------------------------------------------------------
     KZip* kzip = NULL;
