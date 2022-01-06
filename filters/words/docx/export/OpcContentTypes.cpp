@@ -190,11 +190,11 @@ KoFilter::ConversionStatus DocPropsFiles::writeToStore(KoStore *docPropsFiles)
         //addTextNode(value());
         //endElement();
         writer.startElement("Template",false);
-        writer.addTextNode("Normal");
+        writer.addTextNode("Normal.dotm");
         writer.endElement();
 
         writer.startElement("TotalTime",false);
-        writer.addTextNode("0");
+        writer.addTextNode("1");
         writer.endElement();
 
         writer.startElement("Pages",false);
@@ -252,7 +252,7 @@ KoFilter::ConversionStatus DocPropsFiles::writeToStore(KoStore *docPropsFiles)
         writer.endElement();
 
         writer.startElement("AppVersion",false);
-        writer.addTextNode("3.2.1.0");//Characters :
+        writer.addTextNode("16.0000");//Characters ://writer.addTextNode("3.2.1.0");//Characters :
         writer.endElement();
     }
     else if (m_filename.contains("core.xml"))
@@ -260,18 +260,18 @@ KoFilter::ConversionStatus DocPropsFiles::writeToStore(KoStore *docPropsFiles)
         writer.startElement("cp:coreProperties");
         writer.addAttribute("xmlns:cp", "http://schemas.openxmlformats.org/package/2006/metadata/core-properties");
         writer.addAttribute("xmlns:dc", "http://purl.org/dc/elements/1.1/");
-        writer.addAttribute("xmlns:dcterms", "hthttp://purl.org/dc/terms/");
+        writer.addAttribute("xmlns:dcterms", "http://purl.org/dc/terms/");
         writer.addAttribute("xmlns:dcmitype", "http://purl.org/dc/dcmitype/");
         writer.addAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
 
         writer.startElement("dc:title");
         writer.endElement();
 
-        writer.startElement("dc:subject");
-        writer.endElement();
+        //writer.startElement("dc:subject");
+        //writer.endElement();//MS2016报错20220106
 
         writer.startElement("dc:creator",false);
-        writer.addTextNode("created:pc name");
+        writer.addTextNode("openword");
         writer.endElement();
 
         writer.startElement("cp:keywords");
@@ -282,14 +282,22 @@ KoFilter::ConversionStatus DocPropsFiles::writeToStore(KoStore *docPropsFiles)
 
 
         writer.startElement("cp:lastModifiedBy",false);
-        writer.addTextNode("modified:pc name ");
+        writer.addTextNode("openword");
         writer.endElement();
 
-        writer.startElement("dcterms:created xsi:type=\"dcterms:W3CDTF\"",false);
+        writer.startElement("cp:revision",false);
+        writer.addTextNode("2");//writer.addTextNode("3.2.001");
+        writer.endElement();
+
+        //<cp:revision>15</cp:revision>
+
+        writer.startElement("dcterms:created",false);
+        writer.addAttribute("xsi:type", "dcterms:W3CDTF");
         writer.addTextNode("2021-09-07T01:12:00Z");// create time
         writer.endElement();
 
-        writer.startElement("dcterms:modified xsi:type=\"dcterms:W3CDTF\"",false);
+        writer.startElement("dcterms:modified",false);
+        writer.addAttribute("xsi:type", "dcterms:W3CDTF");
         writer.addTextNode("2021-09-07T02:11:00Z");
         writer.endElement();
     }
