@@ -205,7 +205,7 @@ KoFilter::ConversionStatus DocxImport::parseParts(KoOdfWriters *writers, MSOOXML
 
         KoFilter::ConversionStatus status = loadAndParseDocument(&themesReader, docThemePathAndFile, errorMessage, &themecontext);
 
-        //debugDocx << "Reading ThemePathAndFile:" << docThemePathAndFile << "status=" << status;
+        debugDocx << "Reading ThemePathAndFile:" << docThemePathAndFile << "status=" << status;
     }
 
     reportProgress(15);
