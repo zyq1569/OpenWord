@@ -223,5 +223,5 @@ KoFilter::ConversionStatus KoOdfExporter::convert(const QByteArray& from, const 
     oasisStore.closeManifestWriter();
     delete outputStore;
 
-    return KoFilter::OK;
+    return KoFilter::OK;/// temp odt file ok!
 }
