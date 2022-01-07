@@ -163,9 +163,9 @@ void OdfDrawReaderDocxBackend::elementDrawFrameImage(KoXmlStreamReader &reader, 
         //start pic:nvPicPr
         writer->startElement("pic:nvPicPr");
         writer->startElement("pic:cNvPr ");
-        writer->addAttribute("descr",destinationName.right(destinationName.length()-5));
         writer->addAttribute("id",imageIndex);
         writer->addAttribute("name",imageName);
+        writer->addAttribute("descr",destinationName.right(destinationName.length()-5));
         writer->endElement();
         writer->startElement("pic:cNvPicPr ");
         writer->endElement();
