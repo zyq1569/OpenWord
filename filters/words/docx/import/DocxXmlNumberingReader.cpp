@@ -400,7 +400,7 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read_numFmt()
         {
             m_currentBulletProperties.setNumFormat("a");
         }
-        else if (val == "decimal")
+        else if (val == "decimal" || val == "1")
         {
             m_currentBulletProperties.setNumFormat("1");
         }
@@ -430,7 +430,12 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read_numFmt()
         else if (val == "none") //add openword
         {
             // <w:numFmt w:val="none"/> --->?"decimal" openword 20211012
+            LOG_WARN("<w:lvl> / <w:numFmt vl=" + val + "---> set setNumFormat(1)");
             //m_currentBulletProperties.setNumFormat("1");
+        }
+        else
+        {
+            LOG_WARN("<w:lvl> / <w:numFmt vl=" + val + "");
         }
     }
 
