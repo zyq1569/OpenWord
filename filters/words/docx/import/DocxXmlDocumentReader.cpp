@@ -2583,36 +2583,44 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
     // there is no text:outline-level equivalent in OOXML
     QString outlineLevelAttribute;
     const KoGenStyle* pstyle = &m_currentParagraphStyle;
-    //do
-    //{
-    //    outlineLevelAttribute = pstyle->attribute("style:default-outline-level");
-    //    // use isNull, empty string value is valid here
-    //    if (! outlineLevelAttribute.isNull())
-    //    {
-    //        m_currentParagraphStyle.setParentStyleName(pstyle->parentStyleName());
-    //        break;
-    //    }
-    //    // next in hierarchy
-    //    pstyle = mainStyles->style(pstyle->parentName(), "paragraph");
-    //}
-    //while (pstyle);//old code calligra//
-    QString parentNameId = m_currentParagraphStyle.parentName();
-    const KoGenStyle* pstyleFind = mainStyles->style(parentNameId, "paragraph");
-    if (pstyleFind)
-    {
-        outlineLevelAttribute = pstyleFind->attribute("style:default-outline-level");
-#ifdef MSVC
-        m_currentParagraphStyle.m_parentstyleName = pstyle->m_parentstyleName;
-#else
-        m_currentParagraphStyle.setParentStyleName(pstyle->parentStyleName());
-        QString stylename    = m_currentParagraphStyle.parentStyleName();
-#endif
 
-        if (m_currentNumId.isEmpty())
+//    QString parentNameId = m_currentParagraphStyle.parentName();
+//    const KoGenStyle* pstyleFind = mainStyles->style(parentNameId, "paragraph");
+//    if (pstyleFind)
+//    {
+//        outlineLevelAttribute = pstyleFind->attribute("style:default-outline-level");
+//#ifdef MSVC
+//        m_currentParagraphStyle.m_parentstyleName = pstyle->m_parentstyleName;
+//#else
+//        m_currentParagraphStyle.setParentStyleName(pstyle->parentStyleName());
+//        QString stylename    = m_currentParagraphStyle.parentStyleName();
+//#endif
+
+//        if (m_currentNumId.isEmpty())
+//        {
+//            m_currentNumId = pstyleFind->attribute("style:default-numId");
+//        }
+//    }//目前这种写法有误，待进一步理解.
+
+    do
+    {
+        outlineLevelAttribute = pstyle->attribute("style:default-outline-level");
+        // use isNull, empty string value is valid here
+        if (! outlineLevelAttribute.isNull())
         {
-            m_currentNumId = pstyleFind->attribute("style:default-numId");
+            m_currentParagraphStyle.setParentStyleName(pstyle->parentStyleName());
+            if (pstyle->parentName().toUpper().contains("HEAD"))//MS2007版本，head1:0; head2:1 ;;MS20016版本: head1:1;head2:2;后期考虑通过ms版本号来调整
+            {
+                outlineLevelAttribute = pstyle->parentName().right(1);
+            }
+            break;
         }
+        // next in hierarchy
+        pstyle = mainStyles->style(pstyle->parentName(), "paragraph");
     }
+    while (pstyle);//old code calligra//
+
+
 
     const uint outlineLevel = outlineLevelAttribute.toUInt();
 
