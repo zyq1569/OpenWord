@@ -51,9 +51,9 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
 
     const QString prefix = format.stringProperty(KoListStyle::ListItemPrefix);
     const QString suffix = format.stringProperty(KoListStyle::ListItemSuffix);
-    const int      level = format.intProperty(KoListStyle::Level);
+    const int      level = format.intProperty(KoListStyle::Level);//段落级别
 
-    int dp = format.intProperty(KoListStyle::DisplayLevel);
+    int dp = format.intProperty(KoListStyle::DisplayLevel);//(head1 级下:子段落显示隶属级数)
     if (dp > level)
     {
         dp = level;
@@ -141,7 +141,7 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
     }
 
     QString item;
-    if (displayLevel > 1)
+    if (displayLevel > 1)//显示的级数(eg.displayLevel=2;  1.1 、1.2 1.3 ;displayLevel=3; 1.1.1 1.1.2 1.1.3; displayLevel=4:1.1.1.1 1.1.1.2 1.1.1.3 1.1.1.4
     {
         int checkLevel = level;
         int tmpDisplayLevel = displayLevel;
