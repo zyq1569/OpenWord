@@ -157,6 +157,8 @@ KoFilter::ConversionStatus DocxImport::parseParts(KoOdfWriters *writers, MSOOXML
 {
     writers->body->addAttribute("text:use-soft-page-breaks", "true");
 
+    ///to do... 需要增加读取app.xml core.xml 应用厂商 、版本 等信息方便来判断修正不同MS_Word内容
+    ///
     // 0. parse settings.xml
     {
         DocxXmlSettingsReaderContext context(d->documentSettings);
