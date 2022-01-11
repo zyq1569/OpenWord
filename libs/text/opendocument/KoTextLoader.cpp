@@ -661,16 +661,16 @@ void KoTextLoader::loadHeading(const KoXmlElement &element, QTextCursor &cursor)
     bool stripLeadingSpace = true;
     loadSpan(element, cursor, &stripLeadingSpace);
     cursor.setCharFormat(cf);   // restore the cursor char format
-    static bool bMicrosoftOffice = false;
-    static int initMS = 0;
-    if (0 == initMS)
-    {
-        initMS = 1;
+    /*static*/ bool bMicrosoftOffice = false;///openword. to do... 修改为加载文档后预处理
+//    static int initMS = 0;
+//    if (0 == initMS)
+//    {
+//        initMS = 1;
         if (d->context.odfLoadingContext().generator().startsWith(QLatin1String("MicrosoftOffice")))
         {
             bMicrosoftOffice = true;
         }
-    }
+//    }
 
     if ((block.blockFormat().hasProperty(KoParagraphStyle::OutlineLevel)) && (level == -1))
     {
