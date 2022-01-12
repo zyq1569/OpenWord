@@ -212,6 +212,7 @@ KoFilter::ConversionStatus DocxExport::convert(const QByteArray& from, const QBy
                             "application/vnd.openxmlformats-officedocument.wordprocessingml.endnotes+xml",
                             docxEndnotes.documentContent());
 
+    /// to do...参考DocxFontTable 替换现有类
     //    docxFile.addContentFile("", "/docProps/app.xml",
     //                            "application/vnd.openxmlformats-officedocument.extended-properties+xml",
     //                            docxBackendContext.documentContent());
