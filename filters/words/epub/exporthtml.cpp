@@ -58,7 +58,7 @@
 
 ExportHtmlFactory::ExportHtmlFactory()
 {
-     registerPlugin<ExportHtml>();
+    registerPlugin<ExportHtml>();
 }
 ExportHtmlFactory::~ExportHtmlFactory()
 {}
@@ -176,12 +176,12 @@ KoFilter::ConversionStatus ExportHtml::extractImages(KoStore *odfStore, HtmlFile
             return KoFilter::FileNotFound;
         }
 
-#if 1
+#if 0
         htmlFile->addContentFile(("image" + QString::number(imgId)), // id
                                  (htmlFile->filePrefix() + imgSrc.section('/', -1)), // filename
                                  m_manifest.value(imgSrc).toUtf8(), imgContent);
 #else
-
+        HtmlFile *epubFile = htmlFile;
         VectorType type = vectorType(imgContent);
         QSizeF qSize = m_imagesSrcList.value(imgSrc);
         switch (type)
@@ -256,7 +256,7 @@ KoFilter::ConversionStatus ExportHtml::extractImages(KoStore *odfStore, HtmlFile
     return KoFilter::OK;
 }
 
-#if 0
+#if 1
 
 bool ExportHtml::convertSvm(QByteArray &input, QByteArray &output, QSize size)
 {

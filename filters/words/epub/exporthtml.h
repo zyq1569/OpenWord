@@ -55,7 +55,7 @@ public:
 private:
     KoFilter::ConversionStatus extractImages(KoStore *odfStore, HtmlFile *epubFile);
 
-#if 0
+#if 1
     ExportHtml::VectorType vectorType(QByteArray &content);
     bool convertSvm(QByteArray &input, QByteArray &output, QSize size);
     bool convertEmf(QByteArray &input, QByteArray &output, QSize size);
