@@ -56,6 +56,7 @@ SUBDIRS    +=   log/easylog.pro \
                 plugins/textediting/spellcheck/calligra_textediting_spellcheck.pro \
                 plugins/textediting/thesaurus/calligra_textediting_thesaurus.pro \
 #                libs/ki18n/KF5I18n.pro \
+                filters/words/epub/calligra_filter_odt2html.pro \
                 words/app/calligrawords.pro
 #-------------------------------------------------
 #                karbon/karbonpart.pro \
@@ -78,7 +79,6 @@ SUBDIRS    +=   log/easylog.pro \
                 #filters/stage/kpr2odf/calligra_filter_kpr2odp.pro \
                 #filters/words/ascii/calligra_filter_odt2ascii.pro \
                 #filters/words/epub/calligra_filter_odt2epub2.pro \
-                #filters/words/epub/calligra_filter_odt2html.pro \
                 #filters/words/mobi/calligra_filter_odt2mobi.pro \
                 #filters/words/wiki/export/calligra_filter_odt2wiki.pro \
                 #filters/stage/pptx/calligra_filter_pptx2odp.pro \
