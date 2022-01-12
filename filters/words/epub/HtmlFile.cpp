@@ -49,7 +49,8 @@ KoFilter::ConversionStatus HtmlFile::writeHtml(const QString &fileName)
 {
     // Create the store and check if everything went well.
     KoStore *htmlStore = KoStore::createStore(fileName, KoStore::Write, "", KoStore::Directory);
-    if (!htmlStore || htmlStore->bad()) {
+    if (!htmlStore || htmlStore->bad())
+    {
         warnHtml << "Unable to create output file!";
         delete htmlStore;
         return KoFilter::FileNotFound;

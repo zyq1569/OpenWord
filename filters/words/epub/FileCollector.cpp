@@ -148,8 +148,10 @@ QList<FileCollector::FileInfo*>  FileCollector::files() const
 KoFilter::ConversionStatus FileCollector::writeFiles(KoStore *store)
 {
     // Write contents of added files.
-    foreach(FileInfo *file, d->m_files) {
-        if (!store->open(file->m_fileName)) {
+    foreach(FileInfo *file, d->m_files)
+    {
+        if (!store->open(file->m_fileName))
+        {
             debugSharedExport << "Can not create" << file->m_fileName;
             return KoFilter::CreationError;
         }
