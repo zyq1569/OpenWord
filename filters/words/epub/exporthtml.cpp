@@ -56,6 +56,12 @@
 // Needed to instantiate the plugin factory.
 //#include "exporthtml.moc"
 
+ExportHtmlFactory::ExportHtmlFactory()
+{
+     registerPlugin<ExportHtml>();
+}
+ExportHtmlFactory::~ExportHtmlFactory()
+{}
 
 ExportHtml::ExportHtml(QObject *parent, const QVariantList&)
     : KoFilter(parent)

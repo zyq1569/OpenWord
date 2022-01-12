@@ -32,6 +32,7 @@
 #include <KoFilter.h>
 #include <KoStore.h>
 
+#include <kpluginfactory.h>
 
 class HtmlFile;
 
@@ -72,5 +73,17 @@ private:
     QHash<QString, QString> m_manifest;
     QHash<QString, QSizeF>  m_imagesSrcList;
 };
+
+class ExportHtmlFactory : public KPluginFactory
+{
+    Q_OBJECT
+    Q_INTERFACES(KPluginFactory)
+    Q_PLUGIN_METADATA(IID KPluginFactory_iid FILE "calligra_filter_odt2html.json")
+public:
+    explicit ExportHtmlFactory();
+    ~ExportHtmlFactory();
+};
+
+
 
 #endif // EXPORTHTML_H
