@@ -33,10 +33,10 @@
 
 KoTarStore::KoTarStore(const QString & _filename, Mode mode, const QByteArray & appIdentification,
                        bool writeMimetype)
- : KoStore(mode, writeMimetype)
+    : KoStore(mode, writeMimetype)
 {
     debugStore << "KoTarStore Constructor filename =" << _filename
-    << " mode = " << int(mode) << endl;
+               << " mode = " << int(mode) << endl;
     Q_D(KoStore);
 
     d->localFileName = _filename;
@@ -48,7 +48,7 @@ KoTarStore::KoTarStore(const QString & _filename, Mode mode, const QByteArray & 
 
 KoTarStore::KoTarStore(QIODevice *dev, Mode mode, const QByteArray & appIdentification,
                        bool writeMimetype)
- : KoStore(mode, writeMimetype)
+    : KoStore(mode, writeMimetype)
 {
     m_pTar = new KTar(dev);
 
@@ -57,21 +57,24 @@ KoTarStore::KoTarStore(QIODevice *dev, Mode mode, const QByteArray & appIdentifi
 
 KoTarStore::KoTarStore(QWidget* window, const QUrl &_url, const QString & _filename, Mode mode,
                        const QByteArray & appIdentification, bool writeMimetype)
- : KoStore(mode, writeMimetype)
+    : KoStore(mode, writeMimetype)
 {
     debugStore << "KoTarStore Constructor url=" << _url.url(QUrl::PreferLocalFile)
-                  << " filename = " << _filename
-                  << " mode = " << int(mode) << endl;
+               << " filename = " << _filename
+               << " mode = " << int(mode) << endl;
     Q_D(KoStore);
 
     d->url = _url;
     d->window = window;
 
-    if (mode == KoStore::Read) {
+    if (mode == KoStore::Read)
+    {
         d->fileMode = KoStorePrivate::RemoteRead;
         d->localFileName = _filename;
 
-    } else {
+    }
+    else
+    {
         d->fileMode = KoStorePrivate::RemoteWrite;
         d->localFileName = "/tmp/kozip"; // ### FIXME with KTempFile
     }
@@ -85,13 +88,18 @@ KoTarStore::~KoTarStore()
 {
     Q_D(KoStore);
     if (!d->finalized)
-        finalize(); // ### no error checking when the app forgot to call finalize itself
+    {
+        finalize();    // ### no error checking when the app forgot to call finalize itself
+    }
     delete m_pTar;
 
     // Now we have still some job to do for remote files.
-    if (d->fileMode == KoStorePrivate::RemoteRead) {
+    if (d->fileMode == KoStorePrivate::RemoteRead)
+    {
         KIO::NetAccess::removeTempFile(d->localFileName);
-    } else if (d->fileMode == KoStorePrivate::RemoteWrite) {
+    }
+    else if (d->fileMode == KoStorePrivate::RemoteWrite)
+    {
         KIO::NetAccess::upload(d->localFileName, d->url, d->window);
         // ### FIXME: delete temp file
     }
@@ -101,9 +109,11 @@ QStringList KoTarStore::directoryList() const
 {
     QStringList retval;
     const KArchiveDirectory *directory = m_pTar->directory();
-    foreach(const QString &name, directory->entries()) {
+    foreach(const QString &name, directory->entries())
+    {
         const KArchiveEntry* fileArchiveEntry = m_pTar->directory()->entry(name);
-        if (fileArchiveEntry->isDirectory()) {
+        if (fileArchiveEntry->isDirectory())
+        {
             retval << name;
         }
     }
@@ -129,12 +139,17 @@ void KoTarStore::init(const QByteArray &appIdentification)
     d->good = m_pTar->open(d->mode == Write ? QIODevice::WriteOnly : QIODevice::ReadOnly);
 
     if (!d->good)
+    {
         return;
+    }
 
-    if (d->mode == Write) {
+    if (d->mode == Write)
+    {
         debugStore << "appIdentification :" << appIdentification;
         m_pTar->setOrigFileName(completeMagic(appIdentification));
-    } else {
+    }
+    else
+    {
         d->good = m_pTar->directory() != 0;
     }
 }
@@ -161,10 +176,12 @@ bool KoTarStore::openRead(const QString& name)
 {
     Q_D(KoStore);
     const KArchiveEntry * entry = m_pTar->directory()->entry(name);
-    if (entry == 0) {
+    if (entry == 0)
+    {
         return false;
     }
-    if (entry->isDirectory()) {
+    if (entry->isDirectory())
+    {
         warnStore << name << " is a directory !";
         return false;
     }
@@ -184,7 +201,9 @@ bool KoTarStore::closeWrite()
     debugStore << "Writing file" << d->fileName << " into TAR archive. size" << d->size;
     m_byteArray.resize(d->size); // TODO: check if really needed
     if (!m_pTar->writeFile(d->fileName, m_byteArray, 0100644, QLatin1String("user"), QLatin1String("group")))
+    {
         warnStore << "Failed to write " << d->fileName;
+    }
     m_byteArray.resize(0);   // save memory
     return true;
 }
@@ -192,34 +211,45 @@ bool KoTarStore::closeWrite()
 bool KoTarStore::enterRelativeDirectory(const QString& dirName)
 {
     Q_D(KoStore);
-    if (d->mode == Read) {
-        if (!m_currentDir) {
+    if (d->mode == Read)
+    {
+        if (!m_currentDir)
+        {
             m_currentDir = m_pTar->directory(); // initialize
             Q_ASSERT(d->currentPath.isEmpty());
         }
         const KArchiveEntry *entry = m_currentDir->entry(dirName);
-        if (entry && entry->isDirectory()) {
+        if (entry && entry->isDirectory())
+        {
             m_currentDir = dynamic_cast<const KArchiveDirectory*>(entry);
             return m_currentDir != 0;
         }
         return false;
-    } else // Write, no checking here
+    }
+    else   // Write, no checking here
+    {
         return true;
+    }
 }
 
 bool KoTarStore::enterAbsoluteDirectory(const QString& path)
 {
     Q_D(KoStore);
-    if (path.isEmpty()) {
+    if (path.isEmpty())
+    {
         m_currentDir = 0;
         return true;
     }
-    if (d->mode == Read) {
+    if (d->mode == Read)
+    {
         m_currentDir = dynamic_cast<const KArchiveDirectory*>(m_pTar->directory()->entry(path));
         Q_ASSERT(m_currentDir);
         return m_currentDir != 0;
-    } else
+    }
+    else
+    {
         return true;
+    }
 }
 
 bool KoTarStore::fileExists(const QString& absPath) const
