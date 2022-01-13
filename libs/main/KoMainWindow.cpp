@@ -1516,8 +1516,9 @@ bool KoMainWindow::queryClose()
     {
         return true;
     }
-    //debugMain <<"KoMainWindow::queryClose() viewcount=" << rootDocument()->viewCount()
-    //               << " mainWindowCount=" << rootDocument()->mainWindowCount() << endl;
+    //当前关闭的文档的窗口和view数
+    //debugMain <<"KoMainWindow::queryClose() viewcount=" << d->rootPart->viewCount()
+    //               << " mainWindowCount=" << d->rootPart->mainwindowCount() << Qt::endl;
     if (!d->forQuit && d->rootPart && d->rootPart->mainwindowCount() > 1)
         // there are more open, and we are closing just one, so no problem for closing
     {
