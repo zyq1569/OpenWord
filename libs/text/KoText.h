@@ -45,7 +45,8 @@ KOTEXT_EXPORT Qt::Alignment valignmentFromString(const QString &align);
 KOTEXT_EXPORT QString valignmentToString(Qt::Alignment align);
 
 /// This enum contains values to be used as keys in KoCanvasResourceManager
-enum CanvasResource {
+enum CanvasResource
+{
     CurrentTextDocument = 382490375, ///< set by the text plugin whenever the document is changed
     CurrentTextPosition = 183523,   ///<  used by the text plugin whenever the position is changed
     CurrentTextAnchor = 341899485,   ///<  used by the text plugin whenever the anchor-position is changed
@@ -55,7 +56,8 @@ enum CanvasResource {
 };
 
 /// For paragraphs each tab definition is represented by this struct.
-struct KOTEXT_EXPORT Tab {
+struct KOTEXT_EXPORT Tab
+{
     Tab();
     qreal position;    ///< distance in ps-points from the edge of the text-shape
     QTextOption::TabType type;       ///< Determine which type is used.
@@ -74,7 +76,8 @@ struct KOTEXT_EXPORT Tab {
  * Text resources per calligra-document.
  * \sa KoDocumentResourceManager KoShapeController::resourceManager()
  */
-enum DocumentResource {
+enum DocumentResource
+{
     ChangeTracker = KoDocumentResourceManager::KoTextStart + 1, ///< KoChangeTracker
     InlineTextObjectManager, ///< The KoText inline-text-object manager. KoInlineTextObjectManager
     TextRangeManager, ///< The KoText inline-text-object manager. KoInlineTextObjectManager
@@ -86,17 +89,20 @@ enum DocumentResource {
 
 };
 
-enum KoTextFrameProperty {
+enum KoTextFrameProperty
+{
     SubFrameType = QTextFormat::UserProperty + 1
 };
 
-enum KoSubFrameType {
+enum KoSubFrameType
+{
     AuxillaryFrameType = 1,
     NoteFrameType
 };
 
 /// Text in the objects will be positioned according to the direction.
-enum Direction {
+enum Direction
+{
     AutoDirection,      ///< Take the direction from the text.
     LeftRightTopBottom, ///< Text layout for most western languages
     RightLeftTopBottom, ///< Text layout for languages like Hebrew
@@ -111,7 +117,8 @@ KOTEXT_EXPORT Direction directionFromString(const QString &direction);
 KOTEXT_EXPORT QString directionToString(Direction direction);
 
 /// There are several possible text breaks
-enum KoTextBreakProperty {
+enum KoTextBreakProperty
+{
     NoBreak = 0,         ///< No text break
     ColumnBreak,     ///< Column break
     PageBreak        ///< Page break
