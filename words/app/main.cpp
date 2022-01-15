@@ -9,6 +9,7 @@
 
 #include <QLoggingCategory>
 #include <QMessageBox>
+//#include <QTextCodec>
 ///???if (KRun::isExecutableFile(_url, type))
 /*extern "C"*/ Q_DECL_EXPORT int main(int argc, char **argv)
 {
@@ -21,6 +22,9 @@
      *
      * See: http://doc.qt.io/qt-5/qloggingcategory.html
      */
+//    QTextCodec::setCodecForLocale(QTextCodec::codecForName("utf-8"));
+//    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf-8"));
+//    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf-8"));
     //    QLoggingCategory::setFilterRules("calligra.*.debug=true\n"
     //                                     "calligra.*.warning=true");
 
