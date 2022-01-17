@@ -135,12 +135,18 @@ public:
     /**
      * Return the widget that will be added to the scrollArea.
      */
-    virtual QGraphicsObject *canvasItem() { return 0; }
+    virtual QGraphicsObject *canvasItem()
+    {
+        return 0;
+    }
 
     /**
      * Return the widget that will be added to the scrollArea.
      */
-    virtual const QGraphicsObject *canvasItem() const{ return 0; }
+    virtual const QGraphicsObject *canvasItem() const
+    {
+        return 0;
+    }
 
     /**
      * Return the unit of the current document for initialization of the widgets created
@@ -165,7 +171,8 @@ public:
      * By default the origin of the canvas widget and the position of the
      * document origin are coincident, thus an empty point is returned.
      */
-    virtual QPoint documentOrigin() const {
+    virtual QPoint documentOrigin() const
+    {
         return QPoint(0, 0);
     }
 
