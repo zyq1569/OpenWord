@@ -954,11 +954,7 @@ KoFilter::ConversionStatus DocxXmlNumberingReader::read_multiLevelType()
     TRY_READ_ATTR(val)
     if (!val.isEmpty())
     {
-#ifdef MSVC
-        m_currentBulletProperties.m_multiLevelType = val;
-#else
         m_currentBulletProperties.setMultiLevelType(val);
-#endif
 
     }
 

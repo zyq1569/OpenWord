@@ -433,27 +433,6 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
             if (name() == "name")
             {
                 TRY_READ(name)
-#ifdef MSVC
-                if (type == "character")
-                {
-                    m_currentTextStyle.m_parentstyleName = m_name;
-                }
-                else if (type == "paragraph")
-                {
-                    m_currentParagraphStyle.m_parentstyleName = m_name;
-                }
-                else if (type == "table")
-                {
-                    //if (m_currentTableStyleProperties)
-                    //{
-                    //    m_currentTableStyleProperties->textStyle.setParentStyleName(m_name);
-                    //}
-                }
-                else
-                {
-                    m_currentListStyle.m_parentstyleName = m_name;
-                }
-#else
                 if (type == "character")
                 {
                     m_currentTextStyle.setParentStyleName(m_name);
@@ -473,7 +452,6 @@ KoFilter::ConversionStatus DocxXmlStylesReader::read_style()
                 {
                     m_currentListStyle.setParentStyleName(m_name);
                 }
-#endif
             }
             else if (name() == "rPr")
             {

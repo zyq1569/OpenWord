@@ -2589,12 +2589,8 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
 //    if (pstyleFind)
 //    {
 //        outlineLevelAttribute = pstyleFind->attribute("style:default-outline-level");
-//#ifdef MSVC
-//        m_currentParagraphStyle.m_parentstyleName = pstyle->m_parentstyleName;
-//#else
 //        m_currentParagraphStyle.setParentStyleName(pstyle->parentStyleName());
 //        QString stylename    = m_currentParagraphStyle.parentStyleName();
-//#endif
 
 //        if (m_currentNumId.isEmpty())
 //        {
@@ -2824,19 +2820,11 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                     body->startElement("text:h", false);
                     body->addAttribute("text:outline-level", outlineLevel);
                     // openword to do? how to do?? why?是否保存位置在DocxXmlNumberingReader中
-#ifdef MSVC
-                    if (m_currentBulletProperties.m_multiLevelType == "singleLevel")
-#else
                     if (m_currentBulletProperties.multiLevelType() == "singleLevel")
-#endif
                     {
                         body->addAttribute("text:display-levels", 1);
                     }
-#ifdef MSVC
-                    else if (m_currentBulletProperties.m_multiLevelType == "multilevel")
-#else
                     else if (m_currentBulletProperties.multiLevelType() ==  "multilevel")
-#endif
                     {
                         ///设置段落前序号显示几个级别(eg.方式1.{ 一、1.   2.  3.  二、1.   2.  3.  }  方式2. {1、  1.1.  1.2.  1.3  1.4   2、  2.1  2.2  2.3  })
                         /// 方式1 始终只显示一个级别， 方式而 显示两个级别
@@ -2854,11 +2842,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_p()
                     const KoGenStyle* parentStyle = mainStyles->style(m_currentParagraphStyle.parentName(), m_currentParagraphStyle.familyName());
                     if (parentStyle)
                     {
-#ifdef MSVC
-                        m_currentParagraphStyle.m_parentstyleName = parentStyle->m_parentstyleName;
-#else
                         m_currentParagraphStyle.setParentStyleName(parentStyle->parentStyleName());
-#endif
                     }
                     currentParagraphStyleName = (mainStyles->insert(m_currentParagraphStyle));
                     if (sectionAdded)
@@ -3188,11 +3172,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_r()
         const KoGenStyle* parentStyle = mainStyles->style(m_currentTextStyle.parentName(), m_currentTextStyle.familyName());
         if (parentStyle)
         {
-#ifdef MSVC
-            m_currentTextStyle.m_parentstyleName = parentStyle->m_parentstyleName;
-#else
             m_currentTextStyle.setParentStyleName(parentStyle->parentStyleName());
-#endif
         }
         currentTextStyleName = mainStyles->insert(m_currentTextStyle);
     }
@@ -4296,11 +4276,7 @@ KoFilter::ConversionStatus DocxXmlDocumentReader::read_outlineLvl()
             //QString str = m_currentParagraphStyle.stylewname();
             // stylewname() error!!! ?? to do vs2019+qt build
             //QString str = m_currentParagraphStyle.m_stylewname;
-#ifdef MSVC
-            if (m_currentParagraphStyle.m_parentstyleName.contains("Title") || outlineLevelValue == 9)///openword
-#else
             if (m_currentParagraphStyle.parentStyleName().contains("Title") || outlineLevelValue == 9)///openword
-#endif
             {
                 //m_currentParagraphStyle.addAttribute("style:default-outline-level", "");
                 if (outlineLevelValue != 9)

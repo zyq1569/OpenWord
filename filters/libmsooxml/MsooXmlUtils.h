@@ -147,12 +147,7 @@ public:
     enum ParagraphBulletType {BulletType, NumberType, PictureType, DefaultType};
     ParagraphBulletType m_type;
 
-#ifdef MSVC
-    /// VC++ build error!?????? why? to do ...
-public:
-#else
 private:
-#endif
     QString m_multiLevelType; //add openword 20211022
 
 private:
