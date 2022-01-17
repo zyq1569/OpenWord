@@ -32,7 +32,7 @@ class QActionGroup;
 class KoInteractionStrategy;
 
 /// This is the tool for the artistic text shape.
-class ArtisticTextTool : public KoToolBase 
+class ArtisticTextTool : public KoToolBase
 {
     Q_OBJECT
 public:
@@ -112,7 +112,8 @@ private:
     void updateTextCursorArea() const;
     void setCurrentShape(ArtisticTextShape *currentShape);
 
-    enum FontProperty {
+    enum FontProperty
+    {
         BoldProperty,
         ItalicProperty,
         FamilyProperty,

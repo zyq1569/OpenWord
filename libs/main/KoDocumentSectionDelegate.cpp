@@ -62,18 +62,20 @@ KoDocumentSectionDelegate::~KoDocumentSectionDelegate()
 
 QSize KoDocumentSectionDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    switch(d->view->displayMode()) {
-    case View::ThumbnailMode: {
-        const int height = thumbnailHeight(option, index) + textBoxHeight(option) + d->margin * 2;
-        return QSize(availableWidth(), height);
-    }
-    case View::DetailedMode:
-        return QSize(option.rect.width(),
-            textBoxHeight(option) + option.decorationSize.height() + d->margin);
-    case View::MinimalMode:
-        return QSize(option.rect.width(), textBoxHeight(option));
-    default:
-        return option.rect.size();
+    switch(d->view->displayMode())
+    {
+        case View::ThumbnailMode:
+        {
+            const int height = thumbnailHeight(option, index) + textBoxHeight(option) + d->margin * 2;
+            return QSize(availableWidth(), height);
+        }
+        case View::DetailedMode:
+            return QSize(option.rect.width(),
+                         textBoxHeight(option) + option.decorationSize.height() + d->margin);
+        case View::MinimalMode:
+            return QSize(option.rect.width(), textBoxHeight(option));
+        default:
+            return option.rect.size();
     }
 }
 
@@ -99,36 +101,46 @@ void KoDocumentSectionDelegate::paint(QPainter *p, const QStyleOptionViewItem &o
 bool KoDocumentSectionDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
     if ((event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick)
-        && (index.flags() & Qt::ItemIsEnabled))
+            && (index.flags() & Qt::ItemIsEnabled))
     {
         QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
         const QRect iconsRect_ = iconsRect(option, index).translated(option.rect.topLeft());
 
-        if (iconsRect_.isValid() && iconsRect_.contains(mouseEvent->pos())) {
+        if (iconsRect_.isValid() && iconsRect_.contains(mouseEvent->pos()))
+        {
             const int iconWidth = option.decorationSize.width();
             int xPos = mouseEvent->pos().x() - iconsRect_.left();
-            if (xPos % (iconWidth + d->margin) < iconWidth) { //it's on an icon, not a margin
+            if (xPos % (iconWidth + d->margin) < iconWidth)   //it's on an icon, not a margin
+            {
                 Model::PropertyList propertyList = index.data(Model::PropertiesRole).value<Model::PropertyList>();
                 int clickedProperty = -1;
                 // Discover which of all properties was clicked
-                for (int i = 0; i < propertyList.count(); ++i) {
-                    if (propertyList[i].isMutable) {
+                for (int i = 0; i < propertyList.count(); ++i)
+                {
+                    if (propertyList[i].isMutable)
+                    {
                         xPos -= iconWidth + d->margin;
                     }
                     ++clickedProperty;
-                    if (xPos < 0) break;
+                    if (xPos < 0)
+                    {
+                        break;
+                    }
                 }
                 // Using Ctrl+click to enter stasis
                 if (mouseEvent->modifiers() == Qt::ControlModifier
-                    && propertyList[clickedProperty].canHaveStasis) {
+                        && propertyList[clickedProperty].canHaveStasis)
+                {
                     // STEP 0: Prepare to Enter or Leave control key stasis
                     quint16 numberOfLeaves = model->rowCount(index.parent());
                     QModelIndex eachItem;
                     // STEP 1: Go.
-                    if (propertyList[clickedProperty].isInStasis == false) { // Enter
+                    if (propertyList[clickedProperty].isInStasis == false)   // Enter
+                    {
                         /* Make every leaf of this node go State = False, saving the old property value to stateInStasis */
-                        for (quint16 i = 0; i < numberOfLeaves; ++i) { // Foreach leaf in the node (index.parent())
+                        for (quint16 i = 0; i < numberOfLeaves; ++i)   // Foreach leaf in the node (index.parent())
+                        {
                             eachItem = model->index(i, 0, index.parent());
                             // The entire property list has to be altered because model->setData cannot set individual properties
                             Model::PropertyList eachPropertyList = eachItem.data(Model::PropertiesRole).value<Model::PropertyList>();
@@ -144,9 +156,12 @@ bool KoDocumentSectionDelegate::editorEvent(QEvent *event, QAbstractItemModel *m
                         propertyList = index.data(Model::PropertiesRole).value<Model::PropertyList>();
                         propertyList[clickedProperty].state = true;
                         model->setData(index, QVariant::fromValue(propertyList), Model::PropertiesRole);
-                    } else { // Leave
+                    }
+                    else     // Leave
+                    {
                         /* Make every leaf of this node go State = stateInStasis */
-                        for (quint16 i = 0; i < numberOfLeaves; ++i) {
+                        for (quint16 i = 0; i < numberOfLeaves; ++i)
+                        {
                             eachItem = model->index(i, 0, index.parent());
                             // The entire property list has to be altered because model->setData cannot set individual properties
                             Model::PropertyList eachPropertyList = eachItem.data(Model::PropertiesRole).value<Model::PropertyList>();
@@ -155,7 +170,9 @@ bool KoDocumentSectionDelegate::editorEvent(QEvent *event, QAbstractItemModel *m
                             model->setData(eachItem, QVariant::fromValue(eachPropertyList), Model::PropertiesRole);
                         }
                     }
-                } else {
+                }
+                else
+                {
                     propertyList[clickedProperty].state = !propertyList[clickedProperty].state.toBool();
                     model->setData(index, QVariant::fromValue(propertyList), Model::PropertiesRole);
                 }
@@ -164,23 +181,28 @@ bool KoDocumentSectionDelegate::editorEvent(QEvent *event, QAbstractItemModel *m
         }
 
         if (mouseEvent->button() == Qt::LeftButton &&
-            mouseEvent->modifiers() == Qt::AltModifier) {
+                mouseEvent->modifiers() == Qt::AltModifier)
+        {
 
             d->view->setCurrentIndex(index);
             model->setData(index, true, Model::AlternateActiveRole);
             return true;
         }
 
-        if (mouseEvent->button() != Qt::LeftButton) {
+        if (mouseEvent->button() != Qt::LeftButton)
+        {
             d->view->setCurrentIndex(index);
             return false;
         }
     }
-    else if (event->type() == QEvent::ToolTip) {
+    else if (event->type() == QEvent::ToolTip)
+    {
         QHelpEvent *helpEvent = static_cast<QHelpEvent*>(event);
         d->tip.showTip(d->view, helpEvent->pos(), option, index);
         return true;
-    } else if (event->type() == QEvent::Leave) {
+    }
+    else if (event->type() == QEvent::Leave)
+    {
         d->tip.hide();
     }
 
@@ -221,47 +243,61 @@ void KoDocumentSectionDelegate::updateEditorGeometry(QWidget *widget, const QSty
 
 bool KoDocumentSectionDelegate::eventFilter(QObject *object, QEvent *event)
 {
-    switch (event->type()) {
-    case QEvent::MouseButtonPress: {
-        if (d->edit) {
-            QMouseEvent *me = static_cast<QMouseEvent*>(event);
-            if (!QRect(d->edit->mapToGlobal(QPoint()), d->edit->size()).contains(me->globalPos()))
-                emit closeEditor(d->edit);
-        }
-    } break;
-    case QEvent::KeyPress: {
-        QLineEdit *edit = qobject_cast<QLineEdit*>(object);
-        if (edit && edit == d->edit) {
-            QKeyEvent *ke = static_cast<QKeyEvent*>(event);
-            switch (ke->key()) {
-            case Qt::Key_Escape:
-                emit closeEditor(edit);
-                return true;
-            case Qt::Key_Tab:
-                emit commitData(edit);
-                emit closeEditor(edit,EditNextItem);
-                return true;
-            case Qt::Key_Backtab:
-                emit commitData(edit);
-                emit closeEditor(edit, EditPreviousItem);
-                return true;
-            case Qt::Key_Return:
-            case Qt::Key_Enter:
-                emit commitData(edit);
-                emit closeEditor(edit);
-                return true;
-            default: break;
+    switch (event->type())
+    {
+        case QEvent::MouseButtonPress:
+        {
+            if (d->edit)
+            {
+                QMouseEvent *me = static_cast<QMouseEvent*>(event);
+                if (!QRect(d->edit->mapToGlobal(QPoint()), d->edit->size()).contains(me->globalPos()))
+                {
+                    emit closeEditor(d->edit);
+                }
             }
         }
-    } break;
-    case QEvent::FocusOut : {
-        QLineEdit *edit = qobject_cast<QLineEdit*>(object);
-        if (edit && edit == d->edit) {
-            emit commitData(edit);
-            emit closeEditor(edit);
+        break;
+        case QEvent::KeyPress:
+        {
+            QLineEdit *edit = qobject_cast<QLineEdit*>(object);
+            if (edit && edit == d->edit)
+            {
+                QKeyEvent *ke = static_cast<QKeyEvent*>(event);
+                switch (ke->key())
+                {
+                    case Qt::Key_Escape:
+                        emit closeEditor(edit);
+                        return true;
+                    case Qt::Key_Tab:
+                        emit commitData(edit);
+                        emit closeEditor(edit,EditNextItem);
+                        return true;
+                    case Qt::Key_Backtab:
+                        emit commitData(edit);
+                        emit closeEditor(edit, EditPreviousItem);
+                        return true;
+                    case Qt::Key_Return:
+                    case Qt::Key_Enter:
+                        emit commitData(edit);
+                        emit closeEditor(edit);
+                        return true;
+                    default:
+                        break;
+                }
+            }
         }
-    }
-    default: break;
+        break;
+        case QEvent::FocusOut :
+        {
+            QLineEdit *edit = qobject_cast<QLineEdit*>(object);
+            if (edit && edit == d->edit)
+            {
+                emit commitData(edit);
+                emit closeEditor(edit);
+            }
+        }
+        default:
+            break;
     }
 
     return QAbstractItemDelegate::eventFilter(object, event);
@@ -275,21 +311,28 @@ QStyleOptionViewItem KoDocumentSectionDelegate::getOptions(const QStyleOptionVie
 {
     QStyleOptionViewItem option = o;
     QVariant v = index.data(Qt::FontRole);
-    if (v.isValid()) {
+    if (v.isValid())
+    {
         option.font = v.value<QFont>();
         option.fontMetrics = QFontMetrics(option.font);
     }
     v = index.data(Qt::TextAlignmentRole);
     if (v.isValid())
+    {
         option.displayAlignment = QFlag(v.toInt());
+    }
     v = index.data(Qt::TextColorRole);
     if (v.isValid())
+    {
         option.palette.setColor(QPalette::Text, v.value<QColor>());
+    }
     v = index.data(Qt::BackgroundColorRole);
     if (v.isValid())
+    {
         option.palette.setColor(QPalette::Window, v.value<QColor>());
+    }
 
-   return option;
+    return option;
 }
 
 int KoDocumentSectionDelegate::thumbnailHeight(const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -297,11 +340,17 @@ int KoDocumentSectionDelegate::thumbnailHeight(const QStyleOptionViewItem &optio
     const QSize size = index.data(Qt::SizeHintRole).toSize();
     int width = option.rect.width();
     if (!option.rect.isValid())
+    {
         width = availableWidth();
+    }
     if (size.width() <= width)
+    {
         return size.height();
+    }
     else
+    {
         return int(width / (qreal(size.width()) / size.height()));
+    }
 }
 
 int KoDocumentSectionDelegate::availableWidth() const
@@ -316,14 +365,18 @@ int KoDocumentSectionDelegate::textBoxHeight(const QStyleOptionViewItem &option)
 
 QRect KoDocumentSectionDelegate::textRect(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if (d->view->displayMode() == View::ThumbnailMode) {
+    if (d->view->displayMode() == View::ThumbnailMode)
+    {
         const QRect r = decorationRect(option, index);
         const int left = r.right() + d->margin;
         return QRect(left, r.top(), option.rect.width() - left, textBoxHeight(option));
-    } else {
+    }
+    else
+    {
         static QFont f;
         static int minbearing = 1337 + 666; //can be 0 or negative, 2003 is less likely
-        if (minbearing == 2003 || f != option.font) {
+        if (minbearing == 2003 || f != option.font)
+        {
             f = option.font; //getting your bearings can be expensive, so we cache them
             minbearing = option.fontMetrics.minLeftBearing() + option.fontMetrics.minRightBearing();
         }
@@ -331,8 +384,8 @@ QRect KoDocumentSectionDelegate::textRect(const QStyleOptionViewItem &option, co
         int indent = decorationRect(option, index).right() + d->margin;
 
         const int width = (d->view->displayMode() == View::DetailedMode
-                            ? option.rect.width()
-                            : iconsRect(option, index).left())
+                           ? option.rect.width()
+                           : iconsRect(option, index).left())
                           - indent - d->margin + minbearing;
 
         return QRect(indent, 0, width, textBoxHeight(option));
@@ -342,13 +395,17 @@ QRect KoDocumentSectionDelegate::textRect(const QStyleOptionViewItem &option, co
 QRect KoDocumentSectionDelegate::iconsRect(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     if (d->view->displayMode() == View::ThumbnailMode)
+    {
         return QRect();
+    }
 
     Model::PropertyList lp = index.data(Model::PropertiesRole).value<Model::PropertyList>();
     int propscount = 0;
     for (int i = 0, n = lp.count(); i < n; ++i)
         if (lp[i].isMutable)
+        {
             propscount++;
+        }
 
     const int iconswidth = propscount * option.decorationSize.width() + (propscount - 1) * d->margin;
 
@@ -361,52 +418,73 @@ QRect KoDocumentSectionDelegate::iconsRect(const QStyleOptionViewItem &option, c
 QRect KoDocumentSectionDelegate::thumbnailRect(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     if (d->view->displayMode() == View::ThumbnailMode)
+    {
         return QRect(0, 0, option.rect.width(), thumbnailHeight(option, index));
+    }
     else
+    {
         return QRect(0, 0, option.rect.height(), option.rect.height());
+    }
 }
 
 QRect KoDocumentSectionDelegate::decorationRect(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     int width = option.decorationSize.width();
     if (index.data(Qt::DecorationRole).value<QIcon>().isNull())
+    {
         width = 0;
-    switch(d->view->displayMode()) {
-    case View::ThumbnailMode: {
-        QFont font = option.font;
-        if (index.data(Model::ActiveRole).toBool())
-            font.setBold(!font.bold());
-        const QFontMetrics metrics(font);
-        const int totalwidth = metrics.width(index.data(Qt::DisplayRole).toString()) + width + d->margin;
-        int left;
-        if (totalwidth < option.rect.width())
-            left = (option.rect.width() - totalwidth) / 2;
-        else
-            left = 0;
-        return QRect(left, thumbnailRect(option, index).bottom() + d->margin, width, textBoxHeight(option));
     }
-    case View::DetailedMode:
-    case View::MinimalMode: {
-        const int left = thumbnailRect(option, index).right() + d->margin;
-        return QRect(left, 0, width, textBoxHeight(option));
-    }
-    default: return QRect();
+    switch(d->view->displayMode())
+    {
+        case View::ThumbnailMode:
+        {
+            QFont font = option.font;
+            if (index.data(Model::ActiveRole).toBool())
+            {
+                font.setBold(!font.bold());
+            }
+            const QFontMetrics metrics(font);
+            const int totalwidth = metrics.width(index.data(Qt::DisplayRole).toString()) + width + d->margin;
+            int left;
+            if (totalwidth < option.rect.width())
+            {
+                left = (option.rect.width() - totalwidth) / 2;
+            }
+            else
+            {
+                left = 0;
+            }
+            return QRect(left, thumbnailRect(option, index).bottom() + d->margin, width, textBoxHeight(option));
+        }
+        case View::DetailedMode:
+        case View::MinimalMode:
+        {
+            const int left = thumbnailRect(option, index).right() + d->margin;
+            return QRect(left, 0, width, textBoxHeight(option));
+        }
+        default:
+            return QRect();
     }
 }
 
 QRect KoDocumentSectionDelegate::progressBarRect(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     if (d->view->displayMode() == View::ThumbnailMode)
+    {
         return QRect();
+    }
     QRect iconsRect_ = iconsRect(option, index);
     int width = d->view->width() / 4;
-    if (d->view->displayMode() == View::DetailedMode) {
+    if (d->view->displayMode() == View::DetailedMode)
+    {
         // In detailed mode the progress bar take 50% width on the right of the icons
         return QRect(option.rect.width() - width - d->margin, iconsRect_.top(), width, iconsRect_.height()) ;
-    } else {
+    }
+    else
+    {
         // In minimal mode the progress bar take 50% width on the left of icons
-        return QRect(iconsRect_.left() - width - d->margin , iconsRect_.top(),
-                      width, iconsRect_.height());
+        return QRect(iconsRect_.left() - width - d->margin, iconsRect_.top(),
+                     width, iconsRect_.height());
     }
 }
 
@@ -422,7 +500,8 @@ void KoDocumentSectionDelegate::drawText(QPainter *p, const QStyleOptionViewItem
         QPalette::ColorRole cr = (option.state & QStyle::State_Selected) ? QPalette::HighlightedText : QPalette::Text;
         p->setPen(option.palette.color(cg, cr));
 
-        if (index.data(Model::ActiveRole).toBool()) {
+        if (index.data(Model::ActiveRole).toBool())
+        {
             QFont f = p->font();
             f.setBold(!f.bold());
             p->setFont(f);
@@ -445,8 +524,10 @@ void KoDocumentSectionDelegate::drawIcons(QPainter *p, const QStyleOptionViewIte
         p->translate(r.left(), r.top());
         int x = 0;
         Model::PropertyList lp = index.data(Model::PropertiesRole).value<Model::PropertyList>();
-        for(int i = 0, n = lp.count(); i < n; ++i) {
-            if (lp[i].isMutable) {
+        for(int i = 0, n = lp.count(); i < n; ++i)
+        {
+            if (lp[i].isMutable)
+            {
                 QIcon icon = lp[i].state.toBool() ? lp[i].onIcon : lp[i].offIcon;
                 p->drawPixmap(x, 0, icon.pixmap(option.decorationSize, (option.state & QStyle::State_Enabled) ? QIcon::Normal : QIcon::Disabled));
                 x += option.decorationSize.width() + d->margin;
@@ -468,11 +549,14 @@ void KoDocumentSectionDelegate::drawThumbnail(QPainter *p, const QStyleOptionVie
         const int s = (myratio > thumbratio) ? r.height() : r.width();
 
         QImage img = index.data(int(Model::BeginThumbnailRole) + s).value<QImage>();
-        if (!(option.state & QStyle::State_Enabled)) {
+        if (!(option.state & QStyle::State_Enabled))
+        {
             // Make the image grayscale
             // TODO: if someone feel bored a more optimized version of this would be welcome
-            for(int i = 0; i < img.width(); ++i) {
-                for(int j = 0; j < img.width(); ++j) {
+            for(int i = 0; i < img.width(); ++i)
+            {
+                for(int j = 0; j < img.width(); ++j)
+                {
                     img.setPixel(i, j, qGray(img.pixel(i,j)));
                 }
             }
@@ -481,7 +565,8 @@ void KoDocumentSectionDelegate::drawThumbnail(QPainter *p, const QStyleOptionVie
         offset.setX(r.width()/2 - img.width()/2);
         offset.setY(r.height()/2 - img.height()/2);
 
-        if (!img.isNull() && img.width() > 0 && img.height() > 0) {
+        if (!img.isNull() && img.width() > 0 && img.height() > 0)
+        {
             p->drawImage(r.topLeft() + offset, img);
         }
     }
@@ -497,7 +582,9 @@ void KoDocumentSectionDelegate::drawDecoration(QPainter *p, const QStyleOptionVi
         p->setClipRect(r);
         p->translate(r.topLeft());
         if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
+        {
             p->drawPixmap(0, 0, index.data(Qt::DecorationRole).value<QIcon>().pixmap(option.decorationSize, (option.state & QStyle::State_Enabled) ? QIcon::Normal : QIcon::Disabled));
+        }
     }
     p->restore();
 }
@@ -505,7 +592,8 @@ void KoDocumentSectionDelegate::drawDecoration(QPainter *p, const QStyleOptionVi
 void KoDocumentSectionDelegate::drawProgressBar(QPainter *p, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QVariant value = index.data(KoDocumentSectionModel::ProgressRole);
-    if (!value.isNull() && (value.toInt() >= 0 && value.toInt() <= 100)) {
+    if (!value.isNull() && (value.toInt() >= 0 && value.toInt() <= 100))
+    {
         const QRect r = progressBarRect(option, index).translated(option.rect.topLeft());
         p->save();
         {
