@@ -28,11 +28,14 @@ KoFontComboBox::KoFontComboBox(QWidget *parent)
 
 void KoFontComboBox::setCurrentFont(const QFont &font)
 {
-    if (font.family().toLower() == currentFont().family().toLower()) {
+    if (font.family().toLower() == currentFont().family().toLower())
+    {
         return;
     }
-    for (int i = 0; i < count(); ++i) {
-        if (itemText(i).toLower() == font.family().toLower()) {
+    for (int i = 0; i < count(); ++i)
+    {
+        if (itemText(i).toLower() == font.family().toLower())
+        {
             debugWidgets<<Q_FUNC_INFO<<"found:"<<i<<':'<<itemText(i);
             setCurrentIndex(i);
             return;
