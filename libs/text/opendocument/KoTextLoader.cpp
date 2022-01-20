@@ -190,47 +190,6 @@ public:
     KoList *list(const QTextDocument *document, KoListStyle *listStyle, bool mergeSimilarStyledList);
 };
 
-//void TestBlock(QTextCursor &cursor)
-//{
-//    QString text = cursor.block().text();
-//    QTextDocument *doc = cursor.document();
-//    int lines = doc->lineCount();
-//    int i = 0;
-//    lines = doc->pageCount();
-//    QTextFrame *rootframe = doc->rootFrame();
-//    QTextFrame::iterator it;
-//    for (it = rootframe->begin(); !(it.atEnd()); ++it)
-//    {
-//        i++;
-//        QTextFrame *childframe = it.currentFrame();
-//        QTextBlock childblock = it.currentBlock();
-//        if (childframe)
-//        {
-//        }
-//        else if (childblock.isValid())
-//        {
-//            QTextList *list = childblock.textList();
-//            if (list)
-//            {
-//                QString text = childblock.text();
-//                QTextListFormat format = list->format();
-//                QString prefix = format.stringProperty(KoListStyle::ListItemPrefix);
-//                QString suffix = format.stringProperty(KoListStyle::ListItemSuffix);
-//                int      level = format.intProperty(KoListStyle::Level);
-//                QString  StyleId    = QString::number( format.intProperty(KoListStyle::StyleId));
-//                //if (level == 1)
-//                //{
-//                //    format.setProperty(KoListStyle::ListItemPrefix,"");
-//                //    format.setProperty(KoListStyle::ListItemSuffix,"、");
-//                //    list->setFormat(format);
-//                //}
-//                DEBUG_LOG("text:" + text + "lines:" +  QString::number(lines) + " i:" + QString::number(i)+" StyleId:" + StyleId);
-//                DEBUG_LOG("prefix:" + prefix + " suffix:" + suffix + " level:" + QString::number(level));
-//            }
-//        }
-//    }
-//}
-
 KoList *KoTextLoader::Private::list(const QTextDocument *document, KoListStyle *listStyle, bool mergeSimilarStyledList)
 {
     //TODO: Remove mergeSimilarStyledList parameter by finding a way to put the numbered-paragraphs of same level
