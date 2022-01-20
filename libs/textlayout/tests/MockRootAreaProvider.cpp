@@ -32,13 +32,15 @@ MockRootAreaProvider::MockRootAreaProvider()
 
 KoTextLayoutRootArea *MockRootAreaProvider::provide(KoTextDocumentLayout *documentLayout, const RootAreaConstraint &constraint, int requestedPosition, bool *isNewRootArea)
 {
-    if (maxPosition > 0 && requestedPosition > maxPosition) {
+    if (maxPosition > 0 && requestedPosition > maxPosition)
+    {
         qInfo()<<"To many area requests:"<<maxPosition<<requestedPosition;
         return 0; // guard against loop
     }
     m_askedForMoreThenOneArea |= (m_areas.count() > 1);
     *isNewRootArea = !m_areas.contains(requestedPosition);
-    if (!m_areas.contains(requestedPosition)) {
+    if (!m_areas.contains(requestedPosition))
+    {
         m_areas.insert(requestedPosition, new KoTextLayoutRootArea(documentLayout));
         qInfo()<<"New area provided:"<<requestedPosition;
     }

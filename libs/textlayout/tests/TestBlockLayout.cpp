@@ -69,14 +69,16 @@ void TestBlockLayout::setupTest(const QString &initText)
     //m_area = provider->provide(m_layout);
 
     m_block = m_doc->begin();
-    if (initText.length() > 0) {
+    if (initText.length() > 0)
+    {
         QTextCursor cursor(m_doc);
         cursor.insertText(initText);
         KoParagraphStyle style;
         style.setFontPointSize(12.0);
         style.setStyleId(101); // needed to do manually since we don't use the stylemanager
         QTextBlock b2 = m_doc->begin();
-        while (b2.isValid()) {
+        while (b2.isValid())
+        {
             style.applyStyle(b2);
             b2 = b2.next();
         }
@@ -115,7 +117,8 @@ void TestBlockLayout::testBasicLineSpacing()
 
     // QCOMPARE(blockLayout->lineCount(), 15);
     QTextLine line;
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 15; i++)
+    {
         line = blockLayout->lineAt(i);
         QVERIFY(line.isValid());
         // The reason for this weird check is that the values are stored internally
@@ -133,7 +136,8 @@ void TestBlockLayout::testBasicLineSpacing()
     charFormat.setFontPointSize(10);
     cursor.mergeCharFormat(charFormat);
     m_layout->layout();
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 15; i++)
+    {
         line = blockLayout->lineAt(i);
         QVERIFY(line.isValid());
         //qDebug() << i << qAbs(line.y() - i * lineSpacing12);
@@ -152,7 +156,8 @@ void TestBlockLayout::testBasicLineSpacing()
     line = blockLayout->lineAt(1);
     QVERIFY(qAbs(line.y() - (lineSpacing12 + 100.0)) < ROUNDING);
 
-    for (int i = 2; i < 15; i++) {
+    for (int i = 2; i < 15; i++)
+    {
         line = blockLayout->lineAt(i);
 //qDebug() << "i: " << i << " gives: " << line.y() << (lineSpacing12 + lineSpacing18 + (i - 2) * lineSpacing12);
         QVERIFY(qAbs(line.y() - (lineSpacing12 + lineSpacing18 + (i - 2) * lineSpacing12 + 100.0)) < ROUNDING);
@@ -224,7 +229,7 @@ void TestBlockLayout::testPercentageLineSpacing()
     style.setLineHeightPercent(150); // NOTE: This is *PercentLineHeight*, so operates on font size * linespacing
     QTextBlock block = m_doc->begin();
     style.applyStyle(block);
-    
+
     QCOMPARE(block.blockFormat().doubleProperty(KoParagraphStyle::PercentLineHeight), 150.0);
 
     m_layout->layout();
@@ -302,7 +307,8 @@ void TestBlockLayout::testAdvancedLineSpacing()
     m_layout->layout();
 
     block = m_doc->begin(); // line1
-    for (int i = 1; i < 7; ++i) {
+    for (int i = 1; i < 7; ++i)
+    {
         qInfo()<<i<<block.layout()->lineAt(0).y();
         block = block.next();
     }
@@ -320,7 +326,7 @@ void TestBlockLayout::testAdvancedLineSpacing()
     const qreal line6_y = line1_y + line1_height + line2_height + line3_height + line4_height + line5_height;
     const qreal line6_height = lineheight;
     const qreal line7_y = line1_y + line1_height + line2_height + line3_height + line4_height + line5_height + line6_height;
-    
+
     block = m_block; // line1
     QVERIFY(block.isValid());
     QTextLayout *blockLayout = block.layout();
@@ -499,18 +505,24 @@ void TestBlockLayout::testBlockSpacing()
     bool paraTableSpacingAtStart = KoTextDocument(m_doc).paraTableSpacingAtStart();
 
     qreal spaces[3] = {0.0, 3.0, 6.0};
-    for (int t1 = 0; t1 < 3; ++t1) {
-        for (int t2 = 0; t2 < 3; ++t2) {
-            for (int t3 = 0; t3 < 3; ++t3) {
-                for (int b1 = 0; b1 < 3; ++b1) {
+    for (int t1 = 0; t1 < 3; ++t1)
+    {
+        for (int t2 = 0; t2 < 3; ++t2)
+        {
+            for (int t3 = 0; t3 < 3; ++t3)
+            {
+                for (int b1 = 0; b1 < 3; ++b1)
+                {
                     bf1.setTopMargin(spaces[t1]);
                     bf1.setBottomMargin(spaces[b1]);
                     cursor1.setBlockFormat(bf1);
-                    for (int b2 = 0; b2 < 3; ++b2) {
+                    for (int b2 = 0; b2 < 3; ++b2)
+                    {
                         bf2.setTopMargin(spaces[t2]);
                         bf2.setBottomMargin(spaces[b2]);
                         cursor2.setBlockFormat(bf2);
-                        for (int b3 = 0; b3 < 3; ++b3) {
+                        for (int b3 = 0; b3 < 3; ++b3)
+                        {
                             bf3.setTopMargin(spaces[t3]);
                             bf3.setBottomMargin(spaces[b3]);
                             cursor3.setBlockFormat(bf3);
@@ -518,9 +530,12 @@ void TestBlockLayout::testBlockSpacing()
 
                             // Now lets do the actual testing
                             //Above first block is just plain
-                            if (paraTableSpacingAtStart) {
+                            if (paraTableSpacingAtStart)
+                            {
                                 QVERIFY(qAbs(block1Layout->lineAt(0).y() - spaces[t1]) < ROUNDING);
-                            } else {
+                            }
+                            else
+                            {
                                 QVERIFY(qAbs(block1Layout->lineAt(0).y() - (0.0 + 100.0)) < ROUNDING);
                             }
 
@@ -543,18 +558,24 @@ void TestBlockLayout::testBlockSpacing()
     KoTextDocument(m_doc).setParaTableSpacingAtStart(true);
     paraTableSpacingAtStart = KoTextDocument(m_doc).paraTableSpacingAtStart();
 
-    for (int t1 = 0; t1 < 3; ++t1) {
-        for (int t2 = 0; t2 < 3; ++t2) {
-            for (int t3 = 0; t3 < 3; ++t3) {
-                for (int b1 = 0; b1 < 3; ++b1) {
+    for (int t1 = 0; t1 < 3; ++t1)
+    {
+        for (int t2 = 0; t2 < 3; ++t2)
+        {
+            for (int t3 = 0; t3 < 3; ++t3)
+            {
+                for (int b1 = 0; b1 < 3; ++b1)
+                {
                     bf1.setTopMargin(spaces[t1]);
                     bf1.setBottomMargin(spaces[b1]);
                     cursor1.setBlockFormat(bf1);
-                    for (int b2 = 0; b2 < 3; ++b2) {
+                    for (int b2 = 0; b2 < 3; ++b2)
+                    {
                         bf2.setTopMargin(spaces[t2]);
                         bf2.setBottomMargin(spaces[b2]);
                         cursor2.setBlockFormat(bf2);
-                        for (int b3 = 0; b3 < 3; ++b3) {
+                        for (int b3 = 0; b3 < 3; ++b3)
+                        {
                             bf3.setTopMargin(spaces[t3]);
                             bf3.setBottomMargin(spaces[b3]);
                             cursor3.setBlockFormat(bf3);
@@ -562,9 +583,12 @@ void TestBlockLayout::testBlockSpacing()
 
                             // Now lets do the actual testing
                             //Above first block is just plain
-                            if (paraTableSpacingAtStart) {
+                            if (paraTableSpacingAtStart)
+                            {
                                 QVERIFY(qAbs(block1Layout->lineAt(0).y() - (spaces[t1] + 100.0)) < ROUNDING);
-                            } else {
+                            }
+                            else
+                            {
                                 QVERIFY(qAbs(block1Layout->lineAt(0).y() - (0.0 + 100.0)) < ROUNDING);
                             }
 
@@ -668,13 +692,15 @@ void TestBlockLayout::testTextIndent()
 
 void TestBlockLayout::testTabs_data()
 {
-    static const struct TestCaseData {
+    static const struct TestCaseData
+    {
         bool relativeTabs;
         qreal leftMargin;
         qreal textIndent;
         qreal rightMargin;
         qreal expected; // expected value of pos=2 of each line
-    } testcaseDataList[] = {
+    } testcaseDataList[] =
+    {
         { true, 0, 0, 0, 50},
         { true, 0, 0, 5, 50},
         { true, 0, 10, 0, 50},
@@ -721,15 +747,16 @@ void TestBlockLayout::testTabs_data()
     QTest::addColumn<qreal>("rightMargin");
     QTest::addColumn<qreal>("expected");
 
-    for (int i = 0; i < testcasesCount; ++i) {
+    for (int i = 0; i < testcasesCount; ++i)
+    {
         const TestCaseData &testcaseData = testcaseDataList[i];
 
         QTest::newRow(QString::number(i).toLatin1())
-            << testcaseData.relativeTabs
-            << testcaseData.leftMargin
-            << testcaseData.textIndent
-            << testcaseData.rightMargin
-            << testcaseData.expected;
+                << testcaseData.relativeTabs
+                << testcaseData.leftMargin
+                << testcaseData.textIndent
+                << testcaseData.rightMargin
+                << testcaseData.expected;
     }
 }
 
@@ -759,24 +786,35 @@ void TestBlockLayout::testTabs()
     cursor.setBlockFormat(bf);
     m_layout->layout();
 
-    for (int pos=0; pos<4; pos++) {
+    for (int pos=0; pos<4; pos++)
+    {
         if (pos==0)
+        {
             QCOMPARE(blockLayout->lineAt(0).cursorToX(pos*2), leftMargin + textIndent);
-        else {
+        }
+        else
+        {
             warnTextLayout << blockLayout->lineAt(0).cursorToX(pos*2) << expected+(pos-1)*tabSpacing;
             QVERIFY(qAbs(blockLayout->lineAt(0).cursorToX(pos*2) - (expected+(pos-1)*tabSpacing)) < 1.0);
         }
     }
-    if (textIndent == 0.0) { // excluding known fails
-        for (int pos=0; pos<4; pos++) {
+    if (textIndent == 0.0)   // excluding known fails
+    {
+        for (int pos=0; pos<4; pos++)
+        {
             // pos==0 is known to fail see https://bugs.kde.org/show_bug.cgi?id=239819
             if (pos!=0)
+            {
                 QVERIFY(qAbs(blockLayout->lineAt(1).cursorToX(pos*2+8)- (expected+(pos-1)*tabSpacing)) < 1.0);
+            }
         }
-        for (int pos=0; pos<4; pos++) {
+        for (int pos=0; pos<4; pos++)
+        {
             // pos==0 is known to fail see https://bugs.kde.org/show_bug.cgi?id=239819
             if (pos!=0)
+            {
                 QVERIFY(qAbs(blockLayout->lineAt(2).cursorToX(pos*2+16)- (expected+(pos-1)*tabSpacing)) < 1.0);
+            }
         }
     }
 }
@@ -1221,7 +1259,8 @@ void TestBlockLayout::testDropCapsWithNewline()
     QTextLayout *blockLayout = block.layout();
     int lineCount = blockLayout->lineCount();
     // lineCount must be >= 1 and <= 3 for this test to work
-    if (lineCount == 0 || lineCount >= 3) {
+    if (lineCount == 0 || lineCount >= 3)
+    {
         qWarning()<<"The text was not layouted in the required number of lines, so this test will fail";
     }
     QVERIFY(blockLayout->lineCount() >= 1);
