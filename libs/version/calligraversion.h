@@ -42,7 +42,7 @@
 * or for a protocol (e.g. http) be careful that it is appropriate.
 * (Fictional) example: "3.0 Alpha"
 */
-#define CALLIGRA_VERSION_STRING "3.2.1"
+#define CALLIGRA_VERSION_STRING "3.2.2"
 
 /**
  * @def CALLIGRA_STABLE_VERSION_MAJOR
@@ -190,7 +190,7 @@
  *
  * This macro is used in "About application" dialog for strings such as "© 2012-..., The Author Team".
 */
-#define CALLIGRA_YEAR "2021"
+#define CALLIGRA_YEAR "2022"
 
 /**
  * Namespace for general Calligra functions.
