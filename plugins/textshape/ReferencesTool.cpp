@@ -60,17 +60,21 @@ LabeledWidget::LabeledWidget(QAction *action, const QString &label, LabelPositio
     QLabel *l = new QLabel(label);
     l->setWordWrap(true);
     m_lineEdit = new QLineEdit();
-    if (lb == LabeledWidget::INLINE) { // label followed by line edit
+    if (lb == LabeledWidget::INLINE)   // label followed by line edit
+    {
         layout = new QHBoxLayout();
         l->setIndent(l->style()->pixelMetric(QStyle::PM_SmallIconSize)
-                    + l->style()->pixelMetric(QStyle::PM_MenuPanelWidth) + 4);
-    } else { //Label goes above the text edit
+                     + l->style()->pixelMetric(QStyle::PM_MenuPanelWidth) + 4);
+    }
+    else     //Label goes above the text edit
+    {
         layout = new QVBoxLayout();
         m_lineEdit->setFixedWidth(300); //TODO : assuming a reasonable width, is there a better way?
     }
     layout->addWidget(l);
     layout->addWidget(m_lineEdit);
-    if (warningLabelRequired) {
+    if (warningLabelRequired)
+    {
         m_warningLabel[0] = new QLabel("");
         m_warningLabel[1] = new QLabel("");
         m_warningLabel[0]->setWordWrap(true);
@@ -97,7 +101,8 @@ void LabeledWidget::enterEvent(QEvent *event)
 
 void LabeledWidget::setWarningText(int pos, const QString& warning)
 {
-    if (m_warningLabel[pos] == nullptr) {
+    if (m_warningLabel[pos] == nullptr)
+    {
         return;
     }
     m_warningLabel[pos]->setText(warning);
@@ -156,7 +161,8 @@ void ReferencesTool::createActions()
     wAction->setText(i18n("Insert Labeled Endnote"));
     w = new LabeledWidget(wAction, i18n("Insert with label:"), LabeledWidget::INLINE, false);
     wAction->setDefaultWidget(w);
-    addAction("insert_labeledendnote", wAction); connect(w, SIGNAL(triggered(QString)), this, SLOT(insertLabeledEndNote(QString)));
+    addAction("insert_labeledendnote", wAction);
+    connect(w, SIGNAL(triggered(QString)), this, SLOT(insertLabeledEndNote(QString)));
 
     action = new QAction(koIcon("configure"), i18n("Settings..."), this);
     addAction("format_footnotes",action);
@@ -274,7 +280,8 @@ void ReferencesTool::configureBibliography()
 
 void ReferencesTool::formatTableOfContents()
 {
-    if (textEditor()->block().blockFormat().hasProperty(KoParagraphStyle::TableOfContentsData)) {
+    if (textEditor()->block().blockFormat().hasProperty(KoParagraphStyle::TableOfContentsData))
+    {
         m_configure = new TableOfContentsConfigure(textEditor(), textEditor()->block(), m_stocw);
         connect(m_configure, SIGNAL(finished(int)), this, SLOT(hideCofigureDialog()));
     }
@@ -332,16 +339,22 @@ void ReferencesTool::showEndnotesConfigureDialog()
 
 void ReferencesTool::updateButtons()
 {
-    if (textEditor()->currentFrame()->format().intProperty(KoText::SubFrameType) == KoText::NoteFrameType) {
+    if (textEditor()->currentFrame()->format().intProperty(KoText::SubFrameType) == KoText::NoteFrameType)
+    {
         m_sfenw->widget.addFootnote->setEnabled(false);
         m_sfenw->widget.addEndnote->setEnabled(false);
-    } else {
+    }
+    else
+    {
         m_sfenw->widget.addFootnote->setEnabled(true);
         m_sfenw->widget.addEndnote->setEnabled(true);
     }
-    if (textEditor()->block().blockFormat().hasProperty(KoParagraphStyle::TableOfContentsData)) {
+    if (textEditor()->block().blockFormat().hasProperty(KoParagraphStyle::TableOfContentsData))
+    {
         action("format_tableofcontents")->setEnabled(true);
-    } else {
+    }
+    else
+    {
         action("format_tableofcontents")->setEnabled(false);
     }
 
@@ -361,7 +374,8 @@ void ReferencesTool::insertCustomToC(KoTableOfContentsGeneratorInfo *defaultTemp
 
 void ReferencesTool::customToCGenerated()
 {
-    if (m_configure) {
+    if (m_configure)
+    {
         textEditor()->insertTableOfContents(m_configure->currentToCData());
     }
 }
@@ -374,18 +388,22 @@ void ReferencesTool::insertLink()
 bool ReferencesTool::validateBookmark(QString bookmarkName)
 {
     bookmarkName = bookmarkName.trimmed();
-    if (bookmarkName.isEmpty()) {
+    if (bookmarkName.isEmpty())
+    {
         m_bmark->setWarningText(0, i18n("Bookmark cannot be empty"));
         return false;
     }
     const KoBookmarkManager *manager = KoTextDocument(editor()->document()).textRangeManager()->bookmarkManager();
     QStringList existingBookmarks = manager->bookmarkNameList();
     int position = existingBookmarks.indexOf(bookmarkName);
-    if (position != -1) {
+    if (position != -1)
+    {
         m_bmark->setWarningText(0, i18n("Duplicate Name. Click \"Manage Bookmarks\""));
         m_bmark->setWarningText(1, i18n("to Rename or Delete Bookmarks"));
         return false;
-    } else {
+    }
+    else
+    {
         m_bmark->setWarningText(0, "");
         m_bmark->setWarningText(1, "");
         return true;
@@ -397,7 +415,8 @@ void ReferencesTool::insertBookmark(QString bookMarkName)
     bookMarkName = bookMarkName.trimmed();
     m_bmark->setWarningText(0, "");
     m_bmark->setWarningText(1, "");
-    if (validateBookmark(bookMarkName)) {
+    if (validateBookmark(bookMarkName))
+    {
         editor()->addBookmark(bookMarkName);
         m_bmark->clearLineEdit();
     }

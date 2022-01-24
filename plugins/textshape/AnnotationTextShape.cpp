@@ -39,7 +39,7 @@
 #include <QTextLayout>
 
 AnnotationTextShape::AnnotationTextShape(KoInlineTextObjectManager *inlineTextObjectManager,
-                                         KoTextRangeManager *textRangeManager)
+        KoTextRangeManager *textRangeManager)
     : TextShape(inlineTextObjectManager, textRangeManager)
     , m_creator()
     , m_date()
@@ -67,9 +67,10 @@ void AnnotationTextShape::setAnnotationTextData(KoTextShapeData *textShapeData)
 }
 
 void AnnotationTextShape::paintComponent(QPainter &painter, const KoViewConverter &converter,
-                                         KoShapePaintingContext &paintcontext)
+        KoShapePaintingContext &paintcontext)
 {
-    if (paintcontext.showAnnotations) {
+    if (paintcontext.showAnnotations)
+    {
         TextShape::paintComponent(painter, converter, paintcontext);
         QRectF clipRect = outlineRect();
 
@@ -94,30 +95,37 @@ bool AnnotationTextShape::loadOdf(const KoXmlElement &element, KoShapeLoadingCon
 
     const QString localName(element.localName());
 
-    if (localName == "annotation") {
+    if (localName == "annotation")
+    {
 
         // FIXME: Load more attributes here
 
         // Load the metadata (author, date) and contents here.
         KoXmlElement el;
-        forEachElement(el, element) {
-            if (el.localName() == "creator" && el.namespaceURI() == KoXmlNS::dc) {
+        forEachElement(el, element)
+        {
+            if (el.localName() == "creator" && el.namespaceURI() == KoXmlNS::dc)
+            {
                 m_creator = el.text();
-                if (m_creator.isEmpty()) {
+                if (m_creator.isEmpty())
+                {
                     m_creator = "Unknown";
                 }
             }
-            else if (el.localName() == "date" && el.namespaceURI() == KoXmlNS::dc) {
+            else if (el.localName() == "date" && el.namespaceURI() == KoXmlNS::dc)
+            {
                 m_date = el.text();
             }
-            else if (el.localName() == "datestring" && el.namespaceURI() == KoXmlNS::meta) {
+            else if (el.localName() == "datestring" && el.namespaceURI() == KoXmlNS::meta)
+            {
                 m_dateString = el.text();
             }
         }
         textLoader.loadBody(element, cursor);
         //debugTextShape << "****** End Load ******";
     }
-    else {
+    else
+    {
         // something pretty weird going on...
         return false;
     }
@@ -136,7 +144,8 @@ void AnnotationTextShape::saveOdf(KoShapeSavingContext &context) const
     writer->addTextNode(m_date);
     writer->endElement(); // dc:date
 
-    if (!m_dateString.isEmpty()) {
+    if (!m_dateString.isEmpty())
+    {
         writer->startElement("meta:date-string", false);
         writer->addTextNode(m_dateString);
         writer->endElement(); // meta:date-string

@@ -37,7 +37,8 @@ SimpleRootAreaProvider::SimpleRootAreaProvider(KoTextShapeData *data, TextShape 
 
 KoTextLayoutRootArea *SimpleRootAreaProvider::provide(KoTextDocumentLayout *documentLayout, const RootAreaConstraint &, int requestedPosition, bool *isNewRootArea)
 {
-    if(m_area == 0) {
+    if(m_area == 0)
+    {
         *isNewRootArea = true;
         m_area = new KoTextLayoutRootArea(documentLayout);
         m_area->setAssociatedShape(m_textShape);
@@ -45,7 +46,8 @@ KoTextLayoutRootArea *SimpleRootAreaProvider::provide(KoTextDocumentLayout *docu
 
         return m_area;
     }
-    if (requestedPosition == 0) {
+    if (requestedPosition == 0)
+    {
         *isNewRootArea = false;
         return m_area;
     }
@@ -64,50 +66,65 @@ void SimpleRootAreaProvider::doPostLayout(KoTextLayoutRootArea *rootArea, bool i
     m_textShape->update(m_textShape->outlineRect());
 
     QSizeF newSize = m_textShape->size()
-                    - QSizeF(m_textShapeData->leftPadding() + m_textShapeData->rightPadding(),
-                             m_textShapeData->topPadding() + m_textShapeData->bottomPadding());
+                     - QSizeF(m_textShapeData->leftPadding() + m_textShapeData->rightPadding(),
+                              m_textShapeData->topPadding() + m_textShapeData->bottomPadding());
 
     KoBorder *border = m_textShape->border();
-    if (border) {
+    if (border)
+    {
         newSize -= QSizeF(border->borderWidth(KoBorder::LeftBorder) + border->borderWidth(KoBorder::RightBorder), border->borderWidth(KoBorder::TopBorder) + border->borderWidth(KoBorder::BottomBorder));
-    } else {
+    }
+    else
+    {
         KoInsets inset = m_textShape->strokeInsets();
         newSize -= QSizeF((inset.right+inset.left), (inset.bottom+inset.top));
     }
 
 
-    if (m_textShapeData->verticalAlignment() & Qt::AlignBottom) {
+    if (m_textShapeData->verticalAlignment() & Qt::AlignBottom)
+    {
     }
-    if (m_textShapeData->verticalAlignment() & Qt::AlignVCenter) {
+    if (m_textShapeData->verticalAlignment() & Qt::AlignVCenter)
+    {
     }
 
-    if (m_textShapeData->resizeMethod() == KoTextShapeData::AutoResize) {
+    if (m_textShapeData->resizeMethod() == KoTextShapeData::AutoResize)
+    {
         newSize = QSizeF(rootArea->right() - rootArea->left(), rootArea->bottom() - rootArea->top());
         // HACK: The size we get from the shape will cut descents,
         // so we add some reasonable (approximate) value that works ok in normal cases
         QSizeF s(0.0, 0.0);
         int lines = m_textShapeData->document()->lineCount();
-        if (lines > 0) {
+        if (lines > 0)
+        {
             s.setHeight(newSize.height() / lines * 0.2);
         }
         newSize += s;
-    } else {
+    }
+    else
+    {
         if (m_textShapeData->resizeMethod() == KoTextShapeData::AutoGrowWidthAndHeight
-            ||m_textShapeData->resizeMethod() == KoTextShapeData::AutoGrowHeight) {
+                ||m_textShapeData->resizeMethod() == KoTextShapeData::AutoGrowHeight)
+        {
             qreal height = rootArea->bottom() - rootArea->top();
-            if (height > newSize.height()) {
+            if (height > newSize.height())
+            {
                 newSize.setHeight(height);
             }
-            if (m_textShape->shapeId() == "AnnotationTextShapeID") {
-                if (height < newSize.height()) {
+            if (m_textShape->shapeId() == "AnnotationTextShapeID")
+            {
+                if (height < newSize.height())
+                {
                     newSize.setHeight(rootArea->bottom() - rootArea->top());
                 }
             }
         }
         if (m_textShapeData->resizeMethod() == KoTextShapeData::AutoGrowWidthAndHeight
-            ||m_textShapeData->resizeMethod() == KoTextShapeData::AutoGrowWidth) {
+                ||m_textShapeData->resizeMethod() == KoTextShapeData::AutoGrowWidth)
+        {
             qreal width = rootArea->right() - rootArea->left();
-            if (width > newSize.width()) {
+            if (width > newSize.width())
+            {
                 newSize.setWidth(rootArea->right() - rootArea->left());
             }
         }
@@ -116,31 +133,40 @@ void SimpleRootAreaProvider::doPostLayout(KoTextLayoutRootArea *rootArea, bool i
     qreal newBottom = rootArea->top() + newSize.height();
     KoFlake::Position sizeAnchor= KoFlake::TopLeftCorner;
 
-    if (m_textShapeData->verticalAlignment() & Qt::AlignBottom) {
-        if (true /*FIXME test no page based shapes interfering*/) {
+    if (m_textShapeData->verticalAlignment() & Qt::AlignBottom)
+    {
+        if (true /*FIXME test no page based shapes interfering*/)
+        {
             rootArea->setVerticalAlignOffset(newBottom - rootArea->bottom());
             sizeAnchor= KoFlake::BottomLeftCorner;
         }
     }
-    if (m_textShapeData->verticalAlignment() & Qt::AlignVCenter) {
-        if (true /*FIXME test no page based shapes interfering*/) {
+    if (m_textShapeData->verticalAlignment() & Qt::AlignVCenter)
+    {
+        if (true /*FIXME test no page based shapes interfering*/)
+        {
             rootArea->setVerticalAlignOffset((newBottom - rootArea->bottom()) / 2);
             sizeAnchor = KoFlake::CenteredPosition;
         }
     }
     newSize += QSizeF(m_textShapeData->leftPadding() + m_textShapeData->rightPadding(),
                       m_textShapeData->topPadding() + m_textShapeData->bottomPadding());
-    if (border) {
+    if (border)
+    {
         newSize += QSizeF(border->borderWidth(KoBorder::LeftBorder) + border->borderWidth(KoBorder::RightBorder), border->borderWidth(KoBorder::TopBorder) + border->borderWidth(KoBorder::BottomBorder));
-    } else {
+    }
+    else
+    {
         KoInsets inset = m_textShape->strokeInsets();
         newSize += QSizeF((inset.right+inset.left), (inset.bottom+inset.top));
     }
 
-    if (newSize != m_textShape->size()) {
+    if (newSize != m_textShape->size())
+    {
         // OO grows to both sides so when to small the initial layouting needs
         // to keep that into account.
-        if (m_fixAutogrow) {
+        if (m_fixAutogrow)
+        {
             m_fixAutogrow = false;
             QSizeF tmpSize = m_textShape->size();
             tmpSize.setWidth(newSize.width());
@@ -159,7 +185,8 @@ void SimpleRootAreaProvider::doPostLayout(KoTextLayoutRootArea *rootArea, bool i
 
 void SimpleRootAreaProvider::updateAll()
 {
-    if (m_area && m_area->associatedShape()) {
+    if (m_area && m_area->associatedShape())
+    {
         m_area->associatedShape()->update();
     }
 }
@@ -172,10 +199,13 @@ QRectF SimpleRootAreaProvider::suggestRect(KoTextLayoutRootArea *rootArea)
     rect.adjust(m_textShapeData->leftPadding(), m_textShapeData->topPadding(), -m_textShapeData->rightPadding(), - m_textShapeData->bottomPadding());
 
     KoBorder *border = m_textShape->border();
-    if (border) {
+    if (border)
+    {
         rect.adjust(border->borderWidth(KoBorder::LeftBorder),  border->borderWidth(KoBorder::TopBorder),
-              -border->borderWidth(KoBorder::RightBorder), - border->borderWidth(KoBorder::BottomBorder));
-    } else {
+                    -border->borderWidth(KoBorder::RightBorder), - border->borderWidth(KoBorder::BottomBorder));
+    }
+    else
+    {
         KoInsets inset = m_textShape->strokeInsets();
         rect.adjust(inset.left, inset.top, -inset.right, -inset.bottom);
     }
@@ -185,14 +215,16 @@ QRectF SimpleRootAreaProvider::suggestRect(KoTextLayoutRootArea *rootArea)
     rect.setHeight(1E6);
 
     if (m_textShapeData->resizeMethod() == KoTextShapeData::AutoGrowWidthAndHeight
-        ||m_textShapeData->resizeMethod() == KoTextShapeData::AutoGrowWidth
-        ||m_textShapeData->resizeMethod() == KoTextShapeData::AutoResize) {
+            ||m_textShapeData->resizeMethod() == KoTextShapeData::AutoGrowWidth
+            ||m_textShapeData->resizeMethod() == KoTextShapeData::AutoResize)
+    {
         rootArea->setNoWrap(1E6);
     }
 
     // Make sure the size is not negative due to padding and border width
     // This can happen on vertical lines containing text on shape.
-    if (rect.width() < 0) {
+    if (rect.width() < 0)
+    {
         rect.setWidth(0);
     }
     return rect;
@@ -203,10 +235,10 @@ QList<KoTextLayoutObstruction *> SimpleRootAreaProvider::relevantObstructions(Ko
     Q_UNUSED(rootArea);
 
     QList<KoTextLayoutObstruction*> obstructions;
-/*
-    m_textShape->boundingRect();
-    QList<KoShape *> shapes;
-    shapes = manager->shapesAt(canvasRect):
-*/
+    /*
+        m_textShape->boundingRect();
+        QList<KoShape *> shapes;
+        shapes = manager->shapesAt(canvasRect):
+    */
     return obstructions;
 }

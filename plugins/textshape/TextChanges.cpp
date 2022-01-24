@@ -22,14 +22,15 @@
 
 
 TextChanges::TextChanges()
-        : m_root(0)
+    : m_root(0)
 {
 }
 
 TextChanges::~TextChanges()
 {
     TextChange *change = m_root;
-    while (change) {
+    while (change)
+    {
         TextChange *prev = change;
         change = change->next();
         delete prev;
@@ -48,28 +49,42 @@ void TextChanges::changed(int position, const QString &former, const QString &la
     change->setPosition(position);
     change->setNewText(latter);
     change->setOldText(former);
-    if (m_root == 0) {
+    if (m_root == 0)
+    {
         m_root = change;
         return;
     }
 
     TextChange *cursor = m_root;
-    while (cursor->next()) {
-        if (cursor->position() + cursor->length() >= position) break;
+    while (cursor->next())
+    {
+        if (cursor->position() + cursor->length() >= position)
+        {
+            break;
+        }
         cursor = cursor->next();
     }
     Q_ASSERT(cursor);
-    if (cursor->position() > position) { // insert new one before.
+    if (cursor->position() > position)   // insert new one before.
+    {
         cursor->insertBefore(change);
         if (cursor == m_root)
+        {
             m_root = change;
-    } else if (position >= cursor->position() && position <= cursor->position() + cursor->length()) {//merge
+        }
+    }
+    else if (position >= cursor->position() && position <= cursor->position() + cursor->length())    //merge
+    {
         cursor->merge(change);
         delete change;
-    } else { // insert new one after.
+    }
+    else     // insert new one after.
+    {
         cursor->insertAfter(change);
         if (change->next())
+        {
             change->next()->move(change->length());
+        }
     }
 }
 

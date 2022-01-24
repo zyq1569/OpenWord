@@ -37,7 +37,8 @@
 
 #include <algorithm>
 
-QString format(qreal v) {
+QString format(qreal v)
+{
     static const QString f("%1");
     static const QString e("");
     static const QRegExp r("\\.?0+$");
@@ -46,42 +47,42 @@ QString format(qreal v) {
 
 class FontSizeAction::Private
 {
-    public:
-        Private(FontSizeAction *parent)
-            : q(parent)
-        {
-        }
+public:
+    Private(FontSizeAction *parent)
+        : q(parent)
+    {
+    }
 
-        void init();
+    void init();
 
-        FontSizeAction *q;
+    FontSizeAction *q;
 };
 
 // BEGIN FontSizeAction
 FontSizeAction::FontSizeAction(QObject *parent)
-  : KSelectAction(parent),
-    d(new Private(this))
+    : KSelectAction(parent),
+      d(new Private(this))
 {
-  d->init();
+    d->init();
 }
 
 FontSizeAction::FontSizeAction(const QString &text, QObject *parent)
-  : KSelectAction(text, parent),
-    d(new Private(this))
+    : KSelectAction(text, parent),
+      d(new Private(this))
 {
-  d->init();
+    d->init();
 }
 
 FontSizeAction::FontSizeAction(const QIcon &icon, const QString &text, QObject *parent)
-  : KSelectAction(icon, text, parent),
-    d(new Private(this))
+    : KSelectAction(icon, text, parent),
+      d(new Private(this))
 {
-  d->init();
+    d->init();
 }
 
 FontSizeAction::~FontSizeAction()
 {
-  delete d;
+    delete d;
 }
 
 void FontSizeAction::Private::init()
@@ -90,7 +91,8 @@ void FontSizeAction::Private::init()
     QFontDatabase fontDB;
     const QList<int> sizes = fontDB.standardSizes();
     QStringList lst;
-    for ( QList<int>::ConstIterator it = sizes.begin(); it != sizes.end(); ++it ) {
+    for ( QList<int>::ConstIterator it = sizes.begin(); it != sizes.end(); ++it )
+    {
         lst.append( format(*it) );
     }
     q->setItems( lst );
@@ -98,30 +100,36 @@ void FontSizeAction::Private::init()
 
 void FontSizeAction::setFontSize( qreal size )
 {
-    if ( size == fontSize() ) {
+    if ( size == fontSize() )
+    {
         const QString test = format(size);
-        Q_FOREACH(QAction* action, actions()) {
-          if (action->text() == test) {
-              setCurrentAction(action);
-              return;
-          }
+        Q_FOREACH(QAction* action, actions())
+        {
+            if (action->text() == test)
+            {
+                setCurrentAction(action);
+                return;
+            }
         }
     }
 
-    if ( size < 1 ) {
+    if ( size < 1 )
+    {
         qWarning() << "FontSizeAction: Size " << size << " is out of range";
         return;
     }
 
     QAction* a = action( format(size) );
-    if ( !a ) {
+    if ( !a )
+    {
         // Insert at the correct position in the list (to keep sorting)
         QList<qreal> lst;
         // Convert to list of qreals
         QStringListIterator itemsIt( items() );
-	QStringList debug_lst = items();
+        QStringList debug_lst = items();
 
-        while ( itemsIt.hasNext() ) {
+        while ( itemsIt.hasNext() )
+        {
             lst.append( itemsIt.next().toDouble() );
         }
         //add the new size
@@ -132,21 +140,25 @@ void FontSizeAction::setFontSize( qreal size )
 
         // Sort the list
         std::sort( lst.begin(), lst.end() );
-        Q_FOREACH( qreal it, lst ) {
+        Q_FOREACH( qreal it, lst )
+        {
             QAction* const action = addAction( format(it) );
-            if (it == size) {
+            if (it == size)
+            {
                 setCurrentAction(action);
             }
         }
 
-    } else {
+    }
+    else
+    {
         setCurrentAction( a );
     }
 }
 
 qreal FontSizeAction::fontSize() const
 {
-  return currentText().toDouble();
+    return currentText().toDouble();
 }
 
 void FontSizeAction::actionTriggered( QAction* action )

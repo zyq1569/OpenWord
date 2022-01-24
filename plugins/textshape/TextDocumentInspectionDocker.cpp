@@ -60,12 +60,14 @@ void TextDocumentInspectionDocker::setCanvas(KoCanvasBase *canvas)
 {
     setEnabled(canvas != 0);
 
-    if (m_canvas) {
+    if (m_canvas)
+    {
         m_canvas->disconnectCanvasObserver(this);
     }
 
     m_canvas = canvas;
-    if (! m_canvas) {
+    if (! m_canvas)
+    {
         m_textDocumentStructureModel->setTextDocument(0);
         return;
     }
@@ -93,11 +95,14 @@ void TextDocumentInspectionDocker::onShapeSelectionChanged()
     // So we need to guard us here, this can be called when we officially are not
     // connected to any canvas.
     // Cmp. StrokeDocker::selectionChanged()
-    if (m_canvas) {
+    if (m_canvas)
+    {
         KoShape *shape = m_canvas->shapeManager()->selection()->firstSelectedShape();
-        if (shape) {
+        if (shape)
+        {
             TextShape *textShape = dynamic_cast<TextShape*>(shape);
-            if (textShape) {
+            if (textShape)
+            {
                 textDocument = textShape->textShapeData()->document();
             }
         }

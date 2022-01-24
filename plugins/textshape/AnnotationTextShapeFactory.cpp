@@ -62,29 +62,37 @@ KoShape *AnnotationTextShapeFactory::createDefaultShape(KoDocumentResourceManage
 {
     KoInlineTextObjectManager *manager = 0;
     KoTextRangeManager *locationManager = 0;
-    if (documentResources && documentResources->hasResource(KoText::InlineTextObjectManager)) {
+    if (documentResources && documentResources->hasResource(KoText::InlineTextObjectManager))
+    {
         QVariant variant = documentResources->resource(KoText::InlineTextObjectManager);
-        if (variant.isValid()) {
+        if (variant.isValid())
+        {
             manager = variant.value<KoInlineTextObjectManager *>();
         }
     }
-    if (documentResources && documentResources->hasResource(KoText::TextRangeManager)) {
+    if (documentResources && documentResources->hasResource(KoText::TextRangeManager))
+    {
         QVariant variant = documentResources->resource(KoText::TextRangeManager);
-        if (variant.isValid()) {
+        if (variant.isValid())
+        {
             locationManager = variant.value<KoTextRangeManager *>();
         }
     }
-    if (!manager) {
+    if (!manager)
+    {
         manager = new KoInlineTextObjectManager();
     }
-    if (!locationManager) {
+    if (!locationManager)
+    {
         locationManager = new KoTextRangeManager();
     }
     AnnotationTextShape *annotation = new AnnotationTextShape(manager, locationManager);
-    if (documentResources) {
+    if (documentResources)
+    {
         KoTextDocument document(annotation->textShapeData()->document());
 
-        if (documentResources->hasResource(KoText::StyleManager)) {
+        if (documentResources->hasResource(KoText::StyleManager))
+        {
             KoStyleManager *styleManager = documentResources->resource(KoText::StyleManager).value<KoStyleManager*>();
             document.setStyleManager(styleManager);
         }
@@ -94,11 +102,13 @@ KoShape *AnnotationTextShapeFactory::createDefaultShape(KoDocumentResourceManage
 
         document.setUndoStack(documentResources->undoStack());
 
-        if (documentResources->hasResource(KoText::PageProvider)) {
+        if (documentResources->hasResource(KoText::PageProvider))
+        {
             KoPageProvider *pp = static_cast<KoPageProvider *>(documentResources->resource(KoText::PageProvider).value<void*>());
             annotation->setPageProvider(pp);
         }
-        if (documentResources->hasResource(KoText::ChangeTracker)) {
+        if (documentResources->hasResource(KoText::ChangeTracker))
+        {
             KoChangeTracker *changeTracker = documentResources->resource(KoText::ChangeTracker).value<KoChangeTracker*>();
             document.setChangeTracker(changeTracker);
         }
@@ -121,7 +131,8 @@ KoShape *AnnotationTextShapeFactory::createShape(const KoProperties *params, KoD
     AnnotationTextShape *shape = static_cast<AnnotationTextShape*>(createDefaultShape(documentResources));
     shape->textShapeData()->document()->setUndoRedoEnabled(false);
 
-    if (documentResources) {
+    if (documentResources)
+    {
         shape->setImageCollection(documentResources->imageCollection());
     }
     shape->textShapeData()->document()->setUndoRedoEnabled(true);

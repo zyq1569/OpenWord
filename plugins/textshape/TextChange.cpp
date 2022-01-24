@@ -20,7 +20,7 @@
 
 
 TextChange::TextChange()
-        : m_formerPosition(0), m_position(0), m_previous(0), m_next(0)
+    : m_formerPosition(0), m_position(0), m_previous(0), m_next(0)
 {
 }
 
@@ -75,7 +75,9 @@ void TextChange::move(int length)
 {
     m_position += length;
     if (m_next)
+    {
         m_next->move(length);
+    }
 }
 
 void TextChange::insertBefore(TextChange *node)
@@ -85,7 +87,9 @@ void TextChange::insertBefore(TextChange *node)
     node->setNext(this);
     setPrevious(node);
     if (node->previous())
+    {
         node->previous()->setNext(node);
+    }
 }
 
 void TextChange::insertAfter(TextChange *node)
@@ -94,7 +98,9 @@ void TextChange::insertAfter(TextChange *node)
     node->setNext(next());
     setNext(node);
     if (node->next())
+    {
         node->next()->setPrevious(node);
+    }
 }
 
 void TextChange::merge(TextChange *other)
