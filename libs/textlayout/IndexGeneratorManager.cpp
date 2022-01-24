@@ -61,7 +61,8 @@ IndexGeneratorManager *IndexGeneratorManager::instance(QTextDocument *document)
 
     IndexGeneratorManager *igm = resource.value<IndexGeneratorManager *>();
 
-    if (!igm) {
+    if (!igm)
+    {
         igm = new IndexGeneratorManager(document);
 
         resource.setValue(igm);
@@ -74,10 +75,12 @@ IndexGeneratorManager *IndexGeneratorManager::instance(QTextDocument *document)
 
 void IndexGeneratorManager::requestGeneration()
 {
-    if (m_state == FirstRun || m_state == SecondRun) {
+    if (m_state == FirstRun || m_state == SecondRun)
+    {
         return;
     }
-    if (m_document->characterCount() < 2) {
+    if (m_document->characterCount() < 2)
+    {
         return;
     }
     m_updateTimer.stop();
@@ -102,33 +105,40 @@ void IndexGeneratorManager::timeout()
 
 bool IndexGeneratorManager::generate()
 {
-    if (m_state == Resting || m_state == FirstRunLayouting || m_state == SecondRunLayouting) {
+    if (m_state == Resting || m_state == FirstRunLayouting || m_state == SecondRunLayouting)
+    {
         return false;
     }
 
-    if (m_state == FirstRun || m_state == SecondRun) {
+    if (m_state == FirstRun || m_state == SecondRun)
+    {
         return true;
     }
 
-    if (m_document->characterCount() < 2) {
+    if (m_document->characterCount() < 2)
+    {
         return false;
     }
 
-    if (m_state == FirstRunNeeded) {
+    if (m_state == FirstRunNeeded)
+    {
         m_state = FirstRun;
     }
 
-    if (m_state == SecondRunNeeded) {
+    if (m_state == SecondRunNeeded)
+    {
         m_state = SecondRun;
     }
 
     QTextBlock block = m_document->firstBlock();
 
     bool success = true;
-    while (block.isValid()) {
+    while (block.isValid())
+    {
         QTextBlockFormat format = block.blockFormat();
 
-        if (format.hasProperty(KoParagraphStyle::TableOfContentsData)) {
+        if (format.hasProperty(KoParagraphStyle::TableOfContentsData))
+        {
             QVariant data = format.property(KoParagraphStyle::TableOfContentsData);
             KoTableOfContentsGeneratorInfo *tocInfo = data.value<KoTableOfContentsGeneratorInfo *>();
 
@@ -136,7 +146,8 @@ bool IndexGeneratorManager::generate()
             QTextDocument *tocDocument = data.value<QTextDocument *>();
 
             ToCGenerator *generator = m_generators[tocInfo];
-            if (!generator) {
+            if (!generator)
+            {
                 generator = new ToCGenerator(tocDocument, tocInfo);
                 m_generators[tocInfo] = generator;
             }
@@ -148,14 +159,19 @@ bool IndexGeneratorManager::generate()
     }
 
 
-    if (m_state == FirstRun) {
+    if (m_state == FirstRun)
+    {
         m_state = FirstRunLayouting;
     }
 
-    if (m_state == SecondRun) {
-        if (success) {
+    if (m_state == SecondRun)
+    {
+        if (success)
+        {
             m_state = SecondRunLayouting;
-        } else {
+        }
+        else
+        {
             m_state = FirstRunLayouting;
         }
     }
@@ -165,7 +181,8 @@ bool IndexGeneratorManager::generate()
 
 void IndexGeneratorManager::layoutDone()
 {
-    switch (m_state) {
+    switch (m_state)
+    {
         case FirstRunLayouting:
             m_state = SecondRunNeeded;
             m_documentLayout->scheduleLayout();
