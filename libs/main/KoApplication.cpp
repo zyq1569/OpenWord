@@ -169,9 +169,9 @@ KoApplication::KoApplication(const QByteArray &nativeMimeType,
 
 #ifndef QT_NO_DBUS
     ///----- openword : not start (in windows)--------->nedd dbus-daemon.exe 20210615
-    KDBusService service(KDBusService::Multiple);
-    new KoApplicationAdaptor(this);
-    QDBusConnection::sessionBus().registerObject("/application", this);
+//    KDBusService service(KDBusService::Multiple);
+//    new KoApplicationAdaptor(this);
+//    QDBusConnection::sessionBus().registerObject("/application", this);
 
 
 #endif
