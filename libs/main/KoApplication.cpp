@@ -172,6 +172,14 @@ KoApplication::KoApplication(const QByteArray &nativeMimeType,
 //    KDBusService service(KDBusService::Multiple);
 //    new KoApplicationAdaptor(this);
 //    QDBusConnection::sessionBus().registerObject("/application", this);
+//    try
+//    {
+
+//    }
+//    catch ()
+//    {
+
+//    }
 
 
 #endif
