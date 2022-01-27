@@ -468,13 +468,13 @@ void KoTextLayoutArea::drawListItem(QPainter *painter, QTextBlock &block)
     if (list && blockData.hasCounterData())
     {
         QTextListFormat listFormat = list->format();
-        if (! blockData.counterText().isEmpty())
+        QString result = blockData.counterText();
+        if (!result.isEmpty() /*blockData.counterText().isEmpty()*/)
         {
             QFont font(blockData.labelFormat().font(), d->documentLayout->paintDevice());
 
             KoListStyle::LabelType labelType = static_cast<KoListStyle::LabelType>(listFormat.style());
-            QString result = blockData.counterText();
-
+            //QString result = blockData.counterText();
             QTextLayout layout(result, font, d->documentLayout->paintDevice());
 
             QVector<QTextLayout::FormatRange> layouts;
