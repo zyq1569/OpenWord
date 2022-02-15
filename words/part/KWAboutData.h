@@ -29,8 +29,8 @@
 KAboutData * newWordsAboutData()
 {
     KAboutData * aboutData = new KAboutData(
-        QStringLiteral("calligrawords"),
-        i18nc("application name", "Calligra Words"),
+        QStringLiteral("word"),//设置默认app titlename
+        i18nc("application name", "word"),//设置首选app titlename
         QStringLiteral(CALLIGRA_VERSION_STRING),
         i18n("Word processor"),
         KAboutLicense::LGPL,
