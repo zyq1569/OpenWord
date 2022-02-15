@@ -28,6 +28,9 @@
     //    QLoggingCategory::setFilterRules("calligra.*.debug=true\n"
     //                                     "calligra.*.warning=true");
 
+//    QString appname = argv[0];
+//    appname = appname.right(appname.lastIndexOf('\\')-2).replace(".exe","");
+//    QString appname =  QCoreApplication::applicationFilePath();
     QLoggingCategory::setFilterRules("calligra.*.debug=true\n calligra.*.warning=true");
     KoApplication app(WORDS_MIME_TYPE, QStringLiteral("calligrawords"), newWordsAboutData, argc, argv);
     INFO_LOG("----Word start to run!-----");//must after:KoApplication
