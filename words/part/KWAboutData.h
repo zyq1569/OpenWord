@@ -37,7 +37,7 @@ KAboutData * newWordsAboutData()
         i18n("Copyright 1998-%1, The Words Team", QStringLiteral(CALLIGRA_YEAR)),
         QString(),
         QStringLiteral("https://zyq1569.github.io/"));
-    aboutData->setProductName("calligrawords"); // for bugs.kde.org
+    aboutData->setProductName("word"); // for bugs.kde.org
     aboutData->setOrganizationDomain("kde.org");
 #if KCOREADDONS_VERSION >= 0x051600
     aboutData->setDesktopFileName(QStringLiteral("org.kde.calligrawords"));
