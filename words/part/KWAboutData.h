@@ -19,7 +19,7 @@
 
 #ifndef KWABOUTDATA_H
 #define KWABOUTDATA_H
-
+#include <QApplication>
 #include <KAboutData>
 #include <klocalizedstring.h>
 #include <kcoreaddons_version.h>
@@ -29,15 +29,15 @@
 KAboutData * newWordsAboutData()
 {
     KAboutData * aboutData = new KAboutData(
-        QStringLiteral("word"),//设置默认app titlename
-        i18nc("application name", "word"),//设置首选app titlename
+        /*QStringLiteral("calligrawords")*/qApp->applicationFilePath(),//设置默认app titlename
+        i18nc("application name", "words"),//设置首选app titlename
         QStringLiteral(CALLIGRA_VERSION_STRING),
         i18n("Word processor"),
         KAboutLicense::LGPL,
         i18n("Copyright 1998-%1, The Words Team", QStringLiteral(CALLIGRA_YEAR)),
         QString(),
         QStringLiteral("https://zyq1569.github.io/"));
-    aboutData->setProductName("word"); // for bugs.kde.org
+    aboutData->setProductName("words"); // for bugs.kde.org
     aboutData->setOrganizationDomain("kde.org");
 #if KCOREADDONS_VERSION >= 0x051600
     aboutData->setDesktopFileName(QStringLiteral("org.kde.calligrawords"));
