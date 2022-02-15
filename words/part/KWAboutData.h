@@ -19,7 +19,7 @@
 
 #ifndef KWABOUTDATA_H
 #define KWABOUTDATA_H
-#include <QApplication>
+
 #include <KAboutData>
 #include <klocalizedstring.h>
 #include <kcoreaddons_version.h>
@@ -29,7 +29,7 @@
 KAboutData * newWordsAboutData()
 {
     KAboutData * aboutData = new KAboutData(
-        /*QStringLiteral("calligrawords")*/qApp->applicationFilePath(),//设置默认app titlename
+        QStringLiteral("calligrawords"),//设置默认app titlename
         i18nc("application name", "words"),//设置首选app titlename
         QStringLiteral(CALLIGRA_VERSION_STRING),
         i18n("Word processor"),
