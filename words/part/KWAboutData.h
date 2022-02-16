@@ -29,7 +29,7 @@
 KAboutData * newWordsAboutData()
 {
     KAboutData * aboutData = new KAboutData(
-        QStringLiteral("calligrawords"),//设置默认app titlename
+        QStringLiteral("calligrawords"),//设置默认app titlename,必须和当前应用名称一致,否则应用无法启动那个,限制目前未知位置.
         i18nc("application name", "words"),//设置首选app titlename
         QStringLiteral(CALLIGRA_VERSION_STRING),
         i18n("Word processor"),
