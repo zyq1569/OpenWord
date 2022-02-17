@@ -63,7 +63,7 @@ public:
     bool isStartingAt(FrameIterator *cursor) const;
 
     /**
-     * These methods are deprecated since they lead to wrong assumptions.
+     * These methods are deprecated[废弃] since they lead to wrong assumptions.
      * Only use these methods after discussing with boemann. The problem
      * is related to tables (and paragraphs) split over more than one page,
      * in which case these methods just don't give correct or enough information.
