@@ -639,7 +639,7 @@ bool KoTextLayoutArea::layout(FrameIterator *cursor)
     {
         QTextBlock block = cursor->it.currentBlock();
         ///QString textsr = block.text();
-        ///DEBUG_LOG(textsr); //openword
+
         QTextTable *table = qobject_cast<QTextTable*>(cursor->it.currentFrame());
         QTextFrame *subFrame = cursor->it.currentFrame();
         if (table)
@@ -1057,7 +1057,6 @@ bool KoTextLayoutArea::layoutBlock(FrameIterator *cursor)
     QTextLayout *layout = block.layout();
     QTextOption option = layout->textOption();
     option.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
-
     option.setAlignment(QStyle::visualAlignment(d->isRtl ? Qt::RightToLeft : Qt::LeftToRight, pStyle.alignment()));
     if (d->isRtl)
     {
