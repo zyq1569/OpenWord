@@ -57,13 +57,15 @@ void TestDocumentLayout::setupTest(const QString &initText)
     Q_ASSERT(m_layout);
     m_doc->setDocumentLayout(m_layout);
 
-    if (!initText.isEmpty()) {
+    if (!initText.isEmpty())
+    {
         QTextCursor cursor(m_doc);
         cursor.insertText(initText);
         KoParagraphStyle style;
         style.setStyleId(101); // needed to do manually since we don't use the stylemanager
         QTextBlock b2 = m_doc->begin();
-        while (b2.isValid()) {
+        while (b2.isValid())
+        {
             style.applyStyle(b2);
             b2 = b2.next();
         }
@@ -80,14 +82,22 @@ void TestDocumentLayout::testHitTest()
     qreal lineHeight = 0;
     int lines = 0, parag = 0;
     qreal paragOffets[3];
-    while (1) {
-        if (!block.isValid()) break;
+    while (1)
+    {
+        if (!block.isValid())
+        {
+            break;
+        }
         paragOffets[parag++] = offset;
         QTextLayout *txtLayout = block.layout();
         txtLayout->beginLayout();
-        while (1) {
+        while (1)
+        {
             QTextLine line = txtLayout->createLine();
-            if (!line.isValid()) break;
+            if (!line.isValid())
+            {
+                break;
+            }
             ++lines;
             line.setLineWidth(50);
             line.setPosition(QPointF(20, offset));
