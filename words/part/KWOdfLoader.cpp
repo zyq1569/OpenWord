@@ -212,44 +212,6 @@ bool KWOdfLoader::load(KoOdfReadStore &odfStore)
 
     loader.loadBody(body, cursor);   // now let's load the body from the ODF KoXmlElement.
 
-    //QTextDocument *doc = cursor.document();
-    //int lines = doc->lineCount();
-    //int i = 0;
-    //lines = doc->pageCount();
-    //{
-    //    QTextFrame *rootframe = doc->rootFrame();
-    //    QTextFrame::iterator it;
-
-    //    for (it = rootframe->begin(); !(it.atEnd()); ++it)
-    //    {
-    //        i++;
-    //        QTextFrame *childframe = it.currentFrame();
-    //        QTextBlock childblock = it.currentBlock();
-    //        if (childframe)
-    //        {
-
-    //        }
-    //        else if (childblock.isValid())
-    //        {
-    //            QTextList *list = childblock.textList();
-    //            if (list)
-    //            {
-    //                QTextListFormat format = list->format();
-    //                QString prefix = format.stringProperty(KoListStyle::ListItemPrefix);
-    //                QString suffix = format.stringProperty(KoListStyle::ListItemSuffix);
-    //                int      level = format.intProperty(KoListStyle::Level);
-    //                if (level == 1)
-    //                {
-    //                    format.setProperty(KoListStyle::ListItemPrefix,"");
-    //                    format.setProperty(KoListStyle::ListItemSuffix,"、");
-    //                    list->setFormat(format);
-    //                }
-    //                suffix = prefix;
-    //                level = i;
-    //            }
-    //        }
-    //    }
-    //}
     sharedData->connectFlowingTextShapes();
 
     if (loadUpdater)
