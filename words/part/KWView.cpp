@@ -333,8 +333,8 @@ void KWView::setupActions()
     m_actionFormatFrameSet->setEnabled(false);
     connect(m_actionFormatFrameSet, SIGNAL(triggered()), this, SLOT(editFrameProperties()));
 
+    ///KF5:KConfigWidgets ---> openword KStandardAction::Prior Next ....定义的是框架中针对键盘的快捷键响应 eg. (Fn + PgDn , Fn + PgUp)
     QAction *action = actionCollection()->addAction(KStandardAction::Prior,  "page_previous", this, SLOT(goToPreviousPage()));
-
     action = actionCollection()->addAction(KStandardAction::Next,  "page_next", this, SLOT(goToNextPage()));
 
     // -------------- File menu
