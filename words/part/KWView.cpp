@@ -142,7 +142,7 @@ KWView::KWView(KoPart *part, KWDocument *document, QWidget *parent)
 
 
     //openword
-    const QString langName = QLocale::system().name();
+    static const QString langName = QLocale::system().name();
     //"zh_CN"
     QString resoucefile = "calligrawords.rc";
     if (langName == "zh_CN")
@@ -338,15 +338,15 @@ void KWView::setupActions()
     action = actionCollection()->addAction(KStandardAction::Next,  "page_next", this, SLOT(goToNextPage()));
 
     // -------------- File menu
-    const QString langName = QLocale::system().name();
-    if (langName == "zh_CN"&&"Create Template From Document..."==i18n("Create Template From Document..."))
-    {
-        m_actionCreateTemplate = new QAction(i18n("从文档创建模板..."), this);
-    }
-    else
-    {
-        m_actionCreateTemplate = new QAction(i18n("Create Template From Document..."), this);
-    }
+//    static const QString langName = QLocale::system().name();
+//    if (langName == "zh_CN")
+//    {
+//        m_actionCreateTemplate = new QAction(/*i18n*/("从文档创建模板..."), this);
+//    }
+//    else
+//    {
+    m_actionCreateTemplate = new QAction(i18n("Create Template From Document..."), this);
+//    }
 
     m_actionCreateTemplate->setToolTip(i18n("Save this document and use it later as a template"));
     m_actionCreateTemplate->setWhatsThis(i18n("You can save this document as a template.<br><br>You can use this new template as a starting point for another document."));
