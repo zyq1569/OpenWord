@@ -28,8 +28,19 @@ public:
     RulerTabChooser(QWidget *parent) : QWidget(parent), m_type(QTextOption::LeftTab), m_showTabs(false) {}
     ~RulerTabChooser() override {}
 
-    inline QTextOption::TabType type() {return m_type;}
-    void setShowTabs(bool showTabs) { if (m_showTabs == showTabs) return; m_showTabs = showTabs; update(); }
+    inline QTextOption::TabType type()
+    {
+        return m_type;
+    }
+    void setShowTabs(bool showTabs)
+    {
+        if (m_showTabs == showTabs)
+        {
+            return;
+        }
+        m_showTabs = showTabs;
+        update();
+    }
     void mousePressEvent(QMouseEvent *) override;
 
     void paintEvent(QPaintEvent *) override;
@@ -163,14 +174,16 @@ public:
     KoRuler::Tab deletedTab;
     qreal tabDistance;
 
-    struct HotSpotData {
+    struct HotSpotData
+    {
         qreal position;
         int id;
     };
     QList<HotSpotData> hotspots;
 
     bool rightToLeft;
-    enum Selection {
+    enum Selection
+    {
         None,
         Tab,
         FirstLineIndent,
