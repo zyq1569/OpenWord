@@ -58,7 +58,8 @@ public:
     //
     // The "rect" we refer to below is the rectangle around the object
     // with the border. This could be a page, a cell, a paragraph, etc.
-    enum BorderSide {
+    enum BorderSide
+    {
         TopBorder = 0, ///< References the border at the top of the rect
         LeftBorder,    ///< References the border at the left side of the rect
         BottomBorder,  ///< References the border at the bottom of the rect
@@ -70,7 +71,8 @@ public:
     /// Names of the different types of borders.
     //
     // Note that some of the border types are legacies from the old Words format.
-    enum BorderStyle {
+    enum BorderStyle
+    {
         BorderNone, ///< no border. This value forces the computed value of 'border-width' to be '0'.
         BorderDotted,   ///< The border is a series of dots.
         BorderDashed,   ///< The border is a series of short line segments.
@@ -93,7 +95,8 @@ public:
     };
 
     /// Holds data about one border line.
-    struct KOODF_EXPORT BorderData {
+    struct KOODF_EXPORT BorderData
+    {
         BorderData();
 
         /// Compare the border data with another one
@@ -118,7 +121,10 @@ public:
 
     /// Compare the border with another one
     bool operator==(const KoBorder &other) const;
-    bool operator!=(const KoBorder &other) const { return !operator==(other); }
+    bool operator!=(const KoBorder &other) const
+    {
+        return !operator==(other);
+    }
 
     void setBorderStyle(BorderSide side, BorderStyle style);
     BorderStyle borderStyle(BorderSide side) const;
@@ -139,7 +145,8 @@ public:
     bool hasBorder() const;
     bool hasBorder(BorderSide side) const;
 
-    enum BorderPaintArea {
+    enum BorderPaintArea
+    {
         PaintOnLine,
         PaintInsideLine
     };
@@ -164,7 +171,7 @@ public:
     static QString odfBorderStyleString(BorderStyle borderstyle);
     static QString msoBorderStyleString(BorderStyle borderstyle);
 
- private:
+private:
     void paintBorderSide(QPainter &painter, QPointF lineStart, QPointF lineEnd,
                          BorderData *borderData, bool isVertical,
                          BorderData *neighbour1, BorderData *neighbor2,
