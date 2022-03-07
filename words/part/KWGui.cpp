@@ -65,6 +65,7 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
     m_verticalRuler->setShowMousePosition(true);
 
     m_canvas = new KWCanvas(viewMode, static_cast<KWDocument*>(m_view->koDocument()), m_view, this);
+    ///滚动条控制
     KoCanvasControllerWidget *canvasController = new KoCanvasControllerWidget(m_view->actionCollection(), this);
     m_canvasController = canvasController;
     // We need to set this as QDeclarativeView sets them a bit different from QAbstractScrollArea
@@ -87,7 +88,7 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
         dynamic_cast<KoCanvasObserverBase*>(modeBox)->setObservedCanvas(m_canvas);
     }
 
-    gridLayout->addWidget(m_horizontalRuler->tabChooser(), 0, 0);
+    gridLayout->addWidget(m_horizontalRuler->tabChooser(), 0, 0);///是什么控件???
     gridLayout->addWidget(m_horizontalRuler, 0, 1);
     gridLayout->addWidget(m_verticalRuler, 1, 0);
     gridLayout->addWidget(canvasController, 1, 1);
@@ -230,7 +231,7 @@ void KWGui::visibleDockWidget(bool checked)
 
     if (initLang)
     {
-        QString langName = QLocale::system().name();
+        static const QString langName = QLocale::system().name();
         if (langName == "zh_CN")
         {
             showTip = "显示工具箱";
