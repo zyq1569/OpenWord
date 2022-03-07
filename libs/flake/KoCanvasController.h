@@ -57,7 +57,8 @@ class FLAKE_EXPORT KoCanvasController
 {
 public:
     /// An enum to alter the positioning and size of the canvas inside the canvas controller
-    enum CanvasMode {
+    enum CanvasMode
+    {
         AlignTop,     ///< canvas is top aligned if smaller than the viewport
         Centered,     ///< canvas is centered if smaller than the viewport
         Infinite,     ///< canvas is never smaller than the viewport
@@ -278,10 +279,10 @@ public:
      */
     virtual void setVastScrolling(qreal factor) = 0;
 
-   /**
-     * Returns the action collection for the canvas
-     * @returns action collection for this canvas, can be 0
-     */
+    /**
+      * Returns the action collection for the canvas
+      * @returns action collection for this canvas, can be 0
+      */
     virtual KActionCollection* actionCollection() const;
 
     QPoint documentOffset() const;
@@ -322,18 +323,48 @@ public:
 
     // Convenience methods to invoke the signals from subclasses
 
-    void emitCanvasRemoved(KoCanvasController *canvasController) { emit canvasRemoved(canvasController); }
-    void emitCanvasSet(KoCanvasController *canvasController) { emit canvasSet(canvasController); }
-    void emitCanvasOffsetXChanged(int offset) { emit canvasOffsetXChanged(offset); }
-    void emitCanvasOffsetYChanged(int offset) { emit canvasOffsetYChanged(offset); }
-    void emitCanvasMousePositionChanged(const QPoint &position) { emit canvasMousePositionChanged(position); }
-    void emitDocumentMousePositionChanged(const QPointF &position) { emit documentMousePositionChanged(position); }
-    void emitSizeChanged(const QSize &size) { emit sizeChanged(size); }
-    void emitMoveDocumentOffset(const QPoint &point) { emit moveDocumentOffset(point); }
-    void emitZoomRelative(const qreal factor, const QPointF &stillPoint) { emit zoomRelative(factor, stillPoint); }
+    void emitCanvasRemoved(KoCanvasController *canvasController)
+    {
+        emit canvasRemoved(canvasController);
+    }
+    void emitCanvasSet(KoCanvasController *canvasController)
+    {
+        emit canvasSet(canvasController);
+    }
+    void emitCanvasOffsetXChanged(int offset)
+    {
+        emit canvasOffsetXChanged(offset);
+    }
+    void emitCanvasOffsetYChanged(int offset)
+    {
+        emit canvasOffsetYChanged(offset);
+    }
+    void emitCanvasMousePositionChanged(const QPoint &position)
+    {
+        emit canvasMousePositionChanged(position);
+    }
+    void emitDocumentMousePositionChanged(const QPointF &position)
+    {
+        emit documentMousePositionChanged(position);
+    }
+    void emitSizeChanged(const QSize &size)
+    {
+        emit sizeChanged(size);
+    }
+    void emitMoveDocumentOffset(const QPoint &point)
+    {
+        emit moveDocumentOffset(point);
+    }
+    void emitZoomRelative(const qreal factor, const QPointF &stillPoint)
+    {
+        emit zoomRelative(factor, stillPoint);
+    }
 
     // Convenience method to retrieve the canvas controller for who needs to use QPointer
-    KoCanvasController *canvasController() const { return m_canvasController; }
+    KoCanvasController *canvasController() const
+    {
+        return m_canvasController;
+    }
 
 Q_SIGNALS:
     /**
@@ -416,7 +447,8 @@ private:
     KoCanvasController *m_canvasController;
 };
 
-class FLAKE_EXPORT  KoDummyCanvasController : public KoCanvasController {
+class FLAKE_EXPORT  KoDummyCanvasController : public KoCanvasController
+{
 
 public:
 
@@ -429,25 +461,55 @@ public:
 
 
     void scrollContentsBy(int /*dx*/, int /*dy*/) override {}
-    QSize viewportSize() const override { return QSize(); }
+    QSize viewportSize() const override
+    {
+        return QSize();
+    }
     void setDrawShadow(bool /*drawShadow*/) override {}
-    void setCanvas(KoCanvasBase *canvas) override {Q_UNUSED(canvas)}
-    KoCanvasBase *canvas() const override {return 0;}
-    int visibleHeight() const override {return 0;}
-    int visibleWidth() const override {return 0;}
-    int canvasOffsetX() const override {return 0;}
-    int canvasOffsetY() const override {return 0;}
+    void setCanvas(KoCanvasBase *canvas) override
+    {
+        Q_UNUSED(canvas)
+    }
+    KoCanvasBase *canvas() const override
+    {
+        return 0;
+    }
+    int visibleHeight() const override
+    {
+        return 0;
+    }
+    int visibleWidth() const override
+    {
+        return 0;
+    }
+    int canvasOffsetX() const override
+    {
+        return 0;
+    }
+    int canvasOffsetY() const override
+    {
+        return 0;
+    }
     void ensureVisible(const QRectF &/*rect*/, bool /*smooth */ = false) override {}
-    void ensureVisible(KoShape *shape) override {Q_UNUSED(shape)}
+    void ensureVisible(KoShape *shape) override
+    {
+        Q_UNUSED(shape)
+    }
     void zoomIn(const QPoint &/*center*/) override {}
     void zoomOut(const QPoint &/*center*/) override {}
     void zoomBy(const QPoint &/*center*/, qreal /*zoom*/) override {}
     void zoomTo(const QRect &/*rect*/) override {}
     void recenterPreferred() override {}
     void setPreferredCenter(const QPointF &/*viewPoint*/) override {}
-    QPointF preferredCenter() const override {return QPointF();}
+    QPointF preferredCenter() const override
+    {
+        return QPointF();
+    }
     void pan(const QPoint &/*distance*/) override {}
-    QPoint scrollBarValue() const override {return QPoint();}
+    QPoint scrollBarValue() const override
+    {
+        return QPoint();
+    }
     void setScrollBarValue(const QPoint &/*value*/) override {}
     void updateDocumentSize(const QSize &/*sz*/, bool /*recalculateCenter*/) override {}
     void setZoomWithWheel(bool /*zoom*/) override {}
