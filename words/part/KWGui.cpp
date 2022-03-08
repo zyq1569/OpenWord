@@ -74,7 +74,7 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
     //setScene(0);
 
     canvasController->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    m_canvasController->setMargin(10);
+    m_canvasController->setMargin(9);///文本文档区域和周围距离
     m_canvasController->setCanvas(m_canvas);
     m_canvasController->setCanvasMode(KoCanvasController::AlignTop);
     KoToolManager::instance()->addController(m_canvasController);
