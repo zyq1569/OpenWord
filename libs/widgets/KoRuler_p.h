@@ -25,7 +25,10 @@ class RulerTabChooser : public QWidget
 {
 //Q_OBJECT
 public:
-    RulerTabChooser(QWidget *parent) : QWidget(parent), m_type(QTextOption::LeftTab), m_showTabs(false) {}
+    RulerTabChooser(QWidget *parent) : QWidget(parent), m_type(QTextOption::LeftTab), m_showTabs(false)
+    {
+        //setToolTip("RulerTabChooser");
+    }
     ~RulerTabChooser() override {}
 
     inline QTextOption::TabType type()
