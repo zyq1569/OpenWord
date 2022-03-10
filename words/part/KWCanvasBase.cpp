@@ -197,6 +197,7 @@ void KWCanvasBase::paintBackgrounds(QPainter &painter, KWViewMode::ViewMap &view
     // Paint the page.
 
     QColor color = Qt::white;
+
 #ifdef DEBUG_REPAINT
     //color = QColor(random() % 255, random() % 255, random() % 255);
     //openword
@@ -276,9 +277,7 @@ void KWCanvasBase::paint(QPainter &painter, const QRectF &paintRect)
         if (!m_cacheEnabled || !m_pageCacheManager)   // no caching, simple case
         {
 
-            QVector<KWViewMode::ViewMap> map =
-                m_viewMode->mapExposedRects(paintRect.translated(m_documentOffset),
-                                            viewConverter());
+            QVector<KWViewMode::ViewMap> map =  m_viewMode->mapExposedRects(paintRect.translated(m_documentOffset), viewConverter());
             foreach (KWViewMode::ViewMap vm, map)
             {
                 painter.save();
@@ -343,7 +342,10 @@ void KWCanvasBase::paint(QPainter &painter, const QRectF &paintRect)
                     // Paint the background of the page.
                     QColor color = Qt::white;
 #ifdef DEBUG_REPAINT
-                    color = QColor(random() % 255, random() % 255, random() % 255);
+                    //color = QColor(random() % 255, random() % 255, random() % 255);
+                    //openword
+                    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+                    color = QColor(qrand() % 255, qrand() % 255, qrand() % 255);
 #endif
                     painter.fillRect(vm.clipRect, QBrush(color));
 
