@@ -248,7 +248,8 @@ public:
     {
     }
 
-    ~Private() {
+    ~Private()
+    {
         delete selection;
         delete strategy;
     }
@@ -269,29 +270,46 @@ public:
     class DetectCollision
     {
     public:
-        DetectCollision() {}
-        void detect(KoRTree<KoShape *> &tree, KoShape *s, int prevZIndex) {
-            foreach(KoShape *shape, tree.intersects(s->boundingRect())) {
+        DetectCollision()
+        {
+
+        }
+        void detect(KoRTree<KoShape *> &tree, KoShape *s, int prevZIndex)
+        {
+            foreach(KoShape *shape, tree.intersects(s->boundingRect()))
+            {
                 bool isChild = false;
                 KoShapeContainer *parent = s->parent();
-                while (parent && !isChild) {
+                while (parent && !isChild)
+                {
                     if (parent == shape)
+                    {
                         isChild = true;
+                    }
                     parent = parent->parent();
                 }
                 if (isChild)
+                {
                     continue;
+                }
                 if (s->zIndex() <= shape->zIndex() && prevZIndex <= shape->zIndex())
                     // Moving a shape will only make it collide with shapes below it.
+                {
                     continue;
+                }
                 if (shape->collisionDetection() && !shapesWithCollisionDetection.contains(shape))
+                {
                     shapesWithCollisionDetection.append(shape);
+                }
             }
         }
 
-        void fireSignals() {
+        void fireSignals()
+        {
             foreach(KoShape *shape, shapesWithCollisionDetection)
+            {
                 shape->priv()->shapeChanged(KoShape::CollisionDetected);
+            }
         }
 
     private:
