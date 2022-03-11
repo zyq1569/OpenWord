@@ -242,10 +242,8 @@ void KWCanvasBase::paintBorder(QPainter &painter, KWViewMode::ViewMap &viewMap)
     viewConverter()->zoom(&zoomX, &zoomY);
     painter.scale(zoomX, zoomY);
 
-    QPointF topLeftCorner = QPointF(pageRect.topLeft() + QPointF(pageLayout.leftMargin,
-                                    pageLayout.topMargin));
-    QPointF bottomRightCorner = QPointF(pageRect.bottomRight() + QPointF(-pageLayout.rightMargin,
-                                        -pageLayout.bottomMargin));
+    QPointF topLeftCorner = QPointF(pageRect.topLeft() + QPointF(pageLayout.leftMargin, pageLayout.topMargin));
+    QPointF bottomRightCorner = QPointF(pageRect.bottomRight() + QPointF(-pageLayout.rightMargin, -pageLayout.bottomMargin));
     QRectF borderRect = QRectF(topLeftCorner, bottomRightCorner);
     pageLayout.border.paint(painter, borderRect);
 
@@ -267,8 +265,8 @@ void KWCanvasBase::paint(QPainter &painter, const QRectF &paintRect)
 {
     painter.translate(-m_documentOffset);
 
-    static int iteration = 0;
-    iteration++;
+    ///static int iteration = 0;
+    ///iteration++;
 
     if (m_viewMode->hasPages())
     {
@@ -277,6 +275,7 @@ void KWCanvasBase::paint(QPainter &painter, const QRectF &paintRect)
         if (!m_cacheEnabled || !m_pageCacheManager)   // no caching, simple case
         {
 
+            //QVector<KWViewMode::ViewMap> KWViewModeNormal::mapExposedRects(const QRectF &viewRect, KoViewConverter *viewConverter)
             QVector<KWViewMode::ViewMap> map =  m_viewMode->mapExposedRects(paintRect.translated(m_documentOffset), viewConverter());
             foreach (KWViewMode::ViewMap vm, map)
             {
@@ -325,13 +324,10 @@ void KWCanvasBase::paint(QPainter &painter, const QRectF &paintRect)
             if (viewConverter()->zoom() <= m_maxZoom)   // we cache at the actual zoom level
             {
 #endif
-                QVector<KWViewMode::ViewMap> map =
-                    m_viewMode->mapExposedRects(paintRect.translated(m_documentOffset),
-                                                viewConverter());
+                QVector<KWViewMode::ViewMap> map = m_viewMode->mapExposedRects(paintRect.translated(m_documentOffset), viewConverter());
 
                 foreach (KWViewMode::ViewMap vm, map)
                 {
-
                     painter.save();
 
                     // Set up the painter to clip the part of the canvas that contains the rect.
