@@ -150,7 +150,9 @@ public:
     virtual int supportedSpecialFormats() const = 0;
 
     /// Enum values used by specialOutputFlag - note that it's a bitfield for supportedSpecialFormats
-    enum { /*SaveAsCalligra1dot1 = 1,*/ // old and removed
+    enum
+    {
+        /*SaveAsCalligra1dot1 = 1,*/ // old and removed
         SaveAsDirectoryStore = 2,
         SaveAsFlatXML = 4,
         SaveEncrypted = 8
