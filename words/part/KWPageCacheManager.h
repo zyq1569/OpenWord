@@ -29,7 +29,8 @@ class QSize;
 
 class KWPageCacheManager;
 
-class KWPageCache {
+class KWPageCache
+{
 
 
 public:
@@ -53,7 +54,8 @@ public:
     bool allExposed;
 };
 
-class KWPageCacheManager {
+class KWPageCacheManager
+{
 
 public:
 
