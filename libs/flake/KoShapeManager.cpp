@@ -346,7 +346,7 @@ void KoShapeManager::paintShape(KoShape *shape, QPainter &painter, const KoViewC
     if (!shape->filterEffectStack() || shape->filterEffectStack()->isEmpty())
     {
         painter.save();
-        shape->paint(painter, converter, paintContext);
+        shape->paint(painter, converter, paintContext);//绘制文字文本
         painter.restore();
         if (shape->stroke())
         {
@@ -395,7 +395,7 @@ void KoShapeManager::paintShape(KoShape *shape, QPainter &painter, const KoViewC
             else
             {
                 imagePainter.save();
-                shape->paint(imagePainter, converter, paintContext);
+                shape->paint(imagePainter, converter, paintContext);// 显示插入图像
                 imagePainter.restore();
                 if (shape->stroke())
                 {
@@ -483,7 +483,7 @@ void KoShapeManager::paintShape(KoShape *shape, QPainter &painter, const KoViewC
 
         // Paint the result
         painter.save();
-        painter.drawImage(clippingOffset, imageBuffers.value(lastEffect->output()));
+        painter.drawImage(clippingOffset, imageBuffers.value(lastEffect->output()));// 显示插入图像
         painter.restore();
     }
 }
