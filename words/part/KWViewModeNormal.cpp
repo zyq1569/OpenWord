@@ -137,7 +137,7 @@ QVector<KWViewMode::ViewMap> KWViewModeNormal::mapExposedRects(const QRectF &vie
         // FIXME: We should only do this if the annotation area is
         //        actually shown. How can we inside the KWViewMode
         //        know if annotations are active?
-        if (1 /* annotations are shown */)
+        //if (1 /* annotations are shown */)
         {
             const QRectF annotationRect = pageRect.adjusted(page.width(), 0,
                                           KWCanvasBase::AnnotationAreaWidth, GAP);
