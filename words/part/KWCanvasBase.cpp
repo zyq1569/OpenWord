@@ -261,6 +261,7 @@ void KWCanvasBase::paintGrid(QPainter &painter, KWViewMode::ViewMap &vm)
     painter.restore();
 }
 
+///paintRect 中整个重绘区域?
 void KWCanvasBase::paint(QPainter &painter, const QRectF &paintRect)
 {
     painter.translate(-m_documentOffset);
