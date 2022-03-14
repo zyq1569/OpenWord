@@ -81,7 +81,8 @@ KoProgressUpdater::KoProgressUpdater(KoProgressProxy *progressBar,
 
 KoProgressUpdater::~KoProgressUpdater()
 {
-    if (d->output) {
+    if (d->output)
+    {
         Private::logEvents(*d->output, d, referenceTime(), "");
     }
     d->progressBar->setValue(d->progressBar->maximum());
@@ -122,7 +123,8 @@ void KoProgressUpdater::start(int range, const QString &text)
     d->progressBar->setRange(0, range-1);
     d->progressBar->setValue(0);
 
-    if(!text.isEmpty()) {
+    if(!text.isEmpty())
+    {
         d->progressBar->setFormat(text);
     }
     d->totalWeight = 0;
@@ -130,7 +132,7 @@ void KoProgressUpdater::start(int range, const QString &text)
 }
 
 QPointer<KoUpdater> KoProgressUpdater::startSubtask(int weight,
-                                                    const QString &name)
+        const QString &name)
 {
     KoUpdaterPrivate *p = new KoUpdaterPrivate(this, weight, name);
     d->totalWeight += weight;
@@ -140,7 +142,8 @@ QPointer<KoUpdater> KoProgressUpdater::startSubtask(int weight,
     QPointer<KoUpdater> updater = new KoUpdater(p);
     d->subTaskWrappers.append(updater);
 
-    if (!d->updateGuiTimer.isActive()) {
+    if (!d->updateGuiTimer.isActive())
+    {
         // we maybe need to restart the timer if it was stopped in updateUi() cause
         // other sub-tasks created before this one finished already.
         d->updateGuiTimer.start(PROGRESSUPDATER_GUITIMERINTERVAL);
@@ -151,7 +154,8 @@ QPointer<KoUpdater> KoProgressUpdater::startSubtask(int weight,
 
 void KoProgressUpdater::cancel()
 {
-    foreach(KoUpdaterPrivate *updater, d->subtasks) {
+    foreach(KoUpdaterPrivate *updater, d->subtasks)
+    {
         updater->setProgress(100);
         updater->interrupt();
     }
@@ -162,7 +166,8 @@ void KoProgressUpdater::cancel()
 void KoProgressUpdater::update()
 {
     d->updated = true;
-    if (d->mode == Unthreaded) {
+    if (d->mode == Unthreaded)
+    {
         qApp->processEvents();
     }
 }
@@ -176,16 +181,20 @@ void KoProgressUpdater::updateUi()
     // won't happen until we return from this function (which is
     // triggered by a timer)
 
-    if (d->updated) {
+    if (d->updated)
+    {
         int totalProgress = 0;
-        foreach(QPointer<KoUpdaterPrivate> updater, d->subtasks) {
-            if (updater->interrupted()) {
+        foreach(QPointer<KoUpdaterPrivate> updater, d->subtasks)
+        {
+            if (updater->interrupted())
+            {
                 d->currentProgress = -1;
                 return;
             }
 
             int progress = updater->progress();
-            if (progress > 100 || progress < 0) {
+            if (progress > 100 || progress < 0)
+            {
                 progress = updater->progress();
             }
 
@@ -196,13 +205,15 @@ void KoProgressUpdater::updateUi()
         d->updated = false;
     }
 
-    if (d->currentProgress == -1) {
+    if (d->currentProgress == -1)
+    {
         d->progressBar->setValue( d->progressBar->maximum() );
         // should we hide the progressbar after a little while?
         return;
     }
 
-    if (d->currentProgress >= d->progressBar->maximum()) {
+    if (d->currentProgress >= d->progressBar->maximum())
+    {
         // we're done
         d->updateGuiTimer.stop(); // 10 updates/second should be enough?
     }
@@ -220,15 +231,21 @@ bool KoProgressUpdater::hasOutput() const
 }
 
 void KoProgressUpdater::Private::logEvents(QTextStream& out,
-                                           KoProgressUpdater::Private *updater,
-                                           const QTime& startTime,
-                                           const QString& prefix) {
+        KoProgressUpdater::Private *updater,
+        const QTime& startTime,
+        const QString& prefix)
+{
     // initial implementation: write out the names of all events
-    foreach (QPointer<KoUpdaterPrivate> p, updater->subtasks) {
-        if (!p) continue;
-        foreach (const KoUpdaterPrivate::TimePoint &tp, p->getPoints()) {
+    foreach (QPointer<KoUpdaterPrivate> p, updater->subtasks)
+    {
+        if (!p)
+        {
+            continue;
+        }
+        foreach (const KoUpdaterPrivate::TimePoint &tp, p->getPoints())
+        {
             out << prefix+p->objectName() << '\t'
-                    << startTime.msecsTo(tp.time) << '\t' << tp.value << endl;
+                << startTime.msecsTo(tp.time) << '\t' << tp.value << endl;
         }
     }
 }
