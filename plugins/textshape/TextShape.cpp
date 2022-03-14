@@ -111,11 +111,27 @@ void TextShape::paintComponent(QPainter &painter, const KoViewConverter &convert
         }
 
         QPen pen(QColor(210, 210, 210), 0); // use cosmetic pen
+        //QPen pen(QColor(110, 110, 110), 0);
         QPointF onePixel = converter.viewToDocument(QPointF(1.0, 1.0));
         QRectF rect(QPointF(0.0, 0.0), size() - QSizeF(onePixel.x(), onePixel.y()));
         painter.setPen(pen);
         painter.drawRect(rect);
+
     }
+    //else /// Temp Draw // 4个角绘制应该在最后
+    //{
+    //    QPen pen(QColor(0, 0, 0), 0); // use cosmetic pen
+    //    QPointF onePixel = converter.viewToDocument(QPointF(1.0, 1.0));
+    //    QRectF rect(QPointF(0.0, 0.0), size() - QSizeF(onePixel.x(), onePixel.y()));
+    //    painter.setPen(pen);
+    //    //painter.drawRect(rect);
+
+    //    // 4 个角
+    //    qreal vl = 12.0;
+    //    QPointF rTopS(vl-vl, 0.0-vl), rToM(vl-vl,vl-vl), RTopE(0.0-vl, vl-vl);
+    //    painter.drawLine(rTopS,rToM);
+    //    painter.drawLine(rToM,RTopE);
+    //}
     painter.restore();
 
     if (m_textShapeData->isDirty())   // not layouted yet.
