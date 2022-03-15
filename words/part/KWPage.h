@@ -46,10 +46,16 @@ public:
     inline KWPage() : priv(0), n(0) {}
     inline KWPage(KWPageManagerPrivate *manager, int index) : priv(manager), n(index) {}
     inline KWPage(const KWPage &o) : priv(o.priv), n(o.n) {}
-    inline KWPage &operator=(const KWPage &o) { priv = o.priv; n = o.n; return *this; }
+    inline KWPage &operator=(const KWPage &o)
+    {
+        priv = o.priv;
+        n = o.n;
+        return *this;
+    }
 
     /// An enum to define if this is a page that is printed to be a left or a right page
-    enum PageSide {
+    enum PageSide
+    {
         Left,       ///< A left page. Used for even-numbered pages
         Right       ///< A right page. Used for odd numbered pages
     };
@@ -184,9 +190,18 @@ public:
     QImage thumbnail(const QSize &size, KoShapeManager *shapeManager, bool asPrint = false) const;
 
     bool operator==(const KWPage &other) const;
-    inline bool operator!=(const KWPage &other) const { return ! operator==(other); }
-    inline bool operator<(const KWPage &other) const { return n < other.n; }
-    inline bool operator>(const KWPage &other) const { return n > other.n; }
+    inline bool operator!=(const KWPage &other) const
+    {
+        return ! operator==(other);
+    }
+    inline bool operator<(const KWPage &other) const
+    {
+        return n < other.n;
+    }
+    inline bool operator>(const KWPage &other) const
+    {
+        return n > other.n;
+    }
     uint hash() const;
 
 private:

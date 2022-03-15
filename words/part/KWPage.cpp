@@ -31,7 +31,9 @@
 void KWPage::setVisiblePageNumber(int pageNumber)
 {
     if (isValid())
+    {
         priv->setVisiblePageNumber(n, pageNumber);
+    }
 }
 
 bool KWPage::isValid() const
@@ -42,14 +44,18 @@ bool KWPage::isValid() const
 int KWPage::pageNumber() const
 {
     if (! isValid())
-        return -1; // invalid
+    {
+        return -1;    // invalid
+    }
     return priv->pages[n].pageNumber;
 }
 
 KWPageStyle KWPage::pageStyle() const
 {
     if (! isValid())
-        return KWPageStyle(); // invalid
+    {
+        return KWPageStyle();    // invalid
+    }
 
     return priv->pages[n].style;
 }
@@ -57,13 +63,18 @@ KWPageStyle KWPage::pageStyle() const
 void KWPage::setPageStyle(const KWPageStyle style)
 {
     if (! isValid())
+    {
         return;
-    if (! style.isValid()) {
+    }
+    if (! style.isValid())
+    {
         warnWords << "Passing invalid style to KWPage::setPageStyle()";
         return;
     }
     if (! priv->pageStyles.contains(style.name()))
+    {
         priv->pageStyles.insert(style.name(), style);
+    }
 
     KWPageManagerPrivate::Page page = priv->pages[n];
     page.style = style;
@@ -73,11 +84,15 @@ void KWPage::setPageStyle(const KWPageStyle style)
 void KWPage::setPageSide(PageSide ps)
 {
     if (! isValid())
+    {
         return;
+    }
     KWPageManagerPrivate::Page page = priv->pages[n];
 
     if (page.pageSide == ps)
+    {
         return;
+    }
 
     page.pageSide = ps;
     priv->pages.insert(n, page);
@@ -86,7 +101,9 @@ void KWPage::setPageSide(PageSide ps)
 KWPage::PageSide KWPage::pageSide() const
 {
     if (! isValid())
-        return KWPage::Left; // invalid
+    {
+        return KWPage::Left;    // invalid
+    }
 
     return priv->pages[n].pageSide;
 }
@@ -104,7 +121,9 @@ uint KWPage::hash() const
 qreal KWPage::width() const
 {
     if (! isValid())
+    {
         return 0;
+    }
     const KWPageManagerPrivate::Page &page = priv->pages[n];
     return page.style.pageLayout().width;
 }
@@ -112,7 +131,9 @@ qreal KWPage::width() const
 qreal KWPage::height() const
 {
     if (! isValid())
+    {
         return 0;
+    }
     const KWPageManagerPrivate::Page &page = priv->pages[n];
     return page.style.pageLayout().height;
 }
@@ -120,7 +141,9 @@ qreal KWPage::height() const
 qreal KWPage::topMargin() const
 {
     if (! isValid())
+    {
         return 0;
+    }
     const KWPageManagerPrivate::Page &page = priv->pages[n];
     return page.style.pageLayout().topMargin;
 }
@@ -128,7 +151,9 @@ qreal KWPage::topMargin() const
 qreal KWPage::bottomMargin() const
 {
     if (! isValid())
+    {
         return 0;
+    }
     const KWPageManagerPrivate::Page &page = priv->pages[n];
     return page.style.pageLayout().bottomMargin;
 }
@@ -136,29 +161,39 @@ qreal KWPage::bottomMargin() const
 qreal KWPage::leftMargin() const
 {
     if (! isValid())
+    {
         return 0;
+    }
     const KWPageManagerPrivate::Page &page = priv->pages[n];
     qreal answer = page.pageSide == Left ? pageEdgeMargin() : marginClosestBinding();
     if (answer != -1)
+    {
         return answer;
+    }
     return page.style.pageLayout().leftMargin;
 }
 
 qreal KWPage::rightMargin() const
 {
     if (! isValid())
+    {
         return 0;
+    }
     const KWPageManagerPrivate::Page &page = priv->pages[n];
     qreal answer = page.pageSide == Right ? pageEdgeMargin() : marginClosestBinding();
     if (answer != -1)
+    {
         return answer;
+    }
     return page.style.pageLayout().rightMargin;
 }
 
 qreal KWPage::topPadding() const
 {
     if (! isValid())
+    {
         return 0;
+    }
     const KWPageManagerPrivate::Page &page = priv->pages[n];
     return page.style.pageLayout().topPadding;
 }
@@ -166,7 +201,9 @@ qreal KWPage::topPadding() const
 qreal KWPage::bottomPadding() const
 {
     if (! isValid())
+    {
         return 0;
+    }
     const KWPageManagerPrivate::Page &page = priv->pages[n];
     return page.style.pageLayout().bottomPadding;
 }
@@ -174,7 +211,9 @@ qreal KWPage::bottomPadding() const
 qreal KWPage::leftPadding() const
 {
     if (! isValid())
+    {
         return 0;
+    }
     const KWPageManagerPrivate::Page &page = priv->pages[n];
     return page.style.pageLayout().leftPadding;
 }
@@ -182,7 +221,9 @@ qreal KWPage::leftPadding() const
 qreal KWPage::rightPadding() const
 {
     if (! isValid())
+    {
         return 0;
+    }
     const KWPageManagerPrivate::Page &page = priv->pages[n];
     return page.style.pageLayout().rightPadding;
 }
@@ -190,7 +231,9 @@ qreal KWPage::rightPadding() const
 qreal KWPage::pageEdgeMargin() const
 {
     if (! isValid())
+    {
         return 0;
+    }
     const KWPageManagerPrivate::Page &page = priv->pages[n];
     return page.style.pageLayout().pageEdge;
 }
@@ -198,7 +241,9 @@ qreal KWPage::pageEdgeMargin() const
 qreal KWPage::marginClosestBinding() const
 {
     if (! isValid())
+    {
         return 0;
+    }
     const KWPageManagerPrivate::Page &page = priv->pages[n];
     return page.style.pageLayout().bindingSide;
 }
@@ -217,20 +262,25 @@ void KWPage::setOffsetInDocument(qreal offset)
 QRectF KWPage::rect() const
 {
     if (! isValid())
+    {
         return QRectF();
+    }
     return QRectF(0, offsetInDocument(), width(), height());
 }
 
 QRectF KWPage::contentRect() const
 {
     if (! isValid())
+    {
         return QRectF();
+    }
     return priv->pages[n].contentRect;
 }
 
 void KWPage::setContentRect(const QRectF &rect)
 {
-    if (isValid()) {
+    if (isValid())
+    {
         priv->pages[n].contentRect = rect;
     }
 }
@@ -238,7 +288,9 @@ void KWPage::setContentRect(const QRectF &rect)
 KoPageFormat::Orientation KWPage::orientationHint() const
 {
     if (! isValid())
+    {
         return KoPageFormat::Landscape;
+    }
     const KWPageManagerPrivate::Page &page = priv->pages[n];
     return page.orientation;
 }
@@ -246,7 +298,9 @@ KoPageFormat::Orientation KWPage::orientationHint() const
 void KWPage::setOrientationHint(KoPageFormat::Orientation orientation)
 {
     if (! isValid())
+    {
         return;
+    }
     KWPageManagerPrivate::Page page = priv->pages[n];
     page.orientation = orientation;
     priv->pages.insert(n, page);
@@ -255,10 +309,14 @@ void KWPage::setOrientationHint(KoPageFormat::Orientation orientation)
 const KWPage KWPage::previous() const
 {
     if (! isValid())
+    {
         return KWPage();
+    }
     QMap<int,int>::const_iterator iter = priv->pageNumbers.constFind(pageNumber());
     if (iter == priv->pageNumbers.constBegin())
+    {
         return KWPage();
+    }
     --iter;
     return KWPage(priv, iter.value());
 }
@@ -266,19 +324,25 @@ const KWPage KWPage::previous() const
 const KWPage KWPage::next() const
 {
     if (! isValid())
+    {
         return KWPage();
+    }
     QMap<int,int>::const_iterator iter = priv->pageNumbers.constFind(pageNumber());
     Q_ASSERT(iter != priv->pageNumbers.constEnd());
     ++iter;
     if (iter == priv->pageNumbers.constEnd())
+    {
         return KWPage();
+    }
     return KWPage(priv, iter.value());
 }
 
 void KWPage::setDirectionHint(KoText::Direction direction)
 {
     if (!isValid())
+    {
         return;
+    }
     KWPageManagerPrivate::Page page = priv->pages[n];
     page.textDirection = direction;
     priv->pages.insert(n, page);
@@ -287,18 +351,24 @@ void KWPage::setDirectionHint(KoText::Direction direction)
 KoText::Direction KWPage::directionHint() const
 {
     if (! isValid())
+    {
         return KoText::AutoDirection;
+    }
     const KWPageManagerPrivate::Page &page = priv->pages[n];
     KoText::Direction dir = page.textDirection;
     if (dir != KoText::InheritDirection)
+    {
         return dir;
+    }
     return page.style.direction();
 }
 
 void KWPage::setAutoGenerated(bool on)
 {
     if (!isValid())
+    {
         return;
+    }
     KWPageManagerPrivate::Page page = priv->pages[n];
     page.autoGenerated = on;
     priv->pages.insert(n, page);
@@ -307,7 +377,9 @@ void KWPage::setAutoGenerated(bool on)
 bool KWPage::isAutoGenerated() const
 {
     if (!isValid())
+    {
         return false;
+    }
     const KWPageManagerPrivate::Page &page = priv->pages[n];
     return page.autoGenerated;
 }
@@ -325,17 +397,21 @@ QImage KWPage::thumbnail(const QSize &size, KoShapeManager *shapeManager, bool a
     const qreal zoom = (widthScale > heightScale) ? heightScale : widthScale;
     // adapt thumbnailSize to match the rendered page
     QSize thumbnailSize(size);
-    if (widthScale > heightScale) {
+    if (widthScale > heightScale)
+    {
         const int thumbnailWidth = qMin(thumbnailSize.width(), qRound(realWidth*heightScale));
         thumbnailSize.setWidth(thumbnailWidth);
-    } else {
+    }
+    else
+    {
         const int thumbnailHeight = qMin(thumbnailSize.height(), qRound(realHeight*widthScale));
         thumbnailSize.setHeight(thumbnailHeight);
     }
 
     zoomHandler.setZoom(zoom);
 
-    foreach(KoShape* shape, shapeManager->shapes()) {
+    foreach(KoShape* shape, shapeManager->shapes())
+    {
         shape->waitUntilReady(zoomHandler, false);
     }
 
@@ -355,37 +431,50 @@ QImage KWPage::thumbnail(const QSize &size, KoShapeManager *shapeManager, bool a
 int KWPage::visiblePageNumber(PageSelection select, int adjustment) const
 {
     KWPage page = *(const_cast<KWPage*>(this));
-    switch (select) {
-    case KoTextPage::CurrentPage: break;
-    case KoTextPage::PreviousPage:
-        page = page.previous();
-        break;
-    case KoTextPage::NextPage:
-        page = page.next();
-        break;
+    switch (select)
+    {
+        case KoTextPage::CurrentPage:
+            break;
+        case KoTextPage::PreviousPage:
+            page = page.previous();
+            break;
+        case KoTextPage::NextPage:
+            page = page.next();
+            break;
     }
 
     if (! page.isValid())
+    {
         return -1;
-
-    int pageNumber = 0;
-    if (select != KoTextPage::CurrentPage) {
-        pageNumber = page.visiblePageNumber();
-    } else {
-        int n = page.pageNumber();
-        if (priv->visiblePageNumbers.contains(n))
-            pageNumber = priv->visiblePageNumbers[n];
     }
 
-    if (pageNumber == 0) {
+    int pageNumber = 0;
+    if (select != KoTextPage::CurrentPage)
+    {
+        pageNumber = page.visiblePageNumber();
+    }
+    else
+    {
+        int n = page.pageNumber();
+        if (priv->visiblePageNumbers.contains(n))
+        {
+            pageNumber = priv->visiblePageNumbers[n];
+        }
+    }
+
+    if (pageNumber == 0)
+    {
         page = page.previous();
         pageNumber = page.isValid() ? qMax(1, page.visiblePageNumber() + 1) : 1;
     }
 
-    if (adjustment != 0) {
+    if (adjustment != 0)
+    {
         pageNumber += adjustment;
         if (page.priv && !page.priv->pageNumbers.contains(pageNumber))
-            pageNumber = -1; // doesn't exist.
+        {
+            pageNumber = -1;    // doesn't exist.
+        }
     }
 
     return pageNumber;
@@ -394,19 +483,28 @@ int KWPage::visiblePageNumber(PageSelection select, int adjustment) const
 QString KWPage::masterPageName() const
 {
     KWPageStyle pagestyle = pageStyle();
-    if (pagestyle.isValid()) {
+    if (pagestyle.isValid())
+    {
         QString name = pagestyle.name();
         if (!name.isEmpty())
+        {
             return name;
+        }
     }
     KWPage prevpage = previous();
-    while (prevpage.isValid()) {
+    while (prevpage.isValid())
+    {
         KWPageStyle prevpagestyle = prevpage.pageStyle();
-        if (prevpagestyle.isValid()) {
+        if (prevpagestyle.isValid())
+        {
             if (!prevpagestyle.nextStyleName().isEmpty())
+            {
                 return prevpagestyle.nextStyleName();
+            }
             if (!prevpagestyle.name().isEmpty())
+            {
                 return prevpagestyle.name();
+            }
         }
     }
     return QString();
