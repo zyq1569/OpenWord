@@ -36,7 +36,10 @@ class WORDS_EXPORT KWViewModePreview : public KWViewMode
 public:
     /// constructor
     explicit KWViewModePreview();
-    ~KWViewModePreview() override {}
+    ~KWViewModePreview() override
+    {
+
+    }
 
     QPointF documentToView(const QPointF &point, KoViewConverter *viewConverter) const override;
     QPointF viewToDocument(const QPointF &point, KoViewConverter *viewConverter) const override;
