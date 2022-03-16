@@ -81,10 +81,17 @@ void KoTextLayoutArea::paint(QPainter *painter, const KoTextDocumentLayout::Pain
     }
 
     /*
-    struct Timer {
+    struct Timer
+    {
         QTime d->time;
-        Timer() { d->time.start(); }
-        ~Timer() { warnTextLayout << "elapsed=" << d->time.elapsed(); }
+        Timer()
+        {
+            d->time.start();
+        }
+        ~Timer()
+        {
+            warnTextLayout << "elapsed=" << d->time.elapsed();
+        }
     };
     Timer timer;
     */
