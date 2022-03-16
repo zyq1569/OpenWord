@@ -46,7 +46,9 @@ public:
      * Constructor; please use KWViewMode::create()
      */
     KWViewModeNormal();
-    ~KWViewModeNormal() override {}
+    ~KWViewModeNormal() override
+    {
+    }
 
     using KWViewMode::documentToView;
 
@@ -75,6 +77,10 @@ protected:
     QList<qreal> m_pageTops;
     bool m_pageSpreadMode;
     QSizeF m_contents;
+
+    ///20220316 add: set the gap between the pages
+protected:
+    qreal m_pagesGap;
 };
 
 #endif
