@@ -83,7 +83,7 @@ void KoPageLayout::loadOdf(const KoXmlElement &style)
 
         // Page dimension -- width / height
         width  = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "page-width"),
-                                   standard.width);
+                                    standard.width);
         height = KoUnit::parseValue(properties.attributeNS(KoXmlNS::fo, "page-height"),
                                     standard.height);
 

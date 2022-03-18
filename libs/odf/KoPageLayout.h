@@ -35,7 +35,8 @@ class KoGenStyle;
  * This structure defines the page layout, including
  * its size in points, its format (e.g. A4), orientation, unit, margins etc.
  */
-struct KoPageLayout {
+struct KoPageLayout
+{
     /** Page format */
     KoPageFormat::Format format;
     /** Page orientation */
