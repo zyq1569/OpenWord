@@ -108,8 +108,8 @@ private:
     KWCanvas *m_canvas;
     KoRuler *m_horizontalRuler;
     KoRuler *m_verticalRuler;
-
     KoCanvasController *m_canvasController;
+
 private:
     QToolButton *m_showtoolbox;
 };
