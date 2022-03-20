@@ -214,6 +214,21 @@ QVector<KWViewMode::ViewMap> KWViewModeNormal::mapExposedRects(const QRectF &vie
     return answer;
 }
 
+void KWViewModeNormal::setGap(qreal gap)
+{
+    m_pagesGap = gap;
+    if (m_pagesGap < 3)
+    {
+        m_pagesGap = 3;
+    }
+    updatePageCache();
+}
+
+qreal KWViewModeNormal::pagesGap()
+{
+    return m_pagesGap;
+}
+
 void KWViewModeNormal::updatePageCache()
 {
     if (!m_pageManager)
@@ -229,6 +244,7 @@ void KWViewModeNormal::updatePageCache()
     //}
 
     m_pageTops.clear();
+    m_pageGapTops.clear();
     qreal width = 0.0, bottom = 0.0;
     //是否是显示多页同一行?
     if (m_pageSpreadMode)   // two pages next to each other per row
@@ -267,6 +283,10 @@ void KWViewModeNormal::updatePageCache()
         {
             m_pageTops.append(top);
             top  += page.height() + m_pagesGap;
+            ///
+            m_pageGapTops.append(top -  m_pagesGap);
+            m_pageGapTops.append(top);
+            ///||||
             width = qMax(width, page.width());
         }
         bottom = top;
@@ -278,6 +298,10 @@ void KWViewModeNormal::updatePageCache()
     m_contents = QSizeF(width, bottom);
 }
 
+QList<qreal> KWViewModeNormal::getPageTops()
+{
+    return m_pageGapTops;
+}
 QPointF KWViewModeNormal::documentToView(const QPointF & point, KoViewConverter *viewConverter) const
 {
     Q_ASSERT(viewConverter);

@@ -81,6 +81,15 @@ protected:
     ///20220316 add: set the gap between the pages
 protected:
     qreal m_pagesGap;
+public:
+    /// set the gap between the pages
+    void setGap(qreal gap);
+    qreal pagesGap();
+
+    //add 20220317 页间空白区域
+public:
+    QList<qreal> getPageTops();
+    QList<qreal> m_pageGapTops;
 };
 
 #endif
