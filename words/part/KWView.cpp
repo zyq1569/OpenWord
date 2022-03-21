@@ -824,6 +824,7 @@ void KWView::exitFullscreenMode()
 
 void KWView::viewMouseMoveEvent(QMouseEvent *e)
 {
+    //setToolTip(QString::number( e->x()) + "|view| " + QString::number(e->y()));
     if (!m_isFullscreenMode)
     {
         return;
