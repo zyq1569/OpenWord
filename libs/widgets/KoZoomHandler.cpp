@@ -57,9 +57,13 @@ void KoZoomHandler::setResolution( qreal resolutionX, qreal resolutionY )
     m_resolutionY = resolutionY;
 
     if (qFuzzyCompare(m_resolutionX, 1))
+    {
         m_resolutionX = 1;
+    }
     if (qFuzzyCompare(m_resolutionY, 1))
+    {
         m_resolutionY = 1;
+    }
 
     m_zoomedResolutionX = zoom() * resolutionX;
     m_zoomedResolutionY = zoom() * resolutionY;
@@ -76,15 +80,19 @@ void KoZoomHandler::setZoomedResolution( qreal zoomedResolutionX, qreal zoomedRe
 
 void KoZoomHandler::setZoom( qreal zoom )
 {
-    if (qFuzzyCompare(zoom, qreal(1.0))) {
+    if (qFuzzyCompare(zoom, qreal(1.0)))
+    {
         zoom = 1.0;
     }
 
     KoViewConverter::setZoom(zoom);
-    if( zoom == 1.0 ) {
+    if( zoom == 1.0 )
+    {
         m_zoomedResolutionX = m_resolutionX;
         m_zoomedResolutionY = m_resolutionY;
-    } else {
+    }
+    else
+    {
         m_zoomedResolutionX = zoom * m_resolutionX;
         m_zoomedResolutionY = zoom * m_resolutionY;
     }
