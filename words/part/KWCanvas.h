@@ -142,8 +142,8 @@ private Q_SLOTS:
     void pageSetupChanged();
 
 private:
-
     KWView *m_view;
+    KWGui *m_gui;
 };
 
 #endif

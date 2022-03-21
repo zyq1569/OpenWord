@@ -44,7 +44,7 @@
 KWCanvas::KWCanvas(const QString &viewMode, KWDocument *document, KWView *view, KWGui *parent)
     : QWidget(parent),
       KWCanvasBase(document, this),
-      m_view(view)
+      m_view(view),m_gui(parent)
 {
     setAttribute(Qt::WA_OpaquePaintEvent, true);
     setAttribute(Qt::WA_InputMethodEnabled, true);
@@ -52,6 +52,7 @@ KWCanvas::KWCanvas(const QString &viewMode, KWDocument *document, KWView *view, 
     connect(document, SIGNAL(pageSetupChanged()), this, SLOT(pageSetupChanged()));
     m_viewConverter = m_view->viewConverter();
     m_viewMode = KWViewMode::create(viewMode, document);
+    //setToolTip("KWCanvas");
 }
 
 KWCanvas::~KWCanvas()
@@ -100,6 +101,12 @@ void KWCanvas::mouseMoveEvent(QMouseEvent *e)
 {
     m_view->viewMouseMoveEvent(e);
     m_toolProxy->mouseMoveEvent(e, m_viewMode->viewToDocument(e->pos() + m_documentOffset, m_viewConverter));
+    ////////////////////////////|
+    if (m_viewMode->inPagesGap(e->pos() + m_documentOffset, m_viewConverter))
+    {
+        setCursor(Qt::SplitVCursor);
+    }
+    /////////////////////////////||||||||||||||||
 }
 
 void KWCanvas::mousePressEvent(QMouseEvent *e)
