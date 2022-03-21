@@ -106,7 +106,8 @@ public:
      * Acceptance signifies that you have handled this event and found it useful, the effect
      * of that will be that the event will not be handled to other event handlers.
      */
-    inline void accept() {
+    inline void accept()
+    {
         m_event->accept();
     }
 
@@ -115,7 +116,8 @@ public:
      * Ignoring this event means you have not handled it and want to allow other event
      * handlers to try to handle it.
      */
-    inline void ignore() {
+    inline void ignore()
+    {
         m_event->ignore();
     }
 
@@ -126,12 +128,14 @@ public:
     Qt::KeyboardModifiers modifiers() const;
 
     /// return if the event has been accepted.
-    inline bool isAccepted() const {
+    inline bool isAccepted() const
+    {
         return m_event->isAccepted();
     }
 
     /// return if this event was spontaneous (see QMouseEvent::spontaneous())
-    inline bool spontaneous() const {
+    inline bool spontaneous() const
+    {
         return m_event->spontaneous();
     }
 

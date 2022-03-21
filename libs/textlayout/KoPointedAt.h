@@ -40,8 +40,9 @@ public:
 
     void fillInLinks(const QTextCursor &cursor, KoInlineTextObjectManager *inlineManager, KoTextRangeManager *rangeManager);
 
-    enum TableHit {
-          None
+    enum TableHit
+    {
+        None
         , ColumnDivider
         , RowDivider
     };
