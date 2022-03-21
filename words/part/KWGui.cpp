@@ -221,8 +221,8 @@ void KWGui::setupUnitActions()
 void KWGui::mouseMoveEvent(QMouseEvent *e)
 {
     m_view->viewMouseMoveEvent(e);
+    //setToolTip(QString::number( e->x()) + "|" + QString::number(e->y()));
 }
-
 
 void KWGui::visibleDockWidget(bool checked)
 {
