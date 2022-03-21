@@ -45,8 +45,8 @@
 
 
 KWCanvasItem::KWCanvasItem(const QString &viewMode, KWDocument *document)
-        : QGraphicsWidget(0),
-        KWCanvasBase(document, this)
+    : QGraphicsWidget(0),
+      KWCanvasBase(document, this)
 {
     setAttribute(Qt::WA_OpaquePaintEvent, true);
     setFocusPolicy(Qt::StrongFocus);
@@ -93,7 +93,8 @@ void KWCanvasItem::mousePressEvent(QGraphicsSceneMouseEvent *e)
 {
     QMouseEvent me(e->type(), e->pos().toPoint(), e->button(), e->buttons(), e->modifiers());
     m_toolProxy->mousePressEvent(&me, m_viewMode->viewToDocument(e->pos() + m_documentOffset, m_viewConverter));
-    if (!me.isAccepted() && me.button() == Qt::RightButton) {
+    if (!me.isAccepted() && me.button() == Qt::RightButton)
+    {
         // XXX: Port to graphicsitem!
         //m_view->popupContextMenu(e->globalPos(), m_toolProxy->popupActionList());
         me.setAccepted(true);
@@ -118,12 +119,17 @@ void KWCanvasItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *e)
 void KWCanvasItem::keyPressEvent(QKeyEvent *e)
 {
     m_toolProxy->keyPressEvent(e);
-    if (! e->isAccepted()) {
+    if (! e->isAccepted())
+    {
         if (e->key() == Qt::Key_Backtab
                 || (e->key() == Qt::Key_Tab && (e->modifiers() & Qt::ShiftModifier)))
+        {
             focusNextPrevChild(false);
+        }
         else if (e->key() == Qt::Key_Tab)
+        {
             focusNextPrevChild(true);
+        }
     }
 }
 
