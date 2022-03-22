@@ -144,6 +144,7 @@ private Q_SLOTS:
 private:
     KWView *m_view;
     KWGui *m_gui;
+    QCursor cursorS,cursorH;
 };
 
 #endif
