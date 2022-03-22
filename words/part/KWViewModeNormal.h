@@ -83,13 +83,10 @@ protected:
     qreal m_pagesGap;
 public:
     /// set the gap between the pages
-    void setGap(qreal gap);
+    void setGap(qreal gap = 20) override;
     qreal pagesGap();
-
     //add 20220317 页间空白区域
-public:
-    QList<qreal> getPageTops();
-    QList<qreal> m_pageGapTops;
+    int inPagesGap(QPointF point, KoViewConverter *viewConverter) override;
 };
 
 #endif

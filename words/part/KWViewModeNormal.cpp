@@ -26,7 +26,7 @@
 #include <WordsDebug.h>
 
 #define GAP 10
-#define PAGESGAP 10
+#define PAGESGAP 20
 
 KWViewModeNormal::KWViewModeNormal(): m_pageSpreadMode(false),m_pagesGap(PAGESGAP)
 {
@@ -216,10 +216,14 @@ QVector<KWViewMode::ViewMap> KWViewModeNormal::mapExposedRects(const QRectF &vie
 
 void KWViewModeNormal::setGap(qreal gap)
 {
-    m_pagesGap = gap;
-    if (m_pagesGap < 3)
+    // to do ...
+    if ( gap == m_pagesGap)
     {
         m_pagesGap = 3;
+    }
+    else
+    {
+        m_pagesGap = gap;
     }
     updatePageCache();
 }
@@ -244,7 +248,6 @@ void KWViewModeNormal::updatePageCache()
     //}
 
     m_pageTops.clear();
-    m_pageGapTops.clear();
     qreal width = 0.0, bottom = 0.0;
     //是否是显示多页同一行?
     if (m_pageSpreadMode)   // two pages next to each other per row
@@ -283,10 +286,6 @@ void KWViewModeNormal::updatePageCache()
         {
             m_pageTops.append(top);
             top  += page.height() + m_pagesGap;
-            ///
-            m_pageGapTops.append(top -  m_pagesGap);
-            m_pageGapTops.append(top);
-            ///||||
             width = qMax(width, page.width());
         }
         bottom = top;
@@ -298,10 +297,6 @@ void KWViewModeNormal::updatePageCache()
     m_contents = QSizeF(width, bottom);
 }
 
-QList<qreal> KWViewModeNormal::getPageTops()
-{
-    return m_pageGapTops;
-}
 QPointF KWViewModeNormal::documentToView(const QPointF & point, KoViewConverter *viewConverter) const
 {
     Q_ASSERT(viewConverter);
@@ -331,6 +326,30 @@ QPointF KWViewModeNormal::documentToView(const QPointF & point, KoViewConverter 
     Q_ASSERT(pageIndex < m_pageTops.count());
     QPointF translated(x, m_pageTops[pageIndex]);
     return viewConverter->documentToView(translated + offsetInPage);
+}
+
+
+int KWViewModeNormal::inPagesGap(QPointF point, KoViewConverter *viewConverter)
+{
+    Q_ASSERT(viewConverter);
+    QPointF clippedPoint(qMax(qreal(0.0), point.x()), qMax(qreal(0.0), point.y()));
+    QPointF translated = viewConverter->viewToDocument(clippedPoint);
+
+    foreach (qreal top, m_pageTops)
+    {
+        if (translated.y() < (top+3) && (translated.y() + m_pagesGap + 3) > top )
+        {
+            if (m_pagesGap > 3)
+            {
+                return 1;//hide gap
+            }
+            else
+            {
+                return 2;//show gap
+            }
+        }
+    }
+    return 0;
 }
 
 QPointF KWViewModeNormal::viewToDocument(const QPointF & point, KoViewConverter *viewConverter) const
