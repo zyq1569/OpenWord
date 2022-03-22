@@ -64,6 +64,8 @@ LIBS               +=  -L$${SDK_LIB_PREFIX} \
 
 }
 
+//QMAKE_CXXFLAGS     +=  -Wno-unused-parameter
+
 CONFIG             += debug_and_release  c++11
 
 DEFINES            +=  KWIDGETSADDONS_DEPRECATED_WARNINGS_SINCE KCOMPLETION_NO_DEPRECATED  KI18N_DEPRECATED KI18N_NO_DEPRECATED
