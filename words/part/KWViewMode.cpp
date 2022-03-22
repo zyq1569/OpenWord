@@ -74,3 +74,14 @@ KWViewMode *KWViewMode::create(const QString &viewModeType, KWDocument *document
     return vm;
 }
 
+int KWViewMode:: inPagesGap(QPointF point, KoViewConverter *viewConverter)
+{
+    Q_UNUSED(point);
+    Q_UNUSED(viewConverter);
+    return 0;
+}
+
+void KWViewMode::setGap(qreal gap)
+{
+    Q_UNUSED(gap);
+}

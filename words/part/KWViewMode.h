@@ -123,6 +123,12 @@ public:
      */
     virtual QVector<ViewMap> mapExposedRects(const QRectF &clipRect, KoViewConverter *viewConverter) const = 0;
 
+    ///add 20220317 页间空白区域
+    virtual int inPagesGap(QPointF point, KoViewConverter *viewConverter);
+public:
+    /// set the gap between the pages
+    virtual void setGap(qreal gap = 20);
+
 public Q_SLOTS:
     /**
      *  Notification that the page setup has changed expected when a page has been
