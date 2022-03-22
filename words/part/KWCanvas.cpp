@@ -44,7 +44,8 @@
 KWCanvas::KWCanvas(const QString &viewMode, KWDocument *document, KWView *view, KWGui *parent)
     : QWidget(parent),
       KWCanvasBase(document, this),
-      m_view(view),m_gui(parent)
+      m_view(view),m_gui(parent),cursorS(QPixmap(":/images/showgap.png")),
+      cursorH(QPixmap(":/images/hidegap.png"))
 {
     setAttribute(Qt::WA_OpaquePaintEvent, true);
     setAttribute(Qt::WA_InputMethodEnabled, true);
@@ -102,11 +103,16 @@ void KWCanvas::mouseMoveEvent(QMouseEvent *e)
     m_view->viewMouseMoveEvent(e);
     m_toolProxy->mouseMoveEvent(e, m_viewMode->viewToDocument(e->pos() + m_documentOffset, m_viewConverter));
     ////////////////////////////|
-    if (m_viewMode->inPagesGap(e->pos() + m_documentOffset, m_viewConverter))
+    int state = m_viewMode->inPagesGap(e->pos() + m_documentOffset, m_viewConverter);
+    if (state == 1)
     {
-        setCursor(Qt::SplitVCursor);
+        setCursor(cursorH);
     }
-    /////////////////////////////||||||||||||||||
+    else if (state == 2)
+    {
+        setCursor(cursorS);
+    }
+    /////////////////////////////|
 }
 
 void KWCanvas::mousePressEvent(QMouseEvent *e)
@@ -121,7 +127,16 @@ void KWCanvas::mouseReleaseEvent(QMouseEvent *e)
 
 void KWCanvas::mouseDoubleClickEvent(QMouseEvent *e)
 {
-    m_toolProxy->mouseDoubleClickEvent(e, m_viewMode->viewToDocument(e->pos() + m_documentOffset, m_viewConverter));
+    ///20220322
+    if (m_viewMode->inPagesGap(e->pos() + m_documentOffset, m_viewConverter) > 0)
+    {
+        m_viewMode->setGap();
+        repaint();// to do... update()
+    }
+    else
+    {
+        m_toolProxy->mouseDoubleClickEvent(e, m_viewMode->viewToDocument(e->pos() + m_documentOffset, m_viewConverter));
+    }
 }
 
 bool KWCanvas::event(QEvent *e)
