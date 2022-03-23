@@ -87,7 +87,8 @@ public:
     bool isValid() const;
 
     /// Specifies the type of pages that a page master should generate.
-    enum PageUsageType {
+    enum PageUsageType
+    {
         AllPages, ///< if there are no style:header-left or style:footer-left elements, the header and footer content is the same for left and right pages.
         LeftPages, ///< style:header-left or style:footer-left elements are ignored.
         MirroredPages, ///< if there are no style:header-left or style:footer-left elements, the header and footer content is the same for left and right pages.
@@ -210,7 +211,10 @@ public:
     void loadOdf(KoOdfLoadingContext &context, const KoXmlElement &masterNode, const KoXmlElement &style, KoDocumentResourceManager *documentResources);
 
     bool operator==(const KWPageStyle &other) const;
-    inline bool operator!=(const KWPageStyle &other) const { return ! operator==(other); }
+    inline bool operator!=(const KWPageStyle &other) const
+    {
+        return ! operator==(other);
+    }
     uint hash() const;
 
     /// internal
