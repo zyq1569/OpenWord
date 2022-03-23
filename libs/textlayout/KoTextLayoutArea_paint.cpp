@@ -355,9 +355,12 @@ void KoTextLayoutArea::paint(QPainter *painter, const KoTextDocumentLayout::Pain
                         frontBrush.setStyle(Qt::SolidPattern);
                         // use the same luma calculation and threshold as msoffice
                         // see http://social.msdn.microsoft.com/Forums/en-US/os_binaryfile/thread/a02a9a24-efb6-4ba0-a187-0e3d2704882b
-                        int luma = ((5036060/2) * backbrush.color().red()
-                                    + (9886846/2) * backbrush.color().green()
-                                    + (1920103/2) * backbrush.color().blue()) >> 23;
+                        //int luma = ((5036060/2) * backbrush.color().red()
+                        //            + (9886846/2) * backbrush.color().green()
+                        //            + (1920103/2) * backbrush.color().blue()) >> 23;
+                        int luma = (2518030  * backbrush.color().red()
+                                    + 4943423 * backbrush.color().green()
+                                    + (1920103/2)  * backbrush.color().blue()) >> 23;
                         if (luma > 60)
                         {
                             frontBrush.setColor(QColor(Qt::black));
