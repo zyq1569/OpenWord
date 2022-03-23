@@ -91,8 +91,7 @@ TextShape::~TextShape()
 {
 }
 
-void TextShape::paintComponent(QPainter &painter, const KoViewConverter &converter,
-                               KoShapePaintingContext &paintContext)
+void TextShape::paintComponent(QPainter &painter, const KoViewConverter &converter,  KoShapePaintingContext &paintContext)
 {
     painter.save();
     applyConversion(painter, converter);

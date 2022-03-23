@@ -68,10 +68,16 @@ public:
     QRectF outlineRect() const override;
 
     ///reimplemented
-    ChildZOrderPolicy childZOrderPolicy() override {return KoShape::ChildZPassThrough;}
+    ChildZOrderPolicy childZOrderPolicy() override
+    {
+        return KoShape::ChildZPassThrough;
+    }
 
     /// set the image collection which is needed to draw bullet from images
-    void setImageCollection(KoImageCollection *collection) { m_imageCollection = collection; }
+    void setImageCollection(KoImageCollection *collection)
+    {
+        m_imageCollection = collection;
+    }
 
     KoImageCollection *imageCollection();
 
@@ -95,7 +101,8 @@ public:
      */
     void saveOdf(KoShapeSavingContext &context) const override;
 
-    KoTextShapeData *textShapeData() {
+    KoTextShapeData *textShapeData()
+    {
         return m_textShapeData;
     }
 
@@ -105,7 +112,10 @@ public:
     void update(const QRectF &shape) const override;
 
     // required for Stage hack
-    void setPageProvider(KoPageProvider *provider) { m_pageProvider = provider; }
+    void setPageProvider(KoPageProvider *provider)
+    {
+        m_pageProvider = provider;
+    }
 
     /// reimplemented
     bool loadOdfFrame(const KoXmlElement &element, KoShapeLoadingContext &context) override;
