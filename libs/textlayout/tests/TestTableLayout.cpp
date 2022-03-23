@@ -909,4 +909,4 @@ void TestTableLayout::testHeaderRowHeightLargerThanAreaHeight()
     QVERIFY2(table1 == p.table, "table1 not found in area 0");
 }
 
-QTEST_MAIN(TestTableLayout)
+//QTEST_MAIN(TestTableLayout)

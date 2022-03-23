@@ -1309,4 +1309,4 @@ void TestBlockLayout::testDropCapsWithNewline()
     QCOMPARE(line.height(), heightNormalLine);
 }
 
-QTEST_MAIN(TestBlockLayout)
+//QTEST_MAIN(TestBlockLayout)
