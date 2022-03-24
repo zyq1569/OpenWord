@@ -335,7 +335,7 @@ QRectF RunAroundHelper::getLineRect(const QRectF &lineRect, const qreal maxNatur
         // Limit moved the left edge, keep the indent.
         if (leftIndent < x)
         {
-            x += leftIndent;
+            //x += leftIndent;///20220324 del
             width -= leftIndent;
         }
         line.setLineWidth(width);
