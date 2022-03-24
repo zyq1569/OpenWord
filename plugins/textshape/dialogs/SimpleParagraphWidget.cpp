@@ -218,7 +218,7 @@ QPixmap SimpleParagraphWidget::generateListLevelPixmap(const KoListLevelProperti
     }
 
     KoShapePaintingContext paintContext; //FIXME
-    textShape.paintComponent(p, zoomHandler, paintContext);
+    textShape.paintComponent(p, zoomHandler, paintContext);//20220324段落格式设置界面绘制.
 
     return pm;
 }
@@ -314,9 +314,9 @@ void SimpleParagraphWidget::fillListButtons()
         llp.setNumberFormat(KoOdfNumberDefinition::RomanUpperCase);
         llp.setListItemSuffix("");
 
-        llp.setLabelType(KoListStyle::NumberLabelType);
-        llp.setNumberFormat(KoOdfNumberDefinition::ChineseCounting);
-        llp.setListItemSuffix("一");
+        //llp.setLabelType(KoListStyle::NumberLabelType);
+        //llp.setNumberFormat(KoOdfNumberDefinition::ChineseCounting);
+        //llp.setListItemSuffix("一");
 
         m_levelLibrary.append(llp);
     }
