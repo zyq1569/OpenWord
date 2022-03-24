@@ -311,16 +311,16 @@ void KoShapeManager::paint(QPainter &painter, const KoViewConverter &converter, 
         painter.restore();
     }
 
-#ifdef CALLIGRA_RTREE_DEBUG
-    // paint tree
-    qreal zx = 0;
-    qreal zy = 0;
-    converter.zoom(&zx, &zy);
-    painter.save();
-    painter.scale(zx, zy);
-    d->tree.paint(painter);
-    painter.restore();
-#endif
+//#ifdef CALLIGRA_RTREE_DEBUG
+// paint tree
+//qreal zx = 0;
+//qreal zy = 0;
+//converter.zoom(&zx, &zy);
+//painter.save();
+//painter.scale(zx, zy);
+//d->tree.paint(painter);
+//painter.restore();
+//#endif
 
     if (! forPrint)
     {
