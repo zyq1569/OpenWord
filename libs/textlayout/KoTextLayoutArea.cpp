@@ -1644,7 +1644,7 @@ bool KoTextLayoutArea::layoutBlock(FrameIterator *cursor)
             }
         }
         findFootNotes(block, line, bottomOfText);
-        static int deltH = 10;
+        static int deltH = 10;//临时解决部分文字在底部显示不全
         if (bottomOfText > (maximumAllowedBottom() - deltH ))
         {
             // We can not fit line within our allowed space
