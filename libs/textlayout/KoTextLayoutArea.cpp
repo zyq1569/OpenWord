@@ -1484,8 +1484,7 @@ bool KoTextLayoutArea::layoutBlock(FrameIterator *cursor)
     // ==============
     // List label/counter positioning
     // ==============
-    if (textList && block.layout()->lineCount() == 1
-            && ! block.blockFormat().boolProperty(KoParagraphStyle::UnnumberedListItem))
+    if (textList && block.layout()->lineCount() == 1 && ! block.blockFormat().boolProperty(KoParagraphStyle::UnnumberedListItem))
     {
         // If first line in a list then set the counterposition. Following lines in the same
         // list-item have nothing to do with the counter.
