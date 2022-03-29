@@ -114,6 +114,10 @@ void KWCanvas::mouseMoveEvent(QMouseEvent *e)
         setCursor(cursorS);
         setToolTip(i18n("hide gaps"));
     }
+    else /*if (toolTip().length() > 1)*/
+    {
+        setToolTip("");
+    }
     /////////////////////////////|
 }
 
