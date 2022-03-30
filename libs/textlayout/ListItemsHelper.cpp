@@ -153,14 +153,14 @@ void ListItemsHelper::recalculateBlock(QTextBlock &block)
                 continue;
             }
             QTextListFormat lf = b.textList()->format();
-            QVariant ifid = lf.property(KoListStyle::StyleId),formid = format.property(KoListStyle::StyleId);
-            if ( ifid != formid)
-            {
-                if (0)
-                {
-                    continue;    // uninteresting for us
-                }
-            }
+            //QVariant ifid = lf.property(KoListStyle::StyleId),formid = format.property(KoListStyle::StyleId);
+            //if ( ifid != formid)
+            //{
+            //    if (0)
+            //    {
+            //        continue;    // uninteresting for us
+            //    }
+            //}///20220330 del
             if (isOutline != bool(b.blockFormat().intProperty(KoParagraphStyle::OutlineLevel)))
             {
                 continue;    // also uninteresting cause the one is an outline-listitem while the other is not

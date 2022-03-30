@@ -31,9 +31,14 @@ class QFont;
 
 namespace Lists
 {
-enum Capitalisation { Lowercase, Uppercase };
-struct ListStyleItem {
-    ListStyleItem(const QString &name_, KoListStyle::LabelType labelType_, const QString &suffix_ = QString()) {
+enum Capitalisation
+{
+    Lowercase, Uppercase
+};
+struct ListStyleItem
+{
+    ListStyleItem(const QString &name_, KoListStyle::LabelType labelType_, const QString &suffix_ = QString())
+    {
         name = name_;
         labelType = labelType_;
         suffix = suffix_;
