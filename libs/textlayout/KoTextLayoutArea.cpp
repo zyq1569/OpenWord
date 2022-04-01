@@ -1685,8 +1685,7 @@ bool KoTextLayoutArea::layoutBlock(FrameIterator *cursor)
 
         d->neededWidth = qMax(d->neededWidth, line.naturalTextWidth() + d->indent);
 
-        if (!runAroundHelper.stayOnBaseline() && !(block.blockFormat().hasProperty(KoParagraphStyle::HiddenByTable)
-                && block.length() <= 1))
+        if (!runAroundHelper.stayOnBaseline() && !(block.blockFormat().hasProperty(KoParagraphStyle::HiddenByTable) && block.length() <= 1))
         {
             d->y += maxLineHeight;
             maxLineHeight = 0;
