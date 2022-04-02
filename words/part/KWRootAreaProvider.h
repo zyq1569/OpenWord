@@ -65,7 +65,10 @@ private:
     QList<KoTextLayoutRootArea*> m_rootAreaCache;
     QList<QPair<KWRootAreaProviderBase *, int> > m_dependentProviders;
 
-    QList<KWRootAreaPage *> pages() const { return m_pages; }
+    QList<KWRootAreaPage *> pages() const
+    {
+        return m_pages;
+    }
     KoTextLayoutRootArea* provideNext(KoTextDocumentLayout *documentLayout, const RootAreaConstraint &constraints);
     void handleDependentProviders(int pageNumber);
 };
