@@ -35,7 +35,8 @@ class QRectF;
  * has to respect. For simple layout situations (like a single text shape),
  * it's fine to ignore the contract since pages do not exist.
  */
-struct RootAreaConstraint {
+struct RootAreaConstraint
+{
     QString masterPageName;
     int visiblePageNumber;
     bool newPageForced;
