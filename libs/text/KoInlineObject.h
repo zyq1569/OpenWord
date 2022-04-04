@@ -51,7 +51,8 @@ class KOTEXT_EXPORT KoInlineObject : public QObject
 {
     Q_OBJECT
 public:
-    enum Property {
+    enum Property
+    {
         DocumentURL,
         PageCount,
         AuthorName,
