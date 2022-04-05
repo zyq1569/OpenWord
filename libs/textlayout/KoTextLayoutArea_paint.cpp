@@ -518,9 +518,10 @@ void KoTextLayoutArea::drawListItem(QPainter *painter, QTextBlock &block)
             QTextOption option(alignment);
             option.setTextDirection(block.layout()->textOption().textDirection());
             /*
-                        if (option.textDirection() == Qt::RightToLeft || blockData.counterText().isRightToLeft()) {
-                            option.setAlignment(Qt::AlignRight);
-                        }
+            if (option.textDirection() == Qt::RightToLeft || blockData.counterText().isRightToLeft())
+            {
+                option.setAlignment(Qt::AlignRight);
+            }
             */
             layout.setTextOption(option);
 
