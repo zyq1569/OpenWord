@@ -67,17 +67,19 @@ MusicShape::MusicShape()
       m_successor(0),
       m_predecessor(0)
 {
-    /*    debugMusic << "firstShape:" << firstShape << "this:" << this;
-
-        if (firstShape) {
-            firstShape->m_successor = this;
-            m_predecessor = firstShape;
-            m_sheet = firstShape->m_sheet;
-            m_firstSystem = firstShape->m_lastSystem+1;
-            m_engraver->engraveSheet(m_sheet, m_firstSystem, QSizeF(1e9, 1e9), true, &m_lastSystem);
-            firstShape = this;
-        } else {
-            firstShape = this;*/
+    //debugMusic << "firstShape:" << firstShape << "this:" << this;
+    //if (firstShape)
+    //{
+    //firstShape->m_successor = this;
+    //m_predecessor = firstShape;
+    //m_sheet = firstShape->m_sheet;
+    //m_firstSystem = firstShape->m_lastSystem+1;
+    //m_engraver->engraveSheet(m_sheet, m_firstSystem, QSizeF(1e9, 1e9), true, &m_lastSystem);
+    //firstShape = this;
+    //}
+    //else
+    //{
+    //firstShape = this;
     m_sheet = new Sheet();
     Bar* bar = m_sheet->addBar();
 
@@ -106,7 +108,10 @@ MusicShape::~MusicShape()
     delete m_style;
     delete m_engraver;
     delete m_renderer;
-//    if (this == firstShape) firstShape = this->m_predecessor;
+//    if (this == firstShape)
+//    {
+//        firstShape = this->m_predecessor;
+//    }
 }
 
 void MusicShape::setSize( const QSizeF &newSize )
