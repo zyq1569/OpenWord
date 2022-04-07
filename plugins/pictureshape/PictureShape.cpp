@@ -290,8 +290,7 @@ QPainterPath PictureShape::shadowOutline() const
     return outline();
 }
 
-void PictureShape::paint(QPainter &painter, const KoViewConverter &converter,
-                         KoShapePaintingContext &paintContext)
+void PictureShape::paint(QPainter &painter, const KoViewConverter &converter, KoShapePaintingContext &paintContext)
 {
     Q_UNUSED(paintContext);
 
