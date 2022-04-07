@@ -355,12 +355,8 @@ void PictureShape::paint(QPainter &painter, const KoViewConverter &converter, Ko
     if (!m_printQualityImage.isNull() && pixmapSize != m_printQualityRequestedSize)
     {
         QSizeF imageSize = m_printQualityImage.size();
-        QRectF cropRect(
-            imageSize.width()  * m_clippingRect.left,
-            imageSize.height() * m_clippingRect.top,
-            imageSize.width()  * m_clippingRect.width(),
-            imageSize.height() * m_clippingRect.height()
-        );
+        QRectF cropRect( imageSize.width()  * m_clippingRect.left, imageSize.height() * m_clippingRect.top,
+                         imageSize.width()  * m_clippingRect.width(), imageSize.height() * m_clippingRect.height() );
 
         painter.drawImage(viewRect, m_printQualityImage, cropRect);
         m_printQualityImage = QImage(); // free memory
