@@ -376,12 +376,8 @@ void PictureShape::paint(QPainter &painter, const KoViewConverter &converter, Ko
         }
         else
         {
-            QRectF cropRect(
-                pixmapSize.width()  * m_clippingRect.left,
-                pixmapSize.height() * m_clippingRect.top,
-                pixmapSize.width()  * m_clippingRect.width(),
-                pixmapSize.height() * m_clippingRect.height()
-            );
+            QRectF cropRect(  pixmapSize.width()  * m_clippingRect.left,   pixmapSize.height() * m_clippingRect.top,
+                              pixmapSize.width()  * m_clippingRect.width(),  pixmapSize.height() * m_clippingRect.height() );
 
             painter.drawPixmap(viewRect, pixmap, cropRect);
         }
