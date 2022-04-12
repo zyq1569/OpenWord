@@ -243,9 +243,7 @@ void KoTextEditor::Private::newLine(KUndo2Command *parent)
 ///Should such mechanisms be later provided directly by Qt, we could dispose of these classes.
 
 
-KoTextEditor::KoTextEditor(QTextDocument *document)
-    : QObject(document),
-      d (new Private(this, document))
+KoTextEditor::KoTextEditor(QTextDocument *document) : QObject(document), d (new Private(this, document))
 {
     connect (d->document, SIGNAL(undoCommandAdded()), this, SLOT(documentCommandAdded()));
 }
