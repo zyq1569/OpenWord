@@ -215,8 +215,7 @@ bool DefaultTool::wantsAutoScroll() const
 
 void DefaultTool::setupActions()
 {
-    QAction * actionBringToFront = new QAction(koIcon("object-order-front"),
-            i18n("Bring to &Front"), this);
+    QAction * actionBringToFront = new QAction(koIcon("object-order-front"),  i18n("Bring to &Front"), this);
     addAction("object_order_front", actionBringToFront);
     actionBringToFront->setShortcut(QKeySequence("Ctrl+Shift+]"));
     connect(actionBringToFront, SIGNAL(triggered()), this, SLOT(selectionBringToFront()));
@@ -231,24 +230,20 @@ void DefaultTool::setupActions()
     actionLower->setShortcut(QKeySequence("Ctrl+["));
     connect(actionLower, SIGNAL(triggered()), this, SLOT(selectionMoveDown()));
 
-    QAction * actionSendToBack = new QAction(koIcon("object-order-back"),
-            i18n("Send to &Back"), this);
+    QAction * actionSendToBack = new QAction(koIcon("object-order-back"),  i18n("Send to &Back"), this);
     addAction("object_order_back", actionSendToBack);
     actionSendToBack->setShortcut(QKeySequence("Ctrl+Shift+["));
     connect(actionSendToBack, SIGNAL(triggered()), this, SLOT(selectionSendToBack()));
 
-    QAction * actionAlignLeft = new QAction(koIcon("align-horizontal-left"),
-                                            i18n("Align Left"), this);
+    QAction * actionAlignLeft = new QAction(koIcon("align-horizontal-left"),  i18n("Align Left"), this);
     addAction("object_align_horizontal_left", actionAlignLeft);
     connect(actionAlignLeft, SIGNAL(triggered()), this, SLOT(selectionAlignHorizontalLeft()));
 
-    QAction * actionAlignCenter = new QAction(koIcon("align-horizontal-center"),
-            i18n("Horizontally Center"), this);
+    QAction * actionAlignCenter = new QAction(koIcon("align-horizontal-center"),  i18n("Horizontally Center"), this);
     addAction("object_align_horizontal_center", actionAlignCenter);
     connect(actionAlignCenter, SIGNAL(triggered()), this, SLOT(selectionAlignHorizontalCenter()));
 
-    QAction * actionAlignRight = new QAction(koIcon("align-horizontal-right"),
-            i18n("Align Right"), this);
+    QAction * actionAlignRight = new QAction(koIcon("align-horizontal-right"),  i18n("Align Right"), this);
     addAction("object_align_horizontal_right", actionAlignRight);
     connect(actionAlignRight, SIGNAL(triggered()), this, SLOT(selectionAlignHorizontalRight()));
 
@@ -256,13 +251,11 @@ void DefaultTool::setupActions()
     addAction("object_align_vertical_top", actionAlignTop);
     connect(actionAlignTop, SIGNAL(triggered()), this, SLOT(selectionAlignVerticalTop()));
 
-    QAction * actionAlignMiddle = new QAction(koIcon("align-vertical-center"),
-            i18n("Vertically Center"), this);
+    QAction * actionAlignMiddle = new QAction(koIcon("align-vertical-center"),   i18n("Vertically Center"), this);
     addAction("object_align_vertical_center", actionAlignMiddle);
     connect(actionAlignMiddle, SIGNAL(triggered()), this, SLOT(selectionAlignVerticalCenter()));
 
-    QAction * actionAlignBottom = new QAction(koIcon("align-vertical-bottom"),
-            i18n("Align Bottom"), this);
+    QAction * actionAlignBottom = new QAction(koIcon("align-vertical-bottom"),  i18n("Align Bottom"), this);
     addAction("object_align_vertical_bottom", actionAlignBottom);
     connect(actionAlignBottom, SIGNAL(triggered()), this, SLOT(selectionAlignVerticalBottom()));
 
@@ -271,8 +264,7 @@ void DefaultTool::setupActions()
     addAction("object_group", actionGroupBottom);
     connect(actionGroupBottom, SIGNAL(triggered()), this, SLOT(selectionGroup()));
 
-    QAction * actionUngroupBottom = new QAction(koIcon("object-ungroup"),
-            i18n("Ungroup"), this);
+    QAction * actionUngroupBottom = new QAction(koIcon("object-ungroup"), i18n("Ungroup"), this);
     addAction("object_ungroup", actionUngroupBottom);
     connect(actionUngroupBottom, SIGNAL(triggered()), this, SLOT(selectionUngroup()));
 }
@@ -319,8 +311,7 @@ qreal DefaultTool::rotationOfHandle(KoFlake::SelectionHandle handle, bool useEdg
         case KoFlake::BottomMiddleHandle:
             if (useEdgeRotation)
             {
-                direction = koSelection()->absolutePosition(KoFlake::BottomLeftCorner)
-                            - koSelection()->absolutePosition(KoFlake::BottomRightCorner);
+                direction = koSelection()->absolutePosition(KoFlake::BottomLeftCorner) - koSelection()->absolutePosition(KoFlake::BottomRightCorner);
             }
             else
             {
@@ -336,8 +327,7 @@ qreal DefaultTool::rotationOfHandle(KoFlake::SelectionHandle handle, bool useEdg
         case KoFlake::LeftMiddleHandle:
             if (useEdgeRotation)
             {
-                direction = koSelection()->absolutePosition(KoFlake::TopLeftCorner)
-                            - koSelection()->absolutePosition(KoFlake::BottomLeftCorner);
+                direction = koSelection()->absolutePosition(KoFlake::TopLeftCorner) - koSelection()->absolutePosition(KoFlake::BottomLeftCorner);
             }
             else
             {
@@ -613,8 +603,7 @@ void DefaultTool::paint(QPainter &painter, const KoViewConverter &converter)
     KoInteractionTool::paint(painter, converter);
     if (currentStrategy() == 0 && koSelection()->count() > 0)
     {
-        SelectionDecorator decorator(m_mouseWasInsideHandles ? m_lastHandle : KoFlake::NoHandle,
-                                     true, true);
+        SelectionDecorator decorator(m_mouseWasInsideHandles ? m_lastHandle : KoFlake::NoHandle, true, true);
         decorator.setSelection(koSelection());
         decorator.setHandleRadius(handleRadius());
         decorator.setHotPosition(m_hotPosition);
@@ -806,8 +795,7 @@ void DefaultTool::mouseDoubleClickEvent(KoPointerEvent *event)
     }
 
 
-    KoToolManager::instance()->switchToolRequested(
-        KoToolManager::instance()->preferredToolForSelection(shapes2));
+    KoToolManager::instance()->switchToolRequested(  KoToolManager::instance()->preferredToolForSelection(shapes2));
 }
 
 bool DefaultTool::moveSelection(int direction, Qt::KeyboardModifiers modifiers)
@@ -1100,8 +1088,7 @@ KoFlake::SelectionHandle DefaultTool::handleAt(const QPointF &point, bool *inner
         QPointF pt = converter->documentToView(point) - converter->documentToView(m_selectionBox[handle]);
 
         // if just inside the outline
-        if (qAbs(pt.x()) < HANDLE_DISTANCE &&
-                qAbs(pt.y()) < HANDLE_DISTANCE)
+        if (qAbs(pt.x()) < HANDLE_DISTANCE &&  qAbs(pt.y()) < HANDLE_DISTANCE)
         {
             if (innerHandleMeaning != 0)
             {
@@ -1271,9 +1258,7 @@ void DefaultTool::selectionUngroup()
         if (group)
         {
             cmd = cmd ? cmd : new KUndo2Command(kundo2_i18n("Ungroup shapes"));
-            new KoShapeUngroupCommand(group, group->shapes(),
-                                      group->parent()? QList<KoShape*>(): canvas()->shapeManager()->topLevelShapes(),
-                                      cmd);
+            new KoShapeUngroupCommand(group, group->shapes(),  group->parent()? QList<KoShape*>(): canvas()->shapeManager()->topLevelShapes(),  cmd);
             canvas()->shapeController()->removeShape(group, cmd);
         }
     }

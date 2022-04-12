@@ -55,7 +55,8 @@ public:
     explicit DefaultTool( KoCanvasBase *canvas );
     ~DefaultTool() override;
 
-    enum CanvasResource {
+    enum CanvasResource
+    {
         HotPosition = 1410100299
     };
 
