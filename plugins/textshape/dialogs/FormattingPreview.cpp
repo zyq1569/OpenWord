@@ -47,12 +47,12 @@
 #include <QDebug>
 
 FormattingPreview::FormattingPreview(QWidget* parent)
-        : QFrame(parent),
-        m_sampleText(i18n("Font")),
-        m_characterStyle(0),
-        m_paragraphStyle(0),
-        m_thumbnailer(new KoStyleThumbnailer()),
-        m_previewLayoutRequired(true)
+    : QFrame(parent),
+      m_sampleText(i18n("Font")),
+      m_characterStyle(0),
+      m_paragraphStyle(0),
+      m_thumbnailer(new KoStyleThumbnailer()),
+      m_previewLayoutRequired(true)
 {
     setFrameStyle(QFrame::Box | QFrame::Plain);
     setMinimumSize(500, 150);
@@ -63,10 +63,12 @@ FormattingPreview::FormattingPreview(QWidget* parent)
 FormattingPreview::~FormattingPreview()
 {
     delete m_thumbnailer;
-    if (m_characterStyle) {
+    if (m_characterStyle)
+    {
         delete m_characterStyle;
     }
-    if (m_paragraphStyle) {
+    if (m_paragraphStyle)
+    {
         delete m_paragraphStyle;
     }
 }
@@ -84,7 +86,8 @@ void FormattingPreview::setText(const QString &sampleText)
 //Character properties
 void FormattingPreview::setCharacterStyle(const KoCharacterStyle* style)
 {
-    if (m_characterStyle) {
+    if (m_characterStyle)
+    {
         delete m_characterStyle;
     }
 
@@ -97,7 +100,8 @@ void FormattingPreview::setCharacterStyle(const KoCharacterStyle* style)
 
 void FormattingPreview::setParagraphStyle(const KoParagraphStyle *style)
 {
-    if (m_paragraphStyle) {
+    if (m_paragraphStyle)
+    {
         delete m_paragraphStyle;
     }
 
