@@ -77,12 +77,7 @@ void _Private::PixmapScaler::run()
 {
     QString key = generate_key(m_imageKey, m_size);
 
-    m_image = m_image.scaled(
-                  m_size.width(),
-                  m_size.height(),
-                  Qt::IgnoreAspectRatio,
-                  Qt::SmoothTransformation
-              );
+    m_image = m_image.scaled( m_size.width(), m_size.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 
     emit finished(key, m_image);
 }
