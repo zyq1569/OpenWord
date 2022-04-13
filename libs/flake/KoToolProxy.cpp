@@ -452,8 +452,7 @@ void KoToolProxy::mouseReleaseEvent(QMouseEvent *event, const QPointF &point)
         d->activeTool->mouseReleaseEvent(&ev);
 
         if (! event->isAccepted() && event->button() == Qt::LeftButton && event->modifiers() == 0
-                && qAbs(d->mouseDownPoint.x() - event->x()) < 5
-                && qAbs(d->mouseDownPoint.y() - event->y()) < 5)
+                && qAbs(d->mouseDownPoint.x() - event->x()) < 5 && qAbs(d->mouseDownPoint.y() - event->y()) < 5)
         {
             // we potentially will change the selection
             Q_ASSERT(d->activeTool->canvas());
