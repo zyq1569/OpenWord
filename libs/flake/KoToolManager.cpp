@@ -454,9 +454,7 @@ void KoToolManager::Private::postSwitchTool(bool temporary)
         toolActivation = KoToolBase::DefaultActivation;
     }
     QSet<KoShape*> shapesToOperateOn;
-    if (canvasData->activeTool
-            && canvasData->activeTool->canvas()
-            && canvasData->activeTool->canvas()->shapeManager())
+    if (canvasData->activeTool && canvasData->activeTool->canvas() && canvasData->activeTool->canvas()->shapeManager())
     {
         KoSelection *selection = canvasData->activeTool->canvas()->shapeManager()->selection();
         Q_ASSERT(selection);
