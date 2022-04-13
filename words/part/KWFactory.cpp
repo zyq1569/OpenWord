@@ -87,7 +87,7 @@ const KoComponentData &KWFactory::componentData()
         KoDockRegistry *dockRegistry = KoDockRegistry::instance();
         dockRegistry->add(new KWStatisticsDockerFactory());
         dockRegistry->add(new KWNavigationDockerFactory());
-#ifndef NDEBUG
+#ifndef /*NDEBUG*/ QT_NO_DEBUG
         dockRegistry->add(new KWDebugDockerFactory());
 #endif
 
