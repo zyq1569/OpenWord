@@ -34,7 +34,8 @@ class KOWIDGETS_EXPORT KoResourceSelector : public QComboBox
 {
     Q_OBJECT
 public:
-    enum DisplayMode {
+    enum DisplayMode
+    {
         ImageMode,  ///< Displays image of resources (default)
         TextMode   ///< Displays name of resources
     };
