@@ -24,7 +24,8 @@
 #include <KoToolFactoryBase.h>
 
 /// Factory for the KoInteractionTool
-class DefaultToolFactory : public KoToolFactoryBase {
+class DefaultToolFactory : public KoToolFactoryBase
+{
 public:
     /// constructor
     DefaultToolFactory();
