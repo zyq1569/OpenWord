@@ -30,7 +30,8 @@ public:
     KWDebugDockerFactory();
     QString id() const override;
     QDockWidget* createDockWidget() override;
-    DockPosition defaultDockPosition() const override {
+    DockPosition defaultDockPosition() const override
+    {
         return DockMinimized;
     }
 };
