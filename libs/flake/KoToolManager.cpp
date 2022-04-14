@@ -1052,13 +1052,11 @@ void KoToolManager::addController(KoCanvasController *controller)
     d->setup();
     d->attachCanvas(controller);
     connect(controller->proxyObject, &QObject::destroyed, this, &KoToolManager::attemptCanvasControllerRemoval);
-    connect(controller->proxyObject, &KoCanvasControllerProxyObject::canvasRemoved,
-            this, [this](KoCanvasController* c)
+    connect(controller->proxyObject, &KoCanvasControllerProxyObject::canvasRemoved, this, [this](KoCanvasController* c)
     {
         d->detachCanvas(c);
     });
-    connect(controller->proxyObject, &KoCanvasControllerProxyObject::canvasSet,
-            this, [this](KoCanvasController* c)
+    connect(controller->proxyObject, &KoCanvasControllerProxyObject::canvasSet, this, [this](KoCanvasController* c)
     {
         d->attachCanvas(c);
     });
