@@ -87,12 +87,14 @@ private:
  * When creating your new view you should use a KoCanvasController() and register that
  * with the ToolManager like this:
 @code
-    MyGuiWidget::MyGuiWidget() {
+    MyGuiWidget::MyGuiWidget()
+    {
         m_canvasController = new KoCanvasController(this);
         m_canvasController->setCanvas(m_canvas);
         KoToolManager::instance()->addControllers(m_canvasController));
     }
-    MyGuiWidget::~MyGuiWidget() {
+    MyGuiWidget::~MyGuiWidget()
+    {
         KoToolManager::instance()->removeCanvasController(m_canvasController);
     }
 @endcode
