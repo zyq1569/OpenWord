@@ -229,9 +229,7 @@ void KoTextLayoutArea::paint(QPainter *painter, const KoTextDocumentLayout::Pain
             {
                 lastBorderRect = br;
             }
-            else if (lastBorder != border
-                     || lastBorderRect.width() != br.width()
-                     || lastBorderRect.x() != br.x())
+            else if (lastBorder != border || lastBorderRect.width() != br.width() || lastBorderRect.x() != br.x())
             {
                 lastBorder->paint(*painter, lastBorderRect);
                 lastBorderRect = br;
