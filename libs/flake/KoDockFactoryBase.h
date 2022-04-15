@@ -20,7 +20,8 @@ class QString;
 class FLAKE_EXPORT KoDockFactoryBase
 {
 public:
-    enum DockPosition {
+    enum DockPosition
+    {
         DockTornOff, ///< Floating as its own top level window
         DockTop,    ///< Above the central widget
         DockBottom, ///< Below the central widget
@@ -40,11 +41,13 @@ public:
 
     /// @return the dockers default visibility
     /// Default is true.
-    virtual bool defaultVisible() const {
+    virtual bool defaultVisible() const
+    {
         return true;
     }
     /// Returns true if the dock widget should get a collapsable header.
-    virtual bool isCollapsable() const {
+    virtual bool isCollapsable() const
+    {
         return true;
     }
 
@@ -52,7 +55,8 @@ public:
      * In case the docker is collapsable, returns true if the dock widget
      * will start collapsed by default.
      */
-    virtual bool defaultCollapsed() const {
+    virtual bool defaultCollapsed() const
+    {
         return false;
     }
 
