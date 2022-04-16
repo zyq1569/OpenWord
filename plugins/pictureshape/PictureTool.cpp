@@ -29,7 +29,7 @@
 #include <QImageReader>
 
 #include <klocalizedstring.h>
-#include <KIO/Job>
+#include <kio/Job>
 
 #include <KoIcon.h>
 #include <KoCanvasBase.h>
