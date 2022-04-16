@@ -2255,7 +2255,7 @@ KoComponentData KoMainWindow::componentData() const
 QDockWidget* KoMainWindow::createDockWidget(KoDockFactoryBase* factory)
 {
     QDockWidget* dockWidget = 0;
-    QString id = factory->id();
+    //QString id = factory->id();
     if (!d->dockWidgetsMap.contains(factory->id()))
     {
         dockWidget = factory->createDockWidget();
