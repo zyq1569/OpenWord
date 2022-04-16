@@ -31,7 +31,8 @@ class KoSelection;
 /**
  * The SelectionDecorator is used to paint extra user-interface items on top of a selection.
  */
-class SelectionDecorator {
+class SelectionDecorator
+{
 public:
     /**
      * Constructor.
