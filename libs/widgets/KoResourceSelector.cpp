@@ -41,14 +41,19 @@ public:
     {
         KoResourceModel * resourceModel = qobject_cast<KoResourceModel*>(me->model());
         if (!resourceModel)
+        {
             return;
+        }
         if (!resourceModel->rowCount())
+        {
             return;
+        }
 
         int currentIndex = me->currentIndex();
         QModelIndex currentModelIndex = me->view()->currentIndex();
 
-        if (currentIndex < 0 || !currentModelIndex.isValid()) {
+        if (currentIndex < 0 || !currentModelIndex.isValid())
+        {
             me->blockSignals(true);
             me->view()->setCurrentIndex( resourceModel->index( 0, 0 ) );
             me->setCurrentIndex(0);
@@ -61,8 +66,7 @@ public:
 KoResourceSelector::KoResourceSelector(QWidget * parent)
     : QComboBox( parent ), d( new Private() )
 {
-    connect( this, SIGNAL(currentIndexChanged(int)),
-             this, SLOT(indexChanged(int)) );
+    connect( this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)) );
 
     setMouseTracking(true);
 }
@@ -96,7 +100,8 @@ void KoResourceSelector::paintEvent( QPaintEvent *pe )
 {
     QComboBox::paintEvent( pe );
 
-    if (d->displayMode == ImageMode) {
+    if (d->displayMode == ImageMode)
+    {
         QStyleOptionComboBox option;
         option.initFrom( this );
         QRect r = style()->subControlRect( QStyle::CC_ComboBox, &option, QStyle::SC_ComboBoxEditField, this );
@@ -117,20 +122,27 @@ void KoResourceSelector::mousePressEvent( QMouseEvent * event )
     opt.subControls = QStyle::SC_All;
     opt.activeSubControls = QStyle::SC_ComboBoxArrow;
     QStyle::SubControl sc = style()->hitTestComplexControl(QStyle::CC_ComboBox, &opt,
-                                                           mapFromGlobal(event->globalPos()),
-                                                           this);
+                            mapFromGlobal(event->globalPos()),
+                            this);
     // only clicking on combobox arrow shows popup,
     // otherwise the resourceApplied signal is send with the current resource
     if (sc == QStyle::SC_ComboBoxArrow)
+    {
         QComboBox::mousePressEvent( event );
-    else {
+    }
+    else
+    {
         QModelIndex index = view()->currentIndex();
         if( ! index.isValid() )
+        {
             return;
+        }
 
         KoResource * resource = static_cast<KoResource*>( index.internalPointer() );
         if( resource )
+        {
             emit resourceApplied( resource );
+        }
     }
 }
 
@@ -140,9 +152,13 @@ void KoResourceSelector::mouseMoveEvent( QMouseEvent * event )
     option.initFrom( this );
     QRect r = style()->subControlRect( QStyle::CC_ComboBox, &option, QStyle::SC_ComboBoxEditField, this );
     if (r.contains(event->pos()))
+    {
         setCursor(Qt::PointingHandCursor);
+    }
     else
+    {
         unsetCursor();
+    }
 }
 
 void KoResourceSelector::setResourceAdapter(QSharedPointer<KoAbstractResourceServerAdapter>resourceAdapter)
@@ -160,17 +176,20 @@ void KoResourceSelector::setResourceAdapter(QSharedPointer<KoAbstractResourceSer
 void KoResourceSelector::setDisplayMode(DisplayMode mode)
 {
     if (mode == d->displayMode)
+    {
         return;
+    }
 
-    switch(mode) {
-    case ImageMode:
-        setItemDelegate(new KoResourceItemDelegate(this));
-        setView( new KoResourceItemView(this) );
-        break;
-    case TextMode:
-        setItemDelegate(new QStyledItemDelegate(this));
-        setView(new QListView(this));
-        break;
+    switch(mode)
+    {
+        case ImageMode:
+            setItemDelegate(new KoResourceItemDelegate(this));
+            setView( new KoResourceItemView(this) );
+            break;
+        case TextMode:
+            setItemDelegate(new QStyledItemDelegate(this));
+            setView(new QListView(this));
+            break;
     }
 
     d->displayMode = mode;
@@ -181,25 +200,33 @@ void KoResourceSelector::setColumnCount( int columnCount )
 {
     KoResourceModel * resourceModel = qobject_cast<KoResourceModel*>(model());
     if (resourceModel)
+    {
         resourceModel->setColumnCount( columnCount );
+    }
 }
 
 void KoResourceSelector::setRowHeight( int rowHeight )
 {
     QTableView * tableView = qobject_cast<QTableView*>(view());
     if (tableView)
+    {
         tableView->verticalHeader()->setDefaultSectionSize( rowHeight );
+    }
 }
 
 void KoResourceSelector::indexChanged( int )
 {
     QModelIndex index = view()->currentIndex();
     if( ! index.isValid() )
+    {
         return;
+    }
 
     KoResource * resource = static_cast<KoResource*>( index.internalPointer() );
     if( resource )
+    {
         emit resourceSelected( resource );
+    }
 }
 
 void KoResourceSelector::resourceAdded(KoResource*)
