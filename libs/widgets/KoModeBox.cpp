@@ -52,8 +52,38 @@
 #include <QMenu>
 #include <QScrollBar>
 #include <QFontDatabase>
-
+//#include <QtWidgets>
 #include <WidgetsDebug.h>
+//class KoTabBar :public QTabBar
+//{
+////    Q_OBJECT
+//public:
+//    explicit KoTabBar(QWidget *parent = 0)
+//        :QTabBar(parent)
+//    {
+
+//    }
+//protected:
+//    // to do:下需要考虑QTabBar选中项显示明显
+//    //void mousePressEvent (QMouseEvent *)
+//    //{
+//    //    QPainter painter(this);
+//    //    for (int i=0; i <count(); i++ )
+//    //    {
+//    //        QRect rc = tabRect(i);
+//    //        QStyleOptionTab option;
+//    //        initStyleOption(&option, i);
+//    //        //painter.save();
+//    //        //painter.setPen(Qt::NoPen);
+//    //        if (QStyle::State_Selected == option.state)
+//    //        {
+//    //            setTabTextColor(i,Qt::darkGreen);
+//    //        }
+//    //        //painter.restore();
+//    //    }
+//    //}
+
+//};
 
 class KoModeBox::Private
 {
@@ -77,7 +107,7 @@ public:
     QMap<int, QWidget *> addedWidgets;
     QSet<QWidget *> currentAuxWidgets;
     int activeId;
-    QTabBar *tabBar;
+    QTabBar /*KoTabBar*/ *tabBar;
     QStackedWidget *stack;
     bool iconTextFitted;
     int fittingIterations;
@@ -144,7 +174,7 @@ KoModeBox::KoModeBox(KoCanvasControllerWidget *canvas, const QString &appName)
     d->layout = new QGridLayout();
     d->stack = new QStackedWidget();
 
-    d->tabBar = new QTabBar();
+    d->tabBar = new /*KoTabBar*/QTabBar();
     setIconSize();
     d->tabBar->setExpanding(d->horizontalMode);
     if (d->horizontalMode)
@@ -172,20 +202,24 @@ KoModeBox::KoModeBox(KoCanvasControllerWidget *canvas, const QString &appName)
     updateShownTools(QList<QString>());
 
     d->tabBar->setContextMenuPolicy(Qt::CustomContextMenu);
+    d->tabBar->setMovable(true);
+    ///https://doc.qt.io/archives/qt-4.8/stylesheet-examples.html#customizing-qtabwidget-and-qtabbar
+    d->tabBar->setStyleSheet("QTabBar::tab:selected, QTabBar::tab:hover { background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
+                             "stop: 0 #f6f7fa, stop: 1 #dadbde);}");
+//    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+//                                          stop: 0 #f6f7fa, stop: 1 #dadbde);
+//    d->tabBar->setStyleSheet("QTabBar::tab:selected { border-color: #9B9B9B; border-bottom-color: #C2C7CB;}");
+//    d->tabBar->setStyleSheet("QTabBar::tab:!selected { margin-top: 0 px;}");
+
     connect(d->tabBar, SIGNAL(currentChanged(int)), this, SLOT(toolSelected(int)));
     connect(d->tabBar, SIGNAL(customContextMenuRequested(QPoint)), SLOT(slotContextMenuRequested(QPoint)));
 
-    connect(KoToolManager::instance(), SIGNAL(changedTool(KoCanvasController*,int)),
-            this, SLOT(setActiveTool(KoCanvasController*,int)));
-    connect(KoToolManager::instance(), SIGNAL(currentLayerChanged(const KoCanvasController*,const KoShapeLayer*)),
-            this, SLOT(setCurrentLayer(const KoCanvasController*,const KoShapeLayer*)));
+    connect(KoToolManager::instance(), SIGNAL(changedTool(KoCanvasController*,int)),  this, SLOT(setActiveTool(KoCanvasController*,int)));
+    connect(KoToolManager::instance(), SIGNAL(currentLayerChanged(const KoCanvasController*,const KoShapeLayer*)), this, SLOT(setCurrentLayer(const KoCanvasController*,const KoShapeLayer*)));
     connect(KoToolManager::instance(), SIGNAL(toolCodesSelected(QList<QString>)), this, SLOT(updateShownTools(QList<QString>)));
-    connect(KoToolManager::instance(),
-            SIGNAL(addedTool(KoToolAction*,KoCanvasController*)),
-            this, SLOT(toolAdded(KoToolAction*,KoCanvasController*)));
+    connect(KoToolManager::instance(), SIGNAL(addedTool(KoToolAction*,KoCanvasController*)), this, SLOT(toolAdded(KoToolAction*,KoCanvasController*)));
 
-    connect(canvas, SIGNAL(toolOptionWidgetsChanged(QList<QPointer<QWidget>>)),
-            this, SLOT(setOptionWidgets(QList<QPointer<QWidget>>)));
+    connect(canvas, SIGNAL(toolOptionWidgetsChanged(QList<QPointer<QWidget>>)), this, SLOT(setOptionWidgets(QList<QPointer<QWidget>>)));
 }
 
 KoModeBox::~KoModeBox()
@@ -631,16 +665,13 @@ void KoModeBox::setCanvas(KoCanvasBase *canvas)
     if (d->canvas)
     {
         ccwidget = dynamic_cast<KoCanvasControllerWidget *>(d->canvas->canvasController());
-        disconnect(ccwidget, SIGNAL(toolOptionWidgetsChanged(QList<QPointer<QWidget>>)),
-                   this, SLOT(setOptionWidgets(QList<QPointer<QWidget>>)));
+        disconnect(ccwidget, SIGNAL(toolOptionWidgetsChanged(QList<QPointer<QWidget>>)), this, SLOT(setOptionWidgets(QList<QPointer<QWidget>>)));
     }
 
     d->canvas = canvas;
 
     ccwidget = dynamic_cast<KoCanvasControllerWidget *>(d->canvas->canvasController());
-    connect(
-        ccwidget, SIGNAL(toolOptionWidgetsChanged(QList<QPointer<QWidget>>)),
-        this, SLOT(setOptionWidgets(QList<QPointer<QWidget>>)));
+    connect( ccwidget, SIGNAL(toolOptionWidgetsChanged(QList<QPointer<QWidget>>)), this, SLOT(setOptionWidgets(QList<QPointer<QWidget>>)));
 }
 
 void KoModeBox::unsetCanvas()
