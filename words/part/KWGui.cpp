@@ -83,7 +83,7 @@ KWGui::KWGui(const QString &viewMode, KWView *parent)
     if (m_view->mainWindow())
     {
         KoModeBoxFactory modeBoxFactory(canvasController, qApp->applicationName(), i18n("Tools"));
-        QDockWidget* modeBox = m_view->mainWindow()->createDockWidget(&modeBoxFactory);
+        QDockWidget* modeBox = m_view->mainWindow()->createDockWidget(&modeBoxFactory);//create 的对象 QDockWidget KoModeBoxDocker存在KoMainWindow
         m_view->mainWindow()->dockerManager()->removeToolOptionsDocker();
         dynamic_cast<KoCanvasObserverBase*>(modeBox)->setObservedCanvas(m_canvas);
     }
