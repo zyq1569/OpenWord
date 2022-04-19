@@ -203,6 +203,7 @@ KoModeBox::KoModeBox(KoCanvasControllerWidget *canvas, const QString &appName)
 
     d->tabBar->setContextMenuPolicy(Qt::CustomContextMenu);
     //d->tabBar->setMovable(true);
+    ///https://doc.qt.io/archives/qt-5.12/stylesheet-examples.html#customizing-qtabwidget-and-qtabbar
     ///https://doc.qt.io/archives/qt-4.8/stylesheet-examples.html#customizing-qtabwidget-and-qtabbar
     d->tabBar->setStyleSheet("QTabBar::tab:selected, QTabBar::tab:hover { background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
                              "stop: 0 #f6f7fa, stop: 1 #dadbde);}");
