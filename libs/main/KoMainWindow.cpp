@@ -2120,8 +2120,7 @@ void KoMainWindow::slotEmailFile()
     QString theSubject;
     QStringList urls;
     QString fileURL;
-    if (rootDocument()->url().isEmpty() ||
-            rootDocument()->isModified())
+    if (rootDocument()->url().isEmpty() ||  rootDocument()->isModified())
     {
         //Save the file as a temporary file
         bool const tmp_modified = rootDocument()->isModified();
@@ -2188,10 +2187,8 @@ void KoMainWindow::slotReloadFile()
         return;
     }
 
-    bool bOk = KMessageBox::questionYesNo(this,
-                                          i18n("You will lose all changes made since your last save\n"
-                                                  "Do you want to continue?"),
-                                          i18n("Warning")) == KMessageBox::Yes;
+    bool bOk = KMessageBox::questionYesNo(this, i18n("You will lose all changes made since your last save\n"
+                                          "Do you want to continue?"), i18n("Warning")) == KMessageBox::Yes;
     if (!bOk)
     {
         return;
