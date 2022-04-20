@@ -160,9 +160,7 @@ static bool compareToolActions(const KoToolAction *b1, const KoToolAction *b2)
 }
 
 
-KoModeBox::KoModeBox(KoCanvasControllerWidget *canvas, const QString &appName)
-    : QWidget()
-    , d(new Private(canvas))
+KoModeBox::KoModeBox(KoCanvasControllerWidget *canvas, const QString &appName) : QWidget(), d(new Private(canvas))
 {
     applicationName = appName;
 
@@ -326,8 +324,9 @@ QIcon KoModeBox::createTextIcon(KoToolAction *toolAction) const
         p.translate(-iconSize.height(),0);
     }
 
-    QIcon::fromTheme(toolAction->iconName()).paint(&p, 0, 0, iconSize.height(), 22);
+    QIcon::fromTheme(toolAction->iconName()).paint(&p, 0, 0, iconSize.height(), 22);//绘制tab上面的图标
 
+    //开始绘制tab上面文字
     QTextLayout textLayout(toolAction->iconText(), smallFont, p.device());
     QTextOption option = QTextOption(Qt::AlignTop | Qt::AlignHCenter);
     option.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
