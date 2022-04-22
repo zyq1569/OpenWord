@@ -2059,8 +2059,15 @@ msgstr ""
 
 #: libs/main/KoMainWindow.cpp:389
 #, kde-format
+msgctxt "@action:inmenu"
 msgid "Show Docker Titlebars"
 msgstr "显示浮窗标题栏"
+
+#: libs/main/KoView.cpp：406/470
+#, kde-format
+msgctxt "choice for author profile"
+msgid "Anonymous"
+msgstr "匿名"
 
 #: libs/widgets/KoZoomMode.cpp:33
 #, kde-format
