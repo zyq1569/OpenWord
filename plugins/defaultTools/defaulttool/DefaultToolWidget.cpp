@@ -46,10 +46,10 @@
 #include <QTransform>
 
 DefaultToolWidget::DefaultToolWidget( KoInteractionTool* tool,
-                                    QWidget* parent )
+                                      QWidget* parent )
     : QWidget( parent ),
-    m_tool(tool),
-    m_blockSignals(false)
+      m_tool(tool),
+      m_blockSignals(false)
 {
     setupUi( this );
 
@@ -60,7 +60,7 @@ DefaultToolWidget::DefaultToolWidget( KoInteractionTool* tool,
     updateSize();
 
     connect( positionSelector, SIGNAL(positionSelected(KoFlake::Position)),
-        this, SLOT(positionSelected(KoFlake::Position)) );
+             this, SLOT(positionSelected(KoFlake::Position)) );
 
     connect( positionXSpinBox, SIGNAL(editingFinished()), this, SLOT(positionHasChanged()) );
     connect( positionYSpinBox, SIGNAL(editingFinished()), this, SLOT(positionHasChanged()) );
@@ -76,10 +76,10 @@ DefaultToolWidget::DefaultToolWidget( KoInteractionTool* tool,
     connect( manager, SIGNAL(selectionContentChanged()), this, SLOT(updateSize()) );
 
     connect( m_tool->canvas()->resourceManager(), SIGNAL(canvasResourceChanged(int,QVariant)),
-        this, SLOT(resourceChanged(int,QVariant)) );
+             this, SLOT(resourceChanged(int,QVariant)) );
 
     connect (aspectButton, SIGNAL(keepAspectRatioChanged(bool)),
-        this, SLOT(aspectButtonToggled(bool)));
+             this, SLOT(aspectButtonToggled(bool)));
 }
 
 void DefaultToolWidget::positionSelected( KoFlake::Position position )
@@ -95,13 +95,17 @@ void DefaultToolWidget::updatePosition()
 
     KoSelection * selection = m_tool->canvas()->shapeManager()->selection();
     if( selection->count() )
+    {
         selPosition = selection->absolutePosition( position );
+    }
 
     positionXSpinBox->setEnabled( selection->count() );
     positionYSpinBox->setEnabled( selection->count() );
 
     if (m_blockSignals)
+    {
         return;
+    }
     m_blockSignals = true;
     positionXSpinBox->changeValue( selPosition.x() );
     positionYSpinBox->changeValue( selPosition.y() );
@@ -109,7 +113,9 @@ void DefaultToolWidget::updatePosition()
     QList<KoShape*> selectedShapes = selection->selectedShapes( KoFlake::TopLevelSelection );
     bool aspectLocked = false;
     foreach (KoShape* shape, selectedShapes)
+    {
         aspectLocked = aspectLocked | shape->keepAspectRatio();
+    }
     aspectButton->setKeepAspectRatio(aspectLocked);
     m_blockSignals = false;
 }
@@ -118,13 +124,17 @@ void DefaultToolWidget::positionHasChanged()
 {
     KoSelection * selection = m_tool->canvas()->shapeManager()->selection();
     if( ! selection->count() )
+    {
         return;
+    }
 
     KoFlake::Position position = positionSelector->position();
     QPointF newPos( positionXSpinBox->value(), positionYSpinBox->value() );
     QPointF oldPos = selection->absolutePosition( position );
     if( oldPos == newPos )
+    {
         return;
+    }
 
     QList<KoShape*> selectedShapes = selection->selectedShapes( KoFlake::TopLevelSelection );
     QPointF moveBy = newPos - oldPos;
@@ -149,13 +159,17 @@ void DefaultToolWidget::updateSize()
     KoSelection * selection = m_tool->canvas()->shapeManager()->selection();
     uint selectionCount = selection->count();
     if( selectionCount )
+    {
         selSize = selection->boundingRect().size();
+    }
 
     widthSpinBox->setEnabled( selectionCount );
     heightSpinBox->setEnabled( selectionCount );
 
     if (m_blockSignals)
+    {
         return;
+    }
     m_blockSignals = true;
     widthSpinBox->changeValue( selSize.width() );
     heightSpinBox->changeValue( selSize.height() );
@@ -165,9 +179,13 @@ void DefaultToolWidget::updateSize()
 void DefaultToolWidget::sizeHasChanged()
 {
     if (aspectButton->hasFocus())
+    {
         return;
+    }
     if (m_blockSignals)
+    {
         return;
+    }
 
     QSizeF newSize( widthSpinBox->value(), heightSpinBox->value() );
 
@@ -178,9 +196,13 @@ void DefaultToolWidget::sizeHasChanged()
     {
         qreal aspect = rect.width() / rect.height();
         if( rect.width() != newSize.width() )
+        {
             newSize.setHeight( newSize.width() / aspect );
+        }
         else if( rect.height() != newSize.height() )
+        {
             newSize.setWidth( newSize.height() * aspect );
+        }
     }
 
     if( rect.width() != newSize.width() || rect.height() != newSize.height() )
@@ -260,7 +282,9 @@ void DefaultToolWidget::setUnit( const KoUnit &unit )
 void DefaultToolWidget::resourceChanged( int key, const QVariant & res )
 {
     if( key == KoCanvasResourceManager::Unit )
+    {
         setUnit(res.value<KoUnit>());
+    }
     else if( key == DefaultTool::HotPosition )
     {
         if( res.toInt() != positionSelector->position() )
@@ -274,9 +298,12 @@ void DefaultToolWidget::resourceChanged( int key, const QVariant & res )
 void DefaultToolWidget::aspectButtonToggled(bool keepAspect)
 {
     if (m_blockSignals)
+    {
         return;
+    }
     KoSelection * selection = m_tool->canvas()->shapeManager()->selection();
-    foreach (KoShape *shape, selection->selectedShapes(KoFlake::TopLevelSelection)) {
+    foreach (KoShape *shape, selection->selectedShapes(KoFlake::TopLevelSelection))
+    {
         shape->setKeepAspectRatio(keepAspect);
     }
 }
