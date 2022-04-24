@@ -203,12 +203,11 @@ KoModeBox::KoModeBox(KoCanvasControllerWidget *canvas, const QString &appName) :
     //d->tabBar->setMovable(true);
     ///https://doc.qt.io/archives/qt-5.12/stylesheet-examples.html#customizing-qtabwidget-and-qtabbar
     ///https://doc.qt.io/archives/qt-4.8/stylesheet-examples.html#customizing-qtabwidget-and-qtabbar
-    QString style = "QTabBar::tab:selected, QTabBar::tab:hover { background-color:qlineargradient(x1:0, y1:0, x2:0, y2:1,stop:0 #f6f7fa, stop:1 #dadbde);}";
+    QString style = "QTabBar::tab:hover { background-color:qlineargradient(x1:0, y1:0, x2:0, y2:1,stop:0 #d8eaf9, stop:1 #1da1f2);}";
+    style += " QTabBar::tab:selected {background-color: #d8eaf9}";
     d->tabBar->setStyleSheet(style);
-
 //    d->tabBar->setStyleSheet("QTabBar::tab:selected { border-color: #9B9B9B; border-bottom-color: #C2C7CB;}");
 //    d->tabBar->setStyleSheet("QTabBar::tab:!selected { margin-top: 0 px;}");
-
     connect(d->tabBar, SIGNAL(currentChanged(int)), this, SLOT(toolSelected(int)));
     connect(d->tabBar, SIGNAL(customContextMenuRequested(QPoint)), SLOT(slotContextMenuRequested(QPoint)));
 
