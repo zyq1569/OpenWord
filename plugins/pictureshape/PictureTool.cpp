@@ -45,6 +45,10 @@
 #include <KoFilterEffectConfigWidgetBase.h>
 #include <KoFilterEffectStack.h>
 
+//add
+#define HANDLE_DISTANCE 10
+
+
 #include "ui_wdgPictureTool.h"
 
 struct PictureToolUI: public QWidget, public Ui::PictureTool
@@ -68,10 +72,15 @@ struct PictureToolUI: public QWidget, public Ui::PictureTool
 
 // ---------------------------------------------------- //
 
+
 PictureTool::PictureTool(KoCanvasBase* canvas)
-    : KoToolBase(canvas),
+    : /*KoToolBase(canvas)*/ KoInteractionTool(canvas),
       m_pictureshape(0),
-      m_pictureToolUI(0)
+      m_pictureToolUI(0),
+      m_lastHandle(KoFlake::NoHandle),
+      m_hotPosition(KoFlake::TopLeftCorner),
+      m_mouseWasInsideHandles(false)
+
 {
 }
 
@@ -269,6 +278,9 @@ void PictureTool::mousePressEvent(KoPointerEvent *event)
     {
         event->ignore();
     }
+    ///---------------add 20220424
+    KoInteractionTool::mousePressEvent(event);
+    updateCursor();
 }
 
 void PictureTool::mouseDoubleClickEvent(KoPointerEvent *event)
@@ -280,4 +292,163 @@ void PictureTool::mouseDoubleClickEvent(KoPointerEvent *event)
     }
 
     changeUrlPressed();
+}
+
+ ///---------------add 20220424
+KoInteractionStrategy *PictureTool::createStrategy(KoPointerEvent *event)
+{
+    Q_UNUSED(event);
+    return 0;
+}
+
+KoSelection *PictureTool::koSelection()
+{
+    Q_ASSERT(canvas());
+    Q_ASSERT(canvas()->shapeManager());
+    return canvas()->shapeManager()->selection();
+}
+
+void PictureTool::paint(QPainter &painter, const KoViewConverter &converter)
+{
+    KoInteractionTool::paint(painter, converter);
+    if (currentStrategy() == 0 && koSelection()->count() > 0)
+    {
+        SelectionPicture decorator(m_mouseWasInsideHandles ? m_lastHandle : KoFlake::NoHandle, true, true);
+        decorator.setSelection(koSelection());
+        decorator.setHandleRadius(handleRadius());
+        decorator.setHotPosition(m_hotPosition);
+        decorator.paint(painter, converter);
+    }
+}
+
+void PictureTool::mouseReleaseEvent(KoPointerEvent *event)
+{
+    KoInteractionTool::mouseReleaseEvent(event);
+    updateCursor();
+}
+
+void PictureTool::mouseMoveEvent(KoPointerEvent *event)
+{
+    KoInteractionTool::mouseMoveEvent(event);
+    updateCursor();
+}
+
+
+void PictureTool::updateCursor()
+{
+    repaintDecorations();
+    useCursor(Qt::ArrowCursor);
+}
+
+void PictureTool::repaintDecorations()
+{
+    Q_ASSERT(koSelection());
+    if (koSelection()->count() > 0)
+    {
+        canvas()->updateCanvas(handlesSize());
+    }
+}
+
+
+QRectF PictureTool::handlesSize()
+{
+    QRectF bound = koSelection()->boundingRect();
+    // expansion Border
+    if (!canvas() || !canvas()->viewConverter())
+    {
+        return bound;
+    }
+
+    QPointF border = canvas()->viewConverter()->viewToDocument(QPointF(HANDLE_DISTANCE, HANDLE_DISTANCE));
+    bound.adjust(-border.x(), -border.y(), border.x(), border.y());
+    return bound;
+}
+
+///------------------------------
+///-----------------------------------------SelectionPicture copy [class SelectionDecorator]-----
+#define HANDLE_DISTANCE 10
+
+KoFlake::Position SelectionPicture::m_hotPosition = KoFlake::TopLeftCorner;
+
+SelectionPicture::SelectionPicture(KoFlake::SelectionHandle arrows,  bool rotationHandles, bool shearHandles)
+    : m_rotationHandles(rotationHandles), m_shearHandles(shearHandles)
+    , m_arrows(arrows), m_handleRadius( 3 ), m_lineWidth(1)
+{
+
+}
+
+void SelectionPicture::setSelection(KoSelection *selection)
+{
+    m_selection = selection;
+}
+
+void SelectionPicture::setHandleRadius( int radius )
+{
+    m_handleRadius = radius;
+    m_lineWidth = qMax(1, (int)(radius / 2));
+}
+
+void SelectionPicture::setHotPosition( KoFlake::Position hotPosition )
+{
+    m_hotPosition = hotPosition;
+}
+
+KoFlake::Position SelectionPicture::hotPosition()
+{
+    return m_hotPosition;
+}
+
+void SelectionPicture::paint(QPainter &painter, const KoViewConverter &converter)
+{
+    QRectF handleArea;
+    painter.save();
+
+    // save the original painter transformation
+    QTransform painterMatrix = painter.worldTransform();
+
+    QPen pen;
+    //Use the #00adf5 color with 50% opacity
+    pen.setColor(QColor(0, 173, 245, 127));
+    pen.setWidth(m_lineWidth);
+    pen.setJoinStyle(Qt::RoundJoin);
+    painter.setPen( pen );
+    //bool editable=false;
+    KoShape::AllowedInteractions interactions;
+    foreach (KoShape *shape, m_selection->selectedShapes(KoFlake::StrippedSelection))
+    {
+        // apply the shape transformation on top of the old painter transformation
+        painter.setWorldTransform( shape->absoluteTransformation(&converter) * painterMatrix );
+        // apply the zoom factor
+        KoShape::applyConversion( painter, converter );
+        // draw the shape bounding rect
+        painter.drawRect( QRectF( QPointF(), shape->size() ) );
+
+        interactions |= shape->allowedInteractions();
+        shape->update();///20220426 temp add: why? DefaultTool is ok?????
+    }
+
+    if (m_selection->count() > 1)
+    {
+        // more than one shape selected, so we need to draw the selection bounding rect
+        painter.setPen(QPen(Qt::blue, 0));
+        // apply the selection transformation on top of the old painter transformation
+        painter.setWorldTransform(m_selection->absoluteTransformation(&converter) * painterMatrix);
+        // apply the zoom factor
+        KoShape::applyConversion(painter, converter);
+        // draw the selection bounding rect
+        painter.drawRect(QRectF(QPointF(), m_selection->size()));
+        // save the selection bounding rect for later drawing the selection handles
+        handleArea = QRectF(QPointF(), m_selection->size());
+    }
+    else if (m_selection->firstSelectedShape())
+    {
+        // only one shape selected, so we compose the correct painter matrix
+        painter.setWorldTransform(m_selection->firstSelectedShape()->absoluteTransformation(&converter) * painterMatrix);
+        KoShape::applyConversion(painter, converter);
+        // save the only selected shapes bounding rect for later drawing the handles
+        handleArea = QRectF(QPointF(), m_selection->firstSelectedShape()->size());
+    }
+
+    painterMatrix = painter.worldTransform();
+    painter.restore();
 }
