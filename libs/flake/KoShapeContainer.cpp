@@ -221,7 +221,6 @@ void KoShapeContainer::paint(QPainter &painter, const KoViewConverter &converter
         }
         // don't try to draw a child shape that is not in the clipping rect of the painter.
         if (!clipRect.intersects(shape->boundingRect()))
-
         {
             continue;
         }
@@ -275,10 +274,12 @@ void KoShapeContainer::update() const
     Q_D(const KoShapeContainer);
     KoShape::update();
     if (d->model)
+    {
         foreach(KoShape *shape, d->model->shapes())
         {
             shape->update();
         }
+    }
 }
 
 QList<KoShape*> KoShapeContainer::shapes() const
