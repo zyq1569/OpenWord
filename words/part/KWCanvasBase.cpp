@@ -530,6 +530,9 @@ void KWCanvasBase::paint(QPainter &painter, const QRectF &paintRect)
                     pageContentArea = contentArea;
                 }
             }
+#ifndef QT_NO_DEBUG
+            if (0)
+            {
 //#if 0
 //            }
 //            else   // we cache at 100%, but paint at the actual zoom level
@@ -699,6 +702,8 @@ void KWCanvasBase::paint(QPainter &painter, const QRectF &paintRect)
 //                }
 //            }
 //#endif
+            }
+#endif
         }
     }
     else
