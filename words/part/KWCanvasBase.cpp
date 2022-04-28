@@ -718,8 +718,7 @@ void KWCanvasBase::updateCanvas(const QRectF &rc)
     if (!m_cacheEnabled)   // no caching
     {
         QRectF zoomedRect = m_viewMode->documentToView(rc, viewConverter());
-        QVector<KWViewMode::ViewMap> map = m_viewMode->mapExposedRects(zoomedRect,
-                                           viewConverter());
+        QVector<KWViewMode::ViewMap> map = m_viewMode->mapExposedRects(zoomedRect, viewConverter());
         foreach (KWViewMode::ViewMap vm, map)
         {
             vm.clipRect.adjust(-2, -2, 2, 2); // grow for anti-aliasing
@@ -734,8 +733,7 @@ void KWCanvasBase::updateCanvas(const QRectF &rc)
         if (viewConverter()->zoom() <= m_maxZoom)
         {
             QRectF zoomedRect = m_viewMode->documentToView(rc, viewConverter());
-            QVector<KWViewMode::ViewMap> map = m_viewMode->mapExposedRects(zoomedRect,
-                                               viewConverter());
+            QVector<KWViewMode::ViewMap> map = m_viewMode->mapExposedRects(zoomedRect,  viewConverter());
             foreach (KWViewMode::ViewMap vm, map)
             {
                 vm.clipRect.adjust(-2, -2, 2, 2); // grow for anti-aliasing
@@ -812,8 +810,7 @@ void KWCanvasBase::updateCanvas(const QRectF &rc)
             actualVm.clipRect.adjust(-2, -2, 2, 2); // grow for anti-aliasing
             QRect finalClip = QRect((int)(actualVm.clipRect.x() + vm.distance.x() - m_documentOffset.x()),
                                     (int)(actualVm.clipRect.y() + vm.distance.y() - m_documentOffset.y()),
-                                    actualVm.clipRect.width(),
-                                    actualVm.clipRect.height());
+                                    actualVm.clipRect.width(),  actualVm.clipRect.height());
 
             if (!m_pageCacheManager)
             {
