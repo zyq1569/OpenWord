@@ -17,7 +17,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  */
- 
+
 #include "FullScreenPlayer.h"
 
 #include <KoIcon.h>
@@ -108,8 +108,7 @@ FullScreenPlayer::FullScreenPlayer(const QUrl &url)
 
     m_mediaObject->setCurrentSource(url);
     connect(m_mediaObject, SIGNAL(finished()), this, SLOT(stop()));
-    connect(m_mediaObject, SIGNAL(stateChanged(Phonon::State,Phonon::State)),
-            this, SLOT(playStateChanged(Phonon::State,Phonon::State)));
+    connect(m_mediaObject, SIGNAL(stateChanged(Phonon::State,Phonon::State)), this, SLOT(playStateChanged(Phonon::State,Phonon::State)));
     connect(m_mediaObject, SIGNAL(tick(qint64)), this, SLOT(updatePlaybackTime(qint64)));
 
     play();
@@ -160,9 +159,10 @@ void FullScreenPlayer::mousePressEvent(QMouseEvent *event)
 
 void FullScreenPlayer::keyPressEvent(QKeyEvent *event)
 {
-    if(event->key()==Qt::Key_Escape) {
-       m_mediaObject->stop();
-       deleteLater();
+    if(event->key()==Qt::Key_Escape)
+    {
+        m_mediaObject->stop();
+        deleteLater();
     }
 }
 
@@ -170,15 +170,16 @@ void FullScreenPlayer::playStateChanged(Phonon::State newState, Phonon::State ol
 {
     Q_UNUSED(oldState);
 
-    switch (newState) {
+    switch (newState)
+    {
         case Phonon::PlayingState:
-                m_play->setVisible(false);
-                m_pause->setVisible(true);
-                break;
+            m_play->setVisible(false);
+            m_pause->setVisible(true);
+            break;
         case Phonon::PausedState:
-                m_play->setVisible(true);
-                m_pause->setVisible(false);
-                break;
+            m_play->setVisible(true);
+            m_pause->setVisible(false);
+            break;
         default:
             ;
     }
@@ -187,15 +188,15 @@ void FullScreenPlayer::playStateChanged(Phonon::State newState, Phonon::State ol
 void FullScreenPlayer::updatePlaybackTime(qint64 currentTime)
 {
     QString currentPlayTime = QString("%1:%2:%3")
-            .arg((currentTime / 3600000) % 60, 2, 10, QChar('0'))
-            .arg((currentTime / 60000) % 60, 2, 10, QChar('0'))
-            .arg((currentTime / 1000) % 60, 2, 10, QChar('0'));
+                              .arg((currentTime / 3600000) % 60, 2, 10, QChar('0'))
+                              .arg((currentTime / 60000) % 60, 2, 10, QChar('0'))
+                              .arg((currentTime / 1000) % 60, 2, 10, QChar('0'));
 
     qint64 time = m_mediaObject->totalTime();
     QString totalTime = QString("%1:%2:%3")
-            .arg((time / 3600000) % 60, 2, 10, QChar('0'))
-            .arg((time / 60000) % 60, 2, 10, QChar('0'))
-            .arg((time / 1000) % 60, 2, 10, QChar('0'));
+                        .arg((time / 3600000) % 60, 2, 10, QChar('0'))
+                        .arg((time / 60000) % 60, 2, 10, QChar('0'))
+                        .arg((time / 1000) % 60, 2, 10, QChar('0'));
 
     m_playbackTime->setText(QString("%1/%2").arg(currentPlayTime).arg(totalTime));
 }
@@ -203,10 +204,13 @@ void FullScreenPlayer::updatePlaybackTime(qint64 currentTime)
 
 void FullScreenPlayer::muteStateChanged(bool muted)
 {
-    if (muted) {
+    if (muted)
+    {
         m_volumeIconMuted->setVisible(true);
         m_volumeIconUnmuted->setVisible(false);
-    } else {
+    }
+    else
+    {
         m_volumeIconMuted->setVisible(false);
         m_volumeIconUnmuted->setVisible(true);
     }
