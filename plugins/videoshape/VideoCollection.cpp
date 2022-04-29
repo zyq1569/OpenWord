@@ -39,7 +39,7 @@ class VideoCollection::Private
 public:
     ~Private()
     {
-   }
+    }
 
     QMap<qint64, VideoData*> videos;
     // an extra map to find all dataObjects based on the key of a store.
@@ -55,7 +55,8 @@ VideoCollection::VideoCollection(QObject *parent)
 
 VideoCollection::~VideoCollection()
 {
-    foreach(VideoData *id, d->videos) {
+    foreach(VideoData *id, d->videos)
+    {
         id->setCollection(0);
     }
     delete d;
@@ -73,22 +74,30 @@ bool VideoCollection::completeSaving(KoStore *store, KoXmlWriter *manifestWriter
     Q_UNUSED(context);
     QMap<qint64, VideoData *>::ConstIterator dataIt(d->videos.constBegin());
 
-    while (dataIt != d->videos.constEnd()) {
-        if (!dataIt.value()->saveName().isEmpty()) {
+    while (dataIt != d->videos.constEnd())
+    {
+        if (!dataIt.value()->saveName().isEmpty())
+        {
             VideoData *videoData = dataIt.value();
-            if (store->open(videoData->saveName())) {
+            if (store->open(videoData->saveName()))
+            {
                 KoStoreDevice device(store);
                 bool ok = videoData->saveData(device);
                 store->close();
                 // TODO error handling
-                if (ok) {
+                if (ok)
+                {
                     QMimeDatabase db;
                     const QString mimetype(db.mimeTypeForFile(videoData->saveName(), QMimeDatabase::MatchExtension).name());
                     manifestWriter->addManifestEntry(videoData->saveName(), mimetype);
-                } else {
+                }
+                else
+                {
                     warnVideo << "saving video failed";
                 }
-            } else {
+            }
+            else
+            {
                 warnVideo << "saving video failed: open store failed";
             }
             dataIt.value()->setSaveName(QString());
@@ -107,7 +116,8 @@ VideoData *VideoCollection::createExternalVideoData(const QUrl &url, bool saveIn
     md5.addData(url.toEncoded().append(saveInternal ? "true" : "false"));
     qint64 key = VideoData::generateKey(md5.result());
 
-    if (d->videos.contains(key)) {
+    if (d->videos.contains(key))
+    {
         return new VideoData(*(d->videos.value(key)));
     }
 
@@ -130,7 +140,9 @@ VideoData *VideoCollection::createVideoData(const QString &href, KoStore *store)
     // video data they can find this data and share (warm fuzzy feeling here)
     QByteArray storeKey = (QString::number((qint64) store) + href).toLatin1();
     if (d->storeVideos.contains(storeKey))
+    {
         return new VideoData(*(d->storeVideos.value(storeKey)));
+    }
 
     VideoData *data = new VideoData();
     data->setVideo(href, store);
