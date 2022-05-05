@@ -153,8 +153,7 @@ ShapeCollectionDocker::ShapeCollectionDocker(QWidget* parent)
 
     connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), this, SLOT(locationChanged(Qt::DockWidgetArea)));
 
-    connect(m_quickView, SIGNAL(clicked(QModelIndex)),
-            this, SLOT(activateShapeCreationToolFromQuick(QModelIndex)));
+    connect(m_quickView, SIGNAL(clicked(QModelIndex)),  this, SLOT(activateShapeCreationToolFromQuick(QModelIndex)));
 
     m_moreShapes = new QToolButton(mainWidget);
     m_moreShapes->setText(i18n("More"));
@@ -179,8 +178,7 @@ ShapeCollectionDocker::ShapeCollectionDocker(QWidget* parent)
     m_collectionChooser->setMovement(QListView::Static);
     m_collectionChooser->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_collectionChooser->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    connect(m_collectionChooser, SIGNAL(itemClicked(QListWidgetItem*)),
-            this, SLOT(activateShapeCollection(QListWidgetItem*)));
+    connect(m_collectionChooser, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(activateShapeCollection(QListWidgetItem*)));
 
 
     m_addCollectionButton = new QToolButton (m_moreShapesContainer);
@@ -198,8 +196,7 @@ ShapeCollectionDocker::ShapeCollectionDocker(QWidget* parent)
     m_closeCollectionButton->setToolTip(i18n("Remove Shape Collection"));
     m_closeCollectionButton->setVisible(false);
 
-    connect(m_closeCollectionButton, SIGNAL(clicked()),
-            this, SLOT(removeCurrentCollection()));
+    connect(m_closeCollectionButton, SIGNAL(clicked()), this, SLOT(removeCurrentCollection()));
 
     // QT5TODO: app_shape_collections was only used with Flow in 2.x times
     // Now the StencilBoxDocker parses all the stencils and adds them to the KoShapeRegistry,
@@ -222,8 +219,7 @@ ShapeCollectionDocker::ShapeCollectionDocker(QWidget* parent)
     m_collectionView->setFixedSize(QSize(165,345));
     m_collectionView->setWordWrap(true);
 
-    connect(m_collectionView, SIGNAL(clicked(QModelIndex)),
-            this, SLOT(activateShapeCreationTool(QModelIndex)));
+    connect(m_collectionView, SIGNAL(clicked(QModelIndex)),  this, SLOT(activateShapeCreationTool(QModelIndex)));
 
     // Load the default shapes and add them to the combobox
     loadDefaultShapes();
