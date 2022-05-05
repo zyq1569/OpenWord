@@ -46,10 +46,11 @@ KoShape *VideoShapeFactory::createDefaultShape(KoDocumentResourceManager *docume
 {
     VideoShape * defaultShape = new VideoShape();
     defaultShape->setShapeId(VIDEOSHAPEID);
-    if (documentResources) {
-          Q_ASSERT(documentResources->hasResource(VideoCollection::ResourceId));
-          QVariant vc = documentResources->resource(VideoCollection::ResourceId);
-          defaultShape->setVideoCollection(static_cast<VideoCollection*>(vc.value<void*>()));
+    if (documentResources)
+    {
+        Q_ASSERT(documentResources->hasResource(VideoCollection::ResourceId));
+        QVariant vc = documentResources->resource(VideoCollection::ResourceId);
+        defaultShape->setVideoCollection(static_cast<VideoCollection*>(vc.value<void*>()));
     }
     return defaultShape;
 }
@@ -57,7 +58,8 @@ KoShape *VideoShapeFactory::createDefaultShape(KoDocumentResourceManager *docume
 bool VideoShapeFactory::supports(const KoXmlElement &e, KoShapeLoadingContext &context) const
 {
     Q_UNUSED(context);
-    if (e.localName() != "plugin" || e.namespaceURI() != KoXmlNS::draw) {
+    if (e.localName() != "plugin" || e.namespaceURI() != KoXmlNS::draw)
+    {
         return false;
     }
     return e.attribute("mime-type") == "application/vnd.sun.star.media";
