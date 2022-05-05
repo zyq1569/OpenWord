@@ -81,8 +81,8 @@ KoShape *EnhancedPathShapeFactory::createShape(const KoProperties *params, KoDoc
 {
     QVariant viewboxData;
     const QRect viewBox = (params->property(QLatin1String("viewBox"), viewboxData)) ?
-        viewboxData.toRect() :
-        QRect(0, 0, 100, 100);
+                          viewboxData.toRect() :
+                          QRect(0, 0, 100, 100);
 
     EnhancedPathShape *shape = new EnhancedPathShape(viewBox);
 
@@ -92,26 +92,38 @@ KoShape *EnhancedPathShapeFactory::createShape(const KoProperties *params, KoDoc
 
     ListType handles = params->property("handles").toList();
     foreach (const QVariant &v, handles)
+    {
         shape->addHandle(v.toMap());
+    }
 
     ComplexType formulae = params->property("formulae").toMap();
     ComplexType::const_iterator formula = formulae.constBegin();
     ComplexType::const_iterator lastFormula = formulae.constEnd();
     for (; formula != lastFormula; ++formula)
+    {
         shape->addFormula(formula.key(), formula.value().toString());
+    }
 
     QStringList commands = params->property("commands").toStringList();
     foreach (const QString &cmd, commands)
+    {
         shape->addCommand(cmd);
+    }
 
     QVariant color;
     if (params->property("background", color))
+    {
         shape->setBackground(QSharedPointer<KoColorBackground>(new KoColorBackground(color.value<QColor>())));
+    }
     QSizeF size = shape->size();
     if (size.width() > size.height())
+    {
         shape->setSize(QSizeF(100, 100 * size.height() / size.width()));
+    }
     else
+    {
         shape->setSize(QSizeF(100 * size.width() / size.height(), 100));
+    }
 
     return shape;
 }
@@ -166,7 +178,8 @@ void EnhancedPathShapeFactory::addCross()
 
 void EnhancedPathShapeFactory::addArrow()
 {
-    { // arrow right
+    {
+        // arrow right
         QString modifiers("60 35");
 
         QStringList commands;
@@ -199,7 +212,8 @@ void EnhancedPathShapeFactory::addArrow()
         addTemplate(t);
     }
 
-    { // arrow left
+    {
+        // arrow left
         QString modifiers("40 35");
 
         QStringList commands;
@@ -232,7 +246,8 @@ void EnhancedPathShapeFactory::addArrow()
         addTemplate(t);
     }
 
-    { // arrow top
+    {
+        // arrow top
         QString modifiers("35 40");
 
         QStringList commands;
@@ -265,7 +280,8 @@ void EnhancedPathShapeFactory::addArrow()
         addTemplate(t);
     }
 
-    { // arrow bottom
+    {
+        // arrow bottom
         QString modifiers("35 60");
 
         QStringList commands;
@@ -441,7 +457,8 @@ void EnhancedPathShapeFactory::addGearhead()
     qreal radian = (270.0 - 0.35 * toothAngle) * M_PI / 180.0;
     commands.append(QString("M %1 %2").arg(center.x() + innerRadius*cos(radian)).arg(center.y() + innerRadius*sin(radian)));
     QString cmd("L");
-    for (uint i = 0; i < toothCount; ++i) {
+    for (uint i = 0; i < toothCount; ++i)
+    {
         radian += 0.15 * toothAngle * M_PI / 180.0;
         cmd += QString(" %1 %2").arg(center.x() + outerRadius*cos(radian)).arg(center.y() + outerRadius*sin(radian));
         radian += 0.35 * toothAngle * M_PI / 180.0;
