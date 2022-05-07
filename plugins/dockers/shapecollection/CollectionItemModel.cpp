@@ -38,7 +38,9 @@ Qt::DropActions CollectionItemModel::supportedDragActions() const
 QVariant CollectionItemModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid() || index.row() > m_shapeTemplateList.count ())
+    {
         return QVariant();
+    }
 
     switch(role)
     {
@@ -77,15 +79,21 @@ void CollectionItemModel::setShapeTemplateList(const QList<KoCollectionItem>& ne
 QMimeData* CollectionItemModel::mimeData(const QModelIndexList& indexes) const
 {
     if(indexes.isEmpty())
+    {
         return 0;
+    }
 
     QModelIndex index = indexes.first();
 
     if(!index.isValid())
+    {
         return 0;
+    }
 
     if(m_shapeTemplateList.isEmpty())
+    {
         return 0;
+    }
 
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
@@ -93,9 +101,13 @@ QMimeData* CollectionItemModel::mimeData(const QModelIndexList& indexes) const
     const KoProperties *props = m_shapeTemplateList[index.row()].properties;
 
     if(props)
+    {
         dataStream << props->store("shapes");
+    }
     else
+    {
         dataStream << QString();
+    }
 
     QMimeData* mimeData = new QMimeData;
     mimeData->setData(SHAPETEMPLATE_MIMETYPE, itemData);
@@ -114,7 +126,9 @@ QStringList CollectionItemModel::mimeTypes() const
 Qt::ItemFlags CollectionItemModel::flags(const QModelIndex& index) const
 {
     if(index.isValid())
+    {
         return QAbstractListModel::flags(index) | Qt::ItemIsDragEnabled;
+    }
 
     return QAbstractListModel::flags(index);
 }
@@ -122,7 +136,9 @@ Qt::ItemFlags CollectionItemModel::flags(const QModelIndex& index) const
 const KoProperties* CollectionItemModel::properties(const QModelIndex& index) const
 {
     if (!index.isValid() || index.row() > m_shapeTemplateList.count())
+    {
         return 0;
+    }
 
     return m_shapeTemplateList[index.row()].properties;
 }
