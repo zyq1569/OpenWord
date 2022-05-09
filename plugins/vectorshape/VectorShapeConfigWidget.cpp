@@ -31,7 +31,8 @@
 
 void LoadWaiter::setImageData(KJob *job)
 {
-    if (m_vectorShape) {
+    if (m_vectorShape)
+    {
         KIO::StoredTransferJob *transferJob = qobject_cast<KIO::StoredTransferJob*>(job);
         Q_ASSERT(transferJob);
 
@@ -48,7 +49,7 @@ void LoadWaiter::setImageData(KJob *job)
 
 VectorShapeConfigWidget::VectorShapeConfigWidget()
     : m_shape(0),
-    m_fileWidget(0)
+      m_fileWidget(0)
 {
 }
 
@@ -66,10 +67,10 @@ void VectorShapeConfigWidget::open(KoShape *shape)
     m_fileWidget = new KFileWidget(QUrl(/*QT5TODO:"kfiledialog:///OpenDialog"*/), this);
     m_fileWidget->setOperationMode(KFileWidget::Opening);
     const QStringList mimetypes = QStringList()
-        << QLatin1String("image/x-wmf")
-        << QLatin1String("image/x-emf")
-        << QLatin1String("image/x-svm")
-        << QLatin1String("image/svg+xml");
+                                  << QLatin1String("image/x-wmf")
+                                  << QLatin1String("image/x-emf")
+                                  << QLatin1String("image/x-svm")
+                                  << QLatin1String("image/svg+xml");
     m_fileWidget->setMimeFilter(mimetypes);
     layout->addWidget(m_fileWidget);
     setLayout(layout);
@@ -79,10 +80,13 @@ void VectorShapeConfigWidget::open(KoShape *shape)
 void VectorShapeConfigWidget::save()
 {
     if (!m_shape)
+    {
         return;
+    }
     m_fileWidget->accept();
     QUrl url = m_fileWidget->selectedUrl();
-    if (!url.isEmpty()) {
+    if (!url.isEmpty())
+    {
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::NoReload, 0);
         LoadWaiter *waiter = new LoadWaiter(m_shape);
         connect(job, SIGNAL(result(KJob*)), waiter, SLOT(setImageData(KJob*)));
