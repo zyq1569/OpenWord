@@ -46,7 +46,7 @@
 
 KoScriptManagerAddTypeWidget::KoScriptManagerAddTypeWidget(KoScriptManagerAddWizard *wizard)
     : QWidget(wizard),
-    m_wizard(wizard)
+      m_wizard(wizard)
 {
     setObjectName("ScriptManagerAddTypeWidget");
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -94,7 +94,7 @@ void KoScriptManagerAddTypeWidget::slotUpdate()
 
 KoScriptManagerAddFileWidget::KoScriptManagerAddFileWidget(KoScriptManagerAddWizard *wizard, const QString &startDirOrVariable)
     : QWidget(wizard),
-    m_wizard(wizard)
+      m_wizard(wizard)
 {
     setObjectName("ScriptManagerAddFileWidget");
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -103,7 +103,8 @@ KoScriptManagerAddFileWidget::KoScriptManagerAddFileWidget(KoScriptManagerAddWiz
     m_filewidget = new KFileWidget(QUrl(startDirOrVariable), this);
 
     QStringList mimetypes;
-    foreach (const QString &interpretername, Kross::Manager::self().interpreters()) {
+    foreach (const QString &interpretername, Kross::Manager::self().interpreters())
+    {
         Kross::InterpreterInfo *info = Kross::Manager::self().interpreterInfo(interpretername);
         Q_ASSERT(info);
         mimetypes.append(info->mimeTypes().join(" ").trimmed());
@@ -144,8 +145,8 @@ void KoScriptManagerAddFileWidget::slotUpdate()
 
 KoScriptManagerAddScriptWidget::KoScriptManagerAddScriptWidget(KoScriptManagerAddWizard *wizard)
     : QWidget(wizard),
-    m_wizard(wizard),
-    m_editor(0)
+      m_wizard(wizard),
+      m_editor(0)
 {
     setObjectName("ScriptManagerAddScriptWidget");
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -162,29 +163,33 @@ void KoScriptManagerAddScriptWidget::slotUpdate()
     //d->wizard->setValid(d->wizard->m_scriptItem, d->editor && d->editor->isValid());
 
     m_wizard->setValid(m_wizard->m_scriptItem,
-                         ! (m_editor == 0 || m_editor->nameEdit()->text().isEmpty()
-                             || m_editor->textEdit()->text().isEmpty()
-                             || m_editor->interpreterEdit()->currentText().isEmpty()
-                             || m_editor->fileEdit()->url().fileName().isEmpty() )
-                        );
+                       ! (m_editor == 0 || m_editor->nameEdit()->text().isEmpty()
+                          || m_editor->textEdit()->text().isEmpty()
+                          || m_editor->interpreterEdit()->currentText().isEmpty()
+                          || m_editor->fileEdit()->url().fileName().isEmpty() )
+                      );
 }
 
 void KoScriptManagerAddScriptWidget::showEvent(QShowEvent *event)
 {
     Kross::Action *action = 0;
-    if (m_editor) {
+    if (m_editor)
+    {
         action = m_editor->action();
         delete m_editor;
     }
     if (! action)
+    {
         action = new Kross::Action(0, QString());
+    }
 
     const QString file = m_wizard->m_filewidget->selectedFile();
     QFileInfo fi(file);
     action->setObjectName(file);
     action->setText(fi.baseName());
     //action->setDescription();
-    if (fi.isFile()) {
+    if (fi.isFile())
+    {
         action->setIconName(KIO::iconNameForUrl(QUrl(file)));
         action->setEnabled(fi.exists());
     }
@@ -239,7 +244,8 @@ QString KoScriptManagerAddCollectionWidget::uniqueName() const
 {
     QString s("Collection-%1");
     int i = 1;
-    while (m_wizard->m_collection->hasCollection(s.arg(i))) {
+    while (m_wizard->m_collection->hasCollection(s.arg(i)))
+    {
         ++i;
     }
     return s.arg(i);
@@ -317,17 +323,23 @@ bool KoScriptManagerAddWizard::invokeWidgetMethod(const char *member)
 void KoScriptManagerAddWizard::back()
 {
     if (invokeWidgetMethod("back"))
+    {
         KAssistantDialog::back();
+    }
 }
 
 void KoScriptManagerAddWizard::next()
 {
     if (invokeWidgetMethod("next"))
+    {
         KAssistantDialog::next();
+    }
 }
 
 void KoScriptManagerAddWizard::accept()
 {
     if (invokeWidgetMethod("accept"))
+    {
         KAssistantDialog::accept();
+    }
 }
