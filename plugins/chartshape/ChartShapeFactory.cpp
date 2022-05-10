@@ -74,8 +74,7 @@ ChartShapePlugin::ChartShapePlugin(QObject * parent, const QVariantList&)
 }
 
 
-ChartShapeFactory::ChartShapeFactory()
-    : KoShapeFactoryBase(ChartShapeId, i18n("Chart"))
+ChartShapeFactory::ChartShapeFactory(): KoShapeFactoryBase(ChartShapeId, i18n("Chart"))
 {
     setXmlElementNames("urn:oasis:names:tc:opendocument:xmlns:drawing:1.0", QStringList("object"));
     setToolTip(i18n("Business charts"));
@@ -299,12 +298,15 @@ ChartShapeFactory::ChartShapeFactory()
 bool ChartShapeFactory::supports(const KoXmlElement &element, KoShapeLoadingContext &context) const
 {
     if (element.namespaceURI() == "urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
-        && element.tagName() == "object") {
+            && element.tagName() == "object")
+    {
 
         QString href = element.attribute("href");
-        if (!href.isEmpty()) {
+        if (!href.isEmpty())
+        {
             // check the mimetype
-            if (href.startsWith(QLatin1String("./"))) {
+            if (href.startsWith(QLatin1String("./")))
+            {
                 href.remove(0, 2);
             }
             const QString mimetype = context.odfLoadingContext().mimeTypeForPath(href);
@@ -317,7 +319,8 @@ bool ChartShapeFactory::supports(const KoXmlElement &element, KoShapeLoadingCont
 KoShape *ChartShapeFactory::createShape(const KoProperties* properties, KoDocumentResourceManager *documentResources) const
 {
     qInfo()<<Q_FUNC_INFO<<properties->property("chart-type")<<properties->property("chart-sub-type");
-    switch (properties->intProperty("chart-type")) {
+    switch (properties->intProperty("chart-type"))
+    {
         case BarChartType:
             return createBarChart(documentResources, properties->intProperty("chart-sub-type"));
         case LineChartType:
@@ -346,18 +349,21 @@ KoShape *ChartShapeFactory::createShape(const KoProperties* properties, KoDocume
 }
 
 KoShape *ChartShapeFactory::createShapeFromOdf(const KoXmlElement &element,
-                                               KoShapeLoadingContext &context)
+        KoShapeLoadingContext &context)
 {
     ChartShape* shape = new ChartShape(context.documentResourceManager());
 
     if (shape->shapeId().isEmpty())
+    {
         shape->setShapeId(id());
+    }
 
     context.odfLoadingContext().styleStack().save();
     bool loaded = shape->loadOdf(element, context);
     context.odfLoadingContext().styleStack().restore();
 
-    if (!loaded) {
+    if (!loaded)
+    {
         delete shape;
         return 0;
     }
@@ -488,10 +494,14 @@ ChartShape *ChartShapeFactory::createStockChart(KoDocumentResourceManager *docum
     chartData->setData(chartData->index(0, 3), i18n("Low"));
     chartData->setData(chartData->index(0, 4), i18n("Close"));
 
-    QList<qreal> openValues; openValues << 10 << 15 << 20;
-    QList<qreal> highValues; highValues << 12 << 15 << 30;
-    QList<qreal> lowValues; lowValues << 6 << 13 << 20;
-    QList<qreal> closeValues; closeValues << 7 << 13 << 30;
+    QList<qreal> openValues;
+    openValues << 10 << 15 << 20;
+    QList<qreal> highValues;
+    highValues << 12 << 15 << 30;
+    QList<qreal> lowValues;
+    lowValues << 6 << 13 << 20;
+    QList<qreal> closeValues;
+    closeValues << 7 << 13 << 30;
     int col = 1;
 
     // Open
