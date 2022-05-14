@@ -37,6 +37,7 @@
 #include <QLabel>
 #include <QToolButton>
 
+///openword do do: 考虑使用ffmpeg 直接调用ffplay.exe播放, VideoToolWidget带部分参数设置界面
 FullScreenPlayer::FullScreenPlayer(const QUrl &url)
     : QWidget(0)
     , m_seekSlider(new Phonon::SeekSlider(this))
