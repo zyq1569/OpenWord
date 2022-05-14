@@ -31,7 +31,7 @@
 VideoShapeConfigWidget::VideoShapeConfigWidget()
     : KoShapeConfigWidgetBase()
     ,m_shape(0),
-    m_fileSelectionWidget(0)
+      m_fileSelectionWidget(0)
 {
 }
 
@@ -44,7 +44,8 @@ void VideoShapeConfigWidget::open(KoShape *shape)
 {
     m_shape = dynamic_cast<VideoShape*>(shape);
     Q_ASSERT(m_shape);
-    if (!m_fileSelectionWidget) {
+    if (!m_fileSelectionWidget)
+    {
         QVBoxLayout *layout = new QVBoxLayout(this);
         m_fileSelectionWidget = new SelectVideoWidget(this);
         layout->addWidget(m_fileSelectionWidget);
@@ -55,10 +56,12 @@ void VideoShapeConfigWidget::open(KoShape *shape)
 void VideoShapeConfigWidget::save()
 {
     if (!m_shape)
+    {
         return;
+    }
     m_fileSelectionWidget->accept();
     VideoData *data = m_shape->videoCollection()->createExternalVideoData(m_fileSelectionWidget->selectedUrl(),
-                                                                          m_fileSelectionWidget->saveEmbedded());
+                      m_fileSelectionWidget->saveEmbedded());
     m_shape->setUserData(data);
 }
 
