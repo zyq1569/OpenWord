@@ -22,10 +22,10 @@
 
 #include <QWidget>
 
-class KFileWidget;
+//class KFileWidget;
 class QUrl;
 class QCheckBox;
-
+class QFileDialog;
 class SelectVideoWidget : public QWidget
 {
 public:
@@ -39,7 +39,9 @@ public:
     void cancel();
 private:
 
-    KFileWidget *m_fileWidget;
+//    KFileWidget *m_fileWidget;
+    QFileDialog *m_fileDialog;
+    QString m_filename;
     QCheckBox *m_saveEmbedded;
 };
 
