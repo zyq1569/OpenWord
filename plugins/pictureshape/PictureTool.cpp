@@ -90,6 +90,12 @@ void PictureTool::activate(ToolActivation toolActivation, const QSet<KoShape*> &
 
     foreach (KoShape *shape, shapes)
     {
+        //add openword 20220505
+        if (m_pictureshape == shape)
+        {
+            useCursor(Qt::ArrowCursor);
+            return;
+        }
         if ((m_pictureshape = dynamic_cast<PictureShape*>(shape)))
         {
             break;
@@ -280,7 +286,29 @@ void PictureTool::mousePressEvent(KoPointerEvent *event)
     }
     ///---------------add 20220424
     KoInteractionTool::mousePressEvent(event);
+    //KoInteractionTool::mouseMoveEvent(event);
     updateCursor();
+    ///to do... openword! temp add: PictureTool::activate()无法被上层函数调用,待后期完善,注释掉后面的代码
+    if (m_pictureshape)
+    {
+        KoShapeManager *shapeManager = canvas()->shapeManager();
+        bool selectNextInStack = event->modifiers() & Qt::ShiftModifier;
+        KoShape *shape = shapeManager->shapeAt(event->point, selectNextInStack ? KoFlake::NextUnselected : KoFlake::ShapeOnTop);
+        if (m_pictureshape == shape)
+        {
+            return;
+        }
+        m_pictureshape = dynamic_cast<PictureShape*>(shape);
+        if (!m_pictureshape)
+        {
+            return;
+        }
+        if (m_pictureToolUI)
+        {
+            m_pictureToolUI->cropWidget->setPictureShape(m_pictureshape);
+            updateControlElements();
+        }
+    }
 }
 
 void PictureTool::mouseDoubleClickEvent(KoPointerEvent *event)
@@ -294,10 +322,44 @@ void PictureTool::mouseDoubleClickEvent(KoPointerEvent *event)
     changeUrlPressed();
 }
 
- ///---------------add 20220424
+///---------------add 20220424
 KoInteractionStrategy *PictureTool::createStrategy(KoPointerEvent *event)
 {
-    Q_UNUSED(event);
+//    Q_UNUSED(event);
+//    return 0;
+    // reset the move by keys when a new strategy is created otherwise we might change the
+    // command after a new command was added. This happens when you where faster than the timer.
+    KoShapeManager *shapeManager = canvas()->shapeManager();
+    KoSelection *select = shapeManager->selection();
+
+    bool selectMultiple = event->modifiers() & Qt::ControlModifier;
+    bool selectNextInStack = event->modifiers() & Qt::ShiftModifier;
+
+    if ((event->buttons() & Qt::LeftButton) == 0)
+    {
+        return 0;    // Nothing to do for middle/right mouse button
+    }
+
+    KoShape *shape = shapeManager->shapeAt(event->point, selectNextInStack ? KoFlake::NextUnselected : KoFlake::ShapeOnTop);
+
+    if (select->isSelected(shape))
+    {
+        if (selectMultiple)
+        {
+            repaintDecorations();
+            select->deselect(shape);
+        }
+    }
+    else   // clicked on shape which is not selected
+    {
+        repaintDecorations();
+        if (! selectMultiple)
+        {
+            shapeManager->selection()->deselectAll();
+        }
+        select->select(shape, selectNextInStack ? false : true);
+        repaintDecorations();
+    }
     return 0;
 }
 
