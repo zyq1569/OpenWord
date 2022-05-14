@@ -28,10 +28,7 @@
 
 #include <QGridLayout>
 
-VideoShapeConfigWidget::VideoShapeConfigWidget()
-    : KoShapeConfigWidgetBase()
-    ,m_shape(0),
-      m_fileSelectionWidget(0)
+VideoShapeConfigWidget::VideoShapeConfigWidget() : KoShapeConfigWidgetBase() , m_shape(0),  m_fileSelectionWidget(0)
 {
 }
 
@@ -60,8 +57,7 @@ void VideoShapeConfigWidget::save()
         return;
     }
     m_fileSelectionWidget->accept();
-    VideoData *data = m_shape->videoCollection()->createExternalVideoData(m_fileSelectionWidget->selectedUrl(),
-                      m_fileSelectionWidget->saveEmbedded());
+    VideoData *data = m_shape->videoCollection()->createExternalVideoData(m_fileSelectionWidget->selectedUrl(), m_fileSelectionWidget->saveEmbedded());
     m_shape->setUserData(data);
 }
 
