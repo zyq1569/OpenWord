@@ -292,9 +292,7 @@ KoShape * KoShapeRegistry::createShapeFromOdf(const KoXmlElement & e, KoShapeLoa
     return shape;
 }
 
-KoShape *KoShapeRegistry::Private::createShapeInternal(const KoXmlElement &fullElement,
-        KoShapeLoadingContext &context,
-        const KoXmlElement &element) const
+KoShape *KoShapeRegistry::Private::createShapeInternal(const KoXmlElement &fullElement,  KoShapeLoadingContext &context,   const KoXmlElement &element) const
 {
     // Pair of namespace, tagname
     QPair<QString, QString> p = QPair<QString, QString>(element.namespaceURI(), element.tagName());
