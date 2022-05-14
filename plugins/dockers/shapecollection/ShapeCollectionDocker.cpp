@@ -463,8 +463,7 @@ void ShapeCollectionDocker::activateShapeCollection(QListWidgetItem *item)
     m_closeCollectionButton->setEnabled(id != "default");
 }
 
-bool ShapeCollectionDocker::addCollection(const QString& id, const QString& title,
-        CollectionItemModel* model)
+bool ShapeCollectionDocker::addCollection(const QString& id, const QString& title,  CollectionItemModel* model)
 {
     if(m_modelMap.contains(id))
     {
