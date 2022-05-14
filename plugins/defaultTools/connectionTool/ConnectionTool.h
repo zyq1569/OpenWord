@@ -103,7 +103,8 @@ private:
     /// Returns nearest connection handle or nearest connection point id of shape
     int handleAtPoint(KoShape *shape, const QPointF &mousePoint) const;
 
-    enum EditMode {
+    enum EditMode
+    {
         Idle,               ///< in idle mode we can only start a connector creation, manipulation to existing connectors and connection points not allowed
         CreateConnection,   ///< we are creating a new connection
         EditConnection,     ///< we are editing a connection
