@@ -44,9 +44,7 @@
  * KoScriptManagerAddTypeWidget
  */
 
-KoScriptManagerAddTypeWidget::KoScriptManagerAddTypeWidget(KoScriptManagerAddWizard *wizard)
-    : QWidget(wizard),
-      m_wizard(wizard)
+KoScriptManagerAddTypeWidget::KoScriptManagerAddTypeWidget(KoScriptManagerAddWizard *wizard): QWidget(wizard), m_wizard(wizard)
 {
     setObjectName("ScriptManagerAddTypeWidget");
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -93,14 +91,34 @@ void KoScriptManagerAddTypeWidget::slotUpdate()
  */
 
 KoScriptManagerAddFileWidget::KoScriptManagerAddFileWidget(KoScriptManagerAddWizard *wizard, const QString &startDirOrVariable)
-    : QWidget(wizard),
-      m_wizard(wizard)
+    : QWidget(wizard), m_wizard(wizard)
 {
+    //setObjectName("ScriptManagerAddFileWidget");
+    //QVBoxLayout *layout = new QVBoxLayout(this);
+    //layout->setMargin(0);
+    //setLayout(layout);
+    //m_filewidget = new KFileWidget(QUrl(startDirOrVariable), this);
+
+    //QStringList mimetypes;
+    //foreach (const QString &interpretername, Kross::Manager::self().interpreters())
+    //{
+    //    Kross::InterpreterInfo *info = Kross::Manager::self().interpreterInfo(interpretername);
+    //    Q_ASSERT(info);
+    //    mimetypes.append(info->mimeTypes().join(" ").trimmed());
+    //}
+    //m_filewidget->setMimeFilter(mimetypes /*, defaultmime*/);
+
+    //layout->addWidget(m_filewidget);
+    //connect(m_filewidget, SIGNAL(fileHighlighted(QString)), this, SLOT(slotFileHighlighted(QString)));
+    //connect(m_filewidget, SIGNAL(fileSelected(QString)), this, SLOT(slotUpdate()));
+
+    ///
+    ///
     setObjectName("ScriptManagerAddFileWidget");
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(0);
     setLayout(layout);
-    m_filewidget = new KFileWidget(QUrl(startDirOrVariable), this);
+    m_fileDialog = new QFileDialog(this, Qt::SubWindow | Qt::FramelessWindowHint);
 
     QStringList mimetypes;
     foreach (const QString &interpretername, Kross::Manager::self().interpreters())
@@ -109,11 +127,11 @@ KoScriptManagerAddFileWidget::KoScriptManagerAddFileWidget(KoScriptManagerAddWiz
         Q_ASSERT(info);
         mimetypes.append(info->mimeTypes().join(" ").trimmed());
     }
-    m_filewidget->setMimeFilter(mimetypes /*, defaultmime*/);
+    //m_filewidget->setMimeFilter(mimetypes /*, defaultmime*/);
 
-    layout->addWidget(m_filewidget);
-    connect(m_filewidget, SIGNAL(fileHighlighted(QString)), this, SLOT(slotFileHighlighted(QString)));
-    connect(m_filewidget, SIGNAL(fileSelected(QString)), this, SLOT(slotUpdate()));
+    layout->addWidget(m_fileDialog);
+    connect(m_fileDialog, SIGNAL(fileHighlighted(QString)), this, SLOT(slotFileHighlighted(QString)));
+    connect(m_fileDialog, SIGNAL(fileSelected(QString)), this, SLOT(slotUpdate()));
 }
 
 KoScriptManagerAddFileWidget::~KoScriptManagerAddFileWidget()
@@ -143,10 +161,7 @@ void KoScriptManagerAddFileWidget::slotUpdate()
  * KoScriptManagerAddScriptWidget
  */
 
-KoScriptManagerAddScriptWidget::KoScriptManagerAddScriptWidget(KoScriptManagerAddWizard *wizard)
-    : QWidget(wizard),
-      m_wizard(wizard),
-      m_editor(0)
+KoScriptManagerAddScriptWidget::KoScriptManagerAddScriptWidget(KoScriptManagerAddWizard *wizard): QWidget(wizard), m_wizard(wizard), m_editor(0)
 {
     setObjectName("ScriptManagerAddScriptWidget");
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -164,10 +179,8 @@ void KoScriptManagerAddScriptWidget::slotUpdate()
 
     m_wizard->setValid(m_wizard->m_scriptItem,
                        ! (m_editor == 0 || m_editor->nameEdit()->text().isEmpty()
-                          || m_editor->textEdit()->text().isEmpty()
-                          || m_editor->interpreterEdit()->currentText().isEmpty()
-                          || m_editor->fileEdit()->url().fileName().isEmpty() )
-                      );
+                          || m_editor->textEdit()->text().isEmpty() || m_editor->interpreterEdit()->currentText().isEmpty()
+                          || m_editor->fileEdit()->url().fileName().isEmpty() ) );
 }
 
 void KoScriptManagerAddScriptWidget::showEvent(QShowEvent *event)
@@ -224,8 +237,7 @@ bool KoScriptManagerAddScriptWidget::accept()
  * KoScriptManagerAddCollectionWidget
  */
 
-KoScriptManagerAddCollectionWidget::KoScriptManagerAddCollectionWidget(KoScriptManagerAddWizard *wizard)
-    : QWidget(wizard), m_wizard(wizard)
+KoScriptManagerAddCollectionWidget::KoScriptManagerAddCollectionWidget(KoScriptManagerAddWizard *wizard): QWidget(wizard), m_wizard(wizard)
 {
     setObjectName("ScriptManagerAddCollectionWidget");
     QVBoxLayout *layout = new QVBoxLayout(this);

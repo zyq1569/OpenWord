@@ -27,7 +27,8 @@ class KoScriptManagerAddWizard;
 
 class QRadioButton;
 class KPageWidgetItem;
-class KFileWidget;
+//class KFileWidget;
+class QFileDialog;
 
 namespace Kross
 {
@@ -95,7 +96,8 @@ public Q_SLOTS:
 
 private:
     KoScriptManagerAddWizard *const m_wizard;
-    KFileWidget *m_filewidget;
+    //KFileWidget *m_filewidget;
+    QFileDialog *m_fileDialog;
     QString m_file;
 };
 
