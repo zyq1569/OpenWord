@@ -127,7 +127,7 @@ KoScriptManagerAddFileWidget::KoScriptManagerAddFileWidget(KoScriptManagerAddWiz
         Q_ASSERT(info);
         mimetypes.append(info->mimeTypes().join(" ").trimmed());
     }
-    //m_filewidget->setMimeFilter(mimetypes /*, defaultmime*/);
+    m_fileDialog->setMimeTypeFilters(mimetypes /*, defaultmime*/);
 
     layout->addWidget(m_fileDialog);
     connect(m_fileDialog, SIGNAL(fileHighlighted(QString)), this, SLOT(slotFileHighlighted(QString)));
