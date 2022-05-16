@@ -47,10 +47,13 @@ void VectorTool::activate(ToolActivation toolActivation, const QSet<KoShape*> &s
 {
     Q_UNUSED(toolActivation);
 
-    foreach (KoShape *shape, shapes) {
+    foreach (KoShape *shape, shapes)
+    {
         m_shape = dynamic_cast<VectorShape*>( shape );
         if ( m_shape )
+        {
             break;
+        }
     }
     if ( !m_shape )
     {
@@ -62,7 +65,7 @@ void VectorTool::activate(ToolActivation toolActivation, const QSet<KoShape*> &s
 
 void VectorTool::deactivate()
 {
-  m_shape = 0;
+    m_shape = 0;
 }
 
 QWidget * VectorTool::createOptionWidget()
@@ -84,9 +87,12 @@ QWidget * VectorTool::createOptionWidget()
 void VectorTool::changeUrlPressed()
 {
     if (m_shape == 0)
+    {
         return;
+    }
     const QUrl url = QFileDialog::getOpenFileUrl(/*QT5TODO: QLatin1String("image/x-emf image/x-wmf image/x-svm image/svg+xml")*/);
-    if (!url.isEmpty()) {
+    if (!url.isEmpty())
+    {
         // TODO move this to an action in the libs, with a nice dialog or something.
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::NoReload, 0);
         connect(job, SIGNAL(result(KJob*)), this, SLOT(setImageData(KJob*)));
@@ -96,7 +102,8 @@ void VectorTool::changeUrlPressed()
 
 void VectorTool::mouseDoubleClickEvent( KoPointerEvent *event )
 {
-    if(canvas()->shapeManager()->shapeAt(event->point) != m_shape) {
+    if(canvas()->shapeManager()->shapeAt(event->point) != m_shape)
+    {
         event->ignore(); // allow the event to be used by another
         return;
     }
@@ -105,7 +112,8 @@ void VectorTool::mouseDoubleClickEvent( KoPointerEvent *event )
 
 void VectorTool::setImageData(KJob *job)
 {
-    if (m_shape == 0) {
+    if (m_shape == 0)
+    {
         return;
     }
     KIO::StoredTransferJob *transferJob = qobject_cast<KIO::StoredTransferJob*>(job);
