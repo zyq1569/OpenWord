@@ -30,7 +30,7 @@
 
 #include <KIO/Global>
 #include <klocalizedstring.h>
-#include <kfilewidget.h>
+//#include <kfilewidget.h>
 #include <kurlrequester.h>
 
 #include <QVBoxLayout>
