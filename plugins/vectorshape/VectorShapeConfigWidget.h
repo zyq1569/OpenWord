@@ -25,9 +25,9 @@
 #include <QWidget>
 
 class VectorShape;
-class KFileWidget;
+//class KFileWidget;
 class KJob;
-
+class QFileDialog;
 class VectorShapeConfigWidget : public KoShapeConfigWidgetBase
 {
     Q_OBJECT
@@ -46,7 +46,8 @@ public:
 
 private:
     VectorShape *m_shape;
-    KFileWidget *m_fileWidget;
+    //KFileWidget *m_fileWidget;
+    QFileDialog *m_fileDialog;
 };
 
 class LoadWaiter : public QObject

@@ -23,12 +23,12 @@
 #include "VectorShape.h"
 #include "VectorDebug.h"
 // KF5
-#include <kfilewidget.h>
+//#include <kfilewidget.h>
 #include <KIO/Job>
 // Qt
 #include <QVBoxLayout>
 #include <QUrl>
-
+#include <QFileDialog>
 void LoadWaiter::setImageData(KJob *job)
 {
     if (m_vectorShape)
@@ -48,33 +48,48 @@ void LoadWaiter::setImageData(KJob *job)
 // ---------------------------------------------------- //
 
 VectorShapeConfigWidget::VectorShapeConfigWidget()
-    : m_shape(0),
-      m_fileWidget(0)
+    : m_shape(0),m_fileDialog(0)/*  m_fileWidget(0)*/
 {
 }
 
 VectorShapeConfigWidget::~VectorShapeConfigWidget()
 {
-    delete m_fileWidget;
+    delete /*m_fileWidget*/m_fileDialog;
 }
 
 void VectorShapeConfigWidget::open(KoShape *shape)
 {
+//m_shape = dynamic_cast<VectorShape*>(shape);
+//Q_ASSERT(m_shape);
+//delete m_fileWidget;
+//QVBoxLayout *layout = new QVBoxLayout(this);
+//m_fileWidget = new KFileWidget(QUrl(/*QT5TODO:"kfiledialog:///OpenDialog"*/), this);
+//m_fileWidget->setOperationMode(KFileWidget::Opening);
+//const QStringList mimetypes = QStringList()
+//                              << QLatin1String("image/x-wmf")
+//                              << QLatin1String("image/x-emf")
+//                              << QLatin1String("image/x-svm")
+//                              << QLatin1String("image/svg+xml");
+//m_fileWidget->setMimeFilter(mimetypes);
+//layout->addWidget(m_fileWidget);
+//setLayout(layout);
+//connect(m_fileWidget, SIGNAL(accepted()), this, SIGNAL(accept()));
+    ////-----------------------------------------------------
     m_shape = dynamic_cast<VectorShape*>(shape);
     Q_ASSERT(m_shape);
-    delete m_fileWidget;
+    delete m_fileDialog;
     QVBoxLayout *layout = new QVBoxLayout(this);
-    m_fileWidget = new KFileWidget(QUrl(/*QT5TODO:"kfiledialog:///OpenDialog"*/), this);
-    m_fileWidget->setOperationMode(KFileWidget::Opening);
+    m_fileDialog = new QFileDialog(this, Qt::SubWindow | Qt::FramelessWindowHint);
+    m_fileDialog->setOption(QFileDialog::ReadOnly, true);
     const QStringList mimetypes = QStringList()
                                   << QLatin1String("image/x-wmf")
                                   << QLatin1String("image/x-emf")
                                   << QLatin1String("image/x-svm")
                                   << QLatin1String("image/svg+xml");
-    m_fileWidget->setMimeFilter(mimetypes);
-    layout->addWidget(m_fileWidget);
+    m_fileDialog->setMimeTypeFilters(mimetypes);
+    layout->addWidget(m_fileDialog);
     setLayout(layout);
-    connect(m_fileWidget, SIGNAL(accepted()), this, SIGNAL(accept()));
+    connect(m_fileDialog, SIGNAL(accepted()), this, SIGNAL(accept()));
 }
 
 void VectorShapeConfigWidget::save()
@@ -83,8 +98,10 @@ void VectorShapeConfigWidget::save()
     {
         return;
     }
-    m_fileWidget->accept();
-    QUrl url = m_fileWidget->selectedUrl();
+//    m_fileWidget->accept();
+//    QUrl url = m_fileWidget->selectedUrl();
+    m_fileDialog->accepted();
+    QUrl url = QUrl::fromUserInput(m_fileDialog->selectedFiles()[0]);
     if (!url.isEmpty())
     {
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::NoReload, 0);
