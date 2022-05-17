@@ -26,7 +26,7 @@
 class PictureShape;
 class KFileWidget;
 class KJob;
-
+class QFileDialog;
 class PictureShapeConfigWidget : public KoShapeConfigWidgetBase
 {
     Q_OBJECT
@@ -48,7 +48,8 @@ private:
 
 private:
     PictureShape *m_shape;
-    KFileWidget *m_fileWidget;
+    //KFileWidget *m_fileWidget;
+    QFileDialog *m_fileDialog;
 };
 
 class PictureShapeLoadWaiter : public QObject

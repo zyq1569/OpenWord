@@ -24,14 +24,15 @@
 #include <KoImageData.h>
 #include <KoImageCollection.h>
 
-#include <kfilewidget.h>
+//#include <kfilewidget.h>
 #include <kjobuidelegate.h>
 #include <KIO/Job>
 
 #include <QGridLayout>
 #include <QImageReader>
 #include <QUrl>
-
+#include <QFileDialog>//add openword
+///kioslave5.exe for KJob  :to do.qthread
 void PictureShapeLoadWaiter::setImageData(KJob *job)
 {
     if (job->error())   // e.g. file not found
@@ -80,34 +81,53 @@ void PictureShapeLoadWaiter::setImageData(KJob *job)
 // ---------------------------------------------------- //
 
 PictureShapeConfigWidget::PictureShapeConfigWidget()
-    : m_shape(0),
-      m_fileWidget(0)
+    : m_shape(0),/*m_fileWidget(0)*/m_fileDialog(0)
 {
 }
 
 PictureShapeConfigWidget::~PictureShapeConfigWidget()
 {
-    delete m_fileWidget;
+    delete /*m_fileWidget*/m_fileDialog;
 }
 
 void PictureShapeConfigWidget::open(KoShape *shape)
 {
+    //m_shape = dynamic_cast<PictureShape*>(shape);
+    //Q_ASSERT(m_shape);
+    //delete m_fileWidget;
+    //QVBoxLayout *layout = new QVBoxLayout(this);
+    //m_fileWidget = new KFileWidget(QUrl(/* QT5TODO:"kfiledialog:///OpenDialog"*/), this);
+    //m_fileWidget->setMode(KFile::Files | KFile::ExistingOnly);
+    //m_fileWidget->setOperationMode(KFileWidget::Opening);
+    //QStringList imageFilters;
+    //foreach(const QByteArray &mimeType, QImageReader::supportedMimeTypes())
+    //{
+    //    imageFilters << QLatin1String(mimeType);
+    //}
+    //m_fileWidget->setMimeFilter(imageFilters);
+    //layout->addWidget(m_fileWidget);
+    //setLayout(layout);
+    //connect(m_fileWidget, &KFileWidget::accepted, this, &PictureShapeConfigWidget::slotAccept);
+    ///
+    ///-------------------------------------------------------------------------------------------
     m_shape = dynamic_cast<PictureShape*>(shape);
     Q_ASSERT(m_shape);
-    delete m_fileWidget;
+    delete m_fileDialog;
     QVBoxLayout *layout = new QVBoxLayout(this);
-    m_fileWidget = new KFileWidget(QUrl(/* QT5TODO:"kfiledialog:///OpenDialog"*/), this);
-    m_fileWidget->setMode(KFile::Files | KFile::ExistingOnly);
-    m_fileWidget->setOperationMode(KFileWidget::Opening);
+    m_fileDialog = new QFileDialog(this, Qt::SubWindow | Qt::FramelessWindowHint);
+    //m_fileDialog->setMode(KFile::Files | KFile::ExistingOnly);
+    //m_fileDialog->setOperationMode(KFileWidget::Opening);
+    m_fileDialog->setOption(QFileDialog::DontUseNativeDialog,true);
+    m_fileDialog->setOption(QFileDialog::ReadOnly, true);
     QStringList imageFilters;
     foreach(const QByteArray &mimeType, QImageReader::supportedMimeTypes())
     {
         imageFilters << QLatin1String(mimeType);
     }
-    m_fileWidget->setMimeFilter(imageFilters);
-    layout->addWidget(m_fileWidget);
+    m_fileDialog->setMimeTypeFilters(imageFilters);
+    layout->addWidget(m_fileDialog);
     setLayout(layout);
-    connect(m_fileWidget, &KFileWidget::accepted, this, &PictureShapeConfigWidget::slotAccept);
+    connect(m_fileDialog, &QFileDialog::accepted, this, &PictureShapeConfigWidget::slotAccept);
 }
 
 // The page dialog's own accept() is called by the OK button
@@ -119,14 +139,16 @@ void PictureShapeConfigWidget::save()
     {
         return;
     }
-    m_fileWidget->slotOk(); // emits accepted, possibly async
+    //m_fileWidget->slotOk(); // emits accepted, possibly async
+    slotAccept();
 }
 
 // Called by slotOk, possibly async
 void PictureShapeConfigWidget::slotAccept()
 {
-    m_fileWidget->accept();
-    const QUrl url = m_fileWidget->selectedUrl();
+    //m_fileWidget->accept();
+    //const QUrl url = m_fileWidget->selectedUrl();
+    const QUrl url = QUrl::fromUserInput(m_fileDialog->selectedFiles()[0]);
     if (!url.isEmpty())
     {
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::NoReload, {});
