@@ -55,11 +55,14 @@ KoShape *VectorShapeFactory::createDefaultShape(KoDocumentResourceManager */*doc
 
 bool VectorShapeFactory::supports(const KoXmlElement & e, KoShapeLoadingContext &context) const
 {
-    if (e.localName() == "image" && e.namespaceURI() == KoXmlNS::draw) {
+    if (e.localName() == "image" && e.namespaceURI() == KoXmlNS::draw)
+    {
         QString href = e.attribute("href");
-        if (!href.isEmpty()) {
+        if (!href.isEmpty())
+        {
             // check the mimetype
-            if (href.startsWith(QLatin1String("./"))) {
+            if (href.startsWith(QLatin1String("./")))
+            {
                 href.remove(0, 2);
             }
             // LO 3.5 does not write a mimetype for embedded wmf files, so guess also from content
