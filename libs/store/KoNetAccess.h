@@ -72,7 +72,8 @@ class KOSTORE_EXPORT NetAccess : public QObject
     Q_OBJECT
 
 public:
-    enum StatSide {
+    enum StatSide
+    {
         SourceSide,
         DestinationSide
     };
@@ -196,8 +197,7 @@ public:
      * @deprecated since 5.0, use KIO::file_copy + job->ui()->setWindow() + job->exec() instead
      */
     static  bool file_copy(const QUrl &src, const QUrl &target, QWidget *window = 0);
-    static  bool copy(const QUrl &src, const QUrl &target,
-            QWidget *window = 0);
+    static  bool copy(const QUrl &src, const QUrl &target, QWidget *window = 0);
 
     /**
      * Alternative method for copying over the network.
@@ -403,8 +403,7 @@ public:
      * @return true on success, false on failure.
      * @deprecated since 5.0, KJobWidgets::setWindow + job->exec() instead
      */
-    static bool synchronousRun(Job *job, QWidget *window, QByteArray *data = 0,
-                               QUrl *finalURL = 0, QMap<QString, QString> *metaData = 0);
+    static bool synchronousRun(Job *job, QWidget *window, QByteArray *data = 0,  QUrl *finalURL = 0, QMap<QString, QString> *metaData = 0);
 
     /**
      * Determines the mimetype of a given URL.
@@ -456,17 +455,14 @@ private:
     /**
      * Internal methods
      */
-    bool filecopyInternal(const QUrl &src, const QUrl &target, int permissions,
-                          KIO::JobFlags flags, QWidget *window, bool move);
-    bool dircopyInternal(const QList<QUrl> &src, const QUrl &target,
-                         QWidget *window, bool move);
+    bool filecopyInternal(const QUrl &src, const QUrl &target, int permissions,  KIO::JobFlags flags, QWidget *window, bool move);
+    bool dircopyInternal(const QList<QUrl> &src, const QUrl &target,  QWidget *window, bool move);
     bool statInternal(const QUrl &url, int details, StatSide side, QWidget *window = 0);
 
     bool delInternal(const QUrl &url, QWidget *window = 0);
     bool mkdirInternal(const QUrl &url, int permissions, QWidget *window = 0);
     QString fish_executeInternal(const QUrl &url, const QString &command, QWidget *window = 0);
-    bool synchronousRunInternal(Job *job, QWidget *window, QByteArray *data,
-                                QUrl *finalURL, QMap<QString, QString> *metaData);
+    bool synchronousRunInternal(Job *job, QWidget *window, QByteArray *data, QUrl *finalURL, QMap<QString, QString> *metaData);
 
     QString mimetypeInternal(const QUrl &url, QWidget *window = 0);
     void enter_loop();
