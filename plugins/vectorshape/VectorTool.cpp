@@ -37,9 +37,7 @@
 #include <KoShapeManager.h>
 #include <KoPointerEvent.h>
 
-VectorTool::VectorTool( KoCanvasBase* canvas )
-    : KoToolBase( canvas ),
-      m_shape(0)
+VectorTool::VectorTool( KoCanvasBase* canvas ) : KoToolBase( canvas ), m_shape(0)
 {
 }
 
