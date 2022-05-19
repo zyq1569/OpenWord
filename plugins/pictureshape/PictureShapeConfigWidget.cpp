@@ -37,16 +37,46 @@ void PictureShapeLoadWaiter::setImageData(KJob *job)
 {
     if (job->error())   // e.g. file not found
     {
-        job->uiDelegate()->showErrorMessage();
-        if (m_pictureShape && !m_pictureShape->imageData())
+        ///del: openword
+        //job->uiDelegate()->showErrorMessage();
+        //if (m_pictureShape && !m_pictureShape->imageData())
+        //{
+        //    // Don't leave an empty broken shape, the rest of the code isn't ready for null imageData
+        //    if (m_pictureShape->parent())
+        //    {
+        //        m_pictureShape->parent()->removeShape(m_pictureShape);
+        //    }
+        //    delete m_pictureShape;
+        //}
+        ///------------------------------------------------------------------------------------------
+        //add openword
+        if (m_filename.length() > 1)
         {
-            // Don't leave an empty broken shape, the rest of the code isn't ready for null imageData
-            if (m_pictureShape->parent())
+            if (m_pictureShape->imageCollection())
             {
-                m_pictureShape->parent()->removeShape(m_pictureShape);
+                QFile file(m_filename);
+                if (! file.open(QFile::ReadOnly))
+                {
+                    //QMessageBox::critical(this,"ERROR","file open failed");
+                    return;
+                }
+                // 读文件
+                QByteArray array = file.readAll();
+                KoImageData *data = m_pictureShape->imageCollection()->createImageData(array);
+                if (data)
+                {
+                    m_pictureShape->setUserData(data);
+                    // check if the shape still size of the default shape and resize in that case
+                    if (qFuzzyCompare(m_pictureShape->size().width(), 50.0))
+                    {
+                        m_pictureShape->setSize(data->imageSize());
+                    }
+                    // trigger repaint as the userData was changed
+                    m_pictureShape->update();
+                }
             }
-            delete m_pictureShape;
         }
+        ///
         deleteLater();
         return;
     }
@@ -148,11 +178,13 @@ void PictureShapeConfigWidget::slotAccept()
 {
     //m_fileWidget->accept();
     //const QUrl url = m_fileWidget->selectedUrl();
-    const QUrl url = QUrl::fromUserInput(m_fileDialog->selectedFiles()[0]);
+    QString filename = m_fileDialog->selectedFiles()[0];
+    const QUrl url = QUrl::fromUserInput(filename);
     if (!url.isEmpty())
     {
         KIO::StoredTransferJob *job = KIO::storedGet(url, KIO::NoReload, {});
         PictureShapeLoadWaiter *waiter = new PictureShapeLoadWaiter(m_shape);
+        waiter->m_filename = filename;
         connect(job, &KJob::result, waiter, &PictureShapeLoadWaiter::setImageData);
     }
     Q_EMIT accept();

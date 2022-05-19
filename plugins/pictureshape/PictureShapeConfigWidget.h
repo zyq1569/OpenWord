@@ -61,6 +61,8 @@ public:
 public Q_SLOTS:
     void setImageData(KJob *job);
 
+public:
+    QString m_filename;
 private:
     PictureShape *m_pictureShape;
 };
