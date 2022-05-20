@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-08-08 00:16+0000\n"
-"PO-Revision-Date: 2021-09-23 16:51+0800\n"
+"PO-Revision-Date: 2022-05-20 11:04+0800\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2188,3 +2188,8 @@ msgstr "图像(jpg png ...)"
 #, kde-format
 msgid "Video, embedded or fullscreen"
 msgstr "音视频(嵌入)"
+
+#: plugins/artistictextshape/ArtisticTextShapeFactory.cpp:52
+#, kde-format
+msgid "A shape which shows a single text line"
+msgstr "独立行文字"
