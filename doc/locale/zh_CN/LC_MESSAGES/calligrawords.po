@@ -2184,6 +2184,11 @@ msgstr "形状属性"
 msgid "Image shape that can display jpg, png etc."
 msgstr "图像(jpg png ...)"
 
+#: plugins/videoshape/VideoShapeFactory.cpp:37
+#, kde-format
+msgid "Video"
+msgstr "音视频"
+
 #: plugins/videoshape/VideoShapeFactory.cpp:52
 #, kde-format
 msgid "Video, embedded or fullscreen"
@@ -2192,4 +2197,64 @@ msgstr "音视频(嵌入)"
 #: plugins/artistictextshape/ArtisticTextShapeFactory.cpp:52
 #, kde-format
 msgid "A shape which shows a single text line"
-msgstr "独立行文字"
+msgstr "文本形状"
+
+#: plugins/artistictextshape/ArtisticTextShapeFactory.cpp:52
+#, kde-format
+msgid "ArtisticTextShape"
+msgstr "艺术文本"
+
+#: plugins/textshape/ArtisticTextShapeFactory.cpp:52
+#, kde-format
+msgid "Annotation"
+msgstr "注释"
+
+#: plugins/formulashape/KoFormulaShapeFactory.cpp:52
+#, kde-format
+msgid "Formula"
+msgstr "公式"
+
+#: plugins/formulashape/KoFormulaShapeFactory.cpp:52
+#, kde-format
+msgid "A formula"
+msgstr "公式"
+
+#: plugins/libs/KoPathShapeFactory.cpp:52
+#, kde-format
+msgid "A simple path shape"
+msgstr "形状路径"
+
+#: plugins/libs/KoPathShapeFactory.cpp:52
+#, kde-format
+msgid "Simple path shape"
+msgstr "形状路径"
+
+#: plugins/musicshape/MusicShapeFactory.cpp:59
+#, kde-format
+msgid "Music Shape"
+msgstr "音符"
+
+#: plugins/musicshape/MusicShapeFactory.cpp:59
+#, kde-format
+msgid "A shape which provides a music editor"
+msgstr "音符编辑"
+
+#: plugins/textshape/TextShapeFactory.cpp:44
+#, kde-format
+msgid "Text"
+msgstr "文字"
+
+#: plugins/textshape/TextShapeFactory.cpp:46
+#, kde-format
+msgid "A shape that shows text"
+msgstr "文字形状"
+
+#: plugins/vectorshape/VectorShapeFactory.cpp:40
+#, kde-format
+msgid "Vector image"
+msgstr "矢量图形"
+
+#: plugins/vectorshape/VectorShapeFactory.cpp:40
+#, kde-format
+msgid "A shape that shows a vector image (EMF/WMF/SVM)"
+msgstr "矢量图形(EMF/WMF/SVM)"
