@@ -2178,3 +2178,13 @@ msgstr "快照设置"
 #, kde-format
 msgid "Shape Properties"
 msgstr "形状属性"
+
+#: plugins/pictureshape/PictureShapeFactory.cpp:52
+#, kde-format
+msgid "Image shape that can display jpg, png etc."
+msgstr "图像(jpg png ...)"
+
+#: plugins/videoshape/VideoShapeFactory.cpp:52
+#, kde-format
+msgid "Video, embedded or fullscreen"
+msgstr "音视频(嵌入)"
