@@ -54,9 +54,10 @@
 #include <QFontDatabase>
 //#include <QtWidgets>
 #include <WidgetsDebug.h>
+#define  ICONSIZE 22
 //class KoTabBar :public QTabBar
 //{
-////    Q_OBJECT
+///    Q_OBJECT
 //public:
 //    explicit KoTabBar(QWidget *parent = 0)
 //        :QTabBar(parent)
@@ -323,7 +324,7 @@ QIcon KoModeBox::createTextIcon(KoToolAction *toolAction) const
         p.translate(-iconSize.height(),0);
     }
 
-    QIcon::fromTheme(toolAction->iconName()).paint(&p, 0, 0, iconSize.height(), 22);//绘制tab上面的图标
+    QIcon::fromTheme(toolAction->iconName()).paint(&p, 0, 0, iconSize.height(), ICONSIZE/*22*/);//绘制tab上面的图标
 
     //开始绘制tab上面文字
     QTextLayout textLayout(toolAction->iconText(), smallFont, p.device());
@@ -352,16 +353,16 @@ QIcon KoModeBox::createTextIcon(KoToolAction *toolAction) const
         d->tabBar->setIconSize(iconSize);
         d->iconTextFitted = false;
     }
-    else if (height > iconSize.width() - 22)
+    else if (height > iconSize.width() - ICONSIZE/*22*/)
     {
-        iconSize.setWidth(22 + height);
+        iconSize.setWidth(ICONSIZE/*22*/ + height);
         d->tabBar->setIconSize(iconSize);
         d->iconTextFitted = false;
     }
 
     p.setFont(smallFont);
     p.setPen(palette().text().color());
-    textLayout.draw(&p, QPoint(0, 22));
+    textLayout.draw(&p, QPoint(0, ICONSIZE/*22*/));
     p.end();
 
     return QIcon(QPixmap::fromImage(pm));
@@ -788,6 +789,6 @@ void KoModeBox::setIconSize() const
     }
     else
     {
-        d->tabBar->setIconSize(QSize(22,22));
+        d->tabBar->setIconSize(QSize(ICONSIZE/*22*/,ICONSIZE/*22*/));
     }
 }
