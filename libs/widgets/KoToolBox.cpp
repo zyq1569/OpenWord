@@ -47,16 +47,20 @@
 static int buttonSize(int screen)
 {
     QRect rc = qApp->desktop()->screenGeometry(screen);
-    if (rc.width() <= 1024) {
+    if (rc.width() <= 1024)
+    {
         return 12;
     }
-    else if (rc.width() <= 1377) {
+    else if (rc.width() <= 1377)
+    {
         return 14;
     }
-    else  if (rc.width() <= 1920 ) {
+    else  if (rc.width() <= 1920 )
+    {
         return 16;
     }
-    else {
+    else
+    {
         return 22;
     }
 }
@@ -102,7 +106,8 @@ KoToolBox::KoToolBox()
 
     d->buttonGroup = new QButtonGroup(this);
     setLayout(d->layout);
-    foreach(KoToolAction *toolAction, KoToolManager::instance()->toolActionList()) {
+    foreach(KoToolAction *toolAction, KoToolManager::instance()->toolActionList())
+    {
         addButton(toolAction);
     }
 
@@ -135,24 +140,33 @@ void KoToolBox::addButton(KoToolAction *toolAction)
     KConfigGroup cfg =  KSharedConfig::openConfig()->group("KoToolBox");
     int iconSize = cfg.readEntry("iconSize", toolbuttonSize);
     button->setIconSize(QSize(iconSize, iconSize));
-    foreach (Section *section, d->sections)  {
+    foreach (Section *section, d->sections)
+    {
         section->setButtonSize(QSize(iconSize + BUTTON_MARGIN, iconSize + BUTTON_MARGIN));
     }
 
     QString sectionToBeAddedTo;
     const QString section = toolAction->section();
-    if (section.contains(qApp->applicationName())) {
+    if (section.contains(qApp->applicationName()))
+    {
         sectionToBeAddedTo = "main";
-    } else if (section.contains("main")) {
+    }
+    else if (section.contains("main"))
+    {
         sectionToBeAddedTo = "main";
-    }  else if (section.contains("dynamic")) {
+    }
+    else if (section.contains("dynamic"))
+    {
         sectionToBeAddedTo = "dynamic";
-    } else {
+    }
+    else
+    {
         sectionToBeAddedTo = section;
     }
 
     Section *sectionWidget = d->sections.value(sectionToBeAddedTo);
-    if (sectionWidget == 0) {
+    if (sectionWidget == 0)
+    {
         sectionWidget = new Section(this);
         d->addSection(sectionWidget, sectionToBeAddedTo);
     }
@@ -168,33 +182,40 @@ void KoToolBox::setActiveTool(KoCanvasController *canvas, int id)
     Q_UNUSED(canvas);
 
     QAbstractButton *button = d->buttonGroup->button(id);
-    if (button) {
+    if (button)
+    {
         button->setChecked(true);
         (qobject_cast<KoToolBoxButton*>(button))->setHighlightColor();
     }
-    else {
+    else
+    {
         warnWidgets << "KoToolBox::setActiveTool(" << id << "): no such button found";
     }
 }
 
 void KoToolBox::setButtonsVisible(const QList<QString> &codes)
 {
-    foreach(QToolButton *button, d->visibilityCodes.keys()) {
+    foreach(QToolButton *button, d->visibilityCodes.keys())
+    {
         QString code = d->visibilityCodes.value(button);
 
-        if (code.startsWith(QLatin1String("flake/"))) {
+        if (code.startsWith(QLatin1String("flake/")))
+        {
             continue;
         }
 
-        if (code.endsWith( QLatin1String( "/always"))) {
+        if (code.endsWith( QLatin1String( "/always")))
+        {
             button->setVisible(true);
             button->setEnabled( true );
         }
-        else if (code.isEmpty()) {
+        else if (code.isEmpty())
+        {
             button->setVisible(true);
             button->setEnabled( codes.count() != 0 );
         }
-        else {
+        else
+        {
             button->setVisible( codes.contains(code) );
         }
     }
@@ -206,8 +227,10 @@ void KoToolBox::setCurrentLayer(const KoCanvasController *canvas, const KoShapeL
 {
     Q_UNUSED(canvas);
     const bool enabled = layer == nullptr || (layer->isEditable() && layer->isVisible());
-    foreach (QToolButton *button, d->visibilityCodes.keys()) {
-        if (d->visibilityCodes[button].endsWith( QLatin1String( "/always") ) ) {
+    foreach (QToolButton *button, d->visibilityCodes.keys())
+    {
+        if (d->visibilityCodes[button].endsWith( QLatin1String( "/always") ) )
+        {
             continue;
         }
         button->setEnabled(enabled);
@@ -221,15 +244,18 @@ void KoToolBox::paintEvent(QPaintEvent *)
     const QList<Section*> sections = d->sections.values();
     QList<Section*>::const_iterator iterator = sections.begin();
     int halfSpacing = layout()->spacing();
-    if (halfSpacing > 0) {
+    if (halfSpacing > 0)
+    {
         halfSpacing /= 2;
     }
-    while(iterator != sections.end()) {
+    while(iterator != sections.end())
+    {
         Section *section = *iterator;
         QStyleOption styleoption;
         styleoption.palette = palette();
 
-        if (section->separators() & Section::SeparatorTop) {
+        if (section->separators() & Section::SeparatorTop)
+        {
             int y = section->y() - halfSpacing;
             styleoption.state = QStyle::State_None;
             styleoption.rect = QRect(section->x(), y-1, section->width(), 2);
@@ -237,7 +263,8 @@ void KoToolBox::paintEvent(QPaintEvent *)
             style()->drawPrimitive(QStyle::PE_IndicatorToolBarSeparator, &styleoption, &painter);
         }
 
-        if (section->separators() & Section::SeparatorLeft) {
+        if (section->separators() & Section::SeparatorLeft)
+        {
             int x = section->x() - halfSpacing;
             styleoption.state = QStyle::State_Horizontal;
             styleoption.rect = QRect(x-1, section->y(), 2, section->height());
@@ -256,7 +283,8 @@ void KoToolBox::setOrientation(Qt::Orientation orientation)
     d->orientation = orientation;
     d->layout->setOrientation(orientation);
     QTimer::singleShot(0, this, SLOT(update()));
-    foreach(Section* section, d->sections) {
+    foreach(Section* section, d->sections)
+    {
         section->setOrientation(orientation);
     }
 }
@@ -277,17 +305,20 @@ void KoToolBox::toolAdded(KoToolAction *toolAction, KoCanvasController *canvas)
 void KoToolBox::slotContextIconSize()
 {
     QAction* action = qobject_cast<QAction*>(sender());
-    if (action && d->contextIconSizes.contains(action)) {
+    if (action && d->contextIconSizes.contains(action))
+    {
         const int iconSize = d->contextIconSizes.value(action);
 
         KConfigGroup cfg =  KSharedConfig::openConfig()->group("KoToolBox");
         cfg.writeEntry("iconSize", iconSize);
 
-        foreach(QToolButton *button, d->buttons) {
+        foreach(QToolButton *button, d->buttons)
+        {
             button->setIconSize(QSize(iconSize, iconSize));
         }
 
-        foreach(Section *section, d->sections) {
+        foreach(Section *section, d->sections)
+        {
             section->setButtonSize(QSize(iconSize + BUTTON_MARGIN, iconSize + BUTTON_MARGIN));
         }
 
@@ -299,22 +330,23 @@ void KoToolBox::contextMenuEvent(QContextMenuEvent *event)
 
     int toolbuttonSize = buttonSize(qApp->desktop()->screenNumber(this));
 
-    if (!d->contextSize) {
+    if (!d->contextSize)
+    {
 
         d->contextSize = new QMenu(i18n("Icon Size"), this);
-        d->contextIconSizes.insert(d->contextSize->addAction(i18nc("@item:inmenu Icon size", "Default"),
-                                                          this, SLOT(slotContextIconSize())),
-                                   toolbuttonSize);
+        d->contextIconSizes.insert(d->contextSize->addAction(i18nc("@item:inmenu Icon size", "Default"), this, SLOT(slotContextIconSize())), toolbuttonSize);
 
         QList<int> sizes;
         sizes << 12 << 14 << 16 << 22 << 32 << 48 << 64; //<< 96 << 128 << 192 << 256;
-        foreach(int i, sizes) {
+        foreach(int i, sizes)
+        {
             d->contextIconSizes.insert(d->contextSize->addAction(i18n("%1x%2", i, i), this, SLOT(slotContextIconSize())), i);
-//            d->contextIconSizes.insert(d->contextSize->addAction(("%1x%2",QString("%1").arg( i), QString("%1").arg(i)), this, SLOT(slotContextIconSize())), i);
+            //d->contextIconSizes.insert(d->contextSize->addAction(("%1x%2",QString("%1").arg( i), QString("%1").arg(i)), this, SLOT(slotContextIconSize())), i);
         }
 
         QActionGroup *sizeGroup = new QActionGroup(d->contextSize);
-        foreach (QAction *action, d->contextSize->actions()) {
+        foreach (QAction *action, d->contextSize->actions())
+        {
             action->setActionGroup(sizeGroup);
             action->setCheckable(true);
         }
@@ -323,9 +355,11 @@ void KoToolBox::contextMenuEvent(QContextMenuEvent *event)
     toolbuttonSize = cfg.readEntry("iconSize", toolbuttonSize);
 
     QMapIterator< QAction*, int > it = d->contextIconSizes;
-    while (it.hasNext()) {
+    while (it.hasNext())
+    {
         it.next();
-        if (it.value() == toolbuttonSize) {
+        if (it.value() == toolbuttonSize)
+        {
             it.key()->setChecked(true);
             break;
         }
