@@ -33,8 +33,7 @@
 
 #include <klocalizedstring.h>
 
-StarShapeFactory::StarShapeFactory()
-    : KoShapeFactoryBase(StarShapeId, i18n("A star shape"))
+StarShapeFactory::StarShapeFactory(): KoShapeFactoryBase(StarShapeId, i18n("A star shape"))
 {
     setToolTip(i18n("A star"));
     setIconName(koIconName("star-shape"));
@@ -122,7 +121,9 @@ KoShape *StarShapeFactory::createShape(const KoProperties *params, KoDocumentRes
 {
     StarShape *star = new StarShape();
     if (! star)
+    {
         return 0;
+    }
 
     star->setCornerCount(params->intProperty("corners", 5));
     star->setConvex(params->boolProperty("convex", false));
@@ -134,7 +135,9 @@ KoShape *StarShapeFactory::createShape(const KoProperties *params, KoDocumentRes
     star->setShapeId(KoPathShapeId);
     QVariant v;
     if (params->property("background", v))
+    {
         star->setBackground(QSharedPointer<KoColorBackground>(new KoColorBackground(v.value<QColor>())));
+    }
 
     return star;
 }
@@ -143,7 +146,9 @@ bool StarShapeFactory::supports(const KoXmlElement & e, KoShapeLoadingContext &c
 {
     Q_UNUSED(context);
     if (e.localName() == "regular-polygon" && e.namespaceURI() == KoXmlNS::draw)
+    {
         return true;
+    }
     return (e.localName() == "custom-shape" && e.namespaceURI() == KoXmlNS::draw
             && e.attributeNS(KoXmlNS::draw, "engine", "") == "calligra:star");
 }
