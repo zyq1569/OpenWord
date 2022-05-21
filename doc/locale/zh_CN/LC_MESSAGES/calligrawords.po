@@ -2179,6 +2179,11 @@ msgstr "快照设置"
 msgid "Shape Properties"
 msgstr "形状属性"
 
+#: plugins/pictureshape/PictureShapeFactory.cpp:44
+#, kde-format
+msgid "Image"
+msgstr "图像"
+
 #: plugins/pictureshape/PictureShapeFactory.cpp:52
 #, kde-format
 msgid "Image shape that can display jpg, png etc."
