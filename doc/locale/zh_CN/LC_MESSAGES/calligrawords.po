@@ -2298,3 +2298,73 @@ msgstr "箭头"
 #, kde-format
 msgid "Funny"
 msgstr "表情"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:99
+#, kde-format
+msgid "Bar Chart"
+msgstr "图表"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:100
+#, kde-format
+msgid "Normal bar chart"
+msgstr "常规条图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:100
+#, kde-format
+msgid "Ellipse"
+msgstr "椭圆"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:36
+#, kde-format
+msgid "An ellipse"
+msgstr "椭圆"
+
+#: plugins/pathshapes/rectangle/ChartShapeFactory.cpp:33
+#, kde-format
+msgid "Rectangle"
+msgstr "矩形"
+
+#: plugins/pathshapes/rectangle/ChartShapeFactory.cpp:33
+#, kde-format
+msgid "A rectangle"
+msgstr "矩形"
+
+#: plugins/pathshapes/Spiral/SpiralShapeFactory.cpp:33
+#, kde-format
+msgid "Spiral"
+msgstr "螺旋形"
+
+#: plugins/pathshapes/Spiral/SpiralShapeFactory.cpp:33
+#, kde-format
+msgid "A spiral shape"
+msgstr "螺旋形状"
+
+#: plugins/pathshapes/star/StarShapeFactory.cpp:33
+#, kde-format
+msgid "Hexagon"
+msgstr "六边形"
+
+#: plugins/pathshapes/star/StarShapeFactory.cpp:33
+#, kde-format
+msgid "A hexagon"
+msgstr "六边形"
+
+#: plugins/pathshapes/star/StarShapeFactory.cpp:80
+#, kde-format
+msgid "Pentagon"
+msgstr "五边形"
+
+#: plugins/pathshapes/star/StarShapeFactory.cpp:80
+#, kde-format
+msgid "A pentagon"
+msgstr "等五边形"
+
+#: plugins/pathshapes/star/StarShapeFactory.cpp:80
+#, kde-format
+msgid "Star"
+msgstr "星状"
+
+#: plugins/pathshapes/star/StarShapeFactory.cpp:80
+#, kde-format
+msgid "A star"
+msgstr "星形"
