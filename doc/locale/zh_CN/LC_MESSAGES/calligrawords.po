@@ -2214,6 +2214,11 @@ msgstr "艺术文本"
 msgid "Annotation"
 msgstr "注释"
 
+#: plugins/textshape/ArtisticTextShapeFactory.cpp:54
+#, kde-format
+msgid "Annotation Shape"
+msgstr "注释形状"
+
 #: plugins/formulashape/KoFormulaShapeFactory.cpp:52
 #, kde-format
 msgid "Formula"
@@ -2227,12 +2232,12 @@ msgstr "公式"
 #: plugins/libs/KoPathShapeFactory.cpp:52
 #, kde-format
 msgid "A simple path shape"
-msgstr "形状路径"
+msgstr "连线"
 
 #: plugins/libs/KoPathShapeFactory.cpp:52
 #, kde-format
 msgid "Simple path shape"
-msgstr "形状路径"
+msgstr "形状连线"
 
 #: plugins/musicshape/MusicShapeFactory.cpp:59
 #, kde-format
@@ -2244,12 +2249,17 @@ msgstr "音符"
 msgid "A shape which provides a music editor"
 msgstr "音符编辑"
 
-#: plugins/textshape/TextShapeFactory.cpp:44
+#: plugins/textshape/TextShapeFactory.cpp:54
 #, kde-format
 msgid "Text"
 msgstr "文字"
 
-#: plugins/textshape/TextShapeFactory.cpp:46
+#: plugins/textshape/TextShapeFactory.cpp:56
+#, kde-format
+msgid "Text Shape"
+msgstr "文字"
+
+#: plugins/textshape/TextShapeFactory.cpp:56
 #, kde-format
 msgid "A shape that shows text"
 msgstr "文字形状"
@@ -2263,3 +2273,28 @@ msgstr "矢量图形"
 #, kde-format
 msgid "A shape that shows a vector image (EMF/WMF/SVM)"
 msgstr "矢量图形(EMF/WMF/SVM)"
+
+#: libs/text/styles/KoStyleManager.cpp:40
+#, kde-format
+msgid "Default"
+msgstr "默认"
+
+#: plugins/dockers/ShapeCollectionDocker.cpp:322
+#, kde-format
+msgid "Geometrics"
+msgstr "几何"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:77
+#, kde-format
+msgid "Chart"
+msgstr "图表"
+
+#: plugins/dockers/shapecollection/ShapeCollectionDocker.cpp:304
+#, kde-format
+msgid "Arrows"
+msgstr "箭头"
+
+#: plugins/dockers/shapecollection/ShapeCollectionDocker.cpp:388
+#, kde-format
+msgid "Funny"
+msgstr "表情"
