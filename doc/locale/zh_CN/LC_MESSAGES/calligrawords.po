@@ -2368,3 +2368,18 @@ msgstr "星状"
 #, kde-format
 msgid "A star"
 msgstr "星形"
+
+#: plugins/pathshapes/star/StarShapeFactory.cpp:80
+#, kde-format
+msgid "Star"
+msgstr "星状"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:110
+#, kde-format
+msgid "Stacked Bar Chart"
+msgstr "条形图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:111
+#, kde-format
+msgid "Stacked bar chart"
+msgstr "条形图"
