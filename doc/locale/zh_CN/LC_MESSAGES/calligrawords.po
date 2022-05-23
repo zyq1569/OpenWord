@@ -2307,7 +2307,7 @@ msgstr "图表"
 #: plugins/chartshape/ChartShapeFactory.cpp:100
 #, kde-format
 msgid "Normal bar chart"
-msgstr "常规条图"
+msgstr "常规图表"
 
 #: plugins/chartshape/ChartShapeFactory.cpp:100
 #, kde-format
@@ -2369,11 +2369,6 @@ msgstr "星状"
 msgid "A star"
 msgstr "星形"
 
-#: plugins/pathshapes/star/StarShapeFactory.cpp:80
-#, kde-format
-msgid "Star"
-msgstr "星状"
-
 #: plugins/chartshape/ChartShapeFactory.cpp:110
 #, kde-format
 msgid "Stacked Bar Chart"
@@ -2383,3 +2378,163 @@ msgstr "条形图"
 #, kde-format
 msgid "Stacked bar chart"
 msgstr "条形图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:121
+#, kde-format
+msgid "Percent Bar Chart"
+msgstr "百分比条图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Percent bar chart"
+msgstr "百分比条图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Line Chart"
+msgstr "线图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Normal line chart"
+msgstr "一般线图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Stacked Line Chart"
+msgstr "堆线图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Stacked line chart"
+msgstr "堆线图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Percent Line Chart"
+msgstr "百分比线图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Percent line chart"
+msgstr "百分比线图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Area Chart"
+msgstr "面积图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Normal area chart"
+msgstr "一般面积图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Stacked Area Chart"
+msgstr "堆面积图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Stacked area chart"
+msgstr "一般堆面积图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Percent Area Chart"
+msgstr "百分比面积图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Percent area chart"
+msgstr "百分比面积图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Pie Chart"
+msgstr "饼图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Pie chart"
+msgstr "饼图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Ring Chart"
+msgstr "环图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Ring chart"
+msgstr "环图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Bubble Chart"
+msgstr "气泡图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Bubble chart"
+msgstr "气泡图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Scatter Chart"
+msgstr "散点图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Scatter chart"
+msgstr "散点图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Radar Chart"
+msgstr "雷达图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Radar chart"
+msgstr "雷达图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Filled Radar Chart"
+msgstr "填充雷达图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Filled radar chart"
+msgstr "填充雷达图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Candle Stick Stock Chart"
+msgstr "股票图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Japanese candle stick stock chart"
+msgstr "股票图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "OHLC Stock Chart"
+msgstr "高开低收股票图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "Open High Low Close stock chart"
+msgstr "高开低收股票图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "HLC Stock Chart"
+msgstr "高低收盘股票图"
+
+#: plugins/chartshape/ChartShapeFactory.cpp:122
+#, kde-format
+msgid "High Low Close stock chart"
+msgstr "高低收盘股票图"
