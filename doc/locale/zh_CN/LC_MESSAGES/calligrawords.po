@@ -2294,6 +2294,27 @@ msgstr "图表"
 msgid "Arrows"
 msgstr "箭头"
 
+#: plugins/pathshapes/enhancedpath/EnhancedPathShapeFactory.cpp:206
+#, kde-format
+msgid "Arrow"
+msgstr "箭头"
+
+#: plugins/pathshapes/enhancedpath/EnhancedPathShapeFactory.cpp:208
+#, kde-format
+msgid "An arrow"
+msgstr "箭头"
+
+#: plugins/pathshapes/enhancedpath/EnhancedPathShapeFactory.cpp:208
+#, kde-format
+msgid "Circular Arrow"
+msgstr "圆形箭头"
+
+
+#: plugins/pathshapes/enhancedpath/EnhancedPathShapeFactory.cpp:208
+#, kde-format
+msgid "A circular-arrow"
+msgstr "圆形箭头"
+
 #: plugins/dockers/shapecollection/ShapeCollectionDocker.cpp:388
 #, kde-format
 msgid "Funny"
