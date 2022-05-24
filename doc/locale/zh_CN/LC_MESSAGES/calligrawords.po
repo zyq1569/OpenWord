@@ -2539,7 +2539,7 @@ msgstr "股票图"
 #, kde-format
 msgid "Japanese candle stick stock chart"
 msgstr "股票图"
-
+ 
 #: plugins/chartshape/ChartShapeFactory.cpp:122
 #, kde-format
 msgid "OHLC Stock Chart"
@@ -2559,3 +2559,43 @@ msgstr "高低收盘股票图"
 #, kde-format
 msgid "High Low Close stock chart"
 msgstr "高低收盘股票图"
+
+#: plugins/pathshapes/enhancedpath/CalloutShapeFactory.cpp:162
+#, kde-format
+msgid "Rectangular Callout"
+msgstr "矩形标注"
+
+#: plugins/pathshapes/enhancedpath/CalloutShapeFactory.cpp:162
+#, kde-format
+msgid "A rectangular callout"
+msgstr "矩形标注"
+
+#: plugins/pathshapes/enhancedpath/CalloutShapeFactory.cpp:162
+#, kde-format
+msgid "Rounded Callout"
+msgstr "圆角矩形标注"
+
+#: plugins/pathshapes/enhancedpath/CalloutShapeFactory.cpp:162
+#, kde-format
+msgid "A rounded rectangular callout"
+msgstr "圆角矩形标注"
+
+#: plugins/pathshapes/enhancedpath/EnhancedPathShapeFactory.cpp:170
+#, kde-format
+msgid "Cross"
+msgstr "十字"
+
+#: plugins/pathshapes/enhancedpath/EnhancedPathShapeFactory.cpp:172
+#, kde-format
+msgid "A cross"
+msgstr "十字"
+
+#: plugins/pathshapes/enhancedpath/EnhancedPathShapeFactory.cpp:170
+#, kde-format
+msgid "Gearhead"
+msgstr "减速"
+
+#: plugins/pathshapes/enhancedpath/EnhancedPathShapeFactory.cpp:172
+#, kde-format
+msgid "A gearhead"
+msgstr "减速"
