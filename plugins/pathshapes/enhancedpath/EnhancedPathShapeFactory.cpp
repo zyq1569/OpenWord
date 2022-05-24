@@ -352,7 +352,7 @@ void EnhancedPathShapeFactory::addSmiley()
     t.templateId = "smiley";
     t.name = i18n("Smiley");
     t.family = "funny";
-    t.toolTip = i18n("Smiley");
+    t.toolTip = i18n("smiley");
     t.iconName = koIconName("smiley-shape");
     KoProperties* properties = dataToProperties(modifiers, commands, handles, formulae);
     properties->setProperty(QLatin1String("viewBox"), QRect(0, 0, 21600, 21600));
