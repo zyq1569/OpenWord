@@ -2599,3 +2599,23 @@ msgstr "减速"
 #, kde-format
 msgid "A gearhead"
 msgstr "减速"
+
+#: plugins/pathshapes/enhancedpath/EnhancedPathShapeFactory.cpp:353
+#, kde-format
+msgid "Smiley"
+msgstr "笑脸"
+
+#: plugins/pathshapes/enhancedpath/EnhancedPathShapeFactory.cpp:355
+#, kde-format
+msgid "smiley"
+msgstr "笑脸"
+
+#: plugins/pathshapes/enhancedpath/EnhancedPathShapeFactory.cpp:353
+#, kde-format
+msgid "Flower"
+msgstr "花"
+
+#: plugins/pathshapes/enhancedpath/EnhancedPathShapeFactory.cpp:355
+#, kde-format
+msgid "A flower"
+msgstr "一朵花"
