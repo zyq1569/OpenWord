@@ -2618,4 +2618,4 @@ msgstr "花"
 #: plugins/pathshapes/enhancedpath/EnhancedPathShapeFactory.cpp:355
 #, kde-format
 msgid "A flower"
-msgstr "一朵花"
+msgstr "花"
