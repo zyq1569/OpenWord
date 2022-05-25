@@ -40,8 +40,7 @@
 
 #include <math.h>
 
-CalloutShapeFactory::CalloutShapeFactory()
-    : KoShapeFactoryBase(CalloutShapeId, i18n("A callout shape"))
+CalloutShapeFactory::CalloutShapeFactory() : KoShapeFactoryBase(CalloutShapeId, i18n("A callout shape"))
 {
     setToolTip(i18n("A callout shape"));
     setIconName(koIconName("enhancedpath"));
@@ -68,7 +67,8 @@ KoShape *CalloutShapeFactory::createShape(const KoProperties *params, KoDocument
     shape->setSize(QSizeF(150, 100));
 
     KoShape *textShape = shape->pathShape()->createTextShape(resourceManager);
-    if (textShape) {
+    if (textShape)
+    {
         textShape->setSize(shape->size());
         KoTextShapeDataBase *shapeData = qobject_cast<KoTextShapeDataBase*>(textShape->userData());
         shapeData->setResizeMethod(KoTextShapeDataBase::AutoGrowWidthAndHeight);
@@ -91,7 +91,7 @@ KoProperties* CalloutShapeFactory::dataToProperties(
 }
 
 KoProperties *CalloutShapeFactory::squareProperties() const
-{    
+{
     QStringList commands;
     commands.append("M 0 0");
     commands.append("L 0 3590 ?f2 ?f3 0 8970 0 12630 ?f4 ?f5 0 18010 0 21600 3590 21600 ?f6 ?f7 8970 21600 12630 21600 ?f8 ?f9 18010 21600 21600 21600 21600 18010 ?f10 ?f11 21600 12630 21600 8970 ?f12 ?f13 21600 3590 21600 0 18010 0 ?f14 ?f15 12630 0 8970 0 ?f16 ?f17 3590 0 0 0");
@@ -155,7 +155,7 @@ KoProperties *CalloutShapeFactory::squareProperties() const
 
 void CalloutShapeFactory::addCallout()
 {
-    
+
     KoShapeTemplate t;
     t.id = CalloutShapeId;
     t.templateId = "rectangular";
@@ -169,13 +169,13 @@ void CalloutShapeFactory::addCallout()
     properties->setProperty("modifiers", "10800 43200");
     properties->setProperty("type", "rectangular-callout");
     t.properties = properties;
-    
+
     addTemplate(t);
 }
 
 void CalloutShapeFactory::addRoundedCallout()
 {
-    
+
     QStringList commands;
     commands.append("M 3590 0");
     commands.append("X 0 3590");
@@ -188,7 +188,7 @@ void CalloutShapeFactory::addRoundedCallout()
     commands.append("L ?f14 ?f15 12630 0 8970 0 ?f16 ?f17");
     commands.append("Z");
     commands.append("N");
-    
+
     ComplexType formulae;
     formulae["f0"] = "$0 -10800";
     formulae["f1"] = "$1 -10800";
@@ -232,12 +232,12 @@ void CalloutShapeFactory::addRoundedCallout()
     formulae["f39"] = "if(?f0 ,-1,?f28)";
     formulae["f40"] = "$0";
     formulae["f41"] = "$1";
-    
+
     ListType handles;
     ComplexType handle;
     handle["draw:handle-position"] = "$0 $1";
     handles.append(QVariant(handle));
-    
+
     KoShapeTemplate t;
     t.id = CalloutShapeId;
     t.templateId = "rounded-rectangular";
@@ -250,7 +250,7 @@ void CalloutShapeFactory::addRoundedCallout()
     properties->setProperty("modifiers", "4250 40000");
     properties->setProperty("type", "rounded-rectangular-callout");
     t.properties = properties;
-    
+
     addTemplate(t);
 }
 
@@ -259,12 +259,15 @@ void CalloutShapeFactory::addRoundedCallout()
 bool CalloutShapeFactory::supports(const KoXmlElement & e, KoShapeLoadingContext &context) const
 {
     Q_UNUSED(context);
-    if (e.localName() == "custom-shape" && e.namespaceURI() == KoXmlNS::draw) {
+    if (e.localName() == "custom-shape" && e.namespaceURI() == KoXmlNS::draw)
+    {
         KoXmlElement x = KoXml::namedItemNS(e, KoXmlNS::draw, "enhanced-geometry");
-        if (x.isNull()) {
+        if (x.isNull())
+        {
             return false;
         }
-        if (x.attributeNS(KoXmlNS::draw, "type").contains("callout")) {
+        if (x.attributeNS(KoXmlNS::draw, "type").contains("callout"))
+        {
             return true;
         }
     }
