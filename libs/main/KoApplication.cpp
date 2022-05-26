@@ -141,12 +141,8 @@ public:
 };
 
 
-KoApplication::KoApplication(const QByteArray &nativeMimeType,
-                             const QString &windowIconName,
-                             AboutDataGenerator aboutDataGenerator,
-                             int &argc, char **argv)
-    : QApplication(argc, argv)
-    , d(new KoApplicationPrivate())
+KoApplication::KoApplication(const QByteArray &nativeMimeType, const QString &windowIconName,  AboutDataGenerator aboutDataGenerator, int &argc, char **argv)
+    : QApplication(argc, argv), d(new KoApplicationPrivate())
 {
 
     KLocalizedString::setApplicationDomain("calligrawords");
@@ -520,10 +516,8 @@ bool KoApplication::start()
         // only show the mainWindow when no command-line mode option is passed
         const bool showmainWindow =
             parser.isSet("benchmark-loading-show-window") || (
-                parser.isSet("export-pdf")) || (
-                !parser.isSet("benchmark-loading")
-                && !parser.isSet("roundtrip-filename")
-                && d->roundtripFileName.isEmpty());
+                parser.isSet("export-pdf")) || (  !parser.isSet("benchmark-loading") && !parser.isSet("roundtrip-filename")
+                        && d->roundtripFileName.isEmpty());
         const QString profileFileName = parser.value("profile-filename");
 
         QTextStream profileoutput;
@@ -545,9 +539,7 @@ bool KoApplication::start()
             const QString fileUrl = fileUrls.at(argNumber);
             // convert to an url
             const bool startsWithProtocol = (withProtocolChecker.indexIn(fileUrl) == 0);
-            const QUrl url = startsWithProtocol ?
-                             QUrl::fromUserInput(fileUrl) :
-                             QUrl::fromLocalFile(QDir::current().absoluteFilePath(fileUrl));
+            const QUrl url = startsWithProtocol ? QUrl::fromUserInput(fileUrl) : QUrl::fromLocalFile(QDir::current().absoluteFilePath(fileUrl));
 
             // For now create an empty document
             QString errorMsg;
@@ -793,13 +785,11 @@ bool KoApplication::notify(QObject *receiver, QEvent *event)
     }
     catch (std::exception &e)
     {
-        qWarning("Error %s sending event %i to object %s",
-                 e.what(), event->type(), qPrintable(receiver->objectName()));
+        qWarning("Error %s sending event %i to object %s", e.what(), event->type(), qPrintable(receiver->objectName()));
     }
     catch (...)
     {
-        qWarning("Error <unknown> sending event %i to object %s",
-                 event->type(), qPrintable(receiver->objectName()));
+        qWarning("Error <unknown> sending event %i to object %s", event->type(), qPrintable(receiver->objectName()));
     }
     return false;
 
