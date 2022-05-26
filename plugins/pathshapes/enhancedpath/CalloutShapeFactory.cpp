@@ -77,9 +77,7 @@ KoShape *CalloutShapeFactory::createShape(const KoProperties *params, KoDocument
     return shape;
 }
 
-KoProperties* CalloutShapeFactory::dataToProperties(
-    const QStringList &commands,
-    const ListType &handles, const ComplexType & formulae) const
+KoProperties* CalloutShapeFactory::dataToProperties(  const QStringList &commands,   const ListType &handles, const ComplexType & formulae) const
 {
     KoProperties *props = new KoProperties();
     props->setProperty("commands", commands);
