@@ -302,8 +302,7 @@ bool KoApplication::start()
     if (entry.isEmpty())
     {
         QMessageBox::critical(0, i18n("%1: Critical Error", applicationName()), i18n("Essential application components could not be found.\n"
-                              "This might be an installation issue.\n"
-                              "Try restarting or reinstalling."));
+                              "This might be an installation issue.\n Try restarting or reinstalling."));
         return false;
     }
 
