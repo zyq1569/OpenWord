@@ -2161,10 +2161,8 @@ void KoMainWindow::slotEmailFile()
 
     if (!fileURL.isEmpty())
     {
-        KToolInvocation::invokeMailer(QString(), QString(), QString(), theSubject,
-                                      QString(), //body
-                                      QString(),
-                                      urls); // attachments
+        KToolInvocation::invokeMailer(QString(), QString(), QString(), theSubject, QString(), //body
+                                      QString(),  urls); // attachments
     }
 }
 
