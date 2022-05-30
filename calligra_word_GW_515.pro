@@ -59,7 +59,10 @@ SUBDIRS    +=   log/easylog.pro \
                 filters/words/epub/calligra_filter_odt2html.pro \
 #                sheets/calligrasheets.pro \
 #                libs/textlayout/tests/TestBlockLayout.pro \
-                words/app/calligrawords.pro
+                words/app/calligrawords.pro \
+# openword 20220530 for :reportEditor app
+                libs/editorWindow/reportmain.pro \
+                words/app/reportEditor.pro
 #-------------------------------------------------
 #                karbon/karbonpart.pro \
 #                karbon/ui/karbonui.pro \
