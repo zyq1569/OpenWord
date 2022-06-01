@@ -61,7 +61,7 @@ SUBDIRS    +=   log/easylog.pro \
 #                libs/textlayout/tests/TestBlockLayout.pro \
                 words/app/calligrawords.pro \
 # openword 20220530 for :reportEditor app
-                libs/editorWindow/reportmain.pro \
+#                libs/editorWindow/reportmain.pro \
                 words/app/reportEditor.pro
 #-------------------------------------------------
 #                karbon/karbonpart.pro \
