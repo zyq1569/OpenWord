@@ -36,6 +36,7 @@ INCLUDEPATH     +=  ../../  \
                     ../../libs/widgets \
                     ../../libs/textlayout \
                     ../../libs/main \
+#                    ../../libs/editorWindow \
                     ../../libs/main/config \
                     ../../words/part
 
