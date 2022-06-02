@@ -11,19 +11,9 @@
 
 Q_DECL_EXPORT int main(int argc, char **argv)
 {
-
-//    QTextCodec::setCodecForLocale(QTextCodec::codecForName("utf-8"));
-//    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf-8"));
-//    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf-8"));
-    //    QLoggingCategory::setFilterRules("calligra.*.debug=true\n"
-    //                                     "calligra.*.warning=true");
-
-//    QString appname = argv[0];
-//    appname = appname.right(appname.lastIndexOf('\\')-2).replace(".exe","");
-//    QString appname =  QCoreApplication::applicationFilePath();
     QLoggingCategory::setFilterRules("calligra.*.debug=true\n calligra.*.warning=true");
     KoApplication app(WORDS_MIME_TYPE, QStringLiteral("HEditor"), newWordsAboutData, argc, argv);
-    INFO_LOG("----Editor start to run!-----");//must after:KoApplication
+    INFO_LOG("----HEditor start to run!-----");//must after:KoApplication
     // Migrate data from kde4 to kf5 locations
     Calligra2Migration m("HealthEditor", "HEditor");
     QStringList qlist = QStringList() << QStringLiteral("wordsrc");
