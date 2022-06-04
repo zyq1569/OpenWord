@@ -266,18 +266,28 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
     connect(this, SIGNAL(restoringDone()), this, SLOT(forceDockTabFonts()));
 
     //QStringList str = KLocalizedString::languages();
-    const QString langName = KoGlobal::sysLanguageName();
+
     //"zh_CN"
     QString resoucefile = "calligra/calligra_shell.rc";
-    if (langName == "zh_CN")
+    static const QString appName = qAppName();
+    if (appName.contains("HEditor"))
     {
-        resoucefile =  "calligra/calligra_shell_zh_CN.rc";
+        resoucefile = "calligra/HEditor_shell.rc";
+    }
+    else
+    {
+        const QString langName = KoGlobal::sysLanguageName();
+        if (langName == "zh_CN")
+        {
+            resoucefile =  "calligra/calligra_shell_zh_CN.rc";
+        }
     }
     // PartManager
     // End
 
     QString doc;
     //const QStringList allFiles = KoResourcePaths::findAllResources("data", "calligra/calligra_shell.rc");
+    // find : bin\data\calligra
     const QStringList allFiles = KoResourcePaths::findAllResources("data", resoucefile);
     setXMLFile(findMostRecentXMLFile(allFiles, doc));
     //setLocalXMLFile(KoResourcePaths::locateLocal("data", "calligra/calligra_shell.rc"));
