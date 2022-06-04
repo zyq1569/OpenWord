@@ -142,13 +142,22 @@ KWView::KWView(KoPart *part, KWDocument *document, QWidget *parent)
 
 
     //openword
-    static const QString langName = QLocale::system().name();
     //"zh_CN"
     QString resoucefile = "calligrawords.rc";
-    if (langName == "zh_CN")
+    static const QString appName = qAppName();
+    if (appName.contains("HEditor"))
     {
-        resoucefile =  "calligrawords_zh_CN.rc";
+        resoucefile = "HEditor.rc";
     }
+    else
+    {
+        static const QString langName = QLocale::system().name();
+        if (langName == "zh_CN")
+        {
+            resoucefile =  "calligrawords_zh_CN.rc";
+        }
+    }
+
 
     setComponentName(KWFactory::componentData().componentName(), KWFactory::componentData().componentDisplayName());
     //setXMLFile("calligrawords.rc");
