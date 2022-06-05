@@ -287,7 +287,7 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
 
     QString doc;
     //const QStringList allFiles = KoResourcePaths::findAllResources("data", "calligra/calligra_shell.rc");
-    // find : bin\data\calligra
+    // find : bin\data\calligra :如果未找到文件会异常退出
     const QStringList allFiles = KoResourcePaths::findAllResources("data", resoucefile);
     setXMLFile(findMostRecentXMLFile(allFiles, doc));
     //setLocalXMLFile(KoResourcePaths::locateLocal("data", "calligra/calligra_shell.rc"));
