@@ -463,15 +463,6 @@ KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentDa
 
     d->dockerManager = new KoDockerManager(this);
 
-
-    ///------------------------
-    ///
-    ///m_timerID = startTimer(500);//ms
-    ///
-    ///-------------------------
-
-
-
 }
 
 ///----------------------------------------------------------------------
