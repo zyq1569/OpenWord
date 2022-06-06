@@ -257,7 +257,7 @@ public:
 };
 
 KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentData &componentData)
-    :KXmlGuiWindow(), d(new KoMainWindowPrivate(nativeMimeType, componentData, this))/*, m_sharedHealthApp(SHAREDHEALTH)*/
+    :KXmlGuiWindow(), d(new KoMainWindowPrivate(nativeMimeType, componentData, this))
 {
     setStandardToolBarMenuEnabled(true);
 
