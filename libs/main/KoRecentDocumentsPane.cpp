@@ -28,7 +28,7 @@
 #include <KSharedConfig>
 #include <KConfigGroup>
 #include <kfileitem.h>
-#include <kio/previewjob.h>
+#include <KIO/previewjob.h>
 
 #include <KoIcon.h>
 
