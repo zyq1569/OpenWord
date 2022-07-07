@@ -163,7 +163,6 @@ public:
             if (mime.isValid())
             {
                 const QString extension = mime.preferredSuffix();
-
                 if (title.endsWith(extension))
                 {
                     title.chop(extension.length());
@@ -174,8 +173,7 @@ public:
         if (title.isEmpty())
         {
             // #139905
-            title = i18n("%1 unsaved document (%2)", parent->componentData().componentDisplayName(),
-                         QLocale().toString(QDate::currentDate(), QLocale::ShortFormat));
+            title = i18n("%1 unsaved document (%2)", parent->componentData().componentDisplayName(), QLocale().toString(QDate::currentDate(), QLocale::ShortFormat));
         }
         printer.setDocName(title);
     }
