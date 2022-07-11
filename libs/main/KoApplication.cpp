@@ -509,20 +509,15 @@ bool KoApplication::start()
         d->roundtripFileName = parser.value("roundtrip-filename");
         const bool doTemplate = parser.isSet("template");
         const bool doNew = parser.isSet("new");
-        const bool benchmarkLoading = parser.isSet("benchmark-loading")
-                                      || parser.isSet("benchmark-loading-show-window")
-                                      || !d->roundtripFileName.isEmpty();
+        const bool benchmarkLoading = parser.isSet("benchmark-loading") || parser.isSet("benchmark-loading-show-window") || !d->roundtripFileName.isEmpty();
         // only show the mainWindow when no command-line mode option is passed
-        const bool showmainWindow =
-            parser.isSet("benchmark-loading-show-window") || (
-                parser.isSet("export-pdf")) || (  !parser.isSet("benchmark-loading") && !parser.isSet("roundtrip-filename")
-                        && d->roundtripFileName.isEmpty());
+        const bool showmainWindow =  parser.isSet("benchmark-loading-show-window") || ( parser.isSet("export-pdf")) ||
+                (  !parser.isSet("benchmark-loading") && !parser.isSet("roundtrip-filename")  && d->roundtripFileName.isEmpty());
         const QString profileFileName = parser.value("profile-filename");
 
         QTextStream profileoutput;
         QFile profileFile(profileFileName);
-        if (!profileFileName.isEmpty()
-                && profileFile.open(QFile::WriteOnly | QFile::Truncate))
+        if (!profileFileName.isEmpty()  && profileFile.open(QFile::WriteOnly | QFile::Truncate))
         {
             profileoutput.setDevice(&profileFile);
         }
