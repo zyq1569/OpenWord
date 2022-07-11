@@ -164,7 +164,7 @@ KoApplication::KoApplication(const QByteArray &nativeMimeType, const QString &wi
     KoGlobal::initialize();
 
 #ifndef QT_NO_DBUS
-    ///----- openword : not start (in windows)--------->nedd dbus-daemon.exe 20210615
+    ///----- openword : not start (in windows)--------->need dbus-daemon.exe 20210615
 //    KDBusService service(KDBusService::Multiple);
 //    new KoApplicationAdaptor(this);
 //    QDBusConnection::sessionBus().registerObject("/application", this);
@@ -246,12 +246,10 @@ bool KoApplication::start()
 #ifdef ENV32BIT
     if (isWow64())
     {
-        KMessageBox::information(0,
-                                 i18n("You are running a 32 bits build on a 64 bits Windows.\n"
+        KMessageBox::information(0, i18n("You are running a 32 bits build on a 64 bits Windows.\n"
                                       "This is not recommended.\n"
                                       "Please download and install the x64 build instead."),
-                                 qApp->applicationName(),
-                                 "calligra_32_on_64_warning");
+                                      qApp->applicationName(),  "calligra_32_on_64_warning");
 
     }
 #endif

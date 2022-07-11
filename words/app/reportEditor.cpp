@@ -22,6 +22,7 @@ Q_DECL_EXPORT int main(int argc, char **argv)
     qlist = QStringList() << QStringLiteral("words.rc") << QStringLiteral("words_readonly.rc");
     m.setUiFiles(QStringList() << QStringLiteral("words.rc") << QStringLiteral("words_readonly.rc"));
     m.migrate();
+    ///app.start() 考虑在这个地方增加参数启动线程和共享内存
     if (!app.start())
     {
         return 1;
