@@ -24,7 +24,7 @@ Q_DECL_EXPORT int main(int argc, char **argv)
     m.migrate();
     ///app.start() 考虑在这个地方增加参数启动线程和共享内存
     /// bool KoApplication::start() 是否增加函数传递参数，还是其函数里面KAboutData aboutData = KAboutData::applicationData(); 获取参数
-    if (!app.start())
+    if (!app.startHEditor())
     {
         return 1;
     }
