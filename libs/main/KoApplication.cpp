@@ -717,7 +717,7 @@ bool KoApplication::start()
 }
 
 ///openword add 20220713
-bool KoApplication::startHEditor()
+bool KoApplication::startHEditor()//copy  bool KoApplication::start()
 {
     KAboutData aboutData = KAboutData::applicationData();
     // process commandline parameters
@@ -762,11 +762,7 @@ bool KoApplication::startHEditor()
     QString absolutePath = appdir.absolutePath();
     QString nameTmp = absolutePath + "/bin" + ";" + absolutePath + "/lib" + ";" + absolutePath + "/lib/kde4" + ";"
                       + absolutePath + "/Frameworks" + ";" + absolutePath;
-//    qputenv("PATH", QFile::encodeName(appdir.absolutePath() + "/bin" + ";"
-//                                      + appdir.absolutePath() + "/lib" + ";"
-//                                      + appdir.absolutePath() + "/lib/kde4" + ";"
-//                                      + appdir.absolutePath() + "/Frameworks" + ";"
-//                                      + appdir.absolutePath()));
+
     qputenv("PATH", QFile::encodeName(nameTmp));
 #endif
 
@@ -1052,9 +1048,7 @@ bool KoApplication::startHEditor()
                 if (profileoutput.device())
                 {
                     doc->setProfileStream(&profileoutput);
-                    profileoutput << "KoApplication::start\t"
-                                  << appStartTime.msecsTo(QTime::currentTime())
-                                  <<"\t0" << endl;
+                    profileoutput << "KoApplication::start\t" << appStartTime.msecsTo(QTime::currentTime()) <<"\t0" << endl;
                     doc->setAutoErrorHandlingEnabled(false);
                 }
                 doc->setProfileReferenceTime(appStartTime);
@@ -1066,7 +1060,6 @@ bool KoApplication::startHEditor()
                     if (url.isLocalFile() && QFile::exists(url.toLocalFile()))
                     {
                         templatePath = url.toLocalFile();
-                        debugMain << "using full path...";
                         DEBUG_LOG("using full path...:"+templatePath);
                     }
                     else
@@ -1149,13 +1142,11 @@ bool KoApplication::startHEditor()
                 {
                     if (print)
                     {
-                        connect( mainWindow, SIGNAL(loadCompleted(KoMainWindow *)),
-                                 this, SLOT(slotFilePrint(KoMainWindow *)));
+                        connect( mainWindow, SIGNAL(loadCompleted(KoMainWindow *)), this, SLOT(slotFilePrint(KoMainWindow *)));
                     }
                     else if (exportAsPdf)
                     {
-                        connect(mainWindow, SIGNAL(loadCompleted(KoMainWindow*)),
-                                this, SLOT(slotExportToPdf(KoMainWindow*)));
+                        connect(mainWindow, SIGNAL(loadCompleted(KoMainWindow*)), this, SLOT(slotExportToPdf(KoMainWindow*)));
                     }
                     if (mainWindow->openDocument(part, url))
                     {
@@ -1163,9 +1154,7 @@ bool KoApplication::startHEditor()
                         {
                             if (profileoutput.device())
                             {
-                                profileoutput << "KoApplication::start\t"
-                                              << appStartTime.msecsTo(QTime::currentTime())
-                                              <<"\t100" << endl;
+                                profileoutput << "KoApplication::start\t" << appStartTime.msecsTo(QTime::currentTime()) <<"\t100" << endl;
                             }
                             QTimer::singleShot(0, this, SLOT(benchmarkLoadingFinished()));
                             return true; // only load one document!
@@ -1189,9 +1178,7 @@ bool KoApplication::startHEditor()
 
                 if (profileoutput.device())
                 {
-                    profileoutput << "KoApplication::start\t"
-                                  << appStartTime.msecsTo(QTime::currentTime())
-                                  <<"\t100" << endl;
+                    profileoutput << "KoApplication::start\t"  << appStartTime.msecsTo(QTime::currentTime()) <<"\t100" << endl;
                 }
 
             }
