@@ -716,6 +716,503 @@ bool KoApplication::start()
     return true;
 }
 
+///openword add 20220713
+bool KoApplication::startHEditor()
+{
+    KAboutData aboutData = KAboutData::applicationData();
+    // process commandline parameters
+    QCommandLineParser parser;
+    aboutData.setupCommandLine(&parser);
+
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("print"), i18n("Only print and exit")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("template"), i18n("Open a new document based on the given template (desktopfile name)")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("new"), i18n("Open a new document based on the given template file")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("dpi"), i18n("Override display DPI"), QStringLiteral("dpiX,dpiY")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("export-pdf"), i18n("Only export to PDF and exit")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("export-filename"), i18n("Filename for export-pdf"), QStringLiteral("filename")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("benchmark-loading"), i18n("just load the file and then exit")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("benchmark-loading-show-window"), i18n("load the file, show the window and progressbar and then exit")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("profile-filename"), i18n("Filename to write profiling information into."), QStringLiteral("filename")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("roundtrip-filename"), i18n("Load a file and save it as an ODF file. Meant for debugging."), QStringLiteral("filename")));
+    parser.addPositionalArgument(QStringLiteral("[file(s)]"), i18n("File(s) or URL(s) to open"));
+
+    parser.process(*this);
+
+    aboutData.processCommandLine(&parser);
+
+#if defined(Q_OS_WIN) || defined (Q_OS_MACX)
+#ifdef ENV32BIT
+    if (isWow64())
+    {
+        KMessageBox::information(0, i18n("You are running a 32 bits build on a 64 bits Windows.\n"
+                                      "This is not recommended.\n"
+                                      "Please download and install the x64 build instead."),
+                                      qApp->applicationName(),  "calligra_32_on_64_warning");
+
+    }
+#endif
+    QDir appdir(applicationDirPath());
+    appdir.cdUp();
+
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    if (!env.contains("XDG_DATA_DIRS"))
+    {
+        qputenv("XDG_DATA_DIRS", QFile::encodeName(appdir.absolutePath() + "/share"));
+    }
+    QString absolutePath = appdir.absolutePath();
+    QString nameTmp = absolutePath + "/bin" + ";" + absolutePath + "/lib" + ";" + absolutePath + "/lib/kde4" + ";"
+                      + absolutePath + "/Frameworks" + ";" + absolutePath;
+//    qputenv("PATH", QFile::encodeName(appdir.absolutePath() + "/bin" + ";"
+//                                      + appdir.absolutePath() + "/lib" + ";"
+//                                      + appdir.absolutePath() + "/lib/kde4" + ";"
+//                                      + appdir.absolutePath() + "/Frameworks" + ";"
+//                                      + appdir.absolutePath()));
+    qputenv("PATH", QFile::encodeName(nameTmp));
+#endif
+
+    if (d->splashScreen)
+    {
+        d->splashScreen->show();
+        d->splashScreen->repaint();
+        processEvents();
+    }
+
+    ResetStarting resetStarting(d->splashScreen); // remove the splash when done
+    Q_UNUSED(resetStarting);
+
+    // Find the part component file corresponding to the application instance name
+    /// 2021-01-08 plugin error? --->json??
+    KoDocumentEntry entry;
+    QList<QPluginLoader*> pluginLoaders = KoPluginLoader::pluginLoaders("calligra/parts", d->nativeMimeType);
+    Q_FOREACH (QPluginLoader *loader, pluginLoaders)
+    {
+        if (loader->fileName().contains(applicationName()+QString("part")))
+        {
+            entry = KoDocumentEntry(loader);
+            pluginLoaders.removeOne(loader);
+            break;
+        }
+    }
+    qDeleteAll(pluginLoaders);
+
+    if (entry.isEmpty())
+    {
+        QMessageBox::critical(0, i18n("%1: Critical Error", applicationName()), i18n("Essential application components could not be found.\n"
+                              "This might be an installation issue.\n Try restarting or reinstalling."));
+        return false;
+    }
+
+    // Get the command line arguments which we have to parse
+    QString dpiValues = parser.value("dpi");
+    if (!dpiValues.isEmpty())
+    {
+        int sep = dpiValues.indexOf(QRegExp("[x, ]"));
+        int dpiX;
+        int dpiY = 0;
+        bool ok = true;
+        if (sep != -1)
+        {
+            dpiY = dpiValues.mid(sep + 1).toInt(&ok);
+            dpiValues.truncate(sep);
+        }
+        if (ok)
+        {
+            dpiX = dpiValues.toInt(&ok);
+            if (ok)
+            {
+                if (!dpiY)
+                {
+                    dpiY = dpiX;
+                }
+                KoDpi::setDPI(dpiX, dpiY);
+            }
+        }
+    }
+    // No argument -> create an empty document
+    const QStringList fileUrls = parser.positionalArguments();
+
+    if (fileUrls.isEmpty())
+    {
+        // if there's no document, add the current working directory
+        // to the recent dirs so the open dialog and open pane show
+        // the directory from where the app was started, instead of
+        // the last directory from where we opened a file
+        KRecentDirs::add(":OpenDialog", QDir::currentPath());
+        QString errorMsg;
+        KoPart *part = entry.createKoPart(&errorMsg);
+        d->partList << part;
+
+        if (!part)
+        {
+            if (!errorMsg.isEmpty())
+            {
+                KMessageBox::error(0, errorMsg);
+            }
+            return false;
+        }
+
+        // XXX: the document should be separate plugin
+        KoDocument *doc = part->document();
+
+        KoMainWindow *mainWindow = part->createMainWindow();
+        mainWindow->show();
+        QObject::connect(doc, SIGNAL(sigProgress(int)), mainWindow, SLOT(slotProgress(int)));
+        // for initDoc to fill in the recent docs list
+        // and for KoDocument::slotStarted
+        part->addMainWindow(mainWindow);
+
+        // Check for autosave files from a previous run. There can be several, and
+        // we want to offer a restore for every one. Including a nice thumbnail!
+        QStringList autoSaveFiles;
+
+        // get all possible autosave files in the home dir, this is for unsaved document autosave files
+        // Using the extension allows to avoid relying on the mime magic when opening
+        QMimeType mimeType = QMimeDatabase().mimeTypeForName(doc->nativeFormatMimeType());
+        if (!mimeType.isValid())
+        {
+            qFatal("It seems your installation is broken/incomplete because we failed to load the native mimetype \"%s\".", doc->nativeFormatMimeType().constData());
+            FATAL_LOG(QString("It seems your installation is broken/incomplete because we failed to load the native mimetype \"%s\". ").
+                      arg(doc->nativeFormatMimeType().constData()));
+        }
+        const QString extension = mimeType.preferredSuffix();
+
+        QStringList filters;
+        filters << QString(".%1-%2-%3-autosave%4").arg(part->componentData().componentName()).arg("*").arg("*").arg(extension);
+
+#ifdef Q_OS_WIN
+        QDir autosaveDir = QDir::tempPath();
+#else
+        QDir autosaveDir = QDir::home();
+#endif
+        // all autosave files for our application
+        autoSaveFiles = autosaveDir.entryList(filters, QDir::Files | QDir::Hidden);
+
+        QStringList pids;
+        QString ourPid;
+        ourPid.setNum(applicationPid());
+
+#ifndef QT_NO_DBUS
+        // all running instances of our application -- bit hackish, but we cannot get at the dbus name here, for some reason
+        QDBusReply<QStringList> reply = QDBusConnection::sessionBus().interface()->registeredServiceNames();
+        foreach (const QString &name, reply.value()) ///openword
+        {
+            if (name.contains(part->componentData().componentName()))
+            {
+                // we got another instance of ourselves running, let's get the pid
+                QString pid = name.split('-').last();
+                if (pid != ourPid)
+                {
+                    pids << pid;
+                }
+            }
+        }
+#endif
+
+        // remove the autosave files that are saved for other, open instances of ourselves
+        foreach(const QString &autoSaveFileName, autoSaveFiles)
+        {
+            if (!QFile::exists(autosaveDir.absolutePath() + QDir::separator() + autoSaveFileName))
+            {
+                autoSaveFiles.removeAll(autoSaveFileName);
+                continue;
+            }
+            QStringList split = autoSaveFileName.split('-');
+            if (split.size() == 4)
+            {
+                if (pids.contains(split[1]))
+                {
+                    // We've got an active, owned autosave file. Remove.
+                    autoSaveFiles.removeAll(autoSaveFileName);
+                }
+            }
+        }
+
+        // Allow the user to make their selection
+        if (autoSaveFiles.size() > 0)
+        {
+            KoAutoSaveRecoveryDialog dlg(autoSaveFiles);
+            if (dlg.exec() == QDialog::Accepted)
+            {
+                QStringList filesToRecover = dlg.recoverableFiles();
+                foreach (const QString &autoSaveFileName, autoSaveFiles)
+                {
+                    if (!filesToRecover.contains(autoSaveFileName))
+                    {
+                        // remove the files the user didn't want to recover
+                        QFile::remove(autosaveDir.absolutePath() + QDir::separator() + autoSaveFileName);
+                    }
+                }
+                autoSaveFiles = filesToRecover;
+            }
+            else
+            {
+                // don't recover any of the files, but don't delete them either
+                autoSaveFiles.clear();
+            }
+        }
+
+        if (autoSaveFiles.size() > 0)
+        {
+            short int numberOfOpenDocuments = 0; // number of documents open
+            // bah, we need to re-use the document that was already created
+            QUrl url = QUrl::fromLocalFile(autosaveDir.absolutePath() + QDir::separator() + autoSaveFiles.takeFirst());
+            if (mainWindow->openDocument(part, url))
+            {
+                doc->resetURL();
+                doc->setModified(true);
+                // TODO: what if the app crashes immediately, before another autosave was made? better keep & rename
+                QFile::remove(url.toLocalFile());
+                numberOfOpenDocuments++;
+            }
+
+            // And then for the other autosave files, we copy & paste the code
+            // and loop through them.
+            foreach(const QString &autoSaveFile, autoSaveFiles)
+            {
+                // For now create an empty document
+                QString errorMsg;
+                KoPart *part = entry.createKoPart(&errorMsg);
+                d->partList << part;
+                if (part)
+                {
+                    url = QUrl::fromLocalFile(autosaveDir.absolutePath() + QDir::separator() + autoSaveFile);
+
+                    KoMainWindow *mainWindow = part->createMainWindow();
+                    mainWindow->show();
+                    if (mainWindow->openDocument(part, url))
+                    {
+                        doc->resetURL();
+                        doc->setModified(true);
+                        // TODO: what if the app crashes immediately, before another autosave was made? better keep & rename
+                        QFile::remove(url.toLocalFile());
+                        numberOfOpenDocuments++;
+                    }
+                }
+            }
+            return (numberOfOpenDocuments > 0);
+        }
+        else
+        {
+            part->showStartUpWidget(mainWindow);
+        }
+
+    }
+    else
+    {
+        const bool print = parser.isSet("print");
+        const bool exportAsPdf = parser.isSet("export-pdf");
+        d->pdfFileName = parser.value("export-filename");
+        d->roundtripFileName = parser.value("roundtrip-filename");
+        const bool doTemplate = parser.isSet("template");
+        const bool doNew = parser.isSet("new");
+        const bool benchmarkLoading = parser.isSet("benchmark-loading") || parser.isSet("benchmark-loading-show-window") || !d->roundtripFileName.isEmpty();
+        // only show the mainWindow when no command-line mode option is passed
+        const bool showmainWindow =  parser.isSet("benchmark-loading-show-window") || ( parser.isSet("export-pdf")) ||
+                (  !parser.isSet("benchmark-loading") && !parser.isSet("roundtrip-filename")  && d->roundtripFileName.isEmpty());
+        const QString profileFileName = parser.value("profile-filename");
+
+        QTextStream profileoutput;
+        QFile profileFile(profileFileName);
+        if (!profileFileName.isEmpty()  && profileFile.open(QFile::WriteOnly | QFile::Truncate))
+        {
+            profileoutput.setDevice(&profileFile);
+        }
+
+        // Loop through arguments
+
+        short int numberOfOpenDocuments = 0; // number of documents open
+        short int nPrinted = 0;
+        // TODO: remove once Qt has proper handling itself
+        const QRegExp withProtocolChecker( QStringLiteral("^[a-zA-Z]+:") );
+        for (int argNumber = 0; argNumber < fileUrls.size(); ++argNumber)
+        {
+            const QString fileUrl = fileUrls.at(argNumber);
+            // convert to an url
+            const bool startsWithProtocol = (withProtocolChecker.indexIn(fileUrl) == 0);
+            const QUrl url = startsWithProtocol ? QUrl::fromUserInput(fileUrl) : QUrl::fromLocalFile(QDir::current().absoluteFilePath(fileUrl));
+
+            // For now create an empty document
+            QString errorMsg;
+            KoPart *part = entry.createKoPart(&errorMsg);
+            d->partList << part;
+            if (part)
+            {
+                KoDocument *doc = part->document();
+                // show a mainWindow asap
+                KoMainWindow *mainWindow = part->createMainWindow();
+                if (showmainWindow)
+                {
+                    mainWindow->show();
+                }
+                if (benchmarkLoading)
+                {
+                    doc->setReadWrite(false);
+                }
+
+                if (profileoutput.device())
+                {
+                    doc->setProfileStream(&profileoutput);
+                    profileoutput << "KoApplication::start\t"
+                                  << appStartTime.msecsTo(QTime::currentTime())
+                                  <<"\t0" << endl;
+                    doc->setAutoErrorHandlingEnabled(false);
+                }
+                doc->setProfileReferenceTime(appStartTime);
+
+                // are we just trying to open a Calligra-style template?
+                if (doTemplate)
+                {
+                    QString templatePath;
+                    if (url.isLocalFile() && QFile::exists(url.toLocalFile()))
+                    {
+                        templatePath = url.toLocalFile();
+                        debugMain << "using full path...";
+                        DEBUG_LOG("using full path...:"+templatePath);
+                    }
+                    else
+                    {
+                        QString desktopName(fileUrls.at(argNumber));
+                        const QString templatesResourcePath = part->templatesResourcePath();
+
+                        QStringList paths = KoResourcePaths::findAllResources("data", templatesResourcePath + "*/" + desktopName);
+                        if (paths.isEmpty())
+                        {
+                            paths = KoResourcePaths::findAllResources("data", templatesResourcePath + desktopName);
+                        }
+                        if (paths.isEmpty())
+                        {
+                            KMessageBox::error(0, i18n("No template found for: %1", desktopName));
+                            delete mainWindow;
+                        }
+                        else if (paths.count() > 1)
+                        {
+                            KMessageBox::error(0, i18n("Too many templates found for: %1", desktopName));
+                            delete mainWindow;
+                        }
+                        else
+                        {
+                            templatePath = paths.at(0);
+                        }
+                    }
+
+                    if (!templatePath.isEmpty())
+                    {
+                        QUrl templateBase;
+                        templateBase.setPath(templatePath);
+                        KDesktopFile templateInfo(templatePath);
+
+                        QString templateName = templateInfo.readUrl();
+                        QUrl templateURL;
+                        templateURL.setPath(templateBase.adjusted(QUrl::RemoveFilename|QUrl::StripTrailingSlash).path() + '/' + templateName);
+                        if (mainWindow->openDocument(part, templateURL))
+                        {
+                            doc->resetURL();
+                            doc->setEmpty();
+                            doc->setTitleModified();
+                            debugMain << "Template loaded...";
+                            DEBUG_LOG("using full path...:" + templateURL.toString());
+                            numberOfOpenDocuments++;
+                        }
+                        else
+                        {
+                            KMessageBox::error(0, i18n("Template %1 failed to load.", templateURL.toDisplayString()));
+                            delete mainWindow;
+                        }
+                    }
+                    // now try to load
+                }
+                else if (doNew)
+                {
+                    if (url.isLocalFile() && !QFile::exists(url.toLocalFile()))
+                    {
+                        KMessageBox::error(0, i18n("No template found at: %1", url.toDisplayString()));
+                        delete mainWindow;
+                    }
+                    else
+                    {
+                        if (mainWindow->openDocument(part, url))
+                        {
+                            doc->resetURL();
+                            doc->setEmpty();
+                            doc->setTitleModified();
+                            debugMain << "Template loaded...";
+                            numberOfOpenDocuments++;
+                        }
+                        else
+                        {
+                            KMessageBox::error(0, i18n("Template %1 failed to load.", url.toDisplayString()));
+                            delete mainWindow;
+                        }
+                    }
+                }
+                else
+                {
+                    if (print)
+                    {
+                        connect( mainWindow, SIGNAL(loadCompleted(KoMainWindow *)),
+                                 this, SLOT(slotFilePrint(KoMainWindow *)));
+                    }
+                    else if (exportAsPdf)
+                    {
+                        connect(mainWindow, SIGNAL(loadCompleted(KoMainWindow*)),
+                                this, SLOT(slotExportToPdf(KoMainWindow*)));
+                    }
+                    if (mainWindow->openDocument(part, url))
+                    {
+                        if (benchmarkLoading)
+                        {
+                            if (profileoutput.device())
+                            {
+                                profileoutput << "KoApplication::start\t"
+                                              << appStartTime.msecsTo(QTime::currentTime())
+                                              <<"\t100" << endl;
+                            }
+                            QTimer::singleShot(0, this, SLOT(benchmarkLoadingFinished()));
+                            return true; // only load one document!
+                        }
+                        if (print || exportAsPdf)
+                        {
+                            nPrinted++;
+                        }
+                        else
+                        {
+                            numberOfOpenDocuments++;
+                        }
+                    }
+                    else
+                    {
+                        // .... if failed
+                        // delete doc; done by openDocument
+                        // delete mainWindow; done by ~KoDocument
+                    }
+                }
+
+                if (profileoutput.device())
+                {
+                    profileoutput << "KoApplication::start\t"
+                                  << appStartTime.msecsTo(QTime::currentTime())
+                                  <<"\t100" << endl;
+                }
+
+            }
+        }
+        if (benchmarkLoading)
+        {
+            return false; // no valid urls found.
+        }
+        if (print || exportAsPdf)
+        {
+            return nPrinted > 0;
+        }
+        if (numberOfOpenDocuments == 0) // no doc, e.g. all URLs were malformed
+        {
+            return false;
+        }
+    }
+
+    // not calling this before since the program will quit there.
+    return true;
+}
 KoApplication::~KoApplication()
 {
     delete d;

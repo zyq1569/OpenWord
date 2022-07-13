@@ -90,6 +90,8 @@ public:
      */
     virtual bool start();
 
+    bool startHEditor();
+
     /**
      * Tell KoApplication to show this splashscreen when you call start();
      * when start returns, the splashscreen is hidden. Use KSplashScreen
