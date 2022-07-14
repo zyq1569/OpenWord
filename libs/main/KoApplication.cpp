@@ -78,6 +78,10 @@
 #include "MainDebug.h"
 #include <QDesktopWidget>
 
+
+///add 20220714
+#include "Hsharedmemory.h"
+
 KoApplication* KoApplication::KoApp = 0;
 
 namespace

@@ -34,6 +34,8 @@ class KAboutData;
 class QWidget;
 class QStringList;
 
+class Hsharedmemory;
+
 #include <KoFilterManager.h>
 
 #define koApp KoApplication::koApplication()
@@ -154,6 +156,9 @@ private:
     KoApplicationPrivate * const d;
     class ResetStarting;
     friend class ResetStarting;
+
+private:
+    Hsharedmemory *m_sharedmemory;
 };
 
 #endif
