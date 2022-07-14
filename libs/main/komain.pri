@@ -51,7 +51,8 @@ HEADERS +=  KoAutoSaveRecoveryDialog.h \
             KoPartAdaptor.h \
             KoDockerManager_p.h \
             KoView_p.h \
-            KoDocumentSectionPropertyAction_p.h
+            KoDocumentSectionPropertyAction_p.h \
+            Hsharedmemory.h
 
 
 SOURCES +=  KoAutoSaveRecoveryDialog.cpp \
@@ -103,7 +104,8 @@ SOURCES +=  KoAutoSaveRecoveryDialog.cpp \
             Calligra2Migration.cpp \
             KoApplicationAdaptor.cpp \
             KoViewAdaptor.cpp \
-            KoPartAdaptor.cpp
+            KoPartAdaptor.cpp \
+            Hsharedmemory.cpp
 
 FORMS +=  KoOpenPaneBase.ui \
           KoDetailsPaneBase.ui
