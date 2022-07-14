@@ -24,7 +24,7 @@ struct PROCESS_CHANNEL
 {
     char flag;
     char command;
-    int pid;
+    qint64 pid;
     char data[SHARE_LEN];
 };
 
@@ -32,7 +32,7 @@ struct PROCESS_CHANNEL
 class Hsharedmemory
 {
 public:
-    Hsharedmemory(int id);
+    Hsharedmemory(qint64 id);
     ~Hsharedmemory();
 
     /**
@@ -61,7 +61,7 @@ public:
 
 private:
     QSharedMemory *m_SharedMemory;
-    int m_Id;
+    qint64 m_Pid;
 };
 
 #endif // TSHAREDMEMORY_H
