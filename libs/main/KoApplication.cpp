@@ -795,6 +795,7 @@ bool KoApplication::startHEditor()//copy  bool KoApplication::start()
     {
         QMessageBox::critical(0, i18n("%1: Critical Error", applicationName()), i18n("Essential application components could not be found.\n"
                               "This might be an installation issue.\n Try restarting or reinstalling."));
+        DEBUG_LOG("KoDocumentEntry entry/error! plugin error?");
         return false;
     }
 
@@ -851,7 +852,7 @@ bool KoApplication::startHEditor()//copy  bool KoApplication::start()
         KoDocument *doc = part->document();
 
         KoMainWindow *mainWindow = part->createMainWindow();
-        mainWindow->show();
+        //mainWindow->show();
         QObject::connect(doc, SIGNAL(sigProgress(int)), mainWindow, SLOT(slotProgress(int)));
         // for initDoc to fill in the recent docs list
         // and for KoDocument::slotStarted
