@@ -146,7 +146,7 @@ public:
 
 
 KoApplication::KoApplication(const QByteArray &nativeMimeType, const QString &windowIconName,  AboutDataGenerator aboutDataGenerator, int &argc, char **argv)
-    : QApplication(argc, argv), d(new KoApplicationPrivate())
+    : QApplication(argc, argv), d(new KoApplicationPrivate()), m_sharedmemory(0)
 {
 
     KLocalizedString::setApplicationDomain("calligrawords");
@@ -723,6 +723,11 @@ bool KoApplication::start()
 ///openword add 20220713
 bool KoApplication::startHEditor()//copy  bool KoApplication::start()
 {
+    if (!m_sharedmemory)
+    {
+        m_sharedmemory = new Hsharedmemory(applicationPid());
+    }
+    m_sharedmemory->open();
     KAboutData aboutData = KAboutData::applicationData();
     // process commandline parameters
     QCommandLineParser parser;
