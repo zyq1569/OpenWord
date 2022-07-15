@@ -723,11 +723,13 @@ bool KoApplication::start()
 ///openword add 20220713
 bool KoApplication::startHEditor()//copy  bool KoApplication::start()
 {
+    ///线程读取报告,必要时保存通知
     if (!m_sharedmemory)
     {
         m_sharedmemory = new Hsharedmemory(applicationPid());
     }
     m_sharedmemory->open();
+
     KAboutData aboutData = KAboutData::applicationData();
     // process commandline parameters
     QCommandLineParser parser;
