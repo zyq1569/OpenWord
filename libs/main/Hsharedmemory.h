@@ -2,6 +2,7 @@
 #define TSHAREDMEMORY_H
 
 #include <QSharedMemory>
+#include <QThread>
 
 #define FLAG_OFF    0x0
 #define FLAG_ON     0x1
@@ -62,6 +63,20 @@ public:
 private:
     QSharedMemory *m_SharedMemory;
     qint64 m_Pid;
+};
+
+
+class TReadThread : public QThread
+{
+public:
+    TReadThread(Hsharedmemory *sharedMemory, QObject *parent = Q_NULLPTR);
+
+private:
+    Hsharedmemory *m_SharedMemory;
+
+    // QThread interface
+protected:
+    void run() Q_DECL_OVERRIDE;
 };
 
 #endif // TSHAREDMEMORY_H
