@@ -730,6 +730,8 @@ bool KoApplication::startHEditor()//copy  bool KoApplication::start()
     }
     m_sharedmemory->open();
 
+    ///创建线程.开始判断是否打开报告及保存报告
+
     KAboutData aboutData = KAboutData::applicationData();
     // process commandline parameters
     QCommandLineParser parser;
