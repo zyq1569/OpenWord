@@ -79,6 +79,8 @@ protected:
     void run() Q_DECL_OVERRIDE;
 
 protected:
+    void clear();
+protected:
     QString m_info;
 };
 

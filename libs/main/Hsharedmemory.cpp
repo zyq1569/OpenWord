@@ -92,3 +92,8 @@ void HreadThread::run()
     }
     printf("Thread end\n");
 }
+
+void HreadThread::clear()
+{
+    m_info = "";
+}
