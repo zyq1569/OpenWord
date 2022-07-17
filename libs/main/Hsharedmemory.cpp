@@ -91,6 +91,7 @@ void HreadThread::run()
         {
             //printf("RECV: %s\n", s.toStdString().c_str());
             m_info = s;
+            emit reportInfo(m_info);
         }
         QThread::msleep(300);
     }

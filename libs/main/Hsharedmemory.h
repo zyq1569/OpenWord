@@ -71,6 +71,7 @@ class HreadThread : public QThread
 public:
     HreadThread(Hsharedmemory *sharedMemory, QObject *parent = Q_NULLPTR);
 
+    void clear();
 private:
     Hsharedmemory *m_SharedMemory;
 
@@ -79,9 +80,11 @@ protected:
     void run() Q_DECL_OVERRIDE;
 
 protected:
-    void clear();
-protected:
     QString m_info;
+
+signals:
+    void reportInfo(QString info);
+
 };
 
 #endif // TSHAREDMEMORY_H
