@@ -87,6 +87,7 @@ void TReadThread::run()
         if(!s.isEmpty())
         {
             printf("RECV: %s\n", s.toStdString().c_str());
+            m_info = s;
         }
         QThread::msleep(300);
     }

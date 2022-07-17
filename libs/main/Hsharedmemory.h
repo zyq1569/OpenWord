@@ -77,6 +77,9 @@ private:
     // QThread interface
 protected:
     void run() Q_DECL_OVERRIDE;
+
+protected:
+    QString m_info;
 };
 
 #endif // TSHAREDMEMORY_H
