@@ -72,7 +72,11 @@ QString Hsharedmemory::read() const
     return s;
 }
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \brief HreadThread::HreadThread
+/// \param sharedMemory
+/// \param parent
+///
 HreadThread::HreadThread(Hsharedmemory *sharedMemory, QObject *parent) : QThread(parent), m_SharedMemory(sharedMemory)
 {
 
@@ -85,12 +89,12 @@ void HreadThread::run()
         QString s = m_SharedMemory->read();
         if(!s.isEmpty())
         {
-            printf("RECV: %s\n", s.toStdString().c_str());
+            //printf("RECV: %s\n", s.toStdString().c_str());
             m_info = s;
         }
         QThread::msleep(300);
     }
-    printf("Thread end\n");
+    //printf("Thread end\n");
 }
 
 void HreadThread::clear()
