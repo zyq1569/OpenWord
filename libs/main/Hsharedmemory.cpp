@@ -73,13 +73,12 @@ QString Hsharedmemory::read() const
 }
 
 
-TReadThread::TReadThread(Hsharedmemory *sharedMemory, QObject *parent) :
-    QThread(parent), m_SharedMemory(sharedMemory)
+HreadThread::HreadThread(Hsharedmemory *sharedMemory, QObject *parent) : QThread(parent), m_SharedMemory(sharedMemory)
 {
 
 }
 
-void TReadThread::run()
+void HreadThread::run()
 {
     while(true)
     {

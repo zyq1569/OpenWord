@@ -66,10 +66,10 @@ private:
 };
 
 
-class TReadThread : public QThread
+class HreadThread : public QThread
 {
 public:
-    TReadThread(Hsharedmemory *sharedMemory, QObject *parent = Q_NULLPTR);
+    HreadThread(Hsharedmemory *sharedMemory, QObject *parent = Q_NULLPTR);
 
 private:
     Hsharedmemory *m_SharedMemory;
