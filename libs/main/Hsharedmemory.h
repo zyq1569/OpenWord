@@ -68,6 +68,7 @@ private:
 
 class HreadThread : public QThread
 {
+    Q_OBJECT
 public:
     HreadThread(Hsharedmemory *sharedMemory, QObject *parent = Q_NULLPTR);
 
@@ -83,7 +84,7 @@ protected:
     QString m_info;
 
 signals:
-    void reportInfo(QString info);
+    void reportInfo(QString);
 
 };
 

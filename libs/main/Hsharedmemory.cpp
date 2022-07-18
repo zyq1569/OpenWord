@@ -79,7 +79,7 @@ QString Hsharedmemory::read() const
 ///
 HreadThread::HreadThread(Hsharedmemory *sharedMemory, QObject *parent) : QThread(parent), m_SharedMemory(sharedMemory)
 {
-
+    clear();
 }
 
 void HreadThread::run()
@@ -95,7 +95,6 @@ void HreadThread::run()
         }
         QThread::msleep(300);
     }
-    //printf("Thread end\n");
 }
 
 void HreadThread::clear()
