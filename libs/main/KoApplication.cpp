@@ -733,6 +733,7 @@ bool KoApplication::startHEditor()//copy  bool KoApplication::start()
     {
         m_hreadThread = new HreadThread(m_sharedmemory);
     }
+    ///关联读取内存消息后，判断是否打开报告
 
     ///创建线程.开始判断是否打开报告及保存报告
 
