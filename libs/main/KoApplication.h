@@ -35,7 +35,7 @@ class QWidget;
 class QStringList;
 
 class Hsharedmemory;
-
+class HreadThread;
 #include <KoFilterManager.h>
 
 #define koApp KoApplication::koApplication()
@@ -159,6 +159,7 @@ private:
 
 private:
     Hsharedmemory *m_sharedmemory;
+    HreadThread *m_hreadThread;
 };
 
 #endif

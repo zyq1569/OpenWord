@@ -146,7 +146,7 @@ public:
 
 
 KoApplication::KoApplication(const QByteArray &nativeMimeType, const QString &windowIconName,  AboutDataGenerator aboutDataGenerator, int &argc, char **argv)
-    : QApplication(argc, argv), d(new KoApplicationPrivate()), m_sharedmemory(0)
+    : QApplication(argc, argv), d(new KoApplicationPrivate()), m_sharedmemory(0), m_hreadThread(0)
 {
 
     KLocalizedString::setApplicationDomain("calligrawords");
@@ -729,6 +729,10 @@ bool KoApplication::startHEditor()//copy  bool KoApplication::start()
         m_sharedmemory = new Hsharedmemory(applicationPid());
     }
     m_sharedmemory->open();
+    if (!m_hreadThread)
+    {
+        m_hreadThread = new HreadThread(m_sharedmemory);
+    }
 
     ///创建线程.开始判断是否打开报告及保存报告
 
