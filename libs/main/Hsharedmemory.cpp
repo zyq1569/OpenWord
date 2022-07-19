@@ -87,12 +87,13 @@ void HreadThread::run()
     while(true)
     {
         QString s = m_SharedMemory->read();///file:
+        int n = s.length();
         if(!s.isEmpty() && s.length() > 5)
         {
             //printf("RECV: %s\n", s.toStdString().c_str());
             if (s.toUpper().contains("FILE:"))
             {
-                m_info = s.right(6);
+                m_info = s.right(n - 5);
                 emit reportInfo(m_info);
             }
         }
