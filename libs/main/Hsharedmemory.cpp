@@ -86,12 +86,15 @@ void HreadThread::run()
 {
     while(true)
     {
-        QString s = m_SharedMemory->read();
-        if(!s.isEmpty())
+        QString s = m_SharedMemory->read();///file:
+        if(!s.isEmpty() && s.length() > 5)
         {
             //printf("RECV: %s\n", s.toStdString().c_str());
-            m_info = s;
-            emit reportInfo(m_info);
+            if (s.toUpper().contains("FILE:"))
+            {
+                m_info = s.right(6);
+                emit reportInfo(m_info);
+            }
         }
         QThread::msleep(300);
     }
