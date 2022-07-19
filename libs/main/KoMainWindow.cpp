@@ -1655,6 +1655,10 @@ void KoMainWindow::slotFileOpen()
     (void) openDocument(url);
 }
 
+void KoMainWindow:: SetHEditor()
+{
+#define HEditor
+}
 
 void KoMainWindow::HealthFileOpen(QString FileName)
 {
