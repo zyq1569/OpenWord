@@ -69,10 +69,7 @@ public:
      * @param argc number of commandline argument strings in @c argv
      * @param argv array of commandline argument strings
      */
-    explicit KoApplication(const QByteArray &nativeMimeType,
-                           const QString &windowIconName,
-                           AboutDataGenerator aboutDataGenerator,
-                           int &argc, char **argv);
+    explicit KoApplication(const QByteArray &nativeMimeType, const QString &windowIconName,  AboutDataGenerator aboutDataGenerator, int &argc, char **argv);
 
     /**
      *  Destructor.
