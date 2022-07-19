@@ -257,6 +257,7 @@ public:
 KoMainWindow::KoMainWindow(const QByteArray &nativeMimeType, const KoComponentData &componentData)
     :KXmlGuiWindow(), d(new KoMainWindowPrivate(nativeMimeType, componentData, this))
 {
+    m_HEditor = false;
     setStandardToolBarMenuEnabled(true);
 
     setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::North);
@@ -902,6 +903,10 @@ bool KoMainWindow::openDocument(const QUrl &url)
 #ifdef HEditor
     slotFileClose();
 #endif
+    if (m_HEditor)
+    {
+        slotFileClose();
+    }
 
     if (!KIO::NetAccess::exists(url, KIO::NetAccess::SourceSide, 0))
     {
@@ -1657,7 +1662,7 @@ void KoMainWindow::slotFileOpen()
 
 void KoMainWindow:: SetHEditor()
 {
-#define HEditor
+    m_HEditor = true;
 }
 
 void KoMainWindow::HealthFileOpen(QString FileName)

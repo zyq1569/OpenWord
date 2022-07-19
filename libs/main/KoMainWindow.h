@@ -458,6 +458,9 @@ public Q_SLOTS:
      *
      */
     void HealthFileOpen(QString FileName);
+public:
+    void SetHEditor();
+    bool m_HEditor;
     ///---add----20210501--------------------------------
     ///-----------------------------------------------------------------------
 
