@@ -1662,6 +1662,7 @@ void KoMainWindow::HealthFileOpen(QString FileName)
     }
 
     (void) openDocument(url);
+    show();
 
 }
 

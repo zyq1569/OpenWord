@@ -872,6 +872,9 @@ bool KoApplication::startHEditor()//copy  bool KoApplication::start()
         KoMainWindow *mainWindow = part->createMainWindow();
         mainWindow->show();
         QObject::connect(doc, SIGNAL(sigProgress(int)), mainWindow, SLOT(slotProgress(int)));
+        //add openword 20220719
+        QObject::connect(m_hreadThread, SIGNAL(reportInfo(QString)), mainWindow, SLOT(HealthFileOpen(QString)));
+
         // for initDoc to fill in the recent docs list
         // and for KoDocument::slotStarted
         part->addMainWindow(mainWindow);
