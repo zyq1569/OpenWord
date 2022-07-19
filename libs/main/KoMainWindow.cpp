@@ -1668,7 +1668,7 @@ void KoMainWindow:: SetHEditor()
 
 void KoMainWindow::HealthFileOpen(QString FileName)
 {
-    QUrl url(FileName);
+    QUrl url("file:///"+FileName);
     DEBUG_LOG("void KoMainWindow::HealthFileOpen() :" + url.toString());
 
     if (url.isEmpty())
