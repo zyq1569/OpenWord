@@ -458,13 +458,6 @@ public Q_SLOTS:
      *
      */
     void HealthFileOpen(QString FileName);
-//private:
-//    int m_timerID;
-//    QSharedMemory m_sharedHealthApp;
-    ///
-    ///
-//public:
-//    void timerEvent(QTimerEvent *event) override;
     ///---add----20210501--------------------------------
     ///-----------------------------------------------------------------------
 
