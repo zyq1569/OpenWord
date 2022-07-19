@@ -902,11 +902,12 @@ bool KoMainWindow::openDocument(const QUrl &url)
 
 #ifdef HEditor
     slotFileClose();
-#endif
+#else
     if (m_HEditor)
     {
         slotFileClose();
     }
+#endif
 
     if (!KIO::NetAccess::exists(url, KIO::NetAccess::SourceSide, 0))
     {
