@@ -1599,7 +1599,6 @@ void KoMainWindow::chooseNewDocument(InitDocFlags initDocFlags)
     if ((!doc && initDocFlags == InitDocFileNew) || (doc && !doc->isEmpty()))
     {
         KoMainWindow *s = newpart->createMainWindow();
-        ///s->setWindowTitle("Test Openword");
         s->show();
         newpart->addMainWindow(s);
         newpart->showStartUpWidget(s, true /*Always show widget*/);
