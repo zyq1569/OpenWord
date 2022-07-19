@@ -898,6 +898,11 @@ KoView *KoMainWindow::rootView() const
 
 bool KoMainWindow::openDocument(const QUrl &url)
 {
+
+#ifdef HEditor
+    slotFileClose();
+#endif
+
     if (!KIO::NetAccess::exists(url, KIO::NetAccess::SourceSide, 0))
     {
         KMessageBox::error(0, i18n("The file %1 does not exist.", url.url()));
