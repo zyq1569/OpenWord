@@ -558,9 +558,7 @@ bool KoApplication::start()
                 if (profileoutput.device())
                 {
                     doc->setProfileStream(&profileoutput);
-                    profileoutput << "KoApplication::start\t"
-                                  << appStartTime.msecsTo(QTime::currentTime())
-                                  <<"\t0" << endl;
+                    profileoutput << "KoApplication::start\t"  << appStartTime.msecsTo(QTime::currentTime())   <<"\t0" << endl;
                     doc->setAutoErrorHandlingEnabled(false);
                 }
                 doc->setProfileReferenceTime(appStartTime);
@@ -655,13 +653,11 @@ bool KoApplication::start()
                 {
                     if (print)
                     {
-                        connect( mainWindow, SIGNAL(loadCompleted(KoMainWindow *)),
-                                 this, SLOT(slotFilePrint(KoMainWindow *)));
+                        connect( mainWindow, SIGNAL(loadCompleted(KoMainWindow *)),  this, SLOT(slotFilePrint(KoMainWindow *)));
                     }
                     else if (exportAsPdf)
                     {
-                        connect(mainWindow, SIGNAL(loadCompleted(KoMainWindow*)),
-                                this, SLOT(slotExportToPdf(KoMainWindow*)));
+                        connect(mainWindow, SIGNAL(loadCompleted(KoMainWindow*)), this, SLOT(slotExportToPdf(KoMainWindow*)));
                     }
                     if (mainWindow->openDocument(part, url))
                     {
@@ -669,9 +665,7 @@ bool KoApplication::start()
                         {
                             if (profileoutput.device())
                             {
-                                profileoutput << "KoApplication::start\t"
-                                              << appStartTime.msecsTo(QTime::currentTime())
-                                              <<"\t100" << endl;
+                                profileoutput << "KoApplication::start\t" << appStartTime.msecsTo(QTime::currentTime())  <<"\t100" << endl;
                             }
                             QTimer::singleShot(0, this, SLOT(benchmarkLoadingFinished()));
                             return true; // only load one document!
@@ -695,9 +689,7 @@ bool KoApplication::start()
 
                 if (profileoutput.device())
                 {
-                    profileoutput << "KoApplication::start\t"
-                                  << appStartTime.msecsTo(QTime::currentTime())
-                                  <<"\t100" << endl;
+                    profileoutput << "KoApplication::start\t" << appStartTime.msecsTo(QTime::currentTime()) <<"\t100" << endl;
                 }
 
             }
