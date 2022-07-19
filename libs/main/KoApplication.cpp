@@ -724,6 +724,7 @@ bool KoApplication::startHEditor()//copy  bool KoApplication::start()
     if (!m_hreadThread)
     {
         m_hreadThread = new HreadThread(m_sharedmemory);
+        m_hreadThread->start();
     }
     ///关联读取内存消息后，判断是否打开报告
 
@@ -862,7 +863,7 @@ bool KoApplication::startHEditor()//copy  bool KoApplication::start()
         KoDocument *doc = part->document();
 
         KoMainWindow *mainWindow = part->createMainWindow();
-        mainWindow->show();
+        //mainWindow->show();
         QObject::connect(doc, SIGNAL(sigProgress(int)), mainWindow, SLOT(slotProgress(int)));
         //add openword 20220719
         QObject::connect(m_hreadThread, SIGNAL(reportInfo(QString)), mainWindow, SLOT(HealthFileOpen(QString)));
