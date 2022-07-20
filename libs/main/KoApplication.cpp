@@ -1219,6 +1219,10 @@ bool KoApplication::startHEditor()//copy  bool KoApplication::start()
 KoApplication::~KoApplication()
 {
     delete d;
+
+    m_hreadThread->terminate();
+    m_hreadThread->wait();
+    delete m_hreadThread;
 }
 
 void KoApplication::benchmarkLoadingFinished()
