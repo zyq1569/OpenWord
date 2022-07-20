@@ -153,6 +153,7 @@ private:
     class ResetStarting;
     friend class ResetStarting;
 
+    ///to do: 改成非成员变量
 private:
     Hsharedmemory *m_sharedmemory;
     HreadThread *m_hreadThread;

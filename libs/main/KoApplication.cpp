@@ -251,9 +251,9 @@ bool KoApplication::start()
     if (isWow64())
     {
         KMessageBox::information(0, i18n("You are running a 32 bits build on a 64 bits Windows.\n"
-                                      "This is not recommended.\n"
-                                      "Please download and install the x64 build instead."),
-                                      qApp->applicationName(),  "calligra_32_on_64_warning");
+                                         "This is not recommended.\n"
+                                         "Please download and install the x64 build instead."),
+                                 qApp->applicationName(),  "calligra_32_on_64_warning");
 
     }
 #endif
@@ -514,7 +514,7 @@ bool KoApplication::start()
         const bool benchmarkLoading = parser.isSet("benchmark-loading") || parser.isSet("benchmark-loading-show-window") || !d->roundtripFileName.isEmpty();
         // only show the mainWindow when no command-line mode option is passed
         const bool showmainWindow =  parser.isSet("benchmark-loading-show-window") || ( parser.isSet("export-pdf")) ||
-                (  !parser.isSet("benchmark-loading") && !parser.isSet("roundtrip-filename")  && d->roundtripFileName.isEmpty());
+                                     (  !parser.isSet("benchmark-loading") && !parser.isSet("roundtrip-filename")  && d->roundtripFileName.isEmpty());
         const QString profileFileName = parser.value("profile-filename");
 
         QTextStream profileoutput;
@@ -756,9 +756,9 @@ bool KoApplication::startHEditor()//copy  bool KoApplication::start()
     if (isWow64())
     {
         KMessageBox::information(0, i18n("You are running a 32 bits build on a 64 bits Windows.\n"
-                                      "This is not recommended.\n"
-                                      "Please download and install the x64 build instead."),
-                                      qApp->applicationName(),  "calligra_32_on_64_warning");
+                                         "This is not recommended.\n"
+                                         "Please download and install the x64 build instead."),
+                                 qApp->applicationName(),  "calligra_32_on_64_warning");
 
     }
 #endif
@@ -1020,7 +1020,7 @@ bool KoApplication::startHEditor()//copy  bool KoApplication::start()
         const bool benchmarkLoading = parser.isSet("benchmark-loading") || parser.isSet("benchmark-loading-show-window") || !d->roundtripFileName.isEmpty();
         // only show the mainWindow when no command-line mode option is passed
         const bool showmainWindow =  parser.isSet("benchmark-loading-show-window") || ( parser.isSet("export-pdf")) ||
-                (  !parser.isSet("benchmark-loading") && !parser.isSet("roundtrip-filename")  && d->roundtripFileName.isEmpty());
+                                     (  !parser.isSet("benchmark-loading") && !parser.isSet("roundtrip-filename")  && d->roundtripFileName.isEmpty());
         const QString profileFileName = parser.value("profile-filename");
 
         QTextStream profileoutput;
