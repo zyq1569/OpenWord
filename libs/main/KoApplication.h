@@ -144,7 +144,6 @@ private Q_SLOTS:
     void slotExportToPdf(KoMainWindow *view);
 
 protected:
-
     // Current application object.
     static KoApplication *KoApp;
 

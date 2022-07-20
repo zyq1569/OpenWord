@@ -92,9 +92,9 @@ const QTime appStartTime(QTime::currentTime());
 class KoApplicationPrivate
 {
 public:
-    KoApplicationPrivate()
-        : splashScreen(0)
-    {}
+    KoApplicationPrivate() : splashScreen(0)
+    {
+    }
     QByteArray nativeMimeType;
     QWidget *splashScreen;
     QList<KoPart *> partList;
