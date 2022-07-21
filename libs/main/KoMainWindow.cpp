@@ -2471,7 +2471,6 @@ void KoMainWindow::newView()
 
     KoMainWindow *mainWindow = d->activePart->createMainWindow();
     mainWindow->setRootDocument(d->activeView->koDocument(), d->activePart);
-    ///mainWindow->setWindowTitle("Test Openword");
     mainWindow->show();
 }
 
@@ -2528,7 +2527,6 @@ void KoMainWindow::createMainwindowGUI()
     }
 
     guiFactory()->addClient( this );
-//INFO_LOG("title:"+windowTitle());
 
 }
 
@@ -2558,8 +2556,7 @@ void KoMainWindow::setActivePart(KoPart *part, QWidget *widget )
     }
 
     // don't activate twice
-    if ( d->m_activePart && part && d->m_activePart == part &&
-            (!widget || d->m_activeWidget == widget) )
+    if ( d->m_activePart && part && d->m_activePart == part && (!widget || d->m_activeWidget == widget) )
     {
         return;
     }
