@@ -905,6 +905,7 @@ bool KoMainWindow::openDocument(const QUrl &url)
 #else
     if (m_HEditor)
     {
+        hide();
         slotFileClose();
     }
 #endif
