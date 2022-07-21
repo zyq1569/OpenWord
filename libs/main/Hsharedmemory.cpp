@@ -90,7 +90,6 @@ void HreadThread::run()
         int n = s.length();
         if(!s.isEmpty() && s.length() > 5)
         {
-            //printf("RECV: %s\n", s.toStdString().c_str());
             if (s.toUpper().contains("FILE:"))
             {
                 m_info = s.right(n - 5);
@@ -104,4 +103,9 @@ void HreadThread::run()
 void HreadThread::clear()
 {
     m_info = "";
+}
+
+void HreadThread::send()
+{
+    m_SharedMemory->write(m_info);
 }

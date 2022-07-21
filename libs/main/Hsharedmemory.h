@@ -73,6 +73,8 @@ public:
     HreadThread(Hsharedmemory *sharedMemory, QObject *parent = Q_NULLPTR);
 
     void clear();
+
+    void send();
 private:
     Hsharedmemory *m_SharedMemory;
 
