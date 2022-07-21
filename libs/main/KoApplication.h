@@ -34,7 +34,9 @@ class KAboutData;
 class QWidget;
 class QStringList;
 
-class Hsharedmemory;
+//class Hsharedmemory;
+///add 20220714
+#include "Hsharedmemory.h"
 class HreadThread;
 #include <KoFilterManager.h>
 
@@ -155,7 +157,7 @@ private:
 
     ///to do: 改成非成员变量
 private:
-    Hsharedmemory *m_sharedmemory;
+    Hsharedmemory m_sharedmemory;
     HreadThread *m_hreadThread;
 };
 

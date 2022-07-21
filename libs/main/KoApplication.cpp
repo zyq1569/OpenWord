@@ -79,9 +79,6 @@
 #include <QDesktopWidget>
 
 
-///add 20220714
-#include "Hsharedmemory.h"
-
 KoApplication* KoApplication::KoApp = 0;
 
 namespace
@@ -146,7 +143,7 @@ public:
 
 
 KoApplication::KoApplication(const QByteArray &nativeMimeType, const QString &windowIconName,  AboutDataGenerator aboutDataGenerator, int &argc, char **argv)
-    : QApplication(argc, argv), d(new KoApplicationPrivate()), m_sharedmemory(0), m_hreadThread(0)
+    : QApplication(argc, argv), d(new KoApplicationPrivate()), m_sharedmemory(qApp->applicationPid()), m_hreadThread(0)
 {
 
     KLocalizedString::setApplicationDomain("calligrawords");
@@ -716,14 +713,10 @@ bool KoApplication::start()
 bool KoApplication::startHEditor()//copy  bool KoApplication::start()
 {
     ///线程读取报告,必要时保存通知
-    if (!m_sharedmemory)
-    {
-        m_sharedmemory = new Hsharedmemory(applicationPid());
-    }
-    m_sharedmemory->open();
+    m_sharedmemory.open();
     if (!m_hreadThread)
     {
-        m_hreadThread = new HreadThread(m_sharedmemory);
+        m_hreadThread = new HreadThread(&m_sharedmemory);
         m_hreadThread->start();
     }
     ///关联读取内存消息后，判断是否打开报告
@@ -867,6 +860,7 @@ bool KoApplication::startHEditor()//copy  bool KoApplication::start()
         QObject::connect(doc, SIGNAL(sigProgress(int)), mainWindow, SLOT(slotProgress(int)));
         //add openword 20220719
         QObject::connect(m_hreadThread, SIGNAL(reportInfo(QString)), mainWindow, SLOT(HealthFileOpen(QString)));
+        ///documentSaved()
         mainWindow->SetHEditor();
 
         // for initDoc to fill in the recent docs list
