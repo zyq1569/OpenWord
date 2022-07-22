@@ -43,6 +43,21 @@ void Hsharedmemory::write(const QString str)
     m_SharedMemory->unlock();
 }
 
+/**
+ * @brief Write data into shared memory
+ */
+void Hsharedmemory::write2Sender(const QString str)
+{
+    m_SharedMemory->lock();
+    PROCESS_CHANNEL *pc = (PROCESS_CHANNEL*)m_SharedMemory->data();
+    pc->flag = FLAG_ON;
+    pc->command = CMD_TEXT;
+    pc->pid = m_Pid;
+    std::string stdStr = str.toStdString();
+    strcpy_s(pc->rec, stdStr.c_str());
+    m_SharedMemory->unlock();
+}
+
 void Hsharedmemory::write(char *str)
 {
     m_SharedMemory->lock();
@@ -72,6 +87,24 @@ QString Hsharedmemory::read() const
     return s;
 }
 
+//    QString readFromReceiver() const;
+QString Hsharedmemory::readFromReceiver() const
+{
+    m_SharedMemory->lock();
+    PROCESS_CHANNEL *pc = (PROCESS_CHANNEL*)m_SharedMemory->data();
+    if(pc->flag==FLAG_OFF || pc->command!=CMD_TEXT || pc->pid==m_Pid)
+    {
+        m_SharedMemory->unlock();
+        return QString();
+    }
+
+    pc->flag = FLAG_OFF;
+    pc->command = CMD_NULL;
+    QString s = QString::fromLatin1(pc->rec);
+    m_SharedMemory->unlock();
+
+    return s;
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \brief HreadThread::HreadThread
 /// \param sharedMemory
@@ -105,7 +138,7 @@ void HreadThread::clear()
     m_info = "";
 }
 
-void HreadThread::send()
+void HreadThread::send2Sender()
 {
-    m_SharedMemory->write(m_info);
+    m_SharedMemory->write2Sender(m_info);
 }

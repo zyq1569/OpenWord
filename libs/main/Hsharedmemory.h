@@ -27,6 +27,7 @@ struct PROCESS_CHANNEL
     char command;
     qint64 pid;
     char data[SHARE_LEN];
+    char rec[SHARE_LEN];
 };
 
 // 考虑轻量级线程https://github.com/Qthreads/qthreads
@@ -55,10 +56,21 @@ public:
     void write(const QVariant &data);
 
     /**
+     * @brief Write data into shared memory
+     */
+    void write2Sender(const QString str);
+
+    /**
      * @brief Read string from shared memory
      * @return QString
      */
     QString read() const;
+
+    /**
+     * @brief Read string from shared memory
+     * @return QString
+     */
+    QString readFromReceiver() const;
 
 private:
     QSharedMemory *m_SharedMemory;
@@ -74,7 +86,7 @@ public:
 
     void clear();
 
-    void send();
+    void send2Sender();
 private:
     Hsharedmemory *m_SharedMemory;
 
