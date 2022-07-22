@@ -716,7 +716,7 @@ bool KoApplication::startHEditor()//copy  bool KoApplication::start()
     m_sharedmemory.open();
     if (!m_hreadThread)
     {
-        m_hreadThread = new HreadThread(&m_sharedmemory);
+        m_hreadThread = new HreadThread(&m_sharedmemory, false);
         m_hreadThread->start();
     }
     ///关联读取内存消息后，判断是否打开报告
