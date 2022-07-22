@@ -861,6 +861,7 @@ bool KoApplication::startHEditor()//copy  bool KoApplication::start()
         //add openword 20220719
         QObject::connect(m_hreadThread, SIGNAL(reportInfo(QString)), mainWindow, SLOT(HealthFileOpen(QString)));
         ///documentSaved()
+        QObject::connect(mainWindow, SIGNAL(documentSaved()), m_hreadThread, SLOT(send2Sender()));
         mainWindow->SetHEditor();
 
         // for initDoc to fill in the recent docs list
