@@ -34,7 +34,7 @@ struct PROCESS_CHANNEL
 class Hsharedmemory
 {
 public:
-    Hsharedmemory(qint64 id);
+    Hsharedmemory(qint64 id = 0);
     ~Hsharedmemory();
 
     /**
