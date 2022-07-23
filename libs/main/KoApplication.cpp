@@ -143,7 +143,7 @@ public:
 
 
 KoApplication::KoApplication(const QByteArray &nativeMimeType, const QString &windowIconName,  AboutDataGenerator aboutDataGenerator, int &argc, char **argv)
-    : QApplication(argc, argv), d(new KoApplicationPrivate()), m_sharedmemory(qApp->applicationPid()), m_hreadThread(0)
+    : QApplication(argc, argv), d(new KoApplicationPrivate()), m_hreadThread(0)
 {
 
     KLocalizedString::setApplicationDomain("calligrawords");
