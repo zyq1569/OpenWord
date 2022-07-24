@@ -86,7 +86,9 @@ public:
 
     void clear();
 
+public slots:
     void send2Sender();
+
 private:
     Hsharedmemory *m_SharedMemory;
 
