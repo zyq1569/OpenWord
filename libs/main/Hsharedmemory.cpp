@@ -6,7 +6,7 @@ Hsharedmemory::Hsharedmemory(qint64 id) :
 {
     if (0 == id)
     {
-        qApp->applicationPid();
+        m_Pid = qApp->applicationPid();
     }
 }
 
