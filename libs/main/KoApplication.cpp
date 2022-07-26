@@ -1215,6 +1215,7 @@ KoApplication::~KoApplication()
 {
     delete d;
 
+    m_sharedmemory.close();
     m_hreadThread->terminate();
     m_hreadThread->wait();
     delete m_hreadThread;
