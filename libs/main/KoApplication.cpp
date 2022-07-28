@@ -712,6 +712,7 @@ bool KoApplication::start()
 ///openword add 20220713
 bool KoApplication::startHEditor()//copy  bool KoApplication::start()
 {
+    INFO_LOG("----startHEditor--pid:" + QString::number(qApp->applicationPid()));
     ///线程读取报告,必要时保存通知
     m_sharedmemory.open();
     if (!m_hreadThread)
@@ -863,7 +864,7 @@ bool KoApplication::startHEditor()//copy  bool KoApplication::start()
         ///documentSaved()
         QObject::connect(mainWindow, SIGNAL(documentSaved()), m_hreadThread, SLOT(send2Sender()));
         mainWindow->SetHEditor();
-
+        INFO_LOG("----hide HEditor--");
         // for initDoc to fill in the recent docs list
         // and for KoDocument::slotStarted
         part->addMainWindow(mainWindow);
