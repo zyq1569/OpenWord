@@ -58,8 +58,9 @@ SUBDIRS    +=   log/easylog.pro \
 #                libs/ki18n/KF5I18n.pro \
                 filters/words/epub/calligra_filter_odt2html.pro \
 #                sheets/calligrasheets.pro \
-                libs/textlayout/tests/TestBlockLayout.pro \
-                words/app/calligrawords.pro
+#                libs/textlayout/tests/TestBlockLayout.pro \
+                words/app/calligrawords.pro \
+                words/app/reportEditor.pro
 #-------------------------------------------------
 #                karbon/karbonpart.pro \
 #                karbon/ui/karbonui.pro \
