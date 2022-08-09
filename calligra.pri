@@ -5,7 +5,12 @@
 #DESTDIR = ../../bin/libs/
 
 
+#msvc{
 
+#}else
+#{
+
+#}
 
 win32 {
 
@@ -39,6 +44,11 @@ TARGET_IMPLIB       = $$PWD/MS_bin/temp/TARGET
 TARGET_PDB          = $$PWD/MS_bin/temp/TARGET
 
 LOGLIB              = $$PWD/ms_bin/bin
+
+MOC_DIR             = $$PWD/MS_bin/temp/moc
+RCC_DIR             = $$PWD/MS_bin/temp/rcc
+UI_DIR              = $$PWD/MS_bin/temp/ui
+OBJECTS_DIR         = $$PWD/MS_bin/temp/obj
 
 DEFINES            +=  WIN32_LEAN_AND_MEAN  _WINSOCKAPI_
 
