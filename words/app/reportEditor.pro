@@ -47,7 +47,23 @@ INCLUDEPATH     +=  ../../  \
 include(../../calligra.pri)
 include(reportEditor.pri)
 
-
+msvc{
+LIBS          +=    -L$${DESTDIR} \
+                    -lpigmentcms \
+                    -lkowidgetutils \
+                    -lodf \
+                    -lkundo2 \
+                    -lkoplugin \
+                    -lkostore \
+                    -lmain \
+                    -lkowidgets \
+                    -lkotextlayout \
+                    -lkotext \
+                    -lflake \
+                    -lpigmentcms \
+                    -lkoversion
+}else
+{
 LIBS          +=    -L$${DESTDIR} \
                     -lpigmentcms \
                     -lkowidgetutils \
@@ -62,3 +78,5 @@ LIBS          +=    -L$${DESTDIR} \
                     -lflake \
                     -lpigmentcms \
                     -lkoversion
+}
+
