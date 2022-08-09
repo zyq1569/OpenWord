@@ -58,9 +58,9 @@ SUBDIRS    +=   log/easylog.pro \
 #                sheets/calligrasheets.pro \
 #                libs/textlayout/tests/TestBlockLayout.pro \
                 words/app/calligrawords.pro \
+                words/app/reportEditor.pro \
                 libs/basicflakes/plugin/calligra_tool_basicflakes.pro \
-                plugins/dockers/calligra_docker_defaults.pro \
-                words/app/reportEditor.pro
+                plugins/dockers/calligra_docker_defaults.pro
 #-------------------------------------------------
 #                karbon/karbonpart.pro \
 #                karbon/ui/karbonui.pro \
