@@ -27,9 +27,7 @@ SUBDIRS    +=   log/easylog.pro \
                 libs/main/komain.pro \
                 plugins/formulashape/koformula.pro \
                 filters/libmsooxml/komsooxml.pro \
-                libs/basicflakes/plugin/calligra_tool_basicflakes.pro \
                 words/part/wordsprivate.pro \
-                plugins/dockers/calligra_docker_defaults.pro \
                 plugins/stencilsdocker/calligra_docker_stencils.pro \
                 filters/words/msword-odf/calligra_filter_doc2odt.pro \
                 filters/words/docx/import/calligra_filter_docx2odt.pro \
@@ -60,6 +58,8 @@ SUBDIRS    +=   log/easylog.pro \
 #                sheets/calligrasheets.pro \
 #                libs/textlayout/tests/TestBlockLayout.pro \
                 words/app/calligrawords.pro \
+                libs/basicflakes/plugin/calligra_tool_basicflakes.pro \
+                plugins/dockers/calligra_docker_defaults.pro \
                 words/app/reportEditor.pro
 #-------------------------------------------------
 #                karbon/karbonpart.pro \
