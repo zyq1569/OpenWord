@@ -54,6 +54,18 @@ include(../../calligra.pri)
 include(basicflakes.pri)
 
 
+msvc{
+LIBS         +=  -L$${ALL_LIBS_DIR}\
+                -lkowidgets \
+                -lkotext \
+                -lflake \
+                -lpigmentcms \
+                -lodf \
+                -lkostore \
+                -lkundo2 \
+                -lkowidgetutils
+}else
+{
 LIBS         +=  -L$${ALL_LIBS_DIR}\
                 -lkowidgets \
                 -lkotext \
@@ -63,6 +75,9 @@ LIBS         +=  -L$${ALL_LIBS_DIR}\
                 -lkostore \
                 -lkundo2 \
                 -lkowidgetutils
+}
+
+
 #for build error!!
 #add: #include "../../../../libs/basicflakes/tools/KoCreatePathTool_p.h" in " :moc_KoCreatePathTool.cpp "
 

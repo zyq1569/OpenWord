@@ -81,7 +81,18 @@ include(../../calligra.pri)
 include(kowidgets.pri)
 
 
+msvc{
 
+LIBS     +=      -L$${DESTDIR} \
+                 -lflake \
+                 -lpigmentcms \
+                 -lkowidgetutils \
+                 -lodf \
+                 -lkostore \
+                 -lkundo2 \
+                 -lkotext
+}else
+{
 
 LIBS     +=      -L$${DESTDIR} \
                  -lflake \
@@ -91,3 +102,4 @@ LIBS     +=      -L$${DESTDIR} \
                  -lkostore \
                  -lkundo2 \
                  -lkotext
+}

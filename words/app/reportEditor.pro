@@ -46,7 +46,7 @@ INCLUDEPATH     +=  ../../  \
 
 include(../../calligra.pri)
 include(reportEditor.pri)
-
+#mingw
 msvc{
 LIBS          +=    -L$${DESTDIR} \
                     -lpigmentcms \

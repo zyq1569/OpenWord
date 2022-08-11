@@ -39,6 +39,20 @@ INCLUDEPATH +=  ../../plugins/textshape \
                 ../../libs/widgets
 
 
+msvc{
+LIBS        +=  -L$${LIBDIR} \
+                -lkotextlayout \
+                -lkowidgets \
+                -lkotext \
+                -lflake \
+                -lodf \
+                -lkostore \
+                -lkundo2 \
+                -lpigmentcms \
+                -lkowidgetutils \
+                -lsetupapi
+}else
+{
 LIBS        +=  -L$${LIBDIR} \
                 -lkotextlayout \
                 -lkowidgets \
@@ -50,6 +64,8 @@ LIBS        +=  -L$${LIBDIR} \
                 -lpigmentcms \
                 -lkowidgetutils \
                 -lsetupapi
+}
+
 
 include(../../calligra.pri)
 include(calligra_shape_text.pri)

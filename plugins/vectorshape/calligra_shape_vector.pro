@@ -40,6 +40,21 @@ INCLUDEPATH  +=   ../../plugins/vectorshape \
                   ../../libs/vectorimage
 
 
+msvc{
+
+LIBS        +=   -L$${LIBDIR} \
+                 -lflake \
+                 -lkovectorimage \
+                 -lpigmentcms \
+                 -lkowidgetutils \
+                 -lodf \
+                 -lkostore \
+                 -lkundo2 \
+                 -lsetupapi
+
+}else
+{
+
 LIBS        +=   -L$${LIBDIR} \
                  -lflake \
                  -lkovectorimage \
@@ -49,6 +64,8 @@ LIBS        +=   -L$${LIBDIR} \
                  -lkostore \
                  -lkundo2 \
                  -lsetupapi
+
+}
 
 
 include(../../calligra.pri)

@@ -32,7 +32,18 @@ INCLUDEPATH +=  ../../../interfaces \
                 ../../../libs/widgetutils \
                 ../../../libs/widgets
 
-
+msvc{
+LIBS       +=     -L$${LIBDIR} \
+                  -lkowidgets \
+                  -lkotext \
+                  -lflake \
+                  -lodf \
+                  -lkostore \
+                  -lkundo2 \
+                  -lpigmentcms \
+                  -lkowidgetutils
+}else
+{
 LIBS       +=     -L$${LIBDIR} \
                   -lkowidgets \
                   -lkotext \
@@ -42,6 +53,9 @@ LIBS       +=     -L$${LIBDIR} \
                   -lkundo2 \
                   -lpigmentcms \
                   -lkowidgetutils
+}
+
+
 #LIBS += -L"." \
 #    -l../../../lib/Debug/kowidgets \
 #    -l../../../lib/Debug/kotext \

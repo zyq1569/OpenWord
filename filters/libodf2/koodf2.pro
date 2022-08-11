@@ -32,8 +32,17 @@ INCLUDEPATH +=   ../../ \
 include(../../calligra.pri)
 include(koodf2.pri)
 
-
+msvc{
+TARGET       =  odf2
+LIBS        +=   -L$${DESTDIR} \
+                 -lmso \
+                 -lodf \
+                 -lkostore
+}else
+{
 LIBS        +=   -L$${DESTDIR} \
                  -lmso \
                  -lkoodf \
                  -lkostore
+}
+

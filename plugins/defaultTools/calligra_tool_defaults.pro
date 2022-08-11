@@ -39,8 +39,18 @@ INCLUDEPATH +=  ../../plugins/defaultTools \
                 ../../libs/widgetutils \
                 ../../libs/widgets
 
-
-
+msvc{
+LIBS        +=    -L$${LIBDIR} \
+                  -lkowidgets \
+                  -lkotext \
+                  -lflake \
+                  -lpigmentcms \
+                  -lkowidgetutils \
+                  -lodf \
+                  -lkostore \
+                  -lkundo2
+}else
+{
 LIBS        +=    -L$${LIBDIR} \
                   -lkowidgets \
                   -lkotext \
@@ -50,6 +60,11 @@ LIBS        +=    -L$${LIBDIR} \
                   -lkoodf \
                   -lkostore \
                   -lkundo2
+}
+
+
+
+
 
 include(../../calligra.pri)
 include(calligra_tool_defaults.pri)

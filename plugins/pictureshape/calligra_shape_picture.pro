@@ -38,7 +38,17 @@ include(calligra_shape_picture.pri)
 
 DLLDESTDIR          =  $$DLLDESTDIR/calligra/shapes
 
-
+msvc{
+LIBS += -L$${LIBDIR} \
+        -lflake \
+        -lpigmentcms \
+        -lkowidgetutils \
+        -lodf \
+        -lkostore \
+        -lkundo2 \
+        -lsetupapi
+}else
+{
 LIBS += -L$${LIBDIR} \
         -lflake \
         -lpigmentcms \
@@ -47,3 +57,5 @@ LIBS += -L$${LIBDIR} \
         -lkostore \
         -lkundo2 \
         -lsetupapi
+}
+

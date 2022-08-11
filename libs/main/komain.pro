@@ -1,6 +1,7 @@
 
 TEMPLATE     =  lib
 TARGET       =  komain
+
 DESTDIR      =  ../../bin/
 #DEFINES     += CALLIGRA_RC=1
 QT          +=  core xml network gui widgets printsupport concurrent dbus
@@ -32,6 +33,27 @@ INCLUDEPATH +=  ../../ \
                  config \
                  ../plugin
 
+
+msvc{
+TARGET       =  main
+
+LIBS         += -L$${DESTDIR} \
+                -lkowidgets \
+                -lkotextlayout \
+                -lkotext \
+                -lflake \
+                -lpigmentcms \
+                -lkoplugin \
+                -lkowidgetutils \
+                -lodf \
+                -lkoversion \
+                -lkostore \
+                -lkundo2
+#build_pass:message($$PWD)
+
+}else
+{
+
 LIBS         += -L$${DESTDIR} \
                 -lkowidgets \
                 -lkotextlayout \
@@ -45,6 +67,7 @@ LIBS         += -L$${DESTDIR} \
                 -lkostore \
                 -lkundo2
 
+}
 #LIBS         +=   -L$${DESTDIR} \
 #                  -leasylog
 

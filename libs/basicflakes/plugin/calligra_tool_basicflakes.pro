@@ -37,7 +37,19 @@ INCLUDEPATH +=  ../../../libs/basicflakes/plugin \
                 ../../../libs/widgets \
                 ../../../libs/basicflakes/tools \
                 ../../../libs/basicflakes
-
+msvc{
+LIBS      +=   -L$${LIBDIR} \
+               -lbasicflakes \
+               -lkowidgets \
+               -lkotext \
+               -lflake \
+               -lpigmentcms \
+               -lkowidgetutils \
+               -lodf \
+               -lkostore \
+               -lkundo2
+}else
+{
 LIBS      +=   -L$${LIBDIR} \
                -lbasicflakes \
                -lkowidgets \
@@ -48,6 +60,9 @@ LIBS      +=   -L$${LIBDIR} \
                -lkoodf \
                -lkostore \
                -lkundo2
+}
+
+
 #\
 #        -lkernel32 \
 #        -luser32 \

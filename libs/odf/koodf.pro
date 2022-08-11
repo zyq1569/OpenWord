@@ -45,10 +45,18 @@ INCLUDEPATH        +=   ../../ \
                         ../store
 
 #build_pass:message($$DESTDIR)
+msvc{
 
+TARGET              =   odf
 LIBS               +=   -L$${DESTDIR} \
                         -lkoversion \
                         -lkostore
+}else
+{
+LIBS               +=   -L$${DESTDIR} \
+                        -lkoversion \
+                        -lkostore
+}
 
 
 include(../../calligra.pri)

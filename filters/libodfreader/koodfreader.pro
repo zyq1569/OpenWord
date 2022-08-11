@@ -40,11 +40,20 @@ INCLUDEPATH  +=    ../libodfreader \
                    ../../libs/main/config \
                    ../../filters/libodf2
 
-
+msvc{
+LIBS       +=   -L$${DESTDIR} \
+                -lodf2 \
+                -lodf \
+                -lkostore
+}else
+{
 LIBS       +=   -L$${DESTDIR} \
                 -lkoodf2 \
                 -lkoodf \
                 -lkostore
+}
+
+
 
 include(../../calligra.pri)
 include(koodfreader.pri)

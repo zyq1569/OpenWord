@@ -43,6 +43,21 @@ INCLUDEPATH +=  ../../plugins/formulashape \
 include(../../calligra.pri)
 include(koformula.pri)
 
+msvc{
+LIBS        +=  -L$${DESTDIR} \
+                -lmain \
+                -lkowidgets \
+                -lkotextlayout \
+                -lkotext \
+                -lflake \
+                -lpigmentcms \
+                -lkowidgetutils \
+                -lodf \
+                -lkostore \
+                -lkundo2 \
+                -lkoversion
+}else
+{
 LIBS        +=  -L$${DESTDIR} \
                 -lkomain \
                 -lkowidgets \
@@ -55,3 +70,5 @@ LIBS        +=  -L$${DESTDIR} \
                 -lkostore \
                 -lkundo2 \
                 -lkoversion
+}
+

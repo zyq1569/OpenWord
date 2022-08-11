@@ -44,10 +44,23 @@ INCLUDEPATH  +=  ../../ \
 include(../../calligra.pri)
 include(flake.pri)
 
+msvc{
 LIBS         +=   -L$${DESTDIR} \
                   -lpigmentcms \
                   -lkowidgetutils \
-                  -lkoodf \
+                  -lodf \
                   -lkundo2 \
                   -lkoplugin \
                   -lkostore
+}else
+{
+LIBS         +=   -L$${DESTDIR} \
+                  -lpigmentcms \
+                  -lkowidgetutils \
+                  -lodf \
+                  -lkundo2 \
+                  -lkoplugin \
+                  -lkostore
+}
+
+

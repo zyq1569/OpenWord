@@ -37,7 +37,23 @@ INCLUDEPATH +=  ../ \
 include(../../calligra.pri)
 include(kokross.pri)
 
-
+msvc{
+LIBS       +=   -L$${DESTDIR} \
+                -lkostore \
+                -lkoversion \
+                -lmain \
+                -lkowidgets \
+                -lkotextlayout \
+                -lkotext \
+                -lflake \
+                -lpigmentcms \
+                -lkowidgetutils \
+                -lodf \
+                -lkostore \
+                -lkundo2 \
+                -lkoversion
+}else
+{
 LIBS       +=   -L$${DESTDIR} \
                 -lkostore \
                 -lkoversion \
@@ -52,3 +68,6 @@ LIBS       +=   -L$${DESTDIR} \
                 -lkostore \
                 -lkundo2 \
                 -lkoversion
+}
+
+

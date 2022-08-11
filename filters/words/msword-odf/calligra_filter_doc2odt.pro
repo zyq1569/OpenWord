@@ -38,7 +38,23 @@ INCLUDEPATH += ../msword-odf \
                ../../../filters/libmso \
                ../../../filters/words/msword-odf/wv2/src
 
-
+msvc{
+LIBS         += -L$${LIBDIR} \
+                -lkowv2 \
+                -lmso \
+                -lmain \
+                -lkowidgets \
+                -lkotextlayout \
+                -lkotext \
+                -lflake \
+                -lodf \
+                -lkostore \
+                -lpigmentcms \
+                -lkowidgetutils \
+                -lkundo2 \
+                -lkoversion
+}else
+{
 LIBS         += -L$${LIBDIR} \
                 -lkowv2 \
                 -lmso \
@@ -53,6 +69,10 @@ LIBS         += -L$${LIBDIR} \
                 -lkowidgetutils \
                 -lkundo2 \
                 -lkoversion
+}
+
+
+
 
 
 include(../../../calligra.pri)

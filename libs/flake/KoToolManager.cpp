@@ -315,9 +315,9 @@ void KoToolManager::Private::setup()
 
     // connect to all tools so we can hear their button-clicks
     foreach(ToolHelper *tool, tools)
-        connect(tool, &ToolHelper::toolActivated, q, [this] (ToolHelper *tool)
+        connect(tool, &ToolHelper::toolActivated, q, [this] (ToolHelper *btool)
     {
-        toolActivated(tool);
+        toolActivated(btool);
     });
 
     // load pluggable input devices

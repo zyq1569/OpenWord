@@ -35,6 +35,22 @@ INCLUDEPATH +=    ../../plugins/videoshape \
                   ../../libs/widgets
 
 
+msvc{
+
+LIBS       +=     -L$${LIBDIR} \
+                  -lkowidgets \
+                  -lkotext \
+                  -lflake \
+                  -lpigmentcms \
+                  -lkowidgetutils \
+                  -lodf \
+                  -lkostore \
+                  -lkundo2 \
+                  -lsetupapi \
+                  -lphonon4qt5
+}else
+{
+
 LIBS       +=     -L$${LIBDIR} \
                   -lkowidgets \
                   -lkotext \
@@ -46,6 +62,8 @@ LIBS       +=     -L$${LIBDIR} \
                   -lkundo2 \
                   -lsetupapi \
                   -lphonon4qt5
+}
+
 
 include(../../calligra.pri)
 include(calligra_shape_video.pri)

@@ -42,7 +42,22 @@ INCLUDEPATH +=  ../../../filters/words/epub \
                 ../../../libs/vectorimage/libwmf \
                 ../../../libs/vectorimage \
 
-
+msvc{
+LIBS           += -L$${DESTDIR} \
+                -lkovectorimage \
+                -lmain \
+                -lkowidgets \
+                -lkotextlayout \
+                -lkotext \
+                -lflake \
+                -lpigmentcms \
+                -lkowidgetutils \
+                -lodf \
+                -lkostore \
+                -lkundo2 \
+                -lkoversion
+}else
+{
 LIBS           += -L$${DESTDIR} \
                 -lkovectorimage \
                 -lkomain \
@@ -56,6 +71,8 @@ LIBS           += -L$${DESTDIR} \
                 -lkostore \
                 -lkundo2 \
                 -lkoversion
+}
+
 
 include(../../../calligra.pri)
 include(calligra_filter_odt2html.pri)

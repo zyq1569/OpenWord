@@ -50,6 +50,18 @@ include(calligra_shape_artistictext.pri)
 
 DLLDESTDIR          =  $$DLLDESTDIR/calligra/shapes
 
+msvc{
+LIBS        +=   -L$${LIBDIR} \
+                 -lkowidgets \
+                 -lkotext \
+                 -lflake \
+                 -lpigmentcms \
+                 -lkowidgetutils \
+                 -lodf \
+                 -lkostore \
+                 -lkundo2
+}else
+{
 LIBS        +=   -L$${LIBDIR} \
                  -lkowidgets \
                  -lkotext \
@@ -59,3 +71,7 @@ LIBS        +=   -L$${LIBDIR} \
                  -lkoodf \
                  -lkostore \
                  -lkundo2
+}
+
+
+

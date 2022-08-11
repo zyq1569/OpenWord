@@ -40,8 +40,18 @@ INCLUDEPATH +=  ../../plugins/variables \
                 ../../libs/flake \
                 ../../libs/textlayout \
                 ../../libs/widgetutils
-
-
+msvc{
+LIBS        +=  -L$${LIBDIR} \
+                -lkotext \
+                -lflake \
+                -lpigmentcms \
+                -lkowidgetutils \
+                -lodf \
+                -lkostore \
+                -lkundo2 \
+                -lkotextlayout
+}else
+{
 LIBS        +=  -L$${LIBDIR} \
                 -lkotext \
                 -lflake \
@@ -51,6 +61,8 @@ LIBS        +=  -L$${LIBDIR} \
                 -lkostore \
                 -lkundo2 \
                 -lkotextlayout
+}
+
 
 include(../../calligra.pri)
 include(calligra_textinlineobject_variables.pri)

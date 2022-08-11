@@ -39,11 +39,20 @@ INCLUDEPATH +=  ../ \
                 ../../../libs/main/config \
                 ../../../../../filters/libmso
 
-
+msvc{
+LIBS += -L$${DESTDIR} \
+        -lmso \
+        -lodf \
+        -lkostore
+}else
+{
 LIBS += -L$${DESTDIR} \
         -lmso \
         -lkoodf \
         -lkostore
+}
+
+
 #        -lzlibstatic \
 include(../../../../../calligra.pri)
 include(kowv2.pri)

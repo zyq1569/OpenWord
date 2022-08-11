@@ -46,6 +46,25 @@ INCLUDEPATH +=  ../../../../filters/words/docx/export \
                  ../../../../filters/libmsooxml \
                 ../../../../filters/libodf2
 
+
+msvc{
+LIBS     +=     -L$${LIBDIR} \
+                -lkoodfreader \
+                -lmain \
+                -lodf2 \
+                -lkowidgets \
+                -lkotextlayout \
+                -lkotext \
+                -lflake \
+                -lkoodf \
+                -lkostore \
+                -lpigmentcms \
+                -lkowidgetutils \
+                -lkundo2 \
+                -lmsooxml \
+                -lkoversion
+}else
+{
 LIBS     +=     -L$${LIBDIR} \
                 -lkoodfreader \
                 -lkomain \
@@ -61,6 +80,8 @@ LIBS     +=     -L$${LIBDIR} \
                 -lkundo2 \
                 -lkomsooxml \
                 -lkoversion
+}
+
 
 include(../../../../calligra.pri)
 include(calligra_filter_odt2docx.pri)

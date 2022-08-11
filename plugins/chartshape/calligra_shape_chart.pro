@@ -44,6 +44,23 @@ INCLUDEPATH +=  ../../plugins/chartshape \
 #                ../../include \
 #                ../../../include/KF5/KIconThemes
 
+msvc{
+LIBS       +=   -L$${LIBDIR} \
+                -lchartshapecore \
+                -lKChart \
+                -lmain \
+                -lkotextlayout \
+                -lkowidgets \
+                -lkotext \
+                -lflake \
+                -lpigmentcms \
+                -lkowidgetutils \
+                -lodf \
+                -lkoversion \
+                -lkostore \
+                -lkundo2
+}else
+{
 LIBS       +=   -L$${LIBDIR} \
                 -lchartshapecore \
                 -lKChart \
@@ -58,6 +75,10 @@ LIBS       +=   -L$${LIBDIR} \
                 -lkoversion \
                 -lkostore \
                 -lkundo2
+}
+
+
+
 
 
 include(../../calligra.pri)

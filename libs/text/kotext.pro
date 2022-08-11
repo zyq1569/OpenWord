@@ -56,7 +56,17 @@ INCLUDEPATH +=   ../text \
 include(../../calligra.pri)
 include(kotext.pri)
 
-
+msvc{
+LIBS       +=  -L$${DESTDIR} \
+                   -lflake \
+                   -lpigmentcms \
+                   -lkoplugin \
+                   -lkowidgetutils \
+                   -lodf \
+                   -lkostore \
+                   -lkundo2
+}else
+{
 LIBS       +=  -L$${DESTDIR} \
                    -lflake \
                    -lpigmentcms \
@@ -65,3 +75,7 @@ LIBS       +=  -L$${DESTDIR} \
                    -lkoodf \
                    -lkostore \
                    -lkundo2
+}
+
+
+

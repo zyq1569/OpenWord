@@ -42,7 +42,21 @@ INCLUDEPATH   +=  ../../plugins/pluginshape \
                   ../../libs/main \
                   ../../libs/main/config
 
-
+msvc{
+LIBS        +=    -L$${LIBDIR} \
+                  -lmain \
+                  -lkowidgets \
+                  -lkotextlayout \
+                  -lkotext \
+                  -lflake \
+                  -lpigmentcms \
+                  -lkowidgetutils \
+                  -lodf \
+                  -lkostore \
+                  -lkundo2 \
+                  -lkoversion
+}else
+{
 LIBS        +=    -L$${LIBDIR} \
                   -lkomain \
                   -lkowidgets \
@@ -55,6 +69,7 @@ LIBS        +=    -L$${LIBDIR} \
                   -lkostore \
                   -lkundo2 \
                   -lkoversion
+}
 
 include(../../calligra.pri)
 include(calligra_shape_plugin.pri)

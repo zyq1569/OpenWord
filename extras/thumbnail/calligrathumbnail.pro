@@ -41,19 +41,34 @@ INCLUDEPATH +=  ../../extras/thumbnail \
                 ../../libs/main \
                 ../../libs/main/config
 
-
- LIBS       +=    -L$${DESTDIR} \
-                  -lkomain \
-                  -lkowidgets \
-                  -lkotextlayout \
-                  -lkotext \
-                  -lflake \
-                  -lpigmentcms \
-                  -lkowidgetutils \
-                  -lkoodf \
-                  -lkostore \
-                  -lkundo2 \
-                  -lkoversion
+msvc{
+LIBS       +=    -L$${DESTDIR} \
+                 -lmain \
+                 -lkowidgets \
+                 -lkotextlayout \
+                 -lkotext \
+                 -lflake \
+                 -lpigmentcms \
+                 -lkowidgetutils \
+                 -lodf \
+                 -lkostore \
+                 -lkundo2 \
+                 -lkoversion
+}else
+{
+LIBS       +=    -L$${DESTDIR} \
+                 -lkomain \
+                 -lkowidgets \
+                 -lkotextlayout \
+                 -lkotext \
+                 -lflake \
+                 -lpigmentcms \
+                 -lkowidgetutils \
+                 -lkoodf \
+                 -lkostore \
+                 -lkundo2 \
+                 -lkoversion
+}
 
 include(../../calligra.pri)
 include(calligrathumbnail.pri)

@@ -49,6 +49,21 @@ INCLUDEPATH +=  ../part \
 include(../../calligra.pri)
 include(wordsprivate.pri)
 
+msvc{
+LIBS     +=  -L$${DESTDIR} \
+             -lmain \
+             -lkotextlayout \
+             -lkowidgets \
+             -lkotext \
+             -lflake \
+             -lodf \
+             -lkostore \
+             -lkundo2 \
+             -lpigmentcms \
+             -lkowidgetutils \
+             -lkoversion
+}else
+{
 LIBS     +=  -L$${DESTDIR} \
              -lkomain \
              -lkotextlayout \
@@ -61,6 +76,8 @@ LIBS     +=  -L$${DESTDIR} \
              -lpigmentcms \
              -lkowidgetutils \
              -lkoversion
+}
+
 
 DISTFILES +=
 

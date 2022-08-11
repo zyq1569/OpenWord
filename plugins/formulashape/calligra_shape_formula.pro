@@ -48,7 +48,22 @@ INCLUDEPATH   +=   ../../plugins/formulashape \
                    ../../libs/main/config
 
 
-
+msvc{
+LIBS         +=    -L$${LIBDIR} \
+                   -lkoformula \
+                   -lmain \
+                   -lkowidgets \
+                   -lkotextlayout \
+                   -lkotext \
+                   -lflake \
+                   -lpigmentcms \
+                   -lkowidgetutils \
+                   -lodf \
+                   -lkostore \
+                   -lkoversion \
+                   -lkundo2
+}else
+{
 LIBS         +=    -L$${LIBDIR} \
                    -lkoformula \
                    -lkomain \
@@ -62,6 +77,7 @@ LIBS         +=    -L$${LIBDIR} \
                    -lkostore \
                    -lkoversion \
                    -lkundo2
+}
 
 include(../../calligra.pri)
 include(calligra_shape_formula.pri)

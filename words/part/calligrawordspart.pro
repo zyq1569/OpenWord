@@ -48,7 +48,22 @@ INCLUDEPATH +=  ../../words/part \
                 ../../libs/main/config \
                 ../../libs/rdf
 
-
+msvc{
+LIBS        +=   -L$${LIBDIR} \
+                 -lwordsprivate \
+                 -lmain \
+                 -lkowidgets \
+                 -lkotextlayout \
+                 -lkotext \
+                 -lflake \
+                 -lpigmentcms \
+                 -lkowidgetutils \
+                 -lodf \
+                 -lkoversion \
+                 -lkostore \
+                 -lkundo2
+}else
+{
 LIBS        +=   -L$${LIBDIR} \
                  -lwordsprivate \
                  -lkomain \
@@ -62,6 +77,9 @@ LIBS        +=   -L$${LIBDIR} \
                  -lkoversion \
                  -lkostore \
                  -lkundo2
+}
+
+
 
 
 include(../../calligra.pri)

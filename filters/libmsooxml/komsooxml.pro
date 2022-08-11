@@ -55,7 +55,24 @@ INCLUDEPATH +=  ../../ \
                 ../../filters/libmso \
                 ../../filters/libodf2
 
-
+msvc{
+TARGET     =   msooxml
+LIBS      +=   -L$${DESTDIR} \
+               -lmso \
+               -lodf2 \
+               -lmain \
+               -lkowidgets \
+               -lkotextlayout \
+               -lkotext \
+               -lflake \
+               -lkoodf \
+               -lkostore \
+               -lpigmentcms \
+               -lkowidgetutils \
+               -lkundo2 \
+               -lkoversion
+}else
+{
 LIBS      +=   -L$${DESTDIR} \
                -lmso \
                -lkoodf2 \
@@ -70,6 +87,8 @@ LIBS      +=   -L$${DESTDIR} \
                -lkowidgetutils \
                -lkundo2 \
                -lkoversion
+}
+
 
 
 include(../../calligra.pri)

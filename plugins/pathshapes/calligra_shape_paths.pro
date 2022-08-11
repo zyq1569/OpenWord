@@ -42,6 +42,19 @@ include(calligra_shape_paths.pri)
 DLLDESTDIR          =  $$DLLDESTDIR/calligra/shapes
 
 
+msvc{
+LIBS       +=   -L$${LIBDIR} \
+                -lkoformula \
+                -lkowidgets \
+                -lkotext \
+                -lflake \
+                -lpigmentcms \
+                -lkowidgetutils \
+                -lodf \
+                -lkostore \
+                -lkundo2
+}else
+{
 LIBS       +=   -L$${LIBDIR} \
                 -lkoformula \
                 -lkowidgets \
@@ -52,3 +65,4 @@ LIBS       +=   -L$${LIBDIR} \
                 -lkoodf \
                 -lkostore \
                 -lkundo2
+}
