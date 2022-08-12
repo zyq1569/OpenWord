@@ -11,8 +11,11 @@ namespace LOG
 
 const char* getPID(const el::LogMessage*)
 {
-    //static QString pid = QString::number(getpid());
+#ifdef MSVC
     static QString pid = QString::number(qApp->applicationPid());
+#else
+    static QString pid = QString::number(getpid());
+#endif
     static std::string stdpid = pid.toStdString();
     return  stdpid.c_str();
 }
