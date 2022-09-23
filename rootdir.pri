@@ -1,5 +1,10 @@
 ROOTDIR         = $$PWD
 
+win32 {
+
+msvc: DEFINES      += MSVC
+
+}
 
 # EasyLogging++ is set to be thread safe, to not have a default log file, and to not handle crashes
 #DEFINES         += ELPP_THREAD_SAFE ELPP_NO_DEFAULT_LOG_FILE ELPP_DISABLE_DEFAULT_CRASH_HANDLING
