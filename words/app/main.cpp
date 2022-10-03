@@ -32,6 +32,8 @@
 //    appname = appname.right(appname.lastIndexOf('\\')-2).replace(".exe","");
 //    QString appname =  QCoreApplication::applicationFilePath();
     QLoggingCategory::setFilterRules("calligra.*.debug=true\n calligra.*.warning=true");
+    //to do:
+    //1.考虑调整界面布局 2.KDE 的界面库是否考虑弱化
     KoApplication app(WORDS_MIME_TYPE, QStringLiteral("calligrawords"), newWordsAboutData, argc, argv);
     INFO_LOG("----Word start to run!-----");//must after:KoApplication
     // Migrate data from kde4 to kf5 locations
